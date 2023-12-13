@@ -20,7 +20,6 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -94,12 +93,6 @@ namespace System.Windows.Media
             MatrixUtil.MultiplyMatrix(ref result, ref matrixToMultiplyBy);
         }
 
-        /// <SecurityNote>
-        /// Critical -- references and writes out to memory addresses. The
-        ///             caller is safe if the pointer points to a D3DMATRIX
-        ///             value.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe virtual void ConvertToD3DMATRIX(/* out */ D3DMATRIX* milMatrix)
         {
             Matrix matrix = Value;

@@ -5,7 +5,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using MS.Win32;
@@ -38,17 +37,11 @@ namespace System.Windows.Input
         ///     The mode in which the input is being reported.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
-        /// <SecurityNote>
-        ///     This handles critical data in the form of PresentationSource but there are demands on the
-        ///     critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected InputReport(PresentationSource inputSource, InputType type, InputMode mode, int timestamp)
         {
-            if (inputSource == null)
-                throw new ArgumentNullException("inputSource");
+            ArgumentNullException.ThrowIfNull(inputSource);
 
             Validate_InputType( type );
             Validate_InputMode( mode );
@@ -61,14 +54,8 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the type of input source that reported input.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This element is treated as critical and is not ok to expose.
-        ///     A link demand exists but that in itself is not adequate to safeguard this.
-        ///     The critical exists to expose users.
-        /// </SecurityNote>
         public PresentationSource InputSource 
         { 
-            [SecurityCritical]
             get 
             {
                 return _inputSource.Value;
@@ -86,7 +73,7 @@ namespace System.Windows.Input
         public InputMode Mode {get {return _mode;}}
 
         /// <summary>
-        ///     Read-only access to the time when the input occured.
+        ///     Read-only access to the time when the input occurred.
         /// </summary>
         public int Timestamp {get {return _timestamp;}}
 

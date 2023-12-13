@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="ReachPackaging_MoreThanOneSigDefParts">
         <source>Document has more than one Signature Definition relationship.</source>
-        <target state="translated">Das Dokument besitzt mehr als eine  Signature Definition-Beziehung.</target>
+        <target state="translated">Das Dokument besitzt mehr als eine Signature Definition-Beziehung.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachPackaging_MoreThanOneSigOriginParts">
@@ -369,7 +369,7 @@
       </trans-unit>
       <trans-unit id="XpsSerializerFactory_ManufacturerWebsite">
         <source>http://www.microsoft.com</source>
-        <target state="translated">http://www.microsoft.com/de/de/default.aspx</target>
+        <target state="translated">http://www.microsoft.com</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsSerializerFactory_WriterIsClosed">

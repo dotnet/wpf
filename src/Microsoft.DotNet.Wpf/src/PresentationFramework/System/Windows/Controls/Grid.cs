@@ -77,10 +77,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IAddChild.AddChild(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             UIElement cell = value as UIElement;
             if (cell != null)
@@ -89,7 +86,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            throw (new ArgumentException(SR.Get(SRID.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
+            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
         }
 
         /// <summary>
@@ -136,10 +133,7 @@ namespace System.Windows.Controls
         /// <param name="value">Column property value.</param>
         public static void SetColumn(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ColumnProperty, value);
         }
@@ -152,10 +146,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetColumn(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(ColumnProperty));
         }
@@ -167,10 +158,7 @@ namespace System.Windows.Controls
         /// <param name="value">Row property value.</param>
         public static void SetRow(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(RowProperty, value);
         }
@@ -183,10 +171,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetRow(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(RowProperty));
         }
@@ -198,10 +183,7 @@ namespace System.Windows.Controls
         /// <param name="value">ColumnSpan property value.</param>
         public static void SetColumnSpan(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(ColumnSpanProperty, value);
         }
@@ -214,10 +196,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetColumnSpan(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(ColumnSpanProperty));
         }
@@ -229,10 +208,7 @@ namespace System.Windows.Controls
         /// <param name="value">RowSpan property value.</param>
         public static void SetRowSpan(UIElement element, int value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(RowSpanProperty, value);
         }
@@ -245,10 +221,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static int GetRowSpan(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((int)element.GetValue(RowSpanProperty));
         }
@@ -260,10 +233,7 @@ namespace System.Windows.Controls
         /// <param name="value">IsSharedSizeScope property value.</param>
         public static void SetIsSharedSizeScope(UIElement element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsSharedSizeScopeProperty, value);
         }
@@ -275,10 +245,7 @@ namespace System.Windows.Controls
         /// <returns>IsSharedSizeScope property value.</returns>
         public static bool GetIsSharedSizeScope(UIElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }
@@ -359,7 +326,7 @@ namespace System.Windows.Controls
             {
                 if (_gridLinesRenderer == null)
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
                 return _gridLinesRenderer;
             }
@@ -1178,11 +1145,11 @@ namespace System.Windows.Controls
             {
                 if (isRows)
                 {
-                    minSizes[PrivateCells[i].RowIndex] = DefinitionsV[PrivateCells[i].RowIndex].MinSize;
+                    minSizes[PrivateCells[i].RowIndex] = DefinitionsV[PrivateCells[i].RowIndex].RawMinSize;
                 }
                 else
                 {
-                    minSizes[PrivateCells[i].ColumnIndex] = DefinitionsU[PrivateCells[i].ColumnIndex].MinSize;
+                    minSizes[PrivateCells[i].ColumnIndex] = DefinitionsU[PrivateCells[i].ColumnIndex].RawMinSize;
                 }
 
                 i = PrivateCells[i].Next;
@@ -1535,7 +1502,7 @@ namespace System.Windows.Controls
                         double sizeToDistribute;
                         int i;
 
-                        Array.Sort(tempDefinitions, 0, count, s_spanPreferredDistributionOrderComparer);
+                        tempDefinitions.AsSpan(0, count).Sort(s_spanPreferredDistributionOrderComparer);
                         for (i = 0, sizeToDistribute = requestedSize; i < autoDefinitionsCount; ++i)
                         {
                             //  sanity check: only auto definitions allowed in this loop
@@ -1572,7 +1539,7 @@ namespace System.Windows.Controls
                         double sizeToDistribute;
                         int i;
 
-                        Array.Sort(tempDefinitions, 0, count, s_spanMaxDistributionOrderComparer);
+                        tempDefinitions.AsSpan(0, count).Sort(s_spanMaxDistributionOrderComparer);
                         for (i = 0, sizeToDistribute = requestedSize - rangePreferredSize; i < count - autoDefinitionsCount; ++i)
                         {
                             //  sanity check: no auto definitions allowed in this loop
@@ -1618,10 +1585,10 @@ namespace System.Windows.Controls
 
                             //  sanity check: totalRemainingSize and sizeToDistribute must be real positive numbers
                             Debug.Assert(   !double.IsInfinity(totalRemainingSize)
-                                        &&  !DoubleUtil.IsNaN(totalRemainingSize)
+                                        &&  !double.IsNaN(totalRemainingSize)
                                         &&  totalRemainingSize > 0
                                         &&  !double.IsInfinity(sizeToDistribute)
-                                        &&  !DoubleUtil.IsNaN(sizeToDistribute)
+                                        &&  !double.IsNaN(sizeToDistribute)
                                         &&  sizeToDistribute > 0    );
 
                             for (int i = 0; i < count; ++i)
@@ -1717,7 +1684,7 @@ namespace System.Windows.Controls
 
             if (starDefinitionsCount > 0)
             {
-                Array.Sort(tempDefinitions, 0, starDefinitionsCount, s_starDistributionOrderComparer);
+                tempDefinitions.AsSpan(0, starDefinitionsCount).Sort(s_starDistributionOrderComparer);
 
                 //  the 'do {} while' loop below calculates sum of star weights in order to avoid fp overflow...
                 //  partial sum value is stored in each definition's SizeCache member.
@@ -1876,8 +1843,8 @@ namespace System.Windows.Controls
                 double takenStarWeight = 0.0;
                 double remainingAvailableSize = availableSize - takenSize;
                 double remainingStarWeight = totalStarWeight - takenStarWeight;
-                Array.Sort(tempDefinitions, 0, minCount, s_minRatioComparer);
-                Array.Sort(tempDefinitions, defCount, maxCount, s_maxRatioComparer);
+                tempDefinitions.AsSpan(0, minCount).Sort(s_minRatioComparer);
+                tempDefinitions.AsSpan(defCount, maxCount).Sort(s_maxRatioComparer);
 
                 while (minCount + maxCount > 0 && remainingAvailableSize > 0.0)
                 {
@@ -2033,7 +2000,7 @@ namespace System.Windows.Controls
 
             if (starCount > 0)
             {
-                Array.Sort(tempDefinitions, 0, starCount, s_starWeightComparer);
+                tempDefinitions.AsSpan(0, starCount).Sort(s_starWeightComparer);
 
                 // compute the partial sums of *-weight, in increasing order of weight
                 // for minimal loss of precision.
@@ -2084,7 +2051,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="definitions">Array of definitions to process.</param>
         /// <param name="finalSize">Final size to lay out to.</param>
-        /// <param name="rows">True if sizing row definitions, false for columns</param>
+        /// <param name="columns">True if sizing row definitions, false for columns</param>
         private void SetFinalSize(
             DefinitionBase[] definitions,
             double finalSize,
@@ -2204,8 +2171,7 @@ namespace System.Windows.Controls
 
             if (starDefinitionsCount > 0)
             {
-                StarDistributionOrderIndexComparer starDistributionOrderIndexComparer = new StarDistributionOrderIndexComparer(definitions);
-                Array.Sort(definitionIndices, 0, starDefinitionsCount, starDistributionOrderIndexComparer);
+                Array.Sort(definitionIndices, 0, starDefinitionsCount, new StarDistributionOrderIndexComparer(definitions));
 
                 //  the 'do {} while' loop below calculates sum of star weights in order to avoid fp overflow...
                 //  partial sum value is stored in each definition's SizeCache member.
@@ -2252,8 +2218,7 @@ namespace System.Windows.Controls
             if (    allPreferredArrangeSize > finalSize
                 &&  !_AreClose(allPreferredArrangeSize, finalSize)  )
             {
-                DistributionOrderIndexComparer distributionOrderIndexComparer = new DistributionOrderIndexComparer(definitions);
-                Array.Sort(definitionIndices, 0, definitions.Length, distributionOrderIndexComparer);
+                Array.Sort(definitionIndices, 0, definitions.Length, new DistributionOrderIndexComparer(definitions));
                 double sizeToDistribute = finalSize - allPreferredArrangeSize;
 
                 for (int i = 0; i < definitions.Length; ++i)
@@ -2291,8 +2256,7 @@ namespace System.Windows.Controls
                     }
 
                     // Sort rounding errors
-                    RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
-                    Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
+                    Array.Sort(definitionIndices, 0, definitions.Length, new RoundingErrorIndexComparer(roundingErrors));
                     double adjustedSize = allPreferredArrangeSize;
                     double dpiIncrement = UIElement.RoundLayoutValue(1.0, dpi);
 
@@ -2487,10 +2451,8 @@ namespace System.Windows.Controls
                 double remainingAvailableSize = finalSize - takenSize;
                 double remainingStarWeight = totalStarWeight - takenStarWeight;
 
-                MinRatioIndexComparer minRatioIndexComparer = new MinRatioIndexComparer(definitions);
-                Array.Sort(definitionIndices, 0, minCount, minRatioIndexComparer);
-                MaxRatioIndexComparer maxRatioIndexComparer = new MaxRatioIndexComparer(definitions);
-                Array.Sort(definitionIndices, defCount, maxCount, maxRatioIndexComparer);
+                Array.Sort(definitionIndices, 0, minCount, new MinRatioIndexComparer(definitions));
+                Array.Sort(definitionIndices, defCount, maxCount, new MaxRatioIndexComparer(definitions));
 
                 while (minCount + maxCount > 0 && remainingAvailableSize > 0.0)
                 {
@@ -2592,6 +2554,20 @@ namespace System.Windows.Controls
                 // Note that if we return to Phase2, at least one *-def will have been
                 // resolved.  This guarantees we don't run Phase2+3 infinitely often.
                 runPhase2and3 = false;
+
+                if(takenSize < finalSize)
+                {
+                    if(DoubleUtil.AreClose(takenSize, finalSize) && minCountPhase2 > 0)
+                    {
+                        // if very small (~ 2.2204460492503131e-016) remaining size is available
+                        // adding it to size of smallest width column resolved as 'min'.
+                        DefinitionBase resolvedDef = definitions[definitionIndices[minCountPhase2 - 1]];
+                        resolvedDef.MeasureSize -= (finalSize - takenSize);
+                        takenSize = finalSize;
+                        remainingAvailableSize = 0.0;
+                    }
+                }
+
                 if (starCount == 0 && takenSize < finalSize)
                 {
                     // if no *-defs remain and we haven't allocated all the space, reconsider the defs
@@ -2649,8 +2625,7 @@ namespace System.Windows.Controls
 
             if (starCount > 0)
             {
-                StarWeightIndexComparer starWeightIndexComparer = new StarWeightIndexComparer(definitions);
-                Array.Sort(definitionIndices, 0, starCount, starWeightIndexComparer);
+                Array.Sort(definitionIndices, 0, starCount, new StarWeightIndexComparer(definitions));
 
                 // compute the partial sums of *-weight, in increasing order of weight
                 // for minimal loss of precision.
@@ -2750,8 +2725,7 @@ namespace System.Windows.Controls
                     }
 
                     // Sort rounding errors
-                    RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
-                    Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
+                    Array.Sort(definitionIndices, 0, definitions.Length, new RoundingErrorIndexComparer(roundingErrors));
                     double adjustedSize = roundedTakenSize;
                     double dpiIncrement = 1.0/dpi;
 
@@ -3321,13 +3295,12 @@ namespace System.Windows.Controls
         private const double c_starClip = 1e298;                //  used as maximum for clipping star values during normalization
         private const int c_layoutLoopMaxCount = 5;             // 5 is an arbitrary constant chosen to end the measure loop
         private static readonly LocalDataStoreSlot s_tempDefinitionsDataSlot = Thread.AllocateDataSlot();
-        private static readonly IComparer s_spanPreferredDistributionOrderComparer = new SpanPreferredDistributionOrderComparer();
-        private static readonly IComparer s_spanMaxDistributionOrderComparer = new SpanMaxDistributionOrderComparer();
-        private static readonly IComparer s_starDistributionOrderComparer = new StarDistributionOrderComparer();
-        private static readonly IComparer s_distributionOrderComparer = new DistributionOrderComparer();
-        private static readonly IComparer s_minRatioComparer = new MinRatioComparer();
-        private static readonly IComparer s_maxRatioComparer = new MaxRatioComparer();
-        private static readonly IComparer s_starWeightComparer = new StarWeightComparer();
+        private static readonly Comparison<DefinitionBase> s_spanPreferredDistributionOrderComparer = SpanPreferredDistributionOrderComparer;
+        private static readonly Comparison<DefinitionBase> s_spanMaxDistributionOrderComparer = SpanMaxDistributionOrderComparer;
+        private static readonly Comparison<DefinitionBase> s_starDistributionOrderComparer = StarDistributionOrderComparer;
+        private static readonly Comparison<DefinitionBase> s_minRatioComparer = MinRatioComparer;
+        private static readonly Comparison<DefinitionBase> s_maxRatioComparer = MaxRatioComparer;
+        private static readonly Comparison<DefinitionBase> s_starWeightComparer = StarWeightComparer;
 
         #endregion Static Fields
 
@@ -3632,139 +3605,85 @@ namespace System.Windows.Controls
             private bool _u;
         }
 
-        /// <summary>
-        /// SpanPreferredDistributionOrderComparer.
-        /// </summary>
-        private class SpanPreferredDistributionOrderComparer : IComparer
+        private static int SpanPreferredDistributionOrderComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(x, y, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
+                if (x.UserSize.IsAuto)
                 {
-                    if (definitionX.UserSize.IsAuto)
+                    if (y.UserSize.IsAuto)
                     {
-                        if (definitionY.UserSize.IsAuto)
-                        {
-                            result = definitionX.MinSize.CompareTo(definitionY.MinSize);
-                        }
-                        else
-                        {
-                            result = -1;
-                        }
+                        result = x.MinSize.CompareTo(y.MinSize);
                     }
                     else
                     {
-                        if (definitionY.UserSize.IsAuto)
-                        {
-                            result = +1;
-                        }
-                        else
-                        {
-                            result = definitionX.PreferredSize.CompareTo(definitionY.PreferredSize);
-                        }
+                        result = -1;
                     }
                 }
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// SpanMaxDistributionOrderComparer.
-        /// </summary>
-        private class SpanMaxDistributionOrderComparer : IComparer
-        {
-            public int Compare(object x, object y)
-            {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
+                else
                 {
-                    if (definitionX.UserSize.IsAuto)
+                    if (y.UserSize.IsAuto)
                     {
-                        if (definitionY.UserSize.IsAuto)
-                        {
-                            result = definitionX.SizeCache.CompareTo(definitionY.SizeCache);
-                        }
-                        else
-                        {
-                            result = +1;
-                        }
+                        result = +1;
                     }
                     else
                     {
-                        if (definitionY.UserSize.IsAuto)
-                        {
-                            result = -1;
-                        }
-                        else
-                        {
-                            result = definitionX.SizeCache.CompareTo(definitionY.SizeCache);
-                        }
+                        result = x.PreferredSize.CompareTo(y.PreferredSize);
                     }
                 }
-
-                return result;
             }
+
+            return result;
         }
 
-        /// <summary>
-        /// StarDistributionOrderComparer.
-        /// </summary>
-        private class StarDistributionOrderComparer : IComparer
+        private static int SpanMaxDistributionOrderComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(x, y, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
+                if (x.UserSize.IsAuto)
                 {
-                    result = definitionX.SizeCache.CompareTo(definitionY.SizeCache);
+                    if (y.UserSize.IsAuto)
+                    {
+                        result = x.SizeCache.CompareTo(y.SizeCache);
+                    }
+                    else
+                    {
+                        result = +1;
+                    }
                 }
-
-                return result;
+                else
+                {
+                    if (y.UserSize.IsAuto)
+                    {
+                        result = -1;
+                    }
+                    else
+                    {
+                        result = x.SizeCache.CompareTo(y.SizeCache);
+                    }
+                }
             }
+
+            return result;
         }
 
-        /// <summary>
-        /// DistributionOrderComparer.
-        /// </summary>
-        private class DistributionOrderComparer: IComparer
+        private static int StarDistributionOrderComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(x, y, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
-                {
-                    double xprime = definitionX.SizeCache - definitionX.MinSizeForArrange;
-                    double yprime = definitionY.SizeCache - definitionY.MinSizeForArrange;
-                    result = xprime.CompareTo(yprime);
-                }
-
-                return result;
+                result = x.SizeCache.CompareTo(y.SizeCache);
             }
+
+            return result;
         }
 
-
-        /// <summary>
-        /// StarDistributionOrderIndexComparer.
-        /// </summary>
-        private class StarDistributionOrderIndexComparer : IComparer
+        private sealed class StarDistributionOrderIndexComparer : IComparer<int>
         {
             private readonly DefinitionBase[] definitions;
 
@@ -3774,22 +3693,10 @@ namespace System.Windows.Controls
                 this.definitions = definitions;
             }
 
-            public int Compare(object x, object y)
+            public int Compare(int x, int y)
             {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
-
-                if (indexX != null)
-                {
-                    definitionX = definitions[indexX.Value];
-                }
-                if (indexY != null)
-                {
-                    definitionY = definitions[indexY.Value];
-                }
+                DefinitionBase definitionX = definitions[x];
+                DefinitionBase definitionY = definitions[y];
 
                 int result;
 
@@ -3802,10 +3709,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// DistributionOrderComparer.
-        /// </summary>
-        private class DistributionOrderIndexComparer : IComparer
+        private sealed class DistributionOrderIndexComparer : IComparer<int>
         {
             private readonly DefinitionBase[] definitions;
 
@@ -3815,22 +3719,10 @@ namespace System.Windows.Controls
                 this.definitions = definitions;
             }
 
-            public int Compare(object x, object y)
+            public int Compare(int x, int y)
             {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
-
-                if (indexX != null)
-                {
-                    definitionX = definitions[indexX.Value];
-                }
-                if (indexY != null)
-                {
-                    definitionY = definitions[indexY.Value];
-                }
+                DefinitionBase definitionX = definitions[x];
+                DefinitionBase definitionY = definitions[y];
 
                 int result;
 
@@ -3845,10 +3737,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// RoundingErrorIndexComparer.
-        /// </summary>
-        private class RoundingErrorIndexComparer : IComparer
+        private sealed class RoundingErrorIndexComparer : IComparer<int>
         {
             private readonly double[] errors;
 
@@ -3858,96 +3747,57 @@ namespace System.Windows.Controls
                 this.errors = errors;
             }
 
-            public int Compare(object x, object y)
-            {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                int result;
-
-                if (!CompareNullRefs(indexX, indexY, out result))
-                {
-                    double errorX = errors[indexX.Value];
-                    double errorY = errors[indexY.Value];
-                    result = errorX.CompareTo(errorY);
-                }
-
-                return result;
-            }
+            public int Compare(int x, int y) => errors[x].CompareTo(errors[y]);
         }
 
         /// <summary>
-        /// MinRatioComparer.
         /// Sort by w/min (stored in MeasureSize), descending.
         /// We query the list from the back, i.e. in ascending order of w/min.
         /// </summary>
-        private class MinRatioComparer : IComparer
+        private static int MinRatioComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(y, x, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionY, definitionX, out result))
-                {
-                    result = definitionY.MeasureSize.CompareTo(definitionX.MeasureSize);
-                }
-
-                return result;
+                result = y.MeasureSize.CompareTo(x.MeasureSize);
             }
+
+            return result;
         }
 
         /// <summary>
-        /// MaxRatioComparer.
         /// Sort by w/max (stored in SizeCache), ascending.
         /// We query the list from the back, i.e. in descending order of w/max.
         /// </summary>
-        private class MaxRatioComparer : IComparer
+        private static int MaxRatioComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(x, y, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
-                {
-                    result = definitionX.SizeCache.CompareTo(definitionY.SizeCache);
-                }
-
-                return result;
+                result = x.SizeCache.CompareTo(y.SizeCache);
             }
+
+            return result;
         }
 
         /// <summary>
-        /// StarWeightComparer.
         /// Sort by *-weight (stored in MeasureSize), ascending.
         /// </summary>
-        private class StarWeightComparer : IComparer
+        private static int StarWeightComparer(DefinitionBase x, DefinitionBase y)
         {
-            public int Compare(object x, object y)
+            int result;
+
+            if (!CompareNullRefs(x, y, out result))
             {
-                DefinitionBase definitionX = x as DefinitionBase;
-                DefinitionBase definitionY = y as DefinitionBase;
-
-                int result;
-
-                if (!CompareNullRefs(definitionX, definitionY, out result))
-                {
-                    result = definitionX.MeasureSize.CompareTo(definitionY.MeasureSize);
-                }
-
-                return result;
+                result = x.MeasureSize.CompareTo(y.MeasureSize);
             }
+
+            return result;
         }
 
-        /// <summary>
-        /// MinRatioIndexComparer.
-        /// </summary>
-        private class MinRatioIndexComparer : IComparer
+        private sealed class MinRatioIndexComparer : IComparer<int>
         {
             private readonly DefinitionBase[] definitions;
 
@@ -3957,22 +3807,10 @@ namespace System.Windows.Controls
                 this.definitions = definitions;
             }
 
-            public int Compare(object x, object y)
+            public int Compare(int x, int y)
             {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
-
-                if (indexX != null)
-                {
-                    definitionX = definitions[indexX.Value];
-                }
-                if (indexY != null)
-                {
-                    definitionY = definitions[indexY.Value];
-                }
+                DefinitionBase definitionX = definitions[x];
+                DefinitionBase definitionY = definitions[y];
 
                 int result;
 
@@ -3985,10 +3823,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// MaxRatioIndexComparer.
-        /// </summary>
-        private class MaxRatioIndexComparer : IComparer
+        private sealed class MaxRatioIndexComparer : IComparer<int>
         {
             private readonly DefinitionBase[] definitions;
 
@@ -3998,22 +3833,10 @@ namespace System.Windows.Controls
                 this.definitions = definitions;
             }
 
-            public int Compare(object x, object y)
+            public int Compare(int x, int y)
             {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
-
-                if (indexX != null)
-                {
-                    definitionX = definitions[indexX.Value];
-                }
-                if (indexY != null)
-                {
-                    definitionY = definitions[indexY.Value];
-                }
+                DefinitionBase definitionX = definitions[x];
+                DefinitionBase definitionY = definitions[y];
 
                 int result;
 
@@ -4026,10 +3849,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// MaxRatioIndexComparer.
-        /// </summary>
-        private class StarWeightIndexComparer : IComparer
+        private sealed class StarWeightIndexComparer : IComparer<int>
         {
             private readonly DefinitionBase[] definitions;
 
@@ -4039,22 +3859,10 @@ namespace System.Windows.Controls
                 this.definitions = definitions;
             }
 
-            public int Compare(object x, object y)
+            public int Compare(int x, int y)
             {
-                int? indexX = x as int?;
-                int? indexY = y as int?;
-
-                DefinitionBase definitionX = null;
-                DefinitionBase definitionY = null;
-
-                if (indexX != null)
-                {
-                    definitionX = definitions[indexX.Value];
-                }
-                if (indexY != null)
-                {
-                    definitionY = definitions[indexY.Value];
-                }
+                DefinitionBase definitionX = definitions[x];
+                DefinitionBase definitionY = definitions[y];
 
                 int result;
 
@@ -4123,12 +3931,12 @@ namespace System.Windows.Controls
                     if (_currentEnumerator == -1)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                        throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentEnumerator >= 3)
                     {
                         #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                        throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 
                     //  assert below is not true anymore since UIElementCollection allowes for null children
@@ -4250,10 +4058,8 @@ namespace System.Windows.Controls
         private static double _performanceFrequency;
         private static readonly bool _performanceFrequencyInitialized = InitializePerformanceFrequency();
 
-        //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
-        //CASRemoval:[System.Security.SuppressUnmanagedCodeSecurity, System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
         private static double CostInMilliseconds(long count)

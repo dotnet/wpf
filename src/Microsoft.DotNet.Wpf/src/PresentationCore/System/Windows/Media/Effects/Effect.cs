@@ -2,14 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using SecurityHelper=MS.Internal.SecurityHelper; 
 
 namespace System.Windows.Media.Effects
@@ -17,11 +16,6 @@ namespace System.Windows.Media.Effects
     /// <summary>
     /// Effect
     /// </summary>
-    /// <SecurityNote>
-    /// We have the Inheritance demand, because we don't want
-    /// third parties to be able to subclass Effect in the partial trust scenario
-    /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
     public abstract partial class Effect
     {
         static Effect()
@@ -55,17 +49,8 @@ namespace System.Windows.Media.Effects
         /// <summary>
         /// Default constructor for an Effect.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical : Not allowed in partial trust
-        ///     Safe     : Demands UIWindow permission
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected Effect()
         {
-            // Effects are never allowed in partial trust scenarios.  So demand
-            // UIWindow permission immediately in the ctor and get it
-            // over with.  
-            SecurityHelper.DemandUIWindowPermission();            
         }
 
 

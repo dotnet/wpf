@@ -14,7 +14,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows;           // For Exception strings - SRID
+using System.Windows;           // For Exception strings - SR
 using System.Text;              // for StringBuilder
 using System.Diagnostics;        // for Assert
 using System.Security;          // for SecurityCritical
@@ -221,8 +221,7 @@ namespace System.IO.Packaging
             set
             {
                 ThrowIfInvalidated();
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _processor.Signature = value;
             }
@@ -296,19 +295,13 @@ namespace System.IO.Packaging
         /// <returns></returns>
         /// <remarks>Use this overload when the certificate is not embedded in the container at signing time</remarks>
         /// <exception cref="InvalidOperationException">Thrown if associated digital signature has been deleted.</exception>
-        ///<SecurityNote>
-        ///     Critical: calls X509Certificate2 ctor which LinkDemands
-        ///     TreatAsSafe: X509Certificate2 is only used internally and not returned
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public VerifyResult Verify(X509Certificate signingCertificate)
         {
             ThrowIfInvalidated();
 
             VerifyResult result = VerifyResult.NotSigned;
 
-            if (signingCertificate == null)
-                throw new ArgumentNullException("signingCertificate");
+            ArgumentNullException.ThrowIfNull(signingCertificate);
 
             // Check for part existence
             foreach (Uri partUri in SignedParts)
@@ -397,7 +390,7 @@ namespace System.IO.Packaging
                 {
                     // don't resolve if external
                     if (relationship.TargetMode != TargetMode.Internal)
-                        throw new FileFormatException(SR.Get(SRID.PackageSignatureCorruption));
+                        throw new FileFormatException(SR.PackageSignatureCorruption);
 
                     Uri resolvedUri = PackUriHelper.ResolvePartUri(SignaturePart.Uri, relationship.TargetUri);
 
@@ -438,7 +431,7 @@ namespace System.IO.Packaging
         private void ThrowIfInvalidated()
         {
             if (_invalid)
-                throw new InvalidOperationException(SR.Get(SRID.SignatureDeleted));
+                throw new InvalidOperationException(SR.SignatureDeleted);
         }
 
         #endregion Private Methods

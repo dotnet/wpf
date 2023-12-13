@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using MS.Win32;
 using System.Security; 
-using System.Security.Permissions; 
 using System.Windows.Controls.Primitives; //PopupRoot
 using MS.Internal.Utility ;
 using MS.Internal.AppModel; //RootBrowserWindow
@@ -79,107 +78,17 @@ namespace System.Windows.Controls
 
         #region Constructor
 
-        ///<SecurityNote> 
-        /// Critical: 1. Implements security policy. 
-        ///     2. Uses the critical RegistryKeys.ReadLocalMachineBool() to read a security configuration flag.
-        /// Safe: This flag is not a secret.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static WebBrowser()
         {
-#if NETFX
-            if (IsWebOCPermissionRestricted)
-            {
-                // Breaking change for v4, intended to be backported to v3.x: We block PT hosting of the WebOC:
-                //   - In non-IE browser (intended for Firefox presently) for Internet-zone XBAPs, in order 
-                //     not to expose IE's attack surface;
-                //   - In PT standalone ClickOnce application. WPF does not support this in general, but a WebBrowser
-                //     can be instantiated and navigated, and script in it will run, which could be harmful.
-                if (BrowserInteropHelper.IsBrowserHosted) 
-                {
-                    if ((BrowserInteropHelper.HostingFlags & HostingFlags.hfHostedInIEorWebOC) == 0)
-                    {
-                        // Explicitly trust only these zones...
-                        int sourceZone = AppSecurityManager.MapUrlToZone(BrowserInteropHelper.Source);
-                        if (sourceZone != NativeMethods.URLZONE_INTRANET && sourceZone != NativeMethods.URLZONE_TRUSTED &&
-                        sourceZone != NativeMethods.URLZONE_LOCAL_MACHINE)
-                        {
-                            // Enable explicit opt-out of this blocking.
-                            if (RegistryKeys.ReadLocalMachineBool(RegistryKeys.WPF_Hosting, RegistryKeys.value_UnblockWebBrowserControl) != true)
-                            {
-                                //[Using a resource string for another issue that's close enough in meaning.]
-                                throw new SecurityException(SR.Get(SRID.AffectedByMsCtfIssue, "http://go.microsoft.com/fwlink/?LinkID=168882"));
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // ClickOnce uses AppLaunch.exe to host partial-trust applications.
-                    string hostProcessName = Path.GetFileName(UnsafeNativeMethods.GetModuleFileName(new HandleRef()));
-                    if (string.Compare(hostProcessName, "AppLaunch.exe", StringComparison.OrdinalIgnoreCase) == 0)
-                    {
-                        // No explanation message is warranted in this case since it's not supported anyway.
-                        SecurityHelperPF.DemandWebBrowserPermission();
-                    }
-                }
-
-                RegisterWithRBW();
-            }
-#endif
 
             TurnOnFeatureControlKeys();
-
             ControlsTraceLogger.AddControl(TelemetryControls.WebBrowser);
         }
 
-        ///<SecurityNote> 
-        ///     Critical - accesses critical Ctor 
-        ///     PublicOK - creating web browser considered safe. 
-        ///
-        ///                   Known threats and the justification as to why they are mitigated : 
-        ///
-        ///                     Uri is validated at set time. An attempts to navigate outside site of origin will fail the demand for web-permission. 
-        ///                     Attempts to navigate the HTML to another page are mitigated by "Site Lock" feature. 
-        ///                     Attempts to show popup's above HTML are mitigated by popup work. 
-        ///                     Running script inside WebOC - considered ok as script is Internet Zone. 
-        ///                     Running activeX controls - considered safe. Equivalent functionality is enabled through web-pages.
-        ///                     Cookies: The WebOC thinks it's a top-level browser. Thus cookies it sets will always
-        ///                         have 1st party status, which wouldn't be right if the WebOC is in an XBAP that is
-        ///                         third party to the containing HTML page. But now PresentationHost intercepts all
-        ///                         calls to the WinInet cookie APIs and will add the 3rd party flag when necessary.
-        ///                         V3 SP2 Update - WebOCHostedInBrowserProcess - The cookie shim does not apply 
-        ///                             in this case. To prevent the cookie status elevation problem, the native code
-        ///                             in PresentationHostDll fails creating the WebOC.
-        ///                                                
-        ///</SecurityNote> 
-        [ SecurityCritical ] 
         public WebBrowser() 
             : base(new Guid(CLSID.WebBrowser), true )
         {
-            // Check whether feature is disabled
-            if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.WebBrowserDisable))
-            {
-                // in case the registry key is '1' then demand unrestricted WebBrowserPermission to create it
-                SecurityHelperPF.DemandWebBrowserPermission();
-            }
-            else
-            {
-                // Feature is enabled - demand Safe level to create this object, granted in Partial Trust by default
-                (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
-            }
-
-#if NETFX
-            // If the webbrowser permission is restricted, we don't allow webbrowser to be inside Popup.   
-            if (IsWebOCPermissionRestricted)
-            {
-                Loaded += new RoutedEventHandler(LoadedHandler);
-            }
-            _hostingAdaptor = IsWebOCHostedInBrowserProcess ? 
-                new WebOCHostedInBrowserAdaptor(this) : new WebOCHostingAdaptor(this);
-#else 
             _hostingAdaptor = new WebOCHostingAdaptor(this);
-#endif
         }
 
         #endregion Constructor
@@ -253,10 +162,7 @@ namespace System.Windows.Controls
         /// <param name="stream">The stream that contains the content of a html document</param>
         public void NavigateToStream(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             DocumentStream = stream;            
             // We navigate to "about:blank" when Source is set to null. 
@@ -287,12 +193,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Navigates the WebBrowser control to the previous page if available.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - accesses the critical unmanaged interface of the control.
-        ///     Public OK - This code does not expose the interface.
-        ///               - Going back to the previous page within the WebBrowser control is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public void GoBack()
         {
             VerifyAccess();
@@ -303,12 +203,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Navigates the WebBrowser control to the next page if available.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - accesses the critical unmanaged interface of the control.
-        ///     Public OK - This does not expose the interface.
-        ///               - Going forward to the next page within the WebBrowser is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public void GoForward()
         {
             VerifyAccess();
@@ -320,12 +214,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Refreshes the current page. 
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - accesses the critical unmanaged interface of the control.
-        ///     Public OK - This does not expose the interface.
-        ///               - Refreshing the WebBrowser is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public void Refresh()
         {
             VerifyAccess();
@@ -336,13 +224,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Refreshes the current page. 
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - accesses the critical unmanaged interface of the control.
-        ///     Public OK - This does not expose the interface.
-        ///               - Refreshing the WebBrowser is considered safe.
-        ///</SecurityNote>
         /// <param name="noCache">Whether to refresh without cache validation by sending "Pragma:no-cache" header to the server.</param>
-        [SecurityCritical]
         public void Refresh(bool noCache)
         {
             VerifyAccess();
@@ -377,12 +259,6 @@ namespace System.Windows.Controls
         /// <param name="scriptName">The name of the script method to invoke.</param>
         /// <param name="args"></param>
         /// <returns>The object returned by the Active Scripting call.</returns>
-        /// <SecurityNote>
-        /// Critical: Calls critical property and method. 
-        /// Public OK - Demand WebPermission to protect againt cross domain scripting attacks. 
-        ///           - We count on WebOC to "sandbox" the script to the zone of the page.
-        /// </SecurityNote>
-        [SecurityCritical]
         public object InvokeScript(string scriptName, params object[] args)
         {
             VerifyAccess();
@@ -403,31 +279,6 @@ namespace System.Windows.Controls
             // We rely on the site locking feature in gerneral. But in IE 6 server side redirect is not blocked.
             // (In IE 7 it is blocked by turning on the DOCHOSTUIFLAG.ENABLE_REDIRECT_NOTIFICATION flag so that  
             // the additional BeforeNavigate2 event is fired for server side redirect.)
-
-            // If it is our internal navigation to blank for navigating to null or load stream, 
-            // or before any navigation has happened, Source will be null. 
-            Uri currentSource = Source;
-            if (currentSource != null)
-            {
-                SecurityHelper.DemandWebPermission(currentSource);
-            }
-            // Unfortunately, IWebBrowser2::CurrentURL does not always give us the full truth. It is not updated
-            // when the browser navigates to an error page. Then, supposedly, it points to the "intended 
-            // destination". (But on canceled navigation the previous URL may stay.) We don't want to allow 
-            // running script from the built-in error pages as they are privileged. 
-            // See http://support.microsoft.com/kb/272095. Contrary to what the KB article 
-            // suggests, document.location.href is not good either. But document.URL seems to be.
-            if (htmlDocument != null)
-            {
-                string innerURL = htmlDocument.GetUrl();
-                // Again, in the special case we've deliberately navigated to about:blank we don't want to 
-                // demand. But NavigatingToAboutBlank may not be true anymore, so it's not used as a condition.
-                // In that case the two URL properties should match. If not, we'll demand to be safe.
-                if (string.CompareOrdinal(innerURL, AxIWebBrowser2.LocationURL) != 0)
-                {
-                    SecurityHelper.DemandWebPermission(new Uri(innerURL, UriKind.Absolute));
-                }
-            }
 
             object retVal = null;            
             if (scriptObjectEx != null)
@@ -492,7 +343,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotInvokeScript));
+                throw new InvalidOperationException(SR.CannotInvokeScript);
             }
             return retVal;
         }
@@ -510,12 +361,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets the current uri of the WebBrowser control.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Accesses the critical unmanaged interface of the control.
-        ///     Public OK - This does not expose the interface.
-        ///               - Return the current uri is considered as safe because we only allow navigation to 
-        ///                 site-of-origin for top level navigation in parital trust.
-        /// </SecurityNote>
         public Uri Source
         {            
             set
@@ -524,7 +369,6 @@ namespace System.Windows.Controls
 
                 Navigate(value);
             }
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -576,10 +420,6 @@ namespace System.Windows.Controls
         /// Gets or sets an object that can be accessed by scripting code that is contained 
         /// within a Web page in the WebBrowser control. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls Marshal.IsTypeVisibleFromCom(), which has a LinkDemand for UnmanagedCode.
-        ///     PublicOK: We do not expose any security critical info. 
-        /// </SecurityNote>
         public object ObjectForScripting
         {
             get
@@ -588,7 +428,6 @@ namespace System.Windows.Controls
 
                 return _objectForScripting;
             }
-            [SecurityCritical]
             set
             {
                 VerifyAccess();
@@ -596,13 +435,10 @@ namespace System.Windows.Controls
                 if (value != null)
                 {
                     Type t = value.GetType();
-#if NETFX
-                    if (!System.Runtime.InteropServices.Marshal.IsTypeVisibleFromCom(t))
-#else
+
                     if (!System.Runtime.InteropServices.MarshalLocal.IsTypeVisibleFromCom(t))
-#endif
                     {
-                        throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
+                        throw new ArgumentException(SR.NeedToBeComVisible);
                     }
                 }
 
@@ -614,18 +450,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// The HtmlDocument for page hosted in the html page.  If no page is loaded, it returns null.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - exposes the critical unmanaged interface of the DOM object.
-        ///     Public OK - Demands unrestricted WebPermission.
-        ///</SecurityNote>        
         public object Document
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
 
-                SecurityHelper.DemandUnmanagedCode();
 
                 return AxIWebBrowser2.Document;
             }
@@ -711,10 +541,6 @@ namespace System.Windows.Controls
         }
 
 
-        /// <SecurityNote>
-        /// Critical: As a native object, the WebOC should not be exposed directly to partial-trust code.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override object CreateActiveXObject(Guid clsid)
         {
             Debug.Assert(clsid.ToString("D") == CLSID.WebBrowser);
@@ -726,10 +552,6 @@ namespace System.Windows.Controls
         /// parameter to the appropriate interface. They can then cache this interface
         /// value in a member variable. However, they must release this value when
         /// DetachInterfaces is called (by setting the cached interface variable to null).
-        /// <SecurityNote>
-        ///     Critical: This code can be exploited to pass in a bogus Activex object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void AttachInterfaces(object nativeActiveXObject)
         {
             //cache the interface
@@ -748,11 +570,6 @@ namespace System.Windows.Controls
         }
 
         /// See AttachInterfaces for a description of when to override DetachInterfaces.
-        /// <SecurityNote>
-        ///     Critical: This code references the critical object _axIWebBrowser2
-        ///     TreatAsSafe: It does not expose it
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void DetachInterfaces()
         {
             //clear the interface. Base will release the COMObject
@@ -762,11 +579,6 @@ namespace System.Windows.Controls
         /// <Summary> 
         ///     Attaches to the DWebBrowserEvents2 connection point.
         /// </Summary>
-        ///<SecurityNote> 
-        ///     Critical - uses the critical _axIWebBrowser2 and calls _hostingAdaptor.CreateEventSink(). 
-        ///     TreatAsSafe - registering to handle events is ok. The event sink object is not exposed.
-        ///</SecurityNote> 
-        [ SecurityCritical, SecurityTreatAsSafe ]
         internal override void CreateSink()
         {
             Debug.Assert(_axIWebBrowser2 != null);
@@ -778,10 +590,6 @@ namespace System.Windows.Controls
         ///<Summary> 
         ///     Releases the DWebBrowserEvents2 connection point.
         ///</Summary>   
-        /// <SecurityNote>
-        /// Critical: Disconnecting the event sink breaks the site-locking feature.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void DetachSink()
         {
             //If we have a cookie get rid of it
@@ -792,13 +600,6 @@ namespace System.Windows.Controls
             }
         }
         
-        ///<SecurityNote> 
-        ///     Needs to link-demand as base method link-demanded. 
-        ///
-        ///     Critical - calls critical WebBrowserSite - ctor. 
-        ///</SecurityNote>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityCritical]
         internal override ActiveXSite CreateActiveXSite()
         {
             return new WebBrowserSite(this);
@@ -810,33 +611,14 @@ namespace System.Windows.Controls
         /// <remarks>
         ///     This returns a bitmap obtained by calling the PrintWindow Win32 API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:This code Asserts an elevated permission.
-        ///     TreatAsSafe: only site of origin pages can be loaded in PT, so giving out a bitmap of this window is OK.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override System.Windows.Media.DrawingGroup GetDrawing()
         {
-            // SecurityHelper.DemandWebPermission(_source.Value); // _source is null by now...
-
-            (new UIPermission(UIPermissionWindow.AllWindows)).Assert(); // Blessed assert
-            try
-            {
-                return base.GetDrawing();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            return base.GetDrawing();
         }
 
         /// <summary>
         ///     Cleans the internal state used by NavigateToStream/NavigateToString.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Resets NavigatingToAboutBlank which is used in security decisions.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void CleanInternalState()
         {
             NavigatingToAboutBlank = false;
@@ -853,13 +635,8 @@ namespace System.Windows.Controls
 
         #region Internal Properties       
 
-        /// <SecurityNote>
-        ///     Critical: Exposes an HTML document object, which is generally 'safe for scripting', but only
-        ///         if from the same site of origin as the host application.
-        /// </SecurityNote>
         internal UnsafeNativeMethods.IHTMLDocument2 NativeHTMLDocument
         {
-            [SecurityCritical]
             get
             {
                 object objDoc = AxIWebBrowser2.Document;
@@ -868,14 +645,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code exposes an unmanaged interface with SupressUnmanagedCodeSecurity 
-        ///               attribute on some methods
-        /// </SecurityNote>        
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal UnsafeNativeMethods.IWebBrowser2 AxIWebBrowser2
         {
-            [SecurityCritical]
             get
             {
                 if (_axIWebBrowser2 == null)
@@ -895,7 +667,7 @@ namespace System.Windows.Controls
                 // We still don't have _axIWebBrowser2. Throw an exception.
                 if (_axIWebBrowser2 == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.WebBrowserNoCastToIWebBrowser2));
+                    throw new InvalidOperationException(SR.WebBrowserNoCastToIWebBrowser2);
                 }
                 return _axIWebBrowser2;
             }
@@ -917,23 +689,12 @@ namespace System.Windows.Controls
 
         // This property indicates whether we are navigating to "about:blank" internally
         // because Source is set to null or navigating to stream.
-        /// <SecurityNote>
-        ///    Critical: NavigatingToAboutBlank is involved in making security decisions. 
-        ///              We navigate to about:blank internally when navigating to null or navigation to string/stream. 
-        ///              This flag is used to avoid security check per navigation source in order to enable navigation 
-        ///              to about:blank in partial trust.
-        ///              Setting this property to true will by pass the site locking logic. Currently it is only true when
-        ///              navigating to about:blank internally for the scenarios described above.
-        ///              Note that the property may become false once we are at the about:blank page. This happens,
-        ///              for example, when attempting a navigation that is canceled or fails. 
-        /// </SecurityNote>
         internal bool NavigatingToAboutBlank
         {
             get
             {
                 return _navigatingToAboutBlank.Value;
             }
-            [SecurityCritical]
             set
             {
                 _navigatingToAboutBlank.Value = value;
@@ -944,61 +705,15 @@ namespace System.Windows.Controls
         /// Launching a navigation from the Navigating event handler causes reentrancy.
         /// We keep a counter identifying the last navigation that was carried out, used in reentrancy detection logic.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: tampering with the sequencing can influence clean-up decisions made, causing
-        ///              the critical _navigatingToAboutBlank not to get cleaned up where needed.
-        /// </SecurityNote>
         internal Guid LastNavigation
         {
             get
             {
                 return _lastNavigation.Value;
             }
-            [SecurityCritical]
             set
             {
                 _lastNavigation.Value = value;
-            }
-        }
-
-        /// <SecurityNote>
-        /// Starting from v3 SP2, we host the WebOC in the IE 7+ browser process when it's running at low 
-        /// integrity level ('protected mode'). This is to prevent elevation of privilege via our process in
-        /// case a bug in the WebOC is exploited. PresentationHost is on IE's silent elevation list; thus, 
-        /// potentially bigger damange could be effected by running malicious code in our process.
-        /// 
-        /// Starting from v4, we always host the WebOC in IE. This addresses other security concerns:
-        ///   - Mixing CLR code and JavaScript in the same process enables more attack vectors;
-        ///   - We have to play constant catch-up with IE as new Feature Control Keys and other security 
-        ///     mitigations are added. By hosting the WebOC in the IE process, new FCKs automatically apply 
-        ///     (at the risk of being breaking changes, but this risk is justified for partial trust XBAPs).
-        ///     
-        /// Note that we must keep any WebOC in the IE process even in deeply nested situations like this,
-        /// if we allow them:
-        ///     IE / XBAP / WebOC / XBAP / WebOC [this is in terms of container/visual nesting]
-        /// If the WebOC hosted via the inner XBAP is allowed to run outside the protected-mode IE, the whole
-        /// feature is defeated! To ensure we are aware of this situation, the native hosting code sets both
-        /// hfHostedInWebOC and hfHostedInIE. For v4, WebOC hosting is entirely blocked in this situation. 
-        /// See further explanation in COleDocument::InitDocHost().
-        /// </SecurityNote>
-        internal static bool IsWebOCHostedInBrowserProcess
-        {
-            get
-            {
-#if NETFX
-                if(!IsWebOCPermissionRestricted)
-                    return false;
-                HostingFlags hf = BrowserInteropHelper.HostingFlags;
-                return (hf & HostingFlags.hfHostedInIE) != 0 
-                        || // Backup condition in case the low-integrity IE process is compromised. 
-                           // The hfHostedInIE flag cannot be trusted, because it's derived by talking to code 
-                           // in the IE process. (Theretically, one could pretend to be our Mozilla plugin by 
-                           // creating a similar hosting envrionment within IE! Then no IWebBrowser...)
-                           // But hfIsBrowserLowIntegrityProcess is reliable because it's determined externally.
-                       (hf & HostingFlags.hfIsBrowserLowIntegrityProcess) != 0;
-#else
-                return false;
-#endif
             }
         }
 
@@ -1026,11 +741,6 @@ namespace System.Windows.Controls
 
         #region Private Methods
         
-        /// <SecurityNote>
-        ///     Critical:This code gets critical data, PresentationSource
-        ///     TreatAsSafe: The PresentationSource is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadedHandler(object sender, RoutedEventArgs args)
         {
             PresentationSource pSource = PresentationSource.CriticalFromVisual(this);
@@ -1043,30 +753,14 @@ namespace System.Windows.Controls
             
             if (pSource != null && pSource.RootVisual is PopupRoot)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotBeInsidePopup));
+                throw new InvalidOperationException(SR.CannotBeInsidePopup);
             }
         }
 
-        private static void RegisterWithRBW()
-        {
-#if NETFX
-            // if we are browser hosted, rbw should have been created here.  
-            // what if RootBrowserWindow is null.  
-            if (RootBrowserWindow != null)
-            {
-                RootBrowserWindow.AddLayoutUpdatedHandler();
-            }
-#endif
-        }
 
         // Turn on all the WebOC Feature Control Keys implementing various security mitigations. 
         // Whenever possible, we do it programmatically instead of adding reg-keys so that these are on on all WPF apps. 
         // Unfortunately, some FCKs, especially newer ones, work only through the registry.
-        ///<SecurityNote> 
-        ///     Critical - calls critical code. 
-        ///     TreatAsSafe - turns on only FCKs that make the browser control more locked-down. 
-        ///</SecurityNote> 
-        [ SecurityCritical, SecurityTreatAsSafe ]
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId="MS.Win32.UnsafeNativeMethods.CoInternetSetFeatureEnabled(System.Int32,System.Int32,System.Boolean)", 
             Justification="CoInternetSetFeatureEnabled() returns error for an unknown FCK. We expect this to happen with older versions of IE.")]
         private static void TurnOnFeatureControlKeys()
@@ -1148,30 +842,8 @@ namespace System.Windows.Controls
             UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_LEGACY_COMPRESSION, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
             UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_DISABLE_TELNET_PROTOCOL, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
 
-#if NETFX
-            // For use of the WebOC in stand-alone applications and full-trust XBAPs, we don't want to
-            // impact existing behavior causing potential different layout due to the appearance of
-            // address bar and status bar. We therefore only apply the following flag where the spoofing
-            // threat is the most relevant, when restricted permissions apply.
-            if (IsWebOCPermissionRestricted)
-            {
-                UnsafeNativeMethods.CoInternetSetFeatureEnabled( NativeMethods.FEATURE_FORCE_ADDR_AND_STATUS, NativeMethods.SET_FEATURE_ON_PROCESS, true ) ;
-            }
-#endif
-
-            // The relevant IE 8 FCKs are applied only in the registry because they don't work through the API. 
-            // We are trying to change this unfortunate trend. .
         }
         
-        ///<SecurityNote> 
-        ///     Critical - Can be used to spoof HTTP headers.  
-        ///              - Can do cross-domain communication via HTTP POST data.        
-        ///              - Can be used to enable navigation to about:blank in PT.
-        ///              - Calling IOleCommandTarget.Exec, IWebBrowser2.get_Busy.
-        ///    TreatAsSafe - We only allow site-of-origin navigation programmatically for both top level
-        ///                - and sub frame navigations. Spoofing against the SOO is not considered dangerous.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DoNavigate(Uri source, ref object targetFrameName, ref object postData, ref object headers, bool ignoreEscaping = false)
         {
             VerifyAccess();
@@ -1212,37 +884,13 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.AbsoluteUriOnly), "source");
+                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
             }
 
             // Resolve Pack://siteoforigin.
             if (PackUriHelper.IsPackUri(source))
             {
                 source = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(source);
-            }
-
-            // Block popup window. We attempted to use the default popup Manager to block pup-up windows, 
-            // by passing the BrowserNavConstants.NewWindowsManaged flag to WebBrowser
-            // But it did not work. New browser windows still can be opened with "_blank" in Internet zone.
-            // So demand unrestricted WebPermission until we figure out a better solution. 
-            if (!string.IsNullOrEmpty((string)targetFrameName))
-            {
-                (new System.Net.WebPermission(PermissionState.Unrestricted)).Demand();
-            }
-            else
-            {
-                // site locking. 
-                // Note: navigation to "about:blank" is not enabled in partial trust. If we are navigating to 
-                // "about:blank" internally as a result of setting source to null or navigating to stream/string,
-                // do not demand WebPermission.
-                if (!NavigatingToAboutBlank)
-                {
-                    // we currently demand for both top level and subframe navigations.
-                    // If we allow sub frames to navigate out of site of origin programmtically, we must block cross domain communication 
-                    // of all kinds, so demand when additional headers and postData are set for sub frame navigation. 
-                    // The headers can be used to spoof referer headers.   
-                    SecurityHelper.DemandWebPermission(source);
-                }
             }
 
             // figure out why BrowserNavConstants.NewWindowsManaged does not work.
@@ -1305,11 +953,6 @@ namespace System.Windows.Controls
         ///     modify the MSG structure, it's passed by reference only as
         ///     a performance optimization.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - access critical data ActiveXInPlaceActiveObject and can be used to spoof input
-        ///     TreatAsSafe: The interface declaration for this method has a demand on it.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override bool TranslateAcceleratorCore(ref MSG msg, ModifierKeys modifiers)
         {
             SyncUIActiveState();
@@ -1322,11 +965,6 @@ namespace System.Windows.Controls
         ///     Set focus to the first or last tab stop. If it can't, because it has no tab stops,
         ///     the return value is false.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical: calls the critical DoVerb(), which sets focus on the control.
-        ///     PublicOK: Setting focus on the WebOC is okay. Script is allowed to do that.
-        ///</SecurityNote> 
-        [SecurityCritical]
         protected override bool TabIntoCore(TraversalRequest request)
         {
             Invariant.Assert(ActiveXState >= ActiveXHelper.ActiveXState.InPlaceActive, "Should be at least InPlaceActive when tabbed into");
@@ -1343,38 +981,6 @@ namespace System.Windows.Controls
 
         #endregion Private Methods
 
-        //----------------------------------------------
-        //
-        // Private Properties
-        //
-        //----------------------------------------------
-
-        #region Private Properties
-
-#if NETFX
-        /// <SecurityNote>
-        /// Critical - Retrieves RBW and sets it on _rbw.
-        /// TreatAsSafe - The RBW is exposed via Application.MainWindow anyhow.
-        /// </SecurityNote>        
-        private static RootBrowserWindow RootBrowserWindow
-        {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get
-            {
-                if (_rbw.Value == null)
-                {
-                    if (Application.Current != null)
-                    {
-                        _rbw.Value = Application.Current.MainWindow as RootBrowserWindow;
-                    }
-                }
-
-                return _rbw.Value;
-            }
-        }
-#endif
-
-        #endregion Private Properties
 
         //----------------------------------------------
         //
@@ -1384,46 +990,19 @@ namespace System.Windows.Controls
 
         #region Private Fields
 
-#if NETFX
-        private static readonly bool IsWebOCPermissionRestricted = 
-            !SecurityHelperPF.CallerAndAppDomainHaveUnrestrictedWebBrowserPermission();
-#endif
 
         // Reference to the native ActiveX control's IWebBrowser2
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
-        /// <SecurityNote>
-        /// Critical - This code can be exploited to call Navigate on a page and it holds a COM interface
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IWebBrowser2                 _axIWebBrowser2;
 
         WebOCHostingAdaptor                                     _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie                           _cookie;
-
-#if NETFX
-        /// <SecurityNote> 
-        ///     Critical for set - We want to protect the RBW from being set from non-trusted sources.
-        ///                        There's no need to make it SecurityCritical because it's exposed anyhow via Application.MainWindow.
-        /// </SecurityNote> 
-        private static SecurityCriticalDataForSet<RootBrowserWindow> _rbw;
-#endif
-
         private object                                           _objectForScripting;
         private Stream                                           _documentStream;
 
-        /// <SecurityNote> 
-        ///    Critical: _navigatingToAboutBlank is involved in making security decisions. 
-        ///              We navigate to about:blank internally when navigating to null or navigation to string/stream. 
-        ///              This flag is used to avoid security check per navigation source in order to enable navigation 
-        ///              to about:blank in partial trust.
-        ///              Setting this property to true will by pass the site locking logic. Currently it is only true when
-        ///              navigating to about:blank internally for the scenarios described above.
-        ///              Note that the property may become false once we are at the about:blank page. This happens,
-        ///              for example, when attempting a navigation that is canceled or fails. 
-        /// </SecurityNote> 
         private SecurityCriticalDataForSet<bool>                    _navigatingToAboutBlank;
 
         /// <summary>
@@ -1433,10 +1012,6 @@ namespace System.Windows.Controls
         /// we shouldn't clean up the shared state touched by the last navigation (see WebBrowserEvent's
         /// BeforeNavigate2 method), so that the newly started navigation can continue.
         /// </summary>
-        /// <SecurityNote> 
-        ///    Critical: tampering with the sequencing can influence clean-up decisions made, causing
-        ///              the critical _navigatingToAboutBlank not to get cleaned up where needed.
-        /// </SecurityNote> 
         private SecurityCriticalDataForSet<Guid>                    _lastNavigation;
 
         #endregion Private Fields
@@ -1454,6 +1029,9 @@ namespace System.Windows.Controls
         /// the WebOC either in-process or in the browser process (when IsWebOCHostedInBrowserProcess==true).
         /// This base class handles the in-process hosting.
         /// </summary>
+        /// <remarks>
+        /// IsWebOCHostedInBrowserProcess property no longer exists since .NET Core 3.0
+        /// </remarks>
         internal class WebOCHostingAdaptor
         {
             internal WebOCHostingAdaptor(WebBrowser webBrowser)
@@ -1467,28 +1045,11 @@ namespace System.Windows.Controls
                 set { }
             }
 
-            /// <SecurityNote>
-            /// Critical: As a native object, the WebOC should not be exposed to partial-trust code.
-            ///           Asserts UnmanagedCode SecurityPermissions for the CreateInstance call.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal virtual object CreateWebOC()
             {
-                (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    return Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.WebBrowser)));
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                return Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid(CLSID.WebBrowser)));
             }
 
-            /// <SecurityNote>
-            /// Critical: WebBrowserEvent instances should not be exposed to partial-trust code.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal virtual object CreateEventSink()
             {
                 return new WebBrowserEvent(_webBrowser);
@@ -1497,82 +1058,6 @@ namespace System.Windows.Controls
             protected WebBrowser _webBrowser;
         };
 
-#if NETFX
-        /// <summary>
-        /// Used when WebBrowser.IsWebOCHostedInBrowserProcess.
-        /// </summary>
-        private class WebOCHostedInBrowserAdaptor : WebOCHostingAdaptor
-        {
-            internal WebOCHostedInBrowserAdaptor(WebBrowser webBrowser) : base(webBrowser) { }
-
-            /// <SecurityNote>
-            /// Critical: Calls the native CoRegisterPSClsid().
-            /// TAS: Enabling a specific interface to be marshaled. The proxy-stub code is in our PHProxy DLL.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
-            static WebOCHostedInBrowserAdaptor()
-            {
-                // IDocHostUIHandler is not marshalable ... probably because no one has needed to use it
-                // cross-thread. PresentationHostProxy.dll is compiled with a clone of it and contains
-                // proxy-stub code for it. Registering the proxy-stub this way rather than in the registry
-                // is cleaner because it applies only to our scenarios. 
-                // The same thing is done in the browser process, by our in-proc handler.
-                Guid iidDHUIH = typeof(UnsafeNativeMethods.IDocHostUIHandler).GUID;
-                Guid clsidPresHostProxy = new Guid("e302cb55-5f9d-41a3-9ef3-61827fb8b46d");
-                int hr = UnsafeNativeMethods.CoRegisterPSClsid(ref iidDHUIH, ref clsidPresHostProxy);
-                if (hr != NativeMethods.S_OK)
-                {
-                    Marshal.ThrowExceptionForHR(hr);
-                }
-            }
-
-            /// <SecurityNote>
-            /// Critical: Calls the SUC'd CreateIDispatchSTAForwarder().
-            /// TAS: Wrapping a managed object in a native one that trivially delegates IDispatch calls is safe.
-            /// </SecurityNote>
-            internal override object ObjectForScripting
-            {
-                [SecurityCritical, SecurityTreatAsSafe]
-                get
-                {
-                    return _threadBoundObjectForScripting;
-                }
-
-                [SecurityCritical, SecurityTreatAsSafe]
-                set
-                {
-                    _threadBoundObjectForScripting = 
-                        value == null ? null : ActiveXHelper.CreateIDispatchSTAForwarder(value);
-                }
-            }
-
-            /// <SecurityNote>
-            /// Critical: As a native object, the WebOC should not be exposed to partial-trust code.
-            /// </SecurityNote>
-            [SecurityCritical]
-            internal override object CreateWebOC()
-            {
-                IntPtr pWebOC = Application.Current.BrowserCallbackServices.CreateWebBrowserControlInBrowserProcess();
-                object webOC = Marshal.GetTypedObjectForIUnknown(pWebOC, typeof(UnsafeNativeMethods.IWebBrowser2));
-                Marshal.Release(pWebOC);
-                return webOC;
-            }
-
-            /// <SecurityNote>
-            /// Critical: WebBrowserEvent instances should not be exposed to partial-trust code.
-            /// </SecurityNote>
-            [SecurityCritical]
-            internal override object CreateEventSink()
-            {
-                return ActiveXHelper.CreateIDispatchSTAForwarder(
-                    (UnsafeNativeMethods.DWebBrowserEvents2)base.CreateEventSink());
-            }
-
-            // This is a native object that wraps the ObjectForScripting provided by the application
-            // in order to ensure calls arrive on WebBrowser's thread. 
-            object _threadBoundObjectForScripting;
-        };
-#endif
         #endregion Private Class
     }
 }

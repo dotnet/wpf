@@ -39,14 +39,8 @@ namespace MS.Internal
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+            ArgumentNullException.ThrowIfNull(array);
 
             int count = 0;
             foreach (T item in this)

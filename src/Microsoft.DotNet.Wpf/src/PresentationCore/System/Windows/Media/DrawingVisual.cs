@@ -33,10 +33,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             if (_content != null)
             {                
@@ -53,11 +50,8 @@ namespace System.Windows.Media
         /// HitTestCore implements precise hit testing against render contents
         /// </summary>
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
-        {                   
-            if (hitTestParameters == null)
-            {
-                throw new ArgumentNullException("hitTestParameters");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             if ((_content != null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
             {                 

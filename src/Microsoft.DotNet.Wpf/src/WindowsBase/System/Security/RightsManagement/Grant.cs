@@ -24,18 +24,6 @@ namespace System.Security.RightsManagement
     /// ContentGrant class represent a (ContentUser , ContentRight) pair this is 
     /// a basic building block for structures that need to express information about rights granted to a document.
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attribute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unmanaged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class ContentGrant
     {
         /// <summary>
@@ -52,13 +40,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public ContentGrant(ContentUser user, ContentRight right, DateTime validFrom, DateTime validUntil)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             // Add validation here 
 
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(user);
 
             if ((right != ContentRight.View) && 
                 (right != ContentRight.Edit) && 
@@ -77,10 +61,7 @@ namespace System.Security.RightsManagement
                 throw new ArgumentOutOfRangeException("right");                
             }
 
-            if (validFrom > validUntil)
-            {
-                throw new ArgumentOutOfRangeException("validFrom");                
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(validFrom, validUntil);
 
             _user = user;
             _right = right;
@@ -98,7 +79,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();            
                 return _user;
             }
         }
@@ -110,7 +90,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();            
                 return _right;
             }
         }
@@ -122,7 +101,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _validFrom; 
             }
@@ -135,7 +113,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _validUntil; 
             }

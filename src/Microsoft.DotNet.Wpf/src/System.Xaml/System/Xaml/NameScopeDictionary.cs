@@ -35,18 +35,16 @@ namespace System.Xaml
 
         public void RegisterName(string name, object scopedElement)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
-            if (scopedElement == null)
-                throw new ArgumentNullException(nameof(scopedElement));
+            ArgumentNullException.ThrowIfNull(scopedElement);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
-                throw new ArgumentException(SR.Get(SRID.NameScopeInvalidIdentifierName, name));
+                throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
             if (_underlyingNameScope != null)
@@ -71,7 +69,7 @@ namespace System.Xaml
                     }
                     else if (scopedElement != nameContext)
                     {
-                        throw new ArgumentException(SR.Get(SRID.NameScopeDuplicateNamesNotAllowed, name));
+                        throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
                     }
                 }
             }
@@ -79,11 +77,10 @@ namespace System.Xaml
 
         public void UnregisterName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {
@@ -98,18 +95,17 @@ namespace System.Xaml
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.NameScopeNameNotFound, name));
+                    throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
                 }
             }
         }
 
         public object FindName(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException(nameof(name));
+            ArgumentNullException.ThrowIfNull(name);
 
             if (name.Length == 0)
-                throw new ArgumentException(SR.Get(SRID.NameScopeNameNotEmptyString));
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {

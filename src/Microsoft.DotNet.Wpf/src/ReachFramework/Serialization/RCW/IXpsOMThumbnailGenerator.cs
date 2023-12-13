@@ -20,8 +20,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("15B873D5-1971-41E8-83A3-6578403064C7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMThumbnailGenerator
     {
         IXpsOMImageResource GenerateThumbnail([In] IXpsOMPage page, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")] XPS_IMAGE_TYPE thumbnailType, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_THUMBNAIL_SIZE")] XPS_THUMBNAIL_SIZE thumbnailSize, [In] IOpcPartUri imageResourcePartName);

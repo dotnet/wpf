@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿/***************************************************************************\
+/***************************************************************************\
 *
 *  Class for converting a given value (for Setter/Trigger/Condition) to and from a string
 *
@@ -92,14 +92,8 @@ namespace System.Windows.Markup
         internal static object ResolveValue(ITypeDescriptorContext serviceProvider,
             DependencyProperty property, CultureInfo culture, object source)
         {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException("serviceProvider");
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+            ArgumentNullException.ThrowIfNull(source);
 
             // Only need to type convert strings and byte[]
             if (!(source is byte[] || source is String || source is Stream))
@@ -111,7 +105,7 @@ namespace System.Windows.Markup
                 as IXamlSchemaContextProvider);
             if (ixsc == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
+                throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
             }
             XamlSchemaContext schemaContext = ixsc.SchemaContext;
 
@@ -173,12 +167,12 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
+                            throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
                         }
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
+                        throw new NotSupportedException(SR.Format(SR.ParserCannotConvertPropertyValue, "Value", typeof(Object).FullName));
                     }
                 }
                 else

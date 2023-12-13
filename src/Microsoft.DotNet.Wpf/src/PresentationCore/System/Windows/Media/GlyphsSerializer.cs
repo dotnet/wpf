@@ -23,7 +23,6 @@ using Microsoft.Win32.SafeHandles;
 using System.Windows;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 
@@ -42,10 +41,7 @@ namespace System.Windows.Media
         /// <param name="glyphRun"></param>
         public GlyphsSerializer(GlyphRun glyphRun)
         {
-            if (glyphRun == null)
-            {
-                throw new ArgumentNullException("glyphRun");
-            }
+            ArgumentNullException.ThrowIfNull(glyphRun);
 
             _glyphTypeface = glyphRun.GlyphTypeface;
             _milToEm = EmScaleFactor / glyphRun.FontRenderingEmSize;
@@ -65,6 +61,9 @@ namespace System.Windows.Media
             _advances = glyphRun.AdvanceWidths;
             _offsets = glyphRun.GlyphOffsets;
 
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
+
             // "100,50,,0;".Length is a capacity estimate for an individual glyph
             _glyphStringBuider = new StringBuilder(10);
 
@@ -83,6 +82,9 @@ namespace System.Windows.Media
         /// </summary>
         public void ComputeContentStrings(out string characters, out string indices, out string caretStops)
         {
+            _currentAdvanceTotal = 0.0;
+            _idealAdvanceTotal = 0.0;
+
             if (_clusters != null)
             {
                 // the algorithm works by finding (n:m) clusters and appending m glyphs for each cluster
@@ -185,11 +187,28 @@ namespace System.Windows.Media
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
 
             // advance width
-            int normalizedAdvance = (int)Math.Round(_advances[glyph] * _milToEm);
+            // #7499 Advance width needs to be specified if it differs from what is in the font tables. [ECMA-388 O5.5]
+            // Most commonly it differs after shaping, e.g. when kerning is applied. (Ex. 12-15)
+            // XPS supports floating point values, but in the interest of file size, we want to specify integers.
+
+            double shapingAdvance = _advances[glyph] * _milToEm;
             double fontAdvance = _sideways ? _glyphTypeface.AdvanceHeights[fontIndex] : _glyphTypeface.AdvanceWidths[fontIndex];
-            if (normalizedAdvance != (int)Math.Round(fontAdvance * EmScaleFactor))
+
+            // To minimize rounding errors, we keep track of the unrounded advance total as required by [M5.6].
+            int roundedShapingAdvance = (int)Math.Round(_idealAdvanceTotal + shapingAdvance - _currentAdvanceTotal);
+            int roundedFontAdvance = (int)Math.Round(fontAdvance);
+
+            if (roundedShapingAdvance != roundedFontAdvance)
             {
-                _glyphStringBuider.Append(normalizedAdvance.ToString(CultureInfo.InvariantCulture));
+                _glyphStringBuider.Append(roundedShapingAdvance.ToString(CultureInfo.InvariantCulture));
+                _currentAdvanceTotal += roundedShapingAdvance;
+                _idealAdvanceTotal += shapingAdvance;
+            }
+            else
+            {
+                // when the value comes from the font tables, the specification does not mandate clients to do any rounding
+                _currentAdvanceTotal += fontAdvance;
+                _idealAdvanceTotal += fontAdvance;
             }
 
             _glyphStringBuider.Append(GlyphSubEntrySeparator);
@@ -217,7 +236,7 @@ namespace System.Windows.Media
             // remove trailing commas
             RemoveTrailingCharacters(_glyphStringBuider, GlyphSubEntrySeparator);
             _glyphStringBuider.Append(GlyphSeparator);
-            _indicesStringBuider.Append(_glyphStringBuider.ToString());
+            _indicesStringBuider.Append(_glyphStringBuider);
 
             // reset for next glyph
             _glyphStringBuider.Length = 0;
@@ -320,6 +339,10 @@ namespace System.Windows.Media
         private bool _sideways;
 
         private int _glyphClusterInitialOffset;
+
+        private double _currentAdvanceTotal;
+
+        private double _idealAdvanceTotal;
 
         private IList<ushort> _clusters;
 

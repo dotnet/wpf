@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -104,17 +103,9 @@ namespace System.Windows.Media
                    type);
         }
 
-        /// <SecurityNote>
-        /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
-        /// TreatAsSafe - returning a LineGeometry's bounds is considered safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point pt1, Point pt2,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
-
             if (pen == null  &&  worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 return new Rect(pt1, pt2);
@@ -145,11 +136,6 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
-        /// TreatAsSafe - as this doesn't expose anything sensitive.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             unsafe

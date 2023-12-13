@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {
-    // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
+    // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
     // only need the warning to come out for components outside of APT.
     #pragma warning disable 0618
 
@@ -27,7 +27,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private WindowPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -45,7 +45,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Returns the Window pattern identifier</summary>
@@ -83,55 +83,45 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
-        
+
         /// <summary>
         /// Changes the State of the window based on the passed enum.
         /// </summary>
         /// <param name="state">The requested state of the window.</param>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetWindowVisualState( WindowVisualState state )
         {
             UiaCoreApi.WindowPattern_SetWindowVisualState(_hPattern, state);
         }
 
         /// <summary>
-        /// Non-blocking call to close this non-application window. 
-        /// When called on a split pane, it will close the pane (thereby removing a 
-        /// split), it may or may not also close all other panes related to the 
+        /// Non-blocking call to close this non-application window.
+        /// When called on a split pane, it will close the pane (thereby removing a
+        /// split), it may or may not also close all other panes related to the
         /// document/content/etc. This behavior is application dependent.
         /// </summary>
-        ///
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Close()
         {
             UiaCoreApi.WindowPattern_Close(_hPattern);
         }
 
         /// <summary>
-        /// Causes the calling code to block, waiting the specified number of milliseconds, for the 
+        /// Causes the calling code to block, waiting the specified number of milliseconds, for the
         /// associated window to enter an idle state.
         /// </summary>
         /// <remarks>
         /// The implementation is dependent on the underlying application framework therefore this
         /// call may return sometime after the window is ready for user input.  The calling code
-        /// should not rely on this call to understand exactly when the window has become idle. 
-        /// 
-        /// For now this method works reliably for both WinFx and Win32 Windows that are starting
-        /// up.  However, if called at other times on WinFx Windows (e.g. during a long layout) 
+        /// should not rely on this call to understand exactly when the window has become idle.
+        ///
+        /// For now this method works reliably for both WinFX and Win32 Windows that are starting
+        /// up.  However, if called at other times on WinFX Windows (e.g. during a long layout)
         /// WaitForInputIdle may return true before the Window is actually idle.  Additional work
-        /// needs to be done to detect when WinFx Windows are idle.
+        /// needs to be done to detect when WinFX Windows are idle.
         /// </remarks>
-        /// <param name="milliseconds">The amount of time, in milliseconds, to wait for the 
-        /// associated process to become idle. The maximum is the largest possible value of a 
+        /// <param name="milliseconds">The amount of time, in milliseconds, to wait for the
+        /// associated process to become idle. The maximum is the largest possible value of a
         /// 32-bit integer, which represents infinity to the operating system
         /// </param>
         /// <returns>
@@ -150,7 +140,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -163,7 +153,7 @@ namespace System.Windows.Automation
         /// using a CacheRequest. If you try to access a cached
         /// property that was not previously requested, an InvalidOperation
         /// Exception will be thrown.
-        /// 
+        ///
         /// To get the value of a property at the current point in time,
         /// access the property via the Current accessor instead of
         /// Cached.
@@ -188,7 +178,7 @@ namespace System.Windows.Automation
         /// AutomationElement was obtained using AutomationElementMode.None,
         /// then it contains only cached data, and attempting to get
         /// the current value of any property will throw an InvalidOperationException.
-        /// 
+        ///
         /// To get the cached value of a property that was previously
         /// specified using a CacheRequest, access the property via the
         /// Cached accessor instead of Current.
@@ -210,7 +200,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -226,7 +216,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;
@@ -272,15 +262,10 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>Is this window Maximizable</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanMaximize
             {
                 get
@@ -290,11 +275,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this window Minimizable</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool CanMinimize
             {
                 get
@@ -304,11 +284,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this is a modal window.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsModal
             {
                 get
@@ -318,11 +293,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is the Window Maximized, Minimized, or Normal (aka restored)</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public WindowVisualState WindowVisualState
             {
                 get
@@ -332,11 +302,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is the Window Closing, ReadyForUserInteraction, BlockedByModalWindow or NotResponding.</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public WindowInteractionState WindowInteractionState
             {
                 get
@@ -346,11 +311,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Is this window is always on top</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsTopmost
             {
                 get

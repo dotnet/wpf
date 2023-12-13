@@ -131,16 +131,13 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "TriggerCollection"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "TriggerCollection"));
             }
         }
 
         private void TriggerBaseValidation(TriggerBase triggerBase)
         {
-            if (triggerBase == null)
-            {
-                throw new ArgumentNullException("triggerBase");
-            }
+            ArgumentNullException.ThrowIfNull(triggerBase);
         }
 
         // Called by GenericCollection.tb when a trigger is added to the collection.

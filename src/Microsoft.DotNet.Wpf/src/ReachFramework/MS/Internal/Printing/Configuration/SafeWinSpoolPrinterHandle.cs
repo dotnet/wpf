@@ -2,23 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 
 namespace MS.Internal.Printing.Configuration
 {
     using System;
-    using System.Drawing.Printing;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
 
     /// <summary>
     ///     Represents a printer handle used in spooler API's like OpenPrinter
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical: base class SafeHandle is critical
-    /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeWinSpoolPrinterHandle : SafeHandle
     {
         private SafeWinSpoolPrinterHandle()
@@ -38,10 +32,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls native method to close printer handle
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             return UnsafeNativeMethods.ClosePrinter(base.handle);

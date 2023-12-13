@@ -104,7 +104,7 @@
       </trans-unit>
       <trans-unit id="Animation_KeyTime_LessThanZero">
         <source>Cannot create a KeyTime with the value '{0}' because it is less than zero.</source>
-        <target state="translated">無法使用值 '{0}' 建立  KeyTime，因為它小於零。</target>
+        <target state="translated">無法使用值 '{0}' 建立 KeyTime，因為它小於零。</target>
         <note />
       </trans-unit>
       <trans-unit id="Animation_NoAnimationsSpecified">
@@ -187,11 +187,6 @@
         <target state="translated">BitmapCacheBrush 不支援 Transform。</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseBackKey">
-        <source>Alt+Left;Backspace</source>
-        <target state="translated">Alt+Left;Backspace</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseBackKeyDisplayString">
         <source>Alt+Left;Backspace</source>
         <target state="translated">Alt+Left;Backspace</target>
@@ -200,11 +195,6 @@
       <trans-unit id="BrowseBackText">
         <source>Back</source>
         <target state="translated">返回</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseForwardKey">
-        <source>Alt+Right;Shift+Backspace</source>
-        <target state="translated">Alt+Right;Shift+Backspace</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseForwardKeyDisplayString">
@@ -217,11 +207,6 @@
         <target state="translated">往前</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseHomeKey">
-        <source>Alt+Home;BrowserHome</source>
-        <target state="translated">Alt+Home;BrowserHome</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseHomeKeyDisplayString">
         <source>Alt+Home;BrowserHome</source>
         <target state="translated">Alt+Home;BrowserHome</target>
@@ -230,11 +215,6 @@
       <trans-unit id="BrowseHomeText">
         <source>Home</source>
         <target state="translated">首頁</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseStopKey">
-        <source>Alt+Esc;BrowserStop</source>
-        <target state="translated">Alt+Esc;BrowserStop</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseStopKeyDisplayString">
@@ -254,7 +234,7 @@
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderDisposed">
         <source>Cannot access a disposed HTTP byte range downloader.</source>
-        <target state="translated">無法存取已處置的 HTTP 位元組範圍下載器。</target>
+        <target state="translated">無法存取已處置的 HTTP 位元組範圍下載程式。</target>
         <note />
       </trans-unit>
       <trans-unit id="ByteRangeDownloaderErroredOut">
@@ -547,11 +527,6 @@
         <target state="translated">發現可能的建構函式遞迴。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ContextMenuKey">
-        <source>Shift+F10;Apps</source>
-        <target state="translated">Shift+F10;Apps</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ContextMenuKeyDisplayString">
         <source>Shift+F10;Apps</source>
         <target state="translated">Shift+F10;Apps</target>
@@ -570,11 +545,6 @@
       <trans-unit id="Converter_ConvertToNotSupported">
         <source>Cannot convert to type.</source>
         <target state="translated">無法轉換至型別。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CopyKey">
-        <source>Ctrl+C;Ctrl+Insert</source>
-        <target state="translated">Ctrl+C;Ctrl+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="CopyKeyDisplayString">
@@ -640,11 +610,6 @@
       <trans-unit id="Cursor_UnsupportedFormat">
         <source>'{0}' has unsupported extension for cursor.</source>
         <target state="translated">'{0}' 包含資料指標不支援的延伸。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CutKey">
-        <source>Ctrl+X;Shift+Delete</source>
-        <target state="translated">Ctrl+X;Shift+Delete</target>
         <note />
       </trans-unit>
       <trans-unit id="CutKeyDisplayString">
@@ -735,11 +700,6 @@
       <trans-unit id="DecreaseZoomText">
         <source>Decrease Zoom</source>
         <target state="translated">降低縮放比例</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="DeleteKey">
-        <source>Del</source>
-        <target state="translated">Del</target>
         <note />
       </trans-unit>
       <trans-unit id="DeleteKeyDisplayString">
@@ -987,11 +947,6 @@
         <target state="translated">事件引數不能是空值。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionDownKey">
-        <source>Shift+Down</source>
-        <target state="translated">Shift+Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionDownKeyDisplayString">
         <source>Shift+Down</source>
         <target state="translated">Shift+Down</target>
@@ -1000,11 +955,6 @@
       <trans-unit id="ExtendSelectionDownText">
         <source>Extend Selection Down</source>
         <target state="translated">向下延伸選取範圍</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionLeftKey">
-        <source>Shift+Left</source>
-        <target state="translated">Shift+Left</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionLeftKeyDisplayString">
@@ -1017,11 +967,6 @@
         <target state="translated">向左延伸選取範圍</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionRightKey">
-        <source>Shift+Right</source>
-        <target state="translated">Shift+Right</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionRightKeyDisplayString">
         <source>Shift+Right</source>
         <target state="translated">Shift+Right</target>
@@ -1030,11 +975,6 @@
       <trans-unit id="ExtendSelectionRightText">
         <source>Extend Selection Right</source>
         <target state="translated">向右延伸選取範圍</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionUpKey">
-        <source>Shift+Up</source>
-        <target state="translated">Shift+Up</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionUpKeyDisplayString">
@@ -1067,11 +1007,6 @@
         <target state="translated">無法新增 FamilyMap，因為未設定 Target 屬性。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FavoritesKey">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+I</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FavoritesKeyDisplayString">
         <source>Ctrl+I</source>
         <target state="translated">Ctrl+I</target>
@@ -1095,11 +1030,6 @@
       <trans-unit id="FileNotFoundExceptionWithFileName">
         <source>Cannot find file '{0}'.</source>
         <target state="translated">找不到檔案 '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FindKey">
-        <source>Ctrl+F</source>
-        <target state="translated">Ctrl+F</target>
         <note />
       </trans-unit>
       <trans-unit id="FindKeyDisplayString">
@@ -1139,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CloneInvalidType">
         <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
-        <target state="translated">型別 '{0}' 的執行個體複本是空值，或不是 '{0}' 的執行個體。</target>
+        <target state="translated">型別 '{0}' 的執行個體複製品是空值，或不是 '{0}' 的執行個體。</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_Reentrant">
@@ -1220,11 +1150,6 @@
       <trans-unit id="HandlerTypeIllegal">
         <source>Handler type is mismatched.</source>
         <target state="translated">處理嘗試型別不相符。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="HelpKey">
-        <source>F1</source>
-        <target state="translated">F1</target>
         <note />
       </trans-unit>
       <trans-unit id="HelpKeyDisplayString">
@@ -1983,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' 不是有效的 IInputElement 型別。應該是 UIElement 或 ContentElement。</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' 不是有效的 IInputElement 型別。預期為 UIElement、ContentElement 或 UIElement3D。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2317,11 +2242,6 @@
         <target state="translated">RoutedEventArgs 與 EventRoute 中的 RoutedEvent 不相符。</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveDownKey">
-        <source>Down</source>
-        <target state="translated">Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveDownKeyDisplayString">
         <source>Down</source>
         <target state="translated">Down</target>
@@ -2330,11 +2250,6 @@
       <trans-unit id="MoveDownText">
         <source>Move Down</source>
         <target state="translated">下移</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusBackKey">
-        <source>Ctrl+Left</source>
-        <target state="translated">Ctrl+Left</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusBackKeyDisplayString">
@@ -2347,11 +2262,6 @@
         <target state="translated">移動選取項目 - 往前</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusDownKey">
-        <source>Ctrl+Down</source>
-        <target state="translated">Ctrl+Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusDownKeyDisplayString">
         <source>Ctrl+Down</source>
         <target state="translated">Ctrl+Down</target>
@@ -2360,11 +2270,6 @@
       <trans-unit id="MoveFocusDownText">
         <source>Move Focus Down</source>
         <target state="translated">移動選取項目 - 往下</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusForwardKey">
-        <source>Ctrl+Right</source>
-        <target state="translated">Ctrl+Right</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusForwardKeyDisplayString">
@@ -2377,11 +2282,6 @@
         <target state="translated">移動選取項目 - 往後</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusPageDownKey">
-        <source>Ctrl+PageDown</source>
-        <target state="translated">Ctrl+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusPageDownKeyDisplayString">
         <source>Ctrl+PageDown</source>
         <target state="translated">Ctrl+PageDown</target>
@@ -2390,11 +2290,6 @@
       <trans-unit id="MoveFocusPageDownText">
         <source>Move Focus Page Down</source>
         <target state="translated">移動選取項目 - 下一頁</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusPageUpKey">
-        <source>Ctrl+PageUp</source>
-        <target state="translated">Ctrl+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusPageUpKeyDisplayString">
@@ -2407,11 +2302,6 @@
         <target state="translated">移動選取項目 - 上一頁</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusUpKey">
-        <source>Ctrl+Up</source>
-        <target state="translated">Ctrl+Up</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusUpKeyDisplayString">
         <source>Ctrl+Up</source>
         <target state="translated">Ctrl+Up</target>
@@ -2420,11 +2310,6 @@
       <trans-unit id="MoveFocusUpText">
         <source>Move Focus Up</source>
         <target state="translated">移動選取項目 - 往上</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveLeftKey">
-        <source>Left</source>
-        <target state="translated">Left</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveLeftKeyDisplayString">
@@ -2437,11 +2322,6 @@
         <target state="translated">左移</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveRightKey">
-        <source>Right</source>
-        <target state="translated">Right</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveRightKeyDisplayString">
         <source>Right</source>
         <target state="translated">Right</target>
@@ -2450,11 +2330,6 @@
       <trans-unit id="MoveRightText">
         <source>Move Right</source>
         <target state="translated">又移</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToEndKey">
-        <source>End</source>
-        <target state="translated">結束</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToEndKeyDisplayString">
@@ -2467,11 +2342,6 @@
         <target state="translated">移到結尾</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToHomeKey">
-        <source>Home</source>
-        <target state="translated">首頁</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToHomeKeyDisplayString">
         <source>Home</source>
         <target state="translated">首頁</target>
@@ -2480,11 +2350,6 @@
       <trans-unit id="MoveToHomeText">
         <source>Move To Home</source>
         <target state="translated">移到開頭</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToPageDownKeyDisplayString">
@@ -2497,11 +2362,6 @@
         <target state="translated">移動到下一頁</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToPageUpKeyDisplayString">
         <source>PageUp</source>
         <target state="translated">PageUp</target>
@@ -2510,11 +2370,6 @@
       <trans-unit id="MoveToPageUpText">
         <source>Move To Page Up</source>
         <target state="translated">移動到上一頁</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveUpKey">
-        <source>Up</source>
-        <target state="translated">上移</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveUpKeyDisplayString">
@@ -2535,11 +2390,6 @@
       <trans-unit id="NavigateJournalText">
         <source>Navigate Journal</source>
         <target state="translated">巡覽日誌</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NewKey">
-        <source>Ctrl+N</source>
-        <target state="translated">Ctrl+N</target>
         <note />
       </trans-unit>
       <trans-unit id="NewKeyDisplayString">
@@ -2637,11 +2487,6 @@
         <target state="translated">物件已初始化，且無法再初始化。</target>
         <note />
       </trans-unit>
-      <trans-unit id="OpenKey">
-        <source>Ctrl+O</source>
-        <target state="translated">Ctrl+O</target>
-        <note />
-      </trans-unit>
       <trans-unit id="OpenKeyDisplayString">
         <source>Ctrl+O</source>
         <target state="translated">Ctrl+O</target>
@@ -2677,29 +2522,9 @@
         <target state="translated">頁碼不能為負數。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">參數值不能大於 '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">參數值不能小於 '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">參數必須大於或等於零。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">參數值必須介於 '{0}' 到 '{1}' 之間。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">參數值必須大於零。</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
@@ -2710,16 +2535,6 @@
       <trans-unit id="ParameterValueCannotBeNaN">
         <source>The parameter value must be a number.</source>
         <target state="translated">參數值必須是數字。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' 參數值不能為負數。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">'{0}' 參數值必須大於零。</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">
@@ -2745,11 +2560,6 @@
       <trans-unit id="Parsers_IllegalToken_250_Chars">
         <source>Token is not valid because it is more than 250 characters.</source>
         <target state="translated">語彙基元無效，因為它超過 250 個字元。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PasteKey">
-        <source>Ctrl+V;Shift+Insert</source>
-        <target state="translated">Ctrl+V;Shift+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="PasteKeyDisplayString">
@@ -2807,19 +2617,9 @@
         <target state="translated">上一頁</target>
         <note />
       </trans-unit>
-      <trans-unit id="PrintKey">
-        <source>Ctrl+P</source>
-        <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PrintKeyDisplayString">
         <source>Ctrl+P</source>
         <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PrintPreviewKey">
-        <source>Ctrl+F2</source>
-        <target state="translated">Ctrl+F2</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintPreviewKeyDisplayString">
@@ -2835,11 +2635,6 @@
       <trans-unit id="PrintText">
         <source>Print</source>
         <target state="translated">列印</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PropertiesKey">
-        <source>F4</source>
-        <target state="translated">F4</target>
         <note />
       </trans-unit>
       <trans-unit id="PropertiesKeyDisplayString">
@@ -2917,11 +2712,6 @@
         <target state="translated">矩形不能是空白的。</target>
         <note />
       </trans-unit>
-      <trans-unit id="RedoKey">
-        <source>Ctrl+Y</source>
-        <target state="translated">Ctrl+Y</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RedoKeyDisplayString">
         <source>Ctrl+Y</source>
         <target state="translated">Ctrl+Y</target>
@@ -2942,11 +2732,6 @@
         <target state="translated">警告: 此視覺化樹狀結構在 '{0}' 事件期間已有所變更。生產應用程式不支援此狀況。請務必在應用程式出貨之前更正此問題。</target>
         <note />
       </trans-unit>
-      <trans-unit id="RefreshKey">
-        <source>F5</source>
-        <target state="translated">F5</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RefreshKeyDisplayString">
         <source>F5</source>
         <target state="translated">F5</target>
@@ -2960,11 +2745,6 @@
       <trans-unit id="RelievePenaltyResourceFailure">
         <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
         <target state="translated">由於發生下列錯誤，文字格式設定引擎無法釋放懲罰 (penalty) 資源: '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ReplaceKey">
-        <source>Ctrl+H</source>
-        <target state="translated">Ctrl+H</target>
         <note />
       </trans-unit>
       <trans-unit id="ReplaceKeyDisplayString">
@@ -3022,11 +2802,6 @@
         <target state="translated">另存新檔</target>
         <note />
       </trans-unit>
-      <trans-unit id="SaveKey">
-        <source>Ctrl+S</source>
-        <target state="translated">Ctrl+S</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SaveKeyDisplayString">
         <source>Ctrl+S</source>
         <target state="translated">Ctrl+S</target>
@@ -3052,11 +2827,6 @@
         <target state="translated">依行捲動</target>
         <note />
       </trans-unit>
-      <trans-unit id="ScrollPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ScrollPageDownKeyDisplayString">
         <source>PageDown</source>
         <target state="translated">PageDown</target>
@@ -3075,11 +2845,6 @@
       <trans-unit id="ScrollPageRightText">
         <source>Scroll Page Right</source>
         <target state="translated">向右捲動一頁</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ScrollPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollPageUpKeyDisplayString">
@@ -3122,11 +2887,6 @@
         <target state="translated">SeekOrigin 值無效。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectAllKey">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectAllKeyDisplayString">
         <source>Ctrl+A</source>
         <target state="translated">Ctrl+A</target>
@@ -3135,11 +2895,6 @@
       <trans-unit id="SelectAllText">
         <source>Select All</source>
         <target state="translated">全選</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToEndKey">
-        <source>Shift+End</source>
-        <target state="translated">Shift+End</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToEndKeyDisplayString">
@@ -3152,11 +2907,6 @@
         <target state="translated">選取到結尾</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToHomeKey">
-        <source>Shift+Home</source>
-        <target state="translated">Shift+Home</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToHomeKeyDisplayString">
         <source>Shift+Home</source>
         <target state="translated">Shift+Home</target>
@@ -3167,11 +2917,6 @@
         <target state="translated">選取到開頭</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToPageDownKey">
-        <source>Shift+PageDown</source>
-        <target state="translated">Shift+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToPageDownKeyDisplayString">
         <source>Shift+PageDown</source>
         <target state="translated">Shift+PageDown</target>
@@ -3180,11 +2925,6 @@
       <trans-unit id="SelectToPageDownText">
         <source>Select To PageDown</source>
         <target state="translated">選取到下一頁</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToPageUpKey">
-        <source>Shift+PageUp</source>
-        <target state="translated">Shift+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToPageUpKeyDisplayString">
@@ -3245,11 +2985,6 @@
       <trans-unit id="SpecificNumberCultureRequired">
         <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
         <target state="translated">用於數字取代的 CultureInfo 物件必須具有特定的文化特性，而非中性文化特性或 InvariantCulture。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StopKey">
-        <source>Esc</source>
-        <target state="translated">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="StopKeyDisplayString">
@@ -3615,11 +3350,6 @@
       <trans-unit id="UnauthorizedAccessExceptionWithFileName">
         <source>Access denied to the path '{0}'.</source>
         <target state="translated">存取路徑 '{0}' 時遭拒。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UndoKey">
-        <source>Ctrl+Z</source>
-        <target state="translated">Ctrl+Z</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoKeyDisplayString">

@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("3340FE8F-4027-4AA1-8F5F-D35AE45FE597"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMCoreProperties : IXpsOMPart
     {
         IXpsOMCoreProperties Clone();

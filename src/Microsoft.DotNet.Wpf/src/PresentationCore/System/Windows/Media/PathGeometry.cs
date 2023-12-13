@@ -27,11 +27,9 @@ using System.Windows.Markup;
 using System.Windows.Converters;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -68,17 +66,11 @@ namespace System.Windows.Media
         /// <param name="figures">A collection of figures</param>
         public PathGeometry(IEnumerable<PathFigure> figures)
         {
-            if (figures != null)
-            {
-                foreach (PathFigure item in figures)
-                {
-                    Figures.Add(item);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("figures");   
+            ArgumentNullException.ThrowIfNull(figures);
 
+            foreach (PathFigure item in figures)
+            {
+                Figures.Add(item);
             }
 
             SetDirty();
@@ -97,16 +89,11 @@ namespace System.Windows.Media
             {
                 FillRule = fillRule;
 
-                if (figures != null)
+                ArgumentNullException.ThrowIfNull(figures);
+
+                foreach (PathFigure item in figures)
                 {
-                    foreach (PathFigure item in figures)
-                    {
-                        Figures.Add(item);
-                    }
-                }
-                else
-                {
-                    throw new ArgumentNullException("figures");
+                    Figures.Add(item);
                 }
 
                 SetDirty();
@@ -134,11 +121,6 @@ namespace System.Windows.Media
         /// Static method which parses a PathGeometryData and makes calls into the provided context sink.
         /// This can be used to build a PathGeometry, for readback, etc.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - calls code that performs an elevation.
-        ///     TreatAsSafe - This method reads from a pinned byte array.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ParsePathGeometryData(PathGeometryData pathData, CapacityStreamGeometryContext ctx)
         {
             if (pathData.IsEmpty())
@@ -394,10 +376,7 @@ namespace System.Windows.Media
         /// </summary>
         public void AddGeometry(Geometry geometry)
         {
-            if (geometry == null)
-            {
-                throw new System.ArgumentNullException("geometry");
-            }
+            ArgumentNullException.ThrowIfNull(geometry);
 
             if (geometry.IsEmpty())
             {
@@ -470,10 +449,6 @@ namespace System.Windows.Media
             ///<param name="segmentCount">
             /// The size of the types array
             ///</param>
-            /// <SecurityNote>
-            ///    Critical: This code is critical because it is an unsafe code block
-            ///  </SecurityNote>
-            [SecurityCritical]
             internal unsafe void AddFigureToList(bool isFilled, bool isClosed, MilPoint2F* pPoints, UInt32 pointCount, byte* pSegTypes, UInt32 segmentCount)
             {
                 if (pointCount >=1 && segmentCount >= 1)
@@ -506,7 +481,7 @@ namespace System.Windows.Media
                         {
                             if (pointIndex+sameSegCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -537,7 +512,7 @@ namespace System.Windows.Media
 
                             if (pointIndex+pointBezierCount > pointCount)
                             {
-                                throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                                throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
                             if (sameSegCount>1)
@@ -570,7 +545,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            throw new System.InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                            throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                         }
                     }
 
@@ -592,21 +567,11 @@ namespace System.Windows.Media
             internal PathFigureCollection _figures;
         };
 
-        /// <SecurityNote>
-        /// Critical    - Recieves native pointers as parameters.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe delegate void AddFigureToListDelegate(bool isFilled, bool isClosed, MilPoint2F *pPoints, UInt32 pointCount, byte *pTypes, UInt32 typeCount);
 
         #region GetPointAtFractionLength
         /// <summary>
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - calls MilUtility_GetPointAtLengthFraction that performs an elevation.
-        ///     PublicOK - This computes the location of the point x% along the way of a path (and its direction). 
-        ///                Progress is normalized between 0 and 1.  This math is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical]
         public void GetPointAtFractionLength(
             double progress,
             out Point point,
@@ -650,15 +615,6 @@ namespace System.Windows.Media
         /// <param name="transform">A transformation to apply to the result, or null</param>
         /// <param name="tolerance">The computational error tolerance</param>
         /// <param name="type">The way the error tolerance will be interpreted - relative or absolute</param>
-        ///<SecurityNote>
-        ///     Critical - calls code that perfoms an elevation ( MilUtility_PathGeometryCombine )
-        ///     TreatAsSafe - the net effect of this function is to return a new PathGeometry given a transform and a combine operation.
-        ///                          Considered safe.
-        ///
-        ///                          Although we call code within an unsafe block - managed objects are used to construct the unmanaged data.
-        ///                          unsafe code will have to be reviewed
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static PathGeometry InternalCombine(
             Geometry geometry1,
             Geometry geometry2,
@@ -808,12 +764,6 @@ namespace System.Windows.Media
         /// This function should not be called with a PathGeometryData that's known to be empty, since MilRectD
         /// does not offer a standard way of representing this.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical as this code performs an elevation ( SUC on MilUtility_PathGeometryBounds)
-        ///     TreatAsSafe - the net effect of this function is to return a rect for the Path's bounds. Considered safe.
-        ///                          although we call code within an unsafe block - managed objects are used to construct the unmanaged data.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static MilRectD GetPathBoundsAsRB(
             PathGeometryData pathData,
             Pen pen, 
@@ -884,11 +834,6 @@ namespace System.Windows.Media
 
         
         #region HitTestWithPathGeometry
-        ///<SecurityNote>
-        /// Critical as this calls a method that elevates (MilUtility_PathGeometryHitTestPathGeometry)
-        /// TreatAsSafe - net effect of this is to checking the relationship between two geometries. So it's considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IntersectionDetail HitTestWithPathGeometry(
             Geometry geometry1,
             Geometry geometry2,
@@ -1054,11 +999,6 @@ namespace System.Windows.Media
             return data;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses unsafe code blocks
-        ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

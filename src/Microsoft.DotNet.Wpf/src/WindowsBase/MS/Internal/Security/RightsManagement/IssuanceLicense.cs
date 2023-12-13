@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.RightsManagement;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Globalization;             // For CultureInfo
@@ -28,13 +27,6 @@ using System.Windows;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:    This class exposes access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class IssuanceLicense : IDisposable
     {
         internal IssuanceLicense(
@@ -188,8 +180,8 @@ namespace MS.Internal.Security.RightsManagement
                 }
             }
 
-            // set metafata as required 
-            if (contentId != null)
+            // set metadata as required 
+            if (contentId != Guid.Empty)
             {
                 hr = SafeNativeMethods.DRMSetMetaData(
                     _issuanceLicenseHandle,
@@ -602,7 +594,7 @@ namespace MS.Internal.Security.RightsManagement
             string userIdTypeStr = null;
             if (userIdType != null)
             {
-                userIdTypeStr = userIdType.ToString().ToUpperInvariant();
+                userIdTypeStr = userIdType.ToString();
             }
 
             string userIdStr = null;
@@ -612,15 +604,15 @@ namespace MS.Internal.Security.RightsManagement
             }
 
             // based on the UserTypeId build appropriate instance of User class 
-            if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Windows.ToString().ToUpperInvariant()) == 0)
+            if (string.Equals(userIdTypeStr, AuthenticationType.Windows.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.Windows);
             }
-            else if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Passport.ToString().ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, AuthenticationType.Passport.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.Passport);
             }
-            else if (String.CompareOrdinal(userIdTypeStr, AuthenticationType.Internal.ToString().ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, AuthenticationType.Internal.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 // internal anyone user 
                 if (ContentUser.CompareToAnyone(userIdStr))
@@ -632,7 +624,7 @@ namespace MS.Internal.Security.RightsManagement
                     return ContentUser.OwnerUser;
                 }
             }
-            else if (String.CompareOrdinal(userIdTypeStr, UnspecifiedAuthenticationType.ToUpperInvariant()) == 0)
+            else if (string.Equals(userIdTypeStr, UnspecifiedAuthenticationType, StringComparison.OrdinalIgnoreCase))
             {
                 return new ContentUser(userNameStr, AuthenticationType.WindowsPassport);
             }

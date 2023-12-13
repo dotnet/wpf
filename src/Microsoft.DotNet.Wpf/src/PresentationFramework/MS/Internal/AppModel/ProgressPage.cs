@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //  Description:
 //      Deployment progress page. This is primarily a proxy to the native progress page, which supersedes
 //      the managed one from up to v3.5. See Host\DLL\ProgressPage.hxx for details.
@@ -19,15 +19,8 @@ using HR = MS.Internal.Interop.HRESULT;
 
 namespace MS.Internal.AppModel
 {
-    /// <SecurityNote>
-    /// Critical due to SUC. 
-    /// Even if a partilar method is considered safe, applying [SecurityTreatAsSafe] to it here won't help 
-    /// much, because the transparency model still requires SUC-d methods to be called only from 
-    /// SecurityCritical ones.
-    /// </SecurityNote>
     [ComImport, Guid("1f681651-1024-4798-af36-119bbe5e5665")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
     interface INativeProgressPage
     {
         [PreserveSig]
@@ -55,22 +48,11 @@ namespace MS.Internal.AppModel
 
     class NativeProgressPageProxy : IProgressPage2
     {
-        /// <SecurityNote>
-        /// Critical : Accepts critical argument INativeProgressPage
-        ///            Sets critical member _npp
-        /// </SecurityNote>
-        [SecurityCritical]
         internal NativeProgressPageProxy(INativeProgressPage npp)
         {
             _npp = npp;
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls a SUC'd COM interface method.
-        /// TreatAsSafe: No concern about "spoofing" progress messages. A web site could just render an HTML 
-        ///     page that looks like our progress page.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void ShowProgressMessage(string message)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -103,16 +85,8 @@ namespace MS.Internal.AppModel
             get { return null; }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls a SUC'd COM interface method.
-        /// TreatAsSafe: 1) The application name is coming from the manifest, so it could be anything.
-        ///       This means the input doesn't need to be trusted. 
-        ///     2) Setting arbitrary application/publisher can be considered spoofing, but a malicious website
-        ///       could fake the whole progress page and still achieve the same.
-        /// </SecurityNote>
         public string ApplicationName
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -128,10 +102,8 @@ namespace MS.Internal.AppModel
         ///       This means the input doesn't need to be trusted. 
         ///     2) Setting arbitrary application/publisher can be considered spoofing, but a malicious website
         ///       could fake the whole progress page and still achieve the same.
-        /// </SecurityNote>
         public string PublisherName
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
@@ -144,18 +116,12 @@ namespace MS.Internal.AppModel
         /// <SecurityNOoe>
         /// Critical: Calls a SUC'd COM interface method.
         /// TreatAsSafe: Sending even arbitrary progress updates not considered harmful.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void UpdateProgress(long bytesDownloaded, long bytesTotal)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
             HR hr = _npp.OnDownloadProgress((ulong)bytesDownloaded, (ulong)bytesTotal);
         }
 
-        /// <SecurityNote>
-        /// Critical : Field for critical type INativeProgressPage
-        /// </SecurityNote>
-        [SecurityCritical]
         INativeProgressPage _npp;
     };
 }

@@ -94,12 +94,7 @@
       </trans-unit>
       <trans-unit id="FieldModifierNotAllowed">
         <source>MC6021: {0}:FieldModifier cannot be specified on this tag because it has either no {0}:Name or Name attribute set, or the tag is locally defined and has a Name attribute set, which is not allowed.</source>
-        <target state="translated">MC6021: impossibile specificare {0}:FieldModifier in questo tag perché non è impostato l'attributo {0}:Name o Name oppure il tag è definito localmente con un attributo Name impostato e questa condizione non è consentita.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
+        <target state="translated">MC6021: non è possibile specificare {0}:FieldModifier in questo tag perché non è impostato l'attributo {0}:Name o Name oppure il tag è definito in locale con un attributo Name impostato e questa condizione non è consentita.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFound">
@@ -142,11 +137,6 @@
         <target state="translated">File di codice generato: '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: '{0}:{1}' contiene '{2}'. '{0}:{1}' non può includere contenuto annidato.</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">La classe InternalTypeHelper non è richiesta per questo progetto, file make '{0}' vuoto.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: il valore di AssemblyVersion rilevato non è valido: {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -252,24 +247,9 @@
         <target state="translated">Input: file Page del markup di riferimento locale: '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">MarkupCompilePass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: all'evento '{0}' è associato un tipo delegato generico del gestore eventi '{1}'. Il parametro del tipo '{2}' in '{1}' non corrisponde a nessun parametro del tipo nel tag generico contenitore '{3}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -294,7 +274,7 @@
       </trans-unit>
       <trans-unit id="MissingClassWithModifier">
         <source>MC6009: {0}:ClassModifier attribute cannot be specified on the root tag because a {0}:Class attribute is also required. Either add a {0}:Class attribute or remove the {0}:ClassModifier attribute.</source>
-        <target state="translated">MC6009: impossibile specificare l'attributo {0}:ClassModifier nel tag radice perché è necessario anche un attributo {0}:Class. Aggiungere un attributo {0}:Class o rimuovere l'attributo {0}:ClassModifier.</target>
+        <target state="translated">MC6009: non è possibile specificare l'attributo {0}:ClassModifier nel tag radice perché è necessario anche un attributo {0}:Class. Aggiungere un attributo {0}:Class o rimuovere l'attributo {0}:ClassModifier.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassWithSubClass">
@@ -324,7 +304,7 @@
       </trans-unit>
       <trans-unit id="NamedResDictItemWarning">
         <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
-        <target state="translated">Un elemento '{0}' è denominato '{1}'. Non assegnare al contenuto il nome ResourceDictionary perché la relativa creazione dell'istanza è posticipata.</target>
+        <target state="translated">Un elemento '{0}' è denominato '{1}'. Non assegnare al contenuto il nome ResourceDictionary perché la relativa creazione di un'istanza è posticipata.</target>
         <note />
       </trans-unit>
       <trans-unit id="NonClsError">
@@ -799,7 +779,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">MC3086: per l'elemento o la proprietà padre '{0}' è necessaria un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, includere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
+        <target state="translated">MC3086: per l'elemento o la proprietà padre '{0}' è necessaria un'isola di dati XML. Per distinguere un'isola di dati XML dal codice XAML circostante, racchiudere l'isola di dati XML tra tag &lt;x:XData&gt; ... &lt;/x:XData&gt;.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -830,11 +810,6 @@
       <trans-unit id="PreparingCompile">
         <source>Preparing for the markup compilation...</source>
         <target state="translated">Preparazione della compilazione del markup in corso...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: il nome di tipo '{0}' non è specificato nel formato previsto 'nomeClasse, assembly'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReadResourceFile">
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">Generazione del file con estensione .resources '{0}' in corso...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: rilevata fine prematura della stringa.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: Uid mancante per l'elemento '{0}'.</target>
@@ -1085,11 +1050,6 @@
       <trans-unit id="UnmatchedLocComment">
         <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
         <target state="translated">LC1003: per il commento di localizzazione non è disponibile un valore impostato per la proprietà di destinazione: '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
         <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">

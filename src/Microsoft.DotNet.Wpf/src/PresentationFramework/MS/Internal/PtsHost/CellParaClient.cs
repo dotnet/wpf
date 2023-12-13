@@ -75,13 +75,6 @@ namespace MS.Internal.PtsHost
         /// <param name="rcTable">Table's rectangle.. (in page flow dir)</param>
         /// <param name="tableFlowDirection">Table's flow direction</param>
         /// <param name="pageContext">Page context</param>
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsClearUpdateInfoInSubpage.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        /// Safe - as the parameters passed in are Critical for set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Arrange(int du, int dv, PTS.FSRECT rcTable, FlowDirection tableFlowDirection, PageContext pageContext)
         {
             //
@@ -153,11 +146,6 @@ namespace MS.Internal.PtsHost
         /// <param name="fsfmtr">Format result</param>
         /// <param name="dvrUsed">dvr Used</param>
         /// <param name="breakRecordOut">Resultant break record for end of page</param>
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function FormatParaFinite and Critical
-        ///            setter on _paraHandle.Value.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatCellFinite(Size subpageSize, IntPtr breakRecordIn, bool isEmptyOk, uint fswdir, 
                                        PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
                                        out PTS.FSFMTR fsfmtr, out int dvrUsed, out IntPtr breakRecordOut)
@@ -169,7 +157,7 @@ namespace MS.Internal.PtsHost
             int dvrTopSpace;
             PTS.FSPAP fspap;
 
-            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != null)
+            if(CellParagraph.StructuralCache.DtrList != null && breakRecordIn != IntPtr.Zero)
             {
                 CellParagraph.InvalidateStructure(TextContainerHelper.GetCPFromElement(CellParagraph.StructuralCache.TextContainer, CellParagraph.Element, ElementEdge.BeforeStart));
             }
@@ -227,11 +215,6 @@ namespace MS.Internal.PtsHost
         /// <param name="width">Width of cell (height is specified by row props)</param>
         /// <param name="fmtrbl">bottomless format result</param>
         /// <param name="dvrUsed">dvr Used</param>
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical setter on _paraHandle.Value.
-        /// Safe - as pfspara which it is set to is generated in the function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void FormatCellBottomless(uint fswdir, double width, out PTS.FSFMTRBL fmtrbl, out int dvrUsed)
         {
             IntPtr pfspara;
@@ -284,11 +267,6 @@ namespace MS.Internal.PtsHost
         /// <param name="width">Width of cell (height is specified by row props)</param>
         /// <param name="fmtrbl">bottomless format result</param>
         /// <param name="dvrUsed">dvr Used</param>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function SubpageParagraph.UpdateBottomlessPara.
-        /// Safe - as the pointer parameter passed in is Critical for set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void UpdateBottomlessCell(uint fswdir, double width, out PTS.FSFMTRBL fmtrbl, out int dvrUsed)
         {
             IntPtr pmcsclientOut;

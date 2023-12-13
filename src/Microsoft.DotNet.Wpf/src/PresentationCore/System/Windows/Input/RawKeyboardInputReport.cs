@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32;
 using System.Windows;
@@ -32,7 +31,7 @@ namespace System.Windows.Input
         ///     The mode in which the input is being provided.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="actions">
         ///     The set of actions being reported.
@@ -52,12 +51,6 @@ namespace System.Windows.Input
         /// <param name="extraInformation">
         ///     Any extra information being provided along with the input.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This handles critical data in the form of PresentationSource and 
-        ///             ExtraInformation 
-        ///     TreatAsSafe:The data has demands on the property when someone tries to access it.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public RawKeyboardInputReport(
             PresentationSource inputSource,
             InputMode mode,
@@ -109,12 +102,8 @@ namespace System.Windows.Input
         ///     Read-only access to the extra information was provided along
         ///     with the input.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data was got under an elevation and is not safe to expose
-        /// </SecurityNote>
         public IntPtr ExtraInformation
         {
-            [SecurityCritical]
             get
             {
                 return _extraInformation.Value;
@@ -141,10 +130,6 @@ namespace System.Windows.Input
         private bool _isExtendedKey;
         private bool _isSystemKey;
         private int _virtualKey;
-        /// <SecurityNote>
-        ///     Critical: This information is got under an elevation and can latch onto
-        ///     any arbitrary data
-        /// </SecurityNote>
         private SecurityCriticalData<IntPtr> _extraInformation;
     }    
 }

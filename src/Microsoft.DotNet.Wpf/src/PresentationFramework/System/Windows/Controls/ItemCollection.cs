@@ -253,7 +253,7 @@ namespace System.Windows.Controls
 
             if (IsUsingItemsSource)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ItemsSourceInUse));
+                throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
             if (_internalView != null)
@@ -294,12 +294,10 @@ namespace System.Windows.Controls
         /// </param>
         public void CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
-                throw new ArgumentException(SR.Get(SRID.BadTargetArray), "array"); // array is multidimensional.
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
             if (!EnsureCollectionView())
@@ -341,23 +339,21 @@ namespace System.Windows.Controls
         /// </exception>
         public override object GetItemAt(int index)
         {
-                // only check lower bound because Count could be expensive
-                if (index < 0)
-                    throw new ArgumentOutOfRangeException("index");
+            // only check lower bound because Count could be expensive
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
-                VerifyRefreshNotDeferred();
+            VerifyRefreshNotDeferred();
 
-                if (!EnsureCollectionView())
-                    throw new InvalidOperationException(SR.Get(SRID.ItemCollectionHasNoCollection));
+            if (!EnsureCollectionView())
+                throw new InvalidOperationException(SR.ItemCollectionHasNoCollection);
 
-                if (_collectionView == _internalView)
-                {
-                    // check upper bound here because we know it's not expensive
-                    if (index >= _internalView.Count)
-                        throw new ArgumentOutOfRangeException("index");
-                }
+            if (_collectionView == _internalView)
+            {
+                // check upper bound here because we know it's not expensive
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _internalView.Count);
+            }
 
-                return _collectionView.GetItemAt(index);
+            return _collectionView.GetItemAt(index);
         }
 
 
@@ -766,7 +762,7 @@ namespace System.Windows.Controls
                 {
                     // see discussion in XML comment above.
                     #pragma warning suppress 6503 // "Property get methods should not throw exceptions."
-                    throw new NotSupportedException(SR.Get(SRID.ItemCollectionShouldUseInnerSyncRoot));
+                    throw new NotSupportedException(SR.ItemCollectionShouldUseInnerSyncRoot);
                 }
 
                 return _internalView.SyncRoot;
@@ -905,7 +901,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "NewItemPlaceholderPosition"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "NewItemPlaceholderPosition"));
                 }
             }
         }
@@ -944,7 +940,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "AddNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "AddNew"));
             }
         }
 
@@ -963,7 +959,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "CommitNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "CommitNew"));
             }
         }
 
@@ -980,7 +976,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "CancelNew"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "CancelNew"));
             }
         }
 
@@ -1061,7 +1057,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "RemoveAt"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "RemoveAt"));
             }
         }
 
@@ -1077,7 +1073,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "Remove"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "Remove"));
             }
         }
 
@@ -1101,7 +1097,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "EditItem"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "EditItem"));
             }
         }
 
@@ -1118,7 +1114,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "CommitEdit"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "CommitEdit"));
             }
         }
 
@@ -1135,7 +1131,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "CancelEdit"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "CancelEdit"));
             }
         }
 
@@ -1242,7 +1238,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.MemberNotAllowedForView, "AddNewItem"));
+                throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedForView, "AddNewItem"));
             }
         }
 
@@ -1515,7 +1511,7 @@ namespace System.Windows.Controls
             // If we're switching from Normal mode, first make sure it's legal.
             if (!IsUsingItemsSource && (_internalView != null) && (_internalView.RawCount > 0))
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotUseItemsSource));
+                throw new InvalidOperationException(SR.CannotUseItemsSource);
             }
 
             _itemsSource = value;
@@ -1953,7 +1949,7 @@ namespace System.Windows.Controls
         void CheckIsUsingInnerView()
         {
             if (IsUsingItemsSource)
-                throw new InvalidOperationException(SR.Get(SRID.ItemsSourceInUse));
+                throw new InvalidOperationException(SR.ItemsSourceInUse);
             EnsureInternalView();
             EnsureCollectionView();
             Debug.Assert(_collectionView != null);
@@ -1998,7 +1994,7 @@ namespace System.Windows.Controls
             // state of the underlying data.
 
             if (IsRefreshDeferred)
-                throw new InvalidOperationException(SR.Get(SRID.NoCheckOrChangeWhenDeferred));
+                throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
 
             #pragma warning restore 6503
             #pragma warning restore 1634, 1691
@@ -2255,7 +2251,7 @@ namespace System.Windows.Controls
                     break;
 
                 default:
-                    throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, e.Action));
+                    throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
         }
 

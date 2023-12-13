@@ -229,17 +229,11 @@
   <data name="BitmapCacheBrush_TransformChanged" xml:space="preserve">
     <value>BitmapCacheBrush does not support Transform.</value>
   </data>
-  <data name="BrowseBackKey" xml:space="preserve">
-    <value>Alt+Left;Backspace</value>
-  </data>
   <data name="BrowseBackKeyDisplayString" xml:space="preserve">
     <value>Alt+Left;Backspace</value>
   </data>
   <data name="BrowseBackText" xml:space="preserve">
     <value>Back</value>
-  </data>
-  <data name="BrowseForwardKey" xml:space="preserve">
-    <value>Alt+Right;Shift+Backspace</value>
   </data>
   <data name="BrowseForwardKeyDisplayString" xml:space="preserve">
     <value>Alt+Right;Shift+Backspace</value>
@@ -247,17 +241,11 @@
   <data name="BrowseForwardText" xml:space="preserve">
     <value>Forward</value>
   </data>
-  <data name="BrowseHomeKey" xml:space="preserve">
-    <value>Alt+Home;BrowserHome</value>
-  </data>
   <data name="BrowseHomeKeyDisplayString" xml:space="preserve">
     <value>Alt+Home;BrowserHome</value>
   </data>
   <data name="BrowseHomeText" xml:space="preserve">
     <value>Home</value>
-  </data>
-  <data name="BrowseStopKey" xml:space="preserve">
-    <value>Alt+Esc;BrowserStop</value>
   </data>
   <data name="BrowseStopKeyDisplayString" xml:space="preserve">
     <value>Alt+Esc;BrowserStop</value>
@@ -445,9 +433,6 @@
   <data name="ConstructorRecursion" xml:space="preserve">
     <value>Possible constructor recursion detected.</value>
   </data>
-  <data name="ContextMenuKey" xml:space="preserve">
-    <value>Shift+F10;Apps</value>
-  </data>
   <data name="ContextMenuKeyDisplayString" xml:space="preserve">
     <value>Shift+F10;Apps</value>
   </data>
@@ -459,9 +444,6 @@
   </data>
   <data name="Converter_ConvertToNotSupported" xml:space="preserve">
     <value>Cannot convert to type.</value>
-  </data>
-  <data name="CopyKey" xml:space="preserve">
-    <value>Ctrl+C;Ctrl+Insert</value>
   </data>
   <data name="CopyKeyDisplayString" xml:space="preserve">
     <value>Ctrl+C;Ctrl+Insert</value>
@@ -507,9 +489,6 @@
   </data>
   <data name="Cursor_UnsupportedFormat" xml:space="preserve">
     <value>'{0}' has unsupported extension for cursor.</value>
-  </data>
-  <data name="CutKey" xml:space="preserve">
-    <value>Ctrl+X;Shift+Delete</value>
   </data>
   <data name="CutKeyDisplayString" xml:space="preserve">
     <value>Ctrl+X;Shift+Delete</value>
@@ -570,9 +549,6 @@
   </data>
   <data name="DecreaseZoomText" xml:space="preserve">
     <value>Decrease Zoom</value>
-  </data>
-  <data name="DeleteKey" xml:space="preserve">
-    <value>Del</value>
   </data>
   <data name="DeleteKeyDisplayString" xml:space="preserve">
     <value>Del</value>
@@ -721,17 +697,11 @@
   <data name="EventArgIsNull" xml:space="preserve">
     <value>Event arguments must be non-null.</value>
   </data>
-  <data name="ExtendSelectionDownKey" xml:space="preserve">
-    <value>Shift+Down</value>
-  </data>
   <data name="ExtendSelectionDownKeyDisplayString" xml:space="preserve">
     <value>Shift+Down</value>
   </data>
   <data name="ExtendSelectionDownText" xml:space="preserve">
     <value>Extend Selection Down</value>
-  </data>
-  <data name="ExtendSelectionLeftKey" xml:space="preserve">
-    <value>Shift+Left</value>
   </data>
   <data name="ExtendSelectionLeftKeyDisplayString" xml:space="preserve">
     <value>Shift+Left</value>
@@ -739,17 +709,11 @@
   <data name="ExtendSelectionLeftText" xml:space="preserve">
     <value>Extend Selection Left</value>
   </data>
-  <data name="ExtendSelectionRightKey" xml:space="preserve">
-    <value>Shift+Right</value>
-  </data>
   <data name="ExtendSelectionRightKeyDisplayString" xml:space="preserve">
     <value>Shift+Right</value>
   </data>
   <data name="ExtendSelectionRightText" xml:space="preserve">
     <value>Extend Selection Right</value>
-  </data>
-  <data name="ExtendSelectionUpKey" xml:space="preserve">
-    <value>Shift+Up</value>
   </data>
   <data name="ExtendSelectionUpKeyDisplayString" xml:space="preserve">
     <value>Shift+Up</value>
@@ -769,9 +733,6 @@
   <data name="FamilyMap_TargetNotSet" xml:space="preserve">
     <value>Cannot add FamilyMap because Target property is not set.</value>
   </data>
-  <data name="FavoritesKey" xml:space="preserve">
-    <value>Ctrl+I</value>
-  </data>
   <data name="FavoritesKeyDisplayString" xml:space="preserve">
     <value>Ctrl+I</value>
   </data>
@@ -786,9 +747,6 @@
   </data>
   <data name="FileNotFoundExceptionWithFileName" xml:space="preserve">
     <value>Cannot find file '{0}'.</value>
-  </data>
-  <data name="FindKey" xml:space="preserve">
-    <value>Ctrl+F</value>
   </data>
   <data name="FindKeyDisplayString" xml:space="preserve">
     <value>Ctrl+F</value>
@@ -873,9 +831,6 @@
   </data>
   <data name="HandlerTypeIllegal" xml:space="preserve">
     <value>Handler type is mismatched.</value>
-  </data>
-  <data name="HelpKey" xml:space="preserve">
-    <value>F1</value>
   </data>
   <data name="HelpKeyDisplayString" xml:space="preserve">
     <value>F1</value>
@@ -1331,7 +1286,7 @@
     <value>Value must be of type '{0}' or '{1}'.</value>
   </data>
   <data name="Invalid_IInputElement" xml:space="preserve">
-    <value>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</value>
+    <value>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</value>
   </data>
   <data name="Invalid_isfData_Length" xml:space="preserve">
     <value>The length of the ISF data must be greater than zero.</value>
@@ -1687,17 +1642,11 @@
   <data name="Mismatched_RoutedEvent" xml:space="preserve">
     <value>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</value>
   </data>
-  <data name="MoveDownKey" xml:space="preserve">
-    <value>Down</value>
-  </data>
   <data name="MoveDownKeyDisplayString" xml:space="preserve">
     <value>Down</value>
   </data>
   <data name="MoveDownText" xml:space="preserve">
     <value>Move Down</value>
-  </data>
-  <data name="MoveFocusBackKey" xml:space="preserve">
-    <value>Ctrl+Left</value>
   </data>
   <data name="MoveFocusBackKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Left</value>
@@ -1705,17 +1654,11 @@
   <data name="MoveFocusBackText" xml:space="preserve">
     <value>Move Focus Back</value>
   </data>
-  <data name="MoveFocusDownKey" xml:space="preserve">
-    <value>Ctrl+Down</value>
-  </data>
   <data name="MoveFocusDownKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Down</value>
   </data>
   <data name="MoveFocusDownText" xml:space="preserve">
     <value>Move Focus Down</value>
-  </data>
-  <data name="MoveFocusForwardKey" xml:space="preserve">
-    <value>Ctrl+Right</value>
   </data>
   <data name="MoveFocusForwardKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Right</value>
@@ -1723,17 +1666,11 @@
   <data name="MoveFocusForwardText" xml:space="preserve">
     <value>Move Focus Forward</value>
   </data>
-  <data name="MoveFocusPageDownKey" xml:space="preserve">
-    <value>Ctrl+PageDown</value>
-  </data>
   <data name="MoveFocusPageDownKeyDisplayString" xml:space="preserve">
     <value>Ctrl+PageDown</value>
   </data>
   <data name="MoveFocusPageDownText" xml:space="preserve">
     <value>Move Focus Page Down</value>
-  </data>
-  <data name="MoveFocusPageUpKey" xml:space="preserve">
-    <value>Ctrl+PageUp</value>
   </data>
   <data name="MoveFocusPageUpKeyDisplayString" xml:space="preserve">
     <value>Ctrl+PageUp</value>
@@ -1741,17 +1678,11 @@
   <data name="MoveFocusPageUpText" xml:space="preserve">
     <value>Move Focus Page Up</value>
   </data>
-  <data name="MoveFocusUpKey" xml:space="preserve">
-    <value>Ctrl+Up</value>
-  </data>
   <data name="MoveFocusUpKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Up</value>
   </data>
   <data name="MoveFocusUpText" xml:space="preserve">
     <value>Move Focus Up</value>
-  </data>
-  <data name="MoveLeftKey" xml:space="preserve">
-    <value>Left</value>
   </data>
   <data name="MoveLeftKeyDisplayString" xml:space="preserve">
     <value>Left</value>
@@ -1759,17 +1690,11 @@
   <data name="MoveLeftText" xml:space="preserve">
     <value>Move Left</value>
   </data>
-  <data name="MoveRightKey" xml:space="preserve">
-    <value>Right</value>
-  </data>
   <data name="MoveRightKeyDisplayString" xml:space="preserve">
     <value>Right</value>
   </data>
   <data name="MoveRightText" xml:space="preserve">
     <value>Move Right</value>
-  </data>
-  <data name="MoveToEndKey" xml:space="preserve">
-    <value>End</value>
   </data>
   <data name="MoveToEndKeyDisplayString" xml:space="preserve">
     <value>End</value>
@@ -1777,17 +1702,11 @@
   <data name="MoveToEndText" xml:space="preserve">
     <value>Move To End</value>
   </data>
-  <data name="MoveToHomeKey" xml:space="preserve">
-    <value>Home</value>
-  </data>
   <data name="MoveToHomeKeyDisplayString" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="MoveToHomeText" xml:space="preserve">
     <value>Move To Home</value>
-  </data>
-  <data name="MoveToPageDownKey" xml:space="preserve">
-    <value>PageDown</value>
   </data>
   <data name="MoveToPageDownKeyDisplayString" xml:space="preserve">
     <value>PageDown</value>
@@ -1795,17 +1714,11 @@
   <data name="MoveToPageDownText" xml:space="preserve">
     <value>Move To Page Down</value>
   </data>
-  <data name="MoveToPageUpKey" xml:space="preserve">
-    <value>PageUp</value>
-  </data>
   <data name="MoveToPageUpKeyDisplayString" xml:space="preserve">
     <value>PageUp</value>
   </data>
   <data name="MoveToPageUpText" xml:space="preserve">
     <value>Move To Page Up</value>
-  </data>
-  <data name="MoveUpKey" xml:space="preserve">
-    <value>Up</value>
   </data>
   <data name="MoveUpKeyDisplayString" xml:space="preserve">
     <value>Up</value>
@@ -1824,9 +1737,6 @@
   </data>
   <data name="NavigateJournalText" xml:space="preserve">
     <value>Navigate Journal</value>
-  </data>
-  <data name="NewKey" xml:space="preserve">
-    <value>Ctrl+N</value>
   </data>
   <data name="NewKeyDisplayString" xml:space="preserve">
     <value>Ctrl+N</value>
@@ -1891,9 +1801,6 @@
   <data name="OnlyOneInitialization" xml:space="preserve">
     <value>The object is already initialized and cannot be initialized again.</value>
   </data>
-  <data name="OpenKey" xml:space="preserve">
-    <value>Ctrl+O</value>
-  </data>
   <data name="OpenKeyDisplayString" xml:space="preserve">
     <value>Ctrl+O</value>
   </data>
@@ -1915,32 +1822,14 @@
   <data name="PaginatorNegativePageNumber" xml:space="preserve">
     <value>Page number cannot be negative.</value>
   </data>
-  <data name="ParameterCannotBeGreaterThan" xml:space="preserve">
-    <value>The parameter value cannot be greater than '{0}'.</value>
-  </data>
-  <data name="ParameterCannotBeLessThan" xml:space="preserve">
-    <value>The parameter value cannot be less than '{0}'.</value>
-  </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
   <data name="ParameterMustBeBetween" xml:space="preserve">
     <value>The parameter value must be between '{0}' and '{1}'.</value>
-  </data>
-  <data name="ParameterMustBeGreaterThanZero" xml:space="preserve">
-    <value>The parameter value must be greater than zero.</value>
   </data>
   <data name="ParameterValueCannotBeInfinity" xml:space="preserve">
     <value>The parameter value must be finite.</value>
   </data>
   <data name="ParameterValueCannotBeNaN" xml:space="preserve">
     <value>The parameter value must be a number.</value>
-  </data>
-  <data name="ParameterValueCannotBeNegative" xml:space="preserve">
-    <value>'{0}' parameter value cannot be negative.</value>
-  </data>
-  <data name="ParameterValueMustBeGreaterThanZero" xml:space="preserve">
-    <value>'{0}' parameter value must be greater than zero.</value>
   </data>
   <data name="Parsers_IllegalToken" xml:space="preserve">
     <value>Token is not valid.</value>
@@ -1956,9 +1845,6 @@
   </data>
   <data name="Parser_UnexpectedToken" xml:space="preserve">
     <value>Unexpected token '{0}' encountered at position '{1}'.</value>
-  </data>
-  <data name="PasteKey" xml:space="preserve">
-    <value>Ctrl+V;Shift+Insert</value>
   </data>
   <data name="PasteKeyDisplayString" xml:space="preserve">
     <value>Ctrl+V;Shift+Insert</value>
@@ -1993,14 +1879,8 @@
   <data name="PreviousPageText" xml:space="preserve">
     <value>Previous Page</value>
   </data>
-  <data name="PrintKey" xml:space="preserve">
-    <value>Ctrl+P</value>
-  </data>
   <data name="PrintKeyDisplayString" xml:space="preserve">
     <value>Ctrl+P</value>
-  </data>
-  <data name="PrintPreviewKey" xml:space="preserve">
-    <value>Ctrl+F2</value>
   </data>
   <data name="PrintPreviewKeyDisplayString" xml:space="preserve">
     <value>Ctrl+F2</value>
@@ -2010,9 +1890,6 @@
   </data>
   <data name="PrintText" xml:space="preserve">
     <value>Print</value>
-  </data>
-  <data name="PropertiesKey" xml:space="preserve">
-    <value>F4</value>
   </data>
   <data name="PropertiesKeyDisplayString" xml:space="preserve">
     <value>F4</value>
@@ -2059,9 +1936,6 @@
   <data name="Rect_Empty" xml:space="preserve">
     <value>Rectangle cannot be empty.</value>
   </data>
-  <data name="RedoKey" xml:space="preserve">
-    <value>Ctrl+Y</value>
-  </data>
   <data name="RedoKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Y</value>
   </data>
@@ -2074,9 +1948,6 @@
   <data name="ReentrantVisualTreeChangeWarning" xml:space="preserve">
     <value>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</value>
   </data>
-  <data name="RefreshKey" xml:space="preserve">
-    <value>F5</value>
-  </data>
   <data name="RefreshKeyDisplayString" xml:space="preserve">
     <value>F5</value>
   </data>
@@ -2085,9 +1956,6 @@
   </data>
   <data name="RelievePenaltyResourceFailure" xml:space="preserve">
     <value>Text formatting engine cannot release penalty resource due to error: '{0}'.</value>
-  </data>
-  <data name="ReplaceKey" xml:space="preserve">
-    <value>Ctrl+H</value>
   </data>
   <data name="ReplaceKeyDisplayString" xml:space="preserve">
     <value>Ctrl+H</value>
@@ -2112,9 +1980,6 @@
   </data>
   <data name="SaveAsText" xml:space="preserve">
     <value>Save As</value>
-  </data>
-  <data name="SaveKey" xml:space="preserve">
-    <value>Ctrl+S</value>
   </data>
   <data name="SaveKeyDisplayString" xml:space="preserve">
     <value>Ctrl+S</value>
@@ -2146,9 +2011,6 @@
   <data name="ScrollByLineText" xml:space="preserve">
     <value>Scroll By Line</value>
   </data>
-  <data name="ScrollPageDownKey" xml:space="preserve">
-    <value>PageDown</value>
-  </data>
   <data name="ScrollPageDownKeyDisplayString" xml:space="preserve">
     <value>PageDown</value>
   </data>
@@ -2172,9 +2034,6 @@
   </data>
   <data name="ScrollPageRightText" xml:space="preserve">
     <value>Scroll Page Right</value>
-  </data>
-  <data name="ScrollPageUpKey" xml:space="preserve">
-    <value>PageUp</value>
   </data>
   <data name="ScrollPageUpKeyDisplayString" xml:space="preserve">
     <value>PageUp</value>
@@ -2200,17 +2059,11 @@
   <data name="SeekOriginInvalid" xml:space="preserve">
     <value>SeekOrigin value is not valid.</value>
   </data>
-  <data name="SelectAllKey" xml:space="preserve">
-    <value>Ctrl+A</value>
-  </data>
   <data name="SelectAllKeyDisplayString" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
   <data name="SelectAllText" xml:space="preserve">
     <value>Select All</value>
-  </data>
-  <data name="SelectToEndKey" xml:space="preserve">
-    <value>Shift+End</value>
   </data>
   <data name="SelectToEndKeyDisplayString" xml:space="preserve">
     <value>Shift+End</value>
@@ -2218,26 +2071,17 @@
   <data name="SelectToEndText" xml:space="preserve">
     <value>Select To End</value>
   </data>
-  <data name="SelectToHomeKey" xml:space="preserve">
-    <value>Shift+Home</value>
-  </data>
   <data name="SelectToHomeKeyDisplayString" xml:space="preserve">
     <value>Shift+Home</value>
   </data>
   <data name="SelectToHomeText" xml:space="preserve">
     <value>Select To Home</value>
   </data>
-  <data name="SelectToPageDownKey" xml:space="preserve">
-    <value>Shift+PageDown</value>
-  </data>
   <data name="SelectToPageDownKeyDisplayString" xml:space="preserve">
     <value>Shift+PageDown</value>
   </data>
   <data name="SelectToPageDownText" xml:space="preserve">
     <value>Select To PageDown</value>
-  </data>
-  <data name="SelectToPageUpKey" xml:space="preserve">
-    <value>Shift+PageUp</value>
   </data>
   <data name="SelectToPageUpKeyDisplayString" xml:space="preserve">
     <value>Shift+PageUp</value>
@@ -2274,9 +2118,6 @@
   </data>
   <data name="SpecificNumberCultureRequired" xml:space="preserve">
     <value>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</value>
-  </data>
-  <data name="StopKey" xml:space="preserve">
-    <value>Esc</value>
   </data>
   <data name="StopKeyDisplayString" xml:space="preserve">
     <value>Esc</value>
@@ -2496,9 +2337,6 @@
   </data>
   <data name="UnauthorizedAccessExceptionWithFileName" xml:space="preserve">
     <value>Access denied to the path '{0}'.</value>
-  </data>
-  <data name="UndoKey" xml:space="preserve">
-    <value>Ctrl+Z</value>
   </data>
   <data name="UndoKeyDisplayString" xml:space="preserve">
     <value>Ctrl+Z</value>

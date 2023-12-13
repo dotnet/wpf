@@ -29,7 +29,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Threading;
 
 using System.Windows;
@@ -93,12 +92,6 @@ namespace System.Windows.Interop
 
 
         /// constructor for ActiveXHost
-        ///<SecurityNote>
-        ///     Critical - calls trusted HwndHost ctor.
-        ///                Takes the clsid to instantiate as input.
-        ///     NOT TAS. Individual controls ( like WebOC) can become TAS if they justify why.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal ActiveXHost(Guid clsid, bool fTrusted ) : base( fTrusted )
         {
             // Thread.ApartmentState is [Obsolete]
@@ -106,7 +99,7 @@ namespace System.Windows.Interop
             // What if the control is marked as free-threaded?
             if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.AxRequiresApartmentThread, clsid.ToString()));
+                throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
             #pragma warning restore 0618
 
@@ -155,10 +148,6 @@ namespace System.Windows.Interop
         /// <internalonly>
         ///     Overriden to create our window and parent it.
         /// </internalonly>
-        ///<SecurityNote>
-        ///     Critical - calls methods on critical interface members
-        ///</SecurityNote>
-        [SecurityCritical ]
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
             this.ParentHandle = hwndParent;
@@ -186,8 +175,6 @@ namespace System.Windows.Interop
         ///     Critical - accesses ActiveXSite critical property
         ///     Not making TAS - you may be able to spoof content of web-pages if you could position any arbitrary
         ///                      control over a WebOC.
-        /// </SecurityNote>
-        [ SecurityCritical ]
         protected override void OnWindowPositionChanged(Rect bounds)
         {
             //Its okay to process this if we the control is not yet created
@@ -286,17 +273,11 @@ namespace System.Windows.Interop
 
         /// Returns an object that will be set as the site for the native ActiveX control.
         /// Implementors of the site can derive from ActiveXSite class.
-        ///<SecurityNote>
-        /// Critical - calls critical ctor.
-        ///</SecurityNote>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityCritical]
         internal virtual ActiveXSite CreateActiveXSite()
         {
             return new ActiveXSite(this);
         }
 
-        [SecurityCritical]
         internal virtual object CreateActiveXObject(Guid clsid)
         {
             return Activator.CreateInstance(Type.GetTypeFromCLSID(clsid));
@@ -326,11 +307,6 @@ namespace System.Windows.Interop
         /// This will be called when it is time to stop listening to events.
         /// This is where inheritors have to disconnect their connection points.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Potentially unsafe. For example, disconnecting the event sink breaks the site-locking 
-        /// feature of the WebBrowser control.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void DetachSink()
         {
         }
@@ -381,14 +357,8 @@ namespace System.Windows.Interop
             AccessKeyManager.Register(key.ToString(), this);
         }
 
-        ///<SecurityNote>
-        /// Critical - exposes critical _axSite member.
-        /// LinkDemand added, since without it, this property would make the LinkDemand on CreateActiveXSite meaningless.
-        ///</SecurityNote>
         internal ActiveXSite ActiveXSite
         {
-            [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-            [SecurityCritical]
             get
             {
                 if (_axSite == null)
@@ -399,12 +369,8 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - exposes critical _axContainer member.
-        ///</SecurityNote>
         internal ActiveXContainer Container
         {
-            [SecurityCritical]
             get
             {
                 if (_axContainer == null)
@@ -545,10 +511,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - runs arbitrary code on critical _axOleObject member.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal bool DoVerb(int verb)
         {
             int hr = _axOleObject.DoVerb(verb,
@@ -562,10 +524,6 @@ namespace System.Windows.Interop
             return hr == NativeMethods.S_OK;
         }
 
-        ///<SecurityNote>
-        ///     Critical - Calls setParent, accesses _axWindow.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void AttachWindow(IntPtr hwnd)
         {
             if (_axWindow.Handle == hwnd)
@@ -583,10 +541,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls ActiveXSite.StartEvents - critical code.
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private void StartEvents()
         {
             if (!this.GetAxHostState(ActiveXHelper.sinkAttached))
@@ -597,13 +551,6 @@ namespace System.Windows.Interop
             this.ActiveXSite.StartEvents();
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls ActiveXSite.StopEvents - critical code.
-        ///     NOT TAS: if you can stop listening to events - you could
-        ///              potentially turn off a mitigation. On the WebOC this could
-        ///              stop site-locking mitigation.
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private void StopEvents()
         {
             if (this.GetAxHostState(ActiveXHelper.sinkAttached))
@@ -614,13 +561,6 @@ namespace System.Windows.Interop
             this.ActiveXSite.StopEvents();
         }
 
-        ///<SecurityNote>
-        /// Critical - Calls critical code (CreateActiveXObject) calls critical interface members, _axInstance
-        /// TreatAsSafe - although this method instantiates the control.
-        ///               considered safe as the parameter that controls what to instantiate is critical for set.
-        ///               and set only via the critical CTOR.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromPassiveToLoaded()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Passive, "Wrong start state to transition from");
@@ -644,13 +584,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - accesses critical interface members, _axInstance
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromLoadedToPassive()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
@@ -685,13 +618,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls critical code - SetClientSite.
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromLoadedToRunning()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
@@ -717,13 +643,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - accesses critical code, _axOleOlebject, StopEvents
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromRunningToLoaded()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
@@ -741,13 +660,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls critical code - DoVerb.
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromRunningToInPlaceActive()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
@@ -765,7 +677,7 @@ namespace System.Windows.Interop
                     }
                     else
                     {
-                        throw new TargetInvocationException(SR.Get(SRID.AXNohWnd, GetType().Name), e);
+                        throw new TargetInvocationException(SR.Format(SR.AXNohWnd, GetType().Name), e);
                     }
                 }
 
@@ -775,13 +687,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls critical code - InPlaceDeactivate.
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromInPlaceActiveToRunning()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
@@ -797,13 +702,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls critical code - DoVerb.
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromInPlaceActiveToUIActive()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
@@ -817,13 +715,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - accesses critical interface members, _axOleInPlaceObject
-        /// TreatAsSafe - state transitions considered safe.
-        ///                     Instantiating a control is considered critical.
-        ///                     However once instantiated, state transitions considered ok.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private void TransitionFromUIActiveToInPlaceActive()
         {
             Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.UIActive, "Wrong start state to transition from");
@@ -870,15 +761,10 @@ namespace System.Windows.Interop
             set { SetValue(TabIndexProperty, value); }
         }
 
-        ///<SecurityNote>
-        ///     Critical - accesses _hwndParent critical member.
-        ///</SecurityNote>
         internal HandleRef ParentHandle
         {
-            [ SecurityCritical ]
             get { return _hwndParent; }
 
-            [ SecurityCritical ]
             set { _hwndParent = value; }
         }
 
@@ -903,12 +789,8 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the hosted ActiveX control's handle
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - returns critical _axWindow member
-        ///</SecurityNote>
         internal HandleRef ControlHandle
         {
-            [ SecurityCritical ]
             get { return _axWindow; }
         }
 
@@ -916,12 +798,8 @@ namespace System.Windows.Interop
         ///Returns the native webbrowser object that this control wraps. Needs FullTrust to access.
         /// Internally we will access the private field directly for perf reasons, no security checks
         ///</summary>
-        ///<SecurityNote>
-        ///     Critical - returns critical Instance member.
-        ///</SecurityNote>
         internal object ActiveXInstance
         {
-            [ SecurityCritical ]
             get
             {
                 return _axInstance;
@@ -929,24 +807,16 @@ namespace System.Windows.Interop
         }
 
 
-        ///<SecurityNote>
-        ///     Critical - returns critical Instance member.
-        ///</SecurityNote>
         internal UnsafeNativeMethods.IOleInPlaceObject ActiveXInPlaceObject
         {
-            [ SecurityCritical ]
             get
             {
                 return _axOleInPlaceObject;
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - returns critical Instance member.
-        ///</SecurityNote>
         internal UnsafeNativeMethods.IOleInPlaceActiveObject ActiveXInPlaceActiveObject
         {
-            [SecurityCritical]
             get
             {
                 return _axOleInPlaceActiveObject;
@@ -1081,10 +951,6 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        ///<SecurityNote>
-        ///     Critical -  accesses critical interface pointers.
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private void AttachInterfacesInternal()
         {
             Debug.Assert(_axInstance != null, "The native control is null");
@@ -1097,11 +963,6 @@ namespace System.Windows.Interop
             AttachInterfaces(_axInstance);
         }
 
-        ///<SecurityNote>
-        ///     Critical - accesses critical interface members.
-        ///     TreatAsSafe - clearing the interfaces is ok.
-        ///</SecurityNote>
-        [ SecurityCritical, SecurityTreatAsSafe ]
         private void DetachInterfacesInternal()
         {
             _axOleObject = null;
@@ -1113,10 +974,6 @@ namespace System.Windows.Interop
             DetachInterfaces();
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls calls critical interface members.
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private NativeMethods.SIZE SetExtent(int width, int height)
         {
             NativeMethods.SIZE sz = new NativeMethods.SIZE();
@@ -1147,11 +1004,6 @@ namespace System.Windows.Interop
             return GetExtent();
         }
 
-        ///<SecurityNote>
-        ///     Critical - accesses critical interface member _axOleObject
-        ///     TreatAsSafe - getting the size of the control is considered ok.
-        ///</SecurityNote>
-        [ SecurityCritical, SecurityTreatAsSafe ]
         private NativeMethods.SIZE GetExtent()
         {
             NativeMethods.SIZE sz = new NativeMethods.SIZE();
@@ -1192,10 +1044,6 @@ namespace System.Windows.Interop
         private Rect             _boundRect      = new Rect(0, 0, 0, 0);
 
         private Size             _cachedSize     = Size.Empty;
-        ///<SecurityNote>
-        ///     Critical - _hwndParent considered critical.
-        ///</SecurityNote>
-        [SecurityCritical ]
         private HandleRef        _hwndParent;
         private bool             _isDisposed;
 
@@ -1203,54 +1051,23 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        ///<SecurityNote>
-        ///     Critical - _clsId controls what code to run and instantiate.
-        ///</SecurityNote>
         private SecurityCriticalDataForSet<Guid>    _clsid;
 
-        ///<SecurityNote>
-        ///     Critical - hwnd of control
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private HandleRef                   _axWindow;
         private BitVector32                 _axHostState    = new BitVector32();
         private ActiveXHelper.ActiveXState  _axState        = ActiveXHelper.ActiveXState.Passive;
 
-        ///<SecurityNote>
-        ///     Critical - ActiveXSite interfaces of control
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private ActiveXSite                 _axSite;
 
-        ///<SecurityNote>
-        ///     Critical - ActiveXContainer of control
-        ///</SecurityNote>
-        [ SecurityCritical ]
         private ActiveXContainer            _axContainer;
 
-        ///<SecurityNote>
-        ///     Critical - all methods on this Interface are critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private object                      _axInstance;
 
         // Pointers to the ActiveX object: Interface pointers are cached for perf.
-        ///<SecurityNote>
-        ///     Critical - all methods on this Interface are critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IOleObject              _axOleObject;
 
-        ///<SecurityNote>
-        ///     Critical - all methods on this Interface are critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IOleInPlaceObject       _axOleInPlaceObject;
 
-        ///<SecurityNote>
-        ///     Critical - all methods on this Interface are critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IOleInPlaceActiveObject _axOleInPlaceActiveObject;
 
         #endregion ActiveX Related

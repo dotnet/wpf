@@ -23,10 +23,7 @@ namespace System.Windows.Media
         internal ExceptionEventArgs(Exception errorException)
             : base()
         {
-            if (errorException == null)
-            {
-                throw new ArgumentNullException("errorException");
-            }
+            ArgumentNullException.ThrowIfNull(errorException);
 
             _errorException = errorException;
         }
@@ -66,15 +63,9 @@ namespace System.Windows.Media
             string      parameterValue
             ) : base()
         {
-            if (parameterType == null)
-            {
-                throw new ArgumentNullException("parameterType");
-            }
+            ArgumentNullException.ThrowIfNull(parameterType);
 
-            if (parameterValue == null)
-            {
-                throw new ArgumentNullException("parameterValue");
-            }
+            ArgumentNullException.ThrowIfNull(parameterValue);
 
             _parameterType = parameterType;
             _parameterValue = parameterValue;

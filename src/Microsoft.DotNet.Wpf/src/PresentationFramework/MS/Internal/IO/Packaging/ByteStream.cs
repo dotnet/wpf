@@ -16,7 +16,6 @@ using System.Runtime.InteropServices.ComTypes;      // for IStream
 using System.Windows;
 using MS.Win32;                                     // for NativeMethods
 using System.Security;                              // for marking critical methods
-using System.Security.Permissions;                  // for elevations
 
 namespace MS.Internal.IO.Packaging
 {
@@ -37,13 +36,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="underlyingStream"></param>
         /// <param name="openAccess"></param>
-        /// <SecurityNote>
-        ///     Critical - We are creating an instance of SecurityCriticalDataForSet with the supplied stream.
-        ///                The caller of this constructor should be critical and trusted since we accept a stream
-        ///                of data from them.  The data is only critical for set since it was a stream the caller
-        ///                originally had in the first place so they could get it again if they wanted it.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ByteStream(object underlyingStream, FileAccess openAccess)
         {
             SecuritySuppressedIStream stream = underlyingStream as SecuritySuppressedIStream;
@@ -103,15 +95,8 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Gets the length in bytes of the stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override long Length
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckDisposedStatus();
@@ -138,15 +123,8 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Gets or sets the position within the current stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
         public override long Position
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckDisposedStatus();
@@ -160,14 +138,13 @@ namespace MS.Internal.IO.Packaging
                 return seekPos;
             }
 
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 CheckDisposedStatus();
 
                 if (!CanSeek)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.SetPositionNotSupported));
+                    throw new NotSupportedException(SR.SetPositionNotSupported);
                 }
                 
                 long seekPos = 0;
@@ -178,7 +155,7 @@ namespace MS.Internal.IO.Packaging
 
                 if (value != seekPos)
                 {
-                    throw new IOException(SR.Get(SRID.SeekFailed));
+                    throw new IOException(SR.SeekFailed);
                 }
             }
         }
@@ -209,20 +186,13 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">Offset byte count</param>
         /// <param name="origin">Offset origin</param>
         /// <returns>The new position within the current stream.</returns>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposedStatus();
 
             if (!CanSeek)
             {
-                throw new NotSupportedException(SR.Get(SRID.SeekNotSupported));
+                throw new NotSupportedException(SR.SeekNotSupported);
             }
 
             long seekPos = 0;
@@ -235,7 +205,7 @@ namespace MS.Internal.IO.Packaging
                     if (0 > offset)
                     {
                         throw new ArgumentOutOfRangeException("offset",
-                                                              SR.Get(SRID.SeekNegative));
+                                                              SR.SeekNegative);
                     }
                     break;
 
@@ -265,7 +235,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="newLength">New length</param>
         public override void SetLength(long newLength)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
         /// <summary>
@@ -276,20 +246,13 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">Buffer start position</param>
         /// <param name="count">Number of bytes to read</param>
         /// <returns>Number of bytes actually read</returns>
-        /// <SecurityNote>
-        ///     Critical - The stream object is marked with SUC and SecurityCritical.
-        ///     TreatAsSafe - The caller already has access to the stream.  Also, in order to
-        ///                   have created this class the caller would have had to have had
-        ///                   permission to create the unmanaged code stream already.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposedStatus();
 
             if (!CanRead)
             {
-                throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                throw new NotSupportedException(SR.ReadNotSupported);
             }
             
             int read = 0;
@@ -304,21 +267,21 @@ namespace MS.Internal.IO.Packaging
             if (0 > count)
             {
                 throw new ArgumentOutOfRangeException("count",
-                                                      SR.Get(SRID.ReadCountNegative));
+                                                      SR.ReadCountNegative);
             }
 
             // offset has to be a positive number
             if (0 > offset)
             {
                 throw new ArgumentOutOfRangeException("offset",
-                                                      SR.Get(SRID.BufferOffsetNegative));
+                                                      SR.BufferOffsetNegative);
             }
 
             // make sure that we have a buffer that matches number of bytes we need to read 
             // since all values are > 0, there is no chance of overflow
             if (!((buffer.Length > 0) && ((buffer.Length - offset) >= count)))
             {
-                throw new ArgumentException(SR.Get(SRID.BufferTooSmall), "buffer");
+                throw new ArgumentException(SR.BufferTooSmall, "buffer");
             }
             
             // offset == 0 is the normal case
@@ -356,7 +319,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="count">Number of bytes to write</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
         /// <summary>
@@ -385,7 +348,7 @@ namespace MS.Internal.IO.Packaging
         internal void CheckDisposedStatus()
         {
             if (StreamDisposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StreamObjectDisposed));
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
         }
 
         #endregion Internal Methods
@@ -422,10 +385,6 @@ namespace MS.Internal.IO.Packaging
         // This class does not control the life cycle of _securitySupressedIStream
         //  thus it should not dispose it when this class gets disposed
         //  the client code of this class should be the one that dispose _securitySupressedIStream
-        /// <SecurityNote>
-        ///  Critical : Field for critical type SecuritySuppressedIStream
-        /// </SecurityNote>
-        [SecurityCritical]
         SecurityCriticalDataForSet<SecuritySuppressedIStream> _securitySuppressedIStream;
 
         FileAccess                 _access;
@@ -451,8 +410,6 @@ namespace MS.Internal.IO.Packaging
         [Guid("0000000c-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [SecurityCritical(SecurityCriticalScope.Everything)]
         public interface SecuritySuppressedIStream
         {
             // ISequentialStream portion

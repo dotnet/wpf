@@ -5,7 +5,6 @@
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Markup;
-using System.Security.Permissions;
 
 using MS.Utility;
 using MS.Internal;
@@ -142,7 +141,7 @@ namespace System.Windows
             {
                 if (IsSealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "trigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
                 }
 
                 _executeEnterActionsOnApply = value;
@@ -164,7 +163,7 @@ namespace System.Windows
             {
                 if (IsSealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "trigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "trigger"));
                 }
 
                 _executeExitActionsOnApply = value;
@@ -181,7 +180,7 @@ namespace System.Windows
             // Not allowed to use Style to affect the StyleProperty.
             if (dp == FrameworkElement.StyleProperty)
             {
-                throw new ArgumentException(SR.Get(SRID.StylePropertyInStyleNotAllowed));
+                throw new ArgumentException(SR.StylePropertyInStyleNotAllowed);
             }
         }
 
@@ -191,14 +190,11 @@ namespace System.Windows
         /// </summary>
         internal string ProcessParametersVisualTreeChild(DependencyProperty dp, string target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             if (target.Length == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.ChildNameMustBeNonEmpty));
+                throw new ArgumentException(SR.ChildNameMustBeNonEmpty);
             }
 
             return String.Intern(target);
@@ -226,7 +222,6 @@ namespace System.Windows
             PropertyValues.Add(propertyValue);
         }
 
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override void Seal()
         {
             // Verify Context Access
@@ -253,7 +248,7 @@ namespace System.Windows
                     // 984916 for details.
                     if (source == dependent && propertyValue.ChildName == StyleHelper.SelfName)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.PropertyTriggerCycleDetected, source.Name));
+                        throw new InvalidOperationException(SR.Format(SR.PropertyTriggerCycleDetected, source.Name));
                     }
                 }
             }
@@ -312,7 +307,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.VisualTriggerSettersIncludeUnsupportedSetterType, setters[i].GetType().Name));
+                        throw new InvalidOperationException(SR.Format(SR.VisualTriggerSettersIncludeUnsupportedSetterType, setters[i].GetType().Name));
                     }
                 }
             }
@@ -370,7 +365,7 @@ namespace System.Windows
 
                 if( _nextGlobalLayerRank == Int64.MaxValue )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PropertyTriggerLayerLimitExceeded));
+                    throw new InvalidOperationException(SR.PropertyTriggerLayerLimitExceeded);
                 }
             }
         }
@@ -395,7 +390,7 @@ namespace System.Windows
         /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
 
         // Global, cross-object synchronization
-        private static object Synchronized = new object();
+        private static readonly object Synchronized = new object();
 
         // Conditions
         TriggerCondition[] _triggerConditions;

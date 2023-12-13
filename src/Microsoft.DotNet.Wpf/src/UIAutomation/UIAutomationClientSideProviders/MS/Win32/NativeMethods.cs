@@ -18,7 +18,6 @@
 using Accessibility;
 using System.Runtime.InteropServices;
 using System;
-using System.Security.Permissions;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
@@ -1042,7 +1041,6 @@ namespace MS.Win32
             internal int iHeight;
         }
 
-        //CASRemoval:[System.Security.Permissions.SecurityPermissionAttribute (System.Security.Permissions.SecurityAction.LinkDemand, Flags = System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode)]
         static internal class Util
         {
             internal static int MAKELONG (int low, int high)

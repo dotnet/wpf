@@ -1,0 +1,77 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic,Luna.NormalColor,Luna.Homestead,Luna.Metallic,Royale.NormalColor]] -->
+   
+    <!--=================================================================
+        Window
+    ==================================================================-->
+    <ControlTemplate x:Key="WindowTemplateKey"
+                     TargetType="{x:Type Window}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <AdornerDecorator>
+                    <ContentPresenter/>
+                </AdornerDecorator>
+
+                <ResizeGrip x:Name="WindowResizeGrip"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Visibility="Collapsed"
+                            IsTabStop="false"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <!-- There may be perf implications b/c of the following conditions.  We may cause
+                     an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                     is set to CanResizeWithGrip.
+                     NavigationWindow's style requires the ResizeMode condition tag even though
+                     Window's style already takes care of this condition.
+                     -->
+                <MultiTrigger.Conditions>
+                    <Condition Property="Window.ResizeMode"
+                               Value="CanResizeWithGrip"/>
+                    <Condition Property="Window.WindowState"
+                               Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="WindowResizeGrip"
+                        Property="Visibility"
+                        Value="Visible"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+    <Style x:Key="{x:Type Window}"
+           TargetType="{x:Type Window}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <AdornerDecorator>
+                            <ContentPresenter/>
+                        </AdornerDecorator>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Window.ResizeMode"
+                     Value="CanResizeWithGrip">
+                <Setter Property="Template"
+                        Value="{StaticResource WindowTemplateKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>

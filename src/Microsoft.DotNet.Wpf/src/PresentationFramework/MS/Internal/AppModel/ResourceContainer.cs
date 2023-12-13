@@ -197,16 +197,6 @@ namespace MS.Internal.AppModel
         // <param name="uri"></param>
         // <returns></returns>
 
-        /// <SecurityNote>
-        ///   1. Critical - because calling add_AssemblyLoad
-        ///      Safe - because only hooks up specific internal event handler only applicable to for non-browser hosted scneario
-        ///   2. Critical - because creating a new ResourcePart is critical, as the ResourceManagerWrapper
-        ///                 that it uses has an Assembly instance that is SecurityCritical data for accessing internal types.
-        ///      Safe - because a ResourceManagerWrapper is being created based on a Uri name that gets mapped
-        ///             to an assembly from which a stream for the Uri was created and GetResourceManagerWrapper
-        ///             guarantees that given a Uri, the stream is always created from that mapped Assembly
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override PackagePart GetPartCore(Uri uri)
         {
             string partName;
@@ -217,7 +207,7 @@ namespace MS.Internal.AppModel
             // old version dll when a newer one is loaded. So whenever the AssemblyLoad event is fired, we will need to update the cache 
             // with the newly loaded assembly. This is currently only for designer so not needed for browser hosted apps. 
             // Attach the event handler before the first time we get the ResourceManagerWrapper.
-            if ((!assemblyLoadhandlerAttached) && (!BrowserInteropHelper.IsBrowserHosted))
+            if (!assemblyLoadhandlerAttached)
             {
                 AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(OnAssemblyLoadEventHandler);
                 assemblyLoadhandlerAttached = true;
@@ -262,7 +252,7 @@ namespace MS.Internal.AppModel
             // We do not care about assemblies loaded into the reflection-only context or the Gaced assemblies.
             // For example, in Sparkle whenever a project is built all dependent assemblies will be loaded reflection only.
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
-            if ((!assembly.ReflectionOnly) && (!assembly.GlobalAssemblyCache))
+            if ((!assembly.ReflectionOnly))
             {
                 AssemblyName assemblyInfo = new AssemblyName(assembly.FullName);
 
@@ -384,7 +374,7 @@ namespace MS.Internal.AppModel
                 else
                 {
                     // Throw when Application.ResourceAssembly is null. 
-                    throw new IOException(SR.Get(SRID.EntryAssemblyIsNull));
+                    throw new IOException(SR.EntryAssemblyIsNull);
                 }
             }
 

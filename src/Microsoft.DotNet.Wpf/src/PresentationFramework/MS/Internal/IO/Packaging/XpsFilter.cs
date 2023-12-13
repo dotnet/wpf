@@ -58,14 +58,14 @@ namespace MS.Internal.IO.Packaging
         {
             if (_filter == null)
             {
-                throw new COMException(SR.Get(SRID.FileToFilterNotLoaded),
+                throw new COMException(SR.FileToFilterNotLoaded,
                     (int)NativeMethods.E_FAIL);
             }
 
             if (cAttributes > 0 && aAttributes == null)
             {
                 // Attributes count and array do not match.
-                throw new COMException(SR.Get(SRID.FilterInitInvalidAttributes),
+                throw new COMException(SR.FilterInitInvalidAttributes,
                     (int)NativeMethods.E_INVALIDARG);
             }
 
@@ -80,7 +80,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_filter == null)
             {
-                throw new COMException(SR.Get(SRID.FileToFilterNotLoaded),
+                throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging
                 if (ex.ErrorCode == (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS)
                     ReleaseResources();
 
-                throw ex;
+                throw;
             }
         }
 
@@ -104,25 +104,18 @@ namespace MS.Internal.IO.Packaging
         /// <param name="bufCharacterCount">size of buffer in characters</param>
         /// <param name="pBuffer">buffer pointer</param>
         /// <remarks>Supported for indexing content of Package.</remarks>
-        /// <SecurityNote>
-        /// Critical    - Calling Marshal.WriteInt16, which has a LinkDemand. It takes an input 
-        ///               pointer to write to. To be safe, the caller cannot be in Partial Trust.
-        ///   This method is Internal. Not to be called from PT code.
-        ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
-        [SecurityCritical]
         void IFilter.GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
             if (_filter == null)
             {
-                throw new COMException(SR.Get(SRID.FileToFilterNotLoaded),
+                throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
             // NULL is not an acceptable value for pBuffer
             if (pBuffer == IntPtr.Zero)
             {
-                throw new NullReferenceException(SR.Get(SRID.FilterNullGetTextBufferPointer));
+                throw new NullReferenceException(SR.FilterNullGetTextBufferPointer);
             }
 
             // If there is 0 byte to write, this is a no-op.
@@ -162,7 +155,7 @@ namespace MS.Internal.IO.Packaging
             // An increase in the in/out size parameter would be anomalous, and could be ill-intentioned.
             if (bufCharacterCount > maxSpaceForContent)
             {
-                throw new COMException(SR.Get(SRID.AuxiliaryFilterReturnedAnomalousCountOfCharacters),
+                throw new COMException(SR.AuxiliaryFilterReturnedAnomalousCountOfCharacters,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
@@ -201,7 +194,7 @@ namespace MS.Internal.IO.Packaging
                     // An increase in the in/out size parameter would be anomalous, and could be ill-intentioned.
                     if (bufCharacterCount > 2)
                     {
-                        throw new COMException(SR.Get(SRID.AuxiliaryFilterReturnedAnomalousCountOfCharacters),
+                        throw new COMException(SR.AuxiliaryFilterReturnedAnomalousCountOfCharacters,
                             (int)FilterErrorCode.FILTER_E_ACCESS);
                     }
 
@@ -286,7 +279,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_filter == null)
             {
-                throw new COMException(SR.Get(SRID.FileToFilterNotLoaded),
+                throw new COMException(SR.FileToFilterNotLoaded,
                     (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
@@ -302,7 +295,7 @@ namespace MS.Internal.IO.Packaging
         IntPtr IFilter.BindRegion([In] FILTERREGION origPos, [In] ref Guid riid)
         {
             // The following exception maps to E_NOTIMPL.
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
 
         #endregion IFilter methods
@@ -370,14 +363,14 @@ namespace MS.Internal.IO.Packaging
             // Check argument.
             if (pszFileName == null || pszFileName == String.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.FileNameNullOrEmpty), "pszFileName");
+                throw new ArgumentException(SR.FileNameNullOrEmpty, "pszFileName");
             }
 
             // Convert mode information in flag.
             switch ((STGM_FLAGS)(dwMode & (int)STGM_FLAGS.MODE))
             {
                 case STGM_FLAGS.CREATE:
-                    throw new ArgumentException(SR.Get(SRID.FilterLoadInvalidModeFlag), "dwMode");
+                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, "dwMode");
 
                 default:
                     fileMode = FileMode.Open;
@@ -393,7 +386,7 @@ namespace MS.Internal.IO.Packaging
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.FilterLoadInvalidModeFlag), "dwMode");
+                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, "dwMode");
             }
 
             // Sharing flags are ignored. Since managed filters do not have the equivalent
@@ -470,7 +463,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IPersistFile.Save(string pszFileName, bool fRemember)
         {
-            throw new COMException(SR.Get(SRID.FilterIPersistFileIsReadOnly), NativeMethods.STG_E_CANTSAVE);
+            throw new COMException(SR.FilterIPersistFileIsReadOnly, NativeMethods.STG_E_CANTSAVE);
         }
 
         /// <summary>
@@ -528,21 +521,10 @@ namespace MS.Internal.IO.Packaging
         /// MS.Internal.Interop.IStream rather than the standard
         /// managed so as to allow optimized marshaling in UnsafeIndexingFilterStream.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This method accesses a class - UnsafeIndexingFilterStream which calls into
-        ///               unmanaged code which provides a managed Stream like interface for an 
-        ///               unmanaged OLE IStream.
-        ///               This method is only called by unmanaged callers. 
-        ///               There is no elevation of privilege in this method.
-        /// </SecurityNote>
-        [SecurityCritical]
         void IPersistStream.Load(MS.Internal.Interop.IStream stream)
         {
             // Check argument.
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             // Only one of _package and _encryptedPackage can be non-null at a time.
             Invariant.Assert(_package == null || _encryptedPackage == null);
@@ -601,7 +583,7 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IPersistStream.Save(MS.Internal.Interop.IStream stream, bool fClearDirty)
         {
-            throw new COMException(SR.Get(SRID.FilterIPersistStreamIsReadOnly), NativeMethods.STG_E_CANTSAVE);
+            throw new COMException(SR.FilterIPersistStreamIsReadOnly, NativeMethods.STG_E_CANTSAVE);
         }
 
         /// <summary>
@@ -611,7 +593,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         void IPersistStream.GetSizeMax(out Int64 pcbSize)
         {
-            throw new NotSupportedException(SR.Get(SRID.FilterIPersistFileIsReadOnly));
+            throw new NotSupportedException(SR.FilterIPersistFileIsReadOnly);
         }
 
         #endregion IPersistStream methods

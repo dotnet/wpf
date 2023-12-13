@@ -38,7 +38,6 @@ namespace System.Windows.Markup
             if (CurrentType != null)
             {
                 XamlType baseType = CurrentType.BaseType;
-
                 if (baseType != null)
                 {
                     CurrentType = baseType;

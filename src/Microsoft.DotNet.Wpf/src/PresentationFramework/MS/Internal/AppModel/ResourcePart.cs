@@ -41,10 +41,6 @@ namespace MS.Internal.AppModel
 
         #region Public Constructors
 
-        /// <SecurityNote>
-        ///     Critical - because _rmWrapper, which is being set, is marked SecurityCriticalDataForSet.
-        /// </SecurityNote>
-        [SecurityCritical]
         public ResourcePart(Package container, Uri uri, string name, ResourceManagerWrapper rmWrapper) :
             base(container, uri)
         {
@@ -67,18 +63,6 @@ namespace MS.Internal.AppModel
 
         #region Protected Methods
 
-        /// <SecurityNote>
-        ///     Critical - because creating a BamlStream is critical as it stores the assembly
-        ///                passed in to it the _assembly field, and this field is used by the 
-        ///                BamlRecordReader to allow legitimate internal types in Partial Trust.
-        ///     Safe - because the _rmWrapper from which the assembly is obtained is SecurityCriticalDataForSet,
-        ///            and setting that when a ResourcePart is constructed is treated as safe by
-        ///            ResourceContainer.GetPartCore(). The _rmWrapper is trated as safe as it guarantees
-        ///            that any stream created by it is always from the assembly that it also holds on to.
-        ///            So to the BamlRecordReader, this Assembly that it uses is always guaranteed to be 
-        ///            the one from which the baml stream that it reads, was created from.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override Stream GetStreamCore(FileMode mode, FileAccess access)
         {
             Stream stream = null;
@@ -94,7 +78,7 @@ namespace MS.Internal.AppModel
 
                 if (stream == null)
                 {
-                    throw new IOException(SR.Get(SRID.UnableToLocateResource, _name));
+                    throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                 }
             }
 
@@ -150,7 +134,7 @@ namespace MS.Internal.AppModel
                     // Throw here we will catch all those cases.
                     if (String.Compare(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        throw new IOException(SR.Get(SRID.UnableToLocateResource, _name));
+                        throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                     }
 
                     if (String.Compare(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase) == 0)
@@ -201,7 +185,7 @@ namespace MS.Internal.AppModel
         private SecurityCriticalDataForSet<ResourceManagerWrapper> _rmWrapper;
         private bool _ensureResourceIsCalled = false;
         private string _name;
-        private Object _globalLock = new Object();
+        private readonly Object _globalLock = new Object();
 
         #endregion Private Members
     }

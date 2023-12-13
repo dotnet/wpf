@@ -1,0 +1,185 @@
+﻿<!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonGalleryItem
+        ==================================================================-->
+    <SolidColorBrush x:Key="RibbonGalleryItemPressedOverlayBrushKey" Color="#30FFFFFF" />
+    <!-- Instead of using RibbonSharedResources.RibbonDisabledForegroundBrushKey, we need a slightly darker color to signify
+         disabled TextElement.Foreground since the 0.5 Opacity setting will diminish Foreground's darkness. -->
+    <SolidColorBrush x:Key="RibbonGalleryItemDisabledBrush" Color="#FF3F3F3F" />
+    
+    <Style x:Key="{x:Type ribbon:RibbonGalleryItem}"  TargetType="{x:Type ribbon:RibbonGalleryItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="MouseOverBorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.MouseOverBorderBrush}" />
+        <Setter Property="MouseOverBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.MouseOverBackground}" />
+        <Setter Property="PressedBorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.PressedBorderBrush}" />
+        <Setter Property="PressedBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.PressedBackground}" />
+        <Setter Property="CheckedBorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.CheckedBorderBrush}" />
+        <Setter Property="CheckedBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.CheckedBackground}" />
+        <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource RibbonToolTipInitialShowDelayKey}" />
+        <Setter Property="ToolTipService.ShowDuration" Value="{StaticResource RibbonToolTipShowDurationKey}" />
+        <Setter Property="ToolTipService.BetweenShowDelay" Value="{StaticResource RibbonToolTipBetweenShowDelayKey}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="HorizontalContentAlignment"
+                    Value="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment"
+                    Value="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="0"/>
+
+        <!--=================================================================
+                Classic (the default template)
+            ==================================================================-->
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonGalleryItem}">
+                    <Grid x:Name="MainGrid" 
+                          SnapsToDevicePixels="True">
+                        <Border x:Name="OuterBorder"
+                                CornerRadius="2"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <Border x:Name="InnerBorder"
+                                    CornerRadius="2"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="{TemplateBinding BorderThickness}" >
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Margin="2"
+                                                  RecognizesAccessKey="True"/>
+                            </Border>
+                        </Border>
+                        <Border x:Name="PressedStateOverlay"
+                                CornerRadius="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- IsEnabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{StaticResource RibbonGalleryItemDisabledBrush}" />
+                        </Trigger>
+
+                        <!-- HighContrast -->
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="Background" Value="Transparent" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="OuterBorder" Property="CornerRadius" Value="0" />
+                            <Setter TargetName="PressedStateOverlay" Property="CornerRadius" Value="0" />
+                        </DataTrigger>
+
+                        <!-- Highlighted -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="True"/>
+                                <Condition Property="IsPressed" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseOverBackground}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseOverBorderBrush}" />
+                        </MultiTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHighlighted}" Value="True" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </MultiDataTrigger>
+                        
+                        <!-- IsPressed -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBackground}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PressedBorderBrush}"  />
+                            <Setter TargetName="PressedStateOverlay" Property="Background" Value="{StaticResource RibbonGalleryItemPressedOverlayBrushKey}" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                            <Setter TargetName="PressedStateOverlay" Property="Background" Value="{StaticResource RibbonGalleryItemPressedOverlayBrushKey}" />
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </MultiDataTrigger>
+
+                        <!-- IsSelected -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBackground}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CheckedBorderBrush}"  />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </MultiDataTrigger>
+                        <!-- IsHighlighted + IsSelected -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="InnerBorder" Property="Background" Value="{StaticResource RibbonHighlightedSelectedBackgroundBrushKey}" />
+                        </MultiTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHighlighted}" Value="True" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="InnerBorder" Property="Background" Value="Transparent" />
+                            <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False" />
+#ifdef Net45
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                                <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

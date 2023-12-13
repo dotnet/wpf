@@ -307,7 +307,7 @@ namespace MS.Internal.Automation
                 {
                     // you can't really do anything to a disabled window
                     if ( IsBitSet(GetWindowStyle(), SafeNativeMethods.WS_DISABLED) )
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
                     // If already in the normal state, do not need to do anything.
                     if (((IWindowProvider)this).VisualState == WindowVisualState.Normal)
@@ -323,7 +323,7 @@ namespace MS.Internal.Automation
                     // get the WINDOWPLACEMENT information
                     if (!Misc.GetWindowPlacement(_hwnd, ref wp))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     wp.showCmd = UnsafeNativeMethods.SW_RESTORE;
@@ -332,7 +332,7 @@ namespace MS.Internal.Automation
                     // sending SC_RESTORE puts it back to maximized instead of normal.
                     if (!Misc.SetWindowPlacement(_hwnd, ref wp))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     return;
@@ -341,7 +341,7 @@ namespace MS.Internal.Automation
                 case WindowVisualState.Minimized:
                 {
                     if (!((IWindowProvider)this).Minimizable)
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
                     // If already minimzed, do not need to do anything.
                     if (((IWindowProvider)this).VisualState == WindowVisualState.Minimized)
@@ -353,7 +353,7 @@ namespace MS.Internal.Automation
 
                     if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MINIMIZE, IntPtr.Zero))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     return;
@@ -362,7 +362,7 @@ namespace MS.Internal.Automation
                 case WindowVisualState.Maximized:
                 {
                     if ( ! ((IWindowProvider)this).Maximizable )
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
                     // If already maximized, do not need to do anything.
                     if (((IWindowProvider)this).VisualState == WindowVisualState.Maximized)
@@ -374,7 +374,7 @@ namespace MS.Internal.Automation
 
                     if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MAXIMIZE, IntPtr.Zero))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     return;
@@ -383,7 +383,7 @@ namespace MS.Internal.Automation
                 default:
                 {
                     Debug.Assert(false,"unexpected switch() case:");
-                    throw new ArgumentException(SR.Get(SRID.UnexpectedWindowState),"state");
+                    throw new ArgumentException(SR.UnexpectedWindowState,"state");
                 }
 
             }
@@ -396,14 +396,13 @@ namespace MS.Internal.Automation
 
             if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_CLOSE, IntPtr.Zero))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
         bool IWindowProvider.WaitForInputIdle( int milliseconds )
         {
-           if( milliseconds < 0 )
-               throw new ArgumentOutOfRangeException( "milliseconds" );
+            ArgumentOutOfRangeException.ThrowIfNegative(milliseconds);
 
             // Implementation note:  This method is usually used in response to handling a WindowPattern.WindowOpenedEvent.
             // In this case it works for both legacy and WCP windows. This is because the WindowOpenedEvent uses a private
@@ -574,7 +573,7 @@ namespace MS.Internal.Automation
 
         WindowInteractionState IWindowProvider.InteractionState
         {
-            // Note: we should consider Implementing InteractionState by finding the gui thread of the 
+            // Note: we should consider Implementing InteractionState by finding the gui thread of the
             // process and mapping ThreadState and WaitReason to a WindowInteractionState
             get
             {
@@ -640,7 +639,7 @@ namespace MS.Internal.Automation
         void ITransformProvider.Move( double x, double y )
         {
             if ( ! ((ITransformProvider)this).CanMove )
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
             int extendedStyle = GetWindowExStyle();
             if ( IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD) )
@@ -651,7 +650,7 @@ namespace MS.Internal.Automation
                 NativeMethods.HWND hwndParent = SafeNativeMethods.GetAncestor(NativeMethods.HWND.Cast(_hwnd), SafeNativeMethods.GA_PARENT);
                 if (!MapWindowPoints(NativeMethods.HWND.NULL, hwndParent, ref point, 1))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
                 x = point.x;
                 y = point.y;
@@ -660,7 +659,7 @@ namespace MS.Internal.Automation
                 NativeMethods.RECT currentRect = new NativeMethods.RECT();
                 if (!Misc.GetWindowRect(_hwnd, out currentRect))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
                 int currentHeight = currentRect.bottom - currentRect.top;
                 int currentWidth = currentRect.right - currentRect.left;
@@ -684,7 +683,7 @@ namespace MS.Internal.Automation
                 NativeMethods.RECT parentRect = new NativeMethods.RECT();
                 if (!Misc.GetClientRect(hwndParent, out parentRect))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
                 // If to far to the right move left edge to be visible.
                 // Move the left edge back the diffance of it and the parent's client area right side plus a little more to be visible.
@@ -706,7 +705,7 @@ namespace MS.Internal.Automation
             // putting the window in the wrong place
             if (!Misc.SetWindowPos(_hwnd, NativeMethods.HWND.NULL, (int)x, (int)y, 0, 0, UnsafeNativeMethods.SWP_NOSIZE | UnsafeNativeMethods.SWP_NOZORDER | UnsafeNativeMethods.SWP_NOACTIVATE))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
@@ -716,13 +715,13 @@ namespace MS.Internal.Automation
             // terms of the workarea.
             if (!Misc.GetWindowPlacement(_hwnd, ref wp))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             int style = GetWindowStyle();
             if (style == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
             if ( IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) )
             {
@@ -736,7 +735,7 @@ namespace MS.Internal.Automation
                 // it will place the window on the primary monitor at a location closest to the taget.
                 if (!Misc.SetWindowPlacement(_hwnd, ref wp))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
             }
             else
@@ -745,7 +744,7 @@ namespace MS.Internal.Automation
 
                 if (!Misc.GetWindowRect(_hwnd, out currentRect))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // Use SetWindowPlacement to move the window because it handles the case where the
@@ -753,7 +752,7 @@ namespace MS.Internal.Automation
                 // it will place the window on the primary monitor at a location closest to the taget.
                 if (!Misc.SetWindowPlacement(_hwnd, ref wp))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 // check to make sure SetWindowPlacement has not changed the size of our window
@@ -762,7 +761,7 @@ namespace MS.Internal.Automation
 
                 if (!Misc.GetWindowPlacement(_hwnd, ref wp))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed);
                 }
 
                 int newHeight = wp.rcNormalPosition.bottom - wp.rcNormalPosition.top;
@@ -775,7 +774,7 @@ namespace MS.Internal.Automation
 
                     if (!Misc.SetWindowPlacement(_hwnd, ref wp))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
                 }
             }
@@ -790,9 +789,9 @@ namespace MS.Internal.Automation
             int heightInt = (int) height;
 
             if ( ! ((ITransformProvider)this).CanResize )
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
-            UnsafeNativeMethods.MINMAXINFO minMaxInfo = new UnsafeNativeMethods.MINMAXINFO();
+            UnsafeNativeMethods.MINMAXINFO minMaxInfo = default;
 
             // get the largest window size that can be produced by using the borders to size the window
             int x = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CXMAXTRACK);
@@ -827,7 +826,7 @@ namespace MS.Internal.Automation
             // get the WINDOWPLACEMENT information
             if (!Misc.GetWindowPlacement(_hwnd, ref wp))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Calculate the new right and bottom for how the user wants the window resized and update the struct
@@ -839,7 +838,7 @@ namespace MS.Internal.Automation
             // it will place the window on the primary monitor at a location closes to the taget.
             if (!Misc.SetWindowPlacement(_hwnd, ref wp))
             {
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
         }
 
@@ -848,7 +847,7 @@ namespace MS.Internal.Automation
             if (!SafeNativeMethods.IsWindow(_hwnd))
                 throw new ElementNotAvailableException();
 
-            throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.OperationCannotBePerformed);
         }
 
         bool ITransformProvider.CanMove
@@ -1457,6 +1456,21 @@ namespace MS.Internal.Automation
         // Check that a window is visible, and has a non-empty rect
         private static bool IsWindowReallyVisible( NativeMethods.HWND hwnd )
         {
+            // check for visibility overrides
+            // The UIA team says:
+            //      * UIA_WindowVisibilityOverridden property was added in 2011 for Win8.1
+            //      * "I'm not actually sure it is documented publicly."
+            //      * "It's a window property that if its handle value is 1 it's ForceVisible, and if it's 2 it's ForceHidden."
+            IntPtr visibilityOverride = UnsafeNativeMethods.GetProp(hwnd, "UIA_WindowVisibilityOverridden");
+            if (visibilityOverride == new IntPtr(1))
+            {
+                return true;
+            }
+            else if (visibilityOverride == new IntPtr(2))
+            {
+                return false;
+            }
+
             if(!SafeNativeMethods.IsWindowVisible(hwnd))
             {
                 return false;

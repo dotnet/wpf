@@ -66,12 +66,12 @@ namespace System.ComponentModel
         /// </summary>
         public static DependencyPropertyDescriptor FromProperty(PropertyDescriptor property) 
         {
-            if (property == null) throw new ArgumentNullException("property");
+            ArgumentNullException.ThrowIfNull(property);
 
             DependencyPropertyDescriptor dpd;
             bool found;
 
-            lock(_cache)
+            lock (_cache)
             {
                 found = _cache.TryGetValue(property, out dpd);
             }
@@ -98,7 +98,7 @@ namespace System.ComponentModel
             }
             else 
             {
-                #pragma warning suppress 6506 // property is obviously not null
+                #pragma warning suppress 6506 // Property is obviously not null.
                 DependencyPropertyAttribute dpa = property.Attributes[typeof(DependencyPropertyAttribute)] as DependencyPropertyAttribute;
                 if (dpa != null)
                 {
@@ -129,8 +129,8 @@ namespace System.ComponentModel
         /// </summary>
         internal static DependencyPropertyDescriptor FromProperty(DependencyProperty dependencyProperty, Type ownerType, Type targetType, bool ignorePropertyType)
         {
-            if (dependencyProperty == null) throw new ArgumentNullException("dependencyProperty");
-            if (targetType == null) throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(dependencyProperty);
+            ArgumentNullException.ThrowIfNull(targetType);
 
             // We have a different codepath here for attached and direct
             // properties.  For direct properties, we route through Type
@@ -196,8 +196,8 @@ namespace System.ComponentModel
         /// </summary>
         public static DependencyPropertyDescriptor FromProperty(DependencyProperty dependencyProperty, Type targetType)
         {
-            if (dependencyProperty == null) throw new ArgumentNullException("dependencyProperty");
-            if (targetType == null) throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(dependencyProperty);
+            ArgumentNullException.ThrowIfNull(targetType);
 
             // We have a different codepath here for attached and direct
             // properties.  For direct properties, we route through Type
@@ -216,7 +216,7 @@ namespace System.ComponentModel
                 // For direct properties we don't want to get the property descriptor
                 // yet because it is very expensive.  Delay it until needed.
 
-                lock(_cache)
+                lock (_cache)
                 {
                     _cache.TryGetValue(dependencyProperty, out dpd);
                 }
@@ -229,7 +229,7 @@ namespace System.ComponentModel
 
                     dpd = new DependencyPropertyDescriptor(null, dependencyProperty.Name, targetType, dependencyProperty, false);
 
-                    lock(_cache)
+                    lock (_cache)
                     {
                         _cache[dependencyProperty] = dpd;
                     }
@@ -259,9 +259,9 @@ namespace System.ComponentModel
         /// </summary>
         public static DependencyPropertyDescriptor FromName(string name, Type ownerType, Type targetType)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (ownerType == null) throw new ArgumentNullException("ownerType");
-            if (targetType == null) throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(ownerType);
+            ArgumentNullException.ThrowIfNull(targetType);
 
             DependencyProperty dp = DependencyProperty.FromName(name, ownerType);
             if (dp != null) 
@@ -282,9 +282,9 @@ namespace System.ComponentModel
         public static DependencyPropertyDescriptor FromName(string name, Type ownerType, Type targetType,
             bool ignorePropertyType)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (ownerType == null) throw new ArgumentNullException("ownerType");
-            if (targetType == null) throw new ArgumentNullException("targetType");
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(ownerType);
+            ArgumentNullException.ThrowIfNull(targetType);
 
             DependencyProperty dp = DependencyProperty.FromName(name, ownerType);
             if (dp != null)
@@ -493,7 +493,7 @@ namespace System.ComponentModel
             {
                 // We only support public type converters, in order to avoid asserts.
                 TypeConverter typeConverter = Property.Converter;
-                if( typeConverter.GetType().IsPublic )
+                if (typeConverter.GetType().IsPublic)
                 {
                     return typeConverter;
                 }
@@ -572,13 +572,8 @@ namespace System.ComponentModel
         
         // Return the property descriptor we're wrapping.  We may have to get
         // this on demand if it wasn't passed into our constructor
-        ///<SecurityNote>
-        ///     Critical: calls TypeDescriptor.CreateProperty which LinkDemands
-        ///     TreatAsSafe: ok to create a property since we should have one anyway
-        ///</SecurityNote>
         private PropertyDescriptor Property
         {
-            [SecurityCritical, SecurityTreatAsSafe] 
             get
             {
                 if (_property == null) 
@@ -621,11 +616,11 @@ namespace System.ComponentModel
         // Synchronized by "_cache"
         private static Dictionary<object, DependencyPropertyDescriptor> _cache = 
             new Dictionary<object, DependencyPropertyDescriptor>(
-                new ReferenceEqualityComparer()
+                ReferenceEqualityComparer.Instance
             );
         private static Dictionary<object, DependencyPropertyDescriptor> _ignorePropertyTypeCache =
             new Dictionary<object, DependencyPropertyDescriptor>(
-                new ReferenceEqualityComparer()
+                ReferenceEqualityComparer.Instance
             );
 
         #endregion Private Fields

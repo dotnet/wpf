@@ -58,7 +58,7 @@ namespace System.Windows
         {
             if( value == DependencyProperty.UnsetValue )
             {
-                throw new ArgumentException(SR.Get(SRID.SetterValueCannotBeUnset));
+                throw new ArgumentException(SR.SetterValueCannotBeUnset);
             }
 
             CheckValidProperty(property);
@@ -72,19 +72,16 @@ namespace System.Windows
 
         private void CheckValidProperty( DependencyProperty property)
         {
-            if (property == null)
-            {
-                throw new ArgumentNullException("property");
-            }
+            ArgumentNullException.ThrowIfNull(property);
             if (property.ReadOnly)
             {
                 // Read-only properties will not be consulting Style/Template/Trigger Setter for value.
                 //  Rather than silently do nothing, throw error.
-                throw new ArgumentException(SR.Get(SRID.ReadOnlyPropertyNotAllowed, property.Name, GetType().Name));
+                throw new ArgumentException(SR.Format(SR.ReadOnlyPropertyNotAllowed, property.Name, GetType().Name));
             }
             if( property == FrameworkElement.NameProperty)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotHavePropertyInStyle, FrameworkElement.NameProperty.Name));
+                throw new InvalidOperationException(SR.Format(SR.CannotHavePropertyInStyle, FrameworkElement.NameProperty.Name));
             }
         }
 
@@ -102,7 +99,7 @@ namespace System.Windows
 
             if (dp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.NullPropertyIllegal, "Setter.Property"));
+                throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "Setter.Property"));
             }
 
             if( String.IsNullOrEmpty(TargetName))
@@ -110,7 +107,7 @@ namespace System.Windows
                 // Setter on container is not allowed to affect the StyleProperty.
                 if (dp == FrameworkElement.StyleProperty)
                 {
-                    throw new ArgumentException(SR.Get(SRID.StylePropertyInStyleNotAllowed));
+                    throw new ArgumentException(SR.StylePropertyInStyleNotAllowed);
                 }
             }
 
@@ -124,14 +121,14 @@ namespace System.Windows
                 {
                     if ( !(value is DynamicResourceExtension) && !(value is System.Windows.Data.BindingBase) )
                     {
-                        throw new ArgumentException(SR.Get(SRID.SetterValueOfMarkupExtensionNotSupported,
+                        throw new ArgumentException(SR.Format(SR.SetterValueOfMarkupExtensionNotSupported,
                                                            value.GetType().Name));
                     }
                 }
 
                 else if (!(value is DeferredReference))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidSetterValue, value, dp.OwnerType, dp.Name));
+                    throw new ArgumentException(SR.Format(SR.InvalidSetterValue, value, dp.OwnerType, dp.Name));
                 }
             }
 
@@ -184,7 +181,7 @@ namespace System.Windows
             {
                 if( value == DependencyProperty.UnsetValue )
                 {
-                    throw new ArgumentException(SR.Get(SRID.SetterValueCannotBeUnset));
+                    throw new ArgumentException(SR.SetterValueCannotBeUnset);
                 }
 
                 CheckSealed();
@@ -192,7 +189,7 @@ namespace System.Windows
                 // No Expression support
                 if( value is Expression )
                 {
-                    throw new ArgumentException(SR.Get(SRID.StyleValueOfExpressionNotSupported));
+                    throw new ArgumentException(SR.StyleValueOfExpressionNotSupported);
                 }
 
 
@@ -231,14 +228,8 @@ namespace System.Windows
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
-            if (targetObject == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(targetObject);
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             Setter setter = targetObject as Setter;
 
@@ -269,10 +260,7 @@ namespace System.Windows
             {
                 throw new ArgumentNullException("targetObject");
             }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")
             {

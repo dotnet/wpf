@@ -509,11 +509,6 @@ namespace MS.Internal.IO.Packaging
         /// contains the property value, or null if the property does not exist
         /// in the encrypted package.
         /// </returns>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.PtrToStringAnsi which LinkDemands
-        ///     TreatAsSafe: can't be used to allocate a string from an arbitrary pointer since it doesn't accept a ptr.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object
         GetOleProperty(
             Guid fmtid,
@@ -551,8 +546,8 @@ namespace MS.Internal.IO.Packaging
                     if (vals[0].vt != vtExpected)
                     {
                         throw new FileFormatException(
-                                        SR.Get(
-                                            SRID.WrongDocumentPropertyVariantType,
+                                        SR.Format(
+                                            SR.WrongDocumentPropertyVariantType,
                                             propId,
                                             fmtid.ToString(),
                                             vals[0].vt,
@@ -599,7 +594,7 @@ namespace MS.Internal.IO.Packaging
 
                         default:
                             throw new FileFormatException(
-                                        SR.Get(SRID.InvalidDocumentPropertyVariantType, vals[0].vt));
+                                        SR.Format(SR.InvalidDocumentPropertyVariantType, vals[0].vt));
                     }
                 }
                 finally
@@ -634,11 +629,6 @@ namespace MS.Internal.IO.Packaging
         /// An object of the appropriate type for the specified property which
         /// contains the property value, or null if the property is to be deleted.
         /// </param>
-        ///<SecurityNote>
-        ///     Critical: Calls Marshal.StringToCoTaskMemAnsi which LinkDemands.  Also has unsafe code block.
-        ///     TreatAsSafe: the memory that's allocated is freed before returning.  Unsafe code block only manipulates local memory on the stack.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void
         SetOleProperty(
             Guid fmtid,
@@ -720,7 +710,7 @@ namespace MS.Internal.IO.Packaging
                     pszVal = Marshal.StringToCoTaskMemAnsi(inputString);
                     string convertedString = Marshal.PtrToStringAnsi(pszVal);
 
-                    if (String.CompareOrdinal(inputString, convertedString) != 0)
+                    if (!string.Equals(inputString, convertedString, StringComparison.Ordinal))
                     {
                         // The string is not an ASCII string. Use UTF-8 to encode it!
                         byte[] byteArray = UTF8Encoding.UTF8.GetBytes(inputString);
@@ -756,7 +746,7 @@ namespace MS.Internal.IO.Packaging
                 else
                 {
                     throw new ArgumentException(
-                                SR.Get(SRID.InvalidDocumentPropertyType, propVal.GetType().ToString()),
+                                SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
                                 "propVal");
                 }
 
@@ -849,7 +839,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         throw new ArgumentException(
-                            SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                            SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                             "propId"
                             );
                 }
@@ -868,7 +858,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         throw new ArgumentException(
-                            SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                            SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                             "propId"
                             );
                 }
@@ -876,7 +866,7 @@ namespace MS.Internal.IO.Packaging
             else
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.UnknownDocumentProperty, fmtid.ToString(), propId),
+                    SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
                     "fmtid"
                     );
             }
@@ -886,7 +876,7 @@ namespace MS.Internal.IO.Packaging
         CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.StorageBasedPackagePropertiesDiposed));
+                throw new ObjectDisposedException(null, SR.StorageBasedPackagePropertiesDiposed);
         }
 
         #endregion Private Methods

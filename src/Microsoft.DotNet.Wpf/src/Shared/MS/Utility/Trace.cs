@@ -10,7 +10,6 @@ using System.Collections;
 using System.Diagnostics.Tracing;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using System.Threading;
 using System;
@@ -51,7 +50,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1)
+        static internal void EasyTraceEvent<T1>(Keyword keywords, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -61,7 +60,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Level level, Event eventID, object param1)
+        static internal void EasyTraceEvent<T1>(Keyword keywords, Level level, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, level))
             {
@@ -71,7 +70,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1, object param2)
+        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -79,7 +78,7 @@ namespace MS.Utility
             }
         }
 
-        static internal void EasyTraceEvent(Keyword keywords, Level level, Event eventID, object param1, object param2)
+        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Level level, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -89,7 +88,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID, object param1, object param2, object param3)
+        static internal void EasyTraceEvent<T1, T2, T3>(Keyword keywords, Event eventID, T1 param1, T2 param2, T3 param3)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -120,12 +119,6 @@ namespace MS.Utility
         /// Internal operations associated with initializing the event provider and
         /// monitoring the Dispatcher and input components.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical:  This calls critical code in TraceProvider
-        /// TreatAsSafe:  it generates the GUID that is passed into the TraceProvider
-        /// WPF versions prior to 4.0 used provider guid: {a42c77db-874f-422e-9b44-6d89fe2bd3e5}
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static EventTrace()
         {
             Guid providerGuid = new Guid("E13B77A8-14B6-11DE-8069-001B212B5009");
@@ -142,20 +135,10 @@ namespace MS.Utility
             EventProvider.Register(providerGuid);
         }
 
-        [SecurityCritical]
         static bool IsClassicETWRegistryEnabled()
         {
-            try
-            {
-                string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";
-                new RegistryPermission(RegistryPermissionAccess.Read, regKey).Assert();
-                
-                return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
-            }
+            string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";                
+            return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));
         }
     }
 

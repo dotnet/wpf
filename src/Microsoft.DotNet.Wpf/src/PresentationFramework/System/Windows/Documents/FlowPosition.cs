@@ -66,15 +66,12 @@ namespace System.Windows.Documents
         // Compare two FixedTextPointer based on their flow order and offset
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             FlowPosition flow = o as FlowPosition;
             if (flow == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
             }
 
             return _OverlapAwareCompare(flow);

@@ -7,7 +7,6 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Security.Policy;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup

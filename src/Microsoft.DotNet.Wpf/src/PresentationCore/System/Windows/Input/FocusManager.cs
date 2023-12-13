@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.KnownBoxes;
 
 
@@ -137,17 +136,9 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         /// <param name="validate"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource.CriticalFromVisual which is critical
-        ///     TreatAsSafe: This code does not expose it and simply uses it for determining if the FocusedElement is valid
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IInputElement GetFocusedElement(DependencyObject element, bool validate)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             DependencyObject focusedElement = (DependencyObject) element.GetValue(FocusedElementProperty);
 
@@ -177,10 +168,7 @@ namespace System.Windows.Input
         /// <param name="value"></param>
         public static void SetFocusedElement(DependencyObject element, IInputElement value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(FocusedElementProperty, value);
         }
@@ -192,10 +180,7 @@ namespace System.Windows.Input
         /// <param name="value">The property value to set</param>
         public static void SetIsFocusScope(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsFocusScopeProperty, value);
         }
 
@@ -206,10 +191,7 @@ namespace System.Windows.Input
         /// <returns>The property's value.</returns>
         public static bool GetIsFocusScope(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsFocusScopeProperty);
         }
 
@@ -220,10 +202,7 @@ namespace System.Windows.Input
         /// <returns></returns>
         public static DependencyObject GetFocusScope(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return _GetFocusScope(element);
         }
 

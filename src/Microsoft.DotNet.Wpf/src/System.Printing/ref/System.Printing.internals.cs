@@ -31,9 +31,9 @@ namespace MS.Internal.PrintWin32Thunk
     internal partial class SafeMemoryHandle : System.Runtime.InteropServices.SafeHandle
     {
         public SafeMemoryHandle(System.IntPtr Win32Pointer) : base (default(System.IntPtr), default(bool)) { }
-        public override bool IsInvalid { [System.Security.SecuritySafeCriticalAttribute]get { throw null; } }
-        public static MS.Internal.PrintWin32Thunk.SafeMemoryHandle Null { [System.Security.SecuritySafeCriticalAttribute]get { throw null; } }
-        public virtual int Size { [System.Security.SecuritySafeCriticalAttribute]get { throw null; } }
+        public override bool IsInvalid { get { throw null; } }
+        public static MS.Internal.PrintWin32Thunk.SafeMemoryHandle Null { get { throw null; } }
+        public virtual int Size { get { throw null; } }
         public void CopyFromArray(byte[] source, int startIndex, int length) { }
         public void CopyToArray(byte[] destination, int startIndex, int length) { }
         public static MS.Internal.PrintWin32Thunk.SafeMemoryHandle Create(int byteCount) { throw null; }

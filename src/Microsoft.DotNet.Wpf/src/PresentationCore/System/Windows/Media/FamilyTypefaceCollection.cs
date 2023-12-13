@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using MS.Internal.FontFace;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -243,8 +242,7 @@ namespace System.Windows.Media
 
         private int InsertItem(int index, FamilyTypeface item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
 
@@ -254,7 +252,7 @@ namespace System.Windows.Media
 
             // We can't have two items with same style, weight, stretch.
             if (FindItem(item) >= 0)
-                throw new ArgumentException(SR.Get(SRID.CompositeFont_DuplicateTypeface));
+                throw new ArgumentException(SR.CompositeFont_DuplicateTypeface);
 
             // Make room for the new item.
             if (_items == null)
@@ -311,8 +309,7 @@ namespace System.Windows.Media
 
         private void SetItem(int index, FamilyTypeface item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
 
             VerifyChangeable();
             RangeCheck(index);
@@ -364,38 +361,36 @@ namespace System.Windows.Media
         private void VerifyChangeable()
         {
             if (_innerList != null)
-                throw new NotSupportedException(SR.Get(SRID.General_ObjectIsReadOnly));
+                throw new NotSupportedException(SR.General_ObjectIsReadOnly);
         }
 
         private FamilyTypeface ConvertValue(object obj)
         {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
+            ArgumentNullException.ThrowIfNull(obj);
 
             FamilyTypeface familyTypeface = obj as FamilyTypeface;
             if (familyTypeface == null)
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, obj.GetType(), typeof(FamilyTypeface)));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, obj.GetType(), typeof(FamilyTypeface)));
 
             return familyTypeface;
         }
 
         private void CopyItems(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_ArrayCannotBeMultidimensional));
+                throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);
 
             Type elementType = array.GetType().GetElementType();
             if (!elementType.IsAssignableFrom(typeof(FamilyTypeface)))
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(FamilyTypeface[]), elementType));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(FamilyTypeface[]), elementType));
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (_count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             if (_count != 0)
             {
@@ -451,7 +446,7 @@ namespace System.Windows.Media
                     // If there is no current item a non-generic IEnumerator should throw an exception,
                     // but a generic IEnumerator<T> is not required to.
                     if (_current == null)
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                        throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
                     return _current; 
                 }

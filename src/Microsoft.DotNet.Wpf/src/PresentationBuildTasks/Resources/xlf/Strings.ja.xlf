@@ -97,11 +97,6 @@
         <target state="translated">MC6021: {0}:FieldModifier をこのタグで指定することはできません。{0}:Name または Name 属性セットがないか、タグがローカルで定義され、Name 属性セットを保持しています。この処理は許可されていません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFound">
         <source>BG1002: File '{0}' cannot be found.</source>
         <target state="translated">BG1002: ファイル '{0}' が見つかりません。</target>
@@ -142,11 +137,6 @@
         <target state="translated">コード ファイル '{0}' を生成しました。</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: '{0}:{1}' に '{2}' が含まれています。'{0}:{1}' には、入れ子になっているコンテンツを含めることはできません。</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">このプロジェクトには、InternalTypeHelper クラスは不要です。ファイル '{0}' を空にしてください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: 無効な AssemblyVersion が検出されました: {0}。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -229,7 +224,7 @@
       </trans-unit>
       <trans-unit id="InvalidXml">
         <source>MC3000: '{0}' XML is not valid.</source>
-        <target state="translated">MC3000:  '{0}' XML が無効です。</target>
+        <target state="translated">MC3000: '{0}' XML が無効です。</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalNamePropertyNotAllowed">
@@ -252,24 +247,9 @@
         <target state="translated">入力: ローカル参照マークアップ Page ファイルは '{0}' です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">Markupcompilepass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: '{0}' イベントはジェネリック イベント ハンドラー デリゲート型 '{1}' を保持しています。'{1}' の型パラメーター '{2}' が、含まれているジェネリック タグ '{3}' のいずれの型パラメーターとも一致しません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -832,11 +812,6 @@
         <target state="translated">マークアップのコンパイルを準備しています...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: 型名 '{0}' には、予期された書式 'className, assembly' がありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Resource ファイル '{0}' を読み取っています...</target>
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">.resources ファイル '{0}' を生成しています...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: 終了が不完全な文字列が見つかりました。</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: 要素 '{0}' の Uid がありません。</target>
@@ -1085,11 +1050,6 @@
       <trans-unit id="UnmatchedLocComment">
         <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
         <target state="translated">LC1003: ローカライズ コメントに、対象プロパティ '{0}' の値が設定されていません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
         <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">

@@ -6,9 +6,9 @@
 //
 //
 //  Abstract:
-//     Media system holds the relation between an application 
-//     domain and the underlying transport system. 
-// 
+//     Media system holds the relation between an application
+//     domain and the underlying transport system.
+//
 
 using System;
 using System.Windows.Threading;
@@ -22,10 +22,8 @@ using MS.Internal;
 using MS.Internal.FontCache;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
 
@@ -45,13 +43,6 @@ namespace System.Windows.Media
         /// can be used.
         /// </summary>
         /// <seealso cref="Shutdown"/>
-        /// <securitynote>
-        /// Critical    -- gets and stores an unmanaged pointer to the current transport from milcore.
-        /// TreatAsSafe -- starting up the transport is considered a safe operation. Worst case is that
-        ///                we will create a transport object nobody is going to use. Access to the transport
-        ///                object pointer is security critical.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         public static bool Startup(MediaContext mc)
         {
             //
@@ -59,23 +50,23 @@ namespace System.Windows.Media
             //
             // This call will fail if PresentationCore.dll and milcore.dll have mismatched
             // versions -- please make sure that both binaries have been properly built
-            // and deployed. 
+            // and deployed.
             //
             // *** Failure here does NOT indicate a bug in MediaContext.Startup! ***
             //
 
             HRESULT.Check(UnsafeNativeMethods.MilVersionCheck(MS.Internal.Composition.Version.MilSdkVersion));
-            
+
             using (CompositionEngineLock.Acquire())
             {
                 _mediaContexts.Add(mc);
-                
+
                 //Is this the first startup?
                 if (0 == s_refCount)
                 {
                     HRESULT.Check(SafeNativeMethods.MilCompositionEngine_InitializePartitionManager(
                                   0 // THREAD_PRIORITY_NORMAL
-                                  )); 
+                                  ));
 
                     s_forceSoftareForGraphicsStreamMagnifier =
                         UnsafeNativeMethods.WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
@@ -88,7 +79,11 @@ namespace System.Windows.Media
                 }
                 s_refCount++;
             }
-            // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so 
+
+            // Setting renderOption for Hardware acceleration in RDP as per appcontext switch.
+            UnsafeNativeMethods.RenderOptions_EnableHardwareAccelerationInRdp(CoreAppContextSwitches.EnableHardwareAccelerationInRdp);
+
+            // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so
             // that we can initialize the media system to a disconnected state.
 
             return true;
@@ -114,39 +109,19 @@ namespace System.Windows.Media
         /// Reads a value from the registry to decide whether to disable the animation
         /// smoothing algorithm.
         /// </summary>
-        /// <securitynote>
-        /// Critical - asserts registry permissions to read from HKEY_LOCAL_MACHINE.
-        /// Treat as safe - we only read a binary value used exclusively for Avalon.
-        /// </securitynote>
         /// <remarks>
         /// The code is only present in internal builds
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe ]
         private static void ReadAnimationSmoothingSetting()
         {
 #if PRERELEASE
-            // Acquire permissions to read the one key we care about from the registry
-            RegistryPermission permission = new RegistryPermission(
-                RegistryPermissionAccess.Read,
-                System.Security.AccessControl.AccessControlActions.View,
-                @"HKEY_LOCAL_MACHINE\Software\Microsoft\Avalon.Graphics");
-            
-            permission.Assert();
-
-            try
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Avalon.Graphics");
+            if (key != null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Avalon.Graphics");
-                if (key != null)
-                {
-                    object keyValue = key.GetValue("AnimationSmoothing");
+                object keyValue = key.GetValue("AnimationSmoothing");
 
-                    // The Regkey now turns off AnimationSmoothing
-                    s_animationSmoothing = !(keyValue is int && ((int)keyValue) == 0);
-                }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
+                // The Regkey now turns off AnimationSmoothing
+                s_animationSmoothing = !(keyValue is int && ((int)keyValue) == 0);
             }
 #endif
         }
@@ -154,12 +129,6 @@ namespace System.Windows.Media
         /// <summary>
         /// This deinitializes the MediaSystem and frees any resources that it maintains.
         /// </summary>
-        /// <securitynote>
-        /// Critical    -- results in the release of an unmanaged pointer to the current transport.
-        /// TreatAsSafe -- shutting down the transport is considered a safe operation. Worst case
-        ///                is that the client stops rendering Avalon content.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static void Shutdown(MediaContext mc)
         {
             using (CompositionEngineLock.Acquire())
@@ -172,7 +141,7 @@ namespace System.Windows.Media
                 {
                     // We can shut-down.
                     // Debug.WriteLine("MediSystem::NotifyDisconnect Stop Transport\n");
-                   
+
                     if (IsTransportConnected)
                     {
                         DisconnectTransport();
@@ -184,22 +153,36 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// If the app has asked to disable dirty-rect processing, notify the graphics engine
+        /// </summary>
+        internal static void PropagateDirtyRectangleSettings()
+        {
+            int oldValue = s_DisableDirtyRectangles;
+            int disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles ? 1 : 0;
+
+            if (disableDirtyRectangles != oldValue)
+            {
+                if (System.Threading.Interlocked.CompareExchange(ref s_DisableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
+                {
+                    NotifyRedirectionEnvironmentChanged();
+                }
+            }
+        }
+
+        internal static bool DisableDirtyRectangles
+        {
+            get { return (s_DisableDirtyRectangles != 0); }
+        }
+
+        /// <summary>
         /// Handle DWM messages that indicate that the state of the connection needs to change.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical because NotifyRedirectionEnvironmentChanged calls methods that 
-        /// control the composition engine in native code. TreatAsSafe since caller 
-        /// cannot cause any damages with it besides starting and stopping his application's
-        /// own composition engine whicih would worst cases prevent his app from rendering.
-        /// No critical data is being passed in or out since there are no arguments or return values.
-        /// </SecurityNote>		
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void NotifyRedirectionEnvironmentChanged()
         {
             using (CompositionEngineLock.Acquire())
             {
                 // Check to see if we need to force software for the Vista Magnifier
-                s_forceSoftareForGraphicsStreamMagnifier = 
+                s_forceSoftareForGraphicsStreamMagnifier =
                     UnsafeNativeMethods.WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
 
                 foreach (MediaContext mc in _mediaContexts)
@@ -208,25 +191,19 @@ namespace System.Windows.Media
                 }
             }
         }
-        
+
         /// <summary>
         /// Connect the transport.
         /// </summary>
-        /// <securitynote>
-        ///   Critical - Creates a channel, calls methods performing elevations.
-        ///   TreatAsSafe - Transport initialization is considered safe. Service channel
-        ///                 creation is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void ConnectTransport()
         {
             if (IsTransportConnected)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.MediaSystem_OutOfOrderConnectOrDisconnect));
+                throw new System.InvalidOperationException(SR.MediaSystem_OutOfOrderConnectOrDisconnect);
             }
 
             //
-            // Create a default transport to be used by this media system. 
+            // Create a default transport to be used by this media system.
             // If creation fails, fall back to a local transport.
             //
 
@@ -246,19 +223,13 @@ namespace System.Windows.Media
                 false);
 
             IsTransportConnected = true;
-        }    
+        }
 
         /// <summary>
         /// Disconnect the transport. If we are calling this function from a disconnect
         /// request we want to keep the service channel around. So that media contexts that
         /// have not yet received disconnect event do not crash.
         /// </summary>
-        /// <securitynote>
-        /// Critical - Closes a channel. Shuts down the transport.
-        /// TreatAsSafe - Shutting down the transport is considered safe. 
-        ///               Closing the service channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void DisconnectTransport()
         {
             if (!IsTransportConnected)
@@ -318,7 +289,7 @@ namespace System.Windows.Media
                 other.Dispatcher != null &&
                 reference.Dispatcher != other.Dispatcher)
             {
-                throw new ArgumentException(SR.Get(SRID.MediaSystem_ApiInvalidContext));
+                throw new ArgumentException(SR.MediaSystem_ApiInvalidContext);
             }
         }
 
@@ -336,17 +307,9 @@ namespace System.Windows.Media
         /// <summary>
         /// This flag indicates if all rendering should be in software.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical because s_forceSoftareForGraphicsStreamMagnifier is security critical, but 
-        /// only if it can be set (since that controls if rendering is sw/hw). Because
-        /// this method does not allow setting s_forceSoftareForGraphicsStreamMagnifier, it cannot
-        /// be used to control rendering mode. Reading it is safe since this is information
-        /// we volunteer anyhow in the tiering API.
-        /// </SecurityNote>
         internal static bool ForceSoftwareRendering
         {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get 
+            get
             {
                 using (CompositionEngineLock.Acquire())
                 {
@@ -356,27 +319,19 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// Returns the service channel for the current media system. This channel 
+        /// Returns the service channel for the current media system. This channel
         /// is used by the glyph cache infrastructure.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         internal static DUCE.Channel ServiceChannel
         {
-            [SecurityCritical]
             get { return s_serviceChannel; }
         }
 
         /// <summary>
         /// Returns the pointer to the unmanaged transport object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
         internal static IntPtr Connection
         {
-            [SecurityCritical]
             get { return s_pConnection; }
         }
 
@@ -398,10 +353,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Service channel to serve global glyph cache.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static DUCE.Channel s_serviceChannel;
 
         private static bool s_animationSmoothing = true;
@@ -409,21 +360,17 @@ namespace System.Windows.Media
         /// <summary>
         /// Pointer to the unmanaged transport object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Controlled unmanaged resource.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr s_pConnection;
 
         /// <summary>
         /// Indicates if a graphics stream client is present. If a graphics stream client is present,
-        /// we drop back to sw rendering to enable the Vista magnifier. 
+        /// we drop back to sw rendering to enable the Vista magnifier.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - controls rendering mode (hw/sw). 
-        /// </SecurityNote>
-        [SecurityCritical]
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
+
+        // 1 if app is requesting to disable D3D dirty rectangle work, 0 otherwise.
+        // We use Interlocked.CompareExchange to change this, which supports int but not bool.
+        private static int s_DisableDirtyRectangles = 0;
      }
 }
 

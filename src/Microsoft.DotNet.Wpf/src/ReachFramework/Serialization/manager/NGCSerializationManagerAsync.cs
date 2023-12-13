@@ -13,7 +13,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -51,10 +50,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base()
         {
-            if (queue == null)
-            {
-                throw new ArgumentNullException("queue");
-            }
+            ArgumentNullException.ThrowIfNull(queue);
             _printQueue                      = queue;
             _operationStack                  = new Stack();
             _isBatchMode                     = isBatchMode;
@@ -83,14 +79,11 @@ namespace System.Windows.Xps.Serialization
             Object  serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
-            if(!IsSerializedObjectTypeSupported(serializedObject))
+            if (!IsSerializedObjectTypeSupported(serializedObject))
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NotSupported));
+                throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
             if(_isBatchMode && !_isSimulating)
@@ -144,7 +137,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
         }
@@ -276,7 +269,7 @@ namespace System.Windows.Xps.Serialization
                             }
                             else
                             {
-                                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                             }
                             _isBatchWorkItemInProgress = true;
                         }
@@ -679,10 +672,6 @@ namespace System.Windows.Xps.Serialization
         ///
         /// </summary>
         ///
-        /// <SecurityNote>
-        /// Critical   : Calls MetroToGdiConverter.StartDocument which is critical because it returns the print job id
-        /// </SecurityNote>
-        [SecurityCritical]
         internal
         void
         StartDocument(
@@ -739,7 +728,7 @@ namespace System.Windows.Xps.Serialization
                 _device.EndDocument(abort);
 
                 //
-                // Inform the listener that the doucment has been printed
+                // Inform the listener that the document has been printed
                 //
                 XpsSerializationProgressChangedEventArgs e =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,
@@ -1028,8 +1017,7 @@ namespace System.Windows.Xps.Serialization
         {
             do
             {
-                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)DoNothingCallback, null);
-
+                _dispatcher.Invoke(DispatcherPriority.Background, (DispatcherOperationCallback)(_ => null), null);
             }
             while (IsAsyncWorkPending());
         }
@@ -1063,15 +1051,6 @@ namespace System.Windows.Xps.Serialization
             }
 
             return false;
-        }
-
-        private static
-        object
-        DoNothingCallback(
-            object notUsed
-            )
-        {
-            return null;
         }
 
         #endregion Internal Methods

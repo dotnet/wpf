@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//---------------------------------------------------------------------------
-//
-// 
-// 
-// File: AppContextDefaultValues.cs
-//---------------------------------------------------------------------------
-
 using MS.Internal;
 using System.Windows;
 
@@ -43,13 +36,32 @@ namespace System
                         {
                             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchUseSha1AsDefaultHashAlgorithmForDigitalSignatures, true);
                         }
-
-                        // Ensure we set all the accessibility switch defaults
-                        AccessibilitySwitches.SetSwitchDefaults(targetFrameworkVersion);
-
-                        break;
                     }
+                    break;
+
+                case ".NETCoreApp":
+                    {
+                        InitializeNetFxSwitchDefaultsForNetCoreRuntime();
+                    }
+                    break;
             }
+
+            // Ensure we set all the accessibility switch defaults
+            AccessibilitySwitches.SetSwitchDefaults(platformIdentifier, targetFrameworkVersion);
+        }
+
+        /// <summary>
+        /// This is the full set of .NET Framework <see cref="AppContext"/> in <see cref="BaseAppContextSwitches"/>. These are being initialized
+        /// to <code>false</code> to ensure that the corresponding functionality will be treated as if it is enabled by default on .NET Core.
+        /// </summary>
+        private static void InitializeNetFxSwitchDefaultsForNetCoreRuntime()
+        {
+            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchDoNotUseCulturePreservingDispatcherOperations, false);
+            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchUseSha1AsDefaultHashAlgorithmForDigitalSignatures, false);
+
+            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchDoNotInvokeInWeakEventTableShutdownListener, false);
+            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchEnableCleanupSchedulingImprovements, false);
+            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchEnableWeakEventMemoryImprovements, false);
         }
     }
 

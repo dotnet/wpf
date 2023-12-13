@@ -24,7 +24,6 @@ using MS.Internal;
 using MS.Internal.TextFormatting;
 using MS.Internal.PresentationCore;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -51,12 +50,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Construct a paragraph cache to be used during optimal paragraph formatting
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls the setter for _ploparabreak.Value which is type SecurityCriticalDataForSet.
-        /// Safe - as it doesn't set security critical data to a random value passed in but rather to a value returned
-        ///        by a safe function TextFormatterContext.CreateParaBreakingSession().
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextParagraphCache(
             FormatSettings      settings,
             int                 firstCharIndex,
@@ -98,12 +91,12 @@ namespace System.Windows.Media.TextFormatting
                 if(callbackException != null)
                 {                        
                     // rethrow exception thrown in callbacks
-                    throw new InvalidOperationException(SR.Get(SRID.CreateParaBreakingSessionFailure, lserr), callbackException);
+                    throw new InvalidOperationException(SR.Format(SR.CreateParaBreakingSessionFailure, lserr), callbackException);
                 }
                 else
                 {
                     // throw with LS error codes
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CreateParaBreakingSessionFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CreateParaBreakingSessionFailure, lserr), lserr);
                 }
             }
 
@@ -168,11 +161,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Releasing LS unmanaged resource on paragraph content
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this sets critical data _ploparabreak
-        /// Safe - as it does not set critical data thru incoming parameter
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             if(_ploparabreak.Value != IntPtr.Zero)
@@ -189,8 +177,8 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         private int VerifyMaxLineWidth(double maxLineWidth)
         {
-            if (DoubleUtil.IsNaN(maxLineWidth))
-                throw new ArgumentOutOfRangeException("maxLineWidth", SR.Get(SRID.ParameterValueCannotBeNaN));                                        
+            if (double.IsNaN(maxLineWidth))
+                throw new ArgumentOutOfRangeException("maxLineWidth", SR.ParameterValueCannotBeNaN);                                        
             
             if (maxLineWidth == 0 || double.IsPositiveInfinity(maxLineWidth))
             {
@@ -201,7 +189,7 @@ namespace System.Windows.Media.TextFormatting
             if (    maxLineWidth < 0 
                 ||  maxLineWidth > Constants.RealInfiniteWidth)
             {
-                throw new ArgumentOutOfRangeException("maxLineWidth", SR.Get(SRID.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
+                throw new ArgumentOutOfRangeException("maxLineWidth", SR.Format(SR.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
             }
 
             // convert real value to ideal value

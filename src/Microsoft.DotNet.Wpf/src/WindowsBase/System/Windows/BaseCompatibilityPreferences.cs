@@ -9,7 +9,6 @@ using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 using System.Runtime.Versioning;
 using System.Security;
-using System.Security.Permissions;
 
 
 namespace System.Windows
@@ -88,7 +87,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "ReuseDispatcherSynchronizationContextInstance", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "ReuseDispatcherSynchronizationContextInstance", "BaseCompatibilityPreferences"));
                     }
 
                     _reuseDispatcherSynchronizationContextInstance = value;
@@ -103,8 +102,10 @@ namespace System.Windows
             return ReuseDispatcherSynchronizationContextInstance;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _reuseDispatcherSynchronizationContextInstance = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? false : true;
+#elif NETCOREAPP
+        private static bool _reuseDispatcherSynchronizationContextInstance = false;
 #else
         private static bool _reuseDispatcherSynchronizationContextInstance = false;
 #endif
@@ -137,7 +138,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "FlowDispatcherSynchronizationContextPriority", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "FlowDispatcherSynchronizationContextPriority", "BaseCompatibilityPreferences"));
                     }
 
                     _flowDispatcherSynchronizationContextPriority = value;
@@ -152,8 +153,10 @@ namespace System.Windows
             return FlowDispatcherSynchronizationContextPriority;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _flowDispatcherSynchronizationContextPriority = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _flowDispatcherSynchronizationContextPriority = true;
 #else
         private static bool _flowDispatcherSynchronizationContextPriority = true;
 #endif
@@ -185,7 +188,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "InlineDispatcherSynchronizationContextSend", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "InlineDispatcherSynchronizationContextSend", "BaseCompatibilityPreferences"));
                     }
 
                     _inlineDispatcherSynchronizationContextSend = value;
@@ -200,8 +203,10 @@ namespace System.Windows
             return InlineDispatcherSynchronizationContextSend;
         }
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _inlineDispatcherSynchronizationContextSend = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _inlineDispatcherSynchronizationContextSend = true;
 #else
         private static bool _inlineDispatcherSynchronizationContextSend = true;
 #endif
@@ -255,12 +260,6 @@ namespace System.Windows
         /// Contains the setting for whether SignatureMethods should be set to match the strength of the selected
         /// HashAlgorithm.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:    Asserts RegistryPermission
-        ///     Safe:        Does not expose critical data
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        [RegistryPermission(SecurityAction.Assert, Read = WpfPackagingKey, Unrestricted = true)]
         private static void SetMatchPackageSignatureMethodToPackagePartDigestMethodFromRegistry()
         {
             try
@@ -386,6 +385,6 @@ namespace System.Windows
         }
 
         private static bool _isSealed;
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
     }
 }

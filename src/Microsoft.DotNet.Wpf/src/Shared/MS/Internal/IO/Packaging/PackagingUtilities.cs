@@ -17,9 +17,8 @@ using MS.Internal.WindowsBase;  // FriendAccessAllowed
 using System.Xml;               // For XmlReader
 using System.Diagnostics;       // For Debug.Assert
 using System.Text;              // For Encoding
-using System.Windows;           // For Exception strings - SRID
+using System.Windows;           // For Exception strings - SR
 using System.Security;                  // for SecurityCritical
-using System.Security.Permissions;      // for permissions
 using Microsoft.Win32;                  // for Registry classes
 
 
@@ -82,12 +81,12 @@ namespace MS.Internal.IO.Packaging
                     //Note: For Byte order markings that require additional information to be specified in
                     //the encoding attribute in XmlDeclaration have already been ruled out by this check as we allow for
                     //only two valid values.
-                    if (String.CompareOrdinal(encoding, _webNameUTF8) == 0
-                        || String.CompareOrdinal(encoding, _webNameUnicode) == 0)
+                    if (string.Equals(encoding, _webNameUTF8, StringComparison.Ordinal)
+                        || string.Equals(encoding, _webNameUnicode, StringComparison.Ordinal))
                         return;
                     else
                         //if the encoding attribute has any other value we throw an exception
-                        throw new FileFormatException(SR.Get(SRID.EncodingNotSupported));
+                        throw new FileFormatException(SR.EncodingNotSupported);
                 }
             }
 
@@ -99,7 +98,7 @@ namespace MS.Internal.IO.Packaging
             //Note: If not encoding attribute is present or no byte order marking is present the
             //encoding default to UTF8
             if (!(reader.Encoding is UnicodeEncoding || reader.Encoding is UTF8Encoding))
-                throw new FileFormatException(SR.Get(SRID.EncodingNotSupported));
+                throw new FileFormatException(SR.EncodingNotSupported);
         }
 
         /// <summary>
@@ -113,28 +112,25 @@ namespace MS.Internal.IO.Packaging
         static internal void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanRead)
-                throw new NotSupportedException(SR.Get(SRID.ReadNotSupported));
+                throw new NotSupportedException(SR.ReadNotSupported);
 
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.OffsetNegative));
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Get(SRID.ReadCountNegative));
+                throw new ArgumentOutOfRangeException("count", SR.ReadCountNegative);
             }
 
             checked     // catch any integer overflows
             {
                 if (offset + count > buffer.Length)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ReadBufferTooSmall), "buffer");
+                    throw new ArgumentException(SR.ReadBufferTooSmall, "buffer");
                 }
             }
         }
@@ -150,27 +146,24 @@ namespace MS.Internal.IO.Packaging
         static internal void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanWrite)
-                throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+                throw new NotSupportedException(SR.WriteNotSupported);
 
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.OffsetNegative));
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Get(SRID.WriteCountNegative));
+                throw new ArgumentOutOfRangeException("count", SR.WriteCountNegative);
             }
 
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.Get(SRID.WriteBufferTooSmall), "buffer");
+                    throw new ArgumentException(SR.WriteBufferTooSmall, "buffer");
             }
         }
 
@@ -538,22 +531,8 @@ namespace MS.Internal.IO.Packaging
         /// Determine if current user has a User Profile so we can determine the appropriate
         /// scope to use for IsolatedStorage functionality.
         ///</summary>
-        ///<SecurityNote>
-        /// Critical - Asserts read registry permission...
-        ///          - Asserts ControlPrincipal to access current user identity
-        /// TAS - only returns a bool
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool UserHasProfile()
         {
-            // Acquire permissions to read the one key we care about from the registry
-            // Acquite permission to query the current user identity
-            PermissionSet permissionSet = new PermissionSet(PermissionState.None);
-            permissionSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.ControlPrincipal));
-            permissionSet.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read,
-                _fullProfileListKeyName));
-            permissionSet.Assert();
-
             bool userHasProfile = false;
             RegistryKey userProfileKey = null;
             try
@@ -567,8 +546,6 @@ namespace MS.Internal.IO.Packaging
             {
                 if (userProfileKey != null)
                     userProfileKey.Close();
-
-                CodeAccessPermission.RevertAssert();
             }
 
             return userHasProfile;
@@ -596,8 +573,7 @@ namespace MS.Internal.IO.Packaging
                 FileShare share, ReliableIsolatedStorageFileFolder folder)
                 : base(path, mode, access, share, folder.IsoFile)
             {
-                if (path == null)
-                    throw new ArgumentNullException("path");
+                ArgumentNullException.ThrowIfNull(path);
 
                 _path = path;
                 _folder = folder;
@@ -643,7 +619,7 @@ namespace MS.Internal.IO.Packaging
             //------------------------------------------------------
             private string _path;
             private ReliableIsolatedStorageFileFolder _folder;
-            private bool   _disposed;
+            private bool _disposed;
         }
 
 
@@ -837,9 +813,9 @@ namespace MS.Internal.IO.Packaging
             //
             //------------------------------------------------------
             private static IsolatedStorageFile _file;
-            private static bool                _userHasProfile;
-            private int                        _refCount;               // number of outstanding "streams"
-            private bool                       _disposed;
+            private static bool _userHasProfile;
+            private int _refCount;               // number of outstanding "streams"
+            private bool _disposed;
         }
 
         //------------------------------------------------------
@@ -852,7 +828,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <remarks>See PS 1468964 for details.</remarks>
         private static Object _isoStoreSyncObject = new Object();
-        private static Object _isolatedStorageFileLock = new Object();  
+        private static Object _isolatedStorageFileLock = new Object();
         private static ReliableIsolatedStorageFileFolder _defaultFile;
         private const string XmlNamespace = "xmlns";
         private const string _encodingAttribute = "encoding";
@@ -862,9 +838,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// ProfileListKeyName
         /// </summary>
-        ///<SecurityNote>
-        /// _profileListKeyName must remain readonly for security reasons
-        ///</SecurityNote>
         private const string _profileListKeyName = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList";
         private const string _fullProfileListKeyName = @"HKEY_LOCAL_MACHINE\" + _profileListKeyName;
     }

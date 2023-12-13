@@ -34,9 +34,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -211,12 +209,6 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

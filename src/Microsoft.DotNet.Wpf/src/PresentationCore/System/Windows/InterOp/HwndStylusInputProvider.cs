@@ -14,11 +14,9 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
 
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Interop
 {
@@ -35,10 +33,6 @@ namespace System.Windows.Interop
         private const int MultiTouchEnabledFlag         = 0x01000000;
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Accesses and stores critical data (_site, _source, _stylusLogic).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal HwndStylusInputProvider(HwndSource source)
         {
             InputManager inputManager = InputManager.Current;
@@ -46,18 +40,10 @@ namespace System.Windows.Interop
 
             IntPtr sourceHandle;
 
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed Assert this is for RegisterInputManager and RegisterHwndforinput
-            {
-                // Register ourselves as an input provider with the input manager.
-                _site = new SecurityCriticalDataClass<InputProviderSite>(inputManager.RegisterInputProvider(this));
+            // Register ourselves as an input provider with the input manager.
+            _site = new SecurityCriticalDataClass<InputProviderSite>(inputManager.RegisterInputProvider(this));
 
-                sourceHandle = source.Handle;
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            sourceHandle = source.Handle;
 
             _stylusLogic.Value.RegisterHwndForInput(inputManager, source);
             _source = new SecurityCriticalDataClass<HwndSource>(source);
@@ -69,11 +55,6 @@ namespace System.Windows.Interop
         /////////////////////////////////////////////////////////////////////
 
 
-        /// <SecurityNote>
-        ///     Critical:This class accesses critical data, _site
-        ///     TreatAsSafe: This class does not expose the critical data.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Dispose()
         {
             if(_site != null)
@@ -88,12 +69,6 @@ namespace System.Windows.Interop
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: This method acceses critical data hwndsource
-        ///     TreatAsSafe:Information about whether a given input provider services
-        ///     a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert( null != _source );
@@ -102,10 +77,6 @@ namespace System.Windows.Interop
 
         void IInputProvider.NotifyDeactivate() {}
 
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it handles all stylus messages and could be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -128,7 +99,7 @@ namespace System.Windows.Interop
                     NativeMethods.POINT pt1 = new NativeMethods.POINT(
                                             NativeMethods.SignedLOWORD(lParam),
                                             NativeMethods.SignedHIWORD(lParam));
-                    SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), pt1);
+                    SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), ref pt1);
                     Point ptClient1 = new Point(pt1.x, pt1.y);
 
                     IInputElement inputElement = StylusDevice.LocalHitTest(_source.Value, ptClient1);
@@ -201,13 +172,7 @@ namespace System.Windows.Interop
         /////////////////////////////////////////////////////////////////////
 
         private SecurityCriticalDataClass<WispLogic>         _stylusLogic;
-        /// <SecurityNote>
-        ///     Critical: This is the HwndSurce object , not ok to expose
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource>        _source;
-        /// <SecurityNote>
-        ///     This data is critical and should never be exposed
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputProviderSite> _site;
     }
 }

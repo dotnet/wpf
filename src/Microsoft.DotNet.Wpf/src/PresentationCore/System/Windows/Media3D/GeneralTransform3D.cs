@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -64,7 +63,7 @@ namespace System.Windows.Media.Media3D
 
             if (!TryTransform(point, out transformedPoint))
             {
-                throw new InvalidOperationException(SR.Get(SRID.GeneralTransform_TransformFailed, null));
+                throw new InvalidOperationException(SR.Format(SR.GeneralTransform_TransformFailed, null));
             }
 
             return transformedPoint;

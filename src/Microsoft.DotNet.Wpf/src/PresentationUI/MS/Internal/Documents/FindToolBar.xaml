@@ -1,0 +1,386 @@
+﻿<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+  
+Description: Markup for DocumentViewer Find ToolBar.
+==================================================================-->
+<ToolBar
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:System.Windows.Documents"
+    xml:lang="en-US"
+    x:Class="MS.Internal.Documents.FindToolBar"
+    x:ClassModifier="internal"
+    x:Uid="FindToolbar"
+    x:Name="FindToolbar"
+    ToolBarTray.IsLocked="True"
+    KeyboardNavigation.DirectionalNavigation="Continue"
+    KeyboardNavigation.TabNavigation="Continue"
+    xmlns:MappingPIGen1="clr-namespace:System.Windows.Documents"
+    FocusManager.IsFocusScope="False"
+    >
+  <ToolBar.Resources>
+  
+    <!--=================================================================
+        Focus and Hover Brushes
+    ==================================================================-->
+
+    <!-- Used by buttons and menuitems -->
+    <SolidColorBrush x:Uid="SolidColorBrush_1" x:Key="HasFocusBorderBrush" Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" />
+
+    <!-- Used by buttons and menuitems -->
+    <LinearGradientBrush x:Uid="LinearGradientBrush_87" x:Key="HasFocusBrush" StartPoint="0,0" EndPoint="0,1">
+      <GradientBrush.GradientStops>
+        <GradientStopCollection x:Uid="GradientStopCollection_72">
+          <GradientStop x:Uid="GradientStop_155" Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" Offset="0" />
+          <GradientStop x:Uid="GradientStop_154" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset=".3" />
+          <GradientStop x:Uid="GradientStop_182" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset=".85" />
+        </GradientStopCollection>
+      </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- Used by buttons and menuitems -->
+    <LinearGradientBrush x:Uid="LinearGradientBrush_88" x:Key="IsPressedBrush" StartPoint="0,0" EndPoint="0,1">
+      <GradientBrush.GradientStops>
+        <GradientStopCollection x:Uid="GradientStopCollection_87">
+          <GradientStop x:Uid="GradientStop_183" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="0" />
+          <GradientStop x:Uid="GradientStop_184" Color="{DynamicResource {x:Static SystemColors.ControlLightLightColorKey}}" Offset=".3" />
+          <GradientStop x:Uid="GradientStop_185" Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset=".85" />
+        </GradientStopCollection>
+      </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Uid="LinearGradientBrush_89" x:Key="FillBrush" StartPoint="378.500000,0.000000" EndPoint="378.500000,1.000000">
+      <LinearGradientBrush.GradientStops>
+        <GradientStop x:Uid="GradientStop_186" Offset="0.005618" Color="#ff00cfff"/>
+        <GradientStop x:Uid="GradientStop_187" Offset="0.511236" Color="#ff005fb5"/>
+      </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--=================================================================
+        Button Contents
+    ==================================================================-->
+    <!-- Find Previous Icon -->
+    <Canvas x:Uid="Canvas_2" x:Key="FindPreviousContent"  Width="6" Height="7">
+      <Path x:Uid="Path_2" Data="F1 M 4.000000,0.000000 L 4.000000,7.000000 L -2.000000,3.818359" Fill="{StaticResource FillBrush}" />
+    </Canvas>
+    <Canvas x:Uid="Canvas_3" x:Key="FindNextContent"  Width="6" Height="7">
+      <Path x:Uid="Path_3"  Data="F1 M -1.000000,0.000000 L -1.000000,7.000000 L 5.000000,3.818359" Fill="{StaticResource FillBrush}" />
+    </Canvas>
+
+    <!--=================================================================
+        ToolBar Style
+    ==================================================================-->
+    <Style x:Uid="Style_5" x:Key="{x:Type ToolBar}" TargetType="{x:Type ToolBar}">
+      <Setter x:Uid="Setter_1" Property="FontFamily" Value="{Binding Path=FontFamily, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter x:Uid="Setter_2" Property="FontSize" Value="{Binding Path=FontSize, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter x:Uid="Setter_3" Property="FontStyle" Value="{Binding Path=FontStyle, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter x:Uid="Setter_4" Property="FontWeight" Value="{Binding Path=FontWeight, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter x:Uid="Setter_6" Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+
+    <!--=================================================================
+        Button Style
+    ==================================================================-->
+    <Style x:Uid="Style_18" x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+      <Setter x:Uid="Setter_742" Property="VerticalAlignment" Value="Center" />
+      <Setter x:Uid="Setter_772" Property="HorizontalAlignment" Value="Center" />
+      <Setter x:Uid="Setter_743" Property="BorderThickness" Value="0" />
+      <Setter x:Uid="Setter_128" Property="Width" Value="15"/>
+      <Setter x:Uid="Setter_129" Property="Height" Value="18"/>
+      <Setter x:Uid="Setter_773" Property="Padding" Value="0"/>
+      <Setter x:Uid="Setter_774" Property="Margin" Value="0"/>
+      <Setter x:Uid="Setter_744" Property="BorderBrush" Value="Transparent" />
+      <Setter x:Uid="Setter_745" Property="Template">
+        <Setter.Value>
+          <ControlTemplate x:Uid="ControlTemplate_16" TargetType="{x:Type Button}">
+            <Border x:Uid="Border_10" Background="Transparent"  Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}">
+              <Grid x:Uid="Grid_10" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                <Border x:Uid="Border_11" BorderThickness="1" x:Name="TrimBorder" Background="Transparent">
+                  <ContentPresenter x:Uid="ContentPresenter_1" x:Name="ButtonContent"/>
+                </Border>
+              </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger x:Uid="Trigger_FTDisable" Property="IsEnabled" Value="false">
+                <Setter x:Uid="Setter_FTDisable" TargetName="ButtonContent" Property="Opacity" Value="0.3" />
+              </Trigger>
+              <Trigger x:Uid="Trigger_32" Property="IsMouseOver" Value="true">
+                <Setter x:Uid="Setter_756" TargetName="TrimBorder" Property="Background" Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_757" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+              <Trigger x:Uid="Trigger_33" Property="IsKeyboardFocused" Value="true">
+                <Setter x:Uid="Setter_758" TargetName="TrimBorder" Property="Background" Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_759" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+              <MultiTrigger x:Uid="MultiTrigger_7">
+                <MultiTrigger.Conditions>
+                  <Condition x:Uid="Condition_13" Property="IsMouseOver" Value="true" />
+                  <Condition x:Uid="Condition_14" Property="IsKeyboardFocused" Value="true" />
+                </MultiTrigger.Conditions>
+                <Setter x:Uid="Setter_760" TargetName="TrimBorder" Property="Background"  Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_761" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </MultiTrigger>
+              <Trigger x:Uid="Trigger_34" Property="IsPressed" Value="true">
+                <Setter x:Uid="Setter_762" TargetName="TrimBorder" Property="Background" Value="{StaticResource IsPressedBrush}" />
+                <Setter x:Uid="Setter_763" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <!--=================================================================
+        Label Style
+    ==================================================================-->
+    <Style x:Uid="Style_4"  x:Key="{x:Type Label}"  TargetType="{x:Type Label}" BasedOn="{x:Null}">
+      <Setter x:Uid="Setter_12"  Property="Padding" Value="0"/>
+      <Setter x:Uid="Setter_20"  Property="Margin" Value="3,0,0,0" />
+      <Setter x:Uid="Setter_130" Property="Width" Value="180"/>
+      <Setter x:Uid="Setter_133" Property="VerticalAlignment" Value="Center"/>
+      <Setter x:Uid="Setter_134" Property="HorizontalAlignment" Value="Left"/>
+      <Setter x:Uid="Setter_135" Property="Background" Value="Transparent"/>
+      <Setter x:Uid="Setter_136" Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+    </Style>
+
+    <!--=================================================================
+        TextBox Style
+    ==================================================================-->
+    <Style x:Uid="Style_3" x:Key="{x:Type TextBox}"
+           TargetType="{x:Type TextBox}"
+           BasedOn="{x:Null}">
+      <Setter x:Uid="Setter_11"  Property="BorderThickness" Value="0"/>
+      <Setter x:Uid="Setter_138" Property="BorderBrush" Value="Transparent"/>
+      <Setter x:Uid="Setter_21"  Property="Padding" Value="0"/>
+      <Setter x:Uid="Setter_22"  Property="Margin" Value="0"/>
+      <Setter x:Uid="Setter_131" Property="Width" Value="183"/>
+      <Setter x:Uid="Setter_13"  Property="AllowDrop" Value="True"/>
+      <Setter x:Uid="Setter_139" Property="VerticalAlignment" Value="Center"/>
+      <Setter x:Uid="Setter_140" Property="HorizontalAlignment" Value="Left"/>
+      <Setter x:Uid="Setter_141" Property="Background" Value="Transparent"/>
+   </Style>
+
+    <!--=================================================================
+        OptionsMenuItem - custom style for this one menu item.
+    ==================================================================-->
+    <Style x:Uid="Style_716" x:Key="OptionsMenuItemStyle" TargetType="{x:Type MenuItem}">
+      <Setter x:Uid="Setter_775" Property="VerticalAlignment" Value="Center" />
+      <Setter x:Uid="Setter_776" Property="HorizontalAlignment" Value="Center" />
+      <Setter x:Uid="Setter_777" Property="BorderThickness" Value="0" />
+      <Setter x:Uid="Setter_778" Property="Width" Value="15"/>
+      <Setter x:Uid="Setter_779" Property="Height" Value="18"/>
+      <Setter x:Uid="Setter_780" Property="Margin" Value="0,0,1,0"/>
+      <Setter x:Uid="Setter_781" Property="Padding" Value="0"/>
+      <Setter x:Uid="Setter_782" Property="BorderBrush" Value="Transparent" />
+      <Setter x:Uid="Setter_725" Property="Template">
+        <Setter.Value>
+          <ControlTemplate x:Uid="ControlTemplate_26" TargetType="{x:Type MenuItem}">
+            <Border x:Uid="Border_12" Background="Transparent"  Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}">
+              <Grid x:Uid="Grid_11" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                <Border x:Uid="Border_13" BorderThickness="1" x:Name="TrimBorder" Background="Transparent">
+                  <!-- Find Options Icon -->
+                  <Canvas x:Uid="Canvas_1" Width="5" Height="4">
+                    <Path x:Name="FindOptionsIcon" x:Uid="Path_4" Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Data="F1 M -2.000000,0.000000 L 5.000000,0.000000 L 1.5,4.000000"/>
+                  </Canvas>
+                </Border>
+                <Popup x:Uid="Popup_1" x:Name="SubMenuPopup" AllowsTransparency="true"
+                       Placement="Bottom" VerticalOffset="0"
+                       IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                       Focusable="false" 
+                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                  <Grid x:Uid="SubMenu" Name="SubMenu">
+                    <Border x:Uid="SubMenuBorder" Name="SubMenuBorder" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                    <ScrollViewer x:Uid="ScrollViewer_1" Margin="1" CanContentScroll="true"
+                                  Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                      <ItemsPresenter x:Uid="ItemsPresenter_1" Margin="2" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                    </ScrollViewer>
+                  </Grid>
+                </Popup>
+              </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger x:Uid="Trigger_FTMDisable" Property="IsEnabled" Value="false">
+                <Setter x:Uid="Setter_FTMDisable" TargetName="FindOptionsIcon" Property="Opacity" Value="0.3" />
+              </Trigger>
+              <Trigger x:Uid="Trigger_35" Property="IsMouseOver" Value="true">
+                <Setter x:Uid="Setter_764" TargetName="TrimBorder" Property="Background" Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_765" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+              <Trigger x:Uid="Trigger_36" Property="IsKeyboardFocused" Value="true">
+                <Setter x:Uid="Setter_766" TargetName="TrimBorder" Property="Background" Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_767" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+              <MultiTrigger x:Uid="MultiTrigger_8">
+                <MultiTrigger.Conditions>
+                  <Condition x:Uid="Condition_15" Property="IsMouseOver" Value="true" />
+                  <Condition x:Uid="Condition_16" Property="IsKeyboardFocused" Value="true" />
+                </MultiTrigger.Conditions>
+                <Setter x:Uid="Setter_768" TargetName="TrimBorder" Property="Background"  Value="{StaticResource HasFocusBrush}" />
+                <Setter x:Uid="Setter_769" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </MultiTrigger>
+              <Trigger x:Uid="Trigger_37" Property="IsPressed" Value="true">
+                <Setter x:Uid="Setter_770" TargetName="TrimBorder" Property="Background" Value="{StaticResource IsPressedBrush}" />
+                <Setter x:Uid="Setter_771" TargetName="TrimBorder" Property="BorderBrush" Value="{StaticResource HasFocusBorderBrush}" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </ToolBar.Resources>
+
+  <!--=================================================================
+       ToolBar Contents
+    ==================================================================-->
+  <!-- Border that wraps entire Toolbar contents -->
+  <Border
+    x:Uid="FindTextBoxBorder"
+    x:Name="FindTextBoxBorder"
+    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+    SnapsToDevicePixels="true"
+    BorderThickness="1"	
+    Padding="0"	
+    Margin="5,1,0,1"
+    >
+    <Border.Background>
+      <LinearGradientBrush x:Uid="LinearGradientBrush_90" StartPoint="0,0" EndPoint="1,0">
+        <GradientBrush.GradientStops>
+          <GradientStopCollection x:Uid="GradientStopCollection_88">
+            <GradientStop x:Uid="GradientStop_188" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" Offset="0" />
+            <GradientStop x:Uid="GradientStop_189" x:Name="FindBorderGradientStop"  Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" Offset="0" />
+            <GradientStop x:Uid="GradientStop_190" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" Offset="1" />
+          </GradientStopCollection>
+        </GradientBrush.GradientStops>
+      </LinearGradientBrush>
+    </Border.Background>
+    <Border.Triggers>
+      <EventTrigger 
+        x:Uid="EventTrigger_1" 
+        RoutedEvent="TextBox.GotFocus"
+        SourceName="FindTextBox">
+        <BeginStoryboard x:Uid="BeginStoryboard_1">
+          <Storyboard x:Uid="Storyboard_1">
+            <ColorAnimation 
+              x:Uid="ColorAnimation_1" 
+              Storyboard.TargetName="FindBorderGradientStop"
+              Storyboard.TargetProperty="Color"
+              From="{DynamicResource {x:Static SystemColors.WindowColorKey}}"
+              To="{DynamicResource {x:Static SystemColors.HighlightColorKey}}"
+              Duration="0:0:0.6" AutoReverse="True" />
+            <DoubleAnimation
+              x:Uid="DoubleAnimation_1"
+              Storyboard.TargetName="FindBorderGradientStop"
+              Storyboard.TargetProperty="Offset"
+              From="0" To="1"
+              Duration="0:0:0.6"
+              AutoReverse="False" />
+          </Storyboard>
+        </BeginStoryboard>
+      </EventTrigger >
+    </Border.Triggers>
+
+    <!-- StackPanel that wraps the TextBox/Label overlay -->
+    <StackPanel x:Uid="FindStackPanel" Orientation="Horizontal">
+      <Grid 
+           x:Uid="FindTextBoxGrid"
+           x:Name="FindTextBoxGrid"
+           VerticalAlignment="Center"
+           Background="Transparent">
+        <Label
+          x:Uid="FindTextLabel"
+          x:Name="FindTextLabel"
+          FontStyle="Italic"
+          >Type text to find...</Label>
+        <TextBox
+          x:Uid="FindTextBox"
+          x:Name="FindTextBox"
+          TextChanged="OnFindTextBoxChanged"
+          PreviewKeyDown="OnFindTextBoxPreviewKeyDown"
+          MaxLength="255"
+          ToolTip="Search for a word or phrase in this document."
+          ToolTipService.ShowOnDisabled="True" />
+      </Grid>
+
+      <!-- Find Previous instance button -->
+      <Button
+        x:Uid="FindPreviousButton"
+        x:Name="FindPreviousButton"
+        Click="OnFindPreviousClick"
+        IsEnabled="False" 
+        ToolTip="Find Previous"
+        ToolTipService.ShowOnDisabled="True"
+        Content="{StaticResource FindPreviousContent}" />
+      <!-- Find Next instance button -->
+      <Button
+        x:Uid="FindNextButton"
+        x:Name="FindNextButton"
+        Click="OnFindNextClick"
+        IsEnabled="False" 
+        ToolTip="Find Next"
+        ToolTipService.ShowOnDisabled="True"
+        Content="{StaticResource FindNextContent}" />
+
+      <!-- Options menu -->
+      <Menu
+        x:Uid="OptionsMenu"
+        x:Name="OptionsMenu"
+        IsTabStop="False"  
+        IsMainMenu="False"
+        VerticalAlignment="Center"
+        Background="Transparent" 
+        KeyboardNavigation.DirectionalNavigation="Continue"
+        KeyboardNavigation.TabNavigation="Continue"
+        >
+        <MenuItem 
+          x:Uid="OptionsMenuItem"
+          x:Name="OptionsMenuItem"
+          Style="{StaticResource OptionsMenuItemStyle}" 
+          IsTabStop="True"
+          ToolTip="Find..."
+          ToolTipService.ShowOnDisabled="True"
+          KeyboardNavigation.DirectionalNavigation="Continue"
+          KeyboardNavigation.TabNavigation="Continue"
+          >
+          <MenuItem 
+            x:Uid="OptionsWholeWordMenuItem"
+            x:Name="OptionsWholeWordMenuItem"
+            IsCheckable="true">
+            <MenuItem.Header>Match _whole word only</MenuItem.Header>
+          </MenuItem>
+
+          <MenuItem
+            x:Uid="OptionsCaseMenuItem"
+            x:Name="OptionsCaseMenuItem"
+            IsCheckable="true">
+            <MenuItem.Header>Match _case</MenuItem.Header>
+          </MenuItem>
+
+          <MenuItem
+            x:Uid="OptionsDiacriticMenuItem"
+            x:Name="OptionsDiacriticMenuItem"
+            IsCheckable="true">
+            <MenuItem.Header>Match _diacritic</MenuItem.Header>
+          </MenuItem>
+
+          <MenuItem
+            x:Uid="OptionsKashidaMenuItem"
+            x:Name="OptionsKashidaMenuItem"
+            IsCheckable="true">
+            <MenuItem.Header>Match _kashida</MenuItem.Header>
+          </MenuItem>
+
+          <MenuItem 
+            x:Uid="OptionsAlefHamzaMenuItem"
+            x:Name="OptionsAlefHamzaMenuItem"
+            IsCheckable="true">
+            <MenuItem.Header>Match _alef hamza</MenuItem.Header>
+          </MenuItem>
+        </MenuItem>
+        <!-- end of Options menu item -->
+      </Menu>
+    </StackPanel>
+  </Border>
+</ToolBar>
+<!-- end of Find toolbar  -->

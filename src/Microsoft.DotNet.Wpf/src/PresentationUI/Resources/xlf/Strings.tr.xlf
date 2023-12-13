@@ -1,0 +1,1252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="tr" original="../Strings.resx">
+    <body>
+      <trans-unit id="CertSelectionDialogMessage">
+        <source>Select a certificate</source>
+        <target state="translated">Sertifika seçin</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="CertSelectionDialogTitle">
+        <source>Digital Signature</source>
+        <target state="translated">Dijital İmza</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString1">
+        <source>&lt;None&gt;</source>
+        <target state="translated">&lt;Yok&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString2">
+        <source>I am the author of this document.</source>
+        <target state="translated">Ben bu belgenin yazarıyım.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString3">
+        <source>I have reviewed the contents of this document.</source>
+        <target state="translated">Bu belgenin içeriğini gözden geçirdim.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString4">
+        <source>I have reviewed and approve the contents of this document.</source>
+        <target state="translated">Bu belgenin içeriğini gözden geçirdim ve içeriği onaylıyorum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString5">
+        <source>I agree with the terms defined in this document.</source>
+        <target state="translated">Bu belgede tanımlanan koşulları kabul ediyorum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigIntentString6">
+        <source>I attest to the accuracy and integrity of this document.</source>
+        <target state="translated">Bu belgenin doğruluğunu ve tutarlılığını onaylıyorum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigRequestTitle">
+        <source>Request Digital Signatures</source>
+        <target state="translated">Dijital İmza İste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderIntent">
+        <source>Intent:</source>
+        <target state="translated">Amaç:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderLocale">
+        <source>Locale:</source>
+        <target state="translated">Yerel Ayar:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderName">
+        <source>Name:</source>
+        <target state="translated">Ad:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderSignBy">
+        <source>Sign By:</source>
+        <target state="translated">İmzalayan:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumColumnHeaderSignatureStatus">
+        <source>Signature Status:</source>
+        <target state="translated">İmza Durumu:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumDone">
+        <source>&amp;Done</source>
+        <target state="translated">&amp;Bitti</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumRequestAdd">
+        <source>&amp;Add...</source>
+        <target state="translated">&amp;Ekle...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumRequestDelete">
+        <source>De&amp;lete</source>
+        <target state="translated">S&amp;il</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumSign">
+        <source>&amp;Sign...</source>
+        <target state="translated">İ&amp;mzala...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumTitle">
+        <source>Digital Signature Summary</source>
+        <target state="translated">Dijital İmza Özeti</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigSigSumViewCert">
+        <source>View &amp;Certificate...</source>
+        <target state="translated">&amp;Sertifikayı Görüntüle...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageActionInvalidatesSignature">
+        <source>The changes that you selected will invalidate one or more signatures that are applied to this document.\r\n\r\nAre you sure you want to continue?</source>
+        <target state="translated">Seçtiğiniz değişiklikler, bu belgeye uygulanan bir veya daha fazla imzayı geçersiz kılacak.\r\n\r\nDevam etmek istediğinizden emin misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageAddRequestsBeforeSigning">
+        <source>You are about to apply the first digital signature to this document.\r\n\r\nIf this document must be signed by other users, you need to request their signatures before you sign by using the Digital Signatures menu.\r\n\r\nAfter you sign this document, changes to the document will invalidate your signature.  Are you sure you want to continue?</source>
+        <target state="translated">Bu belgeye ilk dijital imzayı uygulamak üzeresiniz.\r\n\r\nBu belgenin diğer kullanıcılar tarafından imzalanması gerekirse, Dijital İmzalar menüsünü kullanarak imzalamadan önce bu kullanıcıların imzalarını istemeniz gerekir.\r\n\r\nBu belgeyi imzaladıktan sonra, belgedeki değişiklikler imzanızı geçersiz kılar. Devam etmek istediğinizden emin misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageAddRequestsBeforeSigningTitle">
+        <source>Digital Signatures - Document Is Not Signed</source>
+        <target state="translated">Dijital İmzalar - Belge İmzalanmadı</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageDocumentNotSignable">
+        <source>This document cannot be signed because it contains content that cannot be displayed.</source>
+        <target state="translated">Bu belgenin içeriği görüntülenemediğinden imzalanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageDocumentNotSignableTitle">
+        <source>Digital Signatures</source>
+        <target state="translated">Dijital İmzalar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNoPending">
+        <source>This document has no pending signatures. Are you sure you want to sign it anyway?</source>
+        <target state="translated">Bu belgede bekleyen imza yok. Yine de imzalamak istediğinizden emin misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNow">
+        <source>Do you want to sign this document now?\r\n\r\nYou have just defined information about who is required to sign this document. You should digitally sign the document to ensure tamper evidence if someone tries to modify it. If you still want to modify this document then you should not sign it now.</source>
+        <target state="translated">Bu belgeyi şimdi imzalamak istiyor musunuz?\r\n\r\nBu belgeyi kimin imzalaması gerektiğiyle ilgili bilgileri tanımlamış bulunuyorsunuz. Birisi belgeyi değiştirmeyi denediği takdirde müdahale kanıtı elde etmek için belgeyi dijital olarak imzalamanız gerekir. Bu belgede hala değişiklik yapmak istiyorsanız, şimdi imzalamamalısınız.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignNowTitle">
+        <source>Sign XPS Document</source>
+        <target state="translated">XPS Belgesini İmzala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureMessageSignPending">
+        <source>You have not selected any of the pending signatures requested by the publisher of this document. Are you sure you want to continue?</source>
+        <target state="translated">Bu belgenin yayımcısı tarafından istenen bekleyen imzalardan hiçbirini seçmediniz. Devam etmek istediğinizden emin misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureNoFixedDocumentSequence">
+        <source>The document does not contain a valid FixedDocumentSequence.</source>
+        <target state="translated">Belge geçerli bir FixedDocumentSequence içermiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorGeneric">
+        <source>The following error occurred while signing the document:\r\n{0}</source>
+        <target state="translated">Belge imzalanırken aşağıdaki hata oluştu:\r\n{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorRMSigningMessage">
+        <source>You do not have permission to sign this document.</source>
+        <target state="translated">Bu belgeyi imzalama izniniz yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorRMSigningMessageNoCerts">
+        <source>Signing process failed. To sign this document, you need to obtain a digital certificate.</source>
+        <target state="translated">İmzalama işlemi başarısız oldu. Bu belgeyi imzalamak için bir dijital sertifika edinmeniz gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorReadOnlyInputError">
+        <source>Requested signer and reason for signing must be entered before adding this requested signature.</source>
+        <target state="translated">İstenen bu imza eklenmeden önce istenen imzalayıcı ve imzalama nedeni girilmelidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorReadOnlyNoMoreRequest">
+        <source>This document has been signed already and cannot be signed again.</source>
+        <target state="translated">Bu belge zaten imzalandı ve yeniden imzalanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DigitalSignatureWarnErrorSigningErrorTitle">
+        <source>XPS Document Signing Error</source>
+        <target state="translated">XPS Belgesi İmzalama Hatası</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerFocusToolBarCommand">
+        <source>Give focus to the main toolbar.</source>
+        <target state="translated">Ana araç çubuğuna odaklanın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerRequestSignersCommand">
+        <source>Request signatures</source>
+        <target state="translated">İmza iste</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMCredentialManagerCommand">
+        <source>Restrict permission as...</source>
+        <target state="translated">İzinleri kısıtlama biçimi...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMPermissionsCommand">
+        <source>View my permissions</source>
+        <target state="translated">İzinlerimi görüntüle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowRMPublishingUICommand">
+        <source>Set permissions</source>
+        <target state="translated">İzin ayarla</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerShowSignatureSummaryCommand">
+        <source>View signature details</source>
+        <target state="translated">İmza ayrıntılarını görüntüle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentApplicationDocumentViewerSignCommand">
+        <source>Sign this document</source>
+        <target state="translated">Bu belgeyi imzala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogAuthorLabel">
+        <source>Author:</source>
+        <target state="translated">Yazar:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogCategoryLabel">
+        <source>Category:</source>
+        <target state="translated">Kategori:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogContentLabel">
+        <source>Content:</source>
+        <target state="translated">İçerik:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDateFormat">
+        <source>{0:F}</source>
+        <target state="translated">{0:F}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDescriptionLabel">
+        <source>Description:</source>
+        <target state="translated">Açıklama:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentCreatedLabel">
+        <source>Published:</source>
+        <target state="translated">Yayım:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentDetailBoxLabel">
+        <source>Authoring Information</source>
+        <target state="translated">Yazar Bilgileri</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentModifiedLabel">
+        <source>Edited:</source>
+        <target state="translated">Düzenlenme:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentPrintedLabel">
+        <source>Printed:</source>
+        <target state="translated">Yazdırılma:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogDocumentPropertiesMustExist">
+        <source>DocumentProperties must exist.</source>
+        <target state="translated">DocumentProperties var olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileAccessedLabel">
+        <source>Accessed:</source>
+        <target state="translated">Erişim:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileCreatedLabel">
+        <source>Created:</source>
+        <target state="translated">Oluşturulma:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileModifiedLabel">
+        <source>Modified:</source>
+        <target state="translated">Değiştirilme:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeBytesUnit">
+        <source>bytes</source>
+        <target state="translated">bayt</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeFormat">
+        <source>{{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})</source>
+        <target state="translated">{{0:#,#.{0}}} {{1}} ({{2:#,#}} {{3}})</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeKBUnit">
+        <source>KB</source>
+        <target state="translated">KB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSizeMBUnit">
+        <source>MB</source>
+        <target state="translated">MB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogFileSystemBoxLabel">
+        <source>File System</source>
+        <target state="translated">Dosya Sistemi</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogIdentifierLabel">
+        <source>Identifier:</source>
+        <target state="translated">Tanımlayıcı:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogInfoLabel">
+        <source>File</source>
+        <target state="translated">Dosya</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogKeywordsLabel">
+        <source>Keywords:</source>
+        <target state="translated">Anahtar Sözcükler:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogLanguageLabel">
+        <source>Language:</source>
+        <target state="translated">Dil:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogLastSavedByLabel">
+        <source>Last Saved By:</source>
+        <target state="translated">Son Kaydeden:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogNotAvailable">
+        <source>Not Available</source>
+        <target state="translated">Kullanılamıyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogOkButtonLabel">
+        <source>&amp;Close</source>
+        <target state="translated">K&amp;apat</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogRevisionLabel">
+        <source>Revision:</source>
+        <target state="translated">Gözden Geçirilme:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSizeLabel">
+        <source>Size:</source>
+        <target state="translated">Boyut:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogStatusLabel">
+        <source>Status:</source>
+        <target state="translated">Durum:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSubjectLabel">
+        <source>Subject:</source>
+        <target state="translated">Konu:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogSummaryLabel">
+        <source>Content</source>
+        <target state="translated">İçerik</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogTitle">
+        <source>XPS Document Properties</source>
+        <target state="translated">XPS Belge Özellikleri</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogTitleLabel">
+        <source>Title:</source>
+        <target state="translated">Başlık:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentPropertiesDialogVersionLabel">
+        <source>Version:</source>
+        <target state="translated">Sürüm:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerAppliedToolTip">
+        <source>Click here to verify the signer's identity.</source>
+        <target state="translated">İmzalayanın kimliğini doğrulamak için burayı tıklatın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerDefaultToolTip">
+        <source>Sign this document using a digital signature.</source>
+        <target state="translated">Bu belgeyi dijital imza kullanarak imzalayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerInvalid">
+        <source>This document is signed. However, there are problems with one or more signatures. Click here for more information...</source>
+        <target state="translated">Bu belge imzalı. Ancak, bir veya daha fazla imzayla ilgili sorun var. Daha fazla bilgi için burayı tıklatın...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerUndetermined">
+        <source>This document contains digital signatures that will be checked when the download is complete. Click here to verify the signer's identity...</source>
+        <target state="translated">Bu belge, indirme tamamlandığında denetlenecek dijital imzalar içeriyor. İmzalayanın kimliğini doğrulamak için burayı tıklatın...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentSignatureManagerValid">
+        <source>This document is signed. All signatures are valid. Click here to view the signer's identity...</source>
+        <target state="translated">Bu belge imzalı. Tüm imzalar geçerli. İmzalayanın kimliğini görüntülemek için burayı tıklatın...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamCanNoLongerOpen">
+        <source>Can no longer open file.</source>
+        <target state="translated">Dosya artık açılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeFileSource">
+        <source>Operation valid only on file based sources.</source>
+        <target state="translated">İşlem yalnızca dosya temelinde kaynaklar üzerinde geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeTemporary">
+        <source>Operation valid only on temporary documents.</source>
+        <target state="translated">İşlem yalnızca geçici belgeler üzerinde geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DocumentStreamMustBeXpsFile">
+        <source>Only XPS documents are supported.</source>
+        <target state="translated">Yalnızca XPS belgeleri desteklenir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementDestinationIsReadOnly">
+        <source>Cannot save to this file because it is read-only.</source>
+        <target state="translated">Salt okunur olduğundan bu dosyaya kaydedilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoAccessToDestination">
+        <source>Cannot save to the target location.</source>
+        <target state="translated">Hedef konuma kaydedilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoAccessToSource">
+        <source>Cannot open from the target location.</source>
+        <target state="translated">Hedef konuma kaydedilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementNoTemporaryFileAccess">
+        <source>Cannot create a temporary file; some features will not be available.</source>
+        <target state="translated">Geçici dosya oluşturulamıyor; bazı özellikler kullanılamayacak.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementSaveExt">
+        <source>.xps</source>
+        <target state="translated">.xps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementSaveFilter">
+        <source>Document (*.xps)|*.xps</source>
+        <target state="translated">Belge (*.xps)|*.xps</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementStreamProxyIsReadOnly">
+        <source>Cannot change target because stream proxy is read-only.</source>
+        <target state="translated">Akış proxy 'si salt okunur olduğundan hedef değiştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileManagementTitleError">
+        <source>File Access Error</source>
+        <target state="translated">Dosya Erişim Hatası</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackageControllerStreamCorruption">
+        <source>Source and destination cannot be same stream.</source>
+        <target state="translated">Kaynak ve hedef aynı akış olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagePartTypeNotWritable">
+        <source>Writing to parts with the provided content type is not supported.</source>
+        <target state="translated">Sağlanan içerik türünü içeren bölümlere yazma desteklenmiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingCircularReference">
+        <source>Value returned from writeable factory delegate refers to self.</source>
+        <target state="translated">Yazılabilir fabrika temsilcisinden döndürülen değer kendisine başvuruyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteNotSupported">
+        <source>This instance cannot perform write operations.</source>
+        <target state="translated">Örnek, yazma işlemleri gerçekleştiremez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteableDelegateGaveNullPart">
+        <source>Delegate returned a null writing part.</source>
+        <target state="translated">Temsilci boş yazma bölümü döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PackagingWriteableDelegateGaveNullStream">
+        <source>Delegate returned a null writing stream.</source>
+        <target state="translated">Temsilci boş yazma akışı döndürdü.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PageTextBoxToolTip">
+        <source>Type the number of the page that you want to view.</source>
+        <target state="translated">Görüntülemek istediğiniz sayfanın numarasını yazın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PeoplePickerErrorConditionFromOpenQueryWindow">
+        <source>An error was returned from OpenQueryWindow while invoking the Find Users, Contacts, and Groups dialog box, HRESULT={0}.</source>
+        <target state="translated">Kullanıcı, Kişi ve Grup Bul iletişim kutusu çağrılırken OpenQueryWindow'dan hata döndürüldü, HRESULT={0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="PeoplePickerInvalidParentWindow">
+        <source>The parent HWND passed to the Find Users, Contacts, and Groups dialog box is not valid.</source>
+        <target state="translated">Kullanıcı, Kişi ve Grup Bul iletişim kutusuna gönderilen üst HWND geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProgressBarKiloBytesStringFormat">
+        <source>{0} KB</source>
+        <target state="translated">{0} KB</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ProgressBarPercentageStringFormat">
+        <source>{0}%</source>
+        <target state="translated">{0}%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMAppliedToolTip">
+        <source>View my permissions for this document.</source>
+        <target state="translated">Bu belgeyle ilgili izinlerimi görüntüle.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementAdd">
+        <source>&amp;Add...</source>
+        <target state="translated">&amp;Ekle...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementCancel">
+        <source>Cancel</source>
+        <target state="translated">İptal</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementDialog">
+        <source>User Accounts</source>
+        <target state="translated">Kullanıcı Hesapları</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementInstruction">
+        <source>Select one of the following user accounts to create or open content with restricted permission. To use an account not listed below, click Add.</source>
+        <target state="translated">Sınırlı izinle içerik oluşturmak veya açmak için aşağıdaki kullanıcı hesaplarından birini seçin. Aşağıda listelenmeyen bir hesabı kullanmak için, Ekle'yi tıklatın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementOk">
+        <source>OK</source>
+        <target state="translated">Tamam</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementPassportAccount">
+        <source>{0} (Passport)</source>
+        <target state="translated">{0} (Passport)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementRemove">
+        <source>&amp;Remove</source>
+        <target state="translated">&amp;Kaldır</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementUnknownAccount">
+        <source>{0} (Unknown)</source>
+        <target state="translated">{0} (Bilinmiyor)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMCredManagementWindowsAccount">
+        <source>{0}</source>
+        <target state="translated">{0}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMDefaultToolTip">
+        <source>Choose who can view or manage this document and for how long.</source>
+        <target state="translated">Bu belgeyi kimin ne kadar süreyle görüntüleyebileceğini veya yönetebileceğini seçin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentCancel">
+        <source>Cancel</source>
+        <target state="translated">İptal</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentNext">
+        <source>&amp;Next</source>
+        <target state="translated">İle&amp;ri</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1a">
+        <source>To publish or access XPS documents with restricted permissions, you need a user account.</source>
+        <target state="translated">XPS belgelerini kısıtlı izinlerle yayımlamak veya bu belgelere erişmek için kullanıcı hesabınızın olması gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1b">
+        <source>You can use your network credentials (the account you use to log on to your company network) or your .NET Passport.</source>
+        <target state="translated">Ağ kimlik bilgilerinizi (şirketinizin ağında oturum açmak için kullandığınız hesap) veya .NET Passport'unuzu kullanabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1c">
+        <source>Privacy Statement: </source>
+        <target state="translated">Gizlilik Bildirimi: </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1d">
+        <source>Each time you set up a user account to publish or access XPS documents with restricted permissions, computers that certify user accounts and manage permissions to the document check your user name and e-mail address. Your account password is not used during this process.</source>
+        <target state="translated">XPS belgelerini kısıtlı izinlerle yayımlamak veya bu belgelere kısıtlı izinlerle erişmek üzere her kullanıcı hesabı oluşturduğunuzda, kullanıcı hesaplarını belgeleyen ve belgeyle ilgili izinleri yöneten bilgisayarlar kullanıcı adınızı ve e-posta adresinizi denetler. Bu işlem sırasında hesap parolanız kullanılmaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage1e">
+        <source>To continue, click Next.</source>
+        <target state="translated">Devam etmek için İleri'yi tıklayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2a">
+        <source>Choose the account you want to use to open protected documents.</source>
+        <target state="translated">Korumalı belgeleri açmak için kullanmak istediğiniz hesabı seçin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2b">
+        <source>In the future, this account will be used automatically to open protected documents. You can change this setting later. Your document may need to be reloaded to use the new account.</source>
+        <target state="translated">Gelecekte, korumalı belgeleri açmak için otomatik olarak bu hesap kullanılacaktır. Daha sonra bu ayarı değiştirebilirsiniz. Yeni hesabın kullanılması için belgenizin yeniden yüklenmesi gerekebilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2c">
+        <source>N&amp;etwork user account</source>
+        <target state="translated">&amp;Ağ kullanıcı hesabı</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage2e">
+        <source>.NET &amp;Passport account</source>
+        <target state="translated">.NET &amp;Passport hesabı</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage3b">
+        <source>Please wait while we finish setting up your account.</source>
+        <target state="translated">Lütfen hesabınızın ayarlanması tamamlanırken bekleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentPage3c">
+        <source>Activating your account</source>
+        <target state="translated">Hesabınızı etkinleştirme</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMEnrollmentTitle">
+        <source>Rights Management Configuration</source>
+        <target state="translated">Rights Management Yapılandırması</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsAnnotatePermission">
+        <source>Annotate</source>
+        <target state="translated">Not Ekle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsAuthenticatedAs">
+        <source>You have permission to view this document as:</source>
+        <target state="translated">Bu belgeyi şu kimlikle görüntüleme izniniz var:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsCloseButton">
+        <source>&amp;Close</source>
+        <target state="translated">K&amp;apat</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsCopyPermission">
+        <source>Copy</source>
+        <target state="translated">Kopyala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsExpiresOn">
+        <source>This document expires on: </source>
+        <target state="translated">Bu belgenin süre sonu: </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsHavePermissions">
+        <source>You have the following permissions:</source>
+        <target state="translated">Aşağıdaki haklara sahipsiniz:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsNoExpiration">
+        <source>This document never expires</source>
+        <target state="translated">Bu belgenin süre sonu yoktur</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsOwnerPermission">
+        <source>Owner</source>
+        <target state="translated">Sahibi</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsPrintPermission">
+        <source>Print</source>
+        <target state="translated">Yazdır</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsRequestFrom">
+        <source>Request additional permissions from:</source>
+        <target state="translated">Ek izin iste:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsSignPermission">
+        <source>Sign</source>
+        <target state="translated">İmzala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsTitle">
+        <source>Permissions</source>
+        <target state="translated">İzinler</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsUnknownOwner">
+        <source>Unknown</source>
+        <target state="translated">Bilinmiyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPermissionsViewPermission">
+        <source>View</source>
+        <target state="translated">Görünüm</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProtected">
+        <source>This document is restricted. Click here to view your permissions...</source>
+        <target state="translated">Bu belge kısıtlanmış. İzinlerinizi görüntülemek için burayı tıklatın...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoPackageToDecrypt">
+        <source>No encrypted package to decrypt.</source>
+        <target state="translated">Şifresi açılacak şifreli paket yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoPublishLicense">
+        <source>Document protected with rights management does not have publish license.</source>
+        <target state="translated">Haklar yönetimiyle korunan belgenin yayımlama lisansı yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoRightsToDocument">
+        <source>The current user does not have permission to access the document.</source>
+        <target state="translated">Geçerli kullanıcının belgeye erişme izni yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNoUseLicense">
+        <source>The current user has no use license for the document.</source>
+        <target state="translated">Geçerli kullanıcının belge için kullanım lisansı yok.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMProviderExceptionNotOwnerOfDocument">
+        <source>Only the owner of a document is allowed to publish it.</source>
+        <target state="translated">Bir belgeyi yayımlama izni yalnızca sahibine verilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAddUserButton">
+        <source>&amp;Add User</source>
+        <target state="translated">K&amp;ullanıcı Ekle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAddUserButtonToolTip">
+        <source>Type an e-mail address, and then add the user to the list so you can apply permissions.</source>
+        <target state="translated">Bir e-posta adresi yazın, ardından kullanıcı listeye ekleyerek izinler uygulayabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneButton">
+        <source>Everyone</source>
+        <target state="translated">Herkes</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneButtonToolTip">
+        <source>Allow all users to read the document, or apply other permissions for all users.</source>
+        <target state="translated">Tüm kullanıcıların belgeyi okumasına izin verin veya tüm kullanıcılar için başka izinler uygulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingAnyoneUserDisplay">
+        <source>Everyone</source>
+        <target state="translated">Herkes</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingCancelButton">
+        <source>Cancel</source>
+        <target state="translated">İptal</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingCopyHeader">
+        <source>Copy</source>
+        <target state="translated">Kopyala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingExpiresOn">
+        <source>Permissions e&amp;xpire on</source>
+        <target state="translated">İ&amp;zinlerin sona erme tarihi</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingMainContentGroupLabel">
+        <source>Details</source>
+        <target state="translated">Ayrıntılar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingOwnerHeader">
+        <source>All</source>
+        <target state="translated">Tümünü</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPeoplePickerButton">
+        <source>People Picker</source>
+        <target state="translated">Kişi Seçici</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPeoplePickerButtonToolTip">
+        <source>Find users, contacts, and groups.</source>
+        <target state="translated">Kullanıcıları, kişileri ve grupları bulun.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPermissionsRadio">
+        <source>Apply permissions</source>
+        <target state="translated">İzinleri uygula</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingPrintHeader">
+        <source>Print</source>
+        <target state="translated">Yazdır</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingReadHeader">
+        <source>Read</source>
+        <target state="translated">Oku</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRemoveButton">
+        <source>Remove</source>
+        <target state="translated">Kaldır</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRemoveButtonToolTip">
+        <source>Remove permissions for selected users, contacts, or groups.</source>
+        <target state="translated">Seçili kullanıcıların, kişilerin veya grupların izinlerini kaldırın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingRequestPermissionsFrom">
+        <source>Users can re&amp;quest additional permissions from:</source>
+        <target state="translated">Kullanıcı &amp;bu kişiden ek izin isteyebilir:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveAsButton">
+        <source>Sa&amp;ve As...</source>
+        <target state="translated">&amp;Farklı Kaydet...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveAsButtonToolTip">
+        <source>Save a copy of the document and apply selected permissions to the copy only.</source>
+        <target state="translated">Belgenin kopyasını kaydedin ve seçili izinleri yalnızca kopyaya uygulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveButton">
+        <source>&amp;Save</source>
+        <target state="translated">Kay&amp;det</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSaveButtonToolTip">
+        <source>Apply selected permissions to the current document.</source>
+        <target state="translated">Seçili izinleri geçerli belgeye uygulayın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSelectTemplate">
+        <source>Select one of your company's predefined templates:</source>
+        <target state="translated">Şirketinizin önceden tanımlanmış şablonlarından birini seçin:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingSignHeader">
+        <source>Sign</source>
+        <target state="translated">İmzala</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingTemplateRadio">
+        <source>Apply permissions using a template</source>
+        <target state="translated">Şablon kullanarak izin uygula</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingTitle">
+        <source>Permissions</source>
+        <target state="translated">İzinler</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUnrestrictedRadio">
+        <source>Do not apply permissions</source>
+        <target state="translated">İzin uygulama</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUnrestrictedText">
+        <source>All users can view this document, digitally sign it, or change permissions. To decide who can access the document and for how long, apply permissions. You can apply permissions to this version of the document, or save a copy of the document and then apply changes to the copy only.</source>
+        <target state="translated">Tüm kullanıcılar bu belgeyi görüntüleyebilir, dijital olarak imzalayabilir veya izinlerini değiştirebilir. Bu belgeye kimin ne kadar süreyle erişebileceğini belirlemek için izinler uygulayın. İzinleri belgenin bu sürümüne uygulayabilir veya belgenin kopyasını kaydedip değişiklikleri yalnızca kopyaya uygulayabilirsiniz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUserHeader">
+        <source>User</source>
+        <target state="translated">Kullanıcı</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RMPublishingUserSeparator">
+        <source>;</source>
+        <target state="translated">;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogAdd">
+        <source>&amp;Add</source>
+        <target state="translated">&amp;Ekle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogCancel">
+        <source>Cancel</source>
+        <target state="translated">İptal</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogIntentLabel">
+        <source>Reason for signing this document (choose one or create your own):</source>
+        <target state="translated">Bu belgeyi imzalama nedeni (birini seçin veya kendiniz oluşturun):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogLocationLabel">
+        <source>Location (for example, city name):</source>
+        <target state="translated">Yer (örneğin, şehir adı):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogRequestSignerNameLabel">
+        <source>Requested signer's name or role:</source>
+        <target state="translated">İstenen imza sahibi adı veya rolü:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogSignatureAppliedByDateLabel">
+        <source>Signature must be applied by:</source>
+        <target state="translated">İmzayı uygulaması gereken:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RequestSignatureDialogTitle">
+        <source>Add Requested Signature</source>
+        <target state="translated">İstenen İmza Ekle</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementExceptionNoRightsForOperation">
+        <source>The user does not have sufficient rights to perform the operation.</source>
+        <target state="translated">Kullanıcı işlemi gerçekleştirmek için yeterli haklara sahip değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorClockModified">
+        <source>Cannot open this document because the system clock has been modified.</source>
+        <target state="translated">Sistem saati değiştirildiğinden bu belge açılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorConfigurationError">
+        <source>This application has detected a problem with your Rights Management configuration. Contact your network administrator or support personnel.</source>
+        <target state="translated">Bu uygulama Rights Management yapılandırmanızda sorun algıladı. Ağ yöneticinize veya destek personeline başvurun.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorDebuggerDetected">
+        <source>Cannot open or publish documents with restricted permissions because a debugging application has been detected.</source>
+        <target state="translated">Hata ayıklama uygulaması algılandığından, sınırlı izinlerle belgeler açılamaz veya yayımlanamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorExpiredPermission">
+        <source>Cannot open this document because your permissions have expired.</source>
+        <target state="translated">İzinlerinizin süresi geçtiğinden bu belge açılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorFailedToLoadTemplate">
+        <source>Cannot load the requested template. Select a different template and contact your network administrator or support personnel.</source>
+        <target state="translated">İstenen şablon yüklenemiyor. Farklı bir şablon seçin ve ağ yöneticinize veya destek personeline başvurun.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorFailedToRemoveUser">
+        <source>Cannot remove this account because it is in use.</source>
+        <target state="translated">Bu hesap kullanımda olduğundan kaldırılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorGenericFailure">
+        <source>Failed to initialize rights management. Contact your network administrator or support personnel.</source>
+        <target state="translated">Haklar yönetimi başlatılamadı. Ağ yöneticinize veya destek personeline başvurun.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorInvalidContent">
+        <source>Cannot open this document with restricted permissions because the content is invalid or corrupted.</source>
+        <target state="translated">İçerik geçersiz veya bozuk olduğundan bu belge sınırlı izinlerle açılamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorInvalidTemplate">
+        <source>Cannot sign with the requested template. Select a different template and contact your network administrator or support personnel.</source>
+        <target state="translated">İstenen şablonla imzalanamıyor. Farklı bir şablon seçin ve ağ yöneticinize veya destek personeline başvurun.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoAddress">
+        <source>Enter a valid e-mail address for whom to add rights.</source>
+        <target state="translated">Hak eklenecek kişi için geçerli bir e-posta adresi girin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoPermission">
+        <source>You do not have permission to open this document with this account. Would you like to use a different account or create a new account?</source>
+        <target state="translated">Bu belgeyi bu hesapla açma izniniz yok. Farklı bir hesap kullanmak veya yeni bir hesap oluşturmak ister misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorNoReferralAddress">
+        <source>Enter a valid e-mail address to contact for permissions.</source>
+        <target state="translated">İzin için başvurulacak geçerli bir e-posta adresi girin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorRMNotInstalled">
+        <source>The Windows Rights Management Services Client (RMS) is required in order for you to be able to open and create XPS documents with restricted permissions. Do you want to download and install Windows RMS Client now?</source>
+        <target state="translated">Sınırlı izinlerle XPS belgeleri açabilmeniz ve oluşturabilmeniz için Windows Rights Management Services Client (RMS) gerekir. Windows RMS Client'ı şimdi indirip kurmak ister misiniz?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorServerError">
+        <source>Cannot verify your permissions to this document because the server that manages permissions for this document is not available.</source>
+        <target state="translated">Bu belgenin izinlerini yöneten sunucu kullanılamadığından bu belge üzerindeki izinleriniz doğrulanamıyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorTemporaryActivationNotSupported">
+        <source>The server does not support temporary activation.</source>
+        <target state="translated">Sunucu geçici etkinleştirmeyi desteklemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="RightsManagementWarnErrorTitle">
+        <source>XPS Document Rights Management Error</source>
+        <target state="translated">XPS Document Rights Management Hatası</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ServerSideTemplateDisplayNone">
+        <source>&lt;none&gt;</source>
+        <target state="translated">&lt;none&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusCannotBeVerified">
+        <source>Certificate cannot be verified</source>
+        <target state="translated">Sertifika doğrulanamıyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusCorrupted">
+        <source>Certificate is corrupted</source>
+        <target state="translated">Sertifika bozuk</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusExpired">
+        <source>Certificate has expired</source>
+        <target state="translated">Sertifikanın süresi geçti</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusIssuerNotTrusted">
+        <source>Certificate issuer is not trusted</source>
+        <target state="translated">Sertifikayı verene güvenilmiyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusNoCertificate">
+        <source>Certificate is missing</source>
+        <target state="translated">Sertifika yok</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusOk">
+        <source>Certificate is valid</source>
+        <target state="translated">Sertifika geçerli</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusRevoked">
+        <source>Certificate has been revoked</source>
+        <target state="translated">Sertifika iptal edildi</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperCertificateStatusVerifying">
+        <source>Certificate is being verified</source>
+        <target state="translated">Sertifika doğrulanıyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperMissingCertificate">
+        <source>The certificate was null, which is not valid for the current certificate status.</source>
+        <target state="translated">Sertifika boştu ve bu da şimdiki sertifika durumu için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperNone">
+        <source>&lt;none&gt;</source>
+        <target state="translated">&lt;none&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusInvalid">
+        <source>Document has been modified since signed</source>
+        <target state="translated">Belge imzalandıktan sonra değiştirilmiş</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusUnverifiable">
+        <source>Not all signed content can be displayed</source>
+        <target state="translated">Tüm imzalı içerik görüntülenemez</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusValid">
+        <source>Signature is valid</source>
+        <target state="translated">İmza geçerli</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSignatureStatusValidCertInvalid">
+        <source>Document has not been modified since signed</source>
+        <target state="translated">Belge imzalandıktan sonra değiştirilmemiş</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSummaryBreakLine">
+        <source>{0}\r\n</source>
+        <target state="translated">{0}\r\n</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperSummaryFormat">
+        <source>{0}{1}Signed by {2} on {3:d}\r\n{4}</source>
+        <target state="translated">{0}{1}İmzalayan: {2} Tarih: {3:d}\r\n{4}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourceHelperValidSigSummaryPending">
+        <source>Signature pending:\r\n{0}\r\nSign by {1:d}\r\n{2}</source>
+        <target state="translated">İmza bekleniyor:\r\n{0}\r\nİmzalayan: {1:d}\r\n{2}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SignatureResourcesFormatForAccessibility">
+        <source>Summary: {0} Name: {1} Intent: {2} Locale: {3} Sign By: {4}</source>
+        <target state="translated">Özet: {0} Ad: {1} Amaç: {2} Yerel Ayar: {3} İmzalayan: {4}</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogActionlabel">
+        <source>The following will invalidate your signature:</source>
+        <target state="translated">Aşağıdakiler imzanızı geçersiz kılar:</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogAddDigSigCheckBox">
+        <source>Apply additional &amp;digital signatures to this document</source>
+        <target state="translated">Bu &amp;belgeye ek dijital imzalar uygula</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogAddDocPropCheckBox">
+        <source>Add or modify document &amp;properties (for example, author or keywords)</source>
+        <target state="translated">Belge &amp;özellikleri ekle veya değiştir (örneğin, yazar veya anahtar sözcükler)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogCancelButton">
+        <source>Cancel</source>
+        <target state="translated">İptal</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogLocationLabel">
+        <source>Location (for example, city name):</source>
+        <target state="translated">Yer (örneğin, şehir adı):</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogNA">
+        <source>N/A</source>
+        <target state="translated">Yok</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogReasonLabel">
+        <source>Reason for signing this document (choose one or create your own): </source>
+        <target state="translated">Bu belgeyi imzalama nedeni (birini seçin veya kendiniz oluşturun): </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignButton">
+        <source>&amp;Sign and Save</source>
+        <target state="translated">İ&amp;mzala ve Kaydet</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignSaveAsButton">
+        <source>Sign and Save &amp;As...</source>
+        <target state="translated">&amp;Farklı İmzala ve Kaydet...</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogSignerlabel">
+        <source>Signing as '{0}'</source>
+        <target state="translated">'{0}' olarak imzalama</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningDialogTitle">
+        <source>Signing XPS Document</source>
+        <target state="translated">XPS Belgesi İmzalanıyor</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningProgressLabel">
+        <source>Signing XPS document.</source>
+        <target state="translated">XPS belgesini imzalama.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SigningProgressTitle">
+        <source>Signing</source>
+        <target state="translated">İmzalama</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValidationProgressLabel">
+        <source>Validating content. Please wait.</source>
+        <target state="translated">İçerik doğrulanıyor. Lütfen bekleyin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ValidationProgressTitle">
+        <source>Digital Signatures</source>
+        <target state="translated">Dijital İmzalar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WPF_UILanguage">
+        <source>en</source>
+        <target state="translated">tr</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsViewerGenericException">
+        <source>There has been an exception in this application.</source>
+        <target state="translated">Bu uygulamada özel durum oluştu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="XpsViewerRightsManagementException">
+        <source>An XPS viewer rights management operation failed.</source>
+        <target state="translated">Bir XPS görüntüleyici hakları yönetimi işlemi başarısız oldu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem100">
+        <source>100%</source>
+        <target state="translated">%100</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem150">
+        <source>150%</source>
+        <target state="translated">150%</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem25">
+        <source>25%</source>
+        <target state="translated">%25</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem250">
+        <source>250%</source>
+        <target state="translated">%250</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem400">
+        <source>400%</source>
+        <target state="translated">%400</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem50">
+        <source>50%</source>
+        <target state="translated">%50</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxItem75">
+        <source>75%</source>
+        <target state="translated">%75</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomComboBoxToolTip">
+        <source>Select a zoom percentage or type a zoom percent.</source>
+        <target state="translated">Bir yakınlaştırma yüzdesi seçin veya bir yakınlaştırma yüzdesi girin.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ZoomPercentageConverterStringFormat">
+        <source>{0:0.##}%</source>
+        <target state="translated">%{0:0.##}</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

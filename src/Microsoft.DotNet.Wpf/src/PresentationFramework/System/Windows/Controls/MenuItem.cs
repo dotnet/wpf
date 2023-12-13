@@ -15,7 +15,6 @@ using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Security;
-using System.Security.Permissions;
 
 
 using System.Windows;
@@ -487,7 +486,9 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty CommandParameterProperty =
                 ButtonBase.CommandParameterProperty.AddOwner(
                         typeof(MenuItem),
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata(
+                                (object)null,
+                                new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///     The parameter to pass to MenuItem's Command.
@@ -498,6 +499,12 @@ namespace System.Windows.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MenuItem item = (MenuItem)d;
+            item.UpdateCanExecute();
         }
 
         /// <summary>
@@ -947,13 +954,22 @@ namespace System.Windows.Controls
         {
             MenuItem menuItem = (MenuItem) d;
 
-            if ((bool) e.NewValue)
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
+
+            if (newValue)
             {
                 menuItem.OnChecked(new RoutedEventArgs(CheckedEvent));
             }
             else
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
+            }
+            
+            MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
             }
         }
 
@@ -1341,32 +1357,16 @@ namespace System.Windows.Controls
         /// <summary>
         /// This virtual method in called when the MenuItem is clicked and it raises a Click event
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls OnClickImple which sets the userInitiated bit on a command, which is used
-        ///            for security purposes later.
-        /// TreatAsSafe - passes false for userInitiated
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void OnClick()
         {
             OnClickImpl(false);
         }
 
-        /// <SecurityNote>
-        /// Critical - accepts a parameter which may be used to set the userInitiated
-        ///             bit on a command, which is used for security purposes later.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnClickCore(bool userInitiated)
         {
             OnClick();
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls InvokeClickAfterRender which sets the userInitiated
-        ///             bit on a command, which is used for security purposes later.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnClickImpl(bool userInitiated)
         {
             if (IsCheckable)
@@ -1403,11 +1403,6 @@ namespace System.Windows.Controls
             Dispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(InvokeClickAfterRender), userInitiated);
         }
 
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later.
-        /// </SecurityNote>
-        [SecurityCritical]
         private object InvokeClickAfterRender(object arg)
         {
             bool userInitiated = (bool)arg;
@@ -1421,12 +1416,6 @@ namespace System.Windows.Controls
         ///        Called when the left mouse button is pressed.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        ///     Critical: Sets an internal variable in case input was user initiated and button was pressed
-        ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
-        ///                 before setting the variable
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1446,12 +1435,6 @@ namespace System.Windows.Controls
         ///        Called when the right mouse button is pressed.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        ///     Critical: Sets an internal variable in case input was user initiated and button was pressed
-        ///     TreatAsSafe: The variable is not exposed and there is a demand for UserInitiatedRoutedEvent permission
-        ///                 before setting the variable
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1469,11 +1452,6 @@ namespace System.Windows.Controls
         ///        Called when the left mouse button is released.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        /// Critical - sets _userInitiatedPress
-        /// TreatAsSafe - setting this to false is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1489,11 +1467,6 @@ namespace System.Windows.Controls
         ///        Called when the right mouse button is released.
         /// </summary>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        /// Critical - sets _userInitiatedPress
-        /// TreatAsSafe - setting this to false is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -1528,12 +1501,6 @@ namespace System.Windows.Controls
             e.Handled = true;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// TreatAsSafe - e.UserInitiated can always be trusted
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void HandleMouseUp(MouseButtonEventArgs e)
         {
             // See comment above in HandleMouseDown.
@@ -1554,8 +1521,8 @@ namespace System.Windows.Controls
                         }
                         else
                         {
-                            // This is the case where the mouse down happend on a different element
-                            // but the moust up is happening on the menuitem. this is to prevent spoofing
+                            // This is the case where the mouse down happened on a different element
+                            // but the mouse up is happening on the menuitem. this is to prevent spoofing
                             // attacks where someone substitutes an element with a menu item
                             ClickItem(false);
                         }
@@ -1914,12 +1881,6 @@ namespace System.Windows.Controls
         ///     This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// PublicOK - e.UserInitiated can always be trusted
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -2068,12 +2029,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// The Access key for this control was invoked.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// PublicOK - e.UserInitiated can always be trusted
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override void OnAccessKey(AccessKeyEventArgs e)
         {
             base.OnAccessKey(e);
@@ -2161,7 +2116,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
                     }
                 }
             }
@@ -2311,21 +2266,10 @@ namespace System.Windows.Controls
 
 
 
-        /// <SecurityNote>
-        /// Critical - Calls ClickItem, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// TreatAsSafe - passes false.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void ClickItem()
         {
             ClickItem(false);
         }
-        /// <SecurityNote>
-        /// Critical - Calls OnClickCore, setting the userInitiated
-        ///             bit, which is used for security purposes later.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ClickItem(bool userInitiated)
         {
             try
@@ -2571,7 +2515,10 @@ namespace System.Windows.Controls
             // but if we fail to focus we should still select.
             // (This is to help enable focusless menus).
             // Check IsKeyboardFocusWithin to allow rich content within the menuitem.
-            if (!IsKeyboardFocusWithin)
+            if (!IsKeyboardFocusWithin
+                // But only acquire focus if the window we are inside of is currently active or there is no window.
+                // Otherwise we would potentially steal focus from other applications.
+                && (Window.GetWindow(this)?.IsActive ?? true))
             {
                 Focus();
             }
@@ -2773,10 +2720,6 @@ namespace System.Windows.Controls
         DispatcherTimer _openHierarchyTimer;
         DispatcherTimer _closeHierarchyTimer;
 
-        /// <SecurityNote>
-        ///     Critical: Setting this to true indicates that the mouse down was user initiated
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool _userInitiatedPress;
         #endregion
 

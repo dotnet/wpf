@@ -16,7 +16,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Diagnostics;
@@ -28,7 +27,6 @@ using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Net;
 using System.Net.Cache;
 
@@ -48,10 +46,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into BitmapDownload.BeginDownload which is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal LateBoundBitmapDecoder(
             Uri baseUri,
             Uri uri,
@@ -99,13 +93,8 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null.
         /// If the LateBoundDecoder is still downloading, the returned Palette is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting palette data is OK
-        /// </SecurityNote>
         public override BitmapPalette Palette
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -124,13 +113,8 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null.
         /// If the LateBoundDecoder is still downloading, the returned ColorContext is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting colorcontext data is OK
-        /// </SecurityNote>
         public override ReadOnlyCollection<ColorContext> ColorContexts
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -149,13 +133,8 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null. The returned source is frozen.
         /// If the LateBoundDecoder is still downloading, the returned Thumbnail is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting thumbnail data is OK
-        /// </SecurityNote>
         public override BitmapSource Thumbnail
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
@@ -174,21 +153,12 @@ namespace System.Windows.Media.Imaging
         /// The info that identifies this codec.
         /// If the LateBoundDecoder is still downloading, the returned CodecInfo is null.
         /// </summary>
-        /// <Remarks>
-        ///     The getter demands RegistryPermission(PermissionState.Unrestricted)
-        /// </Remarks>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Demands RegistryPermission(PermissionState.Unrestricted)
-        /// </SecurityNote>
         public override BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();
 
-                SecurityHelper.DemandRegistryPermission();
 
                 if (_isDownloading)
                 {
@@ -247,13 +217,8 @@ namespace System.Windows.Media.Imaging
         /// Otherwise, return null. The returned source is frozen.
         /// If the LateBoundDecoder is still downloading, the returned Preview is null.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting preview data is OK
-        /// </SecurityNote>
         public override BitmapSource Preview
         {
-            [SecurityCritical]
             get
             {
                 VerifyAccess();

@@ -4,8 +4,8 @@
 
 using System;
 using System.Diagnostics;
-using System.Security.Permissions;
-
+using System.Runtime.CompilerServices;
+using MS.Internal.KnownBoxes;
 using MS.Internal.WindowsBase;  // for FriendAccessAllowed
 
 namespace System.Windows
@@ -13,7 +13,6 @@ namespace System.Windows
     /// <summary>
     ///
     /// </summary>
-    //CASRemoval:[StrongNameIdentityPermissionAttribute(SecurityAction.InheritanceDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [FriendAccessAllowed] // Built into Base, used by Core and Framework
     internal class UncommonField<T>
     {
@@ -48,24 +47,31 @@ namespace System.Windows
         /// <param name="value">The value to set.</param>
         public void SetValue(DependencyObject instance, T value)
         {
-            if (instance != null)
-            {
-                EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
+            ArgumentNullException.ThrowIfNull(instance);
 
-                // Set the value if it's not the default, otherwise remove the value.
-                if (!object.ReferenceEquals(value, _defaultValue))
+            EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
+
+            // Set the value if it's not the default, otherwise remove the value.
+            if (!object.ReferenceEquals(value, _defaultValue))
+            {
+                object valueObject;
+
+                if (typeof(T) == typeof(bool))
                 {
-                    instance.SetEffectiveValue(entryIndex, null /* dp */, _globalIndex, null /* metadata */, value, BaseValueSourceInternal.Local);
-                    _hasBeenSet = true;
+                    // Use shared boxed instances rather than creating new objects for each SetValue call.
+                    valueObject = BooleanBoxes.Box(Unsafe.As<T, bool>(ref value));
                 }
                 else
                 {
-                    instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
+                    valueObject = value;
                 }
+
+                instance.SetEffectiveValue(entryIndex, dp: null, _globalIndex, metadata: null, valueObject, BaseValueSourceInternal.Local);
+                _hasBeenSet = true;
             }
             else
             {
-                throw new ArgumentNullException("instance");
+                instance.UnsetEffectiveValue(entryIndex, dp: null, metadata: null);
             }
         }
 
@@ -76,31 +82,26 @@ namespace System.Windows
         /// <returns></returns>
         public T GetValue(DependencyObject instance)
         {
-            if (instance != null)
+            ArgumentNullException.ThrowIfNull(instance);
+
+            if (_hasBeenSet)
             {
-                if (_hasBeenSet)
-                {
-                    EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
+                EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
-                    if (entryIndex.Found)
+                if (entryIndex.Found)
+                {
+                    object value = instance.EffectiveValues[entryIndex.Index].LocalValue;
+
+                    if (value != DependencyProperty.UnsetValue)
                     {
-                        object value = instance.EffectiveValues[entryIndex.Index].LocalValue;
-
-                        if (value != DependencyProperty.UnsetValue)
-                        {
-                            return (T)value;
-                        }
+                        return (T)value;
                     }
-                    return _defaultValue;
                 }
-                else
-                {
-                    return _defaultValue;
-                }
+                return _defaultValue;
             }
             else
             {
-                throw new ArgumentNullException("instance");
+                return _defaultValue;
             }
         }
 
@@ -111,16 +112,11 @@ namespace System.Windows
         /// <param name="instance"></param>
         public void ClearValue(DependencyObject instance)
         {
-            if (instance != null)
-            {
-                EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
+            ArgumentNullException.ThrowIfNull(instance);
 
-                instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
-            }
-            else
-            {
-                throw new ArgumentNullException("instance");
-            }
+            EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
+
+            instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
         }
 
         internal int GlobalIndex

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Company.ClassLibrary1</RootNamespace>
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">FrameworkParameter-windows</TargetFramework>
+    <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride-windows</TargetFramework>
+    <RootNamespace>Company.ClassLibrary1</RootNamespace>
+    <LangVersion Condition="'$(langVersion)' != ''">$(ProjectLanguageVersion)</LangVersion>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>

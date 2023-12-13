@@ -11,10 +11,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Security;
-using System.Security.Permissions;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -47,12 +45,12 @@ namespace System.Windows.Input.StylusPlugIns
             // Validate the input parameter
             if (null == plugIn)
             {
-                throw new ArgumentNullException(nameof(plugIn), SR.Get(SRID.Stylus_PlugInIsNull));
+                throw new ArgumentNullException(nameof(plugIn), SR.Stylus_PlugInIsNull);
             }
 
             if (IndexOf(plugIn) != -1)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_PlugInIsDuplicated), nameof(plugIn));
+                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, nameof(plugIn));
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy
@@ -180,12 +178,12 @@ namespace System.Windows.Input.StylusPlugIns
 
             if (null == plugIn)
             {
-                throw new ArgumentNullException("plugIn", SR.Get(SRID.Stylus_PlugInIsNull));
+                throw new ArgumentNullException("plugIn", SR.Stylus_PlugInIsNull);
             }
 
             if (IndexOf(plugIn) != -1)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_PlugInIsDuplicated), "plugIn");
+                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, "plugIn");
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy
@@ -517,13 +515,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// Add this StylusPlugInCollection to the StylusPlugInCollectionList when it the first 
         /// element is added.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Presentation source access
-        /// TreatAsSafe: - PresentationSource makes a SecurityDemand
-        ///                    - no data handed out or accepted
-        ///                    - called by Add and Insert
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void EnsureEventsHooked()
         {
             if (this.Count == 0)

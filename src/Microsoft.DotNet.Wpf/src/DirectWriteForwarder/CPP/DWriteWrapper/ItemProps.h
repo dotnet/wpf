@@ -10,7 +10,6 @@
 #include "NativePointerWrapper.h"
 
 using namespace System::Security;
-using namespace System::Security::Permissions;
 using namespace MS::Internal::Text::TextInterface::Generics;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
@@ -33,7 +32,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///</remarks>
             property void* NumberSubstitutionNoAddRef
             {
-                [SecurityCritical]
                 void* get();
             }
 
@@ -42,7 +40,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             ///</remarks>
             property void* ScriptAnalysis
             {
-                [SecurityCritical]
                 void* get();
             }
 
@@ -82,18 +79,8 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Applying custom attributes on the constructor implementation
             /// causes a compiler error (a custom attribute may not be used inside a function)
             ///</remarks>
-            ///<SecurityNote>
-            /// Critical    - Asserts to allocate and initialize unmanaged memory.
-            /// TreatAsSafe - Initializes unmanaged memory to known safe state.
-            ///</SecurityNote>
-            [SecuritySafeCritical]
-            [SecurityPermission(SecurityAction::Assert, UnmanagedCode = true)]
             ItemProps();
 
-            ///<SecurityNote>
-            /// Critical    - Asserts to initialize unmanaged memory.
-            ///</SecurityNote>
-            [SecurityCritical]
             static ItemProps^ Create(
                 void* scriptAnalysis,
                 void* numberSubstitution,

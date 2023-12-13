@@ -24,7 +24,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Security.Permissions;
 using System.Windows.Controls.Primitives;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -157,19 +156,10 @@ namespace System.Windows.Controls
         /// Use the SecurePassword property in place of this one when possible.
         /// Doing so reduces the risk of revealing content that should be kept secret.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - The getter elevates to unmanaged code and has unsafe code block.
-        ///            The setter calls SetSecurePassword.
-        ///
-        /// PublicOK: Does not pass unsafe data to native code.
-        ///           Does not pass 2nd party SecureString to SetSecurePassword.
-        ///
-        /// </SecurityNote>
         [DefaultValue("")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Password
         {
-            [SecurityCritical]
             get
             {
                 string password;
@@ -194,7 +184,6 @@ namespace System.Windows.Controls
                 return password;
             }
 
-            [SecurityCritical]
             set
             {
                 if (value == null)
@@ -224,9 +213,6 @@ namespace System.Windows.Controls
         ///
         /// Setting the value always stores a copy of the supplied value.
         /// </remarks>
-        /// <SecurityNote>
-        /// Do not add public setter, see SetSecurePassword comments.
-        /// </SecurityNote>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public SecureString SecurePassword
         {
@@ -971,7 +957,7 @@ namespace System.Windows.Controls
                 ScrollViewer scrollViewer = (ScrollViewer)_passwordBoxContentHost;
                 if (scrollViewer.Content != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -983,7 +969,7 @@ namespace System.Windows.Controls
                 Decorator decorator = (Decorator)_passwordBoxContentHost;
                 if (decorator.Child != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -1002,7 +988,7 @@ namespace System.Windows.Controls
                 {
                     _passwordBoxContentHost = null;
                     //  Remove the exception
-                    throw new NotSupportedException(SR.Get(SRID.PasswordBoxInvalidTextContainer));
+                    throw new NotSupportedException(SR.PasswordBoxInvalidTextContainer);
                 }
             }
 
@@ -1091,15 +1077,8 @@ namespace System.Windows.Controls
             ITextPointer selectionEnd;
 
             //             VerifyAccess();
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start", SR.Get(SRID.ParameterCannotBeNegative));
-            }
-
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             // Identify new selection start position
             selectionStart = this.TextContainer.Start.CreatePointer();
@@ -1221,17 +1200,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Sets the content of the control.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - This method indirectly reveals value's SecureString content.
-        ///
-        /// This method must never be passed a publicly supplied SecureString as long as we expose
-        /// a plain text get_Password property.
-        ///
-        /// 1. Attacker sets SecureString value it does not have permission to read.
-        /// 2. Attacker reads Password property.
-        /// --> attacker has cracked open a SecureString without UnmanagedCode permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void SetSecurePassword(SecureString value)
         {
             this.TextContainer.BeginChange();

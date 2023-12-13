@@ -18,10 +18,8 @@ using System.Windows.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Input
@@ -209,22 +207,22 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.BrowseBack: uiText = SR.Get(SRID.BrowseBackText); break;
-                case  CommandId.BrowseForward: uiText = SR.Get(SRID.BrowseForwardText); break;
-                case  CommandId.BrowseHome: uiText = SR.Get(SRID.BrowseHomeText); break;
-                case  CommandId.BrowseStop: uiText = SR.Get(SRID.BrowseStopText); break;
-                case  CommandId.Refresh: uiText = SR.Get(SRID.RefreshText); break;
-                case  CommandId.Favorites: uiText = SR.Get(SRID.FavoritesText); break;
-                case  CommandId.Search: uiText = SR.Get(SRID.SearchText); break;
-                case  CommandId.IncreaseZoom: uiText = SR.Get(SRID.IncreaseZoomText); break;
-                case  CommandId.DecreaseZoom: uiText = SR.Get(SRID.DecreaseZoomText); break;
-                case  CommandId.Zoom: uiText = SR.Get(SRID.ZoomText); break;
-                case  CommandId.NextPage: uiText = SR.Get(SRID.NextPageText); break;
-                case  CommandId.PreviousPage: uiText = SR.Get(SRID.PreviousPageText); break;
-                case  CommandId.FirstPage: uiText = SR.Get(SRID.FirstPageText); break;
-                case  CommandId.LastPage: uiText = SR.Get(SRID.LastPageText); break;
-                case  CommandId.GoToPage: uiText = SR.Get(SRID.GoToPageText); break;
-                case  CommandId.NavigateJournal: uiText = SR.Get(SRID.NavigateJournalText); break;
+                case  CommandId.BrowseBack: uiText = SR.BrowseBackText; break;
+                case  CommandId.BrowseForward: uiText = SR.BrowseForwardText; break;
+                case  CommandId.BrowseHome: uiText = SR.BrowseHomeText; break;
+                case  CommandId.BrowseStop: uiText = SR.BrowseStopText; break;
+                case  CommandId.Refresh: uiText = SR.RefreshText; break;
+                case  CommandId.Favorites: uiText = SR.FavoritesText; break;
+                case  CommandId.Search: uiText = SR.SearchText; break;
+                case  CommandId.IncreaseZoom: uiText = SR.IncreaseZoomText; break;
+                case  CommandId.DecreaseZoom: uiText = SR.DecreaseZoomText; break;
+                case  CommandId.Zoom: uiText = SR.ZoomText; break;
+                case  CommandId.NextPage: uiText = SR.NextPageText; break;
+                case  CommandId.PreviousPage: uiText = SR.PreviousPageText; break;
+                case  CommandId.FirstPage: uiText = SR.FirstPageText; break;
+                case  CommandId.LastPage: uiText = SR.LastPageText; break;
+                case  CommandId.GoToPage: uiText = SR.GoToPageText; break;
+                case  CommandId.NavigateJournal: uiText = SR.NavigateJournalText; break;
             }
             return uiText;
         }
@@ -238,98 +236,98 @@ namespace System.Windows.Input
             {
                 case  CommandId.BrowseBack:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseBackKey),
-                        SR.Get(SRID.BrowseBackKeyDisplayString),
+                        BrowseBackKey,
+                        SR.BrowseBackKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.BrowseForward:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseForwardKey),
-                        SR.Get(SRID.BrowseForwardKeyDisplayString),
+                        BrowseForwardKey,
+                        SR.BrowseForwardKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.BrowseHome:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseHomeKey),
-                        SR.Get(SRID.BrowseHomeKeyDisplayString),
+                        BrowseHomeKey,
+                        SR.BrowseHomeKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.BrowseStop:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.BrowseStopKey),
-                        SR.Get(SRID.BrowseStopKeyDisplayString),
+                        BrowseStopKey,
+                        SR.BrowseStopKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Refresh:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.RefreshKey),
-                        SR.Get(SRID.RefreshKeyDisplayString),
+                        RefreshKey,
+                        SR.RefreshKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Favorites:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.FavoritesKey),
-                        SR.Get(SRID.FavoritesKeyDisplayString),
+                        FavoritesKey,
+                        SR.FavoritesKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Search:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.SearchKey),
-                        SR.Get(SRID.SearchKeyDisplayString),
+                        SearchKey,
+                        SR.SearchKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.IncreaseZoom:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.IncreaseZoomKey),
-                        SR.Get(SRID.IncreaseZoomKeyDisplayString),
+                        SR.IncreaseZoomKey,
+                        SR.IncreaseZoomKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.DecreaseZoom:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.DecreaseZoomKey),
-                        SR.Get(SRID.DecreaseZoomKeyDisplayString),
+                        SR.DecreaseZoomKey,
+                        SR.DecreaseZoomKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Zoom:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.ZoomKey),
-                        SR.Get(SRID.ZoomKeyDisplayString),
+                        SR.ZoomKey,
+                        SR.ZoomKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.NextPage:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.NextPageKey),
-                        SR.Get(SRID.NextPageKeyDisplayString),
+                        SR.NextPageKey,
+                        SR.NextPageKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.PreviousPage:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.PreviousPageKey),
-                        SR.Get(SRID.PreviousPageKeyDisplayString),
+                        SR.PreviousPageKey,
+                        SR.PreviousPageKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.FirstPage:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.FirstPageKey),
-                        SR.Get(SRID.FirstPageKeyDisplayString),
+                        SR.FirstPageKey,
+                        SR.FirstPageKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.LastPage:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.LastPageKey),
-                        SR.Get(SRID.LastPageKeyDisplayString),
+                        SR.LastPageKey,
+                        SR.LastPageKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.GoToPage:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.GoToPageKey),
-                        SR.Get(SRID.GoToPageKeyDisplayString),
+                        SR.GoToPageKey,
+                        SR.GoToPageKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.NavigateJournal:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.NavigateJournalKey),
-                        SR.Get(SRID.NavigateJournalKeyDisplayString),
+                        SR.NavigateJournalKey,
+                        SR.NavigateJournalKeyDisplayString,
                         gestures);
                     break;
             }
@@ -346,8 +344,7 @@ namespace System.Windows.Input
                     {
                         RoutedUICommand newCommand = CommandLibraryHelper.CreateUICommand(
                                                             GetPropertyName(idCommand),
-                                                            typeof(NavigationCommands), (byte)idCommand,
-                                                            null);
+                                                            typeof(NavigationCommands), (byte)idCommand);
 
                         _internalCommands[(int)idCommand] = newCommand;
                     }
@@ -390,5 +387,13 @@ namespace System.Windows.Input
 
         private static RoutedUICommand[] _internalCommands = new RoutedUICommand[(int)CommandId.Last];
         #endregion Private Fields
+
+        private const string BrowseBackKey = "Alt+Left;Backspace";
+        private const string BrowseForwardKey = "Alt+Right;Shift+Backspace";
+        private const string BrowseHomeKey = "Alt+Home;BrowserHome";
+        private const string BrowseStopKey = "Alt+Esc;BrowserStop";
+        private const string FavoritesKey = "Ctrl+I";
+        private const string RefreshKey = "F5";
+        private const string SearchKey = "F3";
     }
 }

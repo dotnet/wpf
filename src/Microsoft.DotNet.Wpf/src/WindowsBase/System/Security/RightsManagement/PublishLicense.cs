@@ -35,18 +35,6 @@ namespace System.Security.RightsManagement
     /// who must then request a Use License by calling the PublishLicense.AcquireUseLicense function. It is only the 
     /// Use License that allows an application to exercise the rights that have been granted.
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class PublishLicense
     {
         /// <summary>
@@ -55,13 +43,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public PublishLicense(string signedPublishLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
-            if (signedPublishLicense == null)
-            {
-                throw new ArgumentNullException("signedPublishLicense");
-            }
-            
+            ArgumentNullException.ThrowIfNull(signedPublishLicense);
+
             _serializedPublishLicense = signedPublishLicense;
 
             /////////////////
@@ -105,12 +89,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense DecryptUnsignedPublishLicense(CryptoProvider cryptoProvider )
         {
-            SecurityHelper.DemandRightsManagementPermission();
-            
-            if (cryptoProvider == null)
-            {
-                throw new ArgumentNullException("cryptoProvider");
-            }
+
+            ArgumentNullException.ThrowIfNull(cryptoProvider);
 
             return cryptoProvider.DecryptPublishLicense(_serializedPublishLicense);
         }
@@ -125,7 +105,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoName; 
             }
@@ -141,7 +120,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoUri; 
             }
@@ -154,7 +132,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _contentId;
             }
@@ -167,7 +144,6 @@ namespace System.Security.RightsManagement
         {
             get 
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _useLicenseAcquisitionUriFromPublishLicense;
             }
@@ -178,7 +154,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override string ToString()
         {
-            SecurityHelper.DemandRightsManagementPermission();
             
             return _serializedPublishLicense;
         }        
@@ -188,12 +163,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicense(SecureEnvironment secureEnvironment)
         {
-            SecurityHelper.DemandRightsManagementPermission();
-            
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
             // Accordingly suppressing preSharp warning about having to validate ClientSession.
@@ -211,12 +182,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicenseNoUI(SecureEnvironment secureEnvironment)
         {
-            SecurityHelper.DemandRightsManagementPermission();
-                    
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
             // Accordingly suppressing preSharp warning about having to validate ClientSession.

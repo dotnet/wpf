@@ -41,7 +41,7 @@ namespace MS.Internal.AutomationProxies
                 // i'm throwing an invalid operation exception rather than an argument exception because 
                 // clients never call this constructor directly.  it always happens as a result of some 
                 // other operation, e.g. cloning an existing TextPatternRange.
-                throw new InvalidOperationException(SR.Get(SRID.InvalidTextRangeOffset,GetType().FullName));
+                throw new InvalidOperationException(SR.Format(SR.InvalidTextRangeOffset, GetType().FullName));
             }
             Debug.Assert(provider != null);
 
@@ -199,19 +199,7 @@ namespace MS.Internal.AutomationProxies
 
         ITextRangeProvider ITextRangeProvider.FindText(string text, bool backwards, bool ignoreCase)
         {
-            // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
-            // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
-            // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-#pragma warning suppress 6507
-            if (text.Length == 0)
-            {
-                throw new ArgumentException(SR.Get(SRID.InvalidParameter));
-            }
+            ArgumentException.ThrowIfNullOrEmpty(text);
 
             // get the text of the range
             string rangeText = _provider.GetText();
@@ -245,7 +233,7 @@ namespace MS.Internal.AutomationProxies
             // there is ambiguity at line breaks and some international scenarios.
             if (IsDegenerate)
             {
-                return new double[0];
+                return Array.Empty<double>();
             }
 
             // we'll need to have the text eventually (so we can measure characters) so get it up
@@ -259,7 +247,7 @@ namespace MS.Internal.AutomationProxies
             w32point.y = 0;
             if (!Misc.MapWindowPoints(_provider.WindowHandle, IntPtr.Zero, ref w32point, 1))
             {
-                return new double[0];
+                return Array.Empty<double>();
             }
             Point mapClientToScreen = new Point(w32point.x, w32point.y);
 
@@ -545,7 +533,7 @@ namespace MS.Internal.AutomationProxies
         IRawElementProviderSimple[] ITextRangeProvider.GetChildren()
         {
             // we don't have any children so return an empty array
-            return new IRawElementProviderSimple[0];
+            return Array.Empty<IRawElementProviderSimple>();
         }
 
         #endregion Public Properties
@@ -1081,7 +1069,7 @@ namespace MS.Internal.AutomationProxies
         {
             if (start < 0 || end < start)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidTextRangeOffset,GetType().FullName));
+                throw new InvalidOperationException(SR.Format(SR.InvalidTextRangeOffset, GetType().FullName));
             }
 
             _start = start;
@@ -1093,7 +1081,7 @@ namespace MS.Internal.AutomationProxies
             int limit = _provider.GetTextLength();
             if (Start > limit || End > limit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidRangeEndpoint,GetType().FullName));
+                throw new InvalidOperationException(SR.Format(SR.InvalidRangeEndpoint, GetType().FullName));
             }
         }
 
@@ -1127,7 +1115,7 @@ namespace MS.Internal.AutomationProxies
                 // ensure that we never accidentally get a negative index
                 if (value < 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidTextRangeOffset,GetType().FullName));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidTextRangeOffset, GetType().FullName));
                 }
 
                 // ensure that end never moves before start
@@ -1158,7 +1146,7 @@ namespace MS.Internal.AutomationProxies
                 // ensure that we never accidentally get a negative index
                 if (value < 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidTextRangeOffset,GetType().FullName));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidTextRangeOffset, GetType().FullName));
                 }
 
                 // ensure that start never moves after end

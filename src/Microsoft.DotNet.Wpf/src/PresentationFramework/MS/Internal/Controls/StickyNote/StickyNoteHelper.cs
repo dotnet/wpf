@@ -22,7 +22,6 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Annotations;
@@ -87,10 +86,7 @@ namespace MS.Internal.Controls.StickyNote
         {
             public AutoLocker(LockHelper helper, LockFlag flag)
             {
-                if (helper == null)
-                {
-                    throw new ArgumentNullException("helper");
-                }
+                ArgumentNullException.ThrowIfNull(helper);
 
                 Debug.Assert(!helper.IsLocked(flag));
                 _helper = helper;

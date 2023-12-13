@@ -1,0 +1,173 @@
+﻿<!--
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+
+Description: XBAP download progress page for Media Center
+-->
+
+<Page 
+  x:Uid="Page_1" xml:lang="en-US"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  x:Class="Microsoft.Internal.DeploymentUI.TenFeetInstallationProgress" x:ClassModifier="internal"
+  FocusManager.FocusedElement="{Binding ElementName=CancelButton}" >
+
+  <Page.Resources>
+
+    <!-- Base Text -->
+
+    <Style x:Uid="Style_1" x:Key="BaseText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_1" Property="FontFamily" Value="Segoe SemiBold" />
+      <Setter x:Uid="Setter_2" Property="Foreground" Value="white" />
+      <Setter x:Uid="Setter_3" Property="FontSize" Value="18pt" />
+      <Setter x:Uid="Setter_4" Property="Margin" Value="0,0,0,0" />
+    </Style>
+
+    <!-- Publisher -->
+
+    <Style x:Uid="Style_2" BasedOn="{StaticResource BaseText}" x:Key="PublisherText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_5" Property="FontSize" Value="18pt" />
+    </Style>
+
+    <!-- ApplicationName -->
+
+    <Style x:Uid="Style_3" BasedOn="{StaticResource BaseText}" x:Key="ApplicationNameText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_6" Property="FontSize" Value="22pt" />
+      <Setter x:Uid="Setter_7" Property="FontWeight" Value="bold" />
+      <Setter x:Uid="Setter_8" Property="Foreground" Value="#152a4f" />
+    </Style>
+
+    <!-- Detail -->
+
+    <Style x:Uid="Style_4" BasedOn="{StaticResource BaseText}" x:Key="DetailText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_9" Property="Foreground" Value="#a1defa"/>
+      <Setter x:Uid="Setter_11" Property="FontSize" Value="16pt" />
+    </Style>
+
+    <!-- Hyperlink -->
+
+    <Style x:Uid="Style_5" BasedOn="{StaticResource BaseText}" x:Key="HyperlinkText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_10" Property="FontWeight" Value="400" />
+      <Setter x:Uid="Setter_12" Property="FontSize" Value="16pt" />
+      <Setter x:Uid="Setter_14" Property="Margin" Value="4,0,0,0" />
+    </Style>
+
+    <!-- Detail Data -->
+
+    <Style x:Uid="Style_11" BasedOn="{StaticResource BaseText}" x:Key="DetailDataText" TargetType="{x:Type TextBlock}">
+      <Setter x:Uid="Setter_13" Property="FontSize" Value="16pt" />
+      <Setter x:Uid="Setter_15" Property="Margin" Value="4,0,0,0" />
+   </Style>
+
+  </Page.Resources>
+
+  <Grid x:Uid="Grid_8">
+
+    <Grid.Resources>
+      <ResourceDictionary x:Uid="ResourceDictionary_1">
+        <ResourceDictionary.MergedDictionaries>
+          <ResourceDictionary Source="themes\MediaCenterTheme.xaml" x:Uid="ResourceDictionary_2"/>
+        </ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary>
+    </Grid.Resources>
+
+    <Grid.Background>
+      <LinearGradientBrush x:Uid="LinearGradientBrush_1" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop x:Uid="GradientStop_1" Color="#2072B8" Offset="0" />
+        <GradientStop x:Uid="GradientStop_2" Color="#093A66" Offset="1" />
+      </LinearGradientBrush>
+    </Grid.Background>
+
+    <Grid.RowDefinitions>
+      <RowDefinition x:Uid="RowDefinition_4" Height="*" />
+      <RowDefinition x:Uid="RowDefinition_5" Height="Auto" />
+      <RowDefinition x:Uid="RowDefinition_6" Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition x:Uid="ColumnDefinition_9" Width="*" />
+      <ColumnDefinition x:Uid="ColumnDefinition_10" Width="3.5*"/>
+      <ColumnDefinition x:Uid="ColumnDefinition_11" Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Border x:Uid="Border_1" Grid.Column="1" Grid.Row="1" CornerRadius="4" Background="#33FFFFFF" />
+
+    <Border x:Uid="Border_2" Grid.Column="1" Grid.Row="1" Margin="7" Padding="20" CornerRadius="3" >
+      <Border.Background>
+        <LinearGradientBrush x:Uid="LinearGradientBrush_2" StartPoint="0,0" EndPoint="1,0">
+          <GradientStop x:Uid="GradientStop_3" Color="#5292BF" Offset="0" />
+          <GradientStop x:Uid="GradientStop_4" Color="#264B79" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+
+      <StackPanel  x:Uid="StackPanel_3" VerticalAlignment="center">
+
+        <!-- *** Please, no text placeholders in TextBlock elements, as these get unnecessarily localized. 
+        -->
+ 
+        <!-- Publisher [not actually populated, because it can be easily faked] -->
+        <TextBlock Style="{DynamicResource PublisherText}" x:Uid="PublisherText" Name="PublisherText" />
+
+        <!-- ApplicationName -->
+        <TextBlock Style="{DynamicResource ApplicationNameText}" x:Uid="ApplicationNameText" Name="ApplicationNameText" />
+
+        <Grid x:Uid="Grid_5" Margin="0,5,0,5">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Uid="ColumnDefinition_4" Width="*"/>
+            <ColumnDefinition x:Uid="ColumnDefinition_5"  Width="Auto" />
+          </Grid.ColumnDefinitions>
+
+          <!-- ProgressBar and Progress Text -->
+          <ProgressBar Height="21" Foreground="#95D7FE" Value="50" x:Uid="ProgressBar_1" Name="ProgressBar_1" Grid.Column="0" />
+          <TextBlock x:Uid="ProgressBarStatusText" Grid.Column="1" Name="ProgressBarStatusText" HorizontalAlignment="center" FontFamily="Segoe Semibold" FontSize="18pt" Foreground="#95D7FE" Margin="8,-2,0,0">50%</TextBlock>
+        </Grid>
+
+         <!-- Download details -->
+         <Grid x:Uid="Grid_9">
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Uid="ColumnDefinition_1" Width="Auto" />
+            <ColumnDefinition x:Uid="ColumnDefinition_3" Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Grid.RowDefinitions>
+            <RowDefinition x:Uid="RowDefinition_1" />
+            <RowDefinition x:Uid="RowDefinition_2" />
+            <RowDefinition x:Uid="RowDefinition_3" />
+          </Grid.RowDefinitions>
+
+          <!-- Downloading from -->
+          <TextBlock Style="{DynamicResource DetailText}" Grid.Row="0" Grid.Column="0" x:Uid="TextBlock_3">
+              <!-- Change to "Downloading from:" after v1 -->
+              Downloading application:
+          </TextBlock>
+          <TextBlock x:Uid="DownloadFrom" Style="{DynamicResource HyperlinkText}" Grid.Row="0" Grid.Column="1" Name="DownloadFrom" TextTrimming="CharacterEllipsis" >
+          </TextBlock >
+
+          <!-- Bytes already downloaded -->
+          <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="TextBlock_5" Style="{DynamicResource DetailText}" >
+            Bytes already downloaded:
+          </TextBlock>
+          <TextBlock Grid.Row="1" Grid.Column="1" x:Uid="CurrentBytesText" Name="CurrentBytesText" Style="{DynamicResource DetailDataText}" >
+          </TextBlock>
+
+          <!-- Total bytes -->
+          <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="TextBlock_6" Style="{DynamicResource DetailText}" >
+            Total bytes:
+          </TextBlock>
+          <TextBlock Grid.Row="2" Grid.Column="1" x:Uid="TotalBytesText" Name="TotalBytesText" Style="{DynamicResource DetailDataText}" >
+          </TextBlock>
+
+        </Grid>
+
+        <Button x:Uid="Button_1" Name="CancelButton" Click="OnCancel" Margin="0,10,0,0" Width="264" HorizontalContentAlignment="Center" HorizontalAlignment="Right"  >
+          <TextBlock x:Uid="TextBlock_1" VerticalAlignment="Center">Cancel</TextBlock>
+        </Button>
+
+      </StackPanel>
+    </Border>
+
+  </Grid>
+</Page>
+

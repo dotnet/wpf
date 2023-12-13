@@ -11,14 +11,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _fontSourceFactory = fontSourceFactory;
     }
 
-    /// <SecurityNote>
-    /// Critical - Receives and returns a native pointers.
-    ///          - Asserts unmanaged code permissions to call Marshal.* However the call to Marshal is safe
-    ///            because it is called with trusted inputs.
-    /// </SecurityNote>
     [ComVisible(true)]
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT FontFileLoader::CreateStreamFromKey(
                                                 __in_bcount(fontFileReferenceKeySize) void const* fontFileReferenceKey,
                                                 UINT32 fontFileReferenceKeySize,

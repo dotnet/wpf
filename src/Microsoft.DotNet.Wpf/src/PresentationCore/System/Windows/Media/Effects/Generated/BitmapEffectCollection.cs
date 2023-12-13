@@ -32,9 +32,7 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -144,7 +142,7 @@ namespace System.Windows.Media.Effects
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
 
             WritePreamble();
@@ -252,7 +250,7 @@ namespace System.Windows.Media.Effects
             {
                 if (value == null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                    throw new System.ArgumentException(SR.Collection_NoNull);
                 }
 
                 WritePreamble();
@@ -295,10 +293,7 @@ namespace System.Windows.Media.Effects
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -410,10 +405,7 @@ namespace System.Windows.Media.Effects
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -425,7 +417,7 @@ namespace System.Windows.Media.Effects
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -440,7 +432,7 @@ namespace System.Windows.Media.Effects
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -525,14 +517,11 @@ namespace System.Windows.Media.Effects
 
         private BitmapEffect Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is BitmapEffect))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "BitmapEffect"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "BitmapEffect"));
             }
 
             return (BitmapEffect) value;
@@ -558,7 +547,7 @@ namespace System.Windows.Media.Effects
 
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
             WritePreamble();
             BitmapEffect newValue = value;
@@ -786,7 +775,7 @@ namespace System.Windows.Media.Effects
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
@@ -814,7 +803,7 @@ namespace System.Windows.Media.Effects
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -832,7 +821,7 @@ namespace System.Windows.Media.Effects
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -866,12 +855,12 @@ namespace System.Windows.Media.Effects
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }
@@ -924,61 +913,56 @@ namespace System.Windows.Media.Effects
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<BitmapEffect> icollectionOfT = collection as ICollection<BitmapEffect>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<BitmapEffect> icollectionOfT = collection as ICollection<BitmapEffect>;
+                _collection = new FrugalStructList<BitmapEffect>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<BitmapEffect>(icollectionOfT);
+                    _collection = new FrugalStructList<BitmapEffect>(icollection);
                 }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<BitmapEffect>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<BitmapEffect>();
-
-                        foreach (BitmapEffect item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
-                            }
-                            BitmapEffect newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-}
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
+                    _collection = new FrugalStructList<BitmapEffect>();
+
                     foreach (BitmapEffect item in collection)
                     {
                         if (item == null)
                         {
-                            throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                            throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
-}
+                        BitmapEffect newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
+                    }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (BitmapEffect item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

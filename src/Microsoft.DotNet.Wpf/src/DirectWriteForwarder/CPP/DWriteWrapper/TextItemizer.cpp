@@ -58,10 +58,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
     }
 
-    ///<SecurityNote>
-    /// Critical - Can be passed an arbitrary pointer that is written to in the method.
-    ///</SecurityNote>
-    [SecurityCritical]
     __declspec(noinline) IList<Span^>^ TextItemizer::Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength)
     {
         DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     pScriptAnalysisListPrevious     = _pScriptAnalysisListHead;

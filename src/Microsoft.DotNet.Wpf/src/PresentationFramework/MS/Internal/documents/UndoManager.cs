@@ -102,19 +102,12 @@ namespace MS.Internal.Documents
         /// </param>
         internal static void AttachUndoManager(DependencyObject scope, UndoManager undoManager)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope");
-            }
-
-            if (undoManager == null)
-            {
-                throw new ArgumentNullException("undoManager");
-            }
+            ArgumentNullException.ThrowIfNull(scope);
+            ArgumentNullException.ThrowIfNull(undoManager);
 
             if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoManagerAlreadyAttached));
+                throw new InvalidOperationException(SR.UndoManagerAlreadyAttached);
             }
 
             // Detach existing instance of undo manager if any
@@ -144,10 +137,7 @@ namespace MS.Internal.Documents
         {
             UndoManager undoManager;
 
-            if (scope == null)
-            {
-                throw new ArgumentNullException("scope");
-            }
+            ArgumentNullException.ThrowIfNull(scope);
 
             // Detach existing undo service if any
             undoManager = scope.ReadLocalValue(UndoManager.UndoManagerInstanceProperty) as UndoManager;
@@ -207,18 +197,15 @@ namespace MS.Internal.Documents
 
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             deepestOpen = DeepestOpenUnit;
             if (deepestOpen == unit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitCantBeOpenedTwice));
+                throw new InvalidOperationException(SR.UndoUnitCantBeOpenedTwice);
             }
 
             if (deepestOpen == null)
@@ -259,17 +246,14 @@ namespace MS.Internal.Documents
         {
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             if (OpenedUnit != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitAlreadyOpen));
+                throw new InvalidOperationException(SR.UndoUnitAlreadyOpen);
             }
 
             switch (State)
@@ -279,7 +263,7 @@ namespace MS.Internal.Documents
                     {
                         if (UndoCount == 0 || PeekUndoStack() != unit)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.UndoUnitNotOnTopOfStack));
+                            throw new InvalidOperationException(SR.UndoUnitNotOnTopOfStack);
                         }
 
                         break;
@@ -289,7 +273,7 @@ namespace MS.Internal.Documents
                     {
                         if (RedoStack.Count == 0 || (IParentUndoUnit)RedoStack.Peek() != unit)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.UndoUnitNotOnTopOfStack));
+                            throw new InvalidOperationException(SR.UndoUnitNotOnTopOfStack);
                         }
 
                         break;
@@ -303,7 +287,7 @@ namespace MS.Internal.Documents
             }
             if (unit.Locked)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitLocked));
+                throw new InvalidOperationException(SR.UndoUnitLocked);
             }
 
             Open(unit);
@@ -338,17 +322,14 @@ namespace MS.Internal.Documents
         {
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             if (OpenedUnit == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoNoOpenUnit));
+                throw new InvalidOperationException(SR.UndoNoOpenUnit);
             }
 
             // find the parent of the given unit
@@ -365,7 +346,7 @@ namespace MS.Internal.Documents
 
                 if (closeParent.OpenedUnit == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.UndoUnitNotFound), "unit");
+                    throw new ArgumentException(SR.UndoUnitNotFound, nameof(unit));
                 }
 
                 closeParent.Close(closeAction);
@@ -434,13 +415,10 @@ namespace MS.Internal.Documents
 
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (unit == null)
-            {
-                throw new ArgumentNullException("unit");
-            }
+            ArgumentNullException.ThrowIfNull(unit);
 
             parent = DeepestOpenUnit;
             if (parent != null)
@@ -490,7 +468,7 @@ namespace MS.Internal.Documents
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoNoOpenParentUnit));
+                throw new InvalidOperationException(SR.UndoNoOpenParentUnit);
             }
         }
 
@@ -504,7 +482,7 @@ namespace MS.Internal.Documents
         {
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
             // In practice, we only clear when the public IsUndoEnabled property is set false.
@@ -535,22 +513,22 @@ namespace MS.Internal.Documents
         {
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
             if (count > UndoCount || count <= 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             if (State != UndoState.Normal)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoNotInNormalState));
+                throw new InvalidOperationException(SR.UndoNotInNormalState);
             }
 
             if (OpenedUnit != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitOpen));
+                throw new InvalidOperationException(SR.UndoUnitOpen);
             }
 
             Invariant.Assert(UndoCount > _minUndoStackCount);
@@ -602,22 +580,22 @@ namespace MS.Internal.Documents
         {
             if (!IsEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoServiceDisabled));
+                throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
             if (count > RedoStack.Count || count <= 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             if (State != UndoState.Normal)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoNotInNormalState));
+                throw new InvalidOperationException(SR.UndoNotInNormalState);
             }
 
             if (OpenedUnit != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UndoUnitOpen));
+                throw new InvalidOperationException(SR.UndoUnitOpen);
             }
 
             SetState(UndoState.Redo);

@@ -19,7 +19,6 @@ using System.ComponentModel.Design.Serialization;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -61,11 +60,8 @@ namespace System.Windows.Input
                 return _srgsMarkup; 
             }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
                 _srgsMarkup = value; 
             }
         }
@@ -82,11 +78,8 @@ namespace System.Windows.Input
                 return _regexString; 
             }
             set 
-            { 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+            {
+                ArgumentNullException.ThrowIfNull(value);
                 _regexString = value; 
             }
         }
@@ -186,7 +179,7 @@ namespace System.Windows.Input
             { 
                 if (!IsValidInputScopeNameValue(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputScope_InvalidInputScopeName, "value"));
+                    throw new ArgumentException(SR.Format(SR.InputScope_InvalidInputScopeName, "value"));
                 }
                 _nameValue = value; 
             }
@@ -294,10 +287,7 @@ namespace System.Windows.Input
         ///</summary>
         public InputScopePhrase(String name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             _phraseName = name;
         }
 
@@ -321,10 +311,7 @@ namespace System.Windows.Input
         ///</param>
         public void AddText(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
             _phraseName = name;
         }
 

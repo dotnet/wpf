@@ -50,14 +50,11 @@ namespace System.Windows
         /// </remarks>
         public Condition( DependencyProperty conditionProperty, object conditionValue, string sourceName )
         {
-            if( conditionProperty == null )
-            {
-                throw new ArgumentNullException("conditionProperty");
-            }
+            ArgumentNullException.ThrowIfNull(conditionProperty);
 
-            if( !conditionProperty.IsValidValue( conditionValue ) )
+            if (!conditionProperty.IsValidValue(conditionValue))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, conditionValue, conditionProperty.Name));
+                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, conditionValue, conditionProperty.Name));
             }
 
             _property = conditionProperty;
@@ -71,10 +68,7 @@ namespace System.Windows
         /// </summary>
         public Condition( BindingBase binding, object conditionValue )
         {
-            if( binding == null )
-            {
-                throw new ArgumentNullException("binding");
-            }
+            ArgumentNullException.ThrowIfNull(binding);
 
             Binding = binding;
             Value  = conditionValue;
@@ -92,12 +86,12 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
                 if (_binding != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ConditionCannotUseBothPropertyAndBinding));
+                    throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
                 }
 
                 _property = value;
@@ -115,12 +109,12 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
-                if( _property != null )
+                if(_property != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ConditionCannotUseBothPropertyAndBinding));
+                    throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
                 }
 
                 _binding = value;
@@ -138,18 +132,18 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
                 if (value is MarkupExtension)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ConditionValueOfMarkupExtensionNotSupported,
+                    throw new ArgumentException(SR.Format(SR.ConditionValueOfMarkupExtensionNotSupported,
                                                        value.GetType().Name));
                 }
 
-                if( value is Expression )
+                if(value is Expression)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ConditionValueOfExpressionNotSupported));
+                    throw new ArgumentException(SR.ConditionValueOfExpressionNotSupported);
                 }
 
                 _value = value;
@@ -171,9 +165,9 @@ namespace System.Windows
             }
             set
             {
-                if( _sealed )
+                if(_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Condition"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Condition"));
                 }
 
                 _sourceName = value;
@@ -194,7 +188,7 @@ namespace System.Windows
 
             // Ensure valid condition
             if (_property != null && _binding != null)
-                throw new InvalidOperationException(SR.Get(SRID.ConditionCannotUseBothPropertyAndBinding));
+                throw new InvalidOperationException(SR.ConditionCannotUseBothPropertyAndBinding);
 
             switch (type)
             {
@@ -202,12 +196,12 @@ namespace System.Windows
                 case ValueLookupType.PropertyTriggerResource:
                     if (_property == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.NullPropertyIllegal, "Property"));
+                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Property"));
                     }
 
                     if (!_property.IsValidValue(_value))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, _value, _property.Name));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, _value, _property.Name));
                     }
                     break;
 
@@ -215,12 +209,12 @@ namespace System.Windows
                 case ValueLookupType.DataTriggerResource:
                     if (_binding == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.NullPropertyIllegal, "Binding"));
+                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Binding"));
                     }
                     break;
 
                 default:
-                    throw new InvalidOperationException(SR.Get(SRID.UnexpectedValueTypeForCondition, type));
+                    throw new InvalidOperationException(SR.Format(SR.UnexpectedValueTypeForCondition, type));
             }
 
             // Freeze the condition value
@@ -269,14 +263,8 @@ namespace System.Windows
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
-            if (targetObject == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(targetObject);
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             Condition condition = targetObject as Condition;
             if (condition != null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)
@@ -292,12 +280,9 @@ namespace System.Windows
             Condition condition = targetObject as Condition;
             if (condition == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")
             {

@@ -309,7 +309,7 @@
       </trans-unit>
       <trans-unit id="CombinationOfAccessibilitySwitchesNotSupported">
         <source>Desktop applications are required to opt in to all earlier accessibility improvements to get the later improvements. To do this, ensure that if the AppContext switch 'Switch.UseLegacyAccessibilityFeatures.N' is set to 'false', then 'Switch.UseLegacyAccessibilityFeatures' and all 'Switch.UseLegacyAccessibilityFeatures.M' switches, when M &lt; N, evaluate to false as well. Note that, if a switch for a particular set of accessibility improvements is not present, its value is determined by the target framework version. You can remedy this by adding these switches and setting their value to false.</source>
-        <target state="translated">Классические приложения должны активировать все предыдущие специальные возможности, чтобы получить  последующие улучшения. Для этого в случае, когда параметр AppContext "Switch.UseLegacyAccessibilityFeatures.N" имеет значение False, "Switch.UseLegacyAccessibilityFeatures" и все параметры "Switch.UseLegacyAccessibilityFeatures.M" также должны иметь значение False, если M &lt; N. Обратите внимание, что если параметр для конкретного набора улучшений специальных возможностей отсутствует, его значение определяется версией целевой платформы. Исправить это можно, добавив параметры и задав значение False.</target>
+        <target state="translated">Классические приложения должны активировать все предыдущие специальные возможности, чтобы получить последующие улучшения. Для этого в случае, когда параметр AppContext "Switch.UseLegacyAccessibilityFeatures.N" имеет значение False, "Switch.UseLegacyAccessibilityFeatures" и все параметры "Switch.UseLegacyAccessibilityFeatures.M" также должны иметь значение False, если M &lt; N. Обратите внимание, что если параметр для конкретного набора улучшений специальных возможностей отсутствует, его значение определяется версией целевой платформы. Исправить это можно, добавив параметры и задав значение False.</target>
         <note />
       </trans-unit>
       <trans-unit id="CompatibilityPreferencesSealed">
@@ -1289,12 +1289,7 @@
       </trans-unit>
       <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
         <source>Specified reference object conflicts with predefined Package specific reference.</source>
-        <target state="translated">Указанный контрольный объект противоречит предопределенному значению для заданного пакета Package.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
+        <target state="translated">Указанный эталонный объект конфликтует с предопределенной ссылкой для заданного пакета.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Заголовок переменной длины в потоке лицензии на публикацию имеет длину в байтах: {0}. Это значение превышает максимальную длину в байтах: {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Формат имени типа "{0}" отличается от ожидаемого формата "имя класса, сборка".</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">
@@ -2509,7 +2499,7 @@
       </trans-unit>
       <trans-unit id="Unsupported_Modifier">
         <source>Unrecognized ModifierKeys '{0}'.</source>
-        <target state="translated">Нераспознанные ключи ModifierKeys "{0}".</target>
+        <target state="translated">Нераспознанные клавиши ModifierKeys "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="UpdaterVersionError">

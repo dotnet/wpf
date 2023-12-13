@@ -19,11 +19,6 @@ namespace MS.Win32
     // ETW Tracing native methods
     //
 
-    ///<SecurityNote>
-    /// Critical as this code performs an elevation.
-    ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
-    [SuppressUnmanagedCodeSecurity]
     internal static unsafe class ManifestEtw
     {
         //
@@ -32,10 +27,6 @@ namespace MS.Win32
         //
         // Callback
         //
-        ///<SecurityNote>
-        /// Critical - Accepts untrusted pointer argument
-        ///</SecurityNote>
-        [SecurityCritical]
         internal unsafe delegate void EtwEnableCallback(
             [In] ref Guid sourceId,
             [In] int isEnabled,
@@ -49,11 +40,6 @@ namespace MS.Win32
         //
         // Registration APIs
         //
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll", ExactSpelling = true, EntryPoint = "EventRegister", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern unsafe uint EventRegister(
                     [In] ref Guid providerId,
@@ -62,22 +48,12 @@ namespace MS.Win32
                     [In][Out]ref ulong registrationHandle
                     );
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll", ExactSpelling = true, EntryPoint = "EventUnregister", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern uint EventUnregister([In] ulong registrationHandle);
 
         //
         // Writing (Publishing/Logging) APIs
         //
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll", ExactSpelling = true, EntryPoint = "EventWrite", CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
         internal static extern unsafe uint EventWrite(
                 [In] ulong registrationHandle,
@@ -115,7 +91,6 @@ namespace MS.Win32
         }
     }
 
-    [SuppressUnmanagedCodeSecurity]
     internal static unsafe class ClassicEtw
     {
         #region RegisterTraceGuidsW()
@@ -123,16 +98,8 @@ namespace MS.Win32
         [StructLayout(LayoutKind.Sequential)]
         internal struct TRACE_GUID_REGISTRATION
         {
-            ///<SecurityNote>
-            /// Critical:  Pointer field
-            ///</SecurityNote>
-            [SecurityCritical]
             internal unsafe Guid* Guid;
             
-            ///<SecurityNote>
-            /// Critical:  Pointer field
-            ///</SecurityNote>
-            [SecurityCritical]
             internal unsafe void* RegHandle;
         }
 
@@ -163,50 +130,21 @@ namespace MS.Win32
             ExecuteMethod = 9,
         };
 
-         ///<SecurityNote>
-        /// Critical:  Delegate that takes an unsafe pointer argument
-        ///</SecurityNote>
-        [SecurityCritical]
         internal unsafe delegate uint ControlCallback(WMIDPREQUESTCODE requestCode, IntPtr requestContext, IntPtr reserved, WNODE_HEADER* data);
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll", CharSet = CharSet.Unicode)]
         internal static extern uint RegisterTraceGuidsW([In] ControlCallback cbFunc, [In] IntPtr context, [In] ref Guid providerGuid, [In] int taskGuidCount, [In, Out] ref TRACE_GUID_REGISTRATION taskGuids, [In] string mofImagePath, [In] string mofResourceName, out ulong regHandle);
         #endregion // RegisterTraceGuidsW
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll")]
         internal static extern uint UnregisterTraceGuids(ulong regHandle);
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll")]
         internal static extern int GetTraceEnableFlags(ulong traceHandle);
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll")]
         internal static extern byte GetTraceEnableLevel(ulong traceHandle);
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll")]
         internal static extern long GetTraceLoggerHandle(WNODE_HEADER* data);
 
@@ -244,11 +182,6 @@ namespace MS.Win32
             public EventData Data;         // Actually variable sized;
         }
 
-        ///<SecurityNote>
-        /// Critical as this code performs an elevation.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("Advapi32.dll")]
         internal static extern unsafe uint TraceEvent(ulong traceHandle, EVENT_HEADER* header);
         #endregion // TraceEvent()

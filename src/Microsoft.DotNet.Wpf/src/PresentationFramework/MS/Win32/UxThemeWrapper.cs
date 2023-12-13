@@ -257,13 +257,6 @@ namespace MS.Win32
             return themeState;
         }
 
-        ///<SecurityNote>
-        /// Critical - as this code performs an elevation to get current theme name
-        /// TreatAsSafe - the "critical data" is transformed into "safe data"
-        ///                      all the info stored is the currrent theme name and current color - e.g. "Luna", "NormalColor"
-        ///                      Does not contain a path - considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void GetThemeNameAndColor(out string themeName, out string themeColor)
         {
             StringBuilder themeNameSB = new StringBuilder(Win32.NativeMethods.MAX_PATH);

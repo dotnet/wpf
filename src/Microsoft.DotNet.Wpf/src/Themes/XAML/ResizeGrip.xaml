@@ -1,0 +1,156 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor]] -->
+    <LinearGradientBrush x:Key="ResizeGripperForeground"
+                          StartPoint="0,0.25"
+                          EndPoint="1,0.75">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFF"
+                          Offset="0.3"/>
+            <GradientStop Color="#BBC5D7"
+                          Offset="0.75"/>
+            <GradientStop Color="#6D83A9"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+<!-- [[AeroLite.NormalColor]] -->
+    
+    <SolidColorBrush x:Key="ResizeGripperForeground" Color="#FFAFAFAF" />
+
+<!-- [[Aero.NormalColor,Aero2.NormalColor,AeroLite.NormalColor]] -->
+
+    <!--=================================================================
+        ResizeGrip
+    ==================================================================-->
+    <Style x:Key="{x:Type ResizeGrip}"
+           TargetType="{x:Type ResizeGrip}">
+        <Setter Property="MinWidth"
+                Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+        <Setter Property="MinHeight"
+                Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+        <Setter Property="Background"
+                Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                    <Grid SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
+                              Margin="0,0,2,2"
+                              Data="M 9,0 L 11,0 L 11,11 L 0,11 L 0,9 L 3,9 L 3,6 L 6,6 L 6,3 L 9,3 z">
+
+                            <Path.Fill>
+                                <DrawingBrush Viewbox="0,0,3,3"
+                                              Viewport="0,0,3,3"
+                                              TileMode="Tile"
+                                              ViewportUnits="Absolute"
+                                              ViewboxUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="{StaticResource ResizeGripperForeground}"
+                                                                 Geometry="M 0,0 L 2,0 L 2,2 L 0,2 z "/>
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Path.Fill>
+                        </Path>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Classic]] -->
+
+    <!--=================================================================
+            ResizeGrip
+        ==================================================================-->
+    <Style x:Key="{x:Type ResizeGrip}"
+           TargetType="{x:Type ResizeGrip}">
+        <Setter Property="MinWidth"
+                Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+        <Setter Property="MinHeight"
+                Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+        <Setter Property="Background"
+                Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                    <Grid SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
+                              Data="M 11,0 L 12,0 L 12,12 L 0,12 L 0,11 z"
+                              Margin="0,0,2,2">
+                            <Path.Fill>
+                                <DrawingBrush Viewbox="0,0,4,4"
+                                              Viewport="0,0,4,4"
+                                              TileMode="Tile"
+                                              ViewportUnits="Absolute"
+                                              ViewboxUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Children>
+                                                <GeometryDrawing Brush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                                                 Geometry="M 0,0 L 2,0 L 2,1 L 1,1 L 1,2 L 0,2 z M 2,2 L 3,2 L 3,1 L 4,1 4,3 L 3,3 L 3,4 L 1,4 L 1,3 L 2,3 z"/>
+                                                <GeometryDrawing Brush="{StaticResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+                                                                 Geometry="M 0,3 L 1,3 L 1,4 L 0,4 z M 1,2 L 2,2 L 2,3 L 1,3 z M 2,1 L 3,1 L 3,2 L 2,2 z M 3,0 L 4,0 L 4,1 L 3,1 z "/>
+                                            </DrawingGroup.Children>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Path.Fill>
+                        </Path>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor]] -->
+    <SolidColorBrush x:Key="ResizeGripperForeground" Color="#B8B4A2"/>
+
+<!-- [[Royale.NormalColor]] -->
+    <SolidColorBrush x:Key="ResizeGripperForeground" Color="#D6D5D9"/>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+    <!--=================================================================
+        ResizeGrip
+    ==================================================================-->
+    <Style x:Key="{x:Type ResizeGrip}"
+           TargetType="{x:Type ResizeGrip}">
+        <Setter Property="MinWidth"
+                Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+        <Setter Property="MinHeight"
+                Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"/>
+        <Setter Property="Background"
+                Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                    <Grid SnapsToDevicePixels="True" 
+                          Background="{TemplateBinding Background}">
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
+                              Fill="White"
+                              Margin="0,0,2,2"
+                              Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
+
+                        <Path HorizontalAlignment="Right" 
+                              VerticalAlignment="Bottom" 
+                              Fill="{StaticResource ResizeGripperForeground}"
+                              Margin="0,0,3,3"
+                              Data="M 8,0 L 10,0 L 10,2 L 8,2 Z M 4,4 L 6,4 L 6,6 L 4,6 Z M 8,4 L 10,4 L 10,6 L 8,6 Z M 0,8 L 2,8 L 2,10 L 0,10 Z M 4,8 L 6,8 L 6,10 L 4,10 Z M 8,8 L 10,8 L 10,10 L 8,10 Z" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

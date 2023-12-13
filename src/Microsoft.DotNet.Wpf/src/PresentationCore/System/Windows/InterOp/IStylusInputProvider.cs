@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;
@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;

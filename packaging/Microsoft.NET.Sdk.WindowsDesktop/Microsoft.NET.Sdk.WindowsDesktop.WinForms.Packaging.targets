@@ -1,0 +1,51 @@
+<Project>
+
+  <PropertyGroup>
+    <_WindowsFormsNuGetPath>$(PkgMicrosoft_Private_Winforms)</_WindowsFormsNuGetPath>
+  </PropertyGroup>
+
+  <!--
+    ============================================================
+                      _ValidateWindowsFormsPackagingContent
+    Validates the content of Microsoft.Private.Winforms NuGet package
+    to ensure we correctly import and reference props and targets.
+    ============================================================
+   -->
+  <Target Name="_ValidateWindowsFormsPackagingContent">
+    <PropertyGroup>
+      <_WindowsFormsContentPath>$(_WindowsFormsNuGetPath)\sdk\dotnet-wpf\*</_WindowsFormsContentPath>
+      <_WindowsFormsRequiredFileName>Microsoft.NET.Sdk.WindowsDesktop.WindowsForms</_WindowsFormsRequiredFileName>
+    </PropertyGroup>
+
+    <Error Text="Unable to resolve path to Microsoft.Private.Winforms NuGet package. Is %24(PkgMicrosoft_Private_Winforms) defined?"
+           Condition="'$(_WindowsFormsNuGetPath)' == ''"/>
+
+    <ItemGroup>
+      <!-- Enumerate all transported files -->
+      <_WindowsFormsContent Include="$(_WindowsFormsContentPath)" />
+      <!-- ...and verify Microsoft.NET.Sdk.WindowsDesktop.WindowsForms.props/.targets are present -->
+      <_WindowsFormsContentFiles Include="@(_WindowsFormsContent->'%(FileName)%(Extension)')"
+          Condition=" '%(FileName)%(Extension)' == '$(_WindowsFormsRequiredFileName).props'
+                   or '%(FileName)%(Extension)' == '$(_WindowsFormsRequiredFileName).targets' "/>
+    </ItemGroup>
+
+    <!-- Fail if the required files are missing -->
+    <Error Text="Microsoft.Private.Winforms NuGet package does not contain $(_WindowsFormsRequiredFileName).props or $(_WindowsFormsRequiredFileName).targets"
+           Condition="@(_WindowsFormsContentFiles->Count()) != 2"/>
+  </Target>
+
+
+  <!--
+    ============================================================
+                      _IdentifyWindowsFormsPackageAssets
+    Add props/targets shipped by Windows Forms to the collection of files that get packaged
+    in to Microsoft.NET.Sdk.WindowsDesktop.<configuration>.<version>.nupkg.
+    ============================================================
+  -->
+  <Target Name="_IdentifyWindowsFormsPackageAssets" BeforeTargets="IdentifyPackageAssets" DependsOnTargets="_ValidateWindowsFormsPackagingContent">
+    <ItemGroup>
+      <PackagingContent Include="$(_WindowsFormsContentPath)" SubFolder="root\targets" />
+    </ItemGroup>
+  </Target>
+
+</Project>

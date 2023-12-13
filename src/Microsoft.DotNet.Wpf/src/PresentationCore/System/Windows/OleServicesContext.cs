@@ -11,7 +11,6 @@
 using MS.Win32;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -19,7 +18,6 @@ using System.Windows.Threading;
 using System.Windows.Input;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -109,15 +107,11 @@ namespace System.Windows
         /// <summary>
         /// OleSetClipboard - Call OLE Interopo OleSetClipboard()
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unsafe methods, and passes native pointer to native code... 
-        /// </SecurityNote>
-        [SecurityCritical]
         internal int OleSetClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleSetClipboard(dataObject);
@@ -126,17 +120,11 @@ namespace System.Windows
         /// <summary>
         /// OleGetClipboard - Call OLE Interop OleGetClipboard()
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - gets critical data from the clipboard... defense in depth, we still 
-        ///            protect the data (because you need to use COM interop to get to it)
-        ///            but we want to track the people accessing this.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal int OleGetClipboard(ref IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleGetClipboard(ref dataObject);
@@ -145,17 +133,11 @@ namespace System.Windows
         /// <summary>
         /// OleFlushClipboard - Call OLE Interop OleFlushClipboard()
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, flushes data to clipboard
-        /// TreatAsSafe - flushing the data is always acceptable to 
-        ///               do, only penalty would be performance.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal int OleFlushClipboard()
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleFlushClipboard();
@@ -167,16 +149,11 @@ namespace System.Windows
         /// of the data object to determine if the object that was on the clipboard at the 
         /// previous OleGetClipboard call is still on the Clipboard.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code: OleIsCurrentClipboard.
-        /// TreatAsSafe - Determining if a data object is still on the clipboard does not pose a security risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal int OleIsCurrentClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.OleIsCurrentClipboard(dataObject);
@@ -186,16 +163,11 @@ namespace System.Windows
         /// OleDoDragDrop - Call OLE Interop DoDragDrop()
         /// Initiate OLE DragDrop
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Since it calls to Dispatcher.InputManager
-        ///     TreatAsSafe: Since it does not expose the InputManager
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void OleDoDragDrop(IComDataObject dataObject, UnsafeNativeMethods.IOleDropSource dropSource, int allowedEffects, int[] finalEffect)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             InputManager inputManager = (InputManager)Dispatcher.CurrentDispatcher.InputManager;
@@ -219,17 +191,11 @@ namespace System.Windows
         /// <summary>
         /// OleRegisterDragDrop - Call OLE Interop RegisterDragDrop()
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - pinvokes into native code with caller supplied COM object.
-        ///            Also -- even if we did trust the dropTarget (which we don't) -- exposes the HWND
-        ///            as a site for arbitrary drops/code injections.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal int OleRegisterDragDrop(HandleRef windowHandle, UnsafeNativeMethods.IOleDropTarget dropTarget)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.RegisterDragDrop(windowHandle, dropTarget);
@@ -238,15 +204,11 @@ namespace System.Windows
         /// <summary>
         /// OleRevokeDragDrop - Call OLE Interop RevokeDragDrop()
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - pinvokes into native code, disables drag/drop for an entire HWND.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal int OleRevokeDragDrop(HandleRef windowHandle)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             return UnsafeNativeMethods.RevokeDragDrop(windowHandle);
@@ -272,7 +234,7 @@ namespace System.Windows
 
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             // Initialize Ole services.
@@ -281,7 +243,7 @@ namespace System.Windows
 
             if (!NativeMethods.Succeeded(hr))
             {
-                throw new SystemException(SR.Get(SRID.OleServicesContext_oleInitializeFailure, hr));
+                throw new SystemException(SR.Format(SR.OleServicesContext_oleInitializeFailure, hr));
             }
 
             // Add Dispatcher.Shutdown event handler. 
@@ -302,7 +264,7 @@ namespace System.Windows
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new ThreadStateException(SR.Get(SRID.OleServicesContext_ThreadMustBeSTA));
+                throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
             }
 
             // Uninitialize Ole services.
@@ -311,11 +273,6 @@ namespace System.Windows
         }
 
         // Wrapper for UnsafeNativeMethods.OleInitialize, useful for debugging.
-        /// <SecurityNote>
-        /// Critical - calls critical method (OleInitialize)
-        /// TreatAsSafe - safe to call anytime (ref counting issues aside)
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private int OleInitialize()
         {
 #if DEBUG
@@ -325,11 +282,6 @@ namespace System.Windows
         }
 
         // Wrapper for UnsafeNativeMethods.OleUninitialize, useful for debugging.
-        /// <SecurityNote>
-        /// Critical - calls critical method (OleUninitialize)
-        /// TreatAsSafe - safe to call OLeUninitialize
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private int OleUninitialize()
         {
             int hr;

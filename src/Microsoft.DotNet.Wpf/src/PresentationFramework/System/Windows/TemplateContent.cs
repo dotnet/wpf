@@ -190,14 +190,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Sets critical property LoadPermission so we can assert the right permission
-        ///           when instantiating the template.
-        ///           Sets critical field _templateLoadData.Reader, which needs to be kept in sync with LoadPermission.
-        /// Safe: Demands the requested permission before setting the fields. Sets both fields together
-        ///       so they stay in sync.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TemplateContent(System.Xaml.XamlReader xamlReader, IXamlObjectWriterFactory factory,
             IServiceProvider context)
         {
@@ -207,12 +199,6 @@ namespace System.Windows
             ObjectWriterParentSettings = factory.GetParentSettings();
 
             XamlAccessLevel accessLevel = ObjectWriterParentSettings.AccessLevel;
-            if (accessLevel != null)
-            {
-                XamlLoadPermission loadPermission = new XamlLoadPermission(accessLevel);
-                loadPermission.Demand();
-                LoadPermission = loadPermission;
-            }
             TemplateLoadData.Reader = xamlReader;
 
             Initialize(context);
@@ -302,38 +288,12 @@ namespace System.Windows
             TemplateLoadData.ObjectWriter = null;
         }
 
-        /// <SecurityNote>
-        /// Critical: FrameworkTemplate relies on the integrity of this reader to assert LoadPermission.
-        ///           Accesses critical field _xamlNodeList.
-        /// Safe: _xamlNodeList integrity is guarded by SecurityCritical.
-        ///       Doesn't leak _xamlNodeList.Writer, just provides a reader.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal System.Xaml.XamlReader PlayXaml()
         {
             return _xamlNodeList.GetReader();
         }
 
-        /// <SecurityNote>
-        /// Critical to write: Specifies the permission that can be asserted when loading the XAML
-        ///                    from PlayXaml() or TemplateLoadData.Reader, to allow it to access non-public members.
-        /// Critical to read: Can be mutated via FromXml method.
-        /// </SecurityNote>
-        internal XamlLoadPermission LoadPermission
-        {
-            [SecurityCritical]
-            get;
-            [SecurityCritical]
-            set;
-        }
-
         //Called by FrameworkTemplate.Seal() to let go of the data used for Template Load.
-        /// <SecurityNote>
-        /// Critical: Resets _templateLoadData to null, which contains the critical Reader.
-        /// Safe: It is ok to cause this object to be GCable, to preserve memory, as the data
-        ///       from Reader has been transferred to the critical _xamlNodeList.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void ResetTemplateLoadData()
         {
             TemplateLoadData = null;
@@ -383,42 +343,14 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Asserts LoadPermission
-        /// Safe: The node stream that we pass to the ObjectWriter (and copy into _xamlNodeList)
-        ///       comes from _reader, and we demanded LoadPermission when that was passed in
-        ///       (in the constructor).
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ParseTree(
             StackOfFrames stack,
             List<PropertyValue> sharedProperties,
             ref int nameNumber)
         {
-            if (LoadPermission != null)
-            {
-                LoadPermission.Assert();
-                try
-                {
-                    ParseNodes(stack, sharedProperties, ref nameNumber);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            else
-            {
-                ParseNodes(stack, sharedProperties, ref nameNumber);
-            }
+            ParseNodes(stack, sharedProperties, ref nameNumber);
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical TemplateLoadData.Reader and _xamlNodeList
-        /// Safe: The node stream that we copy into critical _xamlNodeList comes from the critical Reader.
-        ///       At this point, it is ok to null out the reader, to release the memory.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ParseNodes(
             StackOfFrames stack,
             List<PropertyValue> sharedProperties,
@@ -1084,7 +1016,7 @@ namespace System.Windows
             else
             {
                 // Should never happen
-                throw new System.Windows.Markup.XamlParseException(SR.Get(SRID.ParserUnexpectedEndEle));
+                throw new System.Windows.Markup.XamlParseException(SR.ParserUnexpectedEndEle);
             }
         }
 
@@ -1309,7 +1241,7 @@ namespace System.Windows
 
                 if (dpContent == null && isContentSourceSet)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.MissingContentSource, contentSource, targetType));
+                    throw new InvalidOperationException(SR.Format(SR.MissingContentSource, contentSource, targetType));
                 }
 
                 if (dpContent != null)
@@ -1455,13 +1387,8 @@ namespace System.Windows
 
         internal XamlSchemaContext SchemaContext { get; private set; }
 
-        /// <SecurityNote>
-        /// Critical to write: The XAML in this field is loaded with the privilege specified in LoadPermission.
-        /// Critical to read: Consumers can modify the contents of this object via its Writer property.
-        /// </SecurityNote>
         //_xamlNodeList is the postProcessed list, not the original template nodes.  TemplateContentConverter
         // and TemplateContent do that processing.
-        [SecurityCritical]
         internal XamlNodeList _xamlNodeList = null;
 
         private static SharedDp _sharedDpInstance = new SharedDp(null, null, null);
@@ -1478,14 +1405,9 @@ namespace System.Windows
         }
 
         //This will be nulled out when the FrameworkTemplate is sealed.
-        /// <SecurityNote>
-        /// Critical to write: The Reader in the TemplateLoadData stored on this object
-        ///                    is security critical.
-        /// </SecurityNote>
         internal TemplateLoadData TemplateLoadData
         {
             get;
-            [SecurityCritical]
             set;
         }
 
@@ -1621,14 +1543,9 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical to write: The XAML in this field is loaded with the privilege specified in LoadPermission.
-        /// Safe to read: The object in itself carries no privilege.
-        /// </SecurityNote>
         internal System.Xaml.XamlReader Reader
         {
             get;
-            [SecurityCritical]
             set;
         }
 

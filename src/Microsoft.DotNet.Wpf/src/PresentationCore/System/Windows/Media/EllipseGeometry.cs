@@ -20,9 +20,7 @@ using System.Windows.Media.Animation;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -47,7 +45,7 @@ namespace System.Windows.Media
         {
             if (rect.IsEmpty) 
             {
-                throw new System.ArgumentException(SR.Get(SRID.Rect_Empty, "rect"));
+                throw new System.ArgumentException(SR.Format(SR.Rect_Empty, "rect"));
             }
 
             RadiusX = (rect.Right - rect.X) * (1.0 / 2.0);
@@ -156,18 +154,10 @@ namespace System.Windows.Media
                 type);
         }
         
-        /// <SecurityNote>
-        /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
-        /// TreatAsSafe - returning an EllipseGeometry's bounds is considered safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point center, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
             Rect rect;
-
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
 
             if ( (pen == null || pen.DoesNotContainGaps) &&
                 worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
@@ -212,11 +202,6 @@ namespace System.Windows.Media
             return rect;
         }
 
-        /// <SecurityNote>
-        /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
-        /// TreatAsSafe - as this doesn't expose anything sensitive.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             unsafe
@@ -357,11 +342,6 @@ namespace System.Windows.Media
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Calls critical code
-        /// TreatAsSafe - returning a EllipseGeometry's point list is considered safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Point[] GetPointList()
         {
             Point[] points = new Point[GetPointCount()];
@@ -377,10 +357,6 @@ namespace System.Windows.Media
             return points;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accepts pointer arguments
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe static void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
         {
             Invariant.Assert(pointsCount >= c_pointCount);

@@ -17,7 +17,6 @@ using System.Windows.Media.Animation;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -75,7 +74,7 @@ namespace System.Windows
 
             if (value == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             TokenizerHelper th = new TokenizerHelper(stringValue, cultureInfo);
@@ -96,11 +95,6 @@ namespace System.Windows
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for KeySpline, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext context, 
             CultureInfo cultureInfo,

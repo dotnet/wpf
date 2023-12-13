@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Windows.Threading;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using MS.Win32;
     using System.Windows.Interop;
 
@@ -44,12 +43,6 @@ namespace System.Windows.Documents
         // Callback for FrameworkElement.ContextMenuOpeningEvent.
         // If the control is using the default ContextMenu, we initialize it
         // here.
-        /// <SecurityNote>
-        /// Critical - calls EditorContextMenu.AddMenuItems, using the UserInitiated
-        ///             bit in the event args, to add (critical) clipboard commands.
-        /// TreatAsSafe - the bit is protected by UserIniatedRoutedEvent permission
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
@@ -170,7 +163,7 @@ namespace System.Windows.Documents
             {
                 // It's a default null, so spin up a temporary ContextMenu now.
                 contextMenu = new EditorContextMenu();
-                ((EditorContextMenu)contextMenu).AddMenuItems(This, e.UserInitiated);
+                ((EditorContextMenu)contextMenu).AddMenuItems(This);
             }
             contextMenu.Placement = PlacementMode.RelativePoint;
             contextMenu.PlacementTarget = This.UiScope;
@@ -265,11 +258,6 @@ namespace System.Windows.Documents
         /// Calculates x, y offsets for a ContextMenu based on an ITextPointer and
         /// the viewports of its containers.
         /// </summary>
-        /// <SecurityNote>
-        ///     SecurityCritical: This code asserts to get the containing HWND.
-        ///     TreatAsSafe: The HWND is not exposed, only its RECT.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void GetClippedPositionOffsets(TextEditor This, ITextPointer position, LogicalDirection direction,
             out double horizontalOffset, out double verticalOffset)
         {
@@ -314,15 +302,7 @@ namespace System.Windows.Documents
             if (window != null)
             {
                 IntPtr hwnd = IntPtr.Zero;
-                new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert
-                try
-                {
-                    hwnd = window.Handle;
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                hwnd = window.Handle;
 
                 NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
                 SafeNativeMethods.GetClientRect(new HandleRef(null, hwnd), ref rc);
@@ -442,23 +422,8 @@ namespace System.Windows.Documents
         {
             // Initialize the context menu.
             // Creates a new instance.
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command, which is used for security purposes later.
-            ///             Although there is a demand here to prevent non userinitiated
-            ///             code paths to be blocked this function is not TreatAsSafe because
-            ///             we want to track any new callers to this call
-            /// </SecurityNote>
-            [SecurityCritical]
-            internal void AddMenuItems(TextEditor textEditor, bool userInitiated)
+            internal void AddMenuItems(TextEditor textEditor)
             {
-                // create a special menu item for paste which only works for user initiated paste
-                // within the confines of partial trust this cannot be done programmatically
-                if (userInitiated == false)
-                {
-                    SecurityHelper.DemandAllClipboardPermission();
-                }
-
                 if (!textEditor.IsReadOnly)
                 {
                     if (AddReconversionItems(textEditor))
@@ -471,7 +436,7 @@ namespace System.Windows.Documents
                 {
                     AddSeparator();
                 }
-                AddClipboardItems(textEditor, userInitiated);
+                AddClipboardItems(textEditor);
             }
             // Finalizer release the candidate list if it remains.
             ~EditorContextMenu()
@@ -527,7 +492,7 @@ namespace System.Windows.Documents
                 if (!addedSuggestion)
                 {
                     menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_NoSpellingSuggestions);
+                    menuItem.Header = SR.TextBox_ContextMenu_NoSpellingSuggestions;
                     menuItem.IsEnabled = false;
                     this.Items.Add(menuItem);
                 }
@@ -535,7 +500,7 @@ namespace System.Windows.Documents
                 AddSeparator();
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_IgnoreAll);
+                menuItem.Header = SR.TextBox_ContextMenu_IgnoreAll;
                 menuItem.Command = EditingCommands.IgnoreSpellingError;
                 this.Items.Add(menuItem);
                 menuItem.CommandTarget = textEditor.UiScope;
@@ -551,11 +516,11 @@ namespace System.Windows.Documents
                 {
                     if (suggestion[0] == 0x0020)
                     {
-                        return SR.Get(SRID.TextBox_ContextMenu_Description_SBCSSpace);
+                        return SR.TextBox_ContextMenu_Description_SBCSSpace;
                     }
                     else if (suggestion[0] == 0x3000)
                     {
-                        return SR.Get(SRID.TextBox_ContextMenu_Description_DBCSSpace);
+                        return SR.TextBox_ContextMenu_Description_DBCSSpace;
                     }
                 }
                 return null;
@@ -563,11 +528,6 @@ namespace System.Windows.Documents
 
             // Appends Cicero reconversion related items.
             // Returns false if no items are added.
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// TreatAsSafe - does not expose the unmanaged interface. retrieve the candidate list and add menu item.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private bool AddReconversionItems(TextEditor textEditor)
             {
                 MenuItem menuItem;
@@ -616,7 +576,7 @@ namespace System.Windows.Documents
                 if (count > 5)
                 {
                     menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_More);
+                    menuItem.Header = SR.TextBox_ContextMenu_More;
                     menuItem.Command = ApplicationCommands.CorrectionList;
                     this.Items.Add(menuItem);
                     menuItem.CommandTarget = textEditor.UiScope;
@@ -627,38 +587,24 @@ namespace System.Windows.Documents
 
             // Appends clipboard related items.
             // Returns false if no items are added.
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command
-            ///             Although there is a demand here to prevent non userinitiated
-            ///             code paths to be blocked this function is not TreatAsSafe because
-            ///             we want to track any new callers to this call
-            /// </SecurityNote>
-            [SecurityCritical]
-            private bool AddClipboardItems(TextEditor textEditor, bool userInitiated)
+            private bool AddClipboardItems(TextEditor textEditor)
             {
                 MenuItem menuItem;
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Cut);
+                menuItem.Header = SR.TextBox_ContextMenu_Cut;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Cut;
                 this.Items.Add(menuItem);
 
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Copy);
+                menuItem.Header = SR.TextBox_ContextMenu_Copy;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Copy;
                 this.Items.Add(menuItem);
 
-                // create a special menu item for paste which only works for user initiated paste
-                // within the confines of partial trust this cannot be done programmatically
-                if (userInitiated == false)
-                {
-                    SecurityHelper.DemandAllClipboardPermission();
-                }
                 menuItem = new EditorMenuItem();
-                menuItem.Header = SR.Get(SRID.TextBox_ContextMenu_Paste);
+                menuItem.Header = SR.TextBox_ContextMenu_Paste;
                 menuItem.CommandTarget = textEditor.UiScope;
                 menuItem.Command = ApplicationCommands.Paste;
                 this.Items.Add(menuItem);
@@ -666,11 +612,6 @@ namespace System.Windows.Documents
                 return true;
             }
 
-            /// <SecurityNote>
-            /// Critical - access CandidateList
-            /// TreatAsSafe - does not do anything for the unmanaged interface. It's just a null check.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void DelayReleaseCandidateList()
             {
                 if (CandidateList != null)
@@ -680,11 +621,6 @@ namespace System.Windows.Documents
             }
 
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// TreatAsSafe - just release it.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private object ReleaseCandidateList(object o)
             {
                 if (CandidateList != null)
@@ -700,12 +636,8 @@ namespace System.Windows.Documents
 
             // ReconversionMenuItem uses this to finalzie the candidate string.
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code and return critical ITfCandidateList
-            /// </SecurityNote>
             internal UnsafeNativeMethods.ITfCandidateList CandidateList
             {
-                 [SecurityCritical]
                  get
                  {
                      if ( _candidateList == null)
@@ -720,10 +652,6 @@ namespace System.Windows.Documents
             // The candidate list for Cicero Reconversion.
             // We need to use same ITfCandidateList object for both listing up and finalizing because
             // the index of the candidate string needs to match.
-            /// <SecurityNote>
-            ///  Critical : Field for critical type ITfCandidateList
-            /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
         }
 
@@ -734,11 +662,6 @@ namespace System.Windows.Documents
         {
             internal EditorMenuItem() : base() {}
 
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated
-            ///             bit on a command, which is used for security purposes later.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 OnClickImpl(userInitiated);
@@ -757,10 +680,6 @@ namespace System.Windows.Documents
 
             // OnClick handler.
             // This is called when the item is selected.
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 Invariant.Assert(_menu.CandidateList != null);

@@ -6,7 +6,6 @@ using System;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;
 using System.Collections.Specialized ;
 using System.Windows.Input;
@@ -96,7 +95,7 @@ namespace System.Windows
             set
             {
                 if (UserInitiated && InvokingHandler)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 _routedEvent = value;
             }
@@ -125,24 +124,18 @@ namespace System.Windows
         ///     Initially starts with a false value before routing
         ///     has begun
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical - _flags is critical due to UserInitiated value.
-        /// PublicOK - in this function we're not setting UserInitiated - we're setting Handled.
-        ///</SecurityNote>
         public bool Handled
         {
-            [SecurityCritical ]
             get
             {
                 return _flags[ HandledIndex ] ;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -194,11 +187,11 @@ namespace System.Windows
             set
             {
                 if (InvokingHandler && UserInitiated)
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventCannotChangeWhileRouting));
+                    throw new InvalidOperationException(SR.RoutedEventCannotChangeWhileRouting);
 
                 if (_routedEvent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                    throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
                 }
 
 
@@ -286,19 +279,13 @@ namespace System.Windows
         /// </param>
         protected virtual void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            if (genericHandler == null)
-            {
-                throw new ArgumentNullException("genericHandler");
-            }
+            ArgumentNullException.ThrowIfNull(genericHandler);
 
-            if (genericTarget == null)
-            {
-                throw new ArgumentNullException("genericTarget");
-            }
+            ArgumentNullException.ThrowIfNull(genericTarget);
 
             if (_routedEvent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RoutedEventArgsMustHaveRoutedEvent));
+                throw new InvalidOperationException(SR.RoutedEventArgsMustHaveRoutedEvent);
             }
 
             InvokingHandler = true;
@@ -347,55 +334,35 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        ///     TreatAsSafe - checking user initiated bit considered safe.
-        ///</SecurityNote>
         internal bool UserInitiated
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             [FriendAccessAllowed] // Also used by Framework.
             get
             {
                 if (_flags [UserInitiatedIndex])
                 {
-                    return SecurityHelper.CallerHasUserInitiatedRoutedEventPermission();
+                    return true;
                 }
                 return false;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void MarkAsUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = true;
         }
 
-        /// <SecurityNote>
-        ///     Critical - access critical information, if this is a user initiated command
-        ///     TreatAsSafe - clearing user initiated bit considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal void ClearUserInitiated()
         {
             _flags [ UserInitiatedIndex ] = false ;
         }
 
-        ///<SecurityNote>
-        /// Critical - _flags is critical due to UserInitiated value.
-        /// TreatAsSafe - in this function we're not setting UserInitiated - we're setting InvokingHandler.
-        ///</SecurityNote>
         private bool InvokingHandler
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 return _flags[InvokingHandlerIndex];
             }
-            [SecurityCritical, SecurityTreatAsSafe ]
             set
             {
                 _flags[InvokingHandlerIndex] = value;
@@ -411,10 +378,6 @@ namespace System.Windows
         private object _source;
         private object _originalSource;
 
-        ///<SecurityNote>
-        /// Critical - the UserInitiated flag value is critical.
-        ///</SecurityNote>
-        [SecurityCritical]
         private BitVector32          _flags;
 
         private const int HandledIndex                          = 1;

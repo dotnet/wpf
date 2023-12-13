@@ -128,7 +128,7 @@ namespace System.Windows.Controls
             {
                 if (_contentHost.Content != null)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent));
+                    throw new NotSupportedException(SR.FlowDocumentScrollViewerMarkedAsContentHostMustHaveNoContent);
                 }
                 _contentHost.ScrollChanged += new ScrollChangedEventHandler(OnScrollChanged);
                 CreateTwoWayBinding(_contentHost, HorizontalScrollBarVisibilityProperty, "HorizontalScrollBarVisibility");
@@ -651,11 +651,6 @@ namespace System.Windows.Controls
         /// This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (e.Handled) { return; }
@@ -1204,7 +1199,7 @@ namespace System.Windows.Controls
                 newDocument.StructuralCache.TextContainer != null &&
                 newDocument.StructuralCache.TextContainer.TextSelection != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready));
+                throw new ArgumentException(SR.FlowDocumentScrollViewerDocumentBelongsToAnotherFlowDocumentScrollViewerAlready);
             }
 
             // Cleanup state associated with the old document.
@@ -1722,7 +1717,7 @@ namespace System.Windows.Controls
         private static bool ZoomValidateValue(object o)
         {
             double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThan(value, 0d));
+            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
         }
 
         /// <summary>
@@ -1853,18 +1848,15 @@ namespace System.Windows.Controls
         /// <remarks>FlowDocumentScrollViewer only supports a single child of type IDocumentPaginator.</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
             if (this.Document != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FlowDocumentScrollViewerCanHaveOnlyOneChild));
+                throw new ArgumentException(SR.FlowDocumentScrollViewerCanHaveOnlyOneChild);
             }
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
             }
             Document = value as FlowDocument;
         }
@@ -1896,10 +1888,7 @@ namespace System.Windows.Controls
         object IServiceProvider.GetService(Type serviceType)
         {
             object service = null;
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             // Following services are available:
             // (1) TextView

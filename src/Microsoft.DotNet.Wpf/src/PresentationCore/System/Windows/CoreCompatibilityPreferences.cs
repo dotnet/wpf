@@ -41,8 +41,10 @@ namespace System.Windows
         {
             get
             {
-#if NETFX
+#if NETFX && !NETCOREAPP
                 return BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
+#elif NETCOREAPP
+                return true;
 #else
                 return true;
 #endif
@@ -65,7 +67,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IsAltKeyRequiredInAccessKeyDefaultScope", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IsAltKeyRequiredInAccessKeyDefaultScope", "CoreCompatibilityPreferences"));
                     }
 
                     _isAltKeyRequiredInAccessKeyDefaultScope = value;
@@ -105,7 +107,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IncludeAllInkInBoundingBox", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IncludeAllInkInBoundingBox", "CoreCompatibilityPreferences"));
                     }
 
                     _includeAllInkInBoundingBox = value;
@@ -146,7 +148,7 @@ namespace System.Windows
                 {
                     if(_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "DisableMultimonDisplayClipping", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "DisableMultimonDisplayClipping", "CoreCompatibilityPreferences"));
                     }
 
                     _enableMultiMonitorDisplayClipping = value; 
@@ -185,6 +187,6 @@ namespace System.Windows
         }
 
         private static bool _isSealed;
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
     }
 }

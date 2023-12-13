@@ -18,7 +18,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Internal.Controls;
 using MS.Internal;
@@ -80,11 +79,6 @@ namespace System.Windows.Input
     {
         #region Constructors
 
-        ///<SecurityNote>
-        ///     Critical - this function elevates via a call to InputManager.Current
-        ///     TreatAsSafe: This code simply attaches a call back which is private
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal KeyboardNavigation()
         {
             InputManager inputManager = InputManager.Current;
@@ -158,11 +152,6 @@ namespace System.Windows.Input
                 SetControlTabOnceActiveElement(d, value);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code retrieves PresentationSource which is a protected resource
-        ///     TreatAsSafe: It returns rootvisual which is ok and it does not expose the PresentationSource
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Visual GetVisualRoot(DependencyObject d)
         {
             if (d is Visual || d is Visual3D)
@@ -343,10 +332,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.TabIndexProperty" />
         public static void SetTabIndex(DependencyObject element, int index)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TabIndexProperty, index);
         }
 
@@ -359,10 +345,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static int GetTabIndex(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return GetTabIndexHelper(element);
         }
 
@@ -374,10 +357,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.IsTabStopProperty" />
         public static void SetIsTabStop(DependencyObject element, bool isTabStop)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsTabStopProperty, BooleanBoxes.Box(isTabStop));
         }
 
@@ -390,10 +370,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsTabStop(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsTabStopProperty);
         }
 
@@ -405,10 +382,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.TabNavigationProperty" />
         public static void SetTabNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TabNavigationProperty, mode);
         }
 
@@ -422,10 +396,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetTabNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(TabNavigationProperty);
         }
 
@@ -437,10 +408,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.ControlTabNavigationProperty" />
         public static void SetControlTabNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ControlTabNavigationProperty, mode);
         }
 
@@ -454,10 +422,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetControlTabNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(ControlTabNavigationProperty);
         }
 
@@ -469,10 +434,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.DirectionalNavigationProperty" />
         public static void SetDirectionalNavigation(DependencyObject element, KeyboardNavigationMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(DirectionalNavigationProperty, mode);
         }
 
@@ -486,10 +448,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static KeyboardNavigationMode GetDirectionalNavigation(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (KeyboardNavigationMode)element.GetValue(DirectionalNavigationProperty);
         }
 
@@ -501,10 +460,7 @@ namespace System.Windows.Input
         /// <seealso cref="KeyboardNavigation.AcceptsReturnProperty" />
         public static void SetAcceptsReturn(DependencyObject element, bool enabled)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(AcceptsReturnProperty, BooleanBoxes.Box(enabled));
         }
 
@@ -517,10 +473,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetAcceptsReturn(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(AcceptsReturnProperty);
         }
 
@@ -715,7 +668,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 
@@ -813,7 +766,7 @@ namespace System.Windows.Input
             return GetParentUIElementFromContentElement(ce, ref ichParent);
         }
 
-        private static UIElement GetParentUIElementFromContentElement(ContentElement ce, ref IContentHost ichParent)
+        internal static UIElement GetParentUIElementFromContentElement(ContentElement ce, ref IContentHost ichParent)
         {
             if (ce == null)
                 return null;
@@ -864,11 +817,6 @@ namespace System.Windows.Input
                 _focusVisualAdornerCache = null;
             }
         }
-        /// <SecurityNote>
-        ///   Critical: This code accesses link demanded input manager
-        ///   TreatAsSafe: This code is ok to expose as it simply return boolean weather Keyboard is the last used device
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool IsKeyboardMostRecentInputDevice()
         {
             return InputManager.Current.MostRecentInputDevice is KeyboardDevice;
@@ -919,7 +867,7 @@ namespace System.Windows.Input
                     // then we load the default FocusVisualStyle from ResourceDictionary.
                     if (fvs == FrameworkElement.DefaultFocusVisualStyle)
                     {
-                        fvs = SystemResources.FindResourceInternal(SystemParameters.FocusVisualStyleKey) as Style;
+                        fvs = FrameworkElement.FindResourceInternal(fe, fce: null, SystemParameters.FocusVisualStyleKey) as Style;
                     }
 
                     if (fvs != null)
@@ -946,7 +894,7 @@ namespace System.Windows.Input
                                 // then we load the default FocusVisualStyle from ResourceDictionary.
                                 if (fvs == FrameworkElement.DefaultFocusVisualStyle)
                                 {
-                                    fvs = SystemResources.FindResourceInternal(SystemParameters.FocusVisualStyleKey) as Style;
+                                    fvs = FrameworkElement.FindResourceInternal(fe: null, fce, SystemParameters.FocusVisualStyleKey) as Style;
                                 }
 
                                 if (fvs != null)
@@ -1141,18 +1089,10 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource.
-        ///     TreatAsSafe: This code causes navigation to different elements within an app.
-        ///     It does not expose the PresentationSource
-        ///     Critical: Asserting UnmanagedCode permission to obtain HwndSource.IKeyboardInputSink.KeyboardInputSite
-        ///     TreatAsSafe: Not leaking the InputKeyboardSite obtained under elevation.
-        /// </SecurityNote>
         /// <param name="currentElement">The element from which Navigation is starting.</param>
         /// <param name="request">The TraversalRequest that determines the navigation direction.</param>
         /// <param name="fromProcessInput">Whether this call comes from a ProcessInput call.</param>
         /// <param name="shouldCycle">A recommendation on whether navigation should cycle in case this call can't navigate outside the PresentationSource.</param>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool NavigateOutsidePresentationSource(DependencyObject currentElement, TraversalRequest request, bool fromProcessInput, ref bool shouldCycle)
         {
             Visual visual = currentElement as Visual;
@@ -1167,16 +1107,7 @@ namespace System.Windows.Input
             if (inputSink != null)
             {
                 IKeyboardInputSite ikis = null;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();  // BlessedAssert
-                try
-                {
-                    ikis = inputSink.KeyboardInputSite;
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                ikis = inputSink.KeyboardInputSite;
 
                 if (ikis != null && ShouldNavigateOutsidePresentationSource(currentElement, request))
                 {
@@ -1234,10 +1165,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input and asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // Call Forwarded
@@ -1245,10 +1172,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void TranslateAccelerator(object sender, KeyEventArgs e)
         {
             // Call Forwarded
@@ -1256,10 +1179,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: asserts to retrieve HwndSource
-        ///</SecurityNote>
-        [SecurityCritical]
         private void ProcessInput(InputEventArgs inputEventArgs)
         {
             ProcessForMenuMode(inputEventArgs);
@@ -3236,10 +3155,6 @@ namespace System.Windows.Input
         // ISSUE: how do we deal with deactivate?
 
         /////////////////////////////////////////////////////////////////////
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input
-        ///</SecurityNote>
-        [SecurityCritical]
         private void ProcessForMenuMode(InputEventArgs inputEventArgs)
         {
             // When ALT or F10 key up happens we should fire the EnterMenuMode event.
@@ -3347,14 +3262,6 @@ namespace System.Windows.Input
             return (e.Key == Key.System) ? e.SystemKey : e.Key;
         }
 
-        /// <SecurityNote>
-        ///   SecurityCritical:This code gets  PresentationSource and passes it to event handlers
-        ///   TreatAsSafe: This code is safe inspite of passing the object because of 3 reasons
-        ///                        1. We have a demand on adding the event handler so that no one external can attach
-        ///                        2. The one event handler that we are aware of does not expose the object
-        ///                        3. This code in the worst case will cause your app to go to menu mode
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool OnEnterMenuMode(object eventSource)
         {
             if (_weakEnterMenuModeHandlers == null)
@@ -3421,17 +3328,10 @@ namespace System.Windows.Input
         /// <summary>
         ///     Called when ALT or F10 is pressed anywhere in the global scope
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code causes the handler attached to get an object of type presentationsource
-        ///                  The add is critical, the remove is ok
-        ///     TreatAsSafe: There is a demand on this
-        /// </SecurityNote>
         internal event EnterMenuModeEventHandler EnterMenuMode
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             add
             {
-                SecurityHelper.DemandUIWindowPermission();
 
                 if (_weakEnterMenuModeHandlers == null)
                     _weakEnterMenuModeHandlers = new WeakReferenceList();
@@ -3494,10 +3394,6 @@ namespace System.Windows.Input
 
         #region UIState
 
-        /// <SecurityNote>
-        ///     Critical: accesses the RawUIStateInputReport
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ProcessForUIState(InputEventArgs inputEventArgs)
         {
             PresentationSource source;
@@ -3516,10 +3412,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses the RawUIStateInputReport
-        /// </SecurityNote>
-        [SecurityCritical]
         private RawUIStateInputReport ExtractRawUIStateInputReport(InputEventArgs e, RoutedEvent Event)
         {
             RawUIStateInputReport uiStateInputReport = null;

@@ -44,7 +44,7 @@ namespace System.Windows
 
                 if (IsSealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "DataTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "DataTrigger"));
                 }
 
                 _binding = value;
@@ -72,18 +72,18 @@ namespace System.Windows
 
                 if (IsSealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "DataTrigger"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "DataTrigger"));
                 }
 
                 if (value is MarkupExtension)
                 {
-                    throw new ArgumentException(SR.Get(SRID.ConditionValueOfMarkupExtensionNotSupported,
+                    throw new ArgumentException(SR.Format(SR.ConditionValueOfMarkupExtensionNotSupported,
                                                        value.GetType().Name));
                 }
 
                 if( value is Expression )
                 {
-                    throw new ArgumentException(SR.Get(SRID.ConditionValueOfExpressionNotSupported));
+                    throw new ArgumentException(SR.ConditionValueOfExpressionNotSupported);
                 }
 
                 _value = value;
@@ -174,7 +174,7 @@ namespace System.Windows
                         propertyValue.ValueType = PropertyValueType.DataTriggerResource;
                         break;
                     default:
-                        throw new InvalidOperationException(SR.Get(SRID.UnexpectedValueTypeForDataTrigger, propertyValue.ValueType));
+                        throw new InvalidOperationException(SR.Format(SR.UnexpectedValueTypeForDataTrigger, propertyValue.ValueType));
                 }
 
                 // Put back modified struct
@@ -199,14 +199,8 @@ namespace System.Windows
 
         public static void ReceiveMarkupExtension(object targetObject, XamlSetMarkupExtensionEventArgs eventArgs)
         {
-            if (targetObject == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
-            if (eventArgs == null)
-            {
-                throw new ArgumentNullException("eventArgs");
-            }
+            ArgumentNullException.ThrowIfNull(targetObject);
+            ArgumentNullException.ThrowIfNull(eventArgs);
 
             DataTrigger trigger = targetObject as DataTrigger;
             if (trigger != null && eventArgs.Member.Name == "Binding" && eventArgs.MarkupExtension is BindingBase)

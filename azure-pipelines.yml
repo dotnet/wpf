@@ -6,31 +6,96 @@
 #
 
 variables:
+    # clean the local repo on the build agents
+  - name: Build.Repository.Clean
+    value: true
+  - name: _DotNetArtifactsCategory
+    value: WINDOWSDESKTOP
+  - name: _DotNetValidationArtifactsCategory
+    value: WINDOWSDESKTOP
+  - ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
+    - name: PostBuildSign
+      value: false
+  - ${{ else }}:
+    - name: PostBuildSign
+      value: true
+  
+  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+    - group: DotNet-Wpf-SDLValidation-Params
 
-  # clean the local repo on the build agents
-  Build.Repository.Clean: true
 
+# This is set in the pipeline directly 
+# When set to false, CI tests will not be enabled in builds. 
+#
+# _ContinuousIntegrationTestsEnabled: false
 
-  _PublishUsingPipelines: true
-  _DotNetArtifactsCategory: WINDOWSDESKTOP
-
+# Setting batch to true, triggers one build at a time.
+# if there is a push while a build in progress, it will wait,
+# until the running build finishes, and produce a build with all the changes
+#
 # only trigger ci builds for the master and release branches
 trigger:
-- master
-- release/3.0
-- arcade
+  batch: true 
+  branches:
+    include: 
+    - main
+    - release/3.*
+    - release/5.*
+    - release/6.*
+    - release/7.*
+    - release/8.*
+    - internal/release/5.*
+    - internal/release/6.*
+    - experimental/*
+  paths:
+    exclude:
+    - Documentation/*
 
-# To be added in the future when VSTS supports this feature
-# only trigger pull request builds for the master branch
-# pr:
-# - master
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - main
+    - release/3.* 
+    - internal/release/3.*
+    - release/5.*
+    - release/6.*
+    - release/7.*
+    - release/8.*
+    - experimental/*
+    - win11themingCI
+  paths:
+    exclude:
+    - Documentation/*
 
 # Call the pipeline.yml template, which does the real work
-jobs:
-- template: /eng/pipeline.yml
-  parameters:
-    ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-      # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-      agentPool: dotnet-internal-vs2019-preview
-      # runAsPublic is used in expressions, which can't read from user-defined variables
-      runAsPublic: false
+stages:
+- stage: build
+  displayName: Build 
+  jobs:
+  - template: /eng/pipeline.yml
+    parameters:
+      ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+        runAsPublic: false
+
+- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+  - template: eng\common\templates\post-build\post-build.yml
+    parameters:
+      publishingInfraVersion: 3
+      enableSymbolValidation: false
+      enableSigningValidation: false
+      enableNugetValidation: false
+      enableSourceLinkValidation: false
+      # This is to enable SDL runs part of Post-Build Validation Stage
+      SDLValidationParameters:
+        enable: false
+        params: ' -SourceToolsList @("policheck","credscan")
+        -TsaInstanceURL $(_TsaInstanceURL)
+        -TsaProjectName $(_TsaProjectName)
+        -TsaNotificationEmail $(_TsaNotificationEmail)
+        -TsaCodebaseAdmin $(_TsaCodebaseAdmin)
+        -TsaBugAreaPath $(_TsaBugAreaPath)
+        -TsaIterationPath $(_TsaIterationPath)
+        -TsaRepositoryName "wpf"
+        -TsaCodebaseName "wpf"
+        -TsaPublish $True'

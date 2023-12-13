@@ -148,10 +148,6 @@ namespace MS.Internal.PtsHost
         /// <param name="fCancelAtLastColumn">
         /// OUT: cancel justification for the last column of the page?
         /// </param>
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetJustificationProperties(
             IntPtr* rgnms,                  
             int cnms,                        
@@ -352,12 +348,6 @@ namespace MS.Internal.PtsHost
         /// <param name="ccol">
         /// OUT: actual number of the columns in the segment
         /// </param>
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function GetColumnsInfo,
-        ///     b) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetSectionColumnInfo(
             uint fswdir,                    
             int ncol,                        

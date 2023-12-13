@@ -27,7 +27,6 @@ using MS.Internal.Shaping;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -71,8 +70,7 @@ namespace System.Windows.Media
         /// <param name="glyphRun">Glyph run to obtain typeface and index information from.</param>
         public void RecordUsage(GlyphRun glyphRun)
         {
-            if (glyphRun == null)
-                throw new ArgumentNullException("glyphRun");
+            ArgumentNullException.ThrowIfNull(glyphRun);
 
             // Suppress PRESharp parameter validation warning about glyphRun.GlyphTypeface because
             // GlyphRun.GlyphTypeface property cannot be null.
@@ -119,7 +117,7 @@ namespace System.Windows.Media
             Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
             if (glyphsUsed == null)
             {
-                throw new ArgumentException(SR.Get(SRID.GlyphTypefaceNotRecorded), "glyphTypeface");
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
             }
             return glyphsUsed.Keys;
         }

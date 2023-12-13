@@ -19,7 +19,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Media.Imaging;
 using System.Text;
 using MS.Internal.PresentationCore;                        // SecurityHelper
@@ -59,19 +58,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Container format
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -89,19 +79,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Author
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string Author
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -141,19 +122,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Version
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual System.Version Version
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -193,19 +165,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Spec Version
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual Version SpecificationVersion
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -245,19 +208,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Friendly Name
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string FriendlyName
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -297,19 +251,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Device Manufacturer
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string DeviceManufacturer
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -349,19 +294,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Device Models
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string DeviceModels
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -401,19 +337,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Mime types
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string MimeTypes
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -453,19 +380,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// File extensions
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual string FileExtensions
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -505,19 +423,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Animation
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsAnimation
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -535,19 +444,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Lossless
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsLossless
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 
@@ -565,19 +465,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Does Support Multiple Frames
         /// </summary>
-        /// <remarks>
-        ///     Callers must have RegistryPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls unamanged code to retrieve data
-        /// PublicOK - Demands registry permissions
-        /// </SecurityNote>
         public virtual bool SupportsMultipleFrames
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandRegistryPermission();
 
                 EnsureBuiltIn();
 

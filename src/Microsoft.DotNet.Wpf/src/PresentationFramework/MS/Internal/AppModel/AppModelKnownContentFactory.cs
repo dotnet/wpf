@@ -9,10 +9,7 @@
 
 using System;
 using System.IO;
-
-using System.Net; // WebPermission. 
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -25,8 +22,6 @@ using MS.Internal.PresentationFramework;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
-
 namespace MS.Internal.AppModel
 {
     // !!!! Note: Those methods are registered as MimeObjectFactory.StreamToObjectFactoryDelegate. The caller expects the 
@@ -38,13 +33,21 @@ namespace MS.Internal.AppModel
         // </summary>
         internal static object BamlConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
-            asyncObjectConverter = null;
+            return BamlConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
 
+        internal static object BamlConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
+        {
+            asyncObjectConverter = null;
+            if (isUnsafe)
+            {
+                throw new InvalidOperationException(SR.Format(SR.BamlIsNotSupportedOutsideOfApplicationResources));
+            }
             // If this stream comes from outside the application throw
             //
             if (!BaseUriHelper.IsPackApplicationUri(baseUri))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+                throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }
 
             // If this stream comes from a content file also throw
@@ -53,7 +56,7 @@ namespace MS.Internal.AppModel
             BaseUriHelper.GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
             if (ContentFileHelper.IsContentFile(partName))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlIsNotSupportedOutsideOfApplicationResources));
+                throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }
 
             ParserContext pc = new ParserContext();
@@ -67,14 +70,12 @@ namespace MS.Internal.AppModel
         // <summary>
         // Creates an object instance from a Xaml stream and it's Uri
         // </summary>
-        ///<SecurityNote>
-        /// Critical    - Keep track of this, as sandboxing is meant to be a way for an application to 
-        ///                 isolate xaml content from the hosting application.
-        /// TreatAsSafe - the act of putting this content in a new webbrowser control (and by extention, a new PresentationHost) 
-        ///               isolates the xaml content from the rest of the application.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object XamlConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
+        {
+            return XamlConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
+
+        internal static object XamlConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
         {
             asyncObjectConverter = null;
 
@@ -103,13 +104,17 @@ namespace MS.Internal.AppModel
                     XamlReader xr = new XamlReader();
                     asyncObjectConverter = xr;
                     xr.LoadCompleted += new AsyncCompletedEventHandler(OnParserComplete);
+                    if(isUnsafe)
+                    {
+                        pc.FromRestrictiveReader = true;
+                    }
                     // XamlReader.Load will close the stream.
                     return xr.LoadAsync(stream, pc);
                 }
                 else
                 {
                     // XamlReader.Load will close the stream.
-                    return XamlReader.Load(stream, pc);
+                    return XamlReader.Load(stream, pc, isUnsafe);
                 }
             }
         }
@@ -126,8 +131,16 @@ namespace MS.Internal.AppModel
 
         internal static object HtmlXappConverter(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
         {
-            asyncObjectConverter = null;
+            return HtmlXappConverterCore(stream, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
+        }
 
+        internal static object HtmlXappConverterCore(Stream stream, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
+        {
+            asyncObjectConverter = null;
+            if (isUnsafe)
+            {
+                throw new InvalidOperationException(SR.Format(SR.BamlIsNotSupportedOutsideOfApplicationResources));
+            }
             if (canUseTopLevelBrowser)
             {
                 return null;

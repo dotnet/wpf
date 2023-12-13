@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Printing;
 
 using System.Security;
-using System.Security.Permissions;
 
 namespace Microsoft.Internal.AlphaFlattener
 {
@@ -829,10 +828,6 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: image.Buffer is SecurityCritical
-        /// </SecurityNote>
-        [SecurityCritical] 
         void IProxyDrawingContext.DrawImage(ImageProxy image, Rect dest, Geometry clip, Matrix trans)
         {
             if (_costing)
@@ -932,10 +927,6 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls critical CGDIRenderTarget.DrawGlyphRun via its ILegacyDevice interface
-        /// </SecurityNote>
-        [SecurityCritical]
         bool IProxyDrawingContext.DrawGlyphs(GlyphRun glyphrun, Geometry clip, Matrix trans, BrushProxy foreground)
         {
             Debug.Assert(!_costing, "in costing mode DrawyGlyphs");

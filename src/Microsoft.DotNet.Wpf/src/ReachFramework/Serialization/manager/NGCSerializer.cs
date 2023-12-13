@@ -13,7 +13,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -80,10 +79,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -96,15 +92,12 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocument fd = serializedObject as FixedDocument;
             if( fd == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedDocument));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocument);
             }
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
 
@@ -153,10 +146,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -170,16 +160,13 @@ namespace System.Windows.Xps.Serialization
             )
         {
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
 
             FixedPage fp = serializedObject as FixedPage;
             if( fp == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedPage));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedPage);
             }
 
             bool bManualStartDoc = ngcManager.StartPage();
@@ -238,10 +225,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
         /// <summary>
@@ -320,10 +304,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
         }
 
 
@@ -497,15 +478,12 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if (serializedObject == null)
-            {
-                throw new ArgumentNullException("serializedObject");
-            }
+            ArgumentNullException.ThrowIfNull(serializedObject);
             FixedDocumentSequence fds = serializedObject as FixedDocumentSequence;
             if( fds == null )
             {
 
-               throw new ArgumentException(SR.Get(SRID.ReachSerialization_ExpectedFixedDocumentSequence));
+               throw new ArgumentException(SR.ReachSerialization_ExpectedFixedDocumentSequence);
             }
 
             NgcSerializationManager ngcManager = SerializationManager as NgcSerializationManager;
@@ -717,7 +695,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
 
             //
@@ -777,7 +755,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSavePageEnd);
@@ -863,7 +841,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
         }
@@ -936,7 +914,7 @@ namespace System.Windows.Xps.Serialization
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(IEnumerable)));
             }
 
             //
@@ -996,7 +974,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
         }

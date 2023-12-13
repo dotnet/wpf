@@ -11,7 +11,6 @@
 using System.Windows.Automation;
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Reflection;
 using System.Diagnostics;
 using MS.Internal.Automation;
@@ -46,7 +45,7 @@ namespace System.Windows.Automation
         /// </param>
         public static void RegisterClientSideProviderAssembly(AssemblyName assemblyName)
         {
-            Misc.ValidateArgumentNonNull( assemblyName, "assemblyName" );
+            ArgumentNullException.ThrowIfNull(assemblyName);
 
             ProxyManager.RegisterProxyAssembly( assemblyName );
         } 
@@ -57,7 +56,7 @@ namespace System.Windows.Automation
         /// <param name="clientSideProviderDescription">Array of ClientSideProviderDescription structs that specify window class names and factory delegate</param>
         public static void RegisterClientSideProviders(ClientSideProviderDescription[] clientSideProviderDescription)
         {
-            Misc.ValidateArgumentNonNull(clientSideProviderDescription, "clientSideProviderDescription ");
+            ArgumentNullException.ThrowIfNull(clientSideProviderDescription);
 
             ProxyManager.RegisterWindowHandlers(clientSideProviderDescription);
         } 

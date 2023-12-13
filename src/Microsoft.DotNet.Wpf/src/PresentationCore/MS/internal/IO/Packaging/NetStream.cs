@@ -45,7 +45,6 @@ using System.Threading;
 using System.Collections;               // for IComparer
 using System.Diagnostics;               // for Debug.Assert
 using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.Security.Permissions;      // for FileIOPermission
 using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
 using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
@@ -72,14 +71,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="fullStreamLength">actual length of responseStream (which does not support Length call)</param>
         /// <param name="originalRequest"> the original request that was used to get the responseStream </param>
         /// <param name="originalResponse"> the original response that was used to get the responseStream </param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        ///  2) accepts originalRequest which is Critical (not Safe)
-        /// Safe
-        ///  1) _readEventHandles is Critical for set but this class is creating the new ones here
-        /// </SecurityNote>
-        [SecurityCritical]
         internal NetStream(
             Stream responseStream,
             long fullStreamLength,
@@ -105,8 +96,8 @@ namespace MS.Internal.IO.Packaging
 
             // only attempt out-of-order requests on well-behaved HTTP servers
             // (Note: MSDN indicates that uri.Scheme is always lower case)
-            if (fullStreamLength > 0 && ((String.Compare(uri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) == 0) ||
-                (String.Compare(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal) == 0)))
+            if (fullStreamLength > 0 && ((string.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal)) ||
+                (string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))))
             {
                 _allowByteRangeRequests = true;
                 _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = new AutoResetEvent(false);
@@ -154,7 +145,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.Get(SRID.IOBufferOverflow), "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -263,13 +254,13 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.Get(SRID.SeekOriginInvalid));
+                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                         }
                 }
             }
             if (temp < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                throw new ArgumentException(SR.SeekNegative);
             }
 
 #if DEBUG
@@ -296,7 +287,7 @@ namespace MS.Internal.IO.Packaging
                 CheckDisposed();
 
                 if (value < 0)
-                    throw new ArgumentException(SR.Get(SRID.SeekNegative));
+                    throw new ArgumentException(SR.SeekNegative);
 
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
@@ -314,7 +305,7 @@ namespace MS.Internal.IO.Packaging
         /// <exception cref="NotSupportedException">not supported</exception>
         public override void SetLength(long newLength)
         {
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
         }
 
 
@@ -324,7 +315,7 @@ namespace MS.Internal.IO.Packaging
         /// <exception cref="NotSupportedException">not supported</exception>
         public override void Write(byte[] buf, int offset, int count)
         {
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
 
@@ -382,13 +373,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="disposing"></param>
         /// <remarks>PreSharp 6519 dictates that we not throw exceptions from Dispose() methods.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set but we are disposing the ones this class created
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void Dispose(bool disposing)
         {
             // always call base.Dispose(bool) regardless of our state
@@ -523,13 +507,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="ar">async read result containing our NetLockBytes reference</param>
         /// <remarks>This method is called back when an async read is complete</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ReadCallBack(IAsyncResult ar)
         {
             // prevent simultaneous BeginRead/EndRead
@@ -614,20 +591,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Ensure ByteRangeDownloader is created and available
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        ///  2) local assert of WebPermission to access get_Proxy property
-        ///  3) accesses Critical member _originalRequest
-        ///  4) assigns Critical property ByteRangeDownloader.Proxy
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        ///  2) WebPermission assert is local and needed only to synchronize two WebRequest properties
-        ///  3) _originalRequest.get_Proxy is safe because Proxy is known safe
-        ///     (and Proxy is only Critical member of _originalRequest)
-        ///  4) ByteRangeDownloader.Proxy set is safe because the _originalRequest.Proxy is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureDownloader()
         {
             if (_byteRangeDownloader == null)
@@ -637,16 +600,7 @@ namespace MS.Internal.IO.Packaging
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
                                                                _tempFileMutex);
 
-                // Local assert to allow Proxy get/set under partial trust
-                new WebPermission(PermissionState.Unrestricted).Assert();   // Blessed
-                try
-                {
-                    _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-                }
-                finally
-                {
-                    WebPermission.RevertAssert();
-                }
+                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
 
                 _byteRangeDownloader.Credentials = _originalRequest.Credentials;
                 _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
@@ -1085,13 +1039,6 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Attempts to obtain the data from the temp file.  Spawns a ByteRange
         /// request if enabled and appropriate.  Returns when any data is available or
         /// the request exceeded the actual stream length and the entire stream is available.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical collection _readEventHandles
-        /// Safe
-        ///  1) _readEventHandles is Critical for set
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private int GetData(Block block)
         {
             TrimBlockToStreamLength(block);
@@ -1214,11 +1161,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Release resources only needed for fulldownload
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ReleaseFullDownloadResources()
         {
             Debug.Assert(_fullDownloadComplete, "Do not call this unless full download is complete.");
@@ -1262,11 +1204,6 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Free ByteRangeDownloader if it is allocated
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical collection _readEventHandles
-        /// </SecurityNote>
-        [SecurityCritical]
         private void FreeByteRangeDownloader()
         {
             if (_byteRangeDownloader != null)
@@ -1340,11 +1277,6 @@ namespace MS.Internal.IO.Packaging
 
         Uri                     _uri;               // uri we are resolving
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Proxy member is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
-        [SecurityCritical]
         WebRequest              _originalRequest;   // Proxy member is Critical
         Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
         long                    _position;          // our "logical stream position"
@@ -1379,7 +1311,6 @@ namespace MS.Internal.IO.Packaging
                                                         // access to this value must be synchronized using lock()
 
         // OS synchronization event used to signal that new data is available
-        [SecurityCritical]
         private EventWaitHandle[]   _readEventHandles = new EventWaitHandle[(int)ReadEvent.MaxReadEventEnum];
 
         // protects the _tempFileStream object and allows both our thread and the ByteRangeDownloader thread to safely access the temp stream

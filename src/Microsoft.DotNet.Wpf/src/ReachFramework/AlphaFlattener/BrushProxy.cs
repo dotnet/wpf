@@ -16,7 +16,6 @@ using System.Windows;                  // for Rect                        Window
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Windows.Xps.Serialization;
 using MS.Utility;
@@ -954,10 +953,6 @@ namespace Microsoft.Internal.AlphaFlattener
         static int s_seq = 0;
 #endif
 
-        /// <SecurityNote>
-        /// Critical: This code calls an inernal PresentationCore function CriticalCopyPixels
-        /// </SecurityNote>
-        [SecurityCritical]
         public Byte[] CreateBrushImage(Matrix mat, int width, int height)
         {
             BitmapSource brushImage = CreateBrushImage_ID(mat, width, height);

@@ -19,7 +19,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Security.Permissions;
 using MS.Utility;
 
 #if !PBTCOMPILER
@@ -87,7 +86,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For Style, this is the type of the first element record
         ///   in the record collection, skipping over the Style element itself.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             Type       styleTargetType = Style.DefaultTargetType;
@@ -137,7 +135,7 @@ namespace System.Windows.Markup
             {
                 if (!styleTargetTypeSet)
                 {
-                    ThrowException(SRID.StyleNoDictionaryKey,
+                    ThrowException(nameof(SR.StyleNoDictionaryKey),
                                    parserContext.LineNumber,
                                    parserContext.LinePosition);
                 }
@@ -153,7 +151,7 @@ namespace System.Windows.Markup
              int  lineNumber,
              int  linePosition)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are
@@ -162,7 +160,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentCulture),
                                   linePosition.ToString(CultureInfo.CurrentCulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);

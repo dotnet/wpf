@@ -38,9 +38,7 @@ namespace System.Collections.ObjectModel
         private Object _syncRoot;
 
         public WeakReadOnlyCollection(IList<WeakReference> list) {  // assumption: the WRs in list refer to T's
-            if (list == null) {
-                throw new ArgumentNullException("list");
-            }
+            ArgumentNullException.ThrowIfNull(list);
             this.list = list;
         }
 
@@ -90,34 +88,34 @@ namespace System.Collections.ObjectModel
             get { return (T)list[index].Target; }
             set {
                 //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-                throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+                throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             }
         }
 
         void ICollection<T>.Add(T value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         void ICollection<T>.Clear() {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         void IList<T>.Insert(int index, T value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         bool ICollection<T>.Remove(T value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             //return false;
         }
 
         void IList<T>.RemoveAt(int index) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
@@ -145,29 +143,26 @@ namespace System.Collections.ObjectModel
         }
 
         void ICollection.CopyTo(Array array, int index) {
-            if (array==null) {
-                //ThrowHelper.ThrowArgumentNullException(ExceptionArgument.array);
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Rank != 1) {
                 //ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_RankMultiDimNotSupported);
-                throw new ArgumentException(SR.Get(SRID.Arg_RankMultiDimNotSupported));
+                throw new ArgumentException(SR.Arg_RankMultiDimNotSupported);
             }
 
             if( array.GetLowerBound(0) != 0 ) {
                 //ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_NonZeroLowerBound);
-                throw new ArgumentException(SR.Get(SRID.Arg_NonZeroLowerBound));
+                throw new ArgumentException(SR.Arg_NonZeroLowerBound);
             }
 
             if (index < 0) {
                 //ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.arrayIndex, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.ArgumentOutOfRange_NeedNonNegNum));
+                throw new ArgumentOutOfRangeException(nameof(index), SR.ArgumentOutOfRange_NeedNonNegNum);
             }
 
             if (array.Length - index < Count) {
                 //ThrowHelper.ThrowArgumentException(ExceptionResource.Arg_ArrayPlusOffTooSmall);
-                throw new ArgumentException(SR.Get(SRID.Arg_ArrayPlusOffTooSmall));
+                throw new ArgumentException(SR.Arg_ArrayPlusOffTooSmall);
             }
 
             IList<T> dlist = CreateDereferencedList();
@@ -186,7 +181,7 @@ namespace System.Collections.ObjectModel
                 Type sourceType = typeof(T);
                 if(!(targetType.IsAssignableFrom(sourceType) || sourceType.IsAssignableFrom(targetType))) {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
-                    throw new ArgumentException(SR.Get(SRID.Argument_InvalidArrayType));
+                    throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
 
                 //
@@ -196,7 +191,7 @@ namespace System.Collections.ObjectModel
                 object[] objects = array as object[];
                 if( objects == null) {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
-                    throw new ArgumentException(SR.Get(SRID.Argument_InvalidArrayType));
+                    throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
 
                 int count = dlist.Count;
@@ -207,7 +202,7 @@ namespace System.Collections.ObjectModel
                 }
                 catch(ArrayTypeMismatchException) {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
-                    throw new ArgumentException(SR.Get(SRID.Argument_InvalidArrayType));
+                    throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
             }
         }
@@ -225,19 +220,19 @@ namespace System.Collections.ObjectModel
             get { return (T)list[index].Target; }
             set {
                 //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-                throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+                throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             }
         }
 
         int IList.Add(object value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
             //return -1;
         }
 
         void IList.Clear() {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         private static bool IsCompatibleObject(object value) {
@@ -262,17 +257,17 @@ namespace System.Collections.ObjectModel
 
         void IList.Insert(int index, object value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         void IList.Remove(object value) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         void IList.RemoveAt(int index) {
             //ThrowHelper.ThrowNotSupportedException(ExceptionResource.NotSupported_ReadOnlyCollection);
-            throw new NotSupportedException(SR.Get(SRID.NotSupported_ReadOnlyCollection));
+            throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
         IList<T> CreateDereferencedList()

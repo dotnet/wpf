@@ -7,7 +7,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Collections;
 using System.Diagnostics;
@@ -52,10 +51,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///    OnRange virtual method.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accepts critical argument of type ITfProperty and ITfRange
-        /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnRange(UnsafeNativeMethods.ITfProperty property,
                                       int ecReadonly, 
                                       UnsafeNativeMethods.ITfRange range)
@@ -66,10 +61,6 @@ namespace System.Windows.Documents
         ///    Calback function for TextEditSink
         ///    we track the property change here.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, commits raw input to the system
-        /// </SecurityNote>
-        [SecurityCritical]
         internal virtual void OnEndEdit(UnsafeNativeMethods.ITfContext context,
                                         int ecReadOnly, 
                                         UnsafeNativeMethods.ITfEditRecord editRecord) 
@@ -125,10 +116,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Convert ITfRange to two TextPositions.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetExtent)
-        /// </SecurityNote>
-        [SecurityCritical]
         protected void ConvertToTextPosition(UnsafeNativeMethods.ITfRange range,
                                                out ITextPointer start, 
                                                out ITextPointer end)
@@ -156,13 +143,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Get Cicero property value.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetValue) and expose the returned object directly.
-        ///            It could be any variant in a Cicero property in general.
-        ///            non Avalon derived class is blocked by link demand
-        /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted= true)]
-        [SecurityCritical]
         protected static Object GetValue(int ecReadOnly, UnsafeNativeMethods.ITfProperty property, UnsafeNativeMethods.ITfRange range)
         {
             if (property == null)
@@ -177,10 +157,6 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Get ranges that the property is changed.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - unsafe block to manipulate a pointer of a pointer to GUID.
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
                                 UnsafeNativeMethods.ITfEditRecord editRecord) 
         {

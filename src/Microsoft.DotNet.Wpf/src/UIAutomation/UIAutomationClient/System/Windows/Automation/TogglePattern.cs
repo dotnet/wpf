@@ -65,11 +65,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Request to change the state that this UI element is currently representing
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Toggle()
         {
             UiaCoreApi.TogglePattern_Toggle(_hPattern);
@@ -209,11 +204,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Value of a toggleable control, as a ToggleState enum</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public ToggleState ToggleState
             {
                 get

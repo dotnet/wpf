@@ -82,7 +82,7 @@ namespace System.Windows.Automation.Peers
         //we can consider to add it later. (One concern is GVCH doesn't support reorder by moving itself)
         void ITransformProvider.Move(double x, double y)
         {
-            throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
         }
 
         void ITransformProvider.Resize(double width, double height)
@@ -90,14 +90,8 @@ namespace System.Windows.Automation.Peers
             if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
-            if (width < 0)
-            {
-                throw new ArgumentOutOfRangeException("width");
-            }
-            if (height < 0)
-            {
-                throw new ArgumentOutOfRangeException("height");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(width);
+            ArgumentOutOfRangeException.ThrowIfNegative(height);
 
             GridViewColumnHeader header = Owner as GridViewColumnHeader;
             if (header != null)
@@ -113,7 +107,7 @@ namespace System.Windows.Automation.Peers
 
         void ITransformProvider.Rotate(double degrees)
         {
-            throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+            throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
         }
 
         #endregion

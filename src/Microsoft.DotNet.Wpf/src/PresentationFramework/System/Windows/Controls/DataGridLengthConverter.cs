@@ -85,7 +85,7 @@ namespace System.Windows.Controls
                     DataGridLengthUnitType type;
                     double doubleValue = Convert.ToDouble(value, culture);
 
-                    if (DoubleUtil.IsNaN(doubleValue))
+                    if (double.IsNaN(doubleValue))
                     {
                         // This allows for conversion from Width / Height = "Auto" 
                         doubleValue = 1.0;
@@ -124,21 +124,13 @@ namespace System.Windows.Controls
         ///     An ArgumentException is thrown if the value is not null and is not a DataGridLength,
         ///     or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        /// <SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for DataGridLength, not an arbitrary class
-        /// </SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext context,
             CultureInfo culture,
             object value,
             Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if ((value != null) && (value is DataGridLength))
             {
@@ -275,8 +267,8 @@ namespace System.Windows.Controls
                     (unit == DataGridLengthUnitType.Pixel) || DoubleUtil.AreClose(unitFactor, 1.0),
                     "unitFactor should not be other than 1.0 unless the unit type is Pixel.");
 
-                string valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
 
             return new DataGridLength(value, unit);

@@ -32,18 +32,6 @@ namespace System.Security.RightsManagement
     /// a basic building block for structures that need to express locale specific information about 
     ///  Unsigned Publish Licenses. 
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class exposes access to methods that eventually do one or more of the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class LocalizedNameDescriptionPair
     {
         /// <summary>
@@ -51,18 +39,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public LocalizedNameDescriptionPair(string name, string description)
         {
-            SecurityHelper.DemandRightsManagementPermission();
-        
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
 
-            if (description == null)
-            {
-                throw new ArgumentNullException("description");
-            }
-            
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(description);
+
             _name = name;
             _description = description;
         }
@@ -74,7 +54,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
 
                 return _name;
             }
@@ -87,7 +66,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _description;
             }
@@ -98,7 +76,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override bool Equals(object obj)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             if ((obj == null) || (obj.GetType() != GetType()))
             {
@@ -110,9 +87,9 @@ namespace System.Security.RightsManagement
             //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
             //This is a false positive as the checks above can gurantee no null dereference will occur  
 #pragma warning disable 6506
-            return (String.CompareOrdinal(localizedNameDescr.Name, Name) == 0)
+            return (string.Equals(localizedNameDescr.Name, Name, StringComparison.Ordinal))
                         &&
-                    (String.CompareOrdinal(localizedNameDescr.Description, Description) == 0);
+                    (string.Equals(localizedNameDescr.Description, Description, StringComparison.Ordinal));
 #pragma warning restore 6506
         }        
             
@@ -121,7 +98,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override int GetHashCode()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             return Name.GetHashCode()  ^  Description.GetHashCode();
         }

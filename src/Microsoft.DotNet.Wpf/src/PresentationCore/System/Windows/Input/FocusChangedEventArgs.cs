@@ -6,7 +6,6 @@
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -22,7 +21,7 @@ namespace System.Windows.Input
         ///     The logical keyboard device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="oldFocus">
         ///     The element that previously had focus.
@@ -33,10 +32,10 @@ namespace System.Windows.Input
         public KeyboardFocusChangedEventArgs(KeyboardDevice keyboard, int timestamp, IInputElement oldFocus, IInputElement newFocus) : base(keyboard, timestamp)
         {
             if (oldFocus != null && !InputElement.IsValid(oldFocus))
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, oldFocus.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldFocus.GetType()));
 
             if (newFocus != null && !InputElement.IsValid(newFocus))
-                throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, newFocus.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, newFocus.GetType()));
 
             _oldFocus = oldFocus;
             _newFocus = newFocus;

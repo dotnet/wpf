@@ -24,10 +24,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -75,11 +73,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns the dashes information.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Returns a pointer and manipulates unsafe code.This data
-        ///     is safe to expose, it is the pointer manipulation that makes it risky.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetDashData(MIL_PEN_DATA* pData, out double[] dashArray)
         {
             DoubleCollection vDashes = Dashes;

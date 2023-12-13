@@ -147,14 +147,11 @@ namespace System.Windows.Documents
         // IComparable Override
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             if (o.GetType() != typeof(FixedNode))
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FixedNode)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FixedNode)), "o");
             }
 
             FixedNode fixedp = (FixedNode)o;

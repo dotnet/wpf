@@ -1,0 +1,62 @@
+<Project>
+    <!-- We use a local RID here since we don't want to change the build layout by setting the actual RID. -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU3027;NU3018</NoWarn>
+
+     <!-- Arcade SDK defaults to AnyCpu ~= x64. In WPF, we will map AnyCpu => x86 instead -->
+    <PlatformFolder>x86</PlatformFolder>
+    <PlatformFolder Condition="'$(Platform)' == 'x64'">x64</PlatformFolder>
+    <PayloadRoot>$(RepoRoot)artifacts\test\$(Configuration)\$(PlatformFolder)</PayloadRoot>
+
+    <WpfTestBasePayloadPath>$(PayloadRoot)\Test\</WpfTestBasePayloadPath>
+
+    <NETCoreAppPayloadPath>$(PayloadRoot)\dotnet\shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\</NETCoreAppPayloadPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).Microsoft.DotNet.Wpf.Test" Version="$(MicrosoftDotNetWpfTestPackageVersion)" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x86'">
+    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(WpfRuntimeIdentifier)'=='win-x64'">
+    <MicrosoftDotNetWpfTestPath>$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_Test)\tools\$(WpfRuntimeIdentifier)\Test\</MicrosoftDotNetWpfTestPath>
+  </PropertyGroup>
+
+  <Target Name="CreateTestPayload" BeforeTargets="Test" AfterTargets="Build">
+    <PropertyGroup>
+      <LocalDotnetLocation>$(DotNetRoot)x86\</LocalDotnetLocation>
+      <LocalDotnetLocation Condition="'$(Platform)' == 'x64'">$(DotNetRoot)</LocalDotnetLocation>
+
+    </PropertyGroup>
+    <ItemGroup>
+      <MicrosoftDotNetWpfTestContents Include="$(MicrosoftDotNetWpfTestPath)**\*.*" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.cmd" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)runtests.ps1" />
+      <OtherPayloadContents Include="$(WpfArcadeSdkToolsDir)configure-machine.ps1" />
+      <MicrosoftNetCoreAppContents Include="$(LocalDotnetLocation)shared\Microsoft.NETCore.App\$(MicrosoftNETCoreAppVersion)\**\*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(MicrosoftDotNetWpfTestContents)"
+          DestinationFiles="@(MicrosoftDotNetWpfTestContents->'$(WpfTestBasePayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"  />
+
+    <Copy SourceFiles="@(OtherPayloadContents)"
+          DestinationFolder="$(PayloadRoot)"  />
+
+    <Copy SourceFiles="$(WpfTestsDir)BranchCommon\data\DrtList.xml"
+          DestinationFolder="$(WpfTestBasePayloadPath)DRT"  />
+
+      <!-- 
+        We have to ship over the MicrosoftNetCoreApp that we run against for our tests. This is primarily due to QualityVault
+        being built against WindowsDesktop and there not being a way to install WindowsDesktop via the multi-framework support
+        by arcade due to https://github.com/dotnet/core-setup/issues/6370. Once https://github.com/dotnet/wpf/issues/816
+        is done we can remove this.
+      -->
+    <Copy SourceFiles="@(MicrosoftNetCoreAppContents)"
+          DestinationFiles="@(MicrosoftNetCoreAppContents->'$(NETCoreAppPayloadPath)%(RecursiveDir)%(Filename)%(Extension)')"
+          Condition="'$(ContinuousIntegrationBuild)'=='True'"/>
+  </Target>
+
+</Project>

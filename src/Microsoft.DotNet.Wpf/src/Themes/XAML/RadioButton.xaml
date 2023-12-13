@@ -1,0 +1,376 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+     
+    <!--=================================================================
+        RadioButton
+    ==================================================================-->
+    <Style x:Key="{x:Type RadioButton}"
+           TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="#F4F4F4"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <BulletDecorator Background="Transparent">
+                        <BulletDecorator.Bullet>
+                            <theme:BulletChrome Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                IsRound="true"
+                                                RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                                RenderPressed="{TemplateBinding IsPressed}"
+                                                IsChecked="{TemplateBinding IsChecked}"/>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent"
+                                 Value="true">
+                            <Setter Property="FocusVisualStyle"
+                                    Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding"
+                                    Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Classic]] -->
+
+    <!--=================================================================
+        RadioButton
+    ==================================================================-->
+    <Style x:Key="{x:Type RadioButton}"
+           TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource CheckRadioFocusVisual}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Padding"
+                Value="2,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <BulletDecorator Background="Transparent">
+                        <BulletDecorator.Bullet>
+                            <!-- Draw Checkmark border and tick mark -->
+                            <theme:ClassicBorderDecorator x:Name="Border"
+                                                          Width="13"
+                                                          Height="13"
+                                                          BorderStyle="RadioButton"
+                                                          Background="{TemplateBinding Background}"
+                                                          BorderThickness="4,4,5,5">
+                                <Ellipse x:Name="Dot"
+                                      Visibility="Hidden"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Width="4"
+                                      Height="4"/>
+                            </theme:ClassicBorderDecorator>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter TargetName="Dot"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter TargetName="Dot"
+                                    Property="Fill"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <!-- DDVSO:431603
+                                 When enabled in high contrast, inherit the foreground of the nearest ancestor control.
+                                 This ensures selection highlights are appropriately respected. -->
+                          <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                          </MultiDataTrigger.Conditions>
+                          <!-- DDVSO:431603
+                                 When disabled in high contrast we should directly use the ControlTextBrush color. -->
+                          <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrush}}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource ClassicCheckRadioFocusVisual}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource ClassicEmptyCheckRadioFocusVisual}" />
+                        </MultiDataTrigger>                        
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioHighContrastFocusVisual}"/>
+                        </MultiDataTrigger>
+                      <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                          <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                          <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                          <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                          <Condition Binding="{Binding HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckRadioHighContrastFocusVisual}" />
+                      </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[AeroLite.NormalColor]] -->
+
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="radioButtonBorder" 
+                            Margin="1,1,2,1" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            CornerRadius="100">
+                            <Grid x:Name="markGrid" Margin="2">
+                                <Ellipse x:Name="optionMark" Opacity="0" MinWidth="6" MinHeight="6" Fill="{TemplateBinding TextElement.Foreground}"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" 
+                            RecognizesAccessKey="True" 
+                            Grid.Column="1" 
+                            Margin="{TemplateBinding Padding}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            Focusable="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource OptionMark.MouseOver.Background}" TargetName="radioButtonBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource OptionMark.MouseOver.Border}" TargetName="radioButtonBorder" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" TargetName="optionMark" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.56" TargetName="templateRoot" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" Value="1" TargetName="optionMark" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" Value="0.56" TargetName="optionMark" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Aero2.NormalColor]] -->
+
+    <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="RadioButton.Static.Border" Color="#FF707070" />
+    <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Background" Color="#FFF3F9FF" />
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#FF5593FF" />
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#FFD9ECFF" />
+    <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#FF3C77DD" />
+    <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC" />
+    <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070" />
+
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="radioButtonBorder" 
+                            Margin="1,1,2,1" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            CornerRadius="100">
+                            <Grid x:Name="markGrid" Margin="2">
+                                <Ellipse x:Name="optionMark" Opacity="0" MinWidth="6" MinHeight="6" Fill="{StaticResource RadioButton.Static.Glyph}"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" 
+                            RecognizesAccessKey="True" 
+                            Grid.Column="1" 
+                            Margin="{TemplateBinding Padding}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            Focusable="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource RadioButton.MouseOver.Background}" TargetName="radioButtonBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.MouseOver.Border}" TargetName="radioButtonBorder" />
+                            <Setter Property="Fill" Value="{StaticResource RadioButton.MouseOver.Glyph}" TargetName="optionMark" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{StaticResource RadioButton.Disabled.Background}" TargetName="radioButtonBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Disabled.Border}" TargetName="radioButtonBorder" />
+                            <Setter Property="Fill" Value="{StaticResource RadioButton.Disabled.Glyph}" TargetName="optionMark" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="{StaticResource RadioButton.Pressed.Background}" TargetName="radioButtonBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Pressed.Border}" TargetName="radioButtonBorder" />
+                            <Setter Property="Fill" Value="{StaticResource RadioButton.Pressed.Glyph}" TargetName="optionMark" />
+                        </Trigger>                        
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" Value="1" TargetName="optionMark" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" Value="0.56" TargetName="optionMark" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Luna.HomeStead, Luna.NormalColor, Luna.Metallic, Royale.NormalColor]] -->
+
+<!--=================================================================
+        RadioButton
+    ==================================================================-->
+    <Style x:Key="{x:Type RadioButton}"
+           TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource CheckRadioFillNormal}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource CheckRadioStrokeNormal}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <BulletDecorator Background="Transparent">
+                        <BulletDecorator.Bullet>
+                            <theme:BulletChrome IsRound="true"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                IsChecked="{TemplateBinding IsChecked}"
+                                                RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                                RenderPressed="{TemplateBinding IsPressed}"/>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent"
+                                 Value="true">
+                            <Setter Property="FocusVisualStyle"
+                                    Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding"
+                                    Value="2,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

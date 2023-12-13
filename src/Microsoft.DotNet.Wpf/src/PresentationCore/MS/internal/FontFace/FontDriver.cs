@@ -10,7 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using System.Text;
 using System.Windows;
@@ -103,11 +102,6 @@ namespace MS.Internal.FontFace
         ///     ULong  -  unsigned   32 bit
         ///     Long   -  signed     32 bit
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls into probe which is critical and also has unsafe code blocks
-        ///     TreatAsSafe: This code is Ok to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static ushort ReadOpenTypeUShort(CheckedPointer pointer)
         {
             unsafe
@@ -118,11 +112,6 @@ namespace MS.Internal.FontFace
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls into probe which is critical and also has unsafe code blocks
-        ///     TreatAsSafe: This code IS Ok to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static int ReadOpenTypeLong(CheckedPointer pointer)
         {
             unsafe
@@ -137,10 +126,6 @@ namespace MS.Internal.FontFace
 
         #region Constructor and general helpers
 
-        /// <SecurityNote>
-        ///    Critical:  constructs data for a checked pointer.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TrueTypeFontDriver(UnmanagedMemoryStream unmanagedMemoryStream, Uri sourceUri)
         {
             _sourceUri = sourceUri;
@@ -189,7 +174,7 @@ namespace MS.Internal.FontFace
             else
             {
                 if (faceIndex != 0)
-                    throw new ArgumentOutOfRangeException("faceIndex", SR.Get(SRID.FaceIndexValidOnlyForTTC));
+                    throw new ArgumentOutOfRangeException("faceIndex", SR.FaceIndexValidOnlyForTTC);
             }
 
             try
@@ -270,16 +255,8 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Create font subset that includes glyphs in the input collection.
         /// </summary>
-        ///<SecurityNote>
-        ///  TreatAsSafe: This API could be public in terms of security as it demands unmanaged code
-        ///  Critical: Does an elevation by calling TrueTypeSubsetter which we are treating as equivalent to
-        ///            unsafe native methods
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal byte[] ComputeFontSubset(ICollection<ushort> glyphs)
         {
-            SecurityHelper.DemandUnmanagedCode();
-
             int fileSize = _fileStream.Size;
             unsafe
             {

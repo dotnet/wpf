@@ -139,12 +139,12 @@
       </trans-unit>
       <trans-unit id="AutomationDispatcherShutdown">
         <source>Automation client cannot access UI because application is shutting down.</source>
-        <target state="translated">응용 프로그램을 종료하고 있기 때문에 자동화 클라이언트가 UI에 액세스할 수 없습니다.</target>
+        <target state="translated">애플리케이션을 종료하고 있기 때문에 자동화 클라이언트가 UI에 액세스할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="AutomationTimeout">
         <source>Timeout occurred while attempting to access UI. The application might be busy or unresponsive.</source>
-        <target state="translated">UI에 액세스하려고 시도하는 동안 제한 시간이 초과되었습니다. 응용 프로그램이 사용 중이거나 응답하지 않을 수 있습니다.</target>
+        <target state="translated">UI에 액세스하려고 시도하는 동안 제한 시간이 초과되었습니다. 애플리케이션이 사용 중이거나 응답하지 않을 수 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Automation_InvalidConnectedPeer">
@@ -187,11 +187,6 @@
         <target state="translated">BitmapCacheBrush는 Transform을 지원하지 않습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseBackKey">
-        <source>Alt+Left;Backspace</source>
-        <target state="translated">Alt+Left;Backspace</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseBackKeyDisplayString">
         <source>Alt+Left;Backspace</source>
         <target state="translated">Alt+Left;Backspace</target>
@@ -200,11 +195,6 @@
       <trans-unit id="BrowseBackText">
         <source>Back</source>
         <target state="translated">뒤로</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseForwardKey">
-        <source>Alt+Right;Shift+Backspace</source>
-        <target state="translated">Alt+Right;Shift+Backspace</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseForwardKeyDisplayString">
@@ -217,11 +207,6 @@
         <target state="translated">앞으로</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseHomeKey">
-        <source>Alt+Home;BrowserHome</source>
-        <target state="translated">Alt+Home;홈</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseHomeKeyDisplayString">
         <source>Alt+Home;BrowserHome</source>
         <target state="translated">Alt+Home;홈</target>
@@ -230,11 +215,6 @@
       <trans-unit id="BrowseHomeText">
         <source>Home</source>
         <target state="translated">홈</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseStopKey">
-        <source>Alt+Esc;BrowserStop</source>
-        <target state="translated">Alt+Esc;중지</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseStopKeyDisplayString">
@@ -304,7 +284,7 @@
       </trans-unit>
       <trans-unit id="CannotNavigateToApplicationResourcesInWebBrowser">
         <source>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</source>
-        <target state="translated">WebBrowser 컨트롤을 사용하여 응용 프로그램 리소스 '{0}'(으)로 이동할 수 없습니다. URI로 탐색하려면 리소스가 응용 프로그램의 원본 사이트에 있어야 합니다. URI를 하드 코딩하지 않으려면 pack://siteoforigin:,,,/ 접두사를 사용합니다.</target>
+        <target state="translated">WebBrowser 컨트롤을 사용하여 애플리케이션 리소스 '{0}'(으)로 이동할 수 없습니다. URI로 탐색하려면 리소스가 애플리케이션의 원본 사이트에 있어야 합니다. URI를 하드 코딩하지 않으려면 pack://siteoforigin:,,,/ 접두사를 사용합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="CannotRetrievePartsOfWriteOnlyContainer">
@@ -547,11 +527,6 @@
         <target state="translated">가능한 생성자 재귀를 발견했습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ContextMenuKey">
-        <source>Shift+F10;Apps</source>
-        <target state="translated">Shift+F10;Apps</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ContextMenuKeyDisplayString">
         <source>Shift+F10;Apps</source>
         <target state="translated">Shift+F10;Apps</target>
@@ -570,11 +545,6 @@
       <trans-unit id="Converter_ConvertToNotSupported">
         <source>Cannot convert to type.</source>
         <target state="translated">형식으로 변환할 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CopyKey">
-        <source>Ctrl+C;Ctrl+Insert</source>
-        <target state="translated">Ctrl+C;Ctrl+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="CopyKeyDisplayString">
@@ -642,11 +612,6 @@
         <target state="translated">'{0}'에 커서에 대해 지원되지 않는 확장이 있습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="CutKey">
-        <source>Ctrl+X;Shift+Delete</source>
-        <target state="translated">Ctrl+X;Shift+Delete</target>
-        <note />
-      </trans-unit>
       <trans-unit id="CutKeyDisplayString">
         <source>Ctrl+X;Shift+Delete</source>
         <target state="translated">Ctrl+X;Shift+Delete</target>
@@ -664,7 +629,7 @@
       </trans-unit>
       <trans-unit id="D3DImage_InvalidDevice">
         <source>Back buffer's device is not valid.</source>
-        <target state="translated">백 버퍼의 장치가 잘못되었습니다.</target>
+        <target state="translated">백 버퍼의 디바이스가 잘못되었습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="D3DImage_InvalidPool">
@@ -735,11 +700,6 @@
       <trans-unit id="DecreaseZoomText">
         <source>Decrease Zoom</source>
         <target state="translated">축소</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="DeleteKey">
-        <source>Del</source>
-        <target state="translated">Del</target>
         <note />
       </trans-unit>
       <trans-unit id="DeleteKeyDisplayString">
@@ -987,11 +947,6 @@
         <target state="translated">이벤트 인수는 null이 아니어야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionDownKey">
-        <source>Shift+Down</source>
-        <target state="translated">Shift+아래쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionDownKeyDisplayString">
         <source>Shift+Down</source>
         <target state="translated">Shift+아래쪽 화살표</target>
@@ -1000,11 +955,6 @@
       <trans-unit id="ExtendSelectionDownText">
         <source>Extend Selection Down</source>
         <target state="translated">아래로 선택 영역 확장</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionLeftKey">
-        <source>Shift+Left</source>
-        <target state="translated">Shift+왼쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionLeftKeyDisplayString">
@@ -1017,11 +967,6 @@
         <target state="translated">왼쪽으로 선택 영역 확장</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionRightKey">
-        <source>Shift+Right</source>
-        <target state="translated">Shift+오른쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionRightKeyDisplayString">
         <source>Shift+Right</source>
         <target state="translated">Shift+오른쪽 화살표</target>
@@ -1030,11 +975,6 @@
       <trans-unit id="ExtendSelectionRightText">
         <source>Extend Selection Right</source>
         <target state="translated">오른쪽으로 선택 영역 확장</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionUpKey">
-        <source>Shift+Up</source>
-        <target state="translated">Shift+위쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionUpKeyDisplayString">
@@ -1067,11 +1007,6 @@
         <target state="translated">Target 속성이 설정되어 있지 않기 때문에 FamilyMap을 추가할 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FavoritesKey">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+I</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FavoritesKeyDisplayString">
         <source>Ctrl+I</source>
         <target state="translated">Ctrl+I</target>
@@ -1095,11 +1030,6 @@
       <trans-unit id="FileNotFoundExceptionWithFileName">
         <source>Cannot find file '{0}'.</source>
         <target state="translated">'{0}' 파일을 찾을 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FindKey">
-        <source>Ctrl+F</source>
-        <target state="translated">Ctrl+F</target>
         <note />
       </trans-unit>
       <trans-unit id="FindKeyDisplayString">
@@ -1220,11 +1150,6 @@
       <trans-unit id="HandlerTypeIllegal">
         <source>Handler type is mismatched.</source>
         <target state="translated">처리기 형식이 일치하지 않습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="HelpKey">
-        <source>F1</source>
-        <target state="translated">F1</target>
         <note />
       </trans-unit>
       <trans-unit id="HelpKeyDisplayString">
@@ -1983,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}'은(는) IInputElement에 사용할 수 없습니다. UIElement 또는 ContentElement가 필요합니다.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}'은(는) IInputElement에 유효한 형식이 아닙니다. UIElement, ContentElement 또는 UIElement3D가 필요합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2317,11 +2242,6 @@
         <target state="translated">RoutedEventArgs의 RoutedEvent와 EventRoute가 일치하지 않습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveDownKey">
-        <source>Down</source>
-        <target state="translated">아래쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveDownKeyDisplayString">
         <source>Down</source>
         <target state="translated">아래쪽 화살표</target>
@@ -2330,11 +2250,6 @@
       <trans-unit id="MoveDownText">
         <source>Move Down</source>
         <target state="translated">아래로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusBackKey">
-        <source>Ctrl+Left</source>
-        <target state="translated">Ctrl+왼쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusBackKeyDisplayString">
@@ -2347,11 +2262,6 @@
         <target state="translated">포커스 뒤로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusDownKey">
-        <source>Ctrl+Down</source>
-        <target state="translated">Ctrl+아래쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusDownKeyDisplayString">
         <source>Ctrl+Down</source>
         <target state="translated">Ctrl+아래쪽 화살표</target>
@@ -2360,11 +2270,6 @@
       <trans-unit id="MoveFocusDownText">
         <source>Move Focus Down</source>
         <target state="translated">포커스 아래로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusForwardKey">
-        <source>Ctrl+Right</source>
-        <target state="translated">Ctrl+오른쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusForwardKeyDisplayString">
@@ -2377,11 +2282,6 @@
         <target state="translated">포커스 앞으로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusPageDownKey">
-        <source>Ctrl+PageDown</source>
-        <target state="translated">Ctrl+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusPageDownKeyDisplayString">
         <source>Ctrl+PageDown</source>
         <target state="translated">Ctrl+PageDown</target>
@@ -2390,11 +2290,6 @@
       <trans-unit id="MoveFocusPageDownText">
         <source>Move Focus Page Down</source>
         <target state="translated">포커스 페이지 아래로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusPageUpKey">
-        <source>Ctrl+PageUp</source>
-        <target state="translated">Ctrl+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusPageUpKeyDisplayString">
@@ -2407,11 +2302,6 @@
         <target state="translated">포커스 페이지 위로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusUpKey">
-        <source>Ctrl+Up</source>
-        <target state="translated">Ctrl+위쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusUpKeyDisplayString">
         <source>Ctrl+Up</source>
         <target state="translated">Ctrl+위쪽 화살표</target>
@@ -2420,11 +2310,6 @@
       <trans-unit id="MoveFocusUpText">
         <source>Move Focus Up</source>
         <target state="translated">포커스 위로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveLeftKey">
-        <source>Left</source>
-        <target state="translated">왼쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveLeftKeyDisplayString">
@@ -2437,11 +2322,6 @@
         <target state="translated">왼쪽으로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveRightKey">
-        <source>Right</source>
-        <target state="translated">오른쪽 화살표</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveRightKeyDisplayString">
         <source>Right</source>
         <target state="translated">오른쪽 화살표</target>
@@ -2450,11 +2330,6 @@
       <trans-unit id="MoveRightText">
         <source>Move Right</source>
         <target state="translated">오른쪽으로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToEndKey">
-        <source>End</source>
-        <target state="translated">종료</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToEndKeyDisplayString">
@@ -2467,11 +2342,6 @@
         <target state="translated">맨 뒤로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToHomeKey">
-        <source>Home</source>
-        <target state="translated">홈</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToHomeKeyDisplayString">
         <source>Home</source>
         <target state="translated">홈</target>
@@ -2480,11 +2350,6 @@
       <trans-unit id="MoveToHomeText">
         <source>Move To Home</source>
         <target state="translated">맨 앞으로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToPageDownKeyDisplayString">
@@ -2497,11 +2362,6 @@
         <target state="translated">페이지 아래로 이동</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToPageUpKeyDisplayString">
         <source>PageUp</source>
         <target state="translated">PageUp</target>
@@ -2510,11 +2370,6 @@
       <trans-unit id="MoveToPageUpText">
         <source>Move To Page Up</source>
         <target state="translated">페이지 위로 이동</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveUpKey">
-        <source>Up</source>
-        <target state="translated">위쪽 화살표</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveUpKeyDisplayString">
@@ -2535,11 +2390,6 @@
       <trans-unit id="NavigateJournalText">
         <source>Navigate Journal</source>
         <target state="translated">저널 탐색</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NewKey">
-        <source>Ctrl+N</source>
-        <target state="translated">Ctrl+N</target>
         <note />
       </trans-unit>
       <trans-unit id="NewKeyDisplayString">
@@ -2637,11 +2487,6 @@
         <target state="translated">개체가 이미 초기화되어 다시 초기화할 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="OpenKey">
-        <source>Ctrl+O</source>
-        <target state="translated">Ctrl+O</target>
-        <note />
-      </trans-unit>
       <trans-unit id="OpenKeyDisplayString">
         <source>Ctrl+O</source>
         <target state="translated">Ctrl+O</target>
@@ -2677,29 +2522,9 @@
         <target state="translated">페이지 번호는 음수일 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">매개 변수 값이 '{0}'보다 클 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">매개 변수 값이 '{0}'보다 작을 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">매개 변수 값은 '{0}'과(와) '{1}' 사이에 있어야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">매개 변수 값은 0보다 커야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
@@ -2710,16 +2535,6 @@
       <trans-unit id="ParameterValueCannotBeNaN">
         <source>The parameter value must be a number.</source>
         <target state="translated">매개 변수 값은 숫자여야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' 매개 변수 값은 음수일 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">'{0}' 매개 변수 값은 0보다 커야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">
@@ -2745,11 +2560,6 @@
       <trans-unit id="Parsers_IllegalToken_250_Chars">
         <source>Token is not valid because it is more than 250 characters.</source>
         <target state="translated">토큰의 길이가 250자보다 길기 때문에 사용할 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PasteKey">
-        <source>Ctrl+V;Shift+Insert</source>
-        <target state="translated">Ctrl+V;Shift+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="PasteKeyDisplayString">
@@ -2807,19 +2617,9 @@
         <target state="translated">이전 페이지</target>
         <note />
       </trans-unit>
-      <trans-unit id="PrintKey">
-        <source>Ctrl+P</source>
-        <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PrintKeyDisplayString">
         <source>Ctrl+P</source>
         <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PrintPreviewKey">
-        <source>Ctrl+F2</source>
-        <target state="translated">Ctrl+F2</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintPreviewKeyDisplayString">
@@ -2835,11 +2635,6 @@
       <trans-unit id="PrintText">
         <source>Print</source>
         <target state="translated">인쇄</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PropertiesKey">
-        <source>F4</source>
-        <target state="translated">F4</target>
         <note />
       </trans-unit>
       <trans-unit id="PropertiesKeyDisplayString">
@@ -2917,11 +2712,6 @@
         <target state="translated">사각형을 비워둘 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="RedoKey">
-        <source>Ctrl+Y</source>
-        <target state="translated">Ctrl+Y</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RedoKeyDisplayString">
         <source>Ctrl+Y</source>
         <target state="translated">Ctrl+Y</target>
@@ -2939,12 +2729,7 @@
       </trans-unit>
       <trans-unit id="ReentrantVisualTreeChangeWarning">
         <source>WARNING. The visual tree has been changed during a '{0}' event.  This is not supported in a production application.  Be sure to correct this before shipping the application.</source>
-        <target state="translated">경고. '{0}' 이벤트 중 시각적 트리가 변경되었습니다. 이는 프로덕션 응용 프로그램에서 지원되지 않습니다. 응용 프로그램을 제공하기 전에 이를 수정하세요.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="RefreshKey">
-        <source>F5</source>
-        <target state="translated">F5</target>
+        <target state="translated">경고. '{0}' 이벤트 중 시각적 트리가 변경되었습니다. 이는 프로덕션 애플리케이션에서 지원되지 않습니다. 애플리케이션을 제공하기 전에 이를 수정하세요.</target>
         <note />
       </trans-unit>
       <trans-unit id="RefreshKeyDisplayString">
@@ -2960,11 +2745,6 @@
       <trans-unit id="RelievePenaltyResourceFailure">
         <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
         <target state="translated">오류로 인해 텍스트 서식 엔진이 패널티 리소스를 해제할 수 없습니다. '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ReplaceKey">
-        <source>Ctrl+H</source>
-        <target state="translated">Ctrl+H</target>
         <note />
       </trans-unit>
       <trans-unit id="ReplaceKeyDisplayString">
@@ -3022,11 +2802,6 @@
         <target state="translated">다른 이름으로 저장</target>
         <note />
       </trans-unit>
-      <trans-unit id="SaveKey">
-        <source>Ctrl+S</source>
-        <target state="translated">Ctrl+S</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SaveKeyDisplayString">
         <source>Ctrl+S</source>
         <target state="translated">Ctrl+S</target>
@@ -3052,11 +2827,6 @@
         <target state="translated">줄별 스크롤</target>
         <note />
       </trans-unit>
-      <trans-unit id="ScrollPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ScrollPageDownKeyDisplayString">
         <source>PageDown</source>
         <target state="translated">PageDown</target>
@@ -3075,11 +2845,6 @@
       <trans-unit id="ScrollPageRightText">
         <source>Scroll Page Right</source>
         <target state="translated">오른쪽으로 페이지 스크롤</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ScrollPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollPageUpKeyDisplayString">
@@ -3122,11 +2887,6 @@
         <target state="translated">SeekOrigin 값이 잘못되었습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectAllKey">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectAllKeyDisplayString">
         <source>Ctrl+A</source>
         <target state="translated">Ctrl+A</target>
@@ -3135,11 +2895,6 @@
       <trans-unit id="SelectAllText">
         <source>Select All</source>
         <target state="translated">모두 선택</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToEndKey">
-        <source>Shift+End</source>
-        <target state="translated">Shift+End</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToEndKeyDisplayString">
@@ -3152,11 +2907,6 @@
         <target state="translated">맨 끝까지 선택</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToHomeKey">
-        <source>Shift+Home</source>
-        <target state="translated">Shift+Home</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToHomeKeyDisplayString">
         <source>Shift+Home</source>
         <target state="translated">Shift+Home</target>
@@ -3167,11 +2917,6 @@
         <target state="translated">맨 앞까지 선택</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToPageDownKey">
-        <source>Shift+PageDown</source>
-        <target state="translated">Shift+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToPageDownKeyDisplayString">
         <source>Shift+PageDown</source>
         <target state="translated">Shift+PageDown</target>
@@ -3180,11 +2925,6 @@
       <trans-unit id="SelectToPageDownText">
         <source>Select To PageDown</source>
         <target state="translated">페이지 아래로 선택</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToPageUpKey">
-        <source>Shift+PageUp</source>
-        <target state="translated">Shift+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToPageUpKeyDisplayString">
@@ -3245,11 +2985,6 @@
       <trans-unit id="SpecificNumberCultureRequired">
         <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
         <target state="translated">숫자를 대체하는 데 사용되는 CultureInfo 개체는 중립 문화권 또는 InvariantCulture가 아닌 특정 문화권이어야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StopKey">
-        <source>Esc</source>
-        <target state="translated">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="StopKeyDisplayString">
@@ -3615,11 +3350,6 @@
       <trans-unit id="UnauthorizedAccessExceptionWithFileName">
         <source>Access denied to the path '{0}'.</source>
         <target state="translated">'{0}' 경로에 대한 액세스가 거부되었습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UndoKey">
-        <source>Ctrl+Z</source>
-        <target state="translated">Ctrl+Z</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoKeyDisplayString">

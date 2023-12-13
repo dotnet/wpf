@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 
 #region Using directives
 
@@ -27,16 +27,11 @@ namespace System.Windows.Media.Effects
         /// </summary>
         public DropShadowBitmapEffect()
         {
-}
+        }
 
         /// <summary>
         /// Creates the unmanaged effect handle
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - returns a security critical type SafeHandle.
-        /// Safe     - Always returns null.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         unsafe protected override SafeHandle CreateUnmanagedEffect()
         {
@@ -46,18 +41,9 @@ namespace System.Windows.Media.Effects
         /// <summary>
         /// /// Update (propagetes) properties to the unmanaged effect
         /// </summary>                    
-        /// <SecurityNote>
-        /// This method demands permission because effects should not be run
-        /// in partial trust.
-        /// 
-        /// SecurityCritical - because SetValue has a link demand
-        /// SecutiryTreatAsSafe - because it demans UIWindow permission
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
-            SecurityHelper.DemandUIWindowPermission();
         }
         
         /// <summary>

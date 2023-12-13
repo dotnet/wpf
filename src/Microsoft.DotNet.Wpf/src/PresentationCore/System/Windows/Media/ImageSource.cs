@@ -15,7 +15,6 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -113,7 +112,7 @@ namespace System.Windows.Media
 
             if (dpif < 0.0F || FloatUtil.IsCloseToDivideByZero(96.0F, dpif))
             {
-                dpif = 96.0F;
+                return pixels;
             }
 
             return (double)(pixels * (96.0F / dpif));

@@ -68,28 +68,24 @@ namespace System.Windows.Documents
             {
                 uint StartIndex
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
                 uint Length
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
                 CORRECTIVE_ACTION CorrectiveAction
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
                 string Replacement
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -105,7 +101,6 @@ namespace System.Windows.Documents
             [Guid("803E3BD4-2828-4410-8290-418D1D73C762")]
             internal interface IEnumSpellingError
             {
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 ISpellingError Next();
@@ -120,19 +115,15 @@ namespace System.Windows.Documents
             [Guid("00000101-0000-0000-C000-000000000046")]
             internal interface IEnumString
             {
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void RemoteNext([In] uint celt, [MarshalAs(UnmanagedType.LPWStr)] out string rgelt, out uint pceltFetched);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Skip([In] uint celt);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Reset();
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumString ppenum);
             }
@@ -148,7 +139,6 @@ namespace System.Windows.Documents
             {
                 string Id
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -156,7 +146,6 @@ namespace System.Windows.Documents
 
                 string Heading
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -164,7 +153,6 @@ namespace System.Windows.Documents
 
                 string Description
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -172,7 +160,6 @@ namespace System.Windows.Documents
 
                 IEnumString Labels
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.Interface)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -188,7 +175,6 @@ namespace System.Windows.Documents
             [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
             internal interface ISpellCheckerChangedEventHandler
             {
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Invoke([In, MarshalAs(UnmanagedType.Interface)] ISpellChecker sender);
             }
@@ -204,41 +190,33 @@ namespace System.Windows.Documents
             {
                 string languageTag
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 IEnumSpellingError Check([In, MarshalAs(UnmanagedType.LPWStr)] string text);
 
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 IEnumString Suggest([In, MarshalAs(UnmanagedType.LPWStr)] string word);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Add([In, MarshalAs(UnmanagedType.LPWStr)] string word);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void Ignore([In, MarshalAs(UnmanagedType.LPWStr)] string word);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void AutoCorrect([In, MarshalAs(UnmanagedType.LPWStr)] string from, [In, MarshalAs(UnmanagedType.LPWStr)] string to);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 byte GetOptionValue([In, MarshalAs(UnmanagedType.LPWStr)] string optionId);
 
                 IEnumString OptionIds
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.Interface)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -246,7 +224,6 @@ namespace System.Windows.Documents
 
                 string Id
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
@@ -254,26 +231,21 @@ namespace System.Windows.Documents
 
                 string LocalizedName
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.LPWStr)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 uint add_SpellCheckerChanged([In, MarshalAs(UnmanagedType.Interface)] ISpellCheckerChangedEventHandler handler);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void remove_SpellCheckerChanged([In] uint eventCookie);
 
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 IOptionDescription GetOptionDescription([In, MarshalAs(UnmanagedType.LPWStr)] string optionId);
 
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 IEnumSpellingError ComprehensiveCheck([In, MarshalAs(UnmanagedType.LPWStr)] string text);
@@ -290,17 +262,14 @@ namespace System.Windows.Documents
             {
                 IEnumString SupportedLanguages
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.Interface)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;
                 }
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 int IsSupported([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 ISpellChecker CreateSpellChecker([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
@@ -315,11 +284,9 @@ namespace System.Windows.Documents
             [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
             internal interface IUserDictionariesRegistrar
             {
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void RegisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void UnregisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
             }
@@ -334,26 +301,21 @@ namespace System.Windows.Documents
             [ClassInterface(ClassInterfaceType.None)]
             internal class SpellCheckerFactoryCoClass : ISpellCheckerFactory, SpellCheckerFactoryClass, IUserDictionariesRegistrar
             {
-                [SuppressUnmanagedCodeSecurity]
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 public virtual extern ISpellChecker CreateSpellChecker([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 public virtual extern int IsSupported([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 public virtual extern void RegisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                [SuppressUnmanagedCodeSecurity]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 public virtual extern void UnregisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
                 public virtual extern IEnumString SupportedLanguages
                 {
-                    [SuppressUnmanagedCodeSecurity]
                     [return: MarshalAs(UnmanagedType.Interface)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                     get;

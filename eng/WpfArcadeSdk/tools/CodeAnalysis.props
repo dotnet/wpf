@@ -1,0 +1,8 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Do not warn about the version of analyzers being used in this project -->
+    <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
+  </PropertyGroup>
+
+</Project>

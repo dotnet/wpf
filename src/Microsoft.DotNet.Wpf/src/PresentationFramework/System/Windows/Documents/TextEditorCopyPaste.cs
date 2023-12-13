@@ -11,7 +11,6 @@ namespace System.Windows.Documents
     using MS.Internal;
     using System.Globalization;
     using System.Security;
-    using System.Security.Permissions;
     using System.Threading;
     using System.ComponentModel;
     using System.Text;
@@ -46,38 +45,24 @@ namespace System.Windows.Documents
         #region Class Internal Methods
 
         // Registers all text editing command handlers for a given control type
-        /// <SecurityNote>
-        /// Critical - elevates to associate a protected command (paste) with keyboard
-        /// TreatAsSafe - Shift+Insert is the correct key binding, and therefore is
-        ///               expected by the user.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void _RegisterClassHandlers(Type controlType, bool acceptsRichContent, bool readOnly, bool registerEventListeners)
         {
-            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyCopy), SR.Get(SRID.KeyCopyDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyCtrlInsert), SR.Get(SRID.KeyCtrlInsertDisplayString)));
+            CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnCopy), new CanExecuteRoutedEventHandler(OnQueryStatusCopy), KeyGesture.CreateFromResourceStrings(KeyCopy, SR.KeyCopyDisplayString), KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, SR.KeyCtrlInsertDisplayString));
             if (acceptsRichContent)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), SRID.KeyCopyFormat, SRID.KeyCopyFormatDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.CopyFormat, new ExecutedRoutedEventHandler(OnCopyFormat), new CanExecuteRoutedEventHandler(OnQueryStatusCopyFormat), KeyGesture.CreateFromResourceStrings(KeyCopyFormat, nameof(SR.KeyCopyFormatDisplayString)));
             }
             if (!readOnly)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Cut, new ExecutedRoutedEventHandler(OnCut), new CanExecuteRoutedEventHandler(OnQueryStatusCut), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyCut), SR.Get(SRID.KeyCutDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyShiftDelete), SR.Get(SRID.KeyShiftDeleteDisplayString)));
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Cut, new ExecutedRoutedEventHandler(OnCut), new CanExecuteRoutedEventHandler(OnQueryStatusCut), KeyGesture.CreateFromResourceStrings(KeyCut, SR.KeyCutDisplayString), KeyGesture.CreateFromResourceStrings(KeyShiftDelete, SR.KeyShiftDeleteDisplayString));
                 // temp vars to reduce code under elevation
                 ExecutedRoutedEventHandler ExecutedRoutedEventHandler = new ExecutedRoutedEventHandler(OnPaste);
                 CanExecuteRoutedEventHandler CanExecuteRoutedEventHandler = new CanExecuteRoutedEventHandler(OnQueryStatusPaste);
-                InputGesture inputGesture = KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyShiftInsert), SR.Get(SRID.KeyShiftInsertDisplayString));
-                new UIPermission(UIPermissionClipboard.AllClipboard).Assert(); //BlessedAssert
-                try
-                {
-                    CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Paste, ExecutedRoutedEventHandler, CanExecuteRoutedEventHandler, inputGesture);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                InputGesture inputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.KeyShiftInsertDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Paste, ExecutedRoutedEventHandler, CanExecuteRoutedEventHandler, inputGesture);
                 if (acceptsRichContent)
                 {
-                    CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.PasteFormat, new ExecutedRoutedEventHandler(OnPasteFormat), new CanExecuteRoutedEventHandler(OnQueryStatusPasteFormat), SRID.KeyPasteFormat, SRID.KeyPasteFormatDisplayString);
+                    CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.PasteFormat, new ExecutedRoutedEventHandler(OnPasteFormat), new CanExecuteRoutedEventHandler(OnQueryStatusPasteFormat), KeyPasteFormat, nameof(SR.KeyPasteFormatDisplayString));
                 }
             }
         }
@@ -85,10 +70,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Creates DataObject for Copy and Drag operations
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into SetData under an assert which has the ability to set xaml content on clipboard.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static DataObject _CreateDataObject(TextEditor This, bool isDragDrop)
         {
             DataObject dataObject;
@@ -100,15 +81,7 @@ namespace System.Windows.Documents
             // create your own implementation of it, but you
             // really cannot, because there is no way of
             // using it in our TextEditor.Copy/Drag.
-            (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-            try
-            {
-                dataObject = new DataObject();
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            dataObject = new DataObject();
 
             // Get plain text and copy it into the data object.
             string textString = This.Selection.Text;
@@ -119,14 +92,14 @@ namespace System.Windows.Documents
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Text))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.Text, textString);
+                    dataObject.SetData(DataFormats.Text, textString, true);
                 }
 
                 // Copy unicode text into data object.
                 // ConfirmDataFormatSetting rasies a public event - could throw recoverable exception.
                 if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.UnicodeText))
                 {
-                    CriticalSetDataWrapper(dataObject,DataFormats.UnicodeText, textString);
+                    dataObject.SetData(DataFormats.UnicodeText, textString, true);
                 }
             }
 
@@ -134,14 +107,6 @@ namespace System.Windows.Documents
             // We do this only if our content is rich
             if (This.AcceptsRichContent)
             {
-                // This ensures that in the confines of partial trust RTF is not enabled.
-                // We use unmanaged code permission over clipboard permission since
-                // the latter is available in intranet zone and this is something that will
-                // fail in intranet too.
-                if (SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    // In FullTrust we allow all rich formats on the clipboard
-
                     Stream wpfContainerMemory = null;
                     // null wpfContainerMemory on entry means that container is optional
                     // and will be not created when there is no images in the range.
@@ -168,7 +133,6 @@ namespace System.Windows.Documents
                                 dataObject.SetData(DataFormats.Rtf, rtfText, true);
                             }
                         }
-                    }
 
                     // Add a CF_BITMAP if we have only one image selected.
                     Image image = This.Selection.GetUIElementSelected() as Image;
@@ -192,15 +156,7 @@ namespace System.Windows.Documents
                     if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Xaml))
                     {
                         // Place Xaml data onto the dataobject using safe setter
-                        CriticalSetDataWrapper(dataObject, DataFormats.Xaml, xamlText);
-
-                        // The dataobject itself must hold an information about permission set
-                        // of the source appdomain. Set it there:
-
-                        // Package permission set for the current appdomain
-                        PermissionSet psCurrentAppDomain = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-                        string permissionSetCurrentAppDomain = psCurrentAppDomain.ToString();
-                        CriticalSetDataWrapper(dataObject, DataFormats.ApplicationTrust, permissionSetCurrentAppDomain);
+                        dataObject.SetData(DataFormats.Xaml, xamlText, false);
                     }
                 }
             }
@@ -228,18 +184,8 @@ namespace System.Windows.Documents
         /// <returns>
         /// true if successful, false otherwise
         /// </returns>
-        /// <SecurityNote>
-        /// To disable paste in partial trust case,
-        /// this function checks if the current call stack has the all clipboard permission.
-        /// Critical: This code calls into AppDomain methods and enables xaml cut and paste
-        /// TreatAsSafe: It has a demand for All Clipboard permissions
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static bool _DoPaste(TextEditor This, IDataObject dataObject, bool isDragDrop)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            //
-            if (!SecurityHelper.CallerHasAllClipboardPermission()) return false;
 
             Invariant.Assert(dataObject != null);
 
@@ -294,13 +240,10 @@ namespace System.Windows.Documents
         {
             string formatToApply;
 
-            // Currently we won't allow DataFormats.Xaml on the partial trust.
             // GetDataPresent(DataFormats.Xaml)have a chance to register Xaml format
             // by calling the unmanaged code which is RegisterClipboardFormat.
 
-            bool hasUnmanagedCodePermission = SecurityHelper.CheckUnmanagedCodePermission();
-
-            if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject.GetDataPresent(DataFormats.XamlPackage))
+            if (This.AcceptsRichContent && dataObject.GetDataPresent(DataFormats.XamlPackage))
             {
                 formatToApply = DataFormats.XamlPackage;
             }
@@ -308,7 +251,7 @@ namespace System.Windows.Documents
             {
                 formatToApply = DataFormats.Xaml;
             }
-            else if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject.GetDataPresent(DataFormats.Rtf))
+            else if (This.AcceptsRichContent && dataObject.GetDataPresent(DataFormats.Rtf))
             {
                 formatToApply = DataFormats.Rtf;
             }
@@ -320,7 +263,7 @@ namespace System.Windows.Documents
             {
                 formatToApply = DataFormats.Text;
             }
-            else if (This.AcceptsRichContent && hasUnmanagedCodePermission && dataObject is DataObject && ((DataObject)dataObject).ContainsImage())
+            else if (This.AcceptsRichContent && dataObject is DataObject && ((DataObject)dataObject).ContainsImage())
             {
                 formatToApply = DataFormats.Bitmap;
             }
@@ -338,31 +281,8 @@ namespace System.Windows.Documents
         /// <summary>
         /// Cut worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Sets data on the clipboard and accepts a parameter which indicates 
-        ///            whether or not this action was user-initiated.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Cut(TextEditor This, bool userInitiated)
         {
-            if (userInitiated)
-            {
-                // Fail silently if the app explicitly denies clipboard access.
-                try
-                {
-                    new UIPermission(UIPermissionClipboard.OwnClipboard).Demand();
-                }
-                catch (SecurityException)
-                {
-                    return;
-                }
-            }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
-            }
-
             TextEditorTyping._FlushPendingInputItems(This);
 
             TextEditorTyping._BreakTypingSequence(This);
@@ -409,31 +329,8 @@ namespace System.Windows.Documents
         /// <summary>
         /// Copy worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Sets data on the clipboard and accepts a parameter which indicates 
-        ///            whether or not this action was user-initiated.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Copy(TextEditor This, bool userInitiated)
         {
-            if (userInitiated)
-            {
-                // Fail silently if the app explicitly denies clipboard access.
-                try
-                {
-                    new UIPermission(UIPermissionClipboard.OwnClipboard).Demand();
-                }
-                catch (SecurityException)
-                {
-                    return;
-                }
-            }
-            else if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                // Fail silently if we don't have clipboard permission.
-                return;
-            }
-
             TextEditorTyping._FlushPendingInputItems(This);
 
             TextEditorTyping._BreakTypingSequence(This);
@@ -466,18 +363,8 @@ namespace System.Windows.Documents
         /// <summary>
         /// Paste worker.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:To disable paste in partial trust case,
-        /// TreatAsSafe: this function checks if the current call stack has the all clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void Paste(TextEditor This)
         {
-            // Don't try anything if the caller doesn't have the rights to read from the clipboard...
-            if (!SecurityHelper.CallerHasAllClipboardPermission())
-            {
-                return;
-            }
 
             if (This.Selection.IsTableCellRange)
             {
@@ -625,13 +512,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Cut command event handler.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls TextEditorCopyPaste.Cut, using the UserInitiated
-        ///             bit in the event args, to set data on the clipboard.
-        /// TreatAsSafe - The bit is protected by the UserIniatedRoutedEvent permission and
-        ///               the content being set is based on the active selection.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnCut(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -678,13 +558,6 @@ namespace System.Windows.Documents
         /// Copy command event handler.
         /// This method is used both in Copy, Cut and DragDrop commands.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls TextEditorCopyPaste.Copy, using the UserInitiated
-        ///             bit in the event args, to set data on the clipboard.
-        /// TreatAsSafe - The bit is protected by the UserIniatedRoutedEvent permission and
-        ///               the content being set is based on the active selection.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnCopy(object target, ExecutedRoutedEventArgs args)
         {
             TextEditor This = TextEditor._GetTextEditor(target);
@@ -719,18 +592,10 @@ namespace System.Windows.Documents
 
             try
             {
-                if (SecurityHelper.CallerHasAllClipboardPermission())
-                {
-                    // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
-                    string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
+                // Define what format our paste mechanism recognizes on the clipbord appropriate for this selection
+                string formatToApply = GetPasteApplyFormat(This, Clipboard.GetDataObject());
 
-                    args.CanExecute = formatToApply.Length > 0;
-                }
-                else
-                {
-                    // Simplified version of clipboard sniffing for partial trust
-                    args.CanExecute = Clipboard.IsClipboardPopulated();
-                }
+                args.CanExecute = formatToApply.Length > 0;
             }
             catch (ExternalException)
             {
@@ -800,26 +665,6 @@ namespace System.Windows.Documents
             //  Provide an implementation for this command
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into CriticalSetData which circumvents all checks for setting data
-        /// </SecurityNote>
-        /// <summary>
-        ///     This code is used to call into an internal overload to set data which circumvents the demand for
-        ///     all clipboard permission. Although this is not the cleanest we prefer to cast it to DataObject
-        ///     and call the critical overload to reduce the scope of the code that gets called here.
-        ///     This saves us one high level assert.
-        /// </summary>
-        /// <param name="dataObjectValue"></param>
-        /// <param name="format"></param>
-        /// <param name="content"></param>
-        [SecurityCritical]
-        private static void CriticalSetDataWrapper(IDataObject dataObjectValue, string format, string content)
-        {
-            if (dataObjectValue is DataObject)
-            {
-                ((DataObject)dataObjectValue).CriticalSetData(format, content, format == DataFormats.ApplicationTrust ? /*autoConvert:*/false : true);
-            }
-        }
 
         /// <summary>
         /// Paste the content data(Text, Unicode, Xaml and Rtf) to the current text selection
@@ -835,25 +680,14 @@ namespace System.Windows.Documents
         /// <returns>
         /// true if successful, false otherwise
         /// </returns>
-        /// <SecurityNote>
-        /// This function paste the content data and also can set new apply format with
-        /// checking the unmanaged code permission if the content data is failed to paste.
-        /// Critical: This function falls back to DataFormats.Rtf in case Xaml paste fails. It calls Critical WpfPayload.SaveImage.
-        /// TreatAsSafe: In partial trust we revert to DataFormats.UnicodeText or DataFormats.Text
-        ///              format and hence the risk is mitigated of having Rtf paste enabled
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool PasteContentData(TextEditor This, IDataObject dataObject, IDataObject dataObjectToApply, string formatToApply)
         {
             // CF_BITMAP - pasting a single image.
             if (formatToApply == DataFormats.Bitmap && dataObjectToApply is DataObject)
             {
-                // This demand is present to explicitly disable RTF independant of any
-                // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && This.Selection is TextSelection &&
-                    SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent && This.Selection is TextSelection)
                 {
                     System.Windows.Media.Imaging.BitmapSource bitmapSource = GetPasteData(dataObjectToApply, DataFormats.Bitmap) as System.Windows.Media.Imaging.BitmapSource;
 
@@ -872,12 +706,9 @@ namespace System.Windows.Documents
 
             if (formatToApply == DataFormats.XamlPackage)
             {
-                // This demand is present to explicitly disable RTF independant of any
-                // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && This.Selection is TextSelection &&
-                    SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent && This.Selection is TextSelection)
                 {
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.XamlPackage);
 
@@ -903,7 +734,7 @@ namespace System.Windows.Documents
                 {
                     formatToApply = DataFormats.Xaml;
                 }
-                else if (SecurityHelper.CheckUnmanagedCodePermission() && dataObjectToApply.GetDataPresent(DataFormats.Rtf))
+                else if (dataObjectToApply.GetDataPresent(DataFormats.Rtf))
                 {
                     formatToApply = DataFormats.Rtf;
                 }
@@ -931,7 +762,7 @@ namespace System.Windows.Documents
 
                 // Fall to Rtf:
                 dataObjectToApply = dataObject; // go back to source data object
-                if (SecurityHelper.CheckUnmanagedCodePermission() && dataObjectToApply.GetDataPresent(DataFormats.Rtf))
+                if (dataObjectToApply.GetDataPresent(DataFormats.Rtf))
                 {
                     formatToApply = DataFormats.Rtf;
                 }
@@ -951,7 +782,7 @@ namespace System.Windows.Documents
                 // asserts in the confines of partial trust
                 // We check unmanaged code instead of all clipboard because in paste
                 // there is a high level assert for all clipboard in commandmanager.cs
-                if (This.AcceptsRichContent && SecurityHelper.CheckUnmanagedCodePermission())
+                if (This.AcceptsRichContent)
                 {
                     object pastedData = GetPasteData(dataObjectToApply, DataFormats.Rtf);
 
@@ -1017,11 +848,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// Get the paste data from the specified DataObject and data format.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: This function calls the critical methods which access the unmanaged code
-        /// to get the pasted data from DataObject
-        /// </SecurityNote>
-        [SecurityCritical]
         private static object GetPasteData(IDataObject dataObject, string dataFormat)
         {
             object pastedData;
@@ -1097,8 +923,7 @@ namespace System.Windows.Documents
                 try
                 {
                     // Parse the fragment into a separate subtree
-                    bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader);
+                    object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader: true);
                     TextElement flowContent = xamlObject as TextElement;
 
                     success = flowContent == null ? false : PasteTextElement(This, flowContent);
@@ -1199,5 +1024,13 @@ namespace System.Windows.Documents
         }
 
         #endregion Private methods
+
+        private const string KeyCopy = "Ctrl+C";
+        private const string KeyCopyFormat = "Ctrl+Shift+C";
+        private const string KeyCtrlInsert = "Ctrl+Insert";
+        private const string KeyCut = "Ctrl+X";
+        private const string KeyPasteFormat = "Ctrl+Shift+V";
+        private const string KeyShiftDelete = "Shift+Delete";
+        private const string KeyShiftInsert = "Shift+Insert";
     }
 }

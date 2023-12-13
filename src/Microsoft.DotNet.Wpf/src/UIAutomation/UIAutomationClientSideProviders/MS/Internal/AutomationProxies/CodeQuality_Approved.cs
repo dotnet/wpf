@@ -183,7 +183,6 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage( "Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces", Scope = "type", Target = "UIAutomationClientsideProviders.UIAutomationClientSideProviders" )]
 
 //don't need assembly-level critical on this assembly
-[module: SuppressMessage("Microsoft.SecurityCritical", "Test002:SecurityCriticalMembersMustExistInCriticalTypesAndAssemblies")]
 
 //Related to ST and SR class:
 [module: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="System.Windows.SR.Get(System.String,System.Object[]):System.String")]

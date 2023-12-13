@@ -17,7 +17,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -116,7 +115,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForPageContent));
+                throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForPageContent);
             }
         }
 
@@ -147,7 +146,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
                 }
             }
 

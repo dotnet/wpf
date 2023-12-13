@@ -15,7 +15,6 @@ using System.Collections;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using MS.Internal.PresentationCore;
 using SecurityHelper=MS.Internal.SecurityHelper;
@@ -53,21 +52,13 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Critical:Calls UnsafeNativeMethods.RegisterClipboardFormat which uses [SuppressUnmanagedCodeSecurity]
-        ///  PublicOK:So we demand unmanaged code before calling.
-        ///</SecurityNote>
-        [SecurityCritical]
         public static DataFormat GetDataFormat(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             // Ensures the predefined Win32 data formats into our format list.
@@ -100,15 +91,12 @@ namespace System.Windows
 
                     formatItem = (DataFormat)_formatList[n];
 
-                    if (String.Compare(formatItem.Name, format, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(formatItem.Name, format, StringComparison.OrdinalIgnoreCase))
                     {
                         return formatItem;
                     }
                 }
 
-                // In the most cases the default formats return earlier. If we got here
-                // then this is an attempt to register a new format which is not ok in partial trust.
-                SecurityHelper.DemandUnmanagedCode();
                 // Reigster the this format string.
                 formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
 
@@ -283,11 +271,11 @@ namespace System.Windows
         /// format is to store the permission set of the source application where the content came from.
         /// This is then compared at paste time
         /// </summary>
-        internal static readonly string ApplicationTrust = "ApplicationTrust";
+        internal const string ApplicationTrust = "ApplicationTrust";
 
-        internal static readonly string FileName = "FileName";
-        internal static readonly string FileNameW = "FileNameW";
-        
+        internal const string FileName = "FileName";
+        internal const string FileNameW = "FileNameW";
+
         #endregion  Internal Fields
 
         //------------------------------------------------------
@@ -369,12 +357,6 @@ namespace System.Windows
         /// Allows a the new format name to be specified if the requested format is not
         /// in the list
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls UnsafeNativeMethods.GetClipboardFormatName() which is a P/Invoke method.
-        /// Safe     - The StringBuilder object is constructed internally so we are not passing 
-        ///            GetClipboardFormatName() a possibly malicious object.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private static DataFormat InternalGetDataFormat(int id)
         {
             // Ensures the predefined Win32 data formats into our format list.
@@ -419,13 +401,6 @@ namespace System.Windows
         /// Ensures that the Win32 predefined formats are setup in our format list.  This
         /// is called anytime we need to search the list
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Invokes UnsafeNativeMethods.RegisterClipboardFormat for the Ink Serialized Format
-        ///     TreatAsSafe: This method will be invoked by the transparent callers. The method doesn't take 
-        ///                  any user's input and won't be called from any arbitrary code externally either.
-        ///                  It only builds up an internal format table which is safe all the time.                  
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsurePredefined()
         {
             // Lock the data format list to obtains the mutual-exclusion.
@@ -492,7 +467,7 @@ namespace System.Windows
         private static ArrayList _formatList;
 
         // This object is for locking the _formatList to access safe in the multi-thread.
-        private static Object _formatListlock = new Object();
+        private static readonly Object _formatListlock = new Object();
 
         #endregion Private Fields
     }

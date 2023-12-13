@@ -23,7 +23,6 @@ using System.Windows.Xps.Packaging;
 using Microsoft.Internal.AlphaFlattener;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization
@@ -988,11 +987,11 @@ namespace System.Windows.Xps.Serialization
         {
             if (!Utility.IsIdentity(mat))
             {
-                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
-                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture)); rslt.Append(",");
+                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
                 rslt.Append(CheckFloat(mat.OffsetY).ToString(CultureInfo.InvariantCulture));
             }
         }
@@ -2024,44 +2023,14 @@ namespace System.Windows.Xps.Serialization
         }
 
 
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         private static bool EmbeddingAllowed(GlyphTypeface typeface)
         {
-            CodeAccessPermission fontReadPermission = typeface.CriticalFileReadPermission;
-
-            FontEmbeddingRight embeddingRights = FontEmbeddingRight.Installable;
-
-
-            if (fontReadPermission != null)
-            {
-                fontReadPermission.Assert(); // Blessed assert
-            }
-
-            try
-            {
-                embeddingRights = typeface.EmbeddingRights;
-            }
-            finally
-            {
-                if (fontReadPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-
-            return (XpsFontSubsetter.DetermineEmbeddingAction(embeddingRights) != FontEmbeddingAction.ImageOnlyFont);
+            return (XpsFontSubsetter.DetermineEmbeddingAction(typeface.EmbeddingRights) != FontEmbeddingAction.ImageOnlyFont);
         }
 
         /// <summary>
         /// Draw a GlyphRun.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - It uses internal permission to get FontUri
-        ///</SecurityNote>
-        [SecurityCritical]
         void IMetroDrawingContext.DrawGlyphRun(Brush foreground, GlyphRun glyphRun)
         {
             if (glyphRun == null)

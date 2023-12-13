@@ -22,9 +22,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using System.Windows.Markup;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -55,16 +53,11 @@ namespace System.Windows.Media
             StartPoint = start;
             PathSegmentCollection mySegments = Segments;
 
-            if (segments != null)
+            ArgumentNullException.ThrowIfNull(segments);
+
+            foreach (PathSegment item in segments)
             {
-                foreach (PathSegment item in segments)
-                {
-                    mySegments.Add(item);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("segments");
+                mySegments.Add(item);
             }
 
             IsClosed = closed;
@@ -98,7 +91,7 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.PathGeometry_InternalReadBackError));
+                throw new InvalidOperationException(SR.PathGeometry_InternalReadBackError);
             }
         }
 

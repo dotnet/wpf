@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media 
 {
@@ -185,18 +184,10 @@ namespace System.Windows.Media
                 type);
         }
         
-        /// <SecurityNote>
-        /// Critical - it calls a critical method, Geometry.GetBoundsHelper and has an unsafe block
-        /// TreatAsSafe - returning a RectangleGeometry's bounds is considered safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Rect rect, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
             Rect boundingRect;
-
-            Debug.Assert(worldMatrix != null);
-            Debug.Assert(geometryMatrix != null);
 
             if (rect.IsEmpty)
             {
@@ -252,11 +243,6 @@ namespace System.Windows.Media
             return boundingRect;
         }
 
-        /// <SecurityNote>
-        /// Critical - contains unsafe block and calls critical method Geometry.ContainsInternal.
-        /// TreatAsSafe - as this doesn't expose anything sensitive.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             if (IsEmpty())
@@ -452,9 +438,9 @@ namespace System.Windows.Media
             else
             {   
                 ctx.BeginFigure(rect.TopLeft, true /* is filled */, true /* is closed */);
-                ctx.LineTo(Rect.TopRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomRight, true /* is stroked */, false /* is smooth join */);
-                ctx.LineTo(Rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.TopRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomRight, true /* is stroked */, false /* is smooth join */);
+                ctx.LineTo(rect.BottomLeft, true /* is stroked */, false /* is smooth join */);
             }
 
             ctx.Close();
@@ -466,11 +452,6 @@ namespace System.Windows.Media
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Calls critical code
-        /// TreatAsSafe - returning a RectangleGeometry's point list is considered safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Point[] GetPointList(Rect rect, double radiusX, double radiusY)
         {
             uint pointCount = GetPointCount(rect, radiusX, radiusY);
@@ -487,10 +468,6 @@ namespace System.Windows.Media
             return points;
         }
 
-        /// <SecurityNote>
-        /// Critical - Accepts pointer arguments
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe static void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
         {
             if (IsRounded(radiusX, radiusY))

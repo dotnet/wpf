@@ -13,10 +13,7 @@ namespace System.Windows.Baml2006
     {
         public Baml2006ReaderContext(Baml2006SchemaContext schemaContext)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException("schemaContext");
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
 
             _schemaContext = schemaContext;
         }

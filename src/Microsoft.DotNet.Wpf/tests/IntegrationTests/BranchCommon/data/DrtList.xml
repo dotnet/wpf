@@ -1,0 +1,38 @@
+<!--
+Rundrtlist
+
+ Specifies the list of DRTs to run.
+
+
+ format:
+       name,archList,osList,team[,args]
+
+ name - filename of the drt.  e.g. DrtFooTest.exe
+ archList - architectures to run the drt for.
+   archList : arch [|arch ]
+   Possible values for arch, separated by |, use no blanks
+       all     - all architectures
+       x86     - run for x86
+       ia64    - run for IA64
+       amd64   - run for amd64
+ osList - operating systems to run the drt on.
+   osList : os [|os ]
+   Possible values for os, separated by |, use no blanks
+       all     - all operating systems
+       xp      - Windows Xp
+       vista   - Windows Vista
+ team - name of the Avalon FT that owns the drt
+ args - optional command line to send to the drt
+    - DRT is offline
+-->
+<Drts>
+  <Drt Executable="DrtXaml.exe" Architecture="x86|amd64" OS="all" Team="Xaml" >
+    <SupportFiles>
+      <SupportFile>XamlTestClasses.dll</SupportFile>
+      <SupportFile>BamlTestClasses40.dll</SupportFile>
+      <SupportFile>BamlAvoidXmlTest.exe</SupportFile>
+      <SupportFile>XamlTestClasses.FriendWithKey.dll</SupportFile>
+      <SupportFile>XamlTestClasses.FriendWithoutKey.dll</SupportFile>
+    </SupportFiles>
+  </Drt>
+</Drts>

@@ -111,13 +111,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFigureProperties
         //-------------------------------------------------------------------
-        ///<SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsDestroySubpage,
-        ///            CreateSubpageBottomlessHelper and setter for SubpageHandle.
-        /// Safe - as the parameters passed in are either generated in this function
-        ///        or they are Critical for set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void GetFigureProperties(
             FigureParaClient paraClient,        // IN:
             int fInTextLine,                    // IN:  it is attached to text line
@@ -310,10 +303,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFigurePolygons
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetFigurePolygons(
             FigureParaClient paraClient,        // IN:
             uint fswdir,                        // IN:  current direction
@@ -497,14 +486,6 @@ namespace MS.Internal.PtsHost
         // NOTE: This helper is useful for debugging the caller of this function
         //       because the debugger cannot show local variables in unsafe methods.
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsCreateSubpageFinite and passes
-        ///        pointer parameters directly that'll be written to,
-        ///     b) calls the Critical constructor of SubpageBreakRecord,
-        ///     c) it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void CreateSubpageFiniteHelper(
             PtsContext ptsContext,              // IN:  ptr to FS context
             IntPtr brParaIn,                    // IN:  break record---use if !NULL

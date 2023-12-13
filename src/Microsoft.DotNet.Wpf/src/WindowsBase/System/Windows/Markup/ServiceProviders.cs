@@ -12,7 +12,6 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using MS.Internal.WindowsBase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +22,6 @@ namespace System.Windows.Markup
     /// Proivde a implementation for IServiceProvider and method to add services
     /// </summary>
     /// <internalonly>Restrict public access until M8.2</internalonly>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ComponentModel.Browsable(false)]
     public class ServiceProviders : IServiceProvider
@@ -52,15 +50,8 @@ namespace System.Windows.Markup
         /// <param name="service"></param>
         public void AddService(Type serviceType, Object service)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
-
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
+            ArgumentNullException.ThrowIfNull(service);
 
             if (_objDict.ContainsKey(serviceType) == false)
             {
@@ -68,7 +59,7 @@ namespace System.Windows.Markup
             }
             else if (_objDict[serviceType] != service)
             {
-                throw new ArgumentException(SR.Get(SRID.ServiceTypeAlreadyAdded), "serviceType");
+                throw new ArgumentException(SR.ServiceTypeAlreadyAdded, "serviceType");
             }
         }
 

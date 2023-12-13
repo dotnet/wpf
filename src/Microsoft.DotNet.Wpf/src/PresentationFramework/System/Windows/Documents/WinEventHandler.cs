@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using MS.Win32;
 
@@ -31,11 +30,6 @@ namespace System.Windows.Documents
         #region Constructors
 
         // ctor that takes a range of events
-        /// <SecurityNote>
-        /// Critical - as this calls the setter for _winEventProc.Value.
-        /// Safe - as this doesn't allow an arbitrary value to be set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal WinEventHandler(int eventMin, int eventMax)
         {
             _eventMin = eventMin;
@@ -77,11 +71,6 @@ namespace System.Windows.Documents
         {
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code frees the gchandle and is critical because it calls GCHandle
-        ///     TreatAsSafe: Ok to call free on a handle that we have allocated
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void Clear()
         {
             // Make sure that the hooks is uninitialzied.
@@ -95,13 +84,6 @@ namespace System.Windows.Documents
         }
 
         // install WinEvent hook and start getting the callback.
-        /// <SecurityNote>
-        /// Critical - as this calls SetWinEventHook which has a SUC on it and also calls
-        ///            the setter for _hHook.
-        /// Safe - as this does not allow an arbitrary method to be set up as a hook and
-        ///        also doesn't allow an aribtrary value to be set on _hHook.Value.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Start()
         {
             if (_gchThis.IsAllocated)
@@ -116,13 +98,6 @@ namespace System.Windows.Documents
         }
 
         // uninstall WinEvent hook.
-        /// <SecurityNote>
-        /// Critical - as this calls UnhookWinEvent which has a SUC on it and also
-        ///            calls the setter for _hHook.Value.
-        /// Safe - as this does not allow an arbitrary hook to be removed and sets
-        ///        _hHook.Value to IntPtr.Zero which is safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Stop()
         {
             if (_hHook.Value != IntPtr.Zero )
@@ -159,12 +134,6 @@ namespace System.Windows.Documents
 
         private sealed class WinEventHandlerShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public WinEventHandlerShutDownListener(WinEventHandler target)
                 : base(target, ShutDownEvents.DispatcherShutdown)
             {

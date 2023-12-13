@@ -81,7 +81,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(LeftProperty);
         }
 
@@ -93,7 +93,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Canvas.LeftProperty" />
         public static void SetLeft(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(LeftProperty, length);
         }
 
@@ -107,7 +107,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetTop(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(TopProperty);
         }
 
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Canvas.TopProperty" />
         public static void SetTop(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(TopProperty, length);
         }
 
@@ -133,7 +133,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetRight(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(RightProperty);
         }
 
@@ -145,7 +145,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Canvas.RightProperty" />
         public static void SetRight(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(RightProperty, length);
         }
 
@@ -159,7 +159,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren()]
         public static double GetBottom(UIElement element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             return (double)element.GetValue(BottomProperty);
         }
 
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Canvas.BottomProperty" />
         public static void SetBottom(UIElement element, double length)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(BottomProperty, length);
         }
 
@@ -303,7 +303,7 @@ namespace System.Windows.Controls
                 //If Left is not specified, then Right is used
                 //If both are not there, then 0
                 double left = GetLeft(child);
-                if(!DoubleUtil.IsNaN(left)) 
+                if(!double.IsNaN(left)) 
                 {
                     x = left; 
                 }
@@ -311,14 +311,14 @@ namespace System.Windows.Controls
                 {
                     double right = GetRight(child);
 
-                    if(!DoubleUtil.IsNaN(right)) 
+                    if(!double.IsNaN(right)) 
                     {
                         x = arrangeSize.Width - child.DesiredSize.Width - right;
                     }
                 }
                 
                 double top = GetTop(child);
-                if(!DoubleUtil.IsNaN(top)) 
+                if(!double.IsNaN(top)) 
                 {
                     y = top; 
                 }
@@ -326,7 +326,7 @@ namespace System.Windows.Controls
                 {
                     double bottom = GetBottom(child);
 
-                    if(!DoubleUtil.IsNaN(bottom)) 
+                    if(!double.IsNaN(bottom)) 
                     {
                         y = arrangeSize.Height - child.DesiredSize.Height - bottom;
                     }

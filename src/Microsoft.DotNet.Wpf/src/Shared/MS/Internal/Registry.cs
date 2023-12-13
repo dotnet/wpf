@@ -6,7 +6,6 @@ using System;
 using MS.Internal;
 using MS.Internal.WindowsBase;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32;
 
 //****** 
@@ -44,14 +43,9 @@ namespace MS.Internal
             FRAMEWORK_RegKey_FullPath  = @"HKEY_LOCAL_MACHINE\" + FRAMEWORK_RegKey,
             FRAMEWORK_InstallPath_RegValue = "InstallPath";
 
-        /// <SecurityNote>
-        /// Critical: Reads an arbitrary registry key.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static bool ReadLocalMachineBool(string key, string valueName)
         {
             string keyPath = "HKEY_LOCAL_MACHINE\\" + key;
-            new RegistryPermission(RegistryPermissionAccess.Read, keyPath).Assert();
             object value = Registry.GetValue(keyPath, valueName, null);
             return value is int && (int)value != 0;
         }

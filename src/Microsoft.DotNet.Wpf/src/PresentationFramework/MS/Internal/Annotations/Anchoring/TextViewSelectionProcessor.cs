@@ -134,8 +134,7 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart>
             GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(startNode);
 
             List<ContentLocatorPart> res = null;
 
@@ -158,7 +157,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             ContentLocatorPart part = new ContentLocatorPart(TextSelectionProcessor.CharacterRangeElementName);// DocumentPageViewLocatorPart();
             part.NameValuePairs.Add(TextSelectionProcessor.CountAttribute, 1.ToString(NumberFormatInfo.InvariantInfo));
-            part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + 0.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + endOffset.ToString(NumberFormatInfo.InvariantInfo));
+            part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + 0.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + endOffset.ToString(NumberFormatInfo.InvariantInfo));
             part.NameValuePairs.Add(TextSelectionProcessor.IncludeOverlaps, Boolean.TrueString);
 
             res.Add(part);
@@ -177,11 +176,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">locatorPart or startNode are null</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
-
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(locatorPart);
+            ArgumentNullException.ThrowIfNull(startNode);
 
             attachmentLevel = AttachmentLevel.Unresolved;
 
@@ -274,12 +270,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the selection cast to the necessary type</returns>
         private ITextView VerifySelection(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             IServiceProvider provider = selection as IServiceProvider;
             if (provider == null)
-                throw new ArgumentException(SR.Get(SRID.SelectionMustBeServiceProvider), "selection");
+                throw new ArgumentException(SR.SelectionMustBeServiceProvider, "selection");
 
             ITextView textView = provider.GetService(typeof(ITextView)) as ITextView;
 
@@ -297,7 +292,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // ContentLocator part types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames = new XmlQualifiedName[0];
+        private static readonly XmlQualifiedName[] LocatorPartTypeNames = Array.Empty<XmlQualifiedName>();
 
         #endregion Private Fields
     }

@@ -9,7 +9,6 @@
 
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System;
 using System.IO;
 
@@ -18,11 +17,6 @@ namespace MS.Internal.Shaping
     /// <remarks>
     /// Correct algorithm for multiple substitution hasn't been implemented yet.
     /// </remarks>
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal struct SingleSubstitutionSubtable
     {
         private const int offsetFormat = 0;
@@ -120,11 +114,6 @@ namespace MS.Internal.Shaping
     }
 
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]      
     internal struct LigatureSubstitutionSubtable
     {
         private const int offsetFormat = 0;
@@ -156,11 +145,6 @@ namespace MS.Internal.Shaping
         }
 
 #region Ligature Substitution subtable private structures        
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]  
         private struct LigatureSetTable
         {
             private const int offsetLigatureCount = 0;
@@ -183,11 +167,6 @@ namespace MS.Internal.Shaping
             private int offset;
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]  
         private struct LigatureTable
         {
             private const int offsetLigatureGlyph = 0;
@@ -427,11 +406,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal struct MultipleSubstitutionSequenceTable
     {
         private const int offsetGlyphCount = 0;
@@ -452,11 +426,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
     
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal struct MultipleSubstitutionSubtable
     {
         private const int offsetFormat = 0;
@@ -582,11 +551,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]      
     struct AlternateSubstitutionSubtable
     {
         private const int offsetFormat              = 0;
@@ -623,11 +587,6 @@ namespace MS.Internal.Shaping
                                         );
         }
 
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]  
         private struct AlternateSetTable
         {
             private const int offsetGlyphCount = 0;

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // 
 // Description: This class is used to pass necessary information to any listener
@@ -10,6 +10,7 @@
 //              different DPI, or the dpi of the current monitor changes.
 
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 using System.Windows.Interop;
@@ -43,16 +44,12 @@ namespace System.Windows
         /// <param name="lParam">
         /// A pointer to a RECT structure that provides the size and position of the suggested window, scaled for the new DPI.
         /// </param>    
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical function *PtrToStructure*
-        /// </SecurityNote>
-        [SecurityCritical]
         [Obsolete]
         internal HwndDpiChangedEventArgs(double oldDpiX, double oldDpiY, double newDpiX, double newDpiY, IntPtr lParam) : base(false)
         {
             OldDpi = new DpiScale(oldDpiX / DpiUtil.DefaultPixelsPerInch, oldDpiY / DpiUtil.DefaultPixelsPerInch);
             NewDpi = new DpiScale(newDpiX / DpiUtil.DefaultPixelsPerInch, newDpiY / DpiUtil.DefaultPixelsPerInch);
-            NativeMethods.RECT suggestedRect = (NativeMethods.RECT)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.RECT));
+            NativeMethods.RECT suggestedRect = Marshal.PtrToStructure<NativeMethods.RECT>(lParam);
             this.SuggestedRect = new Rect((double)suggestedRect.left, (double)suggestedRect.top, (double)suggestedRect.Width, (double)suggestedRect.Height);
         }
 

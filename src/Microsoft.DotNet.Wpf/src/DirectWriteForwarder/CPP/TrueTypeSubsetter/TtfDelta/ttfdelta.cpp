@@ -34,7 +34,6 @@
 #include "modsbit.h"
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 TTCOffsetTableOffset(
     /* 0 */ CONST unsigned char * puchSrcBuffer, /* input TTF or TTC buffer */
     /* 1 */ CONST unsigned long ulSrcBufferSize, /* size of input TTF or TTC buffer data */
@@ -69,7 +68,6 @@ uint32 ulOffset;
     return errCode;
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 ExitCleanup(int16 errCode)
 {
     Mem_End();
@@ -77,7 +75,6 @@ PRIVATE int16 ExitCleanup(int16 errCode)
 }
 /* ------------------------------------------------------------------- */
 
-[System::Security::SecurityCritical]
 PRIVATE int16 CopyOffsetDirectoryTables(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                                        TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                                        uint16 usFormat, 
@@ -193,7 +190,6 @@ int16 errCode;
     return(errCode);
 }
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 CopyForgottenTables( CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, 
                                  TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                                  uint32 * pulNewOutOffset )
@@ -257,7 +253,6 @@ char szTag[5];
 /* ---------------------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void FillGlyphIndexArray(
                             __in_ecount(usGlyphListCount) CONST uint8 *puchKeepGlyphList, 
                             CONST uint16 usGlyphListCount,
@@ -279,7 +274,6 @@ uint16 usGlyphIndex = 0;
 /* ------------------------------------------------------------------- */
 /* call this at the very end, before tables. */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 CompactMaxpLocaTable(TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                                  uint8 *puchKeepGlyphList, 
                                  uint16 usGlyphListCount, 
@@ -372,7 +366,6 @@ HEAD Head;
   8. Re-calculate file checksum and update head table
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 UpdatePrivateTable(TTFACC_FILEBUFFERINFO *pOutputBufferInfo, 
                                 uint32 *pulNewOutOffset, 
                                 CONST uint16 * pusGlyphIndexArray, 
@@ -434,7 +427,6 @@ uint16 usBytesWritten;
 /*                in addition any array tables (LTSH, loca, hmtx, hdmx, vmtx) will have a percentage discarded */
 /* Format Delta will keep only a list of tables, and the Subset1 compacted and Glyf tables will keep only a portion */
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void CalcOutputBufferSize(CONST_TTFACC_FILEBUFFERINFO *pInputBufferInfo,
                                  uint16 usGlyphListCount,
                                  uint16 usGlyphKeepCount,
@@ -534,7 +526,6 @@ uint32 ulKeepTablesLength = 0;
                                    typedef void *(CFP_REALLOCPROC) (void *, size_t );
     void *lpvReserved
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 CreateDeltaTTF(CONST uint8 * puchSrcBuffer,
             CONST uint32 ulSrcBufferSize,
             uint8 ** ppuchDestBuffer,
@@ -698,7 +689,6 @@ int16 CreateDeltaTTF(CONST uint8 * puchSrcBuffer,
     return errCode;
 }
 
-[System::Security::SecurityCritical]
 int16 CreateDeltaTTFEx(CONST uint8 * puchSrcBuffer,
             CONST uint32 ulSrcBufferSize,
             uint8 ** ppuchDestBuffer,
@@ -800,6 +790,12 @@ CONST_TTFACC_FILEBUFFERINFO InputBufferInfo;
     OutputBufferInfo.ulBufferSize = *pulDestBufferSize;
     OutputBufferInfo.ulOffsetTableOffset = 0;
     OutputBufferInfo.lpfnReAllocate = lpfnReAllocate;  /* for reallocation */
+
+    // If OutputBufferInfo.puchBuffer goes through a realloc call that moves it, the original buffer pointed to by
+    // *ppuchDestBuffer will be de-allocated.  If there is then an error condition in the call-chain, we can end up
+    // returning a pointer to the de-allocated buffer.  Callers may then double free the buffer as they are none the wiser.
+    // Setting *ppuchDestBuffer to NULL allows us to return NULL in the error case and the non-error case still works as before.
+    *ppuchDestBuffer = NULL;
 
     if (usFormat == TTFDELTA_SUBSET1 || usFormat == TTFDELTA_DELTA)   /* if we will be trying to compact the font */
         usDttfGlyphIndexCount = usGlyphKeepCount;

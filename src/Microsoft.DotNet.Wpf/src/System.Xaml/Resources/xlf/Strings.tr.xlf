@@ -988,8 +988,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Erişilebilir oluşturucular olmadığından �{0}� türündeki nesneler okunamadı. XAML'de bu türün kullanılmasına olanak tanımak için varsayılan bir oluşturucu ekleyin, ConstructorArgumentAttribute kullanın veya bir InstanceDescriptor sağlayın.</target>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Erişilebilir oluşturucular olmadığından '{0}' türündeki nesneler okunamadı. XAML'de bu türün kullanılmasına olanak tanımak için varsayılan bir oluşturucu ekleyin, ConstructorArgumentAttribute kullanın veya bir InstanceDescriptor sağlayın.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
         <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
-        <target state="translated">Nesne grafiği '{0}' türünün bir örneğine birden çok başvuru içeriyor ve seri hale getirici örneği yazmak için genel olarak görünür olan bir konum bulamadı. Ad kapsamlarını kullanımınızı incelemelisiniz.</target>
+        <target state="translated">Nesne grafı '{0}' türünün bir örneğine birden çok başvuru içeriyor ve seri hale getirici örneği yazmak için genel olarak görünür olan bir konum bulamadı. Ad kapsamlarını kullanımınızı incelemelisiniz.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
@@ -1050,11 +1050,6 @@
       <trans-unit id="OpenPropertyInCurrentFrame_SM">
         <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
         <target state="translated">XAML Düğüm Akışı: StartMember '{2}' öncesinde '{0}.{1}' için EndMember yok.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">Döngüsel bağımlılık nedeniyle MarkupExtension.ProvideValue çağrılamıyor. MarkupExtension'ın içindeki özellikler, MarkupExtension'ın sonucuna başvurun nesneler başvuruda bulunamaz. Etkilenen MarkupExtension öğeleri:</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">

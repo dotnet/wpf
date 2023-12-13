@@ -29,14 +29,8 @@ namespace System.Windows
         /// <param name="resourceId">A unique ID to differentiate this key from others associated with this type.</param>
         public ComponentResourceKey(Type typeInTargetAssembly, object resourceId)
         {
-            if (typeInTargetAssembly == null)
-            {
-                throw new ArgumentNullException("typeInTargetAssembly");
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException("resourceId");
-            }
+            ArgumentNullException.ThrowIfNull(typeInTargetAssembly);
+            ArgumentNullException.ThrowIfNull(resourceId);
 
             _typeInTargetAssembly = typeInTargetAssembly;
             _typeInTargetAssemblyInitialized = true;
@@ -57,13 +51,10 @@ namespace System.Windows
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (_typeInTargetAssemblyInitialized)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ChangingTypeNotAllowed));
+                    throw new InvalidOperationException(SR.ChangingTypeNotAllowed);
                 }
                 _typeInTargetAssembly = value;
                 _typeInTargetAssemblyInitialized = true;
@@ -95,7 +86,7 @@ namespace System.Windows
             {
                 if (_resourceIdInitialized)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ChangingIdNotAllowed));
+                    throw new InvalidOperationException(SR.ChangingIdNotAllowed);
                 }
                 _resourceId = value;
                 _resourceIdInitialized = true;
@@ -133,15 +124,8 @@ namespace System.Windows
         ///     return string representation of this key
         /// </summary>
         /// <returns>the string representation of the key</returns>
-        public override string ToString()
-        {
-            StringBuilder strBuilder = new StringBuilder(256);
-            strBuilder.Append("TargetType=");
-            strBuilder.Append((_typeInTargetAssembly != null) ? _typeInTargetAssembly.FullName : "null");
-            strBuilder.Append(" ID=");
-            strBuilder.Append((_resourceId != null) ? _resourceId.ToString() : "null");
-            return strBuilder.ToString();
-        }
+        public override string ToString() =>
+            string.Create(null, stackalloc char[256], $"TargetType={((_typeInTargetAssembly != null) ? _typeInTargetAssembly.FullName : "null")} ID={((_resourceId != null) ? _resourceId.ToString() : "null")}");
 
         private Type _typeInTargetAssembly;
         private bool _typeInTargetAssemblyInitialized;

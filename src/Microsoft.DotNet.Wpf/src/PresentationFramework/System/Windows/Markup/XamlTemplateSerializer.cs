@@ -18,7 +18,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Security.Permissions;
 using MS.Utility;
 
 #if !PBTCOMPILER
@@ -86,7 +85,6 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For ControlTemplate, this is the styleTargetType.
         ///   For DataTemplate, this is the DataTemplateKey containing the DataType.
         /// </summary>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.InheritanceDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
         {
             object     key = null;
@@ -132,7 +130,7 @@ namespace System.Windows.Markup
                             Exception ex = TemplateKey.ValidateDataType(dataType, null);
                             if (ex != null)
                             {
-                                ThrowException(SRID.TemplateBadDictionaryKey,
+                                ThrowException(nameof(SR.TemplateBadDictionaryKey),
                                                parserContext.LineNumber,
                                                parserContext.LinePosition,
                                                ex);
@@ -155,7 +153,7 @@ namespace System.Windows.Markup
 
             if (key == null)
             {
-                ThrowException(SRID.StyleNoDictionaryKey,
+                ThrowException(nameof(SR.StyleNoDictionaryKey),
                                parserContext.LineNumber,
                                parserContext.LinePosition,
                                null);
@@ -171,7 +169,7 @@ namespace System.Windows.Markup
              int  linePosition,
              Exception innerException)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             XamlParseException parseException;
 
             // Throw the appropriate execption.  If we have line numbers, then we are
@@ -180,7 +178,7 @@ namespace System.Windows.Markup
             if (lineNumber > 0)
             {
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                                   lineNumber.ToString(CultureInfo.CurrentUICulture),
                                   linePosition.ToString(CultureInfo.CurrentUICulture));
                 parseException = new XamlParseException(message, lineNumber, linePosition);

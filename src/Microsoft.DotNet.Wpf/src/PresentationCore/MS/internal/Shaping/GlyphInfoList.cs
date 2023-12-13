@@ -12,7 +12,6 @@ using System;
 using System.Diagnostics;
 using System.Windows.Media.TextFormatting;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 
@@ -75,10 +74,6 @@ namespace MS.Internal.Shaping
         /// <summary>
         /// Set glyph run length (use with care)
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetLength(int length)
         {
             _glyphs.Length = length;

@@ -81,7 +81,7 @@ namespace MS.Internal
 
                  if (serializer == null)
                  {
-                    ThrowException(SRID.ParserNoSerializer,
+                    ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlObjectNode.TypeFullName,
                                    xamlObjectNode.LineNumber,
                                    xamlObjectNode.LinePosition);
@@ -139,7 +139,7 @@ namespace MS.Internal
                 if (_compiler.LocalAssembly == memberInfo.ReflectedType.Assembly &&
                     !xamlPropertyNode.IsDefinitionName)
                 {
-                    ThrowException(SRID.LocalNamePropertyNotAllowed,
+                    ThrowException(nameof(SR.LocalNamePropertyNotAllowed),
                                    memberInfo.ReflectedType.Name,
                                    MarkupCompiler.DefinitionNSPrefix,
                                    xamlPropertyNode.LineNumber,
@@ -403,7 +403,7 @@ namespace MS.Internal
                 (localName.Equals(XamlReaderHelper.DefinitionCodeTag) ||
                  localName.Equals(XamlReaderHelper.DefinitionXDataTag)))
             {
-                MarkupCompiler.ThrowCompilerException(SRID.DefinitionTagNotAllowedAtRoot,
+                MarkupCompiler.ThrowCompilerException(nameof(SR.DefinitionTagNotAllowedAtRoot),
                                                       xmlReader.Prefix,
                                                       localName);
             }
@@ -462,7 +462,7 @@ namespace MS.Internal
                                 bool isLocal = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
                                 if (!isLocal)
                                 {
-                                    MarkupCompiler.ThrowCompilerException(SRID.UnknownGenericType,
+                                    MarkupCompiler.ThrowCompilerException(nameof(SR.UnknownGenericType),
                                                                           MarkupCompiler.DefinitionNSPrefix,
                                                                           xmlReader.Value,
                                                                           localName);
@@ -655,7 +655,7 @@ namespace MS.Internal
                 {
                     if (_isFieldModifierSet)
                     {
-                        ThrowException(SRID.FieldModifierNotAllowed,
+                        ThrowException(nameof(SR.FieldModifierNotAllowed),
                                        MarkupCompiler.DefinitionNSPrefix,
                                        xamlEndAttributesNode.LineNumber,
                                        xamlEndAttributesNode.LinePosition);
@@ -829,7 +829,7 @@ namespace MS.Internal
                 }
                 else if (!_isRootTag)
                 {
-                    ThrowException(SRID.DefinitionAttributeNotAllowed,
+                    ThrowException(nameof(SR.DefinitionAttributeNotAllowed),
                                    MarkupCompiler.DefinitionNSPrefix,
                                    xamlDefAttributeNode.Name,
                                    xamlDefAttributeNode.LineNumber,
@@ -839,8 +839,8 @@ namespace MS.Internal
                 {
                     if (_class == MarkupCompiler.DOT)
                     {
-                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
-                        ThrowException(SRID.InvalidClassName,
+                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOTCHAR);
+                        ThrowException(nameof(SR.InvalidClassName),
                                        MarkupCompiler.DefinitionNSPrefix,
                                        CLASS,
                                        xamlDefAttributeNode.Value,
@@ -855,7 +855,7 @@ namespace MS.Internal
                 {
                     if (_classModifier == MarkupCompiler.DOT)
                     {
-                        ThrowException(SRID.UnknownClassModifier,
+                        ThrowException(nameof(SR.UnknownClassModifier),
                                        MarkupCompiler.DefinitionNSPrefix,
                                        xamlDefAttributeNode.Value,
                                        _compiler.Language,
@@ -869,8 +869,8 @@ namespace MS.Internal
                 {
                     if (_subClass == MarkupCompiler.DOT)
                     {
-                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
-                        ThrowException(SRID.InvalidClassName,
+                        int index = xamlDefAttributeNode.Value.LastIndexOf(MarkupCompiler.DOTCHAR);
+                        ThrowException(nameof(SR.InvalidClassName),
                                        MarkupCompiler.DefinitionNSPrefix,
                                        SUBCLASS,
                                        xamlDefAttributeNode.Value,

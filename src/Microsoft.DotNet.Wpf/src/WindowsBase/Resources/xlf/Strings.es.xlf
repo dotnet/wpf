@@ -934,12 +934,12 @@
       </trans-unit>
       <trans-unit id="ListenerDidNotHandleEvent">
         <source>Listener did not handle requested event.</source>
-        <target state="translated">El agente de escucha no controló el evento solicitado.</target>
+        <target state="translated">El cliente de escucha no controló el evento solicitado.</target>
         <note />
       </trans-unit>
       <trans-unit id="ListenerDidNotHandleEventDetail">
         <source>Listener of type '{0}' registered with event manager of type '{1}', but then did not handle the event. The listener is coded incorrectly.</source>
-        <target state="translated">El agente de escucha del tipo "{0}" se registró con el administrador de eventos del tipo "{1}", pero luego no controló el evento. El agente de escucha está codificado de manera incorrecta.</target>
+        <target state="translated">El cliente de escucha del tipo "{0}" se registró con el administrador de eventos del tipo "{1}", pero luego no controló el evento. El cliente de escucha está codificado de manera incorrecta.</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalValueEnumerationInvalidated">
@@ -1292,11 +1292,6 @@
         <target state="translated">El objeto de referencia especificado entra en conflicto con la referencia específica de paquete predefinida.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">El encabezado de longitud variable en la secuencia de licencias de publicación es de {0} bytes, que supera la longitud máxima de {1} bytes.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">El nombre de tipo '{0}' no tiene el formato esperado 'nombreDeClase, ensamblado'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">
@@ -2099,7 +2089,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Se encontró una relación con el origen de la firma pero falta la parte. Las estructuras de firma del paquete están dañadas.</target>
+        <target state="translated">Se encontró una relación con el origen de la firma pero falta esa parte. La estructura de la firma del paquete está dañada.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text; 
 using MS.Win32; 
-using System.Security.Permissions;
 
 #if PRESENTATIONFRAMEWORK
 

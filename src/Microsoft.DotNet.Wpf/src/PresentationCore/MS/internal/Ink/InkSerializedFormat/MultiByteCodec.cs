@@ -15,7 +15,6 @@ using MS.Internal.Ink.InkSerializedFormat;
 using System.Diagnostics;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -29,7 +28,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         internal MultiByteCodec()
         {
-}
+        }
 
         /// <summary>
         /// Encode
@@ -38,10 +37,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="output"></param>
         internal void Encode(uint data, List<byte> output)
         {
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
+            ArgumentNullException.ThrowIfNull(output);
             while (data > 0x7f)
             {
                 byte byteToAdd = (byte)(0x80 | (byte)data & 0x7f);
@@ -116,10 +112,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal uint SignDecode(byte[] input, int inputIndex, ref int data)
         {
             Debug.Assert(input != null); //already validated at the AlgoModule level
-            if (inputIndex >= input.Length)
-            {
-                throw new ArgumentOutOfRangeException("inputIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);
             uint xfData = 0;
             uint cb = Decode(input, inputIndex, ref xfData);
             data = (0 != (0x01 & xfData)) ? -(int)(xfData >> 1) : (int)(xfData >> 1);

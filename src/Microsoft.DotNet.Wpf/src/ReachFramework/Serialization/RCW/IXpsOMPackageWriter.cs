@@ -23,8 +23,6 @@ namespace System.Windows.Xps.Serialization.RCW
     [Guid("4E2AA182-A443-42C6-B41B-4F8E9DE73FF9")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMPackageWriter
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

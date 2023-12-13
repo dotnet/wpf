@@ -14,7 +14,6 @@ using System.Windows.Media.Animation;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -23,7 +22,7 @@ namespace System.Windows.Media
         #region Constructors        
         public BitmapCacheBrush()
         {
-}
+        }
 
         /// <summary>
         /// VisualBrush Constructor where the image is set to the parameter's value
@@ -366,7 +365,7 @@ namespace System.Windows.Media
         {
             if ((double)value != (double)OpacityProperty.GetDefaultValue(typeof(BitmapCacheBrush)))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BitmapCacheBrush_OpacityChanged));
+                throw new InvalidOperationException(SR.BitmapCacheBrush_OpacityChanged);
             }
             return 1.0;
         }
@@ -375,7 +374,7 @@ namespace System.Windows.Media
         {
             if ((Transform)value != (Transform)TransformProperty.GetDefaultValue(typeof(BitmapCacheBrush)))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BitmapCacheBrush_TransformChanged));
+                throw new InvalidOperationException(SR.BitmapCacheBrush_TransformChanged);
             }
             return null;
         }
@@ -384,7 +383,7 @@ namespace System.Windows.Media
         {
             if ((Transform)value != (Transform)RelativeTransformProperty.GetDefaultValue(typeof(BitmapCacheBrush)))
             {
-                throw new InvalidOperationException(SR.Get(SRID.BitmapCacheBrush_RelativeTransformChanged));
+                throw new InvalidOperationException(SR.BitmapCacheBrush_RelativeTransformChanged);
             }
             return null;
         }

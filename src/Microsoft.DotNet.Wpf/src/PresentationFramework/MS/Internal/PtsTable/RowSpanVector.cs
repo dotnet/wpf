@@ -267,7 +267,7 @@ namespace MS.Internal.PtsTable
         private int _size;                              //  current size of the list
         private int _index;                             //  index used for iteration (GetFirst / GetNext)
         private const int c_defaultCapacity = 8;        //  default capacity
-        private static TableCell[] s_noCells = new TableCell[0];  //  empty array RowSpanVector returns to rows that do not 
+        private static TableCell[] s_noCells = Array.Empty<TableCell>();  //  empty array RowSpanVector returns to rows that do not 
                                                         //  have row spanned cells
         #endregion Private Fields 
 

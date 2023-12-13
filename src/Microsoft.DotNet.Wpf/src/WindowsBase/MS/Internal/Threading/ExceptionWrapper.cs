@@ -10,7 +10,6 @@
 
 using Microsoft.Win32;                       // Registry & ComponentDispatcher & MSG
 using System.Security;                       // CAS
-using System.Security.Permissions;           // Registry permissions
 using System.Runtime.InteropServices;        // SEHException
 using System.Diagnostics;                    // Debug & Debugger
 using System.Threading;

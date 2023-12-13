@@ -18,14 +18,12 @@ namespace MS.Internal
 {
     using System;
     using System.Collections;
-    using System.Security.Permissions;
 
     /// <devdoc>
     ///     This is a hashtable that stores object keys as weak references.
     ///     It monitors memory usage and will periodically scavenge the
     ///     hash table to clean out dead references.
     /// </devdoc>
-    [HostProtection(SharedState = true)]
     internal sealed class WeakObjectHashtable : Hashtable, IWeakHashtable
     {
         private static IEqualityComparer _comparer = new WeakKeyComparer();

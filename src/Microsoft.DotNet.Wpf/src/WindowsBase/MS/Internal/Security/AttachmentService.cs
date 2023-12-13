@@ -33,18 +33,6 @@ internal sealed class AttachmentService : IDisposable
     // Constructors
     //--------------------------------------------------------------------------
 
-    /// <SecurityNote>
-    /// Critical:
-    ///  1) Sets _native
-    ///  2) Calls into _native which is a security suppressed interface
-    ///
-    /// TreatAsSafe:
-    ///  1) This is the only constructor we are safe to set it here to a new 
-    ///     instance of the interface.
-    ///  2) Setting the identity of the client once is a safe use of the
-    ///     interface.
-    /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     private AttachmentService()
     {
         _native = (ISecuritySuppressedIAttachmentExecute)new AttachmentServices();
@@ -60,20 +48,6 @@ internal sealed class AttachmentService : IDisposable
     /// <summary>
     /// This method will invoke IAttachment.SaveWithUI; see MSDN documentation.
     /// </summary>
-    /// <SecurityNote>
-    /// Critical:
-    ///  1) Calls into _native which is a security suppressed interface; the
-    ///     method called may alter the file
-    ///  2) The data provided to the _native method is used for security
-    ///     decisions
-    ///
-    /// NotSafe:
-    ///  1) Only the caller can assert that altering this file is done with
-    ///     user consent
-    ///  2) Only the caller can atest to the veracity of the values being used
-    ///     for security decisions
-    /// </SecurityNote>
-    [SecurityCritical]
     internal static void SaveWithUI(IntPtr parent, Uri source, Uri target)
     {
         using (AttachmentService service = new AttachmentService())
@@ -111,16 +85,6 @@ internal sealed class AttachmentService : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <SecurityNote>
-    /// Critical:
-    ///  1) Accesses (get and set) _native
-    ///  2) Calls Marshal.ReleaseComObject
-    /// 
-    /// TreatAsSafe:
-    ///  1) Does not leak _native and set's it to null (safe)
-    ///  2) Target of Marshal.ReleaseComObject is an object we created
-    /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     private void Dispose(bool disposing)
     {
         if (disposing)
@@ -154,14 +118,6 @@ internal sealed class AttachmentService : IDisposable
     // Private Fields
     //--------------------------------------------------------------------------
 
-    /// <SecurityNote>
-    /// Critical:
-    ///  1) Is the target of a call to Marshal.ReleaseComObject
-    ///  2) It must not change between calls as a sequence of calls to this
-    ///     value is used to set the InternetZone of a locally saved file
-    ///  3) It represents a security suppressed interface (which is critical)
-    /// </SecurityNote>
-    [SecurityCritical]
     private ISecuritySuppressedIAttachmentExecute _native;
 
     private readonly Guid _clientId = new Guid("{D5734190-005C-4d76-B0DD-2FA89BE0B622}");
@@ -201,12 +157,6 @@ internal sealed class AttachmentService : IDisposable
         //      based on the file type.
         //
         //      ClearClientState() will reset any user options stored on the clients behalf.
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) SUC'd
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetClientGuid(ref Guid guid);
 
         //  EVIDENCE properties
@@ -215,12 +165,6 @@ internal sealed class AttachmentService : IDisposable
         //      if FileName was already used for the Check() and Prompt() calls,
         //      and the LocalPath points to a different handler than predicted,
         //      previous trust may be revoked, and the Policy and User trust re-verified.
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) SUC'd
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetLocalPath(string pszLocalPath);
 
         //  FileName - (optional) proposed name (not path) to be used to construct LocalPath
@@ -232,12 +176,6 @@ internal sealed class AttachmentService : IDisposable
         //      used as the primary Zone determinant.  if this is NULL default to the Restricted Zone.
         //      may also be used in the Prompt() UI for the "From" field
         //      may also be sent to handlers that can process URLs
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) SUC'd
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SetSource(string pszSource);
 
         //  Referrer - (optional) Zone determinant for container or link types
@@ -287,12 +225,6 @@ internal sealed class AttachmentService : IDisposable
         //      * may run virus scanners or other trust services to validate the file.
         //          these services may delete or alter the file
         //      * may attach evidence to the LocalPath
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) SUC'd
-        /// </SecurityNote>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
         int SaveWithUI(IntPtr hwnd);
 
         //  ClearClientState() - removes any state that is stored based on the ClientGuid

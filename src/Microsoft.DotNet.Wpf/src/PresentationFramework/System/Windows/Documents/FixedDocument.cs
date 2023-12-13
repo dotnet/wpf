@@ -38,7 +38,6 @@ namespace System.Windows.Documents
     using System.Text;
     using MS.Internal.IO.Packaging;
     using System.Security;
-    using System.Security.Permissions;
 
     using PackUriHelper = System.IO.Packaging.PackUriHelper;
     //=====================================================================
@@ -103,10 +102,7 @@ namespace System.Windows.Documents
         object IServiceProvider.GetService(Type serviceType)
         {
 //             Dispatcher.VerifyAccess();
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -140,10 +136,7 @@ namespace System.Windows.Documents
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 //             Dispatcher.VerifyAccess();
 
@@ -151,7 +144,7 @@ namespace System.Windows.Documents
 
             if (fp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
             }
 
             if (fp.IsInitialized)
@@ -169,7 +162,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PrevoiusPartialPageContentOutstanding));
+                    throw new InvalidOperationException(SR.PrevoiusPartialPageContentOutstanding);
                 }
             }
         }
@@ -338,7 +331,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             if (pageNumber < Pages.Count)
@@ -383,13 +376,10 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             if (pageNumber < Pages.Count)
             {
@@ -417,15 +407,12 @@ namespace System.Windows.Documents
         {
 //             Dispatcher.VerifyAccess();
 
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
 
             FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
             if (fixedTextPointer == null)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition));
+                throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
 
             return fixedTextPointer.FixedTextContainer.GetPageNumber(fixedTextPointer);
@@ -440,10 +427,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 //             Dispatcher.VerifyAccess();
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             GetPageAsyncRequest asyncRequest;
             if (_asyncOps.TryGetValue(userState,out asyncRequest))
@@ -462,16 +446,13 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentNullException">element is NULL.</exception>
         internal ContentPosition GetObjectPosition(Object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
-            
+            ArgumentNullException.ThrowIfNull(o);
+
             DependencyObject element = o as DependencyObject;
 
             if (element == null)
             {
-                throw new ArgumentException(SR.Get(SRID.FixedDocumentExpectsDependencyObject));
+                throw new ArgumentException(SR.FixedDocumentExpectsDependencyObject);
             }
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDF.GetContentPositionForElement({0})", element));
             // Make sure that the call is in the right context.
@@ -694,7 +675,7 @@ namespace System.Windows.Documents
             {
                 if (e is InvalidOperationException || e is ApplicationException)
                 {
-                    ApplicationException ae = new ApplicationException(string.Format(System.Globalization.CultureInfo.CurrentCulture, SR.Get(SRID.ExceptionInGetPage), index), e);
+                    ApplicationException ae = new ApplicationException(string.Format(System.Globalization.CultureInfo.CurrentCulture, SR.ExceptionInGetPage, index), e);
                     throw ae;
                 }
                 else
@@ -731,14 +712,14 @@ namespace System.Windows.Documents
 
             double width = fp.Width;
 
-            if (DoubleUtil.IsNaN(width))
+            if (double.IsNaN(width))
             {
                 fp.Width = _pageWidth;
             }
 
             double height = fp.Height;
 
-            if (DoubleUtil.IsNaN(height))
+            if (double.IsNaN(height))
             {
                 fp.Height = _pageHeight;
             }
@@ -908,7 +889,7 @@ namespace System.Windows.Documents
                         ValidateAndLoadPartFromAbsoluteUri(structureUri, true, "DocumentStructure", out mimeType);
                         if (!_documentStructureContentType.AreTypeAndSubTypeEqual(mimeType))
                         {
-                            throw new FileFormatException(SR.Get(SRID.InvalidDSContentType));
+                            throw new FileFormatException(SR.InvalidDSContentType);
                         }
                         _hasExplicitStructure = true;
                     }
@@ -937,11 +918,11 @@ namespace System.Windows.Documents
                         o = ValidateAndLoadPartFromAbsoluteUri(structureUri, false, null, out mimeType);
                         if (!_storyFragmentsContentType.AreTypeAndSubTypeEqual(mimeType))
                         {
-                            throw new FileFormatException(SR.Get(SRID.InvalidSFContentType));
+                            throw new FileFormatException(SR.InvalidSFContentType);
                         }
                         if (!(o is StoryFragments))
                         {
-                            throw new FileFormatException(SR.Get(SRID.InvalidStoryFragmentsMarkup));
+                            throw new FileFormatException(SR.InvalidStoryFragmentsMarkup);
                         }
                     }
                 }
@@ -990,18 +971,12 @@ namespace System.Windows.Documents
          /// <summary>
         /// Retrieves the Uri for the DocumentStructure from the container's relationship
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Accesses a package from PreloadedPackages
-        /// SecurityTreatAsSafe: No package instance or package related objects being handed out
-        ///             from this method
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
         {
             Uri absTargetUri = null;
             if (contentUri != null && relationshipName != null)
             {
-                Uri partUri = MS.Internal.IO.Packaging.PackUriHelper.GetPartUri(contentUri);
+                Uri partUri = PackUriHelper.GetPartUri(contentUri);
                 if (partUri != null)
                 {
                     Uri packageUri = PackUriHelper.GetPackageUri(contentUri);
@@ -1009,10 +984,7 @@ namespace System.Windows.Documents
 
                     if (package == null)
                     {
-                        if (SecurityHelper.CheckEnvironmentPermission())
-                        {
-                            package = PackageStore.GetPackage(packageUri);
-                        }
+                        package = PackageStore.GetPackage(packageUri);
                     }
 
                     if (package != null)
@@ -1413,10 +1385,7 @@ namespace System.Windows.Documents
         /// </param>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextView))
             {

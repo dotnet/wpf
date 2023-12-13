@@ -1,0 +1,5 @@
+<Project>
+    <!-- Disabling currently in favour of enabling unit tests -->
+    <!-- As of now, 10/07/23 DRTs are already running on build pipelines -->
+    <!-- <Import Project="$(MSBuildThisFileDirectory)WpfArcadeSdk\tools\RunDrtsLocal.targets" Condition="'$(Test)'=='True'" /> -->
+</Project>

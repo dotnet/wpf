@@ -13,7 +13,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -87,7 +86,7 @@ namespace System.Windows.Xps.Serialization
 
             if (v == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "serializedObject", typeof(Visual)));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
             }
 
             IXpsSerializationManagerAsync manager = (IXpsSerializationManagerAsync)SerializationManager;
@@ -240,7 +239,7 @@ namespace System.Windows.Xps.Serialization
 
             if (v == null)
             {
-                throw new ArgumentException(SR.Get(SRID.MustBeOfType, "serializedObject", typeof(Visual)));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
             }
 
             IXpsSerializationManagerAsync manager = (IXpsSerializationManagerAsync)SerializationManager;

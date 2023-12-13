@@ -40,7 +40,7 @@ namespace MS.Internal
         internal CompilerWrapper()
         {
             _mc = new MarkupCompiler();
-            _sourceDir = Directory.GetCurrentDirectory() + "\\";
+            _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
             _nErrors = 0;
         }
 
@@ -128,6 +128,14 @@ namespace MS.Internal
             set { _mc.XamlDebuggingInformation = value; }
         }
 
+        /// <summary>
+        /// Sets the checksum algorithm used in code-behind.
+        /// </summary>
+        internal string ChecksumAlgorithm
+        {
+            set => _mc.ChecksumAlgorithm = value;
+        }
+
         // <summary>
         // Controls how to generate localization information for each xaml file.
         // Valid values: None, CommentsOnly, All.
@@ -199,6 +207,11 @@ namespace MS.Internal
         internal int ErrorTimes
         {
             get { return _nErrors; }
+        }
+
+        internal bool SupportCustomOutputPaths 
+        {
+            set { _mc.SupportCustomOutputPaths = value; }
         }
 
         // <summary>
@@ -294,13 +307,13 @@ namespace MS.Internal
                 // If the exception is a Xml exception, show a pre-asigned error id for it.
                 if (IsXmlException(e.Exception))
                 {
-                    message = SR.Get(SRID.InvalidXml, message);
+                    message = SR.Format(SR.InvalidXml, message);
                     strErrorCode = _taskLogger.ExtractMessageCode(message, out errorText);
                 }
                 else
                 {
                     strErrorCode = _unknownErrorID;
-                    errorText = SR.Get(SRID.UnknownBuildError, errorText);
+                    errorText = SR.Format(SR.UnknownBuildError, errorText);
                 }
             }
 
@@ -350,7 +363,7 @@ namespace MS.Internal
             {
                 newRelativeFilePath = GetResolvedFilePath(sourceFileInfo.OriginalFilePath, ref newSourceDir);
 
-                _taskLogger.LogMessageFromResources(MessageImportance.Low, SRID.FileResolved, sourceFileInfo.OriginalFilePath, newRelativeFilePath, newSourceDir);
+                _taskLogger.LogMessageFromResources(MessageImportance.Low, nameof(SR.FileResolved), sourceFileInfo.OriginalFilePath, newRelativeFilePath, newSourceDir);
             }
 
             if (sourceFileInfo.IsXamlFile)
@@ -358,7 +371,7 @@ namespace MS.Internal
                 //
                 // For Xaml Source file, we need to remove the .xaml extension part.
                 //
-                int fileExtIndex = newRelativeFilePath.LastIndexOf(MarkupCompiler.DOT, StringComparison.Ordinal);
+                int fileExtIndex = newRelativeFilePath.LastIndexOf(MarkupCompiler.DOTCHAR);
                 newRelativeFilePath = newRelativeFilePath.Substring(0, fileExtIndex);
             }
 
@@ -408,7 +421,7 @@ namespace MS.Internal
                 // and put the deepest directory that file is in as the new
                 // SourceDir.
                 //
-                int pathEndIndex = fullFilePath.LastIndexOf("\\", StringComparison.Ordinal);
+                int pathEndIndex = fullFilePath.LastIndexOf(Path.DirectorySeparatorChar);
 
                 newSourceDir = fullFilePath.Substring(0, pathEndIndex + 1);
                 newRelativeFilePath = fullFilePath.Substring(pathEndIndex + 1);

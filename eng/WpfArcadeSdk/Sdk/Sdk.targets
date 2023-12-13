@@ -1,13 +1,19 @@
 <Project>
   <!-- Import Signing.targets before Microsoft.DotNet.Arcade.Sdk -->
   <Import Project="$(WpfArcadeSdkToolsDir)Signing.targets" />
-  
+  <Import Project="$(WpfArcadeSdkToolsDir)SourceLink.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'" />
+
   <Import Project="Sdk.targets" Sdk="Microsoft.DotNet.Arcade.Sdk" />
+  <Import Project="$(WpfArcadeSdkToolsDir)ApiCompat.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)FolderPaths.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.targets"/>
   <Import Project="$(WpfArcadeSdkToolsDir)InlineTasks.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ShippingProjects.targets" />
-  <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" />
+
+  <!-- Disabling currently in favour of enabling unit tests -->
+  <!-- As of now, 10/07/23 DRTs are already running on build pipelines -->
+  <!-- <Import Project="$(WpfArcadeSdkToolsDir)GenerateProgramFileForTests.targets" /> -->
+
   <Import Project="$(WpfArcadeSdkToolsDir)Packaging.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Publishing.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)ReferenceAssembly.targets"/>
@@ -20,8 +26,14 @@
   <Import Project="$(WpfArcadeSdkToolsDir)CodeAnalysis.targets" />
   <Import Project="$(WpfArcadeSdkToolsDir)Wpf.Cpp.targets" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'"/>
   <Import Project="$(NoTargetsTargets)" Condition="'$(NoTargets)'=='true'"/>
-  <Import Project="$(WpfArcadeSdkToolsDir)TestProjects.targets" />
-  
+
+  <!-- Disabling currently in favour of enabling unit tests -->
+  <!-- As of now, 10/07/23 DRTs are already running on build pipelines -->
+  <!-- <Import Project="$(WpfArcadeSdkToolsDir)TestProjects.targets" /> -->
+  <!-- <Import Project="$(WpfArcadeSdkToolsDir)CreateTestPayload.targets" Condition="'$(CreateTestPayload)'=='true'"/> -->
+
+  <Import Project="$(WpfArcadeSdkToolsDir)GenApi.targets"/>
+
   <!-- PresentationBuildTasks related targets files -->
   <Import Project="$(WpfArcadeSdkToolsDir)Pbt.targets" Condition="'$(InternalMarkupCompilation)'=='true'"/>
   <Import Project="$(WpfArcadeSdkToolsDir)NoInternalTypeHelper.targets" />

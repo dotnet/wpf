@@ -388,19 +388,7 @@ namespace MS.Internal.AutomationProxies
             if (!IsRoot)
             {
                 // get our parent's runtime ID
-                int[] parentId;
-                try
-                {
-                    parentId = ((IRawElementProviderFragment)Parent).GetRuntimeId();
-                }
-                catch (System.Security.SecurityException)
-                {
-                    // Partial Trust Winforms apps sometimes return a security error for get_accParent - 
-                    // this prevents us from figuring out where the IAccessible lives in the tree
-                    // or getting a proper runtime ID for it. For now, return a 'fake' runtime ID,
-                    // so clients will at least be able to get name, role, location, etc.
-                    return new int[] { AutomationInteropProvider.AppendRuntimeId, -1 };
-                }
+                int[] parentId = ((IRawElementProviderFragment)Parent).GetRuntimeId();
 
                 if (parentId != null)
                 {
@@ -1227,7 +1215,7 @@ namespace MS.Internal.AutomationProxies
                     throw;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
             }
         }
 

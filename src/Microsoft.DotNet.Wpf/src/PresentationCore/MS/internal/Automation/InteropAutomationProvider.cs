@@ -8,7 +8,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 
@@ -21,14 +20,8 @@ namespace MS.Internal.Automation
 
         internal InteropAutomationProvider(HostedWindowWrapper wrapper, AutomationPeer parent)
         {
-            if (wrapper == null)
-            {
-                throw new ArgumentNullException("wrapper");
-            }
-            if (parent == null)
-            {
-                throw new ArgumentNullException("parent");
-            }
+            ArgumentNullException.ThrowIfNull(wrapper);
+            ArgumentNullException.ThrowIfNull(parent);
 
             _wrapper = wrapper;
             _parent = parent;
@@ -56,29 +49,8 @@ namespace MS.Internal.Automation
             return null;
         }
 
-        /// <SecurityNote>
-        ///     Critical    - Calls critical HostedWindowWrapper.Handle.
-        ///     TreatAsSafe - The reason is described in the following comment by BrendanM
-        ///         HostProviderFromHandle is a public method the APTCA assembly UIAutomationProvider.dll; 
-        ///         ...\windows\AccessibleTech\longhorn\Automation\UIAutomationProvider\System\Windows\Automation\Provider\AutomationInteropProvider.cs
-        ///         This calls through to an internal P/Invoke layer...
-        ///         ...\windows\AccessibleTech\longhorn\Automation\UIAutomationProvider\MS\Internal\Automation\UiaCoreProviderApi.cs
-        ///         Which P/Invokes to unmanaged UIAutomationCore.dll's UiaHostProviderFromHwnd API,
-        ///         ...\windows\AccessibleTech\longhorn\Automation\UnmanagedCore\UIAutomationCoreAPI.cpp
-        ///         Which checks the HWND with IsWindow, and returns  a new MiniHwndProxy instance:
-        ///         ...\windows\AccessibleTech\longhorn\Automation\UnmanagedCore\MiniHwndProxy.cpp
-        ///         
-        ///         MiniHwndProxy does implement the IRawElementProviderSimple interface, but all methods 
-        ///         return NULL or empty values; it does not expose any values or functionality through this. 
-        ///         This object is designed to be an opaque cookie to contain the HWND so that only UIACore 
-        ///         itself can access it. UIACore accesses the HWND by QI'ing for a private GUID, and then 
-        ///         casting the returnd value to MiniHwndProxy, and calling a nonvirtual method to access a 
-        ///         _hwnd field. While managed PT code maybe able to do a QI, the only way it could extract 
-        ///         the _hwnd field would be by using unmanaged code.
-        /// </SecurityNote>
         IRawElementProviderSimple IRawElementProviderSimple.HostRawElementProvider
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return AutomationInteropProvider.HostProviderFromHandle(_wrapper.Handle);
@@ -89,11 +61,6 @@ namespace MS.Internal.Automation
 
         #region IRawElementProviderFragment
 
-        /// <SecurityNote>
-        ///     TreatAsSafe - The reason this method can be treated as safe is because it yeilds information 
-        ///         about the parent provider which can even otherwise be obtained by using public APIs such 
-        ///         as UIElement.OnCreateAutomationPeer and AutomationProvider.ProviderFromPeer.
-        /// </SecurityNote>
         IRawElementProviderFragment IRawElementProviderFragment.Navigate(NavigateDirection direction)
         {
             if (direction == NavigateDirection.Parent)

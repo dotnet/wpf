@@ -21,10 +21,10 @@ namespace MS.Internal
             XElement xelement = new XElement("Dummy");
             PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(xelement);
 
-            s_XElementElementsPropertyDescriptorType = pdc["Elements"]?.GetType();
-            s_XElementDescendantsPropertyDescriptorType = pdc["Descendants"]?.GetType();
-            s_XElementAttributePropertyDescriptorType = pdc["Attribute"]?.GetType();
-            s_XElementElementPropertyDescriptorType = pdc["Element"]?.GetType();
+            s_XElementElementsPropertyDescriptorType = pdc["Elements"].GetType();
+            s_XElementDescendantsPropertyDescriptorType = pdc["Descendants"].GetType();
+            s_XElementAttributePropertyDescriptorType = pdc["Attribute"].GetType();
+            s_XElementElementPropertyDescriptorType = pdc["Element"].GetType();
         }
 
         // return true if the item is an XElement

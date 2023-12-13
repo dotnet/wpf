@@ -25,19 +25,6 @@ namespace System.Windows.Interop
     /// <summary>
     /// Enables scripting support against the HTML DOM for XBAPs using the DLR.
     /// </summary>
-    /// <SecurityNote>
-    /// Instances of this type are directly exposed to partial-trust code through BrowserInteropHelper's
-    /// HostScript property as an entry-point, and subsequently as a result of making dynamic calls on it
-    /// causing wrapping in new instances of this type. All public methods on this type are used by the
-    /// DLR to dispatch dynamic calls. The extent of the security measure taken here is to ensure that
-    /// objects that get wrapped in DynamicScriptObject are safe for scripting, so all operations on them
-    /// are deemed safe as well.
-    /// This class needs to be public in order to make DLR accept it in partial trust. Making it internal
-    /// causes failure followed by fallback to the default binders. Security-wise this should be fine as
-    /// the wrapped script object is protected as SecurityCritical and only settable via the constructor,
-    /// and therefore attempts to call any of the Try* methods with custom binder objects are fine as no
-    /// calls can be made on an untrusted object.
-    /// </SecurityNote>
     public sealed class DynamicScriptObject : DynamicObject
     {
         //----------------------------------------------
@@ -52,20 +39,9 @@ namespace System.Windows.Interop
         /// Wraps the given object in a script object for "dynamic" access.
         /// </summary>
         /// <param name="scriptObject">Object to be wrapped.</param>
-        /// <SecurityNote>
-        ///     Critical - Sets the critical _scriptObject field. It's the responsibility of the caller
-        ///                to ensure the object passed in is safe for scripting. We assume a closed world
-        ///                OM where everything returned from an object that's safe for scripting is still
-        ///                safe for scripting. This knowledge is used in wrapping returned objects in a
-        ///                DynamicScriptObject upon return of a dynamic IDispatch-based call.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal DynamicScriptObject(UnsafeNativeMethods.IDispatch scriptObject)
         {
-            if (scriptObject == null)
-            {
-                throw new ArgumentNullException("scriptObject");
-            }
+            ArgumentNullException.ThrowIfNull(scriptObject);
 
             _scriptObject = scriptObject;
 
@@ -93,10 +69,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(binder.Name, NativeMethods.DISPATCH_METHOD, args);
             return true;
@@ -110,10 +83,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(binder.Name, NativeMethods.DISPATCH_PROPERTYGET, null);
             return true;
@@ -127,10 +97,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             int flags = GetPropertyPutMethod(value);
             object result = InvokeAndReturn(binder.Name, flags, new object[] { value });
@@ -146,15 +113,9 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
-            if (indexes == null)
-            {
-                throw new ArgumentNullException("indexes");
-            }
+            ArgumentNullException.ThrowIfNull(indexes);
 
             // IE supports a default member for indexers. Try that first. This accommodates for indexing
             // in collection types, using a default method called "item".
@@ -192,15 +153,9 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
-            if (indexes == null)
-            {
-                throw new ArgumentNullException("indexes");
-            }
+            ArgumentNullException.ThrowIfNull(indexes);
 
             if (indexes.Length != 1)
             {
@@ -231,10 +186,7 @@ namespace System.Windows.Interop
         /// <returns>true - We never defer behavior to the call site, and throw if invalid access is attempted.</returns>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
-            if (binder == null)
-            {
-                throw new ArgumentNullException("binder");
-            }
+            ArgumentNullException.ThrowIfNull(binder);
 
             result = InvokeAndReturn(null, NativeMethods.DISPATCH_METHOD, args);
             return true;
@@ -296,16 +248,8 @@ namespace System.Windows.Interop
         /// <summary>
         /// Gets the IDispatch script object wrapped by the DynamicScriptObject.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Accesses the critical _scriptObject field.
-        ///     TreatAsSafe - Though the IDispatch object per se is not necessarily safe for scripting, it has
-        ///                   necessary protections built-in on the browser side. The more relevant reason for
-        ///                   marking this as TAS is that invocations of members on the IDispatch interface
-        ///                   required unmanaged code permissions anyway.
-        /// </SecurityNote>
         internal UnsafeNativeMethods.IDispatch ScriptObject
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _scriptObject;
@@ -332,11 +276,6 @@ namespace System.Windows.Interop
         /// <param name="args">Arguments passed to the call.</param>
         /// <param name="result">The raw (not wrapped in DynamicScriptObject) result of the invocation.</param>
         /// <returns>true if the member was found; false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical - Unpacks the critical _scriptObject field on DynamicScriptObject arguments.
-        ///     TreatAsSafe - Objects returned from script are considered safe for scripting.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal unsafe bool TryFindMemberAndInvokeNonWrapped(string memberName, int flags, bool cacheDispId, object[] args, out object result)
         {
             result = null;
@@ -419,15 +358,10 @@ namespace System.Windows.Interop
                             // by the CLR. Therefore we also check for the IsCOMObject property. It also seems
                             // COM interop special-cases DateTime as it's not revealed to be visible by any
                             // of the first two checks below.
-                            if (
-#if NETFX
-                                !Marshal.IsTypeVisibleFromCom(argType) 
-#else
-                                !MarshalLocal.IsTypeVisibleFromCom(argType)
-#endif
-                                && !argType.IsCOMObject && argType != typeof(DateTime))
+                            if (!MarshalLocal.IsTypeVisibleFromCom(argType) && 
+                                !argType.IsCOMObject && argType != typeof(DateTime))
                             {
-                                throw new ArgumentException(SR.Get(SRID.NeedToBeComVisible));
+                                throw new ArgumentException(SR.NeedToBeComVisible);
                             }
                         }
                     }
@@ -564,11 +498,6 @@ namespace System.Windows.Interop
         /// <param name="args">Arguments passed to the call.</param>
         /// <param name="result">The result of the invocation, wrapped in DynamicScriptObject if required.</param>
         /// <returns>true if the member was found; false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the DynamicScriptObject constructor.
-        ///     TreatAsSafe - Objects promoted into DynamicScriptObject are considered safe for scripting.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool TryFindMemberAndInvoke(string memberName, int flags, bool cacheDispId, object[] args, out object result)
         {
             if (!TryFindMemberAndInvokeNonWrapped(memberName, flags, cacheDispId, args, out result))
@@ -593,11 +522,6 @@ namespace System.Windows.Interop
         /// <param name="cacheDispId">true to enable caching of DISPIDs; false otherwise.</param>
         /// <param name="dispid">If the member was found, its DISPID; otherwise, default DISPID_VALUE.</param>
         /// <returns>true if the member was found; false if it wasn't (DISP_E_UNKNOWNNAME).</returns>
-        /// <SecurityNote>
-        ///     Critical - Invokes code on the critical _scriptObject field.
-        ///     TreatAsSafe - Objects promoted into DynamicScriptObject are considered safe for scripting.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool TryGetDispIdForMember(string memberName, bool cacheDispId, out int dispid)
         {
             dispid = NativeMethods.DISPID_VALUE;
@@ -634,11 +558,6 @@ namespace System.Windows.Interop
             return true;
         }
 
-        /// <SecurityNote>
-        ///     Critical - Invokes code on the critical _scriptObject field.
-        ///     TreatAsSafe - Objects promoted into DynamicScriptObject are considered safe for scripting.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private HRESULT InvokeOnScriptObject(int dispid, int flags, NativeMethods.DISPPARAMS dp, NativeMethods.EXCEPINFO exInfo, out object result)
         {
             // If we use reflection to call script code, we need to Assert for the UnmanagedCode permission. 
@@ -724,23 +643,12 @@ namespace System.Windows.Interop
         /// <summary>
         /// Script object to invoke operations on through the "dynamic" feature.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Can be used to script against untrusted objects that are not safe for scripting.
-        ///                If setting this field to an arbitrary value were possible, dynamic calls against
-        ///                the DynamicScriptObject instance would dispatch against objects that could be
-        ///                unsafe for scripting.
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IDispatch _scriptObject;
 
         /// <summary>
         /// Script object to invoke operations on through the "dynamic" feature.
         /// Used in the case of IE, where IDispatchEx is used to tighten security (see InvokeOnScriptObject).
         /// </summary>
-        /// <SecurityNote>
-        /// Same as for _scriptObject field.
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IDispatchEx _scriptObjectEx;
 
         /// <summary>

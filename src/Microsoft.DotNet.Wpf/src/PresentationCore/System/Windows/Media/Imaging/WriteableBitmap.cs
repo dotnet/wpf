@@ -15,7 +15,6 @@ using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
@@ -24,7 +23,6 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Threading;
 
@@ -52,11 +50,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="source">
         ///     The BitmapSource to copy.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: Creates and accesses a handle to an unmanaged resource.
-        ///     PublicOK: Inputs are safe.
-        /// </SecurityNote>
-        [SecurityCritical]
         public WriteableBitmap(
             BitmapSource source
             )
@@ -75,11 +68,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="dpiY">The vertical dots per inch (dpi) of the bitmap.</param>
         /// <param name="pixelFormat">The PixelFormat of the bitmap.</param>
         /// <param name="palette">The BitmapPalette of the bitmap.</param>
-        /// <SecurityNote>
-        ///   Critical: Creates and accesses a handle to an unmanaged resource.
-        ///   PublicOK: Inputs are safe.
-        /// </SecurityNote>
-        [SecurityCritical]
         public WriteableBitmap(
             int pixelWidth,
             int pixelHeight,
@@ -96,24 +84,15 @@ namespace System.Windows.Media.Imaging
             // Sanitize inputs
             //
 
-            if (pixelFormat == null)
-            {
-                // Backwards Compat:
-                //
-                // The original code would null-ref, but we choose to raise a
-                // better exception.
-                throw new ArgumentNullException("pixelFormat");
-            }
-
             if (pixelFormat.Palettized && palette == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_IndexedPixelFormatRequiresPalette));
+                throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
             }
 
             if (pixelFormat.Format == PixelFormatEnum.Extended)
             {
                 // We don't support third-party pixel formats yet.
-                throw new ArgumentException(SR.Get(SRID.Effect_PixelFormat), "pixelFormat");
+                throw new ArgumentException(SR.Effect_PixelFormat, "pixelFormat");
             }
 
             if (pixelWidth < 0)
@@ -190,18 +169,13 @@ namespace System.Windows.Media.Imaging
         ///   AddDirtyRect can only be called while the bitmap is locked, otherwise an
         ///   InvalidOperationException will be thrown.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Accesses a handle to an unmanaged resource.
-        ///   PublicOK: Input dirty rect is sanitized before use.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void AddDirtyRect(Int32Rect dirtyRect)
         {
             WritePreamble();
 
             if (_lockCount == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+                throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
 
             //
@@ -264,12 +238,6 @@ namespace System.Windows.Media.Imaging
         ///     Duration.Automatic is an invalid value.
         /// </param>
         /// <returns>Returns true if the lock is now held, false otherwise.</returns>
-        /// <SecurityNote>
-        ///   Critical: Obtains and stores pointers to unmanaged memory.
-        ///   PublicOK: Pointers are not exposed to caller.  This method
-        ///             should work from partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public bool TryLock(Duration timeout)
         {
             WritePreamble();
@@ -290,7 +258,7 @@ namespace System.Windows.Media.Imaging
 
             if (_lockCount == UInt32.MaxValue)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_LockCountLimit));
+                throw new InvalidOperationException(SR.Image_LockCountLimit);
             }
 
             if (_lockCount == 0)
@@ -348,19 +316,13 @@ namespace System.Windows.Media.Imaging
         ///   This method decrements the lock count, and if it reaches zero will release the
         ///   on the back buffer and request a render pass.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: Releases lock around unmanaged memory.
-        ///   PublicOK: Pointers are not exposed to caller.  This method
-        ///             should work from partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Unlock()
         {
             WritePreamble();
 
             if (_lockCount == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_MustBeLocked));
+                throw new InvalidOperationException(SR.Image_MustBeLocked);
             }
             Invariant.Assert(_lockCount > 0, "Lock count should never be negative!");
 
@@ -389,14 +351,12 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceRect">The rect to copy from the input buffer.</param>
         /// <param name="sourceBuffer">The input buffer used to update the bitmap.</param>
         /// <param name="sourceBufferSize">The size of the input buffer in bytes.</param>
-        /// <param name="sourceBufferStride">The stride of the input buffer in bytes.</param>
+        /// <param name="sourceBufferStride">
+        ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
+        /// </param>
         /// <param name="destinationX">The destination x-coordinate of the left-most pixel to copy.</param>
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
-        /// <SecurityNote>
-        ///   Critical: Accesses critical code, performs unsafe operations.
-        ///   PublicOK: Demands unmanaged code permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             IntPtr    sourceBuffer,
@@ -406,7 +366,6 @@ namespace System.Windows.Media.Imaging
             int       destinationY
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
             WritePreamble();
 
             WritePixelsImpl(sourceRect,
@@ -423,15 +382,12 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="sourceRect">The rect to copy from the input buffer.</param>
         /// <param name="sourceBuffer">The input buffer used to update the bitmap.</param>
-        /// <param name="sourceBufferStride">The stride of the input buffer in bytes.</param>
+        /// <param name="sourceBufferStride">
+        ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
+        /// </param>
         /// <param name="destinationX">The destination x-coordinate of the left-most pixel to copy.</param>
         /// <param name="destinationY">The destination y-coordinate of the top-most pixel to copy.</param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical methods, has unsafe code.
-        ///     PublicOK: The overall operation is safe, and the input is sanitized.
-        ///               This method should work from partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             Array     sourceBuffer,
@@ -454,7 +410,7 @@ namespace System.Windows.Media.Imaging
             // We accept arrays of arbitrary value types - but not reference types.
             if (elementType == null || !elementType.IsValueType)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
             }
 
             // Get the address of the data in the array by pinning it.
@@ -485,12 +441,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceRect">Area to update</param>
         /// <param name="buffer">Input buffer</param>
         /// <param name="bufferSize">Size of the buffer</param>
-        /// <param name="stride">Stride</param>
-        /// <SecurityNote>
-        /// Critical - access critical code, accepts pointer arguments
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
+        /// <param name="stride">Stride of the input buffer</param>
         public unsafe void WritePixels(
             Int32Rect sourceRect,
             IntPtr buffer,
@@ -498,18 +449,10 @@ namespace System.Windows.Media.Imaging
             int stride
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
             WritePreamble();
 
-            if (bufferSize < 1)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize", SR.Get(SRID.ParameterCannotBeLessThan, 1));
-            }
-
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterCannotBeLessThan, 1));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bufferSize);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.IsEmpty || sourceRect.Width <= 0 || sourceRect.Height <= 0)
             {
@@ -543,13 +486,8 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="sourceRect">Area to update</param>
         /// <param name="pixels">Input buffer</param>
-        /// <param name="stride">Stride</param>
+        /// <param name="stride">Stride of the input buffer</param>
         /// <param name="offset">Input buffer offset</param>
-        /// <SecurityNote>
-        /// Critical - This method gets direct access to the input Array's memory.
-        /// PublicOk - Input is a managed buffer which is safe, other inputs are safe as well
-        /// </SecurityNote>
-        [SecurityCritical]
         public void WritePixels(
             Int32Rect sourceRect,
             Array pixels,
@@ -573,20 +511,13 @@ namespace System.Windows.Media.Imaging
                                     out sourceBufferSize, 
                                     out elementType);
 
-            if (stride < 1)
-            {
-                throw new ArgumentOutOfRangeException("stride", SR.Get(SRID.ParameterCannotBeLessThan, 1));
-            }
-
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException("offset", SR.Get(SRID.ParameterCannotBeLessThan, 0));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
             // We accept arrays of arbitrary value types - but not reference types.
             if (elementType == null || !elementType.IsValueType)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_InvalidArrayForPixel));
+                throw new ArgumentException(SR.Image_InvalidArrayForPixel);
             }
             
             checked
@@ -660,11 +591,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Implementation of Freezable.CloneCore.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical code.
-        ///   TreatAsSafe:  Method only produces clones of original buffers.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
@@ -677,11 +603,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Implementation of Freezable.FreezeCore.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical code. (AcquireBackBuffer, FreezeBackBuffer)
-        ///   TreatAsSafe:  Method gets the back buffer, but doesn't expose it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override bool FreezeCore(bool isChecking)
         {
             bool canFreeze = (_lockCount == 0) && base.FreezeCore(isChecking);
@@ -756,11 +677,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Implementation of Freezable.CloneCurrentValueCore.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical code.
-        ///   TreatAsSafe:  Method only produces clones of original buffers.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap) sourceFreezable;
@@ -773,11 +689,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Implementation of Freezable.GetAsFrozenCore.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical code.
-        ///   TreatAsSafe:  Method only produces GetAsFrozen of original buffers.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
@@ -790,11 +701,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Implementation of Freezable.GetCurrentValueAsFrozenCore.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical code.
-        ///   TreatAsSafe:  Method only produces GetCurrentValueAsFrozen of original image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
             WriteableBitmap sourceBitmap = (WriteableBitmap)sourceFreezable;
@@ -825,19 +731,11 @@ namespace System.Windows.Media.Imaging
         /// <param name="source">
         ///     The BitmapSource to copy.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: Creates and accesses a handle to an unmanaged resource.
-        ///     PublicOK: Inputs are safe.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void InitFromBitmapSource(
             BitmapSource source
             )
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (source.PixelWidth < 0)
             {
@@ -879,12 +777,17 @@ namespace System.Windows.Media.Imaging
 
                 Lock();
 
-                Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
-                int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
-                source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
-                AddDirtyRect(rcFull);
-
-                Unlock();
+                try
+                {
+                    Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
+                    int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
+                    source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
+                    AddDirtyRect(rcFull);
+                }
+                finally
+                {
+                    Unlock();
+                }
             }
 
             EndInit();
@@ -904,6 +807,7 @@ namespace System.Windows.Media.Imaging
         /// </param>
         /// <param name="sourceBufferStride">
         ///     The stride of the input buffer in bytes.
+        ///     It indicates where the next row starts in the input buffer.
         /// </param>
         /// <param name="destX">
         ///     The destination x-coordinate of the left-most pixel to copy.
@@ -914,10 +818,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="backwardsCompat">
         ///     Whether or not to preserve the old WritePixels behavior.
         /// </param>
-        /// <SecurityNote>
-        ///   Critical: Accesses critical code, performs unsafe operations.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void WritePixelsImpl(
             Int32Rect sourceRect,
             IntPtr    sourceBuffer,
@@ -931,22 +831,14 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the source rect and assure it will fit within the back buffer.
             //
-            if (sourceRect.X < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterCannotBeNegative));
-            }
-
-            if (sourceRect.Y < 0)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            Debug.Assert(!(backwardsCompat && (sourceRect.X < 0 || sourceRect.Y < 0)));
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.X, nameof(sourceRect));
+            ArgumentOutOfRangeException.ThrowIfNegative(sourceRect.Y, nameof(sourceRect));
 
             if (sourceRect.Width < 0)
             {
                 Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelWidth));
+                throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth));
             }
 
             if (sourceRect.Width > _pixelWidth)
@@ -957,14 +849,14 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelWidth));
+                    throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth));
                 }
             }
 
             if (sourceRect.Height < 0)
             {
                 Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelHeight));
+                throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight));
             }
 
             if (sourceRect.Height > _pixelHeight)
@@ -975,22 +867,22 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelHeight));
+                    throw new ArgumentOutOfRangeException("sourceRect", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight));
                 }
             }
 
-            if (destinationX < 0)
+            if (!backwardsCompat)
             {
-                if (backwardsCompat)
+                ArgumentOutOfRangeException.ThrowIfNegative(destinationX);
+            }
+            else
+            {
+                if (destinationX < 0)
                 {
                     HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
                 }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("sourceRect", SR.Get(SRID.ParameterCannotBeNegative));
-                }
             }
-        
+
             if (destinationX > _pixelWidth - sourceRect.Width)
             {
                 if (backwardsCompat)
@@ -999,7 +891,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("destinationX", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelWidth - sourceRect.Width));
+                    throw new ArgumentOutOfRangeException("destinationX", SR.Format(SR.ParameterMustBeBetween, 0, _pixelWidth - sourceRect.Width));
                 }
             }
 
@@ -1011,7 +903,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("destinationY", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
+                    throw new ArgumentOutOfRangeException("destinationY", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
                 }
             }
 
@@ -1023,7 +915,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("destinationY", SR.Get(SRID.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
+                    throw new ArgumentOutOfRangeException("destinationY", SR.Format(SR.ParameterMustBeBetween, 0, _pixelHeight - sourceRect.Height));
                 }
             }
 
@@ -1040,11 +932,8 @@ namespace System.Windows.Media.Imaging
                 throw new ArgumentNullException(backwardsCompat ? "buffer" : "sourceBuffer");
             }
 
-            if (sourceBufferStride < 1)
-            {
-                Debug.Assert(!backwardsCompat);
-                throw new ArgumentOutOfRangeException("sourceBufferStride", SR.Get(SRID.ParameterCannotBeLessThan, 1));
-            }
+            Debug.Assert(!(backwardsCompat && sourceBufferStride < 1));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(sourceBufferStride);
 
             if (sourceRect.Width == 0 || sourceRect.Height == 0)
             {
@@ -1067,7 +956,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.Image_InsufficientBufferSize), "sourceBufferSize");
+                        throw new ArgumentException(SR.Image_InsufficientBufferSize, "sourceBufferSize");
                     }
                 }
 
@@ -1100,20 +989,27 @@ namespace System.Windows.Media.Imaging
 
                     Lock();
 
-                    MILUtilities.MILCopyPixelBuffer(
-                        pDest,
-                        outputBufferSize,
-                        (uint) _backBufferStride.Value,
-                        destBufferBitOffset,
-                        pSource,
-                        inputBufferSize,
-                        (uint) sourceBufferStride,
-                        sourceBufferBitOffset,
-                        (uint) sourceRect.Height,
-                        copyWidthInBits);
-
-                    AddDirtyRect(destinationRect);
-                    Unlock();
+                    try
+                    {
+                        MILUtilities.MILCopyPixelBuffer(
+                            pDest,
+                            outputBufferSize,
+                            (uint) _backBufferStride.Value,
+                            destBufferBitOffset,
+                            pSource,
+                            inputBufferSize,
+                            (uint) sourceBufferStride,
+                            sourceBufferBitOffset,
+                            (uint) sourceRect.Height,
+                            copyWidthInBits);
+                        AddDirtyRect(destinationRect);
+                    }
+                    finally
+                    {
+                        // MILUtilities.MILCopyPixelBuffer may throw ArgumentException (e.g. for invalid stride)
+                        // See https://github.com/dotnet/wpf/issues/8134
+                        Unlock();
+                    }
                 }
             }
 
@@ -1134,10 +1030,6 @@ namespace System.Windows.Media.Imaging
         ///   Should we try to wait for the copy completed event?
         /// </param>        
         /// <returns>Returns true if the back buffer was acquired before the timeout expired.</returns>
-        /// <SecurityNote>
-        ///   Critical: Accesses a handle to an unmanaged resource.
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool AcquireBackBuffer(TimeSpan timeout, bool waitForCopy)
         {
             bool backBufferAcquired = false;
@@ -1183,10 +1075,6 @@ namespace System.Windows.Media.Imaging
         ///   GetAsFrozenCore(), and GetCurrentValueAsFrozenCore().
         /// </summary>
         /// <param name="sourceBitmap">The WriteableBitmap to copy from.</param>
-        /// <SecurityNote>
-        ///   Critical: Accesses a handle to an unmanaged resource.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void CopyCommon(WriteableBitmap sourceBitmap)
         {
             // Avoid Animatable requesting resource updates for invalidations
@@ -1216,10 +1104,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Prepare the bitmap to accept initialize paramters.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:     Access critical resources.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EndInit()
         {
             _bitmapInit.EndInit();
@@ -1230,10 +1114,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Create the unmanaged resources.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             IsSourceCached = true;
@@ -1253,10 +1133,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceBufferSize">
         ///     On output, will contain the size of the array.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical - Calls Marshal.SizeOf, which has a link demand for some reason.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ValidateArrayAndGetInfo(Array sourceBuffer,
                                                        bool backwardsCompat,
                                                        out int elementSize,
@@ -1283,7 +1159,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.Image_InsufficientBuffer), "sourceBuffer");
+                        throw new ArgumentException(SR.Image_InsufficientBuffer, "sourceBuffer");
                     }
                 }
                 else
@@ -1309,7 +1185,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.Image_InsufficientBuffer), "sourceBuffer");
+                        throw new ArgumentException(SR.Image_InsufficientBuffer, "sourceBuffer");
                     }
                 }
                 else
@@ -1325,7 +1201,7 @@ namespace System.Windows.Media.Imaging
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank), backwardsCompat ? "pixels" : "sourceBuffer");
+                throw new ArgumentException(SR.Collection_BadRank, backwardsCompat ? "pixels" : "sourceBuffer");
             }
         }
 
@@ -1404,12 +1280,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="skipOnChannelCheck">
         ///   If this is true, we know we are on channel and don't need to explicitly check.
         /// </param>
-        /// <SecurityNote>
-        ///   Critical:     Accesses a handle to an unmanaged resource.  Calls critical methods.
-        ///   TreateAsSafe: We allocate the double buffered bitmap ourself and the user can never
-        ///                 get ahold of it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateBitmapSourceResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             //
@@ -1491,11 +1361,6 @@ namespace System.Windows.Media.Imaging
         ///   For the packet to be sent, the user must have added a dirty region to the
         ///   WriteableBitmap and there must be no outstanding locks.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical:     Accesses critical methods and a handle to an unmanaged resource.
-        ///   TreatAsSafe:  Inputs are supplied internally.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnCommittingBatch(object sender, EventArgs args)
         {
             Debug.Assert(_isWaitingForCommit);  // How else are we here?
@@ -1574,39 +1439,23 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///   Read-only data pointer to the back buffer.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:  Accesses back buffer pointer.
-        ///   PublicOK:  Demands unmanaged code permission.
-        /// </SecurityNote>
         public IntPtr BackBuffer
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 ReadPreamble();
 
                 return _backBuffer;
             }
 
-            [SecurityCritical]
             private set
             {
                 _backBuffer = value;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: The pointer to the back buffer pixels.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _backBuffer;
 
-        /// <SecurityNote>
-        ///     Critical: The size of the back buffer.  Should never be exposed
-        ///     to external parties.
-        /// </SecurityNote>
-        [SecurityCritical]
         private uint _backBufferSize;
 
         /// <summary>
@@ -1622,35 +1471,16 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Sets the back buffer stride, which is important for
-        ///               internal pointer arithmetic calculations.
-        /// </SecurityNote>
         private SecurityCriticalDataForSet<int> _backBufferStride;
 
         #endregion // Properties
 
         #region Fields
 
-        /// <SecurityNote>
-        ///     Critical: The pointer to the IMILSwDoubleBufferedBitmap
-        ///               interface that manages the back and front buffers.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _pDoubleBufferedBitmap;   // CSwDoubleBufferedBitmap
 
-        /// <SecurityNote>
-        ///     Critical: The pointer to the IWICWGXBitmapLock interface that
-        ///               provides access to the back buffer pointer.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeMILHandle _pBackBufferLock;         // IWICBitmapLock
 
-        /// <SecurityNote>
-        ///     Critical: The pointer to the IMILBitmap interface that is the
-        ///               back buffer.
-        /// </SecurityNote>
-        [SecurityCritical]
         private BitmapSourceSafeMILHandle _pBackBuffer; // IWICBitmap
 
         private uint _lockCount = 0;

@@ -19,7 +19,6 @@ namespace MS.Internal
 {
     using System;
     using System.Security; 
-    using System.Security.Permissions; 
     using Microsoft.Win32;
     using System.Diagnostics;
     using System.Windows;
@@ -42,12 +41,6 @@ namespace MS.Internal
         /// <summary>
         /// Static ctor.  Initializes the Strict property.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - this function elevates to read from the registry. 
-        /// TreatAsSafe - Not controllable from external input. 
-        ///               The information stored indicates whether invariant behavior is "strict" or not. Considered safe. 
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static Invariant()
         {
             _strict = _strictDefaultValue;
@@ -56,25 +49,16 @@ namespace MS.Internal
             //
             // Let the user override the inital value of the Strict property from the registry.
             //
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
 
-            new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\" + RegistryKeys.WPF).Assert(); 
-            try
+            if (key != null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
+                object obj = key.GetValue("InvariantStrict");
 
-                if (key != null)
+                if (obj is int)
                 {
-                    object obj = key.GetValue("InvariantStrict");
-
-                    if (obj is int)
-                    {
-                        _strict = (int)obj != 0;
-                    }
+                    _strict = (int)obj != 0;
                 }
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAll(); 
             }
 #endif // PRERELEASE
         }
@@ -98,18 +82,6 @@ namespace MS.Internal
         /// If condition is false, raises an assert dialog then shuts down the
         /// process unconditionally.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition)
         {
             if (!condition)
@@ -130,18 +102,6 @@ namespace MS.Internal
         /// <param name="invariantMessage">
         /// Message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition, string invariantMessage)
         {
             if (!condition)
@@ -165,18 +125,6 @@ namespace MS.Internal
         /// <param name="detailMessage">
         /// Additional message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process 
-        ///     TreatAsSafe: This code is safe to call.
-        ///                  Note that if this code were ever to become public,
-        ///                  we have a potential denial-of-service vulnerability.
-        ///                  Passing in false shuts down the process, even in
-        ///                  partial trust.  However, not shutting down in
-        ///                  partial trust is even worse: by definition a false condition
-        ///                  means we've hit a bug in avalon code and we cannot safely
-        ///                  continue.
-        /// </SecurityNote>
-        // [SecurityCritical, SecurityTreatAsSafe] - Removed for performance, OK so long as this class remains internal
         internal static void Assert(bool condition, string invariantMessage, string detailMessage)
         {
             if (!condition)
@@ -248,13 +196,6 @@ namespace MS.Internal
         /// <param name="detailMessage">
         ///     Additional message to display before shutting down the application.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code will close the current process.
-        ///     TreatAsSafe: This code is safe to call.
-        ///         Note that if this code were made to be callable publicly,
-        ///         we would have a potential denial-of-service vulnerability.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private // DO NOT MAKE PUBLIC OR INTERNAL -- See security note
             static void FailFast(string message, string detailMessage)
         {
@@ -268,7 +209,7 @@ namespace MS.Internal
 
             Debug.Assert(false, "Invariant failure: " + message, detailMessage);
 
-            Environment.FailFast(SR.Get(SRID.InvariantFailure));
+            Environment.FailFast(SR.InvariantFailure);
         }
 
         #endregion Private Methods
@@ -287,14 +228,8 @@ namespace MS.Internal
         // The dialog may be disabled by
         //   Installing a JIT debugger to the [HKEY_LOCAL_MACHINE\Software\Microsoft\.NETFramework]
         //     DbgJITDebugLaunchSetting and DbgManagedDebugger registry keys.
-        ///<SecurityNote>
-        /// Critical - this function elevates to read from the registry. 
-        /// TreatAsSafe - Not controllable from external input. 
-        ///               The information stored indicates whether dialog override is available or not. Safe to expose
-        ///</SecurityNote>
         private static bool IsDialogOverrideEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 RegistryKey key;
@@ -303,27 +238,15 @@ namespace MS.Internal
                 enabled = false;
 
                 //extracting all the data under an elevation.
-                object dbgJITDebugLaunchSettingValue;
-                string dbgManagedDebuggerValue;
-                PermissionSet ps = new PermissionSet(PermissionState.None);
-                RegistryPermission regPerm = new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\.NetFramework");
-                ps.AddPermission(regPerm);
-                ps.Assert();//BlessedAssert
-                try
-                {
-                    key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
-                    dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                    dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
-                }
-                finally
-                {
-                    PermissionSet.RevertAssert();
-                }
+                key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\.NETFramework");
                 //
                 // Check for the enable.
                 //
                 if (key != null)
                 {
+                    object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
+                    string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
+
                     //
                     // Only count the enable if there's a JIT debugger to launch.
                     //
@@ -349,11 +272,6 @@ namespace MS.Internal
 
         // Property specifying whether or not the user wants to enable expensive
         // verification diagnostics.
-        ///<SecurityNote>
-        /// Critical - this data member required elevated permissions to be set. 
-        /// TreatAsSafe - this data indicates whether "strict" invariant mode is to be used. Considered safe
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe] 
         private static bool _strict;
 
         // Used to initialize the default value of _strict in the static ctor.

@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
@@ -35,21 +34,11 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private class CoInitSafeHandle : SafeMILHandle
         {
-            /// <SecurityNote>
-            /// Critical  - accesses critical code.
-            /// TreatAsSafe - No inputs, does not touch any critical data with external input.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public CoInitSafeHandle()
             {
                 MS.Win32.PresentationCore.UnsafeNativeMethods.WICCodec.CoInitialize(IntPtr.Zero);
             }
 
-            /// <SecurityNote>
-            /// Critical  - accesses critical code.
-            /// TreatAsSafe - No inputs, does not touch any critical data with external input.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             protected override bool ReleaseHandle()
             {
                 MS.Win32.PresentationCore.UnsafeNativeMethods.WICCodec.CoUninitialize();
@@ -68,11 +57,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Uses a SafeFileHandle, which is a SecurityCritical type (in v4).
-        ///     Calls SecurityCritical base class constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal UnknownBitmapDecoder(
             SafeMILHandle decoderHandle,
             BitmapDecoder decoder,

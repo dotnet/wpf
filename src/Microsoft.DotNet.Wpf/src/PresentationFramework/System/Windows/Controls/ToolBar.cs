@@ -365,10 +365,7 @@ namespace System.Windows.Controls
         /// <returns>The property's value.</returns>
         public static bool GetIsOverflowItem(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsOverflowItemProperty);
         }
 
@@ -434,10 +431,7 @@ namespace System.Windows.Controls
         /// <param name="mode">The property value to set</param>
         public static void SetOverflowMode(DependencyObject element, OverflowMode mode)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(OverflowModeProperty, mode);
         }
 
@@ -449,10 +443,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForChildren(IncludeDescendants = true)]
         public static OverflowMode GetOverflowMode(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (OverflowMode)element.GetValue(OverflowModeProperty);
         }
         #endregion
@@ -618,7 +609,7 @@ namespace System.Windows.Controls
             DependencyObject child = GetTemplateChild(ToolBarPanelTemplateName);
             ToolBarPanel toolBarPanel = child as ToolBarPanel;
             if (child != null && toolBarPanel == null)
-                throw new NotSupportedException(SR.Get(SRID.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
+                throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarPanel, child.GetType()));
             return toolBarPanel;
         }
 
@@ -641,7 +632,7 @@ namespace System.Windows.Controls
             DependencyObject child = GetTemplateChild(ToolBarOverflowPanelTemplateName);
             ToolBarOverflowPanel toolBarOverflowPanel = child as ToolBarOverflowPanel;
             if (child != null && toolBarOverflowPanel == null)
-                throw new NotSupportedException(SR.Get(SRID.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
+                throw new NotSupportedException(SR.Format(SR.ToolBar_InvalidStyle_ToolBarOverflowPanel, child.GetType()));
             return toolBarOverflowPanel;
         }
 

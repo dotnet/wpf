@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("1B8EFEC4-3019-4C27-964E-367202156906"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IPrintDocumentPackageTarget
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

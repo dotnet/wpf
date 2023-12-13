@@ -26,7 +26,7 @@ namespace System.Windows.Media.TextFormatting
     /// that will be processed by OpenType layout engine.
     ///
     /// For details see OpenType font specification at
-    ///      http://www.microsoft.com/typography/
+    ///      https://docs.microsoft.com/typography/
     ///
     /// </summary>
     public abstract class TextRunTypographyProperties

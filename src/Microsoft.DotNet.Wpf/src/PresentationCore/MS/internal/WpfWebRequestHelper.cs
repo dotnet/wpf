@@ -15,7 +15,6 @@ using System;
 using System.Net;
 using System.Net.Cache;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 
 using System.Windows.Navigation;
@@ -51,12 +50,6 @@ namespace MS.Internal
 /// </summary>
 static class WpfWebRequestHelper
 {
-    /// <SecurityNote>
-    /// Critical: Elevates to set WebRequest.UseDefaultCredentials.
-    /// Safe: Activates the CustomCredentialPolicy, which makes sure the user's system credentials are not
-    ///     sent across the Internet.
-    /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebRequest CreateRequest(Uri uri)
     {
@@ -65,7 +58,7 @@ static class WpfWebRequestHelper
         //  which is mostly for logging and config.
         // Call PackWebRequestFactory.CreateWebRequest to bypass the regression if possible
         //  by calling Create on PackWebRequest if uri is pack scheme
-        if (string.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+        if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
         {
             return PackWebRequestFactory.CreateWebRequest(uri);
             // The PackWebRequest may end up creating a "real" web request as its inner request.
@@ -79,7 +72,9 @@ static class WpfWebRequestHelper
             uri = new Uri(uri.GetLeftPart(UriPartial.Path));
         }
 
+        #pragma warning disable SYSLIB0014 
         WebRequest request = WebRequest.Create(uri);
+        #pragma warning restore SYSLIB0014 
 
         // It is not clear whether WebRequest.Create() can ever return null, but v1 code make this check in
         // a couple of places, so it is still done here, just in case.
@@ -91,7 +86,7 @@ static class WpfWebRequestHelper
             // occurred. This is the default value for Status."
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(uri);
             throw new WebException(requestUri.ToString(), WebExceptionStatus.RequestCanceled);
-            //throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            //throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -113,9 +108,7 @@ static class WpfWebRequestHelper
 
             // Enable NTLM authentication.
             // This is safe to do thanks to the CustomCredentialPolicy.
-            (new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERNAME")).Assert(); // BlessedAssert
-            try { httpRequest.UseDefaultCredentials = true; }
-            finally { EnvironmentPermission.RevertAssert(); }
+            httpRequest.UseDefaultCredentials = true;
         }
 
         return request;
@@ -158,14 +151,8 @@ static class WpfWebRequestHelper
     private static HttpRequestCachePolicy _httpRequestCachePolicy;
     private static HttpRequestCachePolicy _httpRequestCachePolicyRefresh;
 
-    /// <SecurityNote>
-    /// Critical (getter): Calls the native ObtainUserAgentString().
-    /// Safe: User-agent string is safe to expose. An XBAP could get it by asking the server what the browser
-    ///     sent it initially.
-    /// </SecurityNote>
     internal static string DefaultUserAgent
     {
-        [SecurityCritical, SecurityTreatAsSafe]
         get
         {
             if (_defaultUserAgent == null)
@@ -181,14 +168,6 @@ static class WpfWebRequestHelper
     }
     private static string _defaultUserAgent;
 
-    /// <SecurityNote>
-    /// Critical: Calls the critical CookieHandler.HandleWebResponse(). 
-    ///     We need a secure path for passing authentic, unaltered HttpWebRespones.
-    /// CAUTION: Presently, callers of this method are not required to make any security guarantee about
-    ///     non-HTTP web responses. They will all need to be revised if secure handling of other types of
-    ///     requests/responses becomes necessary.
-    /// </SecurityNote>
-    [SecurityCritical]
     [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
@@ -215,17 +194,6 @@ static class WpfWebRequestHelper
         return GetResponse(request);
     }
 
-    /// <SecurityNote>
-    /// Critical: Calls the critical HandleWebResponse(), which expects unaltered, authentic HttpWebResponses.
-    /// Safe: The response is obtained right here and is passed directly to HandleWebResponse().
-    ///     Even if the given request object is bogus, it cannot produce an HttpWebResponse, because the class 
-    ///     has no public or protected constructor. However, a bogus request could attach to itself an
-    ///     HttpWebResponse from a real request and alter it. This possibility is prevented by a type check.
-    ///     A critical assumption is that HttpWebRequest cannot be derived from and therefore its behavior 
-    ///     cannot be altered (beyond what its public APIs allow, but the security-sensitive ones demand
-    ///     appropriate permission).
-    /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
@@ -241,16 +209,12 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         
         HandleWebResponse(response);
         return response;
     }
-    /// <SecurityNote>
-    /// [See GetResponse()]
-    /// </SecurityNote>
-    [SecurityCritical, SecurityTreatAsSafe]
     [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {
@@ -262,7 +226,7 @@ static class WpfWebRequestHelper
         if (response == null)
         {
             Uri requestUri = BaseUriHelper.PackAppBaseUri.MakeRelativeUri(request.RequestUri);
-            throw new IOException(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+            throw new IOException(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
         }
         HandleWebResponse(response);
         return response;
@@ -317,8 +281,8 @@ static class WpfWebRequestHelper
                     MimeTypeMapper.TextPlainMime.AreTypeAndSubTypeEqual(contentType, true))
                 {
                     string extension = MimeTypeMapper.GetFileExtension(response.ResponseUri);
-                    if ((String.Compare(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) == 0) ||
-                            (String.Compare(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase) == 0))
+                    if (string.Equals(extension, MimeTypeMapper.XamlExtension, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(extension, MimeTypeMapper.XbapExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         contentType = ContentType.Empty;  // Will cause GetMimeTypeFromUri to be called below
                     }

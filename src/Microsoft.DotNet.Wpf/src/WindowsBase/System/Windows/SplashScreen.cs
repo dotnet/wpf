@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Interop;
@@ -20,12 +19,6 @@ using MS.Win32;
 
 namespace System.Windows
 {
-    /// <SecurityNote>
-    /// This class has been reviewed under the assumption that it is not used in partial trust.
-    /// If this changes all methods will need to be re-reviewed.
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
-    [UIPermission(SecurityAction.LinkDemand, Window=UIPermissionWindow.AllWindows)]
     public class SplashScreen
     {
         private IntPtr _hwnd = IntPtr.Zero;
@@ -44,26 +37,13 @@ namespace System.Windows
 
         private const string CLASSNAME = "SplashScreen";
 
-        /// <SecurityNote>
-        ///     Critical - Calls critical ctor overload.
-        /// </SecurityNote>
-        [SecurityCritical]
         public SplashScreen(string resourceName) : this(Assembly.GetEntryAssembly(), resourceName)
         {
         }
 
-        /// <SecurityNote>
-        ///         Critical: Calls Marshal.GetHINSTANCE
-        ///         PublicOK: Does not expose HINSTANCE.
-        ///                   Not available in partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public SplashScreen(Assembly resourceAssembly, string resourceName)
         {
-            if (resourceAssembly == null)
-            {
-                throw new ArgumentNullException("resourceAssembly");
-            }
+            ArgumentNullException.ThrowIfNull(resourceAssembly);
             if (String.IsNullOrEmpty(resourceName))
             {
                 throw new ArgumentNullException("resourceName");
@@ -74,22 +54,11 @@ namespace System.Windows
             _resourceManager = new ResourceManager(name.Name + ".g", resourceAssembly);
         }
 
-        /// <SecurityNote>
-        ///     Critical - Calls critical Show overload.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Show(bool autoClose)
         {
             Show(autoClose, false);
         }
 
-        /// <SecurityNote>
-        ///         Critical: Calls CreateLayeredWindowFromImgBuffer
-        ///         PublicOk: This class is not available in partial trust.
-        ///                   The created window handle is not exposed.
-        ///
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Show(bool autoClose, bool topMost)
         {
             // If we've already been shown it isn't an error to call show
@@ -112,7 +81,11 @@ namespace System.Windows
                         {
                             Dispatcher.CurrentDispatcher.BeginInvoke(
                                 DispatcherPriority.Loaded,
-                                (DispatcherOperationCallback)ShowCallback,
+                                (DispatcherOperationCallback)(arg =>
+                                {
+                                    ((SplashScreen)arg).Close(TimeSpan.FromSeconds(0.3));
+                                    return null;
+                                }),
                                 this);
                         }
                         // The HWND that we just created is owned by this thread.  When we close we should ensure that it 
@@ -122,21 +95,10 @@ namespace System.Windows
                     }
                     else
                     {
-                        throw new IOException(SR.Get(SRID.UnableToLocateResource, _resourceName));
+                        throw new IOException(SR.Format(SR.UnableToLocateResource, _resourceName));
                     }
                 }
             }
-        }
-        
-        /// <SecurityNote>
-        ///     Critical - Calls critical SplashScreen.Close.
-        /// </SecurityNote>
-        [SecurityCritical]
-        private static object ShowCallback(object arg)
-        {
-            SplashScreen splashScreen = (SplashScreen)arg;
-            splashScreen.Close(TimeSpan.FromSeconds(0.3));
-            return null;
         }
 
         // This is 200-300 ms slower than Assembly.GetManifestResourceStream() but works with localization.
@@ -158,11 +120,6 @@ namespace System.Windows
             return _resourceManager.GetStream(resourceName, System.Globalization.CultureInfo.CurrentUICulture);
         }
 
-        /// <SecurityNote>
-        ///         Critical:   Calls UnsafeNativeMethods to create and update a layered window.
-        ///                     Manipulates native objects passed in.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr CreateWindow(NativeMethods.BitmapHandle hBitmap, int width, int height, bool topMost)
         {
             if (_defWndProc == null)
@@ -185,8 +142,9 @@ namespace System.Windows
             _wndClass = MS.Win32.UnsafeNativeMethods.IntRegisterClassEx(wndClass);
             if (_wndClass == 0)
             {
-                if (Marshal.GetLastWin32Error() != 0x582) /* class already registered */
-                    throw new Win32Exception();
+                var lastWin32Error = Marshal.GetLastWin32Error();
+                if (lastWin32Error != 0x582) /* class already registered */
+                    throw new Win32Exception(lastWin32Error);
             }
 
             int screenWidth = MS.Win32.UnsafeNativeMethods.GetSystemMetrics(SM.CXSCREEN);
@@ -204,7 +162,7 @@ namespace System.Windows
             // CreateWindowEx will either succeed or throw
             IntPtr hWnd =  MS.Win32.UnsafeNativeMethods.CreateWindowEx(
                 windowCreateFlags,
-                CLASSNAME, SR.Get(SRID.SplashScreenIsLoading),
+                CLASSNAME, SR.SplashScreenIsLoading,
                 MS.Win32.NativeMethods.WS_POPUP | MS.Win32.NativeMethods.WS_VISIBLE,
                 x, y, width, height,
                 nullHandle, nullHandle, new HandleRef(null, _hInstance), IntPtr.Zero);
@@ -223,8 +181,12 @@ namespace System.Windows
             _blendFunc.SourceConstantAlpha = 255;
             _blendFunc.AlphaFormat = 1; /*AC_SRC_ALPHA*/
 
-            bool result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, newLocation, newSize,
-                memDC, sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            bool result;
+            unsafe
+            {
+                result = UnsafeNativeMethods.UpdateLayeredWindow(hWnd, hScreenDC, &newLocation, &newSize,
+                    memDC, &sourceLocation, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+            }
 
             UnsafeNativeMethods.SelectObject(new HandleRef(null, memDC), hOldBitmap);
             UnsafeNativeMethods.ReleaseDC(new HandleRef(), new HandleRef(null, memDC));
@@ -238,12 +200,6 @@ namespace System.Windows
             return hWnd;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls critical CloseInternal
-        ///     PublicOK: Only the splash screen window can be activated.
-        ///               This class is not available in partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Close(TimeSpan fadeoutDuration)
         {
             object result = null;
@@ -269,10 +225,6 @@ namespace System.Windows
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: P-Invokes SetActiveWindow to make sure the fade out animation is visible (if a fade out is specified)
-        /// </SecurityNote>
-        [SecurityCritical]
         private object CloseInternal(Object fadeOutArg)
         {
             TimeSpan fadeoutDuration = (TimeSpan) fadeOutArg;
@@ -285,7 +237,7 @@ namespace System.Windows
             // In the case where the developer has specified AutoClose=True and then calls
             // Close(non_zero_timespan) before the auto close operation is dispatched we begin
             // the fadeout immidiately and ignore the later call to close.
-            if (_dt != null || _hwnd == null)
+            if (_dt != null || _hwnd == IntPtr.Zero)
             {
                 return BooleanBoxes.TrueBox;
             }
@@ -312,13 +264,6 @@ namespace System.Windows
             return BooleanBoxes.TrueBox;
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls UpdateLayeredWindow to set a new opacity.
-        /// TreatAsSafe: The layered window is not exposed to the user for tampering and setting the opacity of
-        ///              the splash screen is not dangerous.
-        ///              This class is not available in partial trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Fadeout_Tick(object unused, EventArgs args)
         {
             DateTime dtNow = DateTime.UtcNow;
@@ -330,16 +275,13 @@ namespace System.Windows
             {
                 double progress = (_fadeoutEnd - dtNow).TotalMilliseconds / _fadeoutDuration.TotalMilliseconds;
                 _blendFunc.SourceConstantAlpha = (byte)(255 * progress);
-                UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                unsafe
+                {
+                    UnsafeNativeMethods.UpdateLayeredWindow(_hwnd, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref _blendFunc, NativeMethods.ULW_ALPHA);
+                }
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls into UnsafeNativeMethods to free resources
-        ///     TreatAsSafe: Only frees resources allocated by this class and stored privately.
-        ///                  Checks that resource pointers are valid before attempting to free them.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void DestroyResources()
         {
             if (_dt != null)
@@ -378,11 +320,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:   Calls out to WIC to decode the image buffer.
-        ///                 Calls out to several other UnsafeNativeMethods to get DC and create a DDB.
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool CreateLayeredWindowFromImgBuffer(IntPtr pImgBuffer, long cImgBufferLen, bool topMost)
         {
             bool bSuccess = false;

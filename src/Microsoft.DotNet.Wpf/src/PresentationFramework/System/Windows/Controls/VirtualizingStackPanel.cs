@@ -511,6 +511,8 @@ namespace System.Windows.Controls
                     // offset/extent, which ends up scrolling to a "random" place.
                     if (!IsVSP45Compat && Orientation == Orientation.Horizontal)
                     {
+                        IncrementScrollGeneration();
+
                         double delta = Math.Abs(scrollX - oldViewportOffset.X);
                         if (DoubleUtil.LessThanOrClose(delta, ViewportWidth))
                         {
@@ -637,6 +639,8 @@ namespace System.Windows.Controls
                     // offset/extent, which ends up scrolling to a "random" place.
                     if (!IsVSP45Compat && Orientation == Orientation.Vertical)
                     {
+                        IncrementScrollGeneration();
+
                         double delta = Math.Abs(scrollY - oldViewportOffset.Y);
                         if (DoubleUtil.LessThanOrClose(delta, ViewportHeight))
                         {
@@ -927,16 +931,19 @@ namespace System.Windows.Controls
                     // situations where the viewport size has changed)
                     if (!success)
                     {
+                        double computedOffset, maxOffset;
                         if (isHorizontal)
                         {
-                            success = DoubleUtil.GreaterThanOrClose(_scrollData._computedOffset.X,
-                                                                _scrollData._extent.Width - _scrollData._viewport.Width);
+                            computedOffset = _scrollData._computedOffset.X;
+                            maxOffset = _scrollData._extent.Width - _scrollData._viewport.Width;
                         }
                         else
                         {
-                            success = DoubleUtil.GreaterThanOrClose(_scrollData._computedOffset.Y,
-                                                                _scrollData._extent.Height - _scrollData._viewport.Height);
+                            computedOffset = _scrollData._computedOffset.Y;
+                            maxOffset = _scrollData._extent.Height - _scrollData._viewport.Height;
                         }
+                        success = LayoutDoubleUtil.LessThan(maxOffset, computedOffset) ||
+                                  LayoutDoubleUtil.AreClose(maxOffset, computedOffset);
                     }
                 }
             }
@@ -969,7 +976,7 @@ namespace System.Windows.Controls
             else
             {
                 bool remeasure = false;
-                double actualOffset, expectedOffset;
+                double actualOffset, expectedOffset, maxOffset;
 
                 if (isHorizontal)
                 {
@@ -977,12 +984,23 @@ namespace System.Windows.Controls
 
                     actualOffset = _scrollData._computedOffset.X + actualDistanceBetweenViewports;
                     expectedOffset = _scrollData._computedOffset.X + _scrollData._expectedDistanceBetweenViewports;
+                    maxOffset = _scrollData._extent.Width - _scrollData._viewport.Width;
 
-                    if (DoubleUtil.LessThan(expectedOffset, 0) || DoubleUtil.GreaterThan(expectedOffset, _scrollData._extent.Width - _scrollData._viewport.Width))
+                    if (LayoutDoubleUtil.LessThan(expectedOffset, 0) || LayoutDoubleUtil.LessThan(maxOffset, expectedOffset))
                     {
-                        Debug.Assert(DoubleUtil.AreClose(actualOffset, 0) || DoubleUtil.AreClose(actualOffset, _scrollData._extent.Width - _scrollData._viewport.Width), "The actual offset should already be at the beginning or the end.");
-                        _scrollData._computedOffset.X = actualOffset;
-                        _scrollData._offset.X = actualOffset;
+                        // the condition can fail due to estimated sizes in subtrees that contribute
+                        // to FindScrollOffset(_scrollData._firstContainerInViewport) but not to
+                        // _scrollData._extent.  If that happens, remeasure.
+                        if (LayoutDoubleUtil.AreClose(actualOffset, 0) || LayoutDoubleUtil.AreClose(actualOffset, maxOffset))
+                        {
+                            _scrollData._computedOffset.X = actualOffset;
+                            _scrollData._offset.X = actualOffset;
+                        }
+                        else
+                        {
+                            remeasure = true;
+                            _scrollData._offset.X = expectedOffset;
+                        }
                     }
                     else
                     {
@@ -996,12 +1014,23 @@ namespace System.Windows.Controls
 
                     actualOffset = _scrollData._computedOffset.Y + actualDistanceBetweenViewports;
                     expectedOffset = _scrollData._computedOffset.Y + _scrollData._expectedDistanceBetweenViewports;
+                    maxOffset = _scrollData._extent.Height - _scrollData._viewport.Height;
 
-                    if (DoubleUtil.LessThan(expectedOffset, 0) || DoubleUtil.GreaterThan(expectedOffset, _scrollData._extent.Height - _scrollData._viewport.Height))
+                    if (LayoutDoubleUtil.LessThan(expectedOffset, 0) || LayoutDoubleUtil.LessThan(maxOffset, expectedOffset))
                     {
-                        Debug.Assert(DoubleUtil.AreClose(actualOffset, 0) || DoubleUtil.AreClose(actualOffset, _scrollData._extent.Height - _scrollData._viewport.Height), "The actual offset should already be at the beginning or the end.");
-                        _scrollData._computedOffset.Y = actualOffset;
-                        _scrollData._offset.Y = actualOffset;
+                        // the condition can fail due to estimated sizes in subtrees that contribute
+                        // to FindScrollOffset(_scrollData._firstContainerInViewport) but not to
+                        // _scrollData._extent.  If that happens, remeasure.
+                        if (LayoutDoubleUtil.AreClose(actualOffset, 0) || LayoutDoubleUtil.AreClose(actualOffset, maxOffset))
+                        {
+                            _scrollData._computedOffset.Y = actualOffset;
+                            _scrollData._offset.Y = actualOffset;
+                        }
+                        else
+                        {
+                            remeasure = true;
+                            _scrollData._offset.Y = expectedOffset;
+                        }
                     }
                     else
                     {
@@ -1027,6 +1056,9 @@ namespace System.Windows.Controls
                     if (!isVSP45Compat)
                     {
                         CancelPendingAnchoredInvalidateMeasure();
+
+                        // remeasure from the root should use fresh effective offsets
+                        IncrementScrollGeneration();
                     }
 
                     if (!isAnchorOperationPending)
@@ -1157,6 +1189,7 @@ namespace System.Windows.Controls
                     if (fe.IsVisible)
                     {
                         Rect elementRect;
+                        Rect layoutRect;
 
                         // get the vp-position of the element, ignoring the secondary axis
                         // (DevDiv2 1136036, 1203626 show two different cases why we
@@ -1169,7 +1202,8 @@ namespace System.Windows.Controls
                             direction,
                             false /*fullyVisible*/,
                             !isVSP45Compat /*ignorePerpendicularAxis*/,
-                            out elementRect);
+                            out elementRect,
+                            out layoutRect);
 
                         if (elementPosition == ElementViewportPosition.PartiallyInViewport ||
                             elementPosition == ElementViewportPosition.CompletelyInViewport)
@@ -1186,7 +1220,7 @@ namespace System.Windows.Controls
                                     // as we find a child that's positioned after the start
                                     // of the viewport
 
-                                    if (DoubleUtil.GreaterThan(startPosition, 0.0))
+                                    if (DoubleUtil.GreaterThanZero(startPosition))
                                     {
                                         break;
                                     }
@@ -1237,7 +1271,7 @@ namespace System.Windows.Controls
 
                                 // don't delve into non-VSP panels - the result is
                                 // inconsistent with FindScrollOffset, and causes
-                                // infinite loops 
+                                // infinite loops
                                 innerPanel = innerPanel as VirtualizingStackPanel;
 
                                 if (innerPanel != null && innerPanel.IsVisible)
@@ -1255,20 +1289,35 @@ namespace System.Windows.Controls
                                 {
                                     if (direction == FocusNavigationDirection.Down)
                                     {
-                                        firstContainerOffsetFromViewport = elementRect.Y;
-                                        if (!isVSP45Compat)
-                                        {
-                                            firstContainerOffsetFromViewport -= fe.Margin.Top;
-                                        }
-                                    }
+                                       if (isVSP45Compat)
+                                       {
+                                           firstContainerOffsetFromViewport = elementRect.Y;
+                                       }
+                                       else
+                                       {
+                                           // include the leading margin in the offset.  Simply subtracting
+                                           // the margin doesn't work when layout rounding is in effect, as
+                                           // we can't deduce how rounding affected the arrangement of the
+                                           // element and its margin.  Instead, just use the layout rect directly.
+                                           firstContainerOffsetFromViewport = layoutRect.Top;
+                                       }
+                                   }
                                     else // (direction == FocusNavigationDirection.Right)
                                     {
-                                        firstContainerOffsetFromViewport = elementRect.X;
-                                        if (!isVSP45Compat)
-                                        {
-                                            firstContainerOffsetFromViewport -= fe.Margin.Left;
-                                        }
-                                    }
+
+                                       if (isVSP45Compat)
+                                       {
+                                           firstContainerOffsetFromViewport = elementRect.X;
+                                       }
+                                       else
+                                       {
+                                           // include the leading margin in the offset.  Simply subtracting
+                                           // the margin doesn't work when layout rounding is in effect, as
+                                           // we can't deduce how rounding affected the arrangement of the
+                                           // element and its margin.  Instead, just use the layout rect directly.
+                                           firstContainerOffsetFromViewport = layoutRect.Left;
+                                       }
+                                   }
                                 }
                                 else if (findTopContainer && isTopContainer)
                                 {
@@ -1317,7 +1366,7 @@ namespace System.Windows.Controls
                                             {
                                                 if (findTopContainer ||
                                                     !foundTopContainer ||                       // already found a non-top container
-                                                    DoubleUtil.GreaterThan(elementRect.Y, 0))   // this container is non-top
+                                                    DoubleUtil.GreaterThanZero(elementRect.Y))   // this container is non-top
                                                 {
                                                     firstContainerOffsetFromViewport += 1;
                                                 }
@@ -1330,7 +1379,7 @@ namespace System.Windows.Controls
                                             {
                                                 if (findTopContainer ||
                                                     !foundTopContainer ||                       // already found a non-top container
-                                                    DoubleUtil.GreaterThan(elementRect.X, 0))   // this container is non-top
+                                                    DoubleUtil.GreaterThanZero(elementRect.X))   // this container is non-top
                                                 {
                                                     firstContainerOffsetFromViewport += 1;
                                                 }
@@ -1899,7 +1948,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData == null) EnsureScrollData();
+                EnsureScrollData();
                 if (value != _scrollData._scrollOwner)
                 {
                     ResetScrolling(this);
@@ -2149,6 +2198,7 @@ namespace System.Windows.Controls
                     // The viewport constraint used by this panel.
                     //
                     Rect viewport = Rect.Empty, extendedViewport = Rect.Empty;
+                    long scrollGeneration;
 
                     //
                     // Sizes of cache before/after viewport
@@ -2159,7 +2209,7 @@ namespace System.Windows.Controls
                     //
                     // Initialize the viewport for this panel.
                     //
-                    InitializeViewport(parentItem, parentItemStorageProvider, virtualizationInfoProvider, isHorizontal, constraint, ref viewport, ref cacheSize, ref cacheUnit, out extendedViewport);
+                    InitializeViewport(parentItem, parentItemStorageProvider, virtualizationInfoProvider, isHorizontal, constraint, ref viewport, ref cacheSize, ref cacheUnit, out extendedViewport, out scrollGeneration);
 
                     // ===================================================================================
                     // ===================================================================================
@@ -2279,7 +2329,7 @@ namespace System.Windows.Controls
                                 // final size (e.g. when content arrives via bindings
                                 // that don't activate until after layout), as it
                                 // causes a lot of extra measure passes, where "a lot"
-                                // can be as bad as "infinite".  
+                                // can be as bad as "infinite".
                                 //
                                 // To avoid this waste, exclude a proportional part
                                 // of the normal viewport as well.
@@ -2401,6 +2451,7 @@ namespace System.Windows.Controls
                                                 ref viewport,
                                                 ref cacheSize,
                                                 ref cacheUnit,
+                                                ref scrollGeneration,
                                                 ref foundFirstItemInViewport,
                                                 ref firstItemInViewportOffset,
                                                 ref stackPixelSize,
@@ -2500,6 +2551,7 @@ namespace System.Windows.Controls
                                                             ref viewport,
                                                             ref cacheSize,
                                                             ref cacheUnit,
+                                                            ref scrollGeneration,
                                                             ref foundFirstItemInViewport,
                                                             ref firstItemInViewportOffset,
                                                             ref stackPixelSize,
@@ -2702,6 +2754,7 @@ namespace System.Windows.Controls
                                             ref viewport,
                                             ref cacheSize,
                                             ref cacheUnit,
+                                            ref scrollGeneration,
                                             ref foundFirstItemInViewport,
                                             ref firstItemInViewportOffset,
                                             ref stackPixelSize,
@@ -2789,14 +2842,15 @@ namespace System.Windows.Controls
                                 ref firstItemInViewportOffset,
                                 ref mustDisableVirtualization,
                                 ref hasVirtualizingChildren,
-                                ref hasBringIntoViewContainerBeenMeasured);
+                                ref hasBringIntoViewContainerBeenMeasured,
+                                ref scrollGeneration);
 
-                                if (ItemsChangedDuringMeasure)
-                                {
-                                    // if the Items collection changed, our state is now invalid.  Start over.
-                                    remeasure = true;
-                                    goto EscapeMeasure;
-                                }
+                            if (ItemsChangedDuringMeasure)
+                            {
+                                // if the Items collection changed, our state is now invalid.  Start over.
+                                remeasure = true;
+                                goto EscapeMeasure;
+                            }
                         }
                     }
 
@@ -2812,7 +2866,7 @@ namespace System.Windows.Controls
                             // If there were a collection changed between the BringIndexIntoView call
                             // and the current Measure then it is possible that the item for the
                             // _bringIntoViewContainer has been removed from the collection and so
-                            // has the container. We need to guard against this scenario. 
+                            // has the container. We need to guard against this scenario.
                             _bringIntoViewContainer = null;
                         }
                         else
@@ -2837,14 +2891,15 @@ namespace System.Windows.Controls
                                 ref firstItemInViewportOffset,
                                 ref mustDisableVirtualization,
                                 ref hasVirtualizingChildren,
-                                ref hasBringIntoViewContainerBeenMeasured);
+                                ref hasBringIntoViewContainerBeenMeasured,
+                                ref scrollGeneration);
 
-                                if (ItemsChangedDuringMeasure)
-                                {
-                                    // if the Items collection changed, our state is now invalid.  Start over.
-                                    remeasure = true;
-                                    goto EscapeMeasure;
-                                }
+                            if (ItemsChangedDuringMeasure)
+                            {
+                                // if the Items collection changed, our state is now invalid.  Start over.
+                                remeasure = true;
+                                goto EscapeMeasure;
+                            }
                         }
                     }
 
@@ -3043,7 +3098,8 @@ namespace System.Windows.Controls
                                 virtualizationInfoProvider,
                                 isHorizontal,
                                 areContainersUniformlySized,
-                                uniformOrAverageContainerSize);
+                                uniformOrAverageContainerSize,
+                                scrollGeneration);
 
                             // also revise the offset of the first container, for use in Arrange
                             if (firstContainerInViewport != null)
@@ -3084,7 +3140,8 @@ namespace System.Windows.Controls
                                         ref viewport,
                                         firstContainerInViewport,
                                         firstItemInViewportIndex,
-                                        firstItemInViewportOffset);
+                                        firstItemInViewportOffset,
+                                        scrollGeneration);
                             FirstContainerInformationField.SetValue(this, info);
                         }
                     }
@@ -3167,10 +3224,11 @@ namespace System.Windows.Controls
                     {
                         // save information needed by Snapshot
                         DependencyObject offsetHost = virtualizationInfoProvider as DependencyObject;
+                        EffectiveOffsetInformation effectiveOffsetInfo = (offsetHost != null) ? EffectiveOffsetInformationField.GetValue(offsetHost) : null;
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = (offsetHost != null) ? EffectiveOffsetInformationField.GetValue(offsetHost) : null
+                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
                         };
                         SnapshotDataField.SetValue(this, data);
                     }
@@ -3192,6 +3250,12 @@ namespace System.Windows.Controls
 
             if (remeasure)
             {
+                if (!IsVSP45Compat && IsScrolling)
+                {
+                    // remeasure from the root should use fresh effective offsets
+                    IncrementScrollGeneration();
+                }
+
                 //
                 // Make another pass of MeasureOverride if remeasure is true.
                 //
@@ -3460,10 +3524,11 @@ namespace System.Windows.Controls
                     {
                         // save information needed by Snapshot
                         DependencyObject offsetHost = virtualizationInfoProvider as DependencyObject;
+                        EffectiveOffsetInformation effectiveOffsetInfo = (offsetHost != null) ? EffectiveOffsetInformationField.GetValue(offsetHost) : null;
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = (offsetHost != null) ? EffectiveOffsetInformationField.GetValue(offsetHost) : null
+                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
                         };
                         SnapshotDataField.SetValue(this, data);
 
@@ -3494,8 +3559,11 @@ namespace System.Windows.Controls
             {
                 ScrollTracer.Trace(this, ScrollTraceOp.ItemsChanged,
                     args.Action,
-                    "pos:", args.OldPosition, args.Position,
+                    "stpos:", args.Position, Generator.IndexFromGeneratorPosition(args.Position),
+                    "oldpos:", args.OldPosition, Generator.IndexFromGeneratorPosition(args.OldPosition),
                     "count:", args.ItemCount, args.ItemUICount,
+                    "ev:", _firstItemInExtendedViewportIndex, "+", _itemsInExtendedViewportCount,
+                    "ext:", IsScrolling ? _scrollData._extent : Size.Empty,
                     MeasureInProgress ? "MeasureInProgress" : String.Empty);
             }
 
@@ -3588,10 +3656,10 @@ namespace System.Windows.Controls
                     {
                         case NotifyCollectionChangedAction.Remove:
                             {
-                                int startOldIndex = Generator.IndexFromGeneratorPosition(args.OldPosition);
+                                int startIndex =  Generator.IndexFromGeneratorPosition(args.Position);
 
                                 shouldItemsChangeAffectLayout = args.ItemUICount > 0 ||
-                                    (startOldIndex < _firstItemInExtendedViewportIndex + _itemsInExtendedViewportCount);
+                                    (startIndex < _firstItemInExtendedViewportIndex + _itemsInExtendedViewportCount);
                             }
                             break;
 
@@ -3717,6 +3785,7 @@ namespace System.Windows.Controls
         {
             bool isHorizontal = (Orientation == Orientation.Horizontal);
             bool isVSP45Compat = IsVSP45Compat;
+            bool isTracing = ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this);
 
             ItemsControl itemsControl;
             GroupItem groupItem;
@@ -3810,7 +3879,8 @@ namespace System.Windows.Controls
                                 virtualizationInfoProvider,
                                 isHorizontal,
                                 areContainersUniformlySized,
-                                uniformOrAverageContainerSize);
+                                uniformOrAverageContainerSize,
+                                info.ScrollGeneration);
                     }
                 }
             }
@@ -3832,6 +3902,11 @@ namespace System.Windows.Controls
                     _scrollData._extent.Height = distance;
                 }
 
+                if (isTracing)
+                {
+                    ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ext:", _scrollData._extent);
+                }
+
                 ScrollOwner.InvalidateScrollInfo();
             }
             else if (virtualizationInfoProvider != null)
@@ -3848,6 +3923,11 @@ namespace System.Windows.Controls
                     else
                     {
                         pixelSize.Height = distance;
+                    }
+
+                    if (isTracing)
+                    {
+                        ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ids.Px:", pixelSize);
                     }
 
                     itemDesiredSizes = new HierarchicalVirtualizationItemDesiredSizes(
@@ -3870,6 +3950,11 @@ namespace System.Windows.Controls
                     else
                     {
                         logicalSize.Height = distance;
+                    }
+
+                    if (isTracing)
+                    {
+                        ScrollTracer.Trace(this, ScrollTraceOp.UpdateExtent, "ids.Lg:", logicalSize);
                     }
 
                     itemDesiredSizes = new HierarchicalVirtualizationItemDesiredSizes(
@@ -4183,7 +4268,7 @@ namespace System.Windows.Controls
                     VirtualizationMode oldVirtualizationMode = InRecyclingMode ? VirtualizationMode.Recycling : VirtualizationMode.Standard;
                     if (oldVirtualizationMode != virtualizationMode)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CantSwitchVirtualizationModePostMeasure));
+                        throw new InvalidOperationException(SR.CantSwitchVirtualizationModePostMeasure);
                     }
                 }
                 else
@@ -4231,7 +4316,8 @@ namespace System.Windows.Controls
             ref Rect viewport,
             ref VirtualizationCacheLength cacheSize,
             ref VirtualizationCacheLengthUnit cacheUnit,
-            out Rect extendedViewport)
+            out Rect extendedViewport,
+            out long scrollGeneration)
         {
             Size extent = new Size();
             bool isVSP45Compat = IsVSP45Compat;
@@ -4251,6 +4337,7 @@ namespace System.Windows.Controls
                 offsetY = _scrollData._offset.Y;
                 extent = _scrollData._extent;
                 viewportSize = _scrollData._viewport;
+                scrollGeneration = _scrollData._scrollGeneration;
 
                 if (!IsScrollActive || IgnoreMaxDesiredSize)
                 {
@@ -4274,8 +4361,8 @@ namespace System.Windows.Controls
                     cacheSize = VirtualizingStackPanel.GetCacheLength(this);
                     cacheUnit = VirtualizingStackPanel.GetCacheLengthUnit(this);
 
-                    if (DoubleUtil.GreaterThan(cacheSize.CacheBeforeViewport, 0) ||
-                        DoubleUtil.GreaterThan(cacheSize.CacheAfterViewport, 0))
+                    if (DoubleUtil.GreaterThanZero(cacheSize.CacheBeforeViewport) ||
+                        DoubleUtil.GreaterThanZero(cacheSize.CacheAfterViewport))
                     {
                         if (!MeasureCaches)
                         {
@@ -4413,6 +4500,7 @@ namespace System.Windows.Controls
                 viewport = virtualizationConstraints.Viewport;
                 cacheSize = virtualizationConstraints.CacheLength;
                 cacheUnit = virtualizationConstraints.CacheLengthUnit;
+                scrollGeneration = virtualizationConstraints.ScrollGeneration;
                 MeasureCaches = virtualizationInfoProvider.InBackgroundLayout;
 
                 if (isVSP45Compat)
@@ -4436,34 +4524,46 @@ namespace System.Windows.Controls
                     // system.
                     //      This replacement stays in effect until the parent panel gives us
                     // an offset from a more recent coordinate change, after which older
-                    // offsets won't appear again.   Or an offset that's not on the
-                    // list at all, which means a new scroll motion has started.
+                    // offsets won't appear again.   Or until a new scroll motion has started,
+                    // as indicated by a scroll generation that exceeds the one in effect
+                    // when the list was created.
                     DependencyObject container = virtualizationInfoProvider as DependencyObject;
-                    List<Double> offsetList = EffectiveOffsetInformationField.GetValue(container);
-                    if (offsetList != null)
+                    EffectiveOffsetInformation effectiveOffsetInfo = EffectiveOffsetInformationField.GetValue(container);
+                    if (effectiveOffsetInfo != null)
                     {
-                        // find the given offset on the list
-                        double offset = isHorizontal ? viewport.X : viewport.Y;
+                        List<double> offsetList = effectiveOffsetInfo.OffsetList;
                         int index = -1;
-                        for (int i=0, n=offsetList.Count; i<n; ++i)
+
+                        // effective offsets only apply when the scroll generation matches
+                        Debug.Assert(effectiveOffsetInfo.ScrollGeneration <= scrollGeneration,
+                            "stored scroll generation exceeds current - this can't happen");
+                        if (effectiveOffsetInfo.ScrollGeneration >= scrollGeneration)
                         {
-                            if (LayoutDoubleUtil.AreClose(offset, offsetList[i]))
+                            // find the given offset on the list
+                            double offset = isHorizontal ? viewport.X : viewport.Y;
+                            for (int i = 0, n = offsetList.Count; i < n; ++i)
                             {
-                                index = i;
-                                break;
+                                if (LayoutDoubleUtil.AreClose(offset, offsetList[i]))
+                                {
+                                    index = i;
+                                    break;
+                                }
                             }
                         }
 
                         if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
                         {
-                            object[] args = new object[offsetList.Count + 4];
-                            args[0] = viewport.Location;
-                            args[1] = "at";
-                            args[2] = index;
-                            args[3] = "in";
+                            object[] args = new object[offsetList.Count + 7];
+                            args[0] = "gen";
+                            args[1] = effectiveOffsetInfo.ScrollGeneration;
+                            args[2] = virtualizationConstraints.ScrollGeneration;
+                            args[3] = viewport.Location;
+                            args[4] = "at";
+                            args[5] = index;
+                            args[6] = "in";
                             for (int i=0; i<offsetList.Count; ++i)
                             {
-                                args[i+4] = offsetList[i];
+                                args[i+7] = offsetList[i];
                             }
                             ScrollTracer.Trace(this, ScrollTraceOp.UseSubstOffset,
                                 args);
@@ -4496,6 +4596,7 @@ namespace System.Windows.Controls
             }
             else
             {
+                scrollGeneration = 0;
                 viewport = new Rect(0, 0, constraint.Width, constraint.Height);
 
                 if (isHorizontal)
@@ -4528,8 +4629,8 @@ namespace System.Windows.Controls
                 {
                     IsMeasureCachesPending = false;
                 }
-                else if (DoubleUtil.GreaterThan(cacheSize.CacheBeforeViewport, 0) ||
-                        DoubleUtil.GreaterThan(cacheSize.CacheAfterViewport, 0))
+                else if (DoubleUtil.GreaterThanZero(cacheSize.CacheBeforeViewport) ||
+                        DoubleUtil.GreaterThanZero(cacheSize.CacheAfterViewport))
                 {
                     IsMeasureCachesPending = true;
                 }
@@ -4609,7 +4710,7 @@ namespace System.Windows.Controls
 
             // if the viewport is empty in the scrolling direction, force the
             // cache to be empty also.   This avoids an infinite loop re- and
-            // de-virtualizing the last item 
+            // de-virtualizing the last item
             if (IsViewportEmpty(isHorizontal, viewport))
             {
                 cacheLength = new VirtualizationCacheLength(0, 0);
@@ -4641,7 +4742,7 @@ namespace System.Windows.Controls
 
             if (isHorizontal)
             {
-                double approxSizeOfLogicalUnit = (DoubleUtil.GreaterThan(_previousStackPixelSizeInViewport.Width, 0.0) && DoubleUtil.GreaterThan(_previousStackLogicalSizeInViewport.Width, 0.0)) ?
+                double approxSizeOfLogicalUnit = (DoubleUtil.GreaterThanZero(_previousStackPixelSizeInViewport.Width) && DoubleUtil.GreaterThanZero(_previousStackLogicalSizeInViewport.Width)) ?
                     _previousStackPixelSizeInViewport.Width / _previousStackLogicalSizeInViewport.Width : ScrollViewer._scrollLineDelta;
 
                 pixelSize = stackPixelSize.Width;
@@ -4675,7 +4776,7 @@ namespace System.Windows.Controls
                 {
                     if (!IsScrolling && virtualizationInfoProvider != null &&
                         IsViewportEmpty(isHorizontal, extendedViewport) &&
-                        DoubleUtil.GreaterThan(pixelSizeBeforeViewport, 0))
+                        DoubleUtil.GreaterThanZero(pixelSizeBeforeViewport))
                     {
                         //
                         // If this is a GroupItem or a TreeViewItem that is completely above the viewport,
@@ -4705,7 +4806,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.X + extendedViewport.Width, _scrollData._extent.Width))
                         {
-                            extendedViewport.Width = _scrollData._extent.Width - extendedViewport.X;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.X <= _scrollData._extent.Width, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Width = Math.Max(_scrollData._extent.Width - extendedViewport.X, 0.0);
                         }
                     }
                 }
@@ -4713,7 +4819,7 @@ namespace System.Windows.Controls
                 {
                     if (!IsScrolling && virtualizationInfoProvider != null &&
                         IsViewportEmpty(isHorizontal, extendedViewport) &&
-                        DoubleUtil.GreaterThan(pixelSizeBeforeViewport, 0))
+                        DoubleUtil.GreaterThanZero(pixelSizeBeforeViewport))
                     {
                         //
                         // If this is a GroupItem or a TreeViewItem that is completely above the viewport,
@@ -4740,14 +4846,19 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.X + extendedViewport.Width / approxSizeOfLogicalUnit, _scrollData._extent.Width))
                         {
-                            extendedViewport.Width = (_scrollData._extent.Width - extendedViewport.X) * approxSizeOfLogicalUnit;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.X <= _scrollData._extent.Width, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Width = Math.Max(_scrollData._extent.Width - extendedViewport.X, 0.0) * approxSizeOfLogicalUnit;
                         }
                     }
                 }
             }
             else
             {
-                double approxSizeOfLogicalUnit = (DoubleUtil.GreaterThan(_previousStackPixelSizeInViewport.Height, 0.0) && DoubleUtil.GreaterThan(_previousStackLogicalSizeInViewport.Height, 0.0)) ?
+                double approxSizeOfLogicalUnit = (DoubleUtil.GreaterThanZero(_previousStackPixelSizeInViewport.Height) && DoubleUtil.GreaterThanZero(_previousStackLogicalSizeInViewport.Height)) ?
                     _previousStackPixelSizeInViewport.Height / _previousStackLogicalSizeInViewport.Height : ScrollViewer._scrollLineDelta;
 
                 pixelSize = stackPixelSize.Height;
@@ -4781,7 +4892,7 @@ namespace System.Windows.Controls
                 {
                     if (!IsScrolling && virtualizationInfoProvider != null &&
                         IsViewportEmpty(isHorizontal, extendedViewport) &&
-                        DoubleUtil.GreaterThan(pixelSizeBeforeViewport, 0))
+                        DoubleUtil.GreaterThanZero(pixelSizeBeforeViewport))
                     {
                         //
                         // If this is a GroupItem or a TreeViewItem that is completely above the viewport,
@@ -4811,7 +4922,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.Y + extendedViewport.Height, _scrollData._extent.Height))
                         {
-                            extendedViewport.Height = _scrollData._extent.Height - extendedViewport.Y;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.Y <= _scrollData._extent.Height, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Height = Math.Max(_scrollData._extent.Height - extendedViewport.Y, 0.0);
                         }
                     }
                 }
@@ -4819,7 +4935,7 @@ namespace System.Windows.Controls
                 {
                     if (!IsScrolling && virtualizationInfoProvider != null &&
                         IsViewportEmpty(isHorizontal, extendedViewport) &&
-                        DoubleUtil.GreaterThan(pixelSizeBeforeViewport, 0))
+                        DoubleUtil.GreaterThanZero(pixelSizeBeforeViewport))
                     {
                         //
                         // If this is a GroupItem or a TreeViewItem that is completely above the viewport,
@@ -4846,7 +4962,12 @@ namespace System.Windows.Controls
 
                         if (DoubleUtil.GreaterThan(extendedViewport.Y + extendedViewport.Height / approxSizeOfLogicalUnit, _scrollData._extent.Height))
                         {
-                            extendedViewport.Height = (_scrollData._extent.Height - extendedViewport.Y) * approxSizeOfLogicalUnit;
+                            // during Measure the viewport should never start after the extent, but this is possible
+                            // during add/remove item [DDVSO 1405478]
+                            #if DBG     // can't use Debug.Assert during Measure - the dispatcher is disabled and can't open the dialog
+                            Invariant.Assert(!MeasureInProgress || extendedViewport.Y <= _scrollData._extent.Height, "viewport starts after extent");
+                            #endif
+                            extendedViewport.Height = Math.Max(_scrollData._extent.Height - extendedViewport.Y, 0.0) * approxSizeOfLogicalUnit;
                         }
                     }
                 }
@@ -4956,7 +5077,7 @@ namespace System.Windows.Controls
 
                 viewport.X -= IsPixelBased ? pixelSize.Width : logicalSize.Width;
 
-                if (DoubleUtil.GreaterThan(parentViewport.X, 0))
+                if (DoubleUtil.GreaterThanZero(parentViewport.X))
                 {
                     //
                     // Viewport is after the start of this panel
@@ -4998,7 +5119,7 @@ namespace System.Windows.Controls
                     // Viewport is at or before this panel
                     //
 
-                    if (DoubleUtil.GreaterThan(parentViewport.Width, 0))
+                    if (DoubleUtil.GreaterThanZero(parentViewport.Width))
                     {
                         if (DoubleUtil.GreaterThanOrClose(parentViewport.Width, pixelSize.Width))
                         {
@@ -5055,7 +5176,7 @@ namespace System.Windows.Controls
 
                 viewport.Y -= IsPixelBased ? pixelSize.Height : logicalSize.Height;
 
-                if (DoubleUtil.GreaterThan(parentViewport.Y, 0))
+                if (DoubleUtil.GreaterThanZero(parentViewport.Y))
                 {
                     //
                     // Viewport is after the start of this panel
@@ -5097,7 +5218,7 @@ namespace System.Windows.Controls
                     // Viewport is at or before the start of this panel
                     //
 
-                    if (DoubleUtil.GreaterThan(parentViewport.Height, 0))
+                    if (DoubleUtil.GreaterThanZero(parentViewport.Height))
                     {
                         if (DoubleUtil.GreaterThanOrClose(parentViewport.Height, pixelSize.Height))
                         {
@@ -5184,11 +5305,11 @@ namespace System.Windows.Controls
 
             if (isHorizontal)
             {
-                if (DoubleUtil.GreaterThan(parentViewport.X, 0))
+                if (DoubleUtil.GreaterThanZero(parentViewport.X))
                 {
                     // Viewport is after start of this container
 
-                    if (DoubleUtil.GreaterThan(viewport.Width, 0))
+                    if (DoubleUtil.GreaterThanZero(viewport.Width))
                     {
                         // Viewport is not yet full - we're delving for the first
                         // container in the viewport.  We're moving forward, so
@@ -5239,7 +5360,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                else if (DoubleUtil.GreaterThan(viewport.Width, 0))
+                else if (DoubleUtil.GreaterThanZero(viewport.Width))
                 {
                     // Viewport has available space (and starts before this container)
                     // We are filling the viewport front-to-back.
@@ -5291,7 +5412,7 @@ namespace System.Windows.Controls
                 {
                     // Viewport is after start of this container
 
-                    if (DoubleUtil.GreaterThan(viewport.Height, 0))
+                    if (DoubleUtil.GreaterThanZero(viewport.Height))
                     {
                         // Viewport is not yet full - we're delving for the first
                         // container in the viewport.  We're moving forward, so
@@ -5342,7 +5463,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                else if (DoubleUtil.GreaterThan(viewport.Height, 0))
+                else if (DoubleUtil.GreaterThanZero(viewport.Height))
                 {
                     // Viewport has available space (and starts before this container)
                     // We are filling the viewport front-to-back.
@@ -5417,7 +5538,7 @@ namespace System.Windows.Controls
 
             if (IsViewportEmpty(isHorizontal, viewport))
             {
-                if (DoubleUtil.GreaterThan(cacheSize.CacheBeforeViewport, 0.0))
+                if (DoubleUtil.GreaterThanZero(cacheSize.CacheBeforeViewport))
                 {
                     firstItemInViewportIndex = itemCount-1;
                     ComputeDistance(items, itemStorageProvider, isHorizontal, areContainersUniformlySized, uniformOrAverageContainerSize, 0, itemCount-1, out firstItemInViewportOffset);
@@ -5431,7 +5552,7 @@ namespace System.Windows.Controls
                     //
                     firstItemInViewportIndex = 0;
                     firstItemInViewportOffset = 0;
-                    foundFirstItemInViewport = DoubleUtil.GreaterThan(cacheSize.CacheAfterViewport, 0.0);
+                    foundFirstItemInViewport = DoubleUtil.GreaterThanZero(cacheSize.CacheAfterViewport);
                 }
             }
             else
@@ -5450,7 +5571,7 @@ namespace System.Windows.Controls
                     // and offset for the first item in the viewport is computed in constant time.
                     //
                     double childSize = uniformOrAverageContainerSize;
-                    if (DoubleUtil.GreaterThan(childSize, 0))
+                    if (DoubleUtil.GreaterThanZero(childSize))
                     {
                         firstItemInViewportIndex = (int)Math.Floor(spanBeforeViewport / childSize);
                         firstItemInViewportOffset = firstItemInViewportIndex * childSize;
@@ -5548,9 +5669,10 @@ namespace System.Windows.Controls
             IHierarchicalVirtualizationAndScrollInfo virtualizationInfoProvider,
             bool isHorizontal,
             bool areContainersUniformlySized,
-            double uniformOrAverageContainerSize)
+            double uniformOrAverageContainerSize,
+            long scrollGeneration)
         {
-            if (firstContainer == null)
+            if (firstContainer == null || IsViewportEmpty(isHorizontal, viewport))
             {
                 return -1.0;    // undefined if no children in view
             }
@@ -5571,7 +5693,8 @@ namespace System.Windows.Controls
             // adjust newOffset by the same amount.   This has the effect of
             // giving the child panel the offset it wants the next time this
             // panel measures the child.
-            List<Double> childOffsetList = EffectiveOffsetInformationField.GetValue(firstContainer);
+            EffectiveOffsetInformation effectiveOffsetInformation = EffectiveOffsetInformationField.GetValue(firstContainer);
+            List<Double> childOffsetList = (effectiveOffsetInformation != null) ? effectiveOffsetInformation.OffsetList : null;
             if (childOffsetList != null)
             {
                 int count = childOffsetList.Count;
@@ -5586,30 +5709,49 @@ namespace System.Windows.Controls
                 // multiple calls to measure this panel before the parent
                 // adjusts to the change in our coordinate system, or calls from
                 // a parent who set its own offset using an older offset from here
-                List<Double> offsetList = EffectiveOffsetInformationField.GetValue(container);
-                if (offsetList == null)
+                effectiveOffsetInformation = EffectiveOffsetInformationField.GetValue(container);
+                if (effectiveOffsetInformation == null || effectiveOffsetInformation.ScrollGeneration != scrollGeneration)
                 {
-                    offsetList = new List<Double>(2);
-                    offsetList.Add(oldOffset);
+                    effectiveOffsetInformation = new EffectiveOffsetInformation(scrollGeneration);
+                    effectiveOffsetInformation.OffsetList.Add(oldOffset);
                 }
 
-                offsetList.Add(newOffset);
+                effectiveOffsetInformation.OffsetList.Add(newOffset);
 
                 if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
                 {
-                    object[] args = new object[offsetList.Count];
-                    for (int i=0; i<offsetList.Count; ++i)
+                    List<double> offsetList = effectiveOffsetInformation.OffsetList;
+                    object[] args = new object[offsetList.Count + 2];
+                    args[0] = scrollGeneration;
+                    args[1] = ":";
+                    for (int i = 0; i < offsetList.Count; ++i)
                     {
-                        args[i] = offsetList[i];
+                        args[i + 2] = offsetList[i];
                     }
                     ScrollTracer.Trace(this, ScrollTraceOp.StoreSubstOffset,
                         args);
                 }
 
-                EffectiveOffsetInformationField.SetValue(container, offsetList);
+                EffectiveOffsetInformationField.SetValue(container, effectiveOffsetInformation);
             }
 
             return newOffset;
+        }
+
+        /// <summary>
+        /// To distinguish effective offsets set during one scrolling operation
+        /// from those set in a different, each scrolling operation in the
+        /// virtualizing direction increments the "scroll generation" counter.
+        /// This counter is saved along with the effective offsets (see
+        /// ComputeEffectiveOffsets), and compared with the current counter
+        /// before applying the effective offset (see InitializeViewport).
+        /// </summary>
+        private void IncrementScrollGeneration()
+        {
+            // This will break if the counter ever rolls over the maximum.
+            // If you do 1000 scroll operations per second, that will
+            // happen in about 280 million years.
+            ++_scrollData._scrollGeneration;
         }
 
 
@@ -6149,7 +6291,7 @@ namespace System.Windows.Controls
                 // into non-uniform mode just because the pixel heights are different,
                 // and a good reason to avoid it:  it requires looping through all
                 // containers to compute an average size, which breaks third-party's
-                // attempts to do data virtualization 
+                // attempts to do data virtualization
                 bool ignoreContainerPixelSize = IsPixelBased || (IsScrolling && !hasVirtualizingChildren);
 
                 if (isHorizontal)
@@ -6559,6 +6701,7 @@ namespace System.Windows.Controls
             Rect parentViewport,
             VirtualizationCacheLength parentCacheSize,
             VirtualizationCacheLengthUnit parentCacheUnit,
+            long scrollGeneration,
             Size stackPixelSize,
             Size stackPixelSizeInViewport,
             Size stackPixelSizeInCacheBeforeViewport,
@@ -6671,10 +6814,12 @@ namespace System.Windows.Controls
 
             if (virtualizingChild != null)
             {
-                virtualizingChild.Constraints = new HierarchicalVirtualizationConstraints(
+                HierarchicalVirtualizationConstraints constraints = new HierarchicalVirtualizationConstraints(
                     childCacheSize,
                     childCacheUnit,
                     childViewport);
+                constraints.ScrollGeneration = scrollGeneration;
+                virtualizingChild.Constraints = constraints;
                 virtualizingChild.InBackgroundLayout = MeasureCaches;
                 virtualizingChild.MustDisableVirtualization = mustDisableVirtualization;
             }
@@ -6870,20 +7015,20 @@ namespace System.Windows.Controls
             else
             {
                 childPixelSize = childDesiredSize;
-                childLogicalSize = new Size(DoubleUtil.GreaterThan(childPixelSize.Width, 0) ? 1 : 0,
-                                            DoubleUtil.GreaterThan(childPixelSize.Height, 0) ? 1 : 0);
+                childLogicalSize = new Size(DoubleUtil.GreaterThanZero(childPixelSize.Width) ? 1 : 0,
+                                            DoubleUtil.GreaterThanZero(childPixelSize.Height) ? 1 : 0);
 
                 if (isBeforeFirstItem)
                 {
                     childPixelSizeInCacheBeforeViewport = childDesiredSize;
-                    childLogicalSizeInCacheBeforeViewport = new Size(DoubleUtil.GreaterThan(childPixelSizeInCacheBeforeViewport.Width, 0) ? 1 : 0,
-                                                                     DoubleUtil.GreaterThan(childPixelSizeInCacheBeforeViewport.Height, 0) ? 1 : 0);
+                    childLogicalSizeInCacheBeforeViewport = new Size(DoubleUtil.GreaterThanZero(childPixelSizeInCacheBeforeViewport.Width) ? 1 : 0,
+                                                                     DoubleUtil.GreaterThanZero(childPixelSizeInCacheBeforeViewport.Height) ? 1 : 0);
                 }
                 else if (isAfterLastItem)
                 {
                     childPixelSizeInCacheAfterViewport = childDesiredSize;
-                    childLogicalSizeInCacheAfterViewport = new Size(DoubleUtil.GreaterThan(childPixelSizeInCacheAfterViewport.Width, 0) ? 1 : 0,
-                                                                    DoubleUtil.GreaterThan(childPixelSizeInCacheAfterViewport.Height, 0) ? 1 : 0);
+                    childLogicalSizeInCacheAfterViewport = new Size(DoubleUtil.GreaterThanZero(childPixelSizeInCacheAfterViewport.Width) ? 1 : 0,
+                                                                    DoubleUtil.GreaterThanZero(childPixelSizeInCacheAfterViewport.Height) ? 1 : 0);
                 }
                 else
                 {
@@ -7025,14 +7170,14 @@ namespace System.Windows.Controls
                 if (isBeforeFirstItem)
                 {
                     childPixelSizeInCacheBeforeViewport = childDesiredSize;
-                    childLogicalSizeInCacheBeforeViewport = new Size(DoubleUtil.GreaterThan(childPixelSizeInCacheBeforeViewport.Width, 0) ? 1 : 0,
-                                                                     DoubleUtil.GreaterThan(childPixelSizeInCacheBeforeViewport.Height, 0) ? 1 : 0);
+                    childLogicalSizeInCacheBeforeViewport = new Size(DoubleUtil.GreaterThanZero(childPixelSizeInCacheBeforeViewport.Width) ? 1 : 0,
+                                                                     DoubleUtil.GreaterThanZero(childPixelSizeInCacheBeforeViewport.Height) ? 1 : 0);
                 }
                 else if (isAfterLastItem)
                 {
                     childPixelSizeInCacheAfterViewport = childDesiredSize;
-                    childLogicalSizeInCacheAfterViewport = new Size(DoubleUtil.GreaterThan(childPixelSizeInCacheAfterViewport.Width, 0) ? 1 : 0,
-                                                                    DoubleUtil.GreaterThan(childPixelSizeInCacheAfterViewport.Height, 0) ? 1 : 0);
+                    childLogicalSizeInCacheAfterViewport = new Size(DoubleUtil.GreaterThanZero(childPixelSizeInCacheAfterViewport.Width) ? 1 : 0,
+                                                                    DoubleUtil.GreaterThanZero(childPixelSizeInCacheAfterViewport.Height) ? 1 : 0);
                 }
                 else
                 {
@@ -7118,7 +7263,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        if (DoubleUtil.GreaterThan(childViewport.Width, 0.0))
+                        if (DoubleUtil.GreaterThanZero(childViewport.Width))
                         {
                             pixelSizeInViewport = childPixelSize.Width;
                         }
@@ -7135,7 +7280,7 @@ namespace System.Windows.Controls
 
                 Debug.Assert(DoubleUtil.AreClose(pixelSizeInViewport + pixelSizeBeforeViewport + pixelSizeAfterViewport, childPixelSize.Width), "The computed sizes within and outside the viewport should add up to the childPixelSize.");
 
-                if (DoubleUtil.GreaterThan(childPixelSize.Width, 0.0))
+                if (DoubleUtil.GreaterThanZero(childPixelSize.Width))
                 {
                     logicalSizeBeforeViewport = Math.Floor(childLogicalSize.Width * pixelSizeBeforeViewport / childPixelSize.Width);
                     logicalSizeAfterViewport = Math.Floor(childLogicalSize.Width * pixelSizeAfterViewport / childPixelSize.Width);
@@ -7210,7 +7355,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        if (DoubleUtil.GreaterThan(childViewport.Height, 0.0))
+                        if (DoubleUtil.GreaterThanZero(childViewport.Height))
                         {
                             pixelSizeInViewport = childPixelSize.Height;
                         }
@@ -7227,7 +7372,7 @@ namespace System.Windows.Controls
 
                 Debug.Assert(DoubleUtil.AreClose(pixelSizeInViewport + pixelSizeBeforeViewport + pixelSizeAfterViewport, childPixelSize.Height), "The computed sizes within and outside the viewport should add up to the childPixelSize.");
 
-                if (DoubleUtil.GreaterThan(childPixelSize.Height, 0.0))
+                if (DoubleUtil.GreaterThanZero(childPixelSize.Height))
                 {
                     logicalSizeBeforeViewport = Math.Floor(childLogicalSize.Height * pixelSizeBeforeViewport / childPixelSize.Height);
                     logicalSizeAfterViewport = Math.Floor(childLogicalSize.Height * pixelSizeAfterViewport / childPixelSize.Height);
@@ -7367,8 +7512,8 @@ namespace System.Windows.Controls
                             }
                             else
                             {
-                                childSize = new Size(DoubleUtil.GreaterThan(child.DesiredSize.Width, 0) ? 1 : 0,
-                                                     DoubleUtil.GreaterThan(child.DesiredSize.Height, 0) ? 1 : 0);
+                                childSize = new Size(DoubleUtil.GreaterThanZero(child.DesiredSize.Width) ? 1 : 0,
+                                                     DoubleUtil.GreaterThanZero(child.DesiredSize.Height) ? 1 : 0);
                             }
                         }
 
@@ -7538,8 +7683,8 @@ namespace System.Windows.Controls
                             }
                             else
                             {
-                                childSize = new Size(DoubleUtil.GreaterThan(child.DesiredSize.Width, 0) ? 1 : 0,
-                                                     DoubleUtil.GreaterThan(child.DesiredSize.Height, 0) ? 1 : 0);
+                                childSize = new Size(DoubleUtil.GreaterThanZero(child.DesiredSize.Width) ? 1 : 0,
+                                                     DoubleUtil.GreaterThanZero(child.DesiredSize.Height) ? 1 : 0);
                             }
                         }
 
@@ -7655,6 +7800,20 @@ namespace System.Windows.Controls
                 if (numContainerSizes > 0)
                 {
                     uniformOrAverageContainerPixelSize = sumOfContainerPixelSizes / numContainerSizes;
+
+                    if (UseLayoutRounding)
+                    {
+                        // apply layout rounding to the average size, so that anchored
+                        // scrolls use rounded sizes throughout.  Otherwise they can
+                        // hang because of rounding done in layout that isn't accounted
+                        // for in OnAnchor.
+                        DpiScale dpi = GetDpi();
+                        double dpiScale = isHorizontal ? dpi.DpiScaleX : dpi.DpiScaleY;
+                        uniformOrAverageContainerPixelSize = RoundLayoutValue(
+                                        Math.Max(uniformOrAverageContainerPixelSize, dpiScale), // don't round down to 0
+                                        dpiScale);
+                    }
+
                     if (IsPixelBased)
                     {
                         uniformOrAverageContainerSize = uniformOrAverageContainerPixelSize;
@@ -7885,7 +8044,7 @@ namespace System.Windows.Controls
             // size of that ListBoxItem as the uniformOrAverageSize because on the next measure this will
             // lead to a divide by zero error when computing the firstItemInViewportIndex.
             //
-            if (DoubleUtil.GreaterThan(value, 0))
+            if (DoubleUtil.GreaterThanZero(value))
             {
                 if (item == this)
                 {
@@ -7938,7 +8097,8 @@ namespace System.Windows.Controls
             ref double firstItemInViewportOffset,
             ref bool mustDisableVirtualization,
             ref bool hasVirtualizingChildren,
-            ref bool hasBringIntoViewContainerBeenMeasured)
+            ref bool hasBringIntoViewContainerBeenMeasured,
+            ref long scrollGeneration)
         {
             object item = ((ItemContainerGenerator)generator).ItemFromContainer((UIElement)children[childIndex]);
             Rect viewport = new Rect();
@@ -7978,6 +8138,7 @@ namespace System.Windows.Controls
                 ref viewport,
                 ref cacheSize,
                 ref cacheUnit,
+                ref scrollGeneration,
                 ref foundFirstItemInViewport,
                 ref firstItemInViewportOffset,
                 ref stackPixelSize,
@@ -8018,6 +8179,7 @@ namespace System.Windows.Controls
             ref Rect viewport,
             ref VirtualizationCacheLength cacheSize,
             ref VirtualizationCacheLengthUnit cacheUnit,
+            ref long scrollGeneration,
             ref bool foundFirstItemInViewport,
             ref double firstItemInViewportOffset,
             ref Size stackPixelSize,
@@ -8089,6 +8251,7 @@ namespace System.Windows.Controls
                 viewport,
                 cacheSize,
                 cacheUnit,
+                scrollGeneration,
                 stackPixelSize,
                 stackPixelSizeInViewport,
                 stackPixelSizeInCacheBeforeViewport,
@@ -9403,10 +9566,6 @@ namespace System.Windows.Controls
         private void EnsureScrollData()
         {
             if (_scrollData == null) { _scrollData = new ScrollData(); }
-            else
-            {
-                Debug.Assert(_scrollData._scrollOwner != null, "Scrolling an unconnected VSP");
-            }
         }
 
         private static void ResetScrolling(VirtualizingStackPanel element)
@@ -9526,7 +9685,7 @@ namespace System.Windows.Controls
                     //
                     // We do not want the cache measure pass to affect the visibility
                     // of the scrollbars because this makes bad user experience and
-                    // is also the source of scrolling bugs. 
+                    // is also the source of scrolling bugs.
                     //
 
                     stackPixelSize.Width = _scrollData._extent.Width;
@@ -9641,7 +9800,7 @@ namespace System.Windows.Controls
                         offsetForScrollViewerRemeasure.X = newOffset;
 
                         // adjust the persisted viewports too, in case the next use
-                        // occurs before a measure, e.g. adding item to Items 
+                        // occurs before a measure, e.g. adding item to Items
                         _viewport.X = newOffset;
                         _extendedViewport.X += delta;
 
@@ -9666,7 +9825,7 @@ namespace System.Windows.Controls
                         offsetForScrollViewerRemeasure.Y = newOffset;
 
                         // adjust the persisted viewports too, in case the next use
-                        // occurs before a measure, e.g. adding item to Items 
+                        // occurs before a measure, e.g. adding item to Items
                         _viewport.Y = newOffset;
                         _extendedViewport.Y += delta;
 
@@ -9891,7 +10050,7 @@ namespace System.Windows.Controls
                         // (b) the new extent and offset indicate scrolling to the end
                         //
                         if (_scrollData.HorizontalScrollType == ScrollType.ToEnd ||
-                              ( DoubleUtil.GreaterThan(computedViewportOffset.X, 0.0) &&
+                              ( DoubleUtil.GreaterThanZero(computedViewportOffset.X) &&
                                 DoubleUtil.GreaterThan(computedViewportOffset.X, extentSize.Width - viewportSize.Width)))
                         {
                             if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
@@ -9958,7 +10117,7 @@ namespace System.Windows.Controls
                         // (b) the new extent and offset indicate scrolling to the end
                         //
                         if (_scrollData.VerticalScrollType == ScrollType.ToEnd ||
-                              ( DoubleUtil.GreaterThan(computedViewportOffset.Y, 0.0) &&
+                              ( DoubleUtil.GreaterThanZero(computedViewportOffset.Y) &&
                                 DoubleUtil.GreaterThan(computedViewportOffset.Y, extentSize.Height - viewportSize.Height)))
                         {
                             if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
@@ -10108,7 +10267,7 @@ namespace System.Windows.Controls
                         // (b) the new extent and offset indicate scrolling to the end
                         //
                         if (_scrollData.VerticalScrollType == ScrollType.ToEnd ||
-                              ( DoubleUtil.GreaterThan(computedViewportOffset.Y, 0.0) &&
+                              ( DoubleUtil.GreaterThanZero(computedViewportOffset.Y) &&
                                 DoubleUtil.GreaterThan(computedViewportOffset.Y, extentSize.Height - viewportSize.Height)))
                         {
                             if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
@@ -10174,7 +10333,7 @@ namespace System.Windows.Controls
                         // (b) the new extent and offset indicate scrolling to the end
                         //
                         if (_scrollData.HorizontalScrollType == ScrollType.ToEnd ||
-                              ( DoubleUtil.GreaterThan(computedViewportOffset.X, 0.0) &&
+                              ( DoubleUtil.GreaterThanZero(computedViewportOffset.X) &&
                                 DoubleUtil.GreaterThan(computedViewportOffset.X, extentSize.Width - viewportSize.Width)))
                         {
                             if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
@@ -10552,7 +10711,7 @@ namespace System.Windows.Controls
                         // If the extentSize has decreased and we are scrolling to the very end then again we
                         // need to scoot back the offset to fit more in the viewport.
                         //
-                        if (DoubleUtil.GreaterThan(computedViewportOffset.X, 0.0) &&
+                        if (DoubleUtil.GreaterThanZero(computedViewportOffset.X) &&
                             DoubleUtil.GreaterThan(computedViewportOffset.X, extentSize.Width - viewportSize.Width))
                         {
                             remeasure = true;
@@ -10683,7 +10842,7 @@ namespace System.Windows.Controls
                         // If the extentSize has decreased and we are scrolling to the very end then again we
                         // need to scoot back the offset to fit more in the viewport.
                         //
-                        if (DoubleUtil.GreaterThan(computedViewportOffset.Y, 0.0) &&
+                        if (DoubleUtil.GreaterThanZero(computedViewportOffset.Y) &&
                             DoubleUtil.GreaterThan(computedViewportOffset.Y, extentSize.Height - viewportSize.Height))
                         {
                             remeasure = true;
@@ -10842,10 +11001,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override double GetItemOffsetCore(UIElement child)
         {
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             bool isHorizontal = (Orientation == Orientation.Horizontal);
             ItemsControl itemsControl;
@@ -11032,32 +11188,23 @@ namespace System.Windows.Controls
                 viewportOffset, viewportOffset + viewportSize, targetRectOffset, targetRectOffset + targetRectSize, ref alignTop, ref alignBottom);
 
             // Compute the visible rectangle of the child relative to the viewport.
+            double start = targetRectOffset - minPhysicalOffset;
+            double end = start + targetRectSize;
 
-            if (alignTop)
-            {
-                targetRectOffset = viewportOffset;
-            }
-            else if (alignBottom)
-            {
-                targetRectOffset = viewportOffset + viewportSize - targetRectSize;
-            }
-
-            double left = Math.Max(targetRectOffset, minPhysicalOffset);
-            targetRectSize = Math.Max(Math.Min(targetRectSize + targetRectOffset, minPhysicalOffset + viewportSize) - left, 0);
-            targetRectOffset = left;
-            targetRectOffset -= viewportOffset;
+            double visibleStart = Math.Max(start, 0);
+            double visibleEnd = Math.Max(Math.Min(end, viewportSize), visibleStart);
 
             if (isHorizontal)
             {
                 newOffset.X = minPhysicalOffset;
-                newRect.X = targetRectOffset;
-                newRect.Width = targetRectSize;
+                newRect.X = visibleStart;
+                newRect.Width = visibleEnd - visibleStart;
             }
             else
             {
                 newOffset.Y = minPhysicalOffset;
-                newRect.Y = targetRectOffset;
-                newRect.Height = targetRectSize;
+                newRect.Y = visibleStart;
+                newRect.Height = visibleEnd - visibleStart;
             }
         }
 
@@ -11589,7 +11736,7 @@ namespace System.Windows.Controls
         private static readonly UncommonField<DispatcherOperation> AnchoredInvalidateMeasureOperationField = new UncommonField<DispatcherOperation>();
         private static readonly UncommonField<DispatcherOperation> ClearIsScrollActiveOperationField = new UncommonField<DispatcherOperation>();
         private static readonly UncommonField<OffsetInformation> OffsetInformationField = new UncommonField<OffsetInformation>();
-        private static readonly UncommonField<List<Double>> EffectiveOffsetInformationField = new UncommonField<List<Double>>();
+        private static readonly UncommonField<EffectiveOffsetInformation> EffectiveOffsetInformationField = new UncommonField<EffectiveOffsetInformation>();
         private static readonly UncommonField<SnapshotData> SnapshotDataField = new UncommonField<SnapshotData>();
 
         #endregion
@@ -11667,6 +11814,9 @@ namespace System.Windows.Controls
             internal FrameworkElement _firstContainerInViewport;
             internal double _firstContainerOffsetFromViewport;
             internal double _expectedDistanceBetweenViewports;
+
+            // scroll generation - for effective offsets
+            internal long _scrollGeneration;
 
             public Vector Offset
             {
@@ -11780,13 +11930,15 @@ namespace System.Windows.Controls
             public DependencyObject FirstContainer;     // first container visible in viewport
             public int              FirstItemIndex;     // index of corresponding item
             public double           FirstItemOffset;    // offset from top of viewport
+            public long             ScrollGeneration;   // current scroll generation
 
-            public FirstContainerInformation(ref Rect viewport, DependencyObject firstContainer, int firstItemIndex, double firstItemOffset)
+            public FirstContainerInformation(ref Rect viewport, DependencyObject firstContainer, int firstItemIndex, double firstItemOffset, long scrollGeneration)
             {
                 Viewport = viewport;
                 FirstContainer = firstContainer;
                 FirstItemIndex = firstItemIndex;
                 FirstItemOffset = firstItemOffset;
+                ScrollGeneration = scrollGeneration;
             }
         }
 
@@ -11833,6 +11985,19 @@ namespace System.Windows.Controls
             }
         }
 
+        // Info needed to support Effective Offsets
+        private class EffectiveOffsetInformation
+        {
+            public long ScrollGeneration { get; private set; }
+            public List<double> OffsetList { get; private set; }
+
+            public EffectiveOffsetInformation(long scrollGeneration)
+            {
+                ScrollGeneration = scrollGeneration;
+                OffsetList = new List<double>(2);
+            }
+        }
+
         #endregion Information caches
 
         #region ScrollTracer
@@ -11846,7 +12011,7 @@ namespace System.Windows.Controls
         {
             #region static members
 
-            const int s_StfFormatVersion = 2;   // Format of output file
+            const int s_StfFormatVersion = 3;   // Format of output file
             const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
             const int s_MinTraceRecords = 5000;     // keep this many records after flushing
             const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
@@ -12094,14 +12259,14 @@ namespace System.Windows.Controls
                 {
                     if (needSeparator)
                     {
-                        sb.Append("/");
+                        sb.Append('/');
                     }
 
-                    string name = t.ToString();
+                    ReadOnlySpan<char> name = t.ToString();
                     isWPFControl = name.StartsWith("System.Windows.Controls.");
                     if (isWPFControl)
                     {
-                        name = name.Substring(24);  // 24 == length of "s.w.c."
+                        name = name.Slice(24); // 24 == length of "s.w.c."
                     }
 
                     sb.Append(name);
@@ -12136,6 +12301,12 @@ namespace System.Windows.Controls
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}",
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
                 "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17} {18}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14} {15} {16} {17} {18} {19}",
             };
 
             #endregion static members
@@ -12200,6 +12371,12 @@ namespace System.Windows.Controls
                     "VirtMode:", VirtualizingPanel.GetVirtualizationMode(ic),
                     "ScrollUnit:", VirtualizingPanel.GetScrollUnit(ic),
                     "CacheLen:", VirtualizingPanel.GetCacheLength(ic), VirtualizingPanel.GetCacheLengthUnit(ic));
+
+                DpiScale dpiScale = vsp.GetDpi();
+                AddTrace(null, ScrollTraceOp.ID, _nullInfo,
+                    "DPIScale:", dpiScale.DpiScaleX, dpiScale.DpiScaleY,
+                    "UseLayoutRounding:", vsp.UseLayoutRounding,
+                    "Rounding Quantum:", 1.0/dpiScale.DpiScaleY);
 
                 AddTrace(null, ScrollTraceOp.ID, _nullInfo,
                     "CanContentScroll:", ScrollViewer.GetCanContentScroll(ic),
@@ -12378,11 +12555,9 @@ namespace System.Windows.Controls
                     }
                     if (filename != "none" && s_seqno > 1)
                     {
-                        int dotIndex = filename.LastIndexOf(".", StringComparison.Ordinal);
+                        int dotIndex = filename.LastIndexOf('.');
                         if (dotIndex < 0) dotIndex = filename.Length;
-                        filename = filename.Substring(0, dotIndex) +
-                            s_seqno.ToString() +
-                            filename.Substring(dotIndex);
+                        filename = $"{filename.AsSpan(0, dotIndex)}{s_seqno}{filename.AsSpan(dotIndex)}";
                     }
 
                     // create the TraceList
@@ -12605,6 +12780,9 @@ namespace System.Windows.Controls
             /****** Added in Version 1 ******/
             SetContainerSize,
             SizeChangeDuringAnchorScroll,
+
+            /****** Added in Version 3 ******/
+            UpdateExtent,
         }
 
         private class ScrollTraceRecord

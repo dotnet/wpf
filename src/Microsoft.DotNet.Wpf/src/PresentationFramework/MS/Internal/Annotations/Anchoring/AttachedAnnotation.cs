@@ -253,7 +253,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 _parent = _selectionProcessor.GetParent(_attachedAnchor);
             }
-            Debug.Assert(_selectionProcessor != null, SR.Get(SRID.NoProcessorForSelectionType, attachedAnchor.GetType()));
+            Debug.Assert(_selectionProcessor != null, SR.Format(SR.NoProcessorForSelectionType, attachedAnchor.GetType()));
         }
 
 

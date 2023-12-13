@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -75,11 +74,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal constructor -- Creates frame from another frame
         /// </summary>
-        /// <SecurityNote>
-        /// SecurityCritical: Accesses unmanaged resources (_wicSource)
-        /// SecurityTreatAsSafe: Inputs are verified and _wicSource and the get is Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal BitmapFrameDecode(
             int frameNumber,
             BitmapCreateOptions createOptions,
@@ -124,11 +118,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal constructor -- Creates frame thats being downloaded
         /// </summary>
-        /// <SecurityNote>
-        /// SecurityCritical: Accesses unmanaged resources (_wicSource)
-        /// SecurityTreatAsSafe: Inputs are verified and _wicSource and the get is Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal BitmapFrameDecode(
             int frameNumber,
             BitmapCreateOptions createOptions,
@@ -241,10 +230,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Used as a delegate in ColorContexts to get the unmanaged IWICColorContexts
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Calls critical, unmanaged method
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
@@ -261,20 +246,8 @@ namespace System.Windows.Media.Imaging
         /// Provides access to this encoders color profile
         /// </summary>
         ///
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// TreatAsSafe - We are exposing specific, non-sensitive data that came from
-        ///               a Uri or a bitmap. If the profile data came from a Uri, the 
-        ///               WebRequest we did to get it demandend the appropriate 
-        ///               permission and we did not expose the request or response. If it came
-        ///               from a bitmap, it may be cross-domain, but the restricted
-        ///               nature of the data combined with the fact that it has been
-        ///               inspected by WCS which is hardened against malicious data
-        ///               makes this OK.
-        /// </SecurityNote>
         public override ReadOnlyCollection<ColorContext> ColorContexts
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 ReadPreamble();
@@ -388,11 +361,6 @@ namespace System.Windows.Media.Imaging
         /// CloneCore(), CloneCurrentValueCore(), GetAsFrozenCore() and
         /// GetCurrentValueAsFrozenCore().
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources (_metadata)
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CopyCommon(BitmapFrameDecode sourceBitmapFrameDecode)
         {
             _bitmapInit.BeginInit();
@@ -478,11 +446,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Updates the internal decoder -- usually happens with a LateBoundBitmapDecoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void UpdateDecoder(BitmapDecoder decoder)
         {
             Debug.Assert(_decoder != null);
@@ -499,11 +462,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Create the unmanaged resources
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources
-        /// TreatAsSafe - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void FinalizeCreation()
         {
             EnsureSource();
@@ -618,11 +576,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Ensure that the thumbnail is created/cached
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// TreatAsSafe - Getting thumbnail data is OK
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureThumbnail()
         {
             if (_isThumbnailCached || IsDownloading)
@@ -683,13 +636,8 @@ namespace System.Windows.Media.Imaging
         /// Returns cached metadata and creates BitmapMetadata if it does not exist.
         /// This code will demand site of origin permissions.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code
-        /// TreatAsSafe - demands site of origin permissions
-        /// </SecurityNote>
         internal override BitmapMetadata InternalMetadata
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 // Demand Site Of Origin on the URI before usage of metadata.
@@ -737,11 +685,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Ensure that a BitmapSource is created
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// TreatAsSafe - Getting frame data is OK
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureSource()
         {
             if (_frameSource == null)

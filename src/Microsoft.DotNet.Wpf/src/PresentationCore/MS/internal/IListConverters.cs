@@ -16,7 +16,6 @@ using System.Text;
 using System.Windows;
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Converters
@@ -63,7 +62,7 @@ namespace System.Windows.Media.Converters
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
 
             return ConvertFromCore(td, ci, s);            

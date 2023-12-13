@@ -17,7 +17,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Windows;
 using System.Windows.Media;
@@ -79,11 +78,6 @@ namespace System.Windows.Media
         /// Creates a new GlyphTypeface object from a DWrite.Font object.
         /// </summary>
         /// <param name="font">The DWrite.Font object.</param>
-        /// <SecurityNote>
-        /// Critical - as the instance of GlyphTypeface created with this constructor can
-        ///            expose font information.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal GlyphTypeface(MS.Internal.Text.TextInterface.Font font)
         {        
             StyleSimulations styleSimulations = (StyleSimulations)font.SimulationFlags;
@@ -108,9 +102,6 @@ namespace System.Windows.Media
             }
 
             Uri typefaceSource = new Uri(uriPath);
-            _fileIOPermObj = new SecurityCriticalDataForSet<CodeAccessPermission>(
-                SecurityHelper.CreateUriReadPermission(typefaceSource)
-                );
            
             _fontFace = new FontFaceLayoutInfo(font);
             // We skip permission demands for FontSource because the above line already demands them for the right callers.
@@ -126,18 +117,12 @@ namespace System.Windows.Media
             _initializationState = InitializationState.IsInitialized; // fully initialized
         }
 
-        /// <SecurityNote>
-        /// Critical - this method calls into other critical method.
-        /// TreatAsSafe - Demands Uri read permission for the fonts Uri
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Initialize(Uri typefaceSource, StyleSimulations styleSimulations)
         {
-            if (typefaceSource == null)
-                throw new ArgumentNullException("typefaceSource");
+            ArgumentNullException.ThrowIfNull(typefaceSource);
 
             if (!typefaceSource.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "typefaceSource");
+                throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
 
             // remember the original Uri that contains face index
             _originalUri = new SecurityCriticalDataClass<Uri>(typefaceSource);
@@ -146,14 +131,6 @@ namespace System.Windows.Media
             Uri fontSourceUri;
             int faceIndex;
             Util.SplitFontFaceIndex(typefaceSource, out fontSourceUri, out faceIndex);
-
-            _fileIOPermObj = new SecurityCriticalDataForSet<CodeAccessPermission>(
-                SecurityHelper.CreateUriReadPermission(fontSourceUri)
-                );
-
-            // This permission demand is here so that untrusted callers are unable to check for file existence using GlyphTypeface ctor.
-            // Sensitive font data is protected by demands as the user tries to access it.
-            DemandPermissionsForFontInformation();
 
             if (   styleSimulations != StyleSimulations.None 
                 && styleSimulations != StyleSimulations.ItalicSimulation 
@@ -174,15 +151,7 @@ namespace System.Windows.Media
                 // FileFormatException will be thrown!
                 if (fontFaceDWrite == null)
                 {
-                    try
-                    {
-                        SecurityHelper.DemandUriDiscoveryPermission(typefaceSource);
-                        throw new System.IO.FileFormatException(typefaceSource);
-                    }
-                    catch(SecurityException)
-                    {
-                        throw new System.IO.FileFormatException();
-                    }                    
+                    throw new System.IO.FileFormatException(typefaceSource);             
                 }
                 _font = fontCollection.GetFontFromFontFace(fontFaceDWrite);
             }
@@ -210,11 +179,6 @@ namespace System.Windows.Media
         /// Return hash code for this GlyphTypeface.
         /// </summary>
         /// <returns>Hash code.</returns>
-        /// <SecurityNote>
-        /// Critical - as this accesses _originalUri.
-        /// Safe - as this only does this to compute the hash code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public override int GetHashCode()
         {
             CheckInitialized();
@@ -226,11 +190,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="o">Object to compare with.</param>
         /// <returns>Whether this object is equal to the input object.</returns>
-        /// <SecurityNote>
-        /// Critical - as this accesses _originalUri.
-        /// Safe - as this only does this to perform a comparison with another object.
-        /// </SecurityNote>
-        [SecurityCritical]
         public override bool Equals(object o)
         {
             CheckInitialized();
@@ -268,28 +227,18 @@ namespace System.Windows.Media
         ///     Callers must have UnmanagedCode permission to call this API.
         ///     Callers must have FileIOPermission or WebPermission to font location to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - returns raw font data.
-        ///     Safe - (1) unmanaged code demand.  This ensures PT callers can't directly access the TrueType subsetter in V1.
-        ///            (2) fileIO or web permission demand for location of font.  This ensures that even brokered access
-        ///                    via print dialog (which asserts unmanaged code) only succeeds if user has access to font source location.
-        /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public byte[] ComputeSubset(ICollection<ushort> glyphs)
         {
-            SecurityHelper.DemandUnmanagedCode();
-            DemandPermissionsForFontInformation();
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
 
-            if (glyphs == null)
-                throw new ArgumentNullException("glyphs");
+            ArgumentNullException.ThrowIfNull(glyphs);
 
             if (glyphs.Count <= 0)
-                throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeGreaterThanZero), "glyphs");
+                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
 
             if (glyphs.Count > ushort.MaxValue)
-                throw new ArgumentException(SR.Get(SRID.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
+                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
 
             UnmanagedMemoryStream pinnedFontSource = FontSource.GetUnmanagedStream();
 
@@ -314,52 +263,10 @@ namespace System.Windows.Media
         /// Returns a font file stream represented by this GlyphTypeface.
         /// </summary>
         /// <returns>A font file stream represented by this GlyphTypeface.</returns>
-        /// <SecurityNote>
-        ///     Critical - returns raw font data.
-        ///     Safe - does a demand before it gives out the information asked.
-        /// </SecurityNote>
-        [SecurityCritical]
         public Stream GetFontStream()
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-            DemandPermissionsForFontInformation();
             return FontSource.GetStream();
-        }
-
-        /// <summary>
-        /// Exposed to allow printing code to access GetFontStream() in partial trust
-        /// </summary>
-        /// <SecurityNote>
-        ///     Critical - returns a permission allowing access to GetFontStream in partial trust.
-        ///                Caller must make sure there is no font data leak
-        /// </SecurityNote>
-        [FriendAccessAllowed]
-        internal CodeAccessPermission CriticalFileReadPermission
-        {
-            [SecurityCritical]
-            get
-            {
-                CheckInitialized();
-                return _fileIOPermObj.Value;
-            }
-        }
-
-        /// <summary>
-        /// Exposed to allow printing code to access FontUri in partial trust
-        /// </summary>
-        /// <SecurityNote>
-        ///     Critical - returns a permission allowing access to FontUri
-        ///                Caller must make sure there is no data leak
-        /// </SecurityNote>
-        [FriendAccessAllowed]
-        internal CodeAccessPermission CriticalUriDiscoveryPermission
-        {
-            [SecurityCritical]
-            get
-            {
-                CheckInitialized();
-                return SecurityHelper.CreateUriDiscoveryPermission(_originalUri.Value);
-            }
         }
 
         #endregion Public Methods
@@ -379,29 +286,21 @@ namespace System.Windows.Media
         /// <remarks>
         ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this obtains Uri that can reveal local file system information.
-        /// Safe - as this does a discovery demand before it gives out the information asked.
-        /// </SecurityNote>
         public Uri FontUri
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                SecurityHelper.DemandUriDiscoveryPermission(_originalUri.Value);
                 return _originalUri.Value;
             }
-            [SecurityCritical]
             set
             {
                 CheckInitializing(); // This can only be called in initialization
 
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!value.IsAbsoluteUri)
-                    throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "value");
+                    throw new ArgumentException(SR.UriNotAbsolute, "value");
 
                 _originalUri = new SecurityCriticalDataClass<Uri>(value);
             }
@@ -414,13 +313,8 @@ namespace System.Windows.Media
         /// it returns the family name in English.
         /// The family name excludes weight, style and stretch.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical DWrite.Font methods
-        /// TreatAsSafe - it is safe to expose the localized family names.
-        /// </SecurityNote>
         public IDictionary<CultureInfo,string> FamilyNames
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -447,13 +341,8 @@ namespace System.Windows.Media
         /// it returns the face name in English.
         /// The face name may identify weight, style and/or stretch.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical DWrite.Font methods
-        /// TreatAsSafe - it is safe to expose the localized face names.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> FaceNames
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -497,13 +386,8 @@ namespace System.Windows.Media
         /// it returns the face name in English.
         /// The face name may identify weight, style and/or stretch.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical DWrite.Font methods
-        /// TreatAsSafe - it is safe to expose the localized face names for a font.
-        /// </SecurityNote>
         IDictionary<XmlLanguage, string> ITypefaceMetrics.AdjustedFaceNames
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -544,17 +428,11 @@ namespace System.Windows.Media
         /// as a numeric value use the 'Version' property,
         /// do not attempt to parse the VersionString.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> VersionStrings
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.VersionStrings);
             }
         }
@@ -563,17 +441,11 @@ namespace System.Windows.Media
         /// This property is indexed by a Culture Identifier.
         /// Copyright notice.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> Copyrights
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.CopyrightNotice);
             }
         }
@@ -582,17 +454,11 @@ namespace System.Windows.Media
         /// This property is indexed by a Culture Identifier.
         /// Manufacturer Name.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> ManufacturerNames
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Manufacturer);
             }
         }
@@ -603,17 +469,11 @@ namespace System.Windows.Media
         /// Such information should be based on legal advice.
         /// This is distinctly separate from the copyright.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> Trademarks
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Trademark);
             }
         }
@@ -622,17 +482,11 @@ namespace System.Windows.Media
         /// This property is indexed by a Culture Identifier.
         /// Name of the designer of the typeface.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> DesignerNames
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Designer);
             }
         }
@@ -642,17 +496,11 @@ namespace System.Windows.Media
         /// Description of the typeface. Can contain revision information,
         /// usage recommendations, history, features, etc.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> Descriptions
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.Description);
             }
         }
@@ -663,17 +511,11 @@ namespace System.Windows.Media
         /// If a unique serial number is embedded in the URL,
         /// it can be used to register the font.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> VendorUrls
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.FontVendorURL);
             }
         }
@@ -682,17 +524,11 @@ namespace System.Windows.Media
         /// This property is indexed by a Culture Identifier.
         /// URL of typeface designer (with protocol, e.g., `http://, `ftp://).
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> DesignerUrls
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.DesignerURL);
             }
         }
@@ -703,17 +539,11 @@ namespace System.Windows.Media
         /// or different example scenarios for licensed use.
         /// This field should be written in plain language, not legalese.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> LicenseDescriptions
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.LicenseDescription);
             }
         }
@@ -723,17 +553,11 @@ namespace System.Windows.Media
         /// This can be the font name, or any other text that the designer
         /// thinks is the best sample to display the font in.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public IDictionary<CultureInfo, string> SampleTexts
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID.SampleText);
             }
         }
@@ -742,13 +566,8 @@ namespace System.Windows.Media
         /// Returns designed style (regular/italic/oblique) of this font face
         /// </summary>
         /// <value>Designed style of this font face.</value>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public FontStyle Style
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -760,13 +579,8 @@ namespace System.Windows.Media
         /// Returns designed weight of this font face.
         /// </summary>
         /// <value>Designed weight of this font face.</value>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public FontWeight Weight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -778,13 +592,8 @@ namespace System.Windows.Media
         /// Returns designed stretch of this font face.
         /// </summary>
         /// <value>Designed stretch of this font face.</value>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public FontStretch Stretch
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -795,17 +604,11 @@ namespace System.Windows.Media
         /// <summary>
         /// Font face version interpreted from the font's 'NAME' table.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public double Version
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return _font.Version;
             }
         }
@@ -813,13 +616,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Height of character cell relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double Height
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -830,13 +628,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Distance from cell top to English baseline relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double Baseline
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -847,13 +640,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Distance from baseline to top of English capital relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double CapsHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -864,13 +652,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Western x-height relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double XHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -882,13 +665,8 @@ namespace System.Windows.Media
         /// Returns true if this font does not conform to Unicode encoding:
         /// it may be considered as a simple collection of symbols indexed by a codepoint.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public bool Symbol
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -900,13 +678,8 @@ namespace System.Windows.Media
         /// Position of underline relative to baseline relative to em size.
         /// The value is usually negative, to place the underline below the baseline.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double UnderlinePosition
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -917,13 +690,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Thickness of underline relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double UnderlineThickness
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -935,13 +703,8 @@ namespace System.Windows.Media
         /// Position of strikeThrough relative to baseline relative to em size.
         /// The value is usually positive, to place the Strikethrough above the baseline.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double StrikethroughPosition
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -952,13 +715,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Thickness of Strikethrough relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         public double StrikethroughThickness
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -970,17 +728,11 @@ namespace System.Windows.Media
         /// EmbeddingRights property describes font embedding permissions
         /// specified in this glyph typeface.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _fontFace which can reveal Windows font information.
-        /// Safe - as this does a demand before it gives out the information asked.
-        /// </SecurityNote>
         public FontEmbeddingRight EmbeddingRights
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                DemandPermissionsForFontInformation();
                 return _fontFace.EmbeddingRights;
             }
         }
@@ -1176,13 +928,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns nominal mapping of Unicode codepoint to glyph index as defined by the font 'CMAP' table.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical: May potentially leak a writeable cmap.
-        ///   Safe: The cmap IDictionary exposure is read only.
-        ///  </SecurityNote>
         public IDictionary<int, ushort> CharacterToGlyphMap
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1213,13 +960,8 @@ namespace System.Windows.Media
         /// Obtains the number of glyphs in the glyph typeface.
         /// </summary>
         /// <value>The number of glyphs in the glyph typeface.</value>
-        /// <SecurityNote>
-        /// Critical - Accesses critical DWrite.FontFace property
-        /// Safe - This information is safe to expose.
-        /// </SecurityNote>
         public int GlyphCount
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1249,22 +991,13 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
-        /// <SecurityNote>
-        ///   Critical: Uses security critical property FontDWrite.
-        ///   Safe    : Does not expose critical data.
-        ///  </SecurityNote>
-        [SecuritySafeCritical]
         internal bool HasCharacter(uint unicodeValue)
         {
             return FontDWrite.HasCharacter(unicodeValue);
         }
         
-        /// <SecurityNote>
-        ///   Critical: Exposes security critical font object that gives access to font data.
-        ///  </SecurityNote>
         internal MS.Internal.Text.TextInterface.Font FontDWrite
         {
-            [SecurityCritical]
             get
             {                
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1282,11 +1015,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="glyph">Glyph index in the font.</param>
         /// <returns>The nominal advance width for the glyph relative to the em size of the font.</returns>
-        /// <SecurityNote>
-        /// Critical - as this has unsafe block.
-        /// Safe - as this only gives width information which is safe to give out.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal double GetAdvanceWidth(ushort             glyph,
                                         float              pixelsPerDip,
                                         TextFormattingMode textFormattingMode,
@@ -1301,24 +1029,6 @@ namespace System.Windows.Media
                 MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics = GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways);
 
                 return (double)glyphMetrics.AdvanceWidth / DesignEmHeight;
-            }
-        }
-
-        /// <SecurityNote>
-        /// This function will demand appropriate permissions depending on what
-        /// the source of the font information is.  The value of _fileIOPermObj
-        /// is set correctly whenever _originalUri gets set.
-        /// Critical - Performs a demand. Transparent methods should not be responsible 
-        ///            for verifying the security of an operation, and therefore should not 
-        ///            demand permissions.
-        /// Safe - It is safe to perform a demand.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        internal void DemandPermissionsForFontInformation()
-        {
-            if (_fileIOPermObj.Value != null)
-            {
-                _fileIOPermObj.Value.Demand();
             }
         }
 
@@ -1346,10 +1056,6 @@ namespace System.Windows.Media
             return ah;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical DWrite.FontFace methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe MS.Internal.Text.TextInterface.GlyphMetrics GlyphMetrics(ushort             glyphIndex,
                                                                                 double             emSize,
                                                                                 float              pixelsPerDip,
@@ -1362,7 +1068,7 @@ namespace System.Windows.Media
             try
             {
                 if (glyphIndex >= fontFaceDWrite.GlyphCount)
-                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Get(SRID.GlyphIndexOutOfRange, glyphIndex));
+                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
 
                 glyphMetrics = new MS.Internal.Text.TextInterface.GlyphMetrics();
 
@@ -1386,10 +1092,6 @@ namespace System.Windows.Media
             return glyphMetrics;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical DWrite.FontFace methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void GlyphMetrics(ushort* pGlyphIndices, int characterCount, MS.Internal.Text.TextInterface.GlyphMetrics* pGlyphMetrics, double emSize, 
             float pixelsPerDip, TextFormattingMode textFormattingMode, bool isSideways)
         {
@@ -1412,11 +1114,6 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical GlyphMetrics
-        /// TreatAsSafe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double GetLeftSidebearing(ushort         glyph,
                                           float          pixelsPerDip,
                                           TextFormattingMode textFormattingMode,
@@ -1425,11 +1122,6 @@ namespace System.Windows.Media
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).LeftSideBearing) / DesignEmHeight;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical GlyphMetrics
-        /// TreatAsSafe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double GetRightSidebearing(ushort         glyph,
                                            float          pixelsPerDip,
                                            TextFormattingMode textFormattingMode,
@@ -1438,11 +1130,6 @@ namespace System.Windows.Media
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).RightSideBearing) / DesignEmHeight;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical GlyphMetrics
-        /// TreatAsSafe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double GetTopSidebearing(ushort         glyph,
                                          float          pixelsPerDip,
                                          TextFormattingMode textFormattingMode,
@@ -1451,11 +1138,6 @@ namespace System.Windows.Media
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).TopSideBearing) / DesignEmHeight;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical GlyphMetrics
-        /// TreatAsSafe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double GetBottomSidebearing(ushort         glyph,
                                             float          pixelsPerDip,
                                             TextFormattingMode textFormattingMode,
@@ -1464,11 +1146,6 @@ namespace System.Windows.Media
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).BottomSideBearing) / DesignEmHeight;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical GlyphMetrics
-        /// TreatAsSafe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private double GetBaseline(ushort glyph,
                                    float pixelsPerDip,
                                    TextFormattingMode textFormattingMode,
@@ -1492,11 +1169,6 @@ namespace System.Windows.Media
         /// a lot of glyphs you need to get metrics for, use the array based equivalent instead.
         ///
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this uses unsafe code.
-        /// Safe - as this only gives information which is safe to give out.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void GetGlyphMetrics(
             ushort glyph,
             double renderingEmSize,
@@ -1548,11 +1220,6 @@ namespace System.Windows.Media
         /// Optimized version of obtaining all of glyph metrics from font cache at once
         /// without repeated checks and divisions.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this uses unsafe code.
-        /// Safe - as this only gives information which is safe to give out.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void GetGlyphMetrics(
             ushort[] glyphs,
             int glyphsLength,
@@ -1588,11 +1255,6 @@ namespace System.Windows.Media
         /// <param name="sideways">Specifies whether the glyph should be rotated sideways.</param>
         /// <param name="renderingEmSize">Font size in drawing surface units.</param>
         /// <returns>Geometry containing glyph outline.</returns>
-        /// <SecurityNote>
-        /// Critical - as this calls GetGlyphs() which is critical.
-        /// Safe - as this doesn't expose font information but just gives out a Geometry.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Geometry ComputeGlyphOutline(ushort glyphIndex,
                                               bool sideways,
                                               double renderingEmSize)
@@ -1655,10 +1317,6 @@ namespace System.Windows.Media
         /// <param name="advanceWidthsUnshaped">unshaped advance widths </param>
         /// <param name="nullFont">true if all characters map to missing glyph</param>
         /// <returns>array of character advance widths</returns>
-        /// <SecurityNote>
-        /// Critical - takes unsafe char string and returns information in an unsafe int array
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetAdvanceWidthsUnshaped(
             char*              unsafeCharString,
             int                stringLength,
@@ -1799,7 +1457,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns GlyphMetics and/or glyph indices matching a run of characters.  Heap allocation is typically avoided.
         /// </summary>     
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void GetGlyphMetricsOptimized(CharacterBufferRange characters,
             double emSize,
             float pixelsPerDip,
@@ -1839,7 +1496,6 @@ namespace System.Windows.Media
             }
         }
 
-        [SecurityCritical]
         private unsafe void GetGlyphMetricsAndIndicesOptimized(uint *pCodepoints, 
                                                                int characterCount, 
                                                                double emSize,
@@ -1899,12 +1555,8 @@ namespace System.Windows.Media
         /// 0 for TTF files
         /// Face index within TrueType font collection for TTC files
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses critical DWrite.FontFace property
-        /// </SecurityNote>
         internal int FaceIndex
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1951,13 +1603,8 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - this accesses critical DWrite.Font properties.
-        /// TreatAsSafe - this data is safe to expose.
-        /// </SecurityNote>
         internal ushort DesignEmHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1971,7 +1618,6 @@ namespace System.Windows.Media
         //
         unsafe internal IntPtr GetDWriteFontAddRef
         {
-            [SecurityCritical]
             get
             {
                 CheckInitialized();
@@ -1989,11 +1635,6 @@ namespace System.Windows.Media
 
         #region Private Methods
 
-        /// <SecurityNote>
-        /// Critical - calls into critical DWrite.Font methods
-        /// TreatAsSafe - it is safe to expose the localized strings for the font.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IDictionary<CultureInfo, string> GetFontInfo(MS.Internal.Text.TextInterface.InformationalStringID informationalStringID)
         {
             MS.Internal.Text.TextInterface.LocalizedStrings localizedStrings;
@@ -2016,29 +1657,24 @@ namespace System.Windows.Media
             if (_initializationState == InitializationState.IsInitialized)
             {
                 // Cannot initialize a GlyphRun this is completely initialized.
-                throw new InvalidOperationException(SR.Get(SRID.OnlyOneInitialization));
+                throw new InvalidOperationException(SR.OnlyOneInitialization);
             }
 
             if (_initializationState == InitializationState.IsInitializing)
             {
                 // Cannot initialize a GlyphRun this already being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.InInitialization));
+                throw new InvalidOperationException(SR.InInitialization);
             }
 
             _initializationState = InitializationState.IsInitializing;
         }
 
-        /// <SecurityNote>
-        /// Critical - This method calls critical getter _originalUri.Value.
-        /// TreatAsSafe - Does not expose critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         void ISupportInitialize.EndInit()
         {
             if (_initializationState != InitializationState.IsInitializing)
             {
                 // Cannot EndInit a GlyphRun that is not being initialized.
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
 
             Initialize(
@@ -2051,7 +1687,7 @@ namespace System.Windows.Media
         {
             if (_initializationState != InitializationState.IsInitialized)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InitializationIncomplete));
+                throw new InvalidOperationException(SR.InitializationIncomplete);
             }
         }
 
@@ -2059,18 +1695,13 @@ namespace System.Windows.Media
         {
             if (_initializationState != InitializationState.IsInitializing)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotInInitialization));
+                throw new InvalidOperationException(SR.NotInInitialization);
             }
         }
 
         /// <summary>
         /// Allocates a GlyphIndexer for the specified accessor.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses critical DWrite.FontFace property
-        /// Safe - This information is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private GlyphIndexer CreateGlyphIndexer(GlyphAccessor accessor)
         {
             GlyphIndexer indexer;
@@ -2188,14 +1819,11 @@ namespace System.Windows.Media
 
             public void CopyTo(KeyValuePair<ushort, double>[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
@@ -2277,14 +1905,11 @@ namespace System.Windows.Media
 
                 public void CopyTo(double[] array, int arrayIndex)
                 {
-                    if (array == null)
-                    {
-                        throw new ArgumentNullException("array");
-                    }
+                    ArgumentNullException.ThrowIfNull(array);
 
                     if (array.Rank != 1)
                     {
-                        throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                        throw new ArgumentException(SR.Collection_BadRank);
                     }
 
                     // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
@@ -2364,22 +1989,7 @@ namespace System.Windows.Media
         /// <summary>
         /// The Uri that was passed in to constructor.
         /// </summary>
-        /// <SecurityNote>
-        ///     This is critical as we do a demand based on this value public functions.
-        ///     Only setting this Uri is critical, getting is fine.  Hence using the
-        ///     SecurityCriticalDataForSet object.  Note that the object itself does not
-        ///     need to be Critical, it's just setting it that makes it Critical.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<Uri> _originalUri;
-
-        /// <SecurityNote>
-        /// Critical - as this object controls the Demand that'll be made before accessing the
-        ///            security sensitive contents of the font file.  This also only Critical
-        ///            for set.  This should be correctly whenever _originalUri is set.
-        ///
-        /// Caching object for perf reasons.
-        /// </SecurityNote>
-        private SecurityCriticalDataForSet<CodeAccessPermission> _fileIOPermObj;
 
         private const double CFFConversionFactor = 1.0 / 65536.0;
 

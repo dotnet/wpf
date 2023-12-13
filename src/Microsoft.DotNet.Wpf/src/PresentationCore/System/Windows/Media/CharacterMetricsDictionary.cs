@@ -14,7 +14,6 @@ using SC=System.Collections;
 using System.Collections.Generic;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -132,14 +131,12 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public void CopyTo(KeyValuePair<int, CharacterMetrics>[] array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             CharacterMetrics[][] pageTable = _pageTable;
             if (pageTable != null)
@@ -157,7 +154,7 @@ namespace System.Windows.Media
                             if (metrics != null)
                             {
                                 if (k >= array.Length)
-                                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                                    throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
                                 array[k++] = new KeyValuePair<int, CharacterMetrics>(
                                     (i << PageShift) | j,
@@ -191,17 +188,15 @@ namespace System.Windows.Media
 
         void SC.ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
 
             if (Count > array.Length - index)
-                throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
 
             SC.DictionaryEntry[] typedArray = array as SC.DictionaryEntry[];
             if (typedArray != null)
@@ -216,12 +211,12 @@ namespace System.Windows.Media
             {
                 // it's an array of some other type, e.g., object[]; make sure it's one dimensional
                 if (array.Rank != 1)
-                    throw new ArgumentException(SR.Get(SRID.Collection_CopyTo_ArrayCannotBeMultidimensional));
+                    throw new ArgumentException(SR.Collection_CopyTo_ArrayCannotBeMultidimensional);
 
                 // make sure the element type is compatible
                 Type elementType = array.GetType().GetElementType();
                 if (!elementType.IsAssignableFrom(typeof(SC.DictionaryEntry)))
-                    throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(SC.DictionaryEntry), elementType));
+                    throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(SC.DictionaryEntry), elementType));
 
                 foreach (KeyValuePair<int, CharacterMetrics> item in this)
                 {
@@ -375,16 +370,15 @@ namespace System.Windows.Media
         private void SetValue(int key, CharacterMetrics value, bool failIfExists)
         {
             if (key < 0 || key > LastDeviceFontCharacterCode)
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.CodePointOutOfRange, key));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.CodePointOutOfRange, key));
 
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
 
             CharacterMetrics[] page = GetPageFromUnicodeScalar(key);
             int i = key & PageMask;
 
             if (failIfExists && page[i] != null)
-                throw new ArgumentException(SR.Get(SRID.CollectionDuplicateKey, key));
+                throw new ArgumentException(SR.Format(SR.CollectionDuplicateKey, key));
 
             page[i] = value;
             _count = 0;
@@ -504,8 +498,7 @@ namespace System.Windows.Media
 
         internal static int ConvertKey(object key)
         {
-            if (key == null)
-                throw new ArgumentNullException("key");
+            ArgumentNullException.ThrowIfNull(key);
 
             int value;
 
@@ -514,7 +507,7 @@ namespace System.Windows.Media
             {
                 int i = 0;
                 if (!FontFamilyMap.ParseHexNumber(s, ref i, out value) || i < s.Length)
-                    throw new ArgumentException(SR.Get(SRID.CannotConvertStringToType, s, "int"), "key");
+                    throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, s, "int"), "key");
             }
             else if (key is int)
             {
@@ -522,11 +515,11 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, key.GetType(), "int"), "key");
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), "int"), "key");
             }
 
             if (value < 0 || value > FontFamilyMap.LastUnicodeScalar)
-                throw new ArgumentException(SR.Get(SRID.CodePointOutOfRange, value), "key");
+                throw new ArgumentException(SR.Format(SR.CodePointOutOfRange, value), "key");
 
             return value;
         }
@@ -537,10 +530,9 @@ namespace System.Windows.Media
             if (metrics != null)
                 return metrics;
 
-            if (value != null)
-                throw new ArgumentException(SR.Get(SRID.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
-            else
-                throw new ArgumentNullException("value");
+            ArgumentNullException.ThrowIfNull(value);
+
+            throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CharacterMetrics), value.GetType()));
         }
 
         private struct Enumerator : SC.IDictionaryEnumerator, IEnumerator<KeyValuePair<int, CharacterMetrics>>
@@ -599,7 +591,7 @@ namespace System.Windows.Media
                 if (_value != null)
                     return new KeyValuePair<int, CharacterMetrics>(_unicodeScalar, _value);
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_VerifyContext));
+                    throw new InvalidOperationException(SR.Enumerator_VerifyContext);
             }
 
             SC.DictionaryEntry SC.IDictionaryEnumerator.Entry

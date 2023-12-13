@@ -4,10 +4,10 @@
   "classifications": ["Common", "WPF"],
   "name": "WPF Application",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "A project for creating a .NET Core WPF Application",
+  "description": "A project for creating a .NET WPF Application",
   "groupIdentity": "Microsoft.Common.WPF",
-  "precedence": "3000",
-  "identity": "Microsoft.Common.WPF.VisualBasic.3.0",
+  "precedence": "9000",
+  "identity": "Microsoft.Common.WPF.VisualBasic.9.0",
   "shortName": "wpf",
   "tags": {
     "language": "VB",
@@ -21,27 +21,65 @@
       "description": "Overrides the target framework",
       "replaces": "TargetFrameworkOverride",
       "datatype": "string",
-      "defaultValue": ""
+      "defaultValue": "",
+      "displayName": "Target Framework Override"
     },
     "Framework": {
       "type": "parameter",
       "description": "The target framework for the project.",
       "datatype": "choice",
-      "choices": [
-        {
-          "choice": "netcoreapp3.0",
-          "description": "Target netcoreapp3.0"
-        }
-      ],
-      "replaces": "netcoreapp3.0",
-      "defaultValue": "netcoreapp3.0"
+        "choices": [
+          {
+              "choice": "netcoreapp3.0",
+              "description": "Target netcoreapp3.0",
+              "displayName": ".NET Core 3.0"
+          },
+          {
+              "choice": "netcoreapp3.1",
+              "description": "Target netcoreapp3.1",
+              "displayName": ".NET Core 3.1"
+          },
+          {
+              "choice": "net5.0",
+              "description": "Target net5.0",
+              "displayName": ".NET 5.0"
+          },
+          {
+              "choice": "net6.0",
+              "description": "Target net6.0",
+              "displayName": ".NET 6.0"
+          },
+          {
+              "choice": "net7.0",
+              "description": "Target net7.0",
+              "displayName": ".NET 7.0"
+          },
+          {
+              "choice": "net8.0",
+              "description": "Target net8.0",
+              "displayName": ".NET 8.0"
+          },
+          {
+              "choice": "net9.0",
+              "description": "Target net9.0",
+              "displayName": ".NET 9.0"
+          }
+        ],
+      "replaces": "FrameworkParameter",
+      "defaultValue": "net9.0",
+      "displayName": "Framework"
+    },
+    "UseWindowsDesktopSdk": {
+      "type": "computed",
+      "value": "(Framework == \"netcoreapp3.1\" || Framework == \"netcoreapp3.0\")"
     },
     "langVersion": {
       "type": "parameter",
       "datatype": "text",
       "description": "Sets langVersion in the created project file",
       "defaultValue": "",
-      "replaces": "$(ProjectLanguageVersion)"
+      "replaces": "$(ProjectLanguageVersion)",
+      "displayName": "Language Version"
     },
     "HostIdentifier": {
       "type": "bind",
@@ -51,7 +89,8 @@
       "type": "parameter",
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
-      "defaultValue": "false"
+      "defaultValue": "false",
+      "displayName": "Skip restore"
     }
   },
   "primaryOutputs": [
@@ -59,11 +98,37 @@
     {
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "MainWindow.xaml.vb"
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "MainWindow.xaml"
+    }
+  ],
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfApplication1.vbproj"
+          ],
+          "rename": {
+            "Company.WpfApplication3x1.vbproj": "Company.WpfApplication1.vbproj"
+          }
+        },
+        {
+          "condition": "(!UseWindowsDesktopSdk)",
+          "exclude": [
+            "Company.WpfApplication3x1.vbproj"
+          ]
+        }
+      ]
     }
   ],
   "defaultName": "WpfApp1",
   "postActions": [
     {
+      "id": "restore",
       "condition": "(!skipRestore)",
       "description": "Restore NuGet packages required by this project.",
       "manualInstructions": [
@@ -73,12 +138,13 @@
       "continueOnError": true
     },
     {
+      "id": "editor",
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "description": "Opens MainWindow.xaml.vb in the editor",
+      "description": "Opens MainWindow.xaml in the editor",
       "manualInstructions": [ ],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
-        "files": "1"
+        "files": "1;2"
       },
       "continueOnError": true
     }

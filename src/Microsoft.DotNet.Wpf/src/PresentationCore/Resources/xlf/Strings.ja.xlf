@@ -187,11 +187,6 @@
         <target state="translated">BitmapCacheBrush は Transform をサポートしていません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseBackKey">
-        <source>Alt+Left;Backspace</source>
-        <target state="translated">Alt+Left;Backspace</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseBackKeyDisplayString">
         <source>Alt+Left;Backspace</source>
         <target state="translated">Alt+Left;Backspace</target>
@@ -200,11 +195,6 @@
       <trans-unit id="BrowseBackText">
         <source>Back</source>
         <target state="translated">戻る</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseForwardKey">
-        <source>Alt+Right;Shift+Backspace</source>
-        <target state="translated">Alt+Right;Shift+Backspace</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseForwardKeyDisplayString">
@@ -217,11 +207,6 @@
         <target state="translated">進みます</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseHomeKey">
-        <source>Alt+Home;BrowserHome</source>
-        <target state="translated">Alt+Home;BrowserHome</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseHomeKeyDisplayString">
         <source>Alt+Home;BrowserHome</source>
         <target state="translated">Alt+Home;BrowserHome</target>
@@ -230,11 +215,6 @@
       <trans-unit id="BrowseHomeText">
         <source>Home</source>
         <target state="translated">ホーム</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseStopKey">
-        <source>Alt+Esc;BrowserStop</source>
-        <target state="translated">Alt+Esc;BrowserStop</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseStopKeyDisplayString">
@@ -344,7 +324,7 @@
       </trans-unit>
       <trans-unit id="CloneBreakRecordFailure">
         <source>Text formatting engine cannot clone break record due to error: '{0}'.</source>
-        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードを複製できません。</target>
+        <target state="translated">テキスト形式設定エンジンは、エラー '{0}' のために中断レコードをクローンできません。</target>
         <note />
       </trans-unit>
       <trans-unit id="CloseText">
@@ -547,11 +527,6 @@
         <target state="translated">潜在的なコンストラクターの再帰が検出されました。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ContextMenuKey">
-        <source>Shift+F10;Apps</source>
-        <target state="translated">Shift+F10;Apps</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ContextMenuKeyDisplayString">
         <source>Shift+F10;Apps</source>
         <target state="translated">Shift+F10;Apps</target>
@@ -570,11 +545,6 @@
       <trans-unit id="Converter_ConvertToNotSupported">
         <source>Cannot convert to type.</source>
         <target state="translated">型に変換できません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CopyKey">
-        <source>Ctrl+C;Ctrl+Insert</source>
-        <target state="translated">Ctrl+C;Ctrl+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="CopyKeyDisplayString">
@@ -640,11 +610,6 @@
       <trans-unit id="Cursor_UnsupportedFormat">
         <source>'{0}' has unsupported extension for cursor.</source>
         <target state="translated">'{0}' に、カーソルではサポートされていない拡張が含まれています。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CutKey">
-        <source>Ctrl+X;Shift+Delete</source>
-        <target state="translated">Ctrl+X;Shift+Delete</target>
         <note />
       </trans-unit>
       <trans-unit id="CutKeyDisplayString">
@@ -735,11 +700,6 @@
       <trans-unit id="DecreaseZoomText">
         <source>Decrease Zoom</source>
         <target state="translated">ズームの縮小</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="DeleteKey">
-        <source>Del</source>
-        <target state="translated">Del</target>
         <note />
       </trans-unit>
       <trans-unit id="DeleteKeyDisplayString">
@@ -987,11 +947,6 @@
         <target state="translated">イベント引数は、NULL 以外でなければなりません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionDownKey">
-        <source>Shift+Down</source>
-        <target state="translated">Shift+Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionDownKeyDisplayString">
         <source>Shift+Down</source>
         <target state="translated">Shift+Down</target>
@@ -1000,11 +955,6 @@
       <trans-unit id="ExtendSelectionDownText">
         <source>Extend Selection Down</source>
         <target state="translated">拡張選択 - 下</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionLeftKey">
-        <source>Shift+Left</source>
-        <target state="translated">Shift+Left</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionLeftKeyDisplayString">
@@ -1017,11 +967,6 @@
         <target state="translated">拡張選択 - 左</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionRightKey">
-        <source>Shift+Right</source>
-        <target state="translated">Shift+Right</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionRightKeyDisplayString">
         <source>Shift+Right</source>
         <target state="translated">Shift+Right</target>
@@ -1030,11 +975,6 @@
       <trans-unit id="ExtendSelectionRightText">
         <source>Extend Selection Right</source>
         <target state="translated">拡張選択 - 右</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionUpKey">
-        <source>Shift+Up</source>
-        <target state="translated">Shift+Up</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionUpKeyDisplayString">
@@ -1067,11 +1007,6 @@
         <target state="translated">Target プロパティが設定されていないため、FamilyMap を追加できません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FavoritesKey">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+I</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FavoritesKeyDisplayString">
         <source>Ctrl+I</source>
         <target state="translated">Ctrl+I</target>
@@ -1095,11 +1030,6 @@
       <trans-unit id="FileNotFoundExceptionWithFileName">
         <source>Cannot find file '{0}'.</source>
         <target state="translated">ファイル '{0}' が見つかりません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FindKey">
-        <source>Ctrl+F</source>
-        <target state="translated">Ctrl+F</target>
         <note />
       </trans-unit>
       <trans-unit id="FindKeyDisplayString">
@@ -1220,11 +1150,6 @@
       <trans-unit id="HandlerTypeIllegal">
         <source>Handler type is mismatched.</source>
         <target state="translated">ハンドラーの型が一致しません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="HelpKey">
-        <source>F1</source>
-        <target state="translated">F1</target>
         <note />
       </trans-unit>
       <trans-unit id="HelpKeyDisplayString">
@@ -1983,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement または ContentElement を使用してください。</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">'{0}' は、IInputElement に対して有効な型ではありません。UIElement、ContentElement、または UIElement3D を使用してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2004,7 +1929,7 @@
       </trans-unit>
       <trans-unit id="KeyGesture_Invalid">
         <source>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</source>
-        <target state="translated">'{0}+{1}' キーと修飾キーの組み合わせは、KeyGesture ではサポートされていません。</target>
+        <target state="translated">'{0}+{1}' キーと修飾子キーの組み合わせは、KeyGesture ではサポートされていません。</target>
         <note />
       </trans-unit>
       <trans-unit id="KeyboardSinkAlreadyOwned">
@@ -2317,11 +2242,6 @@
         <target state="translated">RoutedEventArgs の RoutedEvent と EventRoute が一致しません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveDownKey">
-        <source>Down</source>
-        <target state="translated">Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveDownKeyDisplayString">
         <source>Down</source>
         <target state="translated">Down</target>
@@ -2330,11 +2250,6 @@
       <trans-unit id="MoveDownText">
         <source>Move Down</source>
         <target state="translated">下に移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusBackKey">
-        <source>Ctrl+Left</source>
-        <target state="translated">Ctrl+Left</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusBackKeyDisplayString">
@@ -2347,11 +2262,6 @@
         <target state="translated">フォーカスを前へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusDownKey">
-        <source>Ctrl+Down</source>
-        <target state="translated">Ctrl+Down</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusDownKeyDisplayString">
         <source>Ctrl+Down</source>
         <target state="translated">Ctrl+Down</target>
@@ -2360,11 +2270,6 @@
       <trans-unit id="MoveFocusDownText">
         <source>Move Focus Down</source>
         <target state="translated">フォーカスを下へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusForwardKey">
-        <source>Ctrl+Right</source>
-        <target state="translated">Ctrl+Right</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusForwardKeyDisplayString">
@@ -2377,11 +2282,6 @@
         <target state="translated">フォーカスを先へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusPageDownKey">
-        <source>Ctrl+PageDown</source>
-        <target state="translated">Ctrl+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusPageDownKeyDisplayString">
         <source>Ctrl+PageDown</source>
         <target state="translated">Ctrl+PageDown</target>
@@ -2390,11 +2290,6 @@
       <trans-unit id="MoveFocusPageDownText">
         <source>Move Focus Page Down</source>
         <target state="translated">フォーカスをページの下へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusPageUpKey">
-        <source>Ctrl+PageUp</source>
-        <target state="translated">Ctrl+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusPageUpKeyDisplayString">
@@ -2407,11 +2302,6 @@
         <target state="translated">フォーカスをページの上へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusUpKey">
-        <source>Ctrl+Up</source>
-        <target state="translated">Ctrl+Up</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusUpKeyDisplayString">
         <source>Ctrl+Up</source>
         <target state="translated">Ctrl+Up</target>
@@ -2420,11 +2310,6 @@
       <trans-unit id="MoveFocusUpText">
         <source>Move Focus Up</source>
         <target state="translated">フォーカスを上へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveLeftKey">
-        <source>Left</source>
-        <target state="translated">Left</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveLeftKeyDisplayString">
@@ -2437,11 +2322,6 @@
         <target state="translated">左へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveRightKey">
-        <source>Right</source>
-        <target state="translated">右へ</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveRightKeyDisplayString">
         <source>Right</source>
         <target state="translated">右へ</target>
@@ -2450,11 +2330,6 @@
       <trans-unit id="MoveRightText">
         <source>Move Right</source>
         <target state="translated">右へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToEndKey">
-        <source>End</source>
-        <target state="translated">終了</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToEndKeyDisplayString">
@@ -2467,11 +2342,6 @@
         <target state="translated">末尾へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToHomeKey">
-        <source>Home</source>
-        <target state="translated">ホーム</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToHomeKeyDisplayString">
         <source>Home</source>
         <target state="translated">ホーム</target>
@@ -2480,11 +2350,6 @@
       <trans-unit id="MoveToHomeText">
         <source>Move To Home</source>
         <target state="translated">最初へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToPageDownKeyDisplayString">
@@ -2497,11 +2362,6 @@
         <target state="translated">ページの下へ移動</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToPageUpKeyDisplayString">
         <source>PageUp</source>
         <target state="translated">PageUp</target>
@@ -2510,11 +2370,6 @@
       <trans-unit id="MoveToPageUpText">
         <source>Move To Page Up</source>
         <target state="translated">ページの上へ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveUpKey">
-        <source>Up</source>
-        <target state="translated">Up</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveUpKeyDisplayString">
@@ -2535,11 +2390,6 @@
       <trans-unit id="NavigateJournalText">
         <source>Navigate Journal</source>
         <target state="translated">ジャーナルへ移動</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NewKey">
-        <source>Ctrl+N</source>
-        <target state="translated">Ctrl+N</target>
         <note />
       </trans-unit>
       <trans-unit id="NewKeyDisplayString">
@@ -2637,11 +2487,6 @@
         <target state="translated">このオブジェクトは既に初期化されているため、再度初期化することはできません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="OpenKey">
-        <source>Ctrl+O</source>
-        <target state="translated">Ctrl+O</target>
-        <note />
-      </trans-unit>
       <trans-unit id="OpenKeyDisplayString">
         <source>Ctrl+O</source>
         <target state="translated">Ctrl+O</target>
@@ -2677,29 +2522,9 @@
         <target state="translated">ページ番号は負の数にできません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">パラメーター値は、'{0}' より大きくできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">パラメーター値は、'{0}' 未満にできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">パラメーター値は、'{0}' と '{1}' の間である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">パラメーター値は、0 より大きい必要があります。</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
@@ -2710,16 +2535,6 @@
       <trans-unit id="ParameterValueCannotBeNaN">
         <source>The parameter value must be a number.</source>
         <target state="translated">パラメーター値は、数値である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' パラメーター値を負の値にすることはできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">'{0}' パラメーター値は、0 より大きい必要があります。</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">
@@ -2745,11 +2560,6 @@
       <trans-unit id="Parsers_IllegalToken_250_Chars">
         <source>Token is not valid because it is more than 250 characters.</source>
         <target state="translated">250 文字以上を超えるため、トークンは無効です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PasteKey">
-        <source>Ctrl+V;Shift+Insert</source>
-        <target state="translated">Ctrl+V;Shift+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="PasteKeyDisplayString">
@@ -2807,19 +2617,9 @@
         <target state="translated">前のページ</target>
         <note />
       </trans-unit>
-      <trans-unit id="PrintKey">
-        <source>Ctrl+P</source>
-        <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PrintKeyDisplayString">
         <source>Ctrl+P</source>
         <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PrintPreviewKey">
-        <source>Ctrl+F2</source>
-        <target state="translated">Ctrl+F2</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintPreviewKeyDisplayString">
@@ -2835,11 +2635,6 @@
       <trans-unit id="PrintText">
         <source>Print</source>
         <target state="translated">印刷</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PropertiesKey">
-        <source>F4</source>
-        <target state="translated">F4</target>
         <note />
       </trans-unit>
       <trans-unit id="PropertiesKeyDisplayString">
@@ -2917,11 +2712,6 @@
         <target state="translated">Rectangle を空にすることはできません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="RedoKey">
-        <source>Ctrl+Y</source>
-        <target state="translated">Ctrl+Y</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RedoKeyDisplayString">
         <source>Ctrl+Y</source>
         <target state="translated">Ctrl+Y</target>
@@ -2942,11 +2732,6 @@
         <target state="translated">警告。'{0}' イベント中にビジュアル ツリーが変更されました。これは、実稼働アプリケーションではサポートされていません。アプリケーションの出荷前に、これを修正してください。</target>
         <note />
       </trans-unit>
-      <trans-unit id="RefreshKey">
-        <source>F5</source>
-        <target state="translated">F5</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RefreshKeyDisplayString">
         <source>F5</source>
         <target state="translated">F5</target>
@@ -2960,11 +2745,6 @@
       <trans-unit id="RelievePenaltyResourceFailure">
         <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
         <target state="translated">テキストの書式設定エンジンは、エラー '{0}' のためペナルティ リソースを解放できません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ReplaceKey">
-        <source>Ctrl+H</source>
-        <target state="translated">Ctrl+H</target>
         <note />
       </trans-unit>
       <trans-unit id="ReplaceKeyDisplayString">
@@ -3022,11 +2802,6 @@
         <target state="translated">名前を付けて保存</target>
         <note />
       </trans-unit>
-      <trans-unit id="SaveKey">
-        <source>Ctrl+S</source>
-        <target state="translated">Ctrl+S</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SaveKeyDisplayString">
         <source>Ctrl+S</source>
         <target state="translated">Ctrl+S</target>
@@ -3052,11 +2827,6 @@
         <target state="translated">行ごとにスクロール</target>
         <note />
       </trans-unit>
-      <trans-unit id="ScrollPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ScrollPageDownKeyDisplayString">
         <source>PageDown</source>
         <target state="translated">PageDown</target>
@@ -3075,11 +2845,6 @@
       <trans-unit id="ScrollPageRightText">
         <source>Scroll Page Right</source>
         <target state="translated">ページを右にスクロール</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ScrollPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollPageUpKeyDisplayString">
@@ -3122,11 +2887,6 @@
         <target state="translated">SeekOrigin 値が無効です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectAllKey">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectAllKeyDisplayString">
         <source>Ctrl+A</source>
         <target state="translated">Ctrl+A</target>
@@ -3135,11 +2895,6 @@
       <trans-unit id="SelectAllText">
         <source>Select All</source>
         <target state="translated">すべて選択</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToEndKey">
-        <source>Shift+End</source>
-        <target state="translated">Shift+End</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToEndKeyDisplayString">
@@ -3152,11 +2907,6 @@
         <target state="translated">末尾まで選択</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToHomeKey">
-        <source>Shift+Home</source>
-        <target state="translated">Shift+Home</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToHomeKeyDisplayString">
         <source>Shift+Home</source>
         <target state="translated">Shift+Home</target>
@@ -3167,11 +2917,6 @@
         <target state="translated">先頭まで選択</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToPageDownKey">
-        <source>Shift+PageDown</source>
-        <target state="translated">Shift+PageDown</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToPageDownKeyDisplayString">
         <source>Shift+PageDown</source>
         <target state="translated">Shift+PageDown</target>
@@ -3180,11 +2925,6 @@
       <trans-unit id="SelectToPageDownText">
         <source>Select To PageDown</source>
         <target state="translated">ページの下まで選択</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToPageUpKey">
-        <source>Shift+PageUp</source>
-        <target state="translated">Shift+PageUp</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToPageUpKeyDisplayString">
@@ -3245,11 +2985,6 @@
       <trans-unit id="SpecificNumberCultureRequired">
         <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
         <target state="translated">数字の置換に使用される CultureInfo オブジェクトは、ニュートラルなカルチャや InvariantCulture ではない、特定のカルチャである必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StopKey">
-        <source>Esc</source>
-        <target state="translated">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="StopKeyDisplayString">
@@ -3615,11 +3350,6 @@
       <trans-unit id="UnauthorizedAccessExceptionWithFileName">
         <source>Access denied to the path '{0}'.</source>
         <target state="translated">パス '{0}' へのアクセスは拒否されました。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UndoKey">
-        <source>Ctrl+Z</source>
-        <target state="translated">Ctrl+Z</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoKeyDisplayString">

@@ -21,7 +21,6 @@ using System.Windows.Navigation;
 using System.Windows.Markup;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -135,21 +134,15 @@ namespace System.Windows.Media
         /// </summary>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (null == value)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             FontFamily fontFamily = value as FontFamily;
             if (fontFamily == null)
             {
-                throw new ArgumentException(SR.Get(SRID.General_Expected_Type, "FontFamily"), "value");
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), "value");
             }
 
-            if (null == destinationType)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType == typeof(string))
             {

@@ -73,11 +73,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Retrieves the latest device information from connected touch devices.
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls UnsafeNativeMethods.GetPointerDevices
-        ///                     Does not accept or expose any secure information
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal void Refresh()
         {
             try

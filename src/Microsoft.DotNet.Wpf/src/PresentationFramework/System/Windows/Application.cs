@@ -29,13 +29,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-#if NETFX
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Lifetime;
-#endif
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Resources;
 using System.Threading;
 
@@ -101,20 +96,11 @@ namespace System.Windows
         static Application()
         {
             ApplicationInit();
-
-#if NETFX
-            NetFxVersionTraceLogger.LogVersionDetails();
-#endif
         }
 
         /// <summary>
         ///     Application constructor
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code posts a work item to start dispatcher if in the browser
-        ///    PublicOk: It is ok because the call itself is not exposed and the application object does this internally.
-        /// </SecurityNote>
-        [SecurityCritical]
         public Application()
         {
 #if DEBUG_CLR_MEM
@@ -141,16 +127,10 @@ namespace System.Windows
                 else
                 {
                     //lock will be released, so no worries about throwing an exception inside the lock
-                    throw new InvalidOperationException(SR.Get(SRID.MultiSingleton));
+                    throw new InvalidOperationException(SR.MultiSingleton);
                 }
             }
 
-            // Post a work item to start the Dispatcher (if we are browser hosted) so that the Dispatcher
-            // will be running before OnStartup is fired. We can't check to see if we are browser-hosted
-            // in the app ctor because BrowerInteropHelper.IsBrowserHosted hasn't been set yet.
-            Dispatcher.BeginInvoke(
-                DispatcherPriority.Send,
-                new DispatcherOperationCallback(StartDispatcherInBrowser), null);
 
             //
             // (Application not shutting down when calling
@@ -234,43 +214,12 @@ namespace System.Windows
         /// The passed Window must be created on the same thread as the Application object.  Furthermore, this Window is
         /// shown once the Application is run.</param>
         /// <returns>ExitCode of the application</returns>
-        /// <SecurityNote>
-        ///    Critical: This code calls into RunInternal which is deemed as critical
-        ///    PublicOk: This code fails if called in a browser hosted scenario because of the check for InBrowserHosted
-        /// </SecurityNote>
-        [SecurityCritical]
         public int Run(Window window)
         {
             VerifyAccess();
-
-            //
-            // Browser hosted app should not explictly call App.Run(). We need to filter out those
-            // calls here
-            //
-            if (InBrowserHostedApp())
-            {
-                throw new InvalidOperationException(SR.Get(SRID.CannotCallRunFromBrowserHostedApp));
-            }
-            else
-            {
-                return RunInternal(window);
-            }
+            return RunInternal(window);
         }
 
-        /// <summary>
-        /// This will return true IFF this is a browser hosted, and this is the user's deployed
-        /// application, not our deployment application. We can't use BrowserCallbackServices for
-        /// this test, because it may not be hooked up yet. BrowserInteropHelper.IsBrowserHosted
-        /// is set before any of the code in the new AppDomain will be run yet.
-        /// </summary>
-        internal static bool InBrowserHostedApp()
-        {
-#if NETFX
-            return BrowserInteropHelper.IsBrowserHosted && !(Application.Current is XappLauncherApp);
-#else
-            return false;
-#endif
-        }
 
         /// <summary>
         ///
@@ -320,20 +269,10 @@ namespace System.Windows
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         /// <param name="exitCode">returned to the Application.Run() method. Typically this will be returned to the OS</param>
-        ///<SecurityNote>
-        ///  PublicOK: Demand UIPermission with AllWindows access
-        ///  Critical: Calls critical code ShutDownDelegate
-        ///</SecurityNote>
-        [SecurityCritical]
         public void Shutdown(int exitCode)
         {
-            SecurityHelper.DemandUIWindowPermission();
             CriticalShutdown(exitCode);
         }
-        /// <SecurityNote>
-        ///     Critical: This code calls into shut down code which is critical.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void CriticalShutdown(int exitCode)
         {
             VerifyAccess();
@@ -441,24 +380,16 @@ namespace System.Windows
         /// </summary>
         /// <param name="component">Root Element</param>
         /// <param name="resourceLocator">Resource Locator</param>
-        /// <SecurityNote>
-        ///     Critical: This code calls critical method GetResourceOrContentStream to get part.
-        ///     PublicOK: The part is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static void LoadComponent(Object component, Uri resourceLocator)
         {
-            if (component == null)
-                throw new ArgumentNullException("component");
-
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(component);
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Get(SRID.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
-                throw new ArgumentException(SR.Get(SRID.AbsoluteUriNotAllowed));
+                throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
             // Passed a relative Uri here.
             // needs to resolve it to Pack://Application.
@@ -511,7 +442,7 @@ namespace System.Windows
                 // if not, this is a first time regular load of the component.
                 PackagePart part = GetResourceOrContentPart(resourceLocator);
                 ContentType contentType = new ContentType(part.ContentType);
-                stream = part.GetStream();
+                stream = part.GetSeekableStream();
                 bCloseStream = true;
 
                 //
@@ -520,7 +451,7 @@ namespace System.Windows
                 //
                 if (!MimeTypeMapper.BamlMime.AreTypeAndSubTypeEqual(contentType))
                 {
-                    throw new Exception(SR.Get(SRID.ContentTypeNotSupported, contentType));
+                    throw new Exception(SR.Format(SR.ContentTypeNotSupported, contentType));
                 }
             }
 
@@ -528,7 +459,7 @@ namespace System.Windows
 
             if (bamlStream == null || bamlStream.Assembly != component.GetType().Assembly)
             {
-                throw new Exception(SR.Get(SRID.UriNotMatchWithRootType, component.GetType( ), resourceLocator));
+                throw new Exception(SR.Format(SR.UriNotMatchWithRootType, component.GetType( ), resourceLocator));
             }
 
             XamlReader.LoadBaml(stream, pc, component, bCloseStream);
@@ -541,14 +472,13 @@ namespace System.Windows
         /// <param name="resourceLocator">Resource Locator</param>
         public static object LoadComponent(Uri resourceLocator)
         {
-            if (resourceLocator == null)
-                throw new ArgumentNullException("resourceLocator");
+            ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Get(SRID.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
-                throw new ArgumentException(SR.Get(SRID.AbsoluteUriNotAllowed));
+                throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
             return LoadComponent(resourceLocator, false);
         }
@@ -559,17 +489,6 @@ namespace System.Windows
         // </summary>
         // <param name="resourceLocator">Resource Locator</param>
         // <param name="bSkipJournaledProperties">SkipJournaledProperties or not</param>
-        /// <SecurityNote>
-        /// Critical - calls critical method GetResourceOrContentPart
-        /// TreatAsSafe:
-        ///           Part is not exposed.
-        ///
-        ///           This internal method is called only by the public LoadComponent(uri) and
-        ///           the journal navigation for PageFunction when the PageFunction was navigated
-        ///           from a markup file or is implemented from a xaml file.
-        ///
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static object LoadComponent(Uri resourceLocator, bool bSkipJournaledProperties)
         {
             //
@@ -586,7 +505,7 @@ namespace System.Windows
 
             PackagePart part = GetResourceOrContentPart(packUri);
             ContentType contentType = new ContentType(part.ContentType);
-            Stream stream = part.GetStream();
+            Stream stream = part.GetSeekableStream();
 
             ParserContext pc = new ParserContext();
             pc.BaseUri = packUri;
@@ -605,7 +524,7 @@ namespace System.Windows
             }
             else
             {
-                throw new Exception(SR.Get(SRID.ContentTypeNotSupported, contentType.ToString()));
+                throw new Exception(SR.Format(SR.ContentTypeNotSupported, contentType.ToString()));
             }
         }
 
@@ -686,26 +605,20 @@ namespace System.Windows
         /// </summary>
         /// <param name="uriResource">the uri maps to the resource</param>
         /// <returns>PackagePart or null</returns>
-        /// <SecurityNote>
-        ///     Critical: This code calls critical method GetResourceOrContentStream to get part.
-        ///     PublicOK: The part is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static StreamResourceInfo GetResourceStream(Uri uriResource)
         {
-            if (uriResource == null)
-                throw new ArgumentNullException("uriResource");
+            ArgumentNullException.ThrowIfNull(uriResource);
 
             if (uriResource.OriginalString == null)
-                throw new ArgumentException(SR.Get(SRID.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
 
             if (uriResource.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriResource))
             {
-                throw new ArgumentException(SR.Get(SRID.NonPackAppAbsoluteUriNotAllowed));
+                throw new ArgumentException(SR.NonPackAppAbsoluteUriNotAllowed);
             }
 
             ResourcePart part = GetResourceOrContentPart(uriResource) as ResourcePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetStream(), part.ContentType);
+            return (part == null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
         }
 
         /// <summary>
@@ -724,26 +637,20 @@ namespace System.Windows
         /// </summary>
         /// <param name="uriContent">the uri maps to the Content File</param>
         /// <returns>PackagePart or null</returns>
-        /// <SecurityNote>
-        ///     Critical: This code calls critical method GetResourceOrContentStream to get part.
-        ///     PublicOK: The part is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static StreamResourceInfo GetContentStream(Uri uriContent)
         {
-            if (uriContent == null)
-                throw new ArgumentNullException("uriContent");
+            ArgumentNullException.ThrowIfNull(uriContent);
 
             if (uriContent.OriginalString == null)
-                throw new ArgumentException(SR.Get(SRID.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
 
             if (uriContent.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriContent))
             {
-                throw new ArgumentException(SR.Get(SRID.NonPackAppAbsoluteUriNotAllowed));
+                throw new ArgumentException(SR.NonPackAppAbsoluteUriNotAllowed);
             }
 
             ContentFilePart part = GetResourceOrContentPart(uriContent) as ContentFilePart;
-            return (part == null) ? null : new StreamResourceInfo(part.GetStream(), part.ContentType);
+            return (part == null) ? null : new StreamResourceInfo(part.GetSeekableStream(), part.ContentType);
         }
 
         /// <summary>
@@ -757,36 +664,27 @@ namespace System.Windows
         /// </summary>
         /// <param name="uriRemote">the uri maps to the resource</param>
         /// <returns>PackagePart or null</returns>
-        /// <SecurityNote>
-        ///     Critical: Calls the Critical GetResourcePackage().
-        ///     PublicOK: The package is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static StreamResourceInfo GetRemoteStream(Uri uriRemote)
         {
             SiteOfOriginPart sooPart = null;
 
-            if (uriRemote == null)
-                throw new ArgumentNullException("uriRemote");
+            ArgumentNullException.ThrowIfNull(uriRemote);
 
             if (uriRemote.OriginalString == null)
-                throw new ArgumentException(SR.Get(SRID.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
 
             if (uriRemote.IsAbsoluteUri == true)
             {
                 if (BaseUriHelper.SiteOfOriginBaseUri.IsBaseOf(uriRemote) != true)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NonPackSooAbsoluteUriNotAllowed));
+                    throw new ArgumentException(SR.NonPackSooAbsoluteUriNotAllowed);
                 }
             }
 
             Uri resolvedUri = BindUriHelper.GetResolvedUri(BaseUriHelper.SiteOfOriginBaseUri, uriRemote);
 
-            // Using PackUriHelper.ValidateAndGetPackUriComponents internal method
-            // to get Package and Part Uri in one step
-            Uri packageUri;
-            Uri partUri;
-            MS.Internal.IO.Packaging.PackUriHelper.ValidateAndGetPackUriComponents(resolvedUri, out packageUri, out partUri);
+            Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
+            Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
 
             //
             // SiteOfOriginContainer must have been added into the package cache, the code should just
@@ -795,7 +693,8 @@ namespace System.Windows
             SiteOfOriginContainer sooContainer = (SiteOfOriginContainer)GetResourcePackage(packageUri);
 
             // the SiteOfOriginContainer is shared across threads;  synchronize access to it
-            lock (_packageLock)
+            // using the same lock object as other uses (PackWebResponse+CachedResponse.GetResponseStream)
+            lock (sooContainer)
             {
                 sooPart = sooContainer.GetPart(partUri) as SiteOfOriginPart;
             }
@@ -809,7 +708,7 @@ namespace System.Windows
             {
                 try
                 {
-                    stream = sooPart.GetStream();
+                    stream = sooPart.GetSeekableStream();
 
                     if (stream == null)
                     {
@@ -927,21 +826,6 @@ namespace System.Windows
             {
                 VerifyAccess();
 
-#if NETFX
-                //
-                // Throw if an attempt is made to change RBW.
-                // or we are browser hosted, main window is null, and attempt is made to change RBW.
-                //
-                if ( ( _mainWindow is RootBrowserWindow )
-                     ||
-                    ((BrowserCallbackServices != null ) &&
-                      ( _mainWindow == null ) &&
-                      ( !( value is RootBrowserWindow ))) )
-                {
-                    throw new InvalidOperationException( SR.Get( SRID.CannotChangeMainWindowInBrowser ) ) ;
-                }
-#endif
-
                 if (value != _mainWindow)
                 {
                     _mainWindow = value;
@@ -987,7 +871,7 @@ namespace System.Windows
                 }
                 if (IsShuttingDown == true || _appIsShutdown == true)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ShutdownModeWhenAppShutdown));
+                    throw new InvalidOperationException(SR.ShutdownModeWhenAppShutdown);
                 }
 
                 _shutdownMode = value;
@@ -1103,10 +987,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _startupUri = value;
             }
@@ -1170,7 +1051,7 @@ namespace System.Windows
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.PropertyIsImmutable, "ResourceAssembly", "Application"));
+                            throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "ResourceAssembly", "Application"));
                         }
                     }
                 }
@@ -1226,12 +1107,6 @@ namespace System.Windows
         /// ReasonSessionEnding enum on the  SessionEndingEventArgs indicates whether the session
         /// is ending in response to a shutdown of the OS, or if the user is logging off.
         /// </summary>
-        /// <SecurityNote>
-        /// By setting cancel to true on the SessionEndingCancelEventArgs, the app can prevent
-        /// the user from logging off.  Hence attempting to cancel this is a high trust
-        /// operation and this is enforced when the event is handled.  No listener can cancel
-        /// this event if the app is partial trust.
-        /// </SecurityNote>
         public event SessionEndingCancelEventHandler SessionEnding
         {
             add{ VerifyAccess(); Events.AddHandler(EVENT_SESSIONENDING, value); }
@@ -1588,7 +1463,6 @@ namespace System.Windows
                 switch (state)
                 {
                     case NavigationStateChange.Navigating:
-                        ChangeBrowserDownloadState(true);
                         if (playNavigatingSound)
                         {
                             PlaySound(SOUND_NAVIGATING);
@@ -1596,34 +1470,13 @@ namespace System.Windows
                         break;
                     case NavigationStateChange.Completed:
                         PlaySound(SOUND_COMPLETE_NAVIGATION);
-                        ChangeBrowserDownloadState(false);
-                        UpdateBrowserCommands();
                         break;
                     case NavigationStateChange.Stopped:
-                        ChangeBrowserDownloadState(false);
                         break;
                 }
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls IBrowserCallbackServices.UpdateCommands which is critical because it has a SUC
-        /// TreatAsSafe: Calling this method is safe because it merely asks IE to synchronize data with us.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        internal void UpdateBrowserCommands()
-        {
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsStart);
-
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // ask the browser to re-query us for toolbar button state
-                ibcs.UpdateCommands();
-            }
-
-            EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, EventTrace.Event.WpfHost_UpdateBrowserCommandsEnd);
-        }
 
         /// <summary>
         /// Application Startup.
@@ -1687,12 +1540,6 @@ namespace System.Windows
         /// <summary>
         /// DO NOT USE - internal method
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: Calls critical code: Window.InternalClose
-        ///     Critical: Calls critical code: HwndSource.Dispose
-        ///     Critical: Calls critical code: PreloadedPackages.Clear()
-        ///</SecurityNote>
-        [SecurityCritical]
         internal virtual void DoShutdown()
         {
             Debug.Assert(CheckAccess() == true, "DoShutdown can only be called on the Dispatcer thread");
@@ -1763,10 +1610,6 @@ namespace System.Windows
         // ApplicationProxyInternal.Run method calls this method directly to bypass the check
         // for browser hosted application in the public Run() method
         //
-        /// <SecurityNote>
-        ///    Critical: This code calls into Dispatcher.Run which is deemed as critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal int RunInternal(Window window)
         {
             VerifyAccess();
@@ -1796,14 +1639,14 @@ namespace System.Windows
             // throw an exception
             if (_appIsShutdown == true)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotCallRunMultipleTimes, this.GetType().FullName));
+                throw new InvalidOperationException(SR.Format(SR.CannotCallRunMultipleTimes, this.GetType().FullName));
             }
 
             if (window != null)
             {
                 if (window.CheckAccess() == false)
                 {
-                    throw new ArgumentException(SR.Get(SRID.WindowPassedShouldBeOnApplicationThread, window.GetType().FullName, this.GetType().FullName));
+                    throw new ArgumentException(SR.Format(SR.WindowPassedShouldBeOnApplicationThread, window.GetType().FullName, this.GetType().FullName));
                 }
 
                 if (WindowsInternal.HasItem(window) == false)
@@ -1837,10 +1680,7 @@ namespace System.Windows
             //Shutdown DispatcherOperationCallback
 
             // Invoke the Dispatcher synchronously if we are not in the browser
-            if (!BrowserInteropHelper.IsBrowserHosted)
-            {
-                RunDispatcher(null);
-            }
+            RunDispatcher(null);
 
             return _exitCode;
         }
@@ -1857,35 +1697,14 @@ namespace System.Windows
         // Creates and returns a NavigationWindow for standalone cases
         // For browser hosted cases, returns the existing RootBrowserWindow which
         //   is created before the application.Run is called.
-        /// <SecurityNote>
-        ///     Critical: This code returns the rootbrowserwindow which is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal NavigationWindow GetAppWindow()
         {
-            NavigationWindow appWin = null;
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
+            NavigationWindow appWin = new NavigationWindow();
 
-            // standalone case
-            if (ibcs == null)
-            {
-                appWin = new NavigationWindow();
-
-                // We don't want to show the window before the content is ready, but for compatibility reasons
-                // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
-                // to be null when LoadCompleted has happened.
-                new WindowInteropHelper(appWin).EnsureHandle();
-            }
-#if NETFX
-            else // browser hosted case
-            {
-                IHostService ihs = (IHostService)this.GetService(typeof(IHostService));
-                Debug.Assert(ihs != null, "IHostService in RootBrowserWindow cannot be null");
-                appWin = ihs.RootBrowserWindowProxy.RootBrowserWindow;
-                Debug.Assert(appWin != null, "appWin must be non-null");
-                Debug.Assert(appWin is RootBrowserWindow, "appWin must be a RootBrowserWindow");
-            }
-#endif
+            // We don't want to show the window before the content is ready, but for compatibility reasons
+            // we do want it to have an HWND available.  Not doing this can cause Application's MainWindow
+            // to be null when LoadCompleted has happened.
+            new WindowInteropHelper(appWin).EnsureHandle();
 
             return appWin;
         }
@@ -2004,13 +1823,9 @@ namespace System.Windows
         //standalone window. Need to ensure only RootBrowserWindow knows about browser hosting,
         //rest of the appmodel code should be agnostic to hosting process.
         //This will be cleaned up with the RootBrowserWindow cleanup.
-        /// <SecurityNote>
-        ///     Critical - Set is critical as _appMimeType is marked SecurityCriticalDataForSet.
-        /// </SecurityNote>
         internal MimeType MimeType
         {
             get { return _appMimeType.Value; }
-            [SecurityCritical]
             set { _appMimeType = new SecurityCriticalDataForSet<MimeType>(value); }
         }
 
@@ -2034,52 +1849,9 @@ namespace System.Windows
             {
                 VerifyAccess();
                 _serviceProvider = value ;
-#if NETFX
-                if (value != null)
-                {
-                    _browserCallbackServices = (IBrowserCallbackServices)(_serviceProvider.GetService(typeof(IBrowserCallbackServices)));
-                    ILease lease = RemotingServices.GetLifetimeService(_browserCallbackServices as MarshalByRefObject) as ILease;
-                    if (lease != null)
-                    {
-                        //Per the remoting infrastructure, any remote object will get released in 5 mins unless the lease
-                        //is extended with the lease manager by a sponsor
-                        _browserCallbackSponsor = new SponsorHelper(lease, new TimeSpan(0, 5, 0));
-                        _browserCallbackSponsor.Register();
-                    }
-
-                }
-                else
-                {
-                    CleanUpBrowserCallBackServices();
-                }
-#endif
             }
         }
 
-#if NETFX
-        private void CleanUpBrowserCallBackServices()
-        {
-            if (_browserCallbackServices != null)
-            {
-                if (_browserCallbackSponsor != null)
-                {
-                    _browserCallbackSponsor.Unregister();
-                    _browserCallbackSponsor = null;
-                }
-                _browserCallbackServices = null;
-                // Marshal.ReleaseComObject(IBHS) is called from ApplicationProxyInternal.
-            }
-        }
-
-        internal IBrowserCallbackServices BrowserCallbackServices
-        {
-            get
-            {
-                VerifyAccess();
-                return _browserCallbackServices;
-            }
-        }
-#endif
 
         // is called by NavigationService to detect TopLevel container
         // We check there to call this only if NavigationService is on
@@ -2098,13 +1870,8 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - calls IsShuttingDown which is SUC'ed.
-        ///     TreatAsSafe - The knowledge that we're shutting down is not critical.
-        ///</SecurityNote>
         internal static bool IsShuttingDown
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 //If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
@@ -2116,17 +1883,6 @@ namespace System.Windows
                     return _isShuttingDown;
                 }
 
-#if NETFX
-                if (BrowserInteropHelper.IsBrowserHosted)
-                {
-                    Application app = Application.Current;
-                    if ((app != null) && (app.CheckAccess()))
-                    {
-                        IBrowserCallbackServices bcs = app.BrowserCallbackServices;
-                        return ((bcs != null) && bcs.IsShuttingDown());
-                    }
-                }
-#endif
                 return false;
             }
             set
@@ -2150,12 +1906,8 @@ namespace System.Windows
         /// <summary>
         /// Returns the handle of the parking window.
         /// </summary>
-        /// <securitynote>
-        /// Critical because we expose _parkingHwnd, which is critical.
-        /// </securitynote>
         internal IntPtr ParkingHwnd
         {
-            [SecurityCritical]
             get
             {
                 if (_parkingHwnd != null)
@@ -2209,13 +1961,6 @@ namespace System.Windows
         // Application class you will need to call this method explicitly.  Standard avalon applications
         // will not have to worry about this detail.
         // </summary>
-        // <SecurityNote>
-        // Critical: Adds ResourceContainer to PreloadedPackages.
-        // TreatAsSafe: ResourceContainer is a well-known package and allowed to be added
-        //          to PreloadedPackages. Also, the package is not going to be handed out from this
-        //          API surface and as such will be protected
-        // </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void ApplicationInit()
         {
             _globalLock = new object();
@@ -2224,20 +1969,22 @@ namespace System.Windows
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true);
 
-            MimeObjectFactory.Register(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.BamlConverter));
 
-            StreamToObjectFactoryDelegate xamlFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.XamlConverter);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.BamlConverterCore));
 
-            MimeObjectFactory.Register(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+            StreamToObjectFactoryDelegateCore xamlFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.XamlConverterCore);
 
-            StreamToObjectFactoryDelegate htmlxappFactoryDelegate = new StreamToObjectFactoryDelegate(AppModelKnownContentFactory.HtmlXappConverter);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
-            MimeObjectFactory.Register(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XamlMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedDocumentSequenceMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.FixedPageMime, xamlFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.ResourceDictionaryMime, xamlFactoryDelegate);
+
+            StreamToObjectFactoryDelegateCore htmlxappFactoryDelegate = new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.HtmlXappConverterCore);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
+            MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
+ 
         }
 
         // This function returns the resource stream including resource and content file.
@@ -2245,12 +1992,6 @@ namespace System.Windows
         // NOTE: when we can do breaking change, we should consider uniting GetContentStream
         // with GetResourceStream. Developer should not need to know and be able to get the
         // stream based on the uri (pack application).
-        /// <SecurityNote>
-        ///     Critical:This code calls into PreLoadedPackages.GetPackage and returns the PackagePart
-        ///              Based on the security note in PreLoadedPackages.cs, PackagePart or Package should
-        ///              never be given out to client.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static PackagePart GetResourceOrContentPart(Uri uri)
         {
             // Caller examines the input parameter.
@@ -2259,12 +2000,9 @@ namespace System.Windows
             Uri packAppUri = BaseUriHelper.PackAppBaseUri;
             Uri resolvedUri = BindUriHelper.GetResolvedUri(packAppUri, uri);
 
-            // Using PackUriHelper.ValidateAndGetPackUriComponents internal method
-            // to get Package and Part Uri in one step
-            Uri packageUri;
-            Uri partUri;
-            MS.Internal.IO.Packaging.PackUriHelper.ValidateAndGetPackUriComponents(resolvedUri, out packageUri, out partUri);
-
+            Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
+            Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
+            
             //
             // ResourceContainer must have been added into the package cache, the code should just
             // take use of that ResourceContainer instance, instead of creating a new instance here.
@@ -2272,8 +2010,9 @@ namespace System.Windows
             ResourceContainer resContainer = (ResourceContainer)GetResourcePackage(packageUri);
 
             // the ResourceContainer is shared across threads;  synchronize access to it
+            // using the same lock object as other uses (PackWebResponse+CachedResponse.GetResponseStream)
             PackagePart part = null;
-            lock (_packageLock)
+            lock (resContainer)
             {
                 part = resContainer.GetPart(partUri);
             }
@@ -2283,10 +2022,6 @@ namespace System.Windows
 
         /// <summary> Helper for getting the pack://application or pack://siteoforigin resource package. </summary>
         /// <param name="packageUri"> "application://" or "siteoforigin://" </param>
-        /// <SecurityNote>
-        /// Critical: Entire packages are not to be exposed in partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Package GetResourcePackage(Uri packageUri)
         {
             Package package = PreloadedPackages.GetPackage(packageUri);
@@ -2297,7 +2032,7 @@ namespace System.Windows
                                 "Unknown packageUri passed: "+packageUri);
 
                 Invariant.Assert(IsApplicationObjectShuttingDown);
-                throw new InvalidOperationException(SR.Get(SRID.ApplicationShuttingDown));
+                throw new InvalidOperationException(SR.ApplicationShuttingDown);
             }
             return package;
         }
@@ -2305,25 +2040,9 @@ namespace System.Windows
         /// <summary>
         ///     Creates hwndsource so that we can listen to some window msgs.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: Calls critical code: HwndSource ctor
-        ///     TreatAsSafe: Doesn't expose the critical resource in this method.
-        ///                  The critical data (_parkingHwnd) is marked as critical and tracked that way.
-        ///                  This hwnd is only created to enable Activated/Deactivated events. Considered safe.
-        ///
-        ///                  Note: that this event is not currently enabled for browser hosted case ( work that we won't do for v1)
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureHwndSource()
         {
-            // We don't support Activate, Deactivate, and SessionEnding
-            // events for browser hosted scenarios thus don't create
-            // this HwndSource if BrowserCallbackServices is valid
-#if NETFX
-            if (BrowserCallbackServices == null && _parkingHwnd == null)
-#else
             if (_parkingHwnd == null)
-#endif
             {
                 // _appFilterHook needs to be member variable otherwise
                 // it is GC'ed and we don't get messages from HwndWrapper
@@ -2383,11 +2102,6 @@ namespace System.Windows
             return false;
         }
 
-        /// <SecurityNote>
-        /// Critical : refInt argument can be used to prevent the user from logging off
-        /// Safe     : Demands Unmanaged code permission in critical path
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool WmQueryEndSession(IntPtr lParam, ref IntPtr refInt)
         {
             int reason = NativeMethods.IntPtrToInt32(lParam);
@@ -2409,11 +2123,6 @@ namespace System.Windows
             }
             else
             {
-                // <SecurityNote>
-                // This'll stop a user from Logging off and hence is a high trust operation.
-                // Demand high level of trust.
-                // </SecurityNote>
-                SecurityHelper.DemandUnmanagedCode();
                 refInt = IntPtr.Zero;
 
                 // we have handled the event DefWndProc will not be called for this msg
@@ -2473,10 +2182,6 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///  Critical: Calls critical code: ShutdownImpl
-        ///</SecurityNote>
-        [SecurityCritical]
         private object ShutdownCallback(object arg)
         {
             ShutdownImpl();
@@ -2485,10 +2190,6 @@ namespace System.Windows
         /// <summary>
         /// This method gets called on dispatch of the Shutdown DispatcherOperationCallback
         /// </summary>
-        ///<SecurityNote>
-        ///  Critical: Calls critical code: DoShutdown, Dispatcher.CritcalInvokeShutdown()
-        ///</SecurityNote>
-        [SecurityCritical]
         private void ShutdownImpl()
         {
             // Event handler exception continuality: if exception occurs in Exit event handler,
@@ -2528,11 +2229,6 @@ namespace System.Windows
             e.Cancel = true;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code calls into GetAppWindow to get RBW
-        ///     TreatAsSafe: The window is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ConfigAppWindowAndRootElement(object root, Uri uri)
         {
             Window w = root as Window;
@@ -2568,20 +2264,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls IBrowserCallbackServices.ChangeDownloadState which is critical
-        /// TreatAsSafe: Changing the download state is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        private void ChangeBrowserDownloadState(bool newState)
-        {
-            IBrowserCallbackServices ibcs = (IBrowserCallbackServices)this.GetService(typeof(IBrowserCallbackServices));
-            if (ibcs != null)
-            {
-                // start or stop waving the flag
-                ibcs.ChangeDownloadState(newState);
-            }
-        }
 
         /// <summary>
         /// Plays a system sound using the PlaySound api.  This is a managed equivalent of the
@@ -2589,11 +2271,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="soundName">The name of the sound to play</param>
         /// <returns>true if a sound was successfully played</returns>
-        /// <SecurityNote>
-        /// Critical - Calls critical dllimport methdod PlaySound() and critical method GetSystemSound()
-        /// TreatAsSafe - The input string must already exist as a system sound in the registry.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void PlaySound(string soundName)
         {
             string soundFile = GetSystemSound(soundName);
@@ -2604,19 +2281,10 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        /// Critical -  Asserts to access the registry.  May return path information which
-        ///             could disclose windows directory (ie. c:\windows\media\sound.wav)
-        /// </SecurityNote>
-        [SecurityCritical]
         private string GetSystemSound(string soundName)
         {
             string soundFile = null;
             string regPath = string.Format(CultureInfo.InvariantCulture, SYSTEM_SOUNDS_REGISTRY_LOCATION, soundName);
-            PermissionSet permissions = new PermissionSet(null);
-            permissions.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read, SYSTEM_SOUNDS_REGISTRY_BASE));
-            permissions.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-            permissions.Assert();
             try
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
@@ -2631,10 +2299,6 @@ namespace System.Windows
             // (Application.PlaySourd crash when the registry is broken)
             catch (System.IndexOutOfRangeException)
             {
-            }
-            finally
-            {
-               CodeAccessPermission.RevertAssert();
             }
 
             return soundFile;
@@ -2721,45 +2385,12 @@ namespace System.Windows
             return isRootElement;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code starts dispatcher run
-        /// </SecurityNote>
-        [SecurityCritical]
-        [DebuggerNonUserCode] // to treat this method as non-user code even when symbols are available
-        private object StartDispatcherInBrowser(object unused)
-        {
-            if (BrowserInteropHelper.IsBrowserHosted)
-            {
-                BrowserInteropHelper.InitializeHostFilterInput();
 
-                // This seemingly meaningless try-catch-throw is a workaround for a CLR deficiency/bug in
-                // exception handling. When an unhandled exception on the main thread crosses
-                // the AppDomain boundary, the p/invoke layer catches it and throws another exception. Thus,
-                // the original exception is lost before the debugger is notified. The result is no managed
-                // callstack whatsoever. The workaround is based on a debugger/CLR feature that notifies of
-                // exceptions unhandled in 'user code'. This works only when the Just My Code feature is enabled
-                // in VS.
-                try
-                {
-                    RunDispatcher(null);
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-            return null;
-        }
-
-        /// <SecurityNote>
-        ///     Critical: This code starts dispatcher run
-        /// </SecurityNote>
-        [SecurityCritical]
         private object RunDispatcher(object ignore)
         {
             if (_ownDispatcherStarted)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ApplicationAlreadyRunning));
+                throw new InvalidOperationException(SR.ApplicationAlreadyRunning);
             }
             _ownDispatcherStarted = true;
             Dispatcher.Run();
@@ -2780,7 +2411,6 @@ namespace System.Windows
         static private bool                             _appCreatedInThisAppDomain;
         static private Application                      _appInstance;
         static private Assembly                         _resourceAssembly;
-        static private object                           _packageLock = new Object();
 
         // Keep LoadBamlSyncInfo stack so that the Outer LoadBaml and Inner LoadBaml( ) for the same
         // Uri share the related information.
@@ -2800,29 +2430,14 @@ namespace System.Windows
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;
-#if NETFX
-        private IBrowserCallbackServices    _browserCallbackServices;
-        private SponsorHelper               _browserCallbackSponsor;
-#endif
 
         private bool                        _appIsShutdown;
         private int                         _exitCode;
 
         private ShutdownMode                _shutdownMode = ShutdownMode.OnLastWindowClose;
 
-        /// <SecurityNote>
-        ///     Critical: Don't want _parkingHwnd to be exposed and used by anyone besides
-        ///               this class.
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapper                 _parkingHwnd;
 
-        /// <SecurityNote>
-        ///     Critical: _appFilterHook is the hook to listen to window messages.
-        ///             We want this to be critical so that no one can get it and listen
-        ///             to window messages.
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook             _appFilterHook;
 
         private EventHandlerList            _events;

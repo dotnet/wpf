@@ -16,7 +16,6 @@ using namespace System::Diagnostics;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     [ClassInterface(ClassInterfaceType::None), ComVisible(true)]
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class FontCollectionLoader : public IDWriteFontCollectionLoaderMirror
     {
         private:
@@ -45,7 +44,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Standard HRESULT error code.
             /// </returns>
             [ComVisible(true)]
-            [SecurityCritical]
             virtual HRESULT CreateEnumeratorFromKey(
                           IntPtr factory,
                           __in_bcount(collectionKeySize) void const* collectionKey,

@@ -21,7 +21,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.Security.Permissions;
 using MS.Utility;
 
 namespace System.Windows.Input

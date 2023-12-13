@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("3DF0B466-D382-49EF-8550-DD94C80242E4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMImageBrush : IXpsOMTileBrush
     {
         IXpsOMImageBrush Clone();

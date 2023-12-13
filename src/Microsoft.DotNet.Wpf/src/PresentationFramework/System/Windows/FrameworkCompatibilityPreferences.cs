@@ -6,6 +6,7 @@ using System;
 using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 using System.Runtime.Versioning;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -15,9 +16,14 @@ namespace System.Windows
 
         static FrameworkCompatibilityPreferences()
         {
-#if NETFX
+#if NETFX && !NETCOREAPP
             _targetsDesktop_V4_0 = BinaryCompatibility.AppWasBuiltForFramework == TargetFrameworkId.NetFramework
                 && !BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
+#elif NETCOREAPP
+            // When building for NETCOREAPP, set this to false
+            // to indicate that quirks should be treated as if they are running on 
+            // .NET 4.5+
+            _targetsDesktop_V4_0 = false;
 #else
             _targetsDesktop_V4_0 = false;
 #endif
@@ -34,11 +40,11 @@ namespace System.Windows
 
             if (appSettings != null)
             {
-                SetHandleTwoWayBindingToPropertyWithNonPublicSetterFromAppSettings(appSettings);
                 SetUseSetWindowPosForTopmostWindowsFromAppSettings(appSettings);
                 SetVSP45CompatFromAppSettings(appSettings);
                 SetScrollingTraceFromAppSettings(appSettings);
                 SetShouldThrowOnCopyOrCutFailuresFromAppSettings(appSettings);
+                SetIMECompositionTraceFromAppSettings(appSettings);
             }
         }
 
@@ -59,8 +65,10 @@ namespace System.Windows
 
         #region AreInactiveSelectionHighlightBrushKeysSupported
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _areInactiveSelectionHighlightBrushKeysSupported = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
 #else
         private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
 #endif
@@ -74,7 +82,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "AreInactiveSelectionHighlightBrushKeysSupported", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "AreInactiveSelectionHighlightBrushKeysSupported", "FrameworkCompatibilityPreferences"));
                     }
 
                     _areInactiveSelectionHighlightBrushKeysSupported = value;
@@ -93,8 +101,10 @@ namespace System.Windows
 
         #region KeepTextBoxDisplaySynchronizedWithTextProperty
 
-#if NETFX
+#if NETFX && !NETCOREAPP
         private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
+#elif NETCOREAPP
+        private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
 #else
         private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
 #endif
@@ -146,7 +156,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "AextBoxDisplaysText", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "AextBoxDisplaysText", "FrameworkCompatibilityPreferences"));
                     }
 
                     _keepTextBoxDisplaySynchronizedWithTextProperty = value;
@@ -163,77 +173,7 @@ namespace System.Windows
 
         #endregion KeepTextBoxDisplaySynchronizedWithTextProperty
 
-        #region HandleTwoWayBindingToPropertyWithNonPublicSetter
-
-        // the different ways we can handle a TwoWay binding to a propery with non-public setter.
-        // These must appear in order, from tightest to loosest.
-        internal enum HandleBindingOptions
-        {
-            Throw,      // 4.0 behavior - throw an exception
-            Disallow,   // diagnostic behavior - don't throw, but don't allow updates
-            Allow,      // 4.5RTM behavior - allow the binding to update
-        }
-
-        // this flag defaults to:
-        //      partial-trust           -> Throw    (plug security hole)
-        //      wrong target framework  -> Disallow (app probably not built by VS.  E.g. ServerManager)
-        //      target = 4.5            -> Allow    (compat with 4.5RTM)
-        //      any other target        -> Throw    (compat with 4.0)
-#if NETFX
-        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter =
-                !MS.Internal.SecurityHelper.IsFullTrustCaller() ? HandleBindingOptions.Throw :
-                BinaryCompatibility.AppWasBuiltForFramework != TargetFrameworkId.NetFramework ? HandleBindingOptions.Disallow :
-                BinaryCompatibility.AppWasBuiltForVersion == 40500 ? HandleBindingOptions.Allow :
-                /* else */  HandleBindingOptions.Throw;
-#else
-        private static HandleBindingOptions _handleTwoWayBindingToPropertyWithNonPublicSetter = HandleBindingOptions.Throw;
-#endif
-
-
-        internal static HandleBindingOptions HandleTwoWayBindingToPropertyWithNonPublicSetter
-        {
-            get { return _handleTwoWayBindingToPropertyWithNonPublicSetter; }
-            set
-            {
-                lock (_lockObject)
-                {
-                    if (_isSealed)
-                    {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "HandleTwoWayBindingToPropertyWithNonPublicSetter", "FrameworkCompatibilityPreferences"));
-                    }
-
-                    // apps are allowed to tighten the restriction, but not to loosen it
-                    if (value.CompareTo(_handleTwoWayBindingToPropertyWithNonPublicSetter) > 0)
-                    {
-                        throw new ArgumentException();
-                    }
-
-                    _handleTwoWayBindingToPropertyWithNonPublicSetter = value;
-                }
-            }
-        }
-
-        internal static HandleBindingOptions GetHandleTwoWayBindingToPropertyWithNonPublicSetter()
-        {
-            Seal();
-
-            return HandleTwoWayBindingToPropertyWithNonPublicSetter;
-        }
-
-        static void SetHandleTwoWayBindingToPropertyWithNonPublicSetterFromAppSettings(NameValueCollection appSettings)
-        {
-            // user can use config file to tighten the restriction
-            string s = appSettings["HandleTwoWayBindingToPropertyWithNonPublicSetter"];
-            HandleBindingOptions value;
-            if (Enum.TryParse(s, true, out value) && value.CompareTo(HandleTwoWayBindingToPropertyWithNonPublicSetter) <= 0)
-            {
-                HandleTwoWayBindingToPropertyWithNonPublicSetter = value;
-            }
-        }
-
-        #endregion AllowTwoWayBindingToPropertyWithNonPublicSetter
-
-        // DevDiv #681144:  There is a bug in the Windows desktop window manager which can cause
+        // There is a bug in the Windows desktop window manager which can cause
         // incorrect z-order for windows when several conditions are all met:
         // (a) windows are parented/owned across different threads or processes
         // (b) a parent/owner window is also owner of a topmost window (which needn't be visible)
@@ -255,7 +195,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "UseSetWindowPosForTopmostWindows", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "UseSetWindowPosForTopmostWindows", "FrameworkCompatibilityPreferences"));
                     }
 
                     _useSetWindowPosForTopmostWindows = value;
@@ -305,7 +245,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.CompatibilityPreferencesSealed, "IsVirtualizingStackPanel_45Compatible", "FrameworkCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IsVirtualizingStackPanel_45Compatible", "FrameworkCompatibilityPreferences"));
                     }
 
                     _vsp45Compat = value;
@@ -438,7 +378,7 @@ namespace System.Windows
                 if (_isSealed)
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.CompatibilityPreferencesSealed, 
+                        SR.Format(SR.CompatibilityPreferencesSealed, 
                         nameof(ShouldThrowOnCopyOrCutFailure), 
                         nameof(FrameworkCompatibilityPreferences)));
                 }
@@ -467,6 +407,65 @@ namespace System.Windows
 
         #endregion ShouldThrowOnCopyOrCutFailure
 
+
+        #region IMECompositionTrace
+
+        private static string _IMECompositionTraceTarget;
+
+        internal static string GetIMECompositionTraceTarget()
+        {
+            Seal();
+            return _IMECompositionTraceTarget;
+        }
+
+        private static string _IMECompositionTraceFile;
+
+        internal static string GetIMECompositionTraceFile()
+        {
+            Seal();
+            return _IMECompositionTraceFile;
+        }
+
+        static void SetIMECompositionTraceFromAppSettings(NameValueCollection appSettings)
+        {
+            // user can use config file to select a control (TextBox, RichTextBox, etc.)
+            // for in-flight tracing of IME composition behavior:
+            //      <add key="IMECompositionTraceTarget" value="NameOfControl"/>
+            _IMECompositionTraceTarget = appSettings["IMECompositionTraceTarget"];
+
+            // user can direct IMEComposition-tracing output to a file:
+            //      <add key="IMECompositionTraceFile" value="NameOfFile"/>
+            // If the key is not present, or the filename is absent or "default",
+            // the output goes to "IMECompositionTrace.stf".  If the filename is "none",
+            // no file output is produced.
+            //
+            // User can also specify a parameter to control when output is flushed
+            // to the file:
+            //      <add key="IMECompositionTraceFile" value="NameOfFile;nnn"/>
+            // If not specified, the output is flushed after completing Measure or      TODO-rewrite
+            // Arrange of the top-level VirtualizingStackPanel below the trace
+            // target.   In some scenarios it may be desirable to flush the output
+            // more often - for example, an infinite loop that never measures the
+            // top-level panel.   Use the optional nnn parameter to flush after
+            // Measure or Arrange of any panel whose depth is nnn or less.  This flushes
+            // more often, but is more likely to interfere with the timing of the app.
+            _IMECompositionTraceFile = appSettings["IMECompositionTraceFile"];
+
+            // Alternatively, the user can control tracing from the VS debugger.
+            // To enable tracing:
+            //      1. Locate the desired control (TextBox, RichTextBox, etc.) and
+            //          make an Object ID for it.
+            //      2. From the Immediate window, execute
+            //          TextStore.IMECompositionTracer.SetTarget(1#)
+            //          (using the appropriate ID instead of 1#)
+            // To flush the current trace data to the file (useful if the app is
+            // about to terminate - including force-termination from the debugger
+            // or TaskManager - but you want to capture the latest trace data):
+            //      1. From the Immediate window, execute
+            //          TextStore.IMECompositionTracer.Flush()
+        }
+
+        #endregion IMECompositionTrace
         private static void Seal()
         {
             if (!_isSealed)
@@ -479,6 +478,6 @@ namespace System.Windows
         }
 
         private static bool _isSealed;
-        private static object _lockObject = new object();
+        private static readonly object _lockObject = new object();
     }
 }

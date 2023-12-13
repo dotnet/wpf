@@ -23,8 +23,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("C2B3CA09-0473-4282-87AE-1780863223F0"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMStoryFragmentsResource : IXpsOMResource
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

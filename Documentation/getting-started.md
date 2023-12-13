@@ -1,13 +1,13 @@
-# Getting started with WPF for .NET Core
+# Getting started with WPF for .NET
 
-This document describes the experience of using WPF on .NET Core. The [Developer Guide](developer-guide.md) describes how to develop features and fixes for WPF.
+This document describes the experience of using WPF on .NET. The [Developer Guide](developer-guide.md) describes how to develop features and fixes for WPF.
 
 ## Installation
 
 Choose one of these options:
 
-1. [.NET Core 3.0 SDK Preview 1 (recommended)](https://www.microsoft.com/net/download)
-2. [.NET Core 3.0 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/master/daily-builds.md)
+1. [.NET 6.0 SDK (recommended)](https://www.microsoft.com/net/download)
+2. [.NET 7.0 daily build (latest changes, but less stable)](https://github.com/dotnet/core/blob/main/daily-builds.md)
 
 ## Creating new applications
 
@@ -23,19 +23,16 @@ dotnet run
 
 ## Samples
 
-Check out the [WPF for .NET Core 3 samples](https://github.com/dotnet/samples/tree/master/wpf) for HelloWorld example. The existing [WPF for .NET Framework samples](https://github.com/Microsoft/WPF-Samples) have also been updated to dual-target .NET Framework and .NET Core 3.
+Check out the [WPF for .NET samples](https://github.com/dotnet/samples/tree/main/wpf) for HelloWorld example. The existing [WPF for .NET samples](https://github.com/Microsoft/WPF-Samples) have also been updated to target .NET.
 
 
 ## Documentation
 
 For WPF API documentation, see the [.NET API Browser](https://docs.microsoft.com/en-us/dotnet/api/?view=netcore-3.0).
 
-For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf?view=vs-2017) applies equally well to WPF for .NET Core 3. The main differences are around project structure and lack of Designer support.
+For conceptual documentation (architecture, how-tos, etc.) most of the [documentation for WPF for .NET Framework](https://docs.microsoft.com/en-us/visualstudio/designers/getting-started-with-wpf) applies equally well to WPF for .NET. The main differences are around project structure and lack of Designer support.
 
 ## Missing features
 
-* To use the XAML Designer for WPF on .NET Core 3 you will need VS 2019 16.2 Preview 1.
-* [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) are not supported for .NET Core 3. 
-* Not all .NET Framework features are supported for .NET Core 3. You can use the [.NET API Portability Analyzer](https://github.com/microsoft/dotnet-apiport) to see if your existing code can run on .NET Core 3.
-
-A full list of supported / unsupported features will be available in a future update. 
+* [XAML Browser applications (XBAPs)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/app-development/wpf-xaml-browser-applications-overview) are not supported for .NET. 
+* Not all .NET Framework features are supported for .NET. You can use the [.NET API Portability Analyzer](https://github.com/microsoft/dotnet-apiport) to see if your existing code can run on .NET.

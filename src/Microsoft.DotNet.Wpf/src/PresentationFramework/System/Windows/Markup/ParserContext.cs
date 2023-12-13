@@ -395,16 +395,10 @@ namespace System.Windows.Markup
         //
         // The Assembly which hosts the Baml stream.
         // 
-        /// <SecurityNote>
-        ///     Critical - because it sets the value of the _streamCreatedAssembly field, and that is
-        ///                SecurityCritical Data as this field is used by the BamlRecordReader to
-        ///                allow legitimate internal types in Partial Trust.
-        /// </SecurityNote>
         internal Assembly StreamCreatedAssembly 
         {
             get { return _streamCreatedAssembly.Value; }
 
-            [SecurityCritical]
             set { _streamCreatedAssembly.Value = value; }
         }
 #endif
@@ -481,6 +475,7 @@ namespace System.Windows.Markup
 
 #region Internal
 
+        internal bool FromRestrictiveReader { get; set; }
 
         // Reset stack to default state
         private void EndRepeat()
@@ -643,15 +638,6 @@ namespace System.Windows.Markup
 #endif
 
 #if !PBTCOMPILER
-        /// <SecurityNote>
-        ///     Critical - because it sets _streamCreatedAssembly on the ParserContext, and that is
-        ///                SecurityCritical Data as this field is used by the BamlRecordReader to
-        ///                allow legitimate internal types in Partial Trust.
-        ///     Safe - because it gets this value from a copy of itself that gets it from a stream that
-        ///            implements an internal IStreamInfo interface and IStreamInfo.Assembly is set\
-        ///            by the ResourceContainer code that is SecurityCritical, but treated as safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ParserContext ScopedCopy(bool copyNameScopeStack)
         {
             ParserContext context = new ParserContext();

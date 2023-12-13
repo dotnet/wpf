@@ -13,7 +13,6 @@
 --*/
 using System;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -92,10 +91,6 @@ namespace System.Windows.Xps.Serialization
         /// A new 32-bit unsigned integer representing
         /// the new Crc32 value.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - This takes in raw bytes of a bit map
-        ///</SecurityNote>
-        [SecurityCritical]
         private
         static
         UInt32

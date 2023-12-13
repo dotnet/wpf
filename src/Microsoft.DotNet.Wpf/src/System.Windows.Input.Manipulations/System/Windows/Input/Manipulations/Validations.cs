@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
 using System.Diagnostics;
 
 namespace System.Windows.Input.Manipulations
@@ -12,20 +11,6 @@ namespace System.Windows.Input.Manipulations
     /// </summary>
     internal static class Validations
     {
-        /// <summary>
-        /// Throws if an argument is null.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="paramName"></param>
-        public static void CheckNotNull(object value, string paramName)
-        {
-            Debug.Assert(paramName != null);
-            if (value == null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
-        }
-
         /// <summary>
         /// Gets whether the specified value is finite.
         /// </summary>

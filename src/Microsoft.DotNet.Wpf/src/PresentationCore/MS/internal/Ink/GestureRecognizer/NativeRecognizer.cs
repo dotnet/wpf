@@ -24,7 +24,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
@@ -33,7 +32,6 @@ using MS.Internal.PresentationCore;
 
 using MS.Utility;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -55,11 +53,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Static constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical methods
-        ///                 LoadRecognizerDll();
-        /// </SecurityNote>
-        [SecurityCritical]
         static NativeRecognizer()
         {
             s_isSupported = LoadRecognizerDll();
@@ -68,13 +61,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Private constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method
-        ///                 NativeRecognizer.UnsafeNativeMethods.CreateContext()
-        ///               Accesses the SecurityCritical member
-        ///                 _hContext
-        /// </SecurityNote>
-        [SecurityCritical]
         private NativeRecognizer()
         {
             Debug.Assert(NativeRecognizer.RecognizerHandleSingleton != null);
@@ -84,7 +70,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (HRESULT.Failed(hr))
             {
                 //don't throw a com exception here, we don't need to pass out any details
-                throw new InvalidOperationException(SR.Get(SRID.UnspecifiedGestureConstructionException));
+                throw new InvalidOperationException(SR.UnspecifiedGestureConstructionException);
             }
 
             // We add a reference of the recognizer to the context handle.
@@ -107,14 +93,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Create an Instance of the NativeRecognizer.
         /// </summary>
         /// <returns>null if it fails</returns>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method
-        ///                 NativeRecognizer();
-        ///     TreatAsSafe: The method is safe because no arguments are passed.
-        ///         The NativeRecognizer return value is protected with SecurityCritical 
-        ///         attributes
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static NativeRecognizer CreateInstance()
         {
             if (NativeRecognizer.RecognizerHandleSingleton != null)
@@ -131,12 +109,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Set the enabled gestures
         /// </summary>
         /// <param name="applicationGestures"></param>
-        /// <SecurityNote>
-        ///     Critical: Handles _hContext, which is SecurityCritical
-        ///     TreatAsSafe: The method is safe because argument passed can not be 
-        ///         used maliciously. And we verify the length of the passed in array.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ApplicationGesture[] SetEnabledGestures(IEnumerable<ApplicationGesture> applicationGestures)
         {
             if (_disposed)
@@ -153,7 +125,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (HRESULT.Failed(hr))
             {
                 //don't throw a com exception here, we don't need to pass out any details
-                throw new InvalidOperationException(SR.Get(SRID.UnspecifiedSetEnabledGesturesException));
+                throw new InvalidOperationException(SR.UnspecifiedSetEnabledGesturesException);
             }
 
             return enabledGestures;
@@ -164,15 +136,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         /// <param name="strokes"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method
-        ///             NativeRecognizer.UnsafeNativeMethods.ResetContext,
-        ///             AddStrokes,
-        ///             NativeRecognizer.UnsafeNativeMethods.Process
-        ///             InvokeGetAlternateList
-        ///             InvokeGetLatticePtr
-        /// </SecurityNote>
-        [SecurityCritical]
         internal GestureRecognitionResult[] Recognize(StrokeCollection strokes)
         {
             if (_disposed)
@@ -184,17 +147,14 @@ namespace MS.Internal.Ink.GestureRecognition
             // note that we validate this argument from GestureRecognizer 
             // but since this is marked TAS, we want to do it here as well
             //
-            if (strokes == null)
-            {
-                throw new ArgumentNullException("strokes"); // Null is not allowed as the argument value
-            }
+            ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.Get(SRID.StrokeCollectionCountTooBig), "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
 
             // Create an empty result.
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[]{};
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
             if ( strokes.Count == 0 )
             {
@@ -243,7 +203,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 if ( HRESULT.Failed(hr) )
                 {
                     //don't throw a com exception here, we don't need to pass out any details
-                    throw new InvalidOperationException(SR.Get(SRID.UnspecifiedGestureException));
+                    throw new InvalidOperationException(SR.UnspecifiedGestureException);
                 }
             }
 
@@ -253,11 +213,7 @@ namespace MS.Internal.Ink.GestureRecognition
 
         internal static ApplicationGesture[] GetApplicationGestureArrayAndVerify(IEnumerable<ApplicationGesture> applicationGestures)
         {
-            if (applicationGestures == null)
-            {
-                // Null is not allowed as the argument value
-                throw new ArgumentNullException("applicationGestures");
-            }
+            ArgumentNullException.ThrowIfNull(applicationGestures);
 
             uint count = 0;
             //we need to make a disconnected copy
@@ -278,7 +234,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (count == 0)
             {
                 // An empty array is not allowed.
-                throw new ArgumentException(SR.Get(SRID.ApplicationGestureArrayLengthIsZero), "applicationGestures");
+                throw new ArgumentException(SR.ApplicationGestureArrayLengthIsZero, "applicationGestures");
             }
 
             bool foundAllGestures = false;
@@ -287,7 +243,7 @@ namespace MS.Internal.Ink.GestureRecognition
             {
                 if (!ApplicationGestureHelper.IsDefined(gesture))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ApplicationGestureIsInvalid), "applicationGestures");
+                    throw new ArgumentException(SR.ApplicationGestureIsInvalid, "applicationGestures");
                 }
 
                 //check for allgestures
@@ -299,7 +255,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 //check for dupes
                 if (gestures.Contains(gesture))
                 {
-                    throw new ArgumentException(SR.Get(SRID.DuplicateApplicationGestureFound), "applicationGestures");
+                    throw new ArgumentException(SR.DuplicateApplicationGestureFound, "applicationGestures");
                 }
 
                 gestures.Add(gesture);
@@ -309,7 +265,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (foundAllGestures && gestures.Count != 1)
             {
                 // no dupes allowed
-                throw new ArgumentException(SR.Get(SRID.AllGesturesMustExistAlone), "applicationGestures");
+                throw new ArgumentException(SR.AllGesturesMustExistAlone, "applicationGestures");
             }
 
             return gestures.ToArray();
@@ -329,13 +285,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// A simple pattern of the dispose implementation.
         /// There is no finalizer since the SafeHandle will take care of releasing the context.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical method and the SecurityCritical handle
-        ///                 _hContext.Dispose()
-        ///     TreatAsSafe: The method is safe because no arguments are passed.  We guard 
-        ///                 against dispose being called twice.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             if (_disposed)
@@ -362,10 +311,6 @@ namespace MS.Internal.Ink.GestureRecognition
         ///  any native functions marked with DllImport in mshwgst.dll
         ///  This method is called from the NativeRecognizer's static construtor.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Requires read registry and unmanaged code access
-        /// </SecurityNote>
-        [SecurityCritical]
         private static bool LoadRecognizerDll()
         {
             // ISSUE-2005/01/14-WAYNEZEN,
@@ -377,42 +322,29 @@ namespace MS.Internal.Ink.GestureRecognition
             //     http://blogs.msdn.com/junfeng/archive/2004/07/14/181932.aspx. Then we don't have to unload the existing
             //     mshwgst.dll.
             String path = null;
-            System.Security.PermissionSet permissionSet = new PermissionSet(null);
-            permissionSet.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read,
-                                                        System.Security.AccessControl.AccessControlActions.View,
-                                                        GestureRecognizerFullPath));
-            permissionSet.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-            permissionSet.Assert();  // BlessedAssert:
-            try
+            RegistryKey regkey = Registry.LocalMachine;
+            RegistryKey recognizerKey = regkey.OpenSubKey(GestureRecognizerPath);
+            if (recognizerKey != null)
             {
-                RegistryKey regkey = Registry.LocalMachine;
-                RegistryKey recognizerKey = regkey.OpenSubKey(GestureRecognizerPath);
-                if (recognizerKey != null)
+                try
                 {
-                    try
+                    // Try to read the recognizer path subkey
+                    path = recognizerKey.GetValue(GestureRecognizerValueName) as string;
+                    if (path == null)
                     {
-                        // Try to read the recognizer path subkey
-                        path = recognizerKey.GetValue(GestureRecognizerValueName) as string;
-                        if (path == null)
-                        {
-                            return false;
-                        } 
-                    }
-                    finally
-                    {
-                        recognizerKey.Close();
-                    }
+                        return false;
+                    } 
                 }
-                else
+                finally
                 {
-                    // we couldn't find the path in the registry
-                    // no key to close
-                    return false;
+                    recognizerKey.Close();
                 }
             }
-            finally
+            else
             {
-                CodeAccessPermission.RevertAssert();
+                // we couldn't find the path in the registry
+                // no key to close
+                return false;
             }
  
             if (path != null)
@@ -437,11 +369,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Set the enabled gestures.
         /// This method is called from the internal SetEnabledGestures method.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a critical pinvoke
-        ///                 NativeRecognizer.UnsafeNativeMethods.SetEnabledUnicodeRanges  
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
@@ -489,13 +416,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Add the strokes to the recoContext.
         /// The method is called from the internal Recognize method.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a critical PInvoke
-        ///                 GetPacketData,
-        ///                 NativeRecognizer.UnsafeNativeMethods.AddStroke,
-        ///                 ReleaseResourcesinPacketDescription
-        /// </SecurityNote>
-        [SecurityCritical]
         private int AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
@@ -538,10 +458,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Retrieve the packet description, packets data and XFORM which is the information the native recognizer needs.
         /// The method is called from AddStrokes.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Contains unsafe code
-        /// </SecurityNote>
-        [SecurityCritical]
         private void GetPacketData
         (
             Stroke stroke,
@@ -654,10 +570,6 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Release the memory blocks which has been created for mashalling purpose.
         /// The method is called from AddStrokes.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls unsafe code, requires UnmanageCode permission
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ReleaseResourcesinPacketDescription(MS.Win32.Recognizer.PACKET_DESCRIPTION pd, IntPtr packets)
         {
             if ( pd.pPacketProperties != IntPtr.Zero )
@@ -695,17 +607,9 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Invokes GetAlternateList in the native dll
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls the native methods
-        ///                 NativeRecognizer.UnsafeNativeMethods.GetAlternateList
-        ///                 NativeRecognizer.UnsafeNativeMethods.GetString
-        ///                 NativeRecognizer.UnsafeNativeMethods.GetConfidenceLevel
-        ///                 NativeRecognizer.UnsafeNativeMethods.DestroyAlternate
-        /// </SecurityNote>
-        [SecurityCritical]
         private GestureRecognitionResult[] InvokeGetAlternateList()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
             int hr = 0;
 
             MS.Win32.Recognizer.RECO_RANGE recoRange;
@@ -767,15 +671,9 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Invokes GetLatticePtr in the native dll
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls the native methods
-        ///                 NativeRecognizer.UnsafeNativeMethods.GetLatticePtr
-        ///               And uses unsafe code
-        /// </SecurityNote>
-        [SecurityCritical]
         private GestureRecognitionResult[] InvokeGetLatticePtr()
         {
-            GestureRecognitionResult[] recResults = new GestureRecognitionResult[] { };
+            GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
 //            int hr = 0;
             IntPtr ptr = IntPtr.Zero;
@@ -867,12 +765,8 @@ namespace MS.Internal.Ink.GestureRecognition
         /// RecognizerHandle is a static property. But it's a SafeHandle.
         /// So, we don't have to worry about releasing the handle since RecognizerSafeHandle when there is no reference on it.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls a SecurityCritical pinvoke and accesses SecurityCritical fields
-        /// </SecurityNote>
         private static MS.Win32.Recognizer.RecognizerSafeHandle RecognizerHandleSingleton
         {
-            [SecurityCritical]
             get
             {
                 if (s_isSupported && s_hRec == null)
@@ -927,24 +821,16 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <summary>
         /// Each NativeRecognizer instance has it's own recognizer context
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: The SecurityCritical handle
-        /// </SecurityNote>
-        [SecurityCritical]
         private MS.Win32.Recognizer.ContextSafeHandle _hContext;
 
         /// <summary>
         /// Used to lock for instancing the native recognizer handle
         /// </summary>
-        private static object                           _syncRoot = new object();
+        private static readonly object                  _syncRoot = new object();
 
         /// <summary>
         /// All NativeRecognizer share a single handle to the recognizer
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: The SecurityCritical handle
-        /// </SecurityNote>
-        [SecurityCritical]
         private static MS.Win32.Recognizer.RecognizerSafeHandle s_hRec;
 
         /// <summary>

@@ -39,11 +39,6 @@ namespace MS.Internal.Documents
         /// <param name="findToolBarHost">FindToolBar host.</param>
         /// <param name="handlerFindClicked">Event handler for FindClicked event.</param>
         /// <param name="enable">Whether to enable/disable FindToolBar.</param>
-        /// <SecurityNote>
-        /// Critical: FindToolBar..ctor is defined in a non-APTCA assembly.
-        /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ToggleFindToolBar(Decorator findToolBarHost, EventHandler handlerFindClicked, bool enable)
         {
             if (enable)
@@ -80,11 +75,6 @@ namespace MS.Internal.Documents
         /// Invoked when the "Find" button in the Find Toolbar is clicked.
         /// This method invokes the actual Find process.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static ITextRange Find(FindToolBar findToolBar, TextEditor textEditor, ITextView textView, ITextView masterPageTextView)
         {
             string searchText;
@@ -282,19 +272,14 @@ namespace MS.Internal.Documents
         /// Shows Find unsuccessful dialog.
         /// </summary>
         /// <param name="findToolBar">FindToolBar instance.</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: method is not intrinsically unsafe; it's safe to call it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ShowFindUnsuccessfulMessage(FindToolBar findToolBar)
         {
             string messageString;
 
             // No, we did not find anything. Alert the user.
             messageString = findToolBar.SearchUp ?
-                        SR.Get(SRID.DocumentViewerSearchUpCompleteLabel) :
-                        SR.Get(SRID.DocumentViewerSearchDownCompleteLabel);
+                        SR.DocumentViewerSearchUpCompleteLabel :
+                        SR.DocumentViewerSearchDownCompleteLabel;
             messageString = String.Format(System.Globalization.CultureInfo.CurrentCulture, messageString, findToolBar.SearchText);
 
             HwndSource hwndSource = PresentationSource.CriticalFromVisual(findToolBar) as HwndSource;
@@ -303,7 +288,7 @@ namespace MS.Internal.Documents
             PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
                 hwnd,
                 messageString,
-                SR.Get(SRID.DocumentViewerSearchCompleteTitle),
+                SR.DocumentViewerSearchCompleteTitle,
                 MessageBoxButton.OK,
                 MessageBoxImage.Asterisk);
         }

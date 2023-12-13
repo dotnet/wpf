@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿/*++
+/*++
 All rights reserved.
 
 --*/
@@ -30,10 +30,7 @@ namespace MS.Internal.Printing.Configuration
 
         public DevMode(byte[] devModeBytes)
         {
-            if (devModeBytes == null)
-            {
-                throw new ArgumentNullException("devModeBytes");
-            }
+            ArgumentNullException.ThrowIfNull(devModeBytes);
 
             this._isDevModeW = true;
             this.ByteData = devModeBytes;
@@ -457,7 +454,6 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>DevMode</returns>
         /// <secritynote>
         /// </secritynote>
-        [SecurityCritical]
         public static DevMode FromIntPtr(IntPtr devModeWPointer)
         {
             if (devModeWPointer == IntPtr.Zero)

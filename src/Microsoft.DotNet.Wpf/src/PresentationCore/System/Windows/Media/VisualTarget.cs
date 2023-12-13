@@ -14,7 +14,6 @@ using System.Security;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -36,10 +35,7 @@ namespace System.Windows.Media
         /// </summary>
         public VisualTarget(HostVisual hostVisual)
         {
-            if (hostVisual == null)
-            {
-                throw new ArgumentNullException("hostVisual");
-            }
+            ArgumentNullException.ThrowIfNull(hostVisual);
 
             _hostVisual = hostVisual;
             _connected = false;
@@ -158,11 +154,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Dispose cleans up the state associated with HwndTarget.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Sets RootVisual to null
-        ///     PublicOK: This code has the same affect as removing elements in a window
-        /// </SecurityNote>
-        [SecurityCritical]
         public override void Dispose()
         {
             try

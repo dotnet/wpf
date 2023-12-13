@@ -18,13 +18,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Security.RightsManagement;
 using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Text;
 using System.Globalization;                 // For CultureInfo
 // for Invariant
-using System.Windows;                       // for SR and SRID
+using System.Windows;                       // for SR and SR
 
 using MS.Internal;
 using System.Runtime.InteropServices;
@@ -35,13 +34,6 @@ using MS.Internal.WindowsBase;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class ClientSession : IDisposable
     {
         internal ClientSession(ContentUser user)
@@ -551,7 +543,7 @@ namespace MS.Internal.Security.RightsManagement
                 string clientLicensorCertificate = GetClientLicensorCert();
 
                 if (clientLicensorCertificate == null)
-                    throw new RightsManagementException(SR.Get(SRID.UserHasNoClientLicensorCert));
+                    throw new RightsManagementException(SR.UserHasNoClientLicensorCert);
 
                 // Trim all the leading and trailing white space characters
                 // of the clientLicensorCertificate.
@@ -561,7 +553,7 @@ namespace MS.Internal.Security.RightsManagement
                 // above, if the certificate string is empty or contains only white spaces, it
                 // is empty now.
                 if (clientLicensorCertificate.Length == 0)
-                    throw new RightsManagementException(SR.Get(SRID.UserHasNoClientLicensorCert));
+                    throw new RightsManagementException(SR.UserHasNoClientLicensorCert);
 
                 // Offline publishing supported no Online publishing support 
                 int hr = SafeNativeMethods.DRMGetSignedIssuanceLicense(
@@ -671,7 +663,7 @@ namespace MS.Internal.Security.RightsManagement
 
                 foreach (string oldElement in oldList)
                 {
-                    if (String.CompareOrdinal(newElement, oldElement) == 0)
+                    if (string.Equals(newElement, oldElement, StringComparison.Ordinal))
                     {
                         matchFound = true;
                         break;
@@ -937,39 +929,23 @@ namespace MS.Internal.Security.RightsManagement
         private static Uri GetRegistryPassportCertificationUrl()
         {
             // This Function Will return null, if the registry entry is missing
-
-            // Acquire permissions to read the one key we care about from the registry
-            RegistryPermission permission = new RegistryPermission(
-                    RegistryPermissionAccess.Read,
-                    System.Security.AccessControl.AccessControlActions.View,
-                    _passportActivationRegistryFullKeyName);
-
-            permission.Assert();
-
-            try
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(_passportActivationRegistryKeyName);
+            if (key == null)
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(_passportActivationRegistryKeyName);
-                if (key == null)
+                return null;
+            }
+            else
+            {
+                object keyValue = key.GetValue(null); // this should get the default value
+                string stringValue = keyValue as string;
+                if (stringValue != null)
                 {
-                    return null;
+                    return new Uri(stringValue);
                 }
                 else
                 {
-                    object keyValue = key.GetValue(null); // this should get the default value
-                    string stringValue = keyValue as string;
-                    if (stringValue != null)
-                    {
-                        return new Uri(stringValue);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
         }
 
@@ -1355,9 +1331,7 @@ namespace MS.Internal.Security.RightsManagement
                         0);
 
                     // We recognise authentication type Windows everything else is assumed to be Passport 
-                    if (String.CompareOrdinal(
-                        AuthenticationType.Windows.ToString().ToUpper(CultureInfo.InvariantCulture),
-                        authenticationType.ToUpper(CultureInfo.InvariantCulture)) == 0)
+                    if (string.Equals(AuthenticationType.Windows.ToString(), authenticationType, StringComparison.OrdinalIgnoreCase))
                     {
                         return new ContentUser(name, AuthenticationType.Windows);
                     }
@@ -1877,7 +1851,7 @@ namespace MS.Internal.Security.RightsManagement
                                                 distributionPointQueryHandle,
                                                 NativeConstants.QUERY_OBJECTTYPE,
                                                 0);
-                        if (String.CompareOrdinal(addressType, distributionPointType) == 0)
+                        if (string.Equals(addressType, distributionPointType, StringComparison.Ordinal))
                         {
                             nameAttributeValue = GetUnboundLicenseStringAttribute(
                                                 distributionPointQueryHandle,
@@ -1960,7 +1934,7 @@ namespace MS.Internal.Security.RightsManagement
 
             for (int i = 0; i < _rightEnums.Length; i++)
             {
-                if (String.CompareOrdinal(_rightNames[i], rightName) == 0)
+                if (string.Equals(_rightNames[i], rightName, StringComparison.Ordinal))
                 {
                     return _rightEnums[i];
                 }

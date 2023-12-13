@@ -5,7 +5,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using System.ComponentModel;
 
@@ -93,11 +92,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -114,11 +108,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -134,11 +123,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -153,11 +137,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             string messageBoxText, 
             string caption, 
@@ -171,11 +150,6 @@ namespace System.Windows
         ///       Displays a message box with specified text and caption.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(string messageBoxText, string caption) 
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -186,11 +160,6 @@ namespace System.Windows
         ///       Displays a message box with specified text.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(string messageBoxText) 
         {
             return ShowCore(IntPtr.Zero, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -205,12 +174,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
             MessageBoxResult defaultResult, MessageBoxOptions options) 
         {
@@ -223,12 +186,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, 
             MessageBoxResult defaultResult) 
         {
@@ -241,12 +198,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon) 
         {
             return ShowCore(owner, messageBoxText, caption, button, icon, 0, 0);
@@ -258,12 +209,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption, MessageBoxButton button) 
         {
             return ShowCore(owner, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
@@ -275,12 +220,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText, string caption) 
         {
             return ShowCore(owner, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -292,12 +231,6 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        /// <SecurityNote>
-        ///     Critical: This code calls ShowCore which is critical
-        ///     PublicOK: Showcore filters for valid input and in this case the IntPtr is valid
-        ///               since we do not let you create a new window in PT
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(IWin32Window owner, string messageBoxText) 
         {
             return ShowCore(owner, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -310,11 +243,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -331,11 +259,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -352,11 +275,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -372,11 +290,6 @@ namespace System.Windows
         ///       Displays a message box with specified text, caption, and style.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(
             Window owner, 
             string messageBoxText, 
@@ -391,11 +304,6 @@ namespace System.Windows
         ///       Displays a message box with specified text and caption.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(Window owner, string messageBoxText, string caption) 
         {
             return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -406,11 +314,6 @@ namespace System.Windows
         ///       Displays a message box with specified text.
         ///    </para>
         /// </devdoc>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical handle
-        ///     PublicOK: It passes the handle to ShowCore which sends it to MessageBox
-        /// </SecurityNote>
-        [SecurityCritical]
         public static MessageBoxResult Show(Window owner, string messageBoxText) 
         {
             return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
@@ -440,10 +343,6 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into UnsafeNativeMethods.MessageBox and takes an IntPtr
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static MessageBoxResult ShowCore(
             IntPtr owner, 
             string messageBoxText, 
@@ -478,13 +377,9 @@ namespace System.Windows
 
             if ( (options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0) 
             {
-                // Demand UnmangedCode permissions if using ServiceNotification/DefaultDesktopOnly.
-                // Details in DevDiv 163043.
-                SecurityHelper.DemandUnmanagedCode();
-
                 if (owner != IntPtr.Zero)
                 {
-                    throw new ArgumentException(SR.Get(SRID.CantShowMBServiceWithOwner));
+                    throw new ArgumentException(SR.CantShowMBServiceWithOwner);
                 }                
             }
             else
@@ -539,12 +434,6 @@ namespace System.Windows
                 || value == MessageBoxResult.Yes;
         }
 
-        /// <SecurityNote>
-        ///  This code exists to prevent a denial of service attack on massagebox. The logic here is to
-        ///  create a mask where all the valid bits are zero and invalid bits are one. Using that "And
-        ///  operation we are able to decide whether the bits passed in were all valid (result is zero)
-        ///  or whether any invalid bits were set (Result is non zero)
-        /// </SecurityNote>
         private static bool IsValidMessageBoxOptions(MessageBoxOptions value)
         {
             int  mask = ~((int)MessageBoxOptions.ServiceNotification |

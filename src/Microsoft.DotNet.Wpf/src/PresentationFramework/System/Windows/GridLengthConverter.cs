@@ -126,7 +126,7 @@ namespace System.Windows
 
                     value = Convert.ToDouble(source, cultureInfo);
 
-                    if (DoubleUtil.IsNaN(value))
+                    if (double.IsNaN(value))
                     {
                         //  this allows for conversion from Width / Height = "Auto" 
                         value = 1.0;
@@ -160,21 +160,13 @@ namespace System.Windows
         /// An ArgumentException is thrown if the object is not null and is not a GridLength,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for GridLength, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext typeDescriptorContext, 
             CultureInfo cultureInfo,
             object value,
             Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (    value != null
                 &&  value is GridLength )

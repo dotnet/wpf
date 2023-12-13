@@ -32,22 +32,12 @@ using namespace MS::Internal::Text::TextInterface::Generics;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    /*******************************************************************************************************************************/
-    //Forward declaration of Factory since there was a circular reference between "TextAnalyzer" & "Factory"
-    ref class Factory;
-    /*******************************************************************************************************************************/  
-    
-
     // The 4 delegates below are used to introduce a level of indirection so we can define
     // the external methods that reference PresentationNative*.dll in PresenationCore.dll.
     // The reason we define the methods in PresentationCore.dll is that the string values for the
     // current release version suffix and the dll name of PresentationNative are defined in managed code.
     // Hence we wanted to avoid redefining these values in MC++ so as not to increase the maintenance cost 
     // of the code. Moreover, using delegates does not impact perf to justify not using it in this case.
-    /// <SecurityNote>
-    /// Critical    - receives native pointers as parameters.
-    /// </SecurityNote>
-    [SecurityCritical]
     private delegate int CreateTextAnalysisSource(
                                                   WCHAR const*    text,
                                                   UINT32          length,
@@ -59,22 +49,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                                   UINT32          numberSubstitutionMethod,
                                                   void**          ppTextAnalysisSource);
 
-    /// <SecurityNote>
-    /// Critical    - Returns a native pointer.
-    /// </SecurityNote>
-    [SecurityCritical]
     private delegate void* CreateTextAnalysisSink();
 
-    /// <SecurityNote>
-    /// Critical    - receives as parameters and returns native pointers .
-    /// </SecurityNote>
-    [SecurityCritical]
     private delegate void* GetScriptAnalysisList(void*);
 
-    /// <SecurityNote>
-    /// Critical    - receives as parameters and returns native pointers .
-    /// </SecurityNote>
-    [SecurityCritical]
     private delegate void* GetNumberSubstitutionList(void*);
     /// <summary>
     /// This class is responsible for Text Analysis and Shaping.
@@ -84,10 +62,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     {
         private:
         
-            /// <SecurityNote>
-            /// Critical - native pointer.
-            /// </SecurityNote>
-            [SecurityCritical]
             NativeIUnknownWrapper<IDWriteTextAnalyzer>^ _textAnalyzer;
 
             void GetBlankGlyphsForControlCharacters(
@@ -102,7 +76,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 [System::Runtime::InteropServices::Out] UINT32% actualGlyphCount
             );
 
-            [SecurityCritical]
             void GetGlyphPlacementsForControlCharacters(
                 __in_ecount(textLength) const WCHAR* pTextString,
                 UINT32 textLength,
@@ -118,10 +91,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 [System::Runtime::InteropServices::Out] array<GlyphOffset>^% glyphOffsets
                 );
 
-            /// <SecurityNote>
-            /// Critical    - recieves native pointers.
-            /// </SecurityNote>
-            [SecurityCritical]
             static void ReleaseItemizationNativeResources(
                 IDWriteFactory**            ppFactory,
                 IDWriteTextAnalyzer**       ppTextAnalyzer,
@@ -151,7 +120,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 }
             }
 
-            [SecurityCritical]
             static IList<Span^>^ AnalyzeExtendedAndItemize(
                 TextItemizer^ textItemizer, 
                 __in_ecount(length) const WCHAR *text, 
@@ -175,17 +143,15 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Contructs a Font object.
             /// </summary>
             /// <param name="font">The DWrite font object that this class wraps.</param>
-            [SecurityCritical]
             TextAnalyzer(
                 IDWriteTextAnalyzer* textAnalyzer
                 );
 
-            [SecurityCritical]
             static IList<Span^>^ Itemize(
                 __in_ecount(length) const WCHAR* text,
                 UINT32                     length,
                 CultureInfo^               culture,
-                Factory^                   factory,
+                IDWriteFactory*            pDWriteFactory,
                 bool                       isRightToLeftParagraph,
                 CultureInfo^               numberCulture,
                 bool                       ignoreUserOverride,
@@ -197,7 +163,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 CreateTextAnalysisSource^  pfnCreateTextAnalysisSource
                 );
 
-            [SecurityCritical]
             static void AnalyzeExtendedCharactersAndDigits(
                 __in_ecount(length) const WCHAR* text,
                 UINT32            length,
@@ -207,7 +172,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 IClassification^  classificationUtility
                 );
 
-            [SecurityCritical]
             void GetGlyphsAndTheirPlacements(
                 __in_ecount(textLength) const WCHAR* textString,
                 UINT32 textLength,
@@ -229,7 +193,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 [System::Runtime::InteropServices::Out] array<GlyphOffset>   ^% glyphOffsets
             );
 
-            [SecurityCritical]
             void GetGlyphs(
                 __in_ecount(textLength) const WCHAR* textString,
                 UINT32 textLength,
@@ -251,7 +214,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 [System::Runtime::InteropServices::Out] UINT32% actualGlyphCount
             );
 
-            [SecurityCritical]
             void GetGlyphPlacements(
                 __in_ecount(textLength) const WCHAR* textString,
                 __in_ecount(textLength) UINT16 const* clusterMap,

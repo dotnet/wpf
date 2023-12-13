@@ -41,7 +41,7 @@ namespace MS.Internal.Xaml.Context
 
         public NameFixupGraph()
         {
-            var referenceComparer = ReferenceEqualityComparer<object>.Singleton;
+            var referenceComparer = ReferenceEqualityComparer.Instance;
             _dependenciesByChildObject = new Dictionary<object, NameFixupToken>(referenceComparer);
             _dependenciesByName = new Dictionary<string, FrugalObjectList<NameFixupToken>>(StringComparer.Ordinal);
             _dependenciesByParentObject = new Dictionary<object, FrugalObjectList<NameFixupToken>>(referenceComparer);
@@ -166,9 +166,8 @@ namespace MS.Internal.Xaml.Context
             NameFixupToken token = null;
             if (instance != null)
             {
-                if (_dependenciesByChildObject.TryGetValue(instance, out token))
+                if (_dependenciesByChildObject.Remove(instance, out token))
                 {
-                    _dependenciesByChildObject.Remove(instance);
                     RemoveTokenByParent(token);
                     _resolvedTokensPendingProcessing.Enqueue(token);
                 }
@@ -474,7 +473,7 @@ namespace MS.Internal.Xaml.Context
         private static void ThrowProvideValueCycle(IEnumerable<NameFixupToken> markupExtensionTokens)
         {
             StringBuilder exceptionMessage = new StringBuilder();
-            exceptionMessage.Append(SR.Get(SRID.ProvideValueCycle));
+            exceptionMessage.Append(SR.ProvideValueCycle);
             foreach (NameFixupToken token in markupExtensionTokens)
             {
                 exceptionMessage.AppendLine();
@@ -483,11 +482,11 @@ namespace MS.Internal.Xaml.Context
                 {
                     if (token.LinePosition != 0)
                     {
-                        exceptionMessage.Append(SR.Get(SRID.LineNumberAndPosition, meName, token.LineNumber, token.LinePosition));
+                        exceptionMessage.Append(SR.Format(SR.LineNumberAndPosition, meName, token.LineNumber, token.LinePosition));
                     }
                     else
                     {
-                        exceptionMessage.Append(SR.Get(SRID.LineNumberOnly, meName, token.LineNumber));
+                        exceptionMessage.Append(SR.Format(SR.LineNumberOnly, meName, token.LineNumber));
                     }
                 }
                 else

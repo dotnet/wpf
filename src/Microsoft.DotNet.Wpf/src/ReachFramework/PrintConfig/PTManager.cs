@@ -213,10 +213,7 @@ namespace System.Printing
         public PrintTicketManager(string deviceName, int clientPrintSchemaVersion)
         {
             // Check input argument
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException("deviceName");
-            }
+            ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
             if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
@@ -386,10 +383,7 @@ namespace System.Printing
             }
 
             // Base PrintTicket is required. Delta PrintTicket is optional.
-            if (basePrintTicket == null)
-            {
-                throw new ArgumentNullException("basePrintTicket");
-            }
+            ArgumentNullException.ThrowIfNull(basePrintTicket);
 
             // validate scope value
             if ((scope != PrintTicketScope.PageScope) &&
@@ -460,20 +454,12 @@ namespace System.Printing
         /// <summary>
         /// Implement Dispose pattern to release print ticket handle which can't be released by GC in WOW64 due to restriction from prntvpt!PTCloseProvider
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   Releases handle to printer device
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <SecurityNote>
-        /// Critical    -   Calls critical PTProvider.Dispose
-        /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -498,10 +484,6 @@ namespace System.Printing
         /// <summary>
         /// Dispose this instance.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    -   Calls critical PTProvider.Release
-        /// </SecurityNote>
-        [SecurityCritical]
         public virtual void Release()
         {
             if (!this._disposed)

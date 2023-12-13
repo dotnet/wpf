@@ -19,7 +19,6 @@ using System.Windows.Input;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -95,7 +94,7 @@ namespace System.Windows.Input
                     case "RIGHTDOUBLECLICK" : mouseAction = MouseAction.RightDoubleClick; break;
                     case "MIDDLEDOUBLECLICK": mouseAction = MouseAction.MiddleDoubleClick; break;
                     default :
-                        throw new NotSupportedException(SR.Get(SRID.Unsupported_MouseAction, mouseActionToken));
+                        throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken));
                 }
                 return mouseAction;
             }
@@ -112,8 +111,7 @@ namespace System.Windows.Input
         /// <returns>string if parameter is a MouseAction</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (destinationType == typeof(string) && value != null)
             {

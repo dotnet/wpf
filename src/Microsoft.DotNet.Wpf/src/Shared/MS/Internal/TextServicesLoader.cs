@@ -14,7 +14,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using System.Threading;
 using MS.Internal;
@@ -99,10 +98,6 @@ namespace MS.Internal
         /// <returns>
         /// May return null if no text services are available.
         /// </returns>
-        /// <SecurityNote>
-        /// SecurityCritical: As this causes elevation of privilige
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static UnsafeNativeMethods.ITfThreadMgr Load()
         {
             UnsafeNativeMethods.ITfThreadMgr threadManager;
@@ -197,41 +192,25 @@ namespace MS.Internal
         // If we finish iterating all entries under HKLM without returning true, return false.
         //
 
-        ///<SecurityNote>
-        ///  Safe - no critical state stored, disclosure that Tips wanting to run is safe
-        ///  Critical - critical because we do an assert
-        ///</SecurityNote>
-        [SecurityTreatAsSafe, SecurityCritical]
         private static bool TIPsWantToRun()
         {
             object obj;
             RegistryKey key;
             bool tipsWantToRun = false;
 
-            PermissionSet ps = new PermissionSet(PermissionState.None);
-            ps.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\CTF"));
-            ps.AddPermission(new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_CURRENT_USER\\Software\\Microsoft\\CTF"));
-            ps.Assert(); // BlessedAssert: 
-            try
+            key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\CTF", false);
+
+            // Is cicero disabled completely for the current user?
+            if (key != null)
             {
-                key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\CTF", false);
+                obj = key.GetValue("Disable Thread Input Manager");
 
-                // Is cicero disabled completely for the current user?
-                if (key != null)
-                {
-                    obj = key.GetValue("Disable Thread Input Manager");
-
-                    if (obj is int && (int)obj != 0)
-                        return false;
-                }
-
-                // Loop through all the TIP entries for machine and current user.
-                tipsWantToRun = IterateSubKeys(Registry.LocalMachine, "SOFTWARE\\Microsoft\\CTF\\TIP",new IterateHandler(SingleTIPWantsToRun), true) == EnableState.Enabled;
+                if (obj is int && (int)obj != 0)
+                    return false;
             }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+
+            // Loop through all the TIP entries for machine and current user.
+            tipsWantToRun = IterateSubKeys(Registry.LocalMachine, "SOFTWARE\\Microsoft\\CTF\\TIP",new IterateHandler(SingleTIPWantsToRun), true) == EnableState.Enabled;
 
             return tipsWantToRun;
         }

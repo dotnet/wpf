@@ -988,8 +988,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">액세스 가능한 생성자가 없기 때문에 {0} 형식의 개체를 읽을 수 없습니다. 이 형식을 XAML에서 사용하려면 기본 생성자를 추가하거나 ConstructorArgumentAttribute를 사용하거나 InstanceDescriptor를 제공하십시오.</target>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">액세스 가능한 생성자가 없으므로 '{0}' 형식의 개체를 읽을 수 없습니다. 이 형식을 XAML에서 사용할 수 있도록 하려면 기본 생성자를 추가하거나, ConstructorArgumentAttribute를 사용하거나, InstanceDescriptor를 제공합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1052,11 +1052,6 @@
         <target state="translated">XAML 노드 스트림: StartMember '{2}' 앞에 '{0}.{1}'에 대한 EndMember가 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">속성 요소 '{0}'이(가) 개체 요소에서 포함되지 않았습니다.</target>
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">순환 종속으로 인해 MarkupExtension.ProvideValue를 호출할 수 없습니다. MarkupExtension 안의 속성에서 MarkupExtension의 결과를 참조하는 개체를 참조할 수 없습니다. 영향을 받는 MarkupExtension은 다음과 같습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 형식 이름에 'className, assembly' 형식이 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">

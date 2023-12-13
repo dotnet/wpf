@@ -18,7 +18,6 @@ using System.Security;
 
 namespace MS.Internal.Security.RightsManagement
 {
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal sealed class SafeRightsManagementPubHandle : SafeHandle
     {
         //Although it is not obvious this constructor is being called by the interop services 

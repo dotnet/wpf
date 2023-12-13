@@ -1292,11 +1292,6 @@
         <target state="translated">Zadaný objekt odkazu je v konfliktu s předdefinovaným odkazem specifickým pro balíček.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Hodnota tohoto parametru musí být větší nebo rovna nule.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">Hodnota tohoto parametru musí být v rozsahu od {0} do {1}.</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Hlavička proměnné délky ve streamu publikační licence má {0} bajtů, což je více než maximální délka {1} bajtů.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Název typu {0} nemá očekávaný formát className, assembly.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

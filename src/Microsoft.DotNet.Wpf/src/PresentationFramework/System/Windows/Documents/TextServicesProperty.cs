@@ -9,7 +9,6 @@
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using System.Collections;
 using System.Diagnostics;
@@ -68,10 +67,6 @@ namespace System.Windows.Documents
         ///    Calback function for TextEditSink
         ///    we track all property change here.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - commits changes to edit buffer, might alow input spoofing
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnEndEdit(
             UnsafeNativeMethods.ITfContext context, 
             int ecReadOnly,

@@ -1,0 +1,342 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor]] -->
+
+
+    <!--=================================================================
+        ContextMenu
+    ==================================================================-->
+    <Style x:Key="{x:Type ContextMenu}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background"
+                Value="#F5F5F5"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="BorderBrush"
+                Value="#FF959595"/>
+        <Setter Property="Padding"
+                Value="2"/>
+        <Setter Property="Grid.IsSharedSizeScope"
+                Value="true"/>
+        <Setter Property="HasDropShadow"
+                Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <theme:SystemDropShadowChrome Name="Shdw"
+                                                  Color="Transparent"
+                                                  SnapsToDevicePixels="true">
+                        <Border Name="ContextMenuBorder" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer Name="ContextMenuScrollViewer"
+                                          Grid.ColumnSpan="2" Margin="1,0"
+                                          Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=ContextMenuBorder,Path=ActualHeight}"
+                                        Width="{Binding ElementName=ContextMenuBorder,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=ContextMenuBorder,Path=Background}" />
+                                </Canvas>
+                                <Rectangle Fill="#F1F1F1"
+                                           HorizontalAlignment="Left"
+                                           Width="28"
+                                           Margin="1,2"
+                                           RadiusX="2"
+                                           RadiusY="2"/>
+                                <Rectangle HorizontalAlignment="Left"
+                                           Width="1"
+                                           Margin="29,2,0,2"
+                                           Fill="#E2E3E3"/>
+                                <Rectangle HorizontalAlignment="Left"
+                                           Width="1"
+                                           Margin="30,2,0,2"
+                                           Fill="White"/>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                              </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                        <Trigger SourceName="ContextMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false" >
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Classic]] -->
+
+
+
+    <Style x:Key="{x:Type ContextMenu}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="2"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="Grid.IsSharedSizeScope"
+                Value="true"/>
+        <Setter Property="HasDropShadow"
+                Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <theme:SystemDropShadowChrome Name="Shdw"
+                                                  Color="Transparent"
+                                                  SnapsToDevicePixels="true">
+                        <theme:ClassicBorderDecorator Name="Border"
+                                                      BorderStyle="AltRaised"
+                                                      Background="{TemplateBinding Background}"
+                                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                                      BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer Name="ContextMenuScrollViewer"
+                                          Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=Border,Path=ActualHeight}"
+                                        Width="{Binding ElementName=Border,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=Border,Path=Background}" />
+                                </Canvas>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                              </Grid>
+                            </ScrollViewer>
+                        </theme:ClassicBorderDecorator>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                        <Trigger SourceName="ContextMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false" >
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[AeroLite.NormalColor]] -->
+
+    <Style x:Key="{x:Type ContextMenu}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Menu.Border}" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="2">
+                        <ScrollViewer Name="ContextMenuScrollViewer"
+                                      Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                          <Grid RenderOptions.ClearTypeHint="Enabled">
+                            <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Rectangle
+                                    Name="OpaqueRect"
+                                    Height="{Binding ElementName=Border,Path=ActualHeight}"
+                                    Width="{Binding ElementName=Border,Path=ActualWidth}"
+                                    Fill="{Binding ElementName=Border,Path=Background}" />
+                            </Canvas>
+                            <Rectangle HorizontalAlignment="Left"
+                                       Width="1"
+                                       Margin="29,2,0,2"
+                                       Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <ItemsPresenter Name="ItemsPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                          </Grid>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="ContextMenuScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
+                            <Setter TargetName="OpaqueRect" Property="Canvas.Top" Value="{Binding ElementName=ContextMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect" Property="Canvas.Left" Value="{Binding ElementName=ContextMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+
+
+ <!--=================================================================
+        ContextMenu
+    ==================================================================-->
+    <Style x:Key="{x:Type ContextMenu}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
+        <Setter Property="FontStyle"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Center"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+        <Setter Property="Padding"
+                Value="2"/>
+        <Setter Property="Grid.IsSharedSizeScope"
+                Value="true"/>
+        <Setter Property="HasDropShadow"
+                Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <theme:SystemDropShadowChrome Name="Shdw"
+                                                  Color="Transparent"
+                                                  SnapsToDevicePixels="true">
+                        <Border Name="ContextMenuBorder" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer Name="ContextMenuScrollViewer"
+                                          Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                              <Grid RenderOptions.ClearTypeHint="Enabled">
+                                <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Rectangle
+                                        Name="OpaqueRect"
+                                        Height="{Binding ElementName=ContextMenuBorder,Path=ActualHeight}"
+                                        Width="{Binding ElementName=ContextMenuBorder,Path=ActualWidth}"
+                                        Fill="{Binding ElementName=ContextMenuBorder,Path=Background}" />
+                                </Canvas>
+                                <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                              </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                        <Trigger SourceName="ContextMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false" >
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left"
+                                    Value="{Binding ElementName=ContextMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

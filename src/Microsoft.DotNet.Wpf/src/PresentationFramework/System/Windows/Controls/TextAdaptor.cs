@@ -94,7 +94,7 @@ namespace MS.Internal.Automation
             ITextView textView = GetUpdatedTextView();
             if (textView == null)
             {
-                return new Rect[0];
+                return Array.Empty<Rect>();
             }
 
             // If start/end positions are not in the visible range, move them to the first/last visible positions.
@@ -112,7 +112,7 @@ namespace MS.Internal.Automation
             }
             if (!textView.Contains(start) || !textView.Contains(end))
             {
-                return new Rect[0];
+                return Array.Empty<Rect>();
             }
 
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
@@ -125,7 +125,7 @@ namespace MS.Internal.Automation
                 // If clipping into view and visible rect is empty, return.
                 if (visibleRect.IsEmpty)
                 {
-                    return new Rect[0];
+                    return Array.Empty<Rect>();
                 }
             }
 
@@ -284,6 +284,35 @@ namespace MS.Internal.Automation
             }
         }
 
+        // convert a range given by TextPointers to a UIA TextRange
+        // (helper method for raising ActiveTextPositionChanged event)
+        internal ITextRangeProvider TextRangeFromTextPointers(ITextPointer rangeStart, ITextPointer rangeEnd)
+        {
+            // special case for the entire range
+            if (rangeStart == null && rangeEnd == null)
+                return null;
+
+            // map null into the appropriate endpoint
+            rangeStart = rangeStart ?? _textContainer.Start;
+            rangeEnd = rangeEnd ?? _textContainer.End;
+
+            // if either pointer belongs to the wrong tree, return null (meaning "entire range")
+            if (rangeStart.TextContainer != _textContainer || rangeEnd.TextContainer != _textContainer)
+                return null;
+
+            // swap the pointers, if necessary
+            if (rangeStart.CompareTo(rangeEnd) > 0)
+            {
+                ITextPointer temp = rangeStart;
+                rangeStart = rangeEnd;
+                rangeEnd = rangeStart;
+            }
+
+            // return the resulting range, wrapped so that it's ready for use by UIA
+            ITextRangeProvider textRange = new TextRangeAdaptor(this, rangeStart, rangeEnd, _textPeer);
+            return TextRangeProviderWrapper.WrapArgument(textRange, _textPeer);
+        }
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------
@@ -369,7 +398,6 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not used be except for compatibility purposes
         /// </summary>
-        [SecuritySafeCritical]
         private Point ObsoleteClientToScreen(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
@@ -410,7 +438,6 @@ namespace MS.Internal.Automation
         /// There is a subtle bug in this version that manifests itself in High-DPI aware applications,
         /// and this version of the method should not be used except for compatibility purposes.
         /// </summary>
-        [SecuritySafeCritical]
         private Point ObsoleteScreenToClient(Point point, Visual visual)
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
@@ -470,7 +497,7 @@ namespace MS.Internal.Automation
             ITextRange selection = _textContainer.TextSelection;
             if (selection == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextProvider_TextSelectionNotSupported));
+                throw new InvalidOperationException(SR.TextProvider_TextSelectionNotSupported);
             }
             return new ITextRangeProvider[] { new TextRangeAdaptor(this, selection.Start, selection.End, _textPeer) };
         }
@@ -546,10 +573,7 @@ namespace MS.Internal.Automation
         /// <returns>A range that spans the child element.</returns>
         ITextRangeProvider ITextProvider.RangeFromChild(IRawElementProviderSimple childElementProvider)
         {
-            if (childElementProvider == null)
-            {
-                throw new ArgumentNullException("childElementProvider");
-            }
+            ArgumentNullException.ThrowIfNull(childElementProvider);
 
             // Retrieve DependencyObject from AutomationElement
             DependencyObject childElement;
@@ -624,7 +648,7 @@ namespace MS.Internal.Automation
             }
             if (range == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextProvider_InvalidChildElement));
+                throw new InvalidOperationException(SR.TextProvider_InvalidChildElement);
             }
             return range;
         }
@@ -653,7 +677,7 @@ namespace MS.Internal.Automation
             }
             if (range == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TextProvider_InvalidPoint));
+                throw new ArgumentException(SR.TextProvider_InvalidPoint);
             }
             return range;
         }

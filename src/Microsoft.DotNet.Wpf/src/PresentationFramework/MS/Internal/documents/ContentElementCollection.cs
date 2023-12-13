@@ -69,21 +69,18 @@ namespace MS.Internal.Documents
         /// <param name="index"><see cref="ICollection.CopyTo"/></param>
         public void CopyTo(Array array, int index)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionRankMultiDimNotSupported));
+                throw new ArgumentException(SR.TableCollectionRankMultiDimNotSupported);
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.TableCollectionOutOfRangeNeedNonNegNum));
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionInvalidOffLen));
+                throw new ArgumentException(SR.TableCollectionInvalidOffLen);
             }
 
             Array.Copy(Items, 0, array, index, Size);
@@ -108,17 +105,14 @@ namespace MS.Internal.Documents
         /// </remarks>
         public void CopyTo(TItem[] array, int index)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.TableCollectionOutOfRangeNeedNonNegNum));
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionInvalidOffLen));
+                throw new ArgumentException(SR.TableCollectionInvalidOffLen);
             }
 
             Array.Copy(Items, 0, array, index, Size);
@@ -327,7 +321,7 @@ namespace MS.Internal.Documents
             {
                 if (Version != _collection.Version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 
                 if (_index < (_collection.Size - 1))
@@ -352,11 +346,11 @@ namespace MS.Internal.Documents
                     {
                         if (_index == -1)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                            throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+                            throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
                     return (TItem)_currentElement;
@@ -379,7 +373,7 @@ namespace MS.Internal.Documents
             {
                 if (Version != _collection.Version)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorVersionChanged));
+                    throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
                 _currentElement = _collection;
                 _index = -1;
@@ -412,17 +406,14 @@ namespace MS.Internal.Documents
 
         int IList.Add(object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TItem item = value as TItem;
 
             // <CR NOTE>: This chunk is moved to the correcponding override in TableCollumnCollection, to keep same behavior
             //if (item == null)
             //{
-            //    throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+            //    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             //}
 
             this.Add(item);
@@ -461,16 +452,13 @@ namespace MS.Internal.Documents
 
         void IList.Insert(int index, object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             TItem newItem = value as TItem;
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             }
 
             this.Insert(index, newItem);
@@ -518,16 +506,13 @@ namespace MS.Internal.Documents
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 TItem item = value as TItem;
 
                 if (item == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
                 }
 
                 this[index] = item;
@@ -775,7 +760,7 @@ namespace MS.Internal.Documents
                 {
                     if (value < Size)
                     {
-                        throw new ArgumentOutOfRangeException(SR.Get(SRID.TableCollectionNotEnoughCapacity));
+                        throw new ArgumentOutOfRangeException(SR.TableCollectionNotEnoughCapacity);
                     }
 
                     if (value > 0)

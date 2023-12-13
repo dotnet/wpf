@@ -60,17 +60,9 @@ namespace System.Windows.Documents.MsSpellCheckLib
             /// <summary>
             /// Creates an instance of OptionDescription from a handle to IOptionDescription
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: Makes COM calls.
-            ///     Safe: Does not directly expose any unamanged resources to the caller. 
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             internal static OptionDescription Create(IOptionDescription optionDescription, bool shouldSuppressCOMExceptions = true, bool shouldReleaseCOMObject = true)
             {
-                if (optionDescription == null)
-                {
-                    throw new ArgumentNullException(nameof(optionDescription));
-                }
+                ArgumentNullException.ThrowIfNull(optionDescription);
 
                 var od = new OptionDescription(optionDescription.Id, optionDescription.Heading, optionDescription.Description);
 

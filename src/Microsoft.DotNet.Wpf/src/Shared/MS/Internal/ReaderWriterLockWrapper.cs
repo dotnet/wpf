@@ -17,7 +17,6 @@
 using System;
 using System.Runtime.ConstrainedExecution;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Threading;
 using MS.Internal.WindowsBase;
@@ -156,11 +155,6 @@ namespace MS.Internal
             CallWithNonPumpingWait(_exitReadAction);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into SynchronizationContext.SetSynchronizationContext which link demands
-        ///     Safe: Restores original SynchronizationContext
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void CallWithNonPumpingWait(Action callback)
         {
             SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
@@ -305,12 +299,7 @@ namespace MS.Internal
             /// <summary>
             ///     Wait for a set of handles.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - Calls WaitForMultipleObjectsEx which has a SUC.
-            /// </SecurityNote>
-            [SecurityCritical]
-            [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.ControlPolicy|SecurityPermissionFlag.ControlEvidence)]
-            [PrePrepareMethod]
+
             public override int Wait(IntPtr[] waitHandles, bool waitAll, int millisecondsTimeout)
             {
                 return MS.Win32.UnsafeNativeMethods.WaitForMultipleObjectsEx(waitHandles.Length, waitHandles, waitAll, millisecondsTimeout, false);

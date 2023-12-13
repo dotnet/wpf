@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Windows.Threading;
     using System.Threading;
     using System.Security;
-    using System.Security.Permissions;
     using System.IO;
     using MS.Win32;
     using System.Windows.Controls;
@@ -1680,11 +1679,6 @@ namespace System.Windows.Documents
         /// Check the installed bidi input language from the current
         /// input keyboard list.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to get the current available keyboard list.
-        /// TreatAsSafe - data exposed (user using bidi) is safe to release
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool IsBidiInputLanguageInstalled()
         {
             bool bidiInputLanguageInstalled;
@@ -2490,11 +2484,6 @@ namespace System.Windows.Documents
         /// Return true if the passed cultureInfo is the bi-directional language like as Arabic or Hebrew.
         /// Otherwise, return false.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to check the font signature
-        /// TreatAsSafe - data exposed (user using bidi) is safe to release
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool IsBidiInputLanguage(CultureInfo cultureInfo)
         {
             bool bidiInput;

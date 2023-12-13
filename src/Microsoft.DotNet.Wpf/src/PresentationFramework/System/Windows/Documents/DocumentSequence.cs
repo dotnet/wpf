@@ -69,10 +69,7 @@ namespace System.Windows.Documents
         /// </summary>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextContainer))
             {
@@ -105,10 +102,7 @@ namespace System.Windows.Documents
         ///</param>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
 //             Dispatcher.VerifyAccess();
 
@@ -116,7 +110,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
             }
 
             if (docRef.IsInitialized)
@@ -133,7 +127,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.PrevoiusUninitializedDocumentReferenceOutstanding));
+                    throw new InvalidOperationException(SR.PrevoiusUninitializedDocumentReferenceOutstanding);
                 }
             }
         }
@@ -256,7 +250,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -281,13 +275,10 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (document == null)
-            {
-                throw new ArgumentNullException("document");
-            }
+            ArgumentNullException.ThrowIfNull(document);
 
             DocumentPage innerDP = document.GetPage(fixedDocPageNumber);
             Debug.Assert(innerDP != null);
@@ -309,13 +300,10 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.Get(SRID.IDPNegativePageNumber));
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             // Add to outstanding AsyncOp list
             GetPageAsyncRequest asyncRequest = new GetPageAsyncRequest(new RequestedPage(pageNumber/*childPaginator, childPageNumber*/), userState);
@@ -329,10 +317,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal int GetPageNumber(ContentPosition contentPosition)
         {
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
 
             // ContentPosition may be only created by DynamicDocumentPaginator.GetObjectPosition or
             // DynamicDocumentPaginator.GetPagePosition.
@@ -350,7 +335,7 @@ namespace System.Windows.Documents
 
             if (childContentPosition == null)
             {
-                throw new ArgumentException(SR.Get(SRID.IDPInvalidContentPosition));
+                throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
 
             int childPageNumber = childPaginator.GetPageNumber(childContentPosition);
@@ -366,10 +351,7 @@ namespace System.Windows.Documents
         {
             DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
 
-            if (userState == null)
-            {
-                throw new ArgumentNullException("userState");
-            }
+            ArgumentNullException.ThrowIfNull(userState);
 
             if (_asyncOps.ContainsKey(userState))
             {
@@ -390,10 +372,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal ContentPosition GetObjectPosition(Object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             foreach (DocumentReference docRef in References)
             {
@@ -752,7 +731,7 @@ namespace System.Windows.Documents
             {
                 if (args.NewItems.Count != 1)
                 {
-                    throw new NotSupportedException(SR.Get(SRID.RangeActionsNotSupported));
+                    throw new NotSupportedException(SR.RangeActionsNotSupported);
                 }
                 else
                 {
@@ -766,7 +745,7 @@ namespace System.Windows.Documents
                     DynamicDocumentPaginator paginator = GetPaginator((DocumentReference)item);
                     if (paginator == null)
                     {
-                        throw new ApplicationException(SR.Get(SRID.DocumentReferenceHasInvalidDocument));
+                        throw new ApplicationException(SR.DocumentReferenceHasInvalidDocument);
                     }
 
                     int addedPages = paginator.PageCount;
@@ -782,7 +761,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                throw new NotSupportedException(SR.Get(SRID.UnexpectedCollectionChangeAction, args.Action));
+                throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, args.Action));
             }
         }
 
@@ -1110,10 +1089,7 @@ namespace System.Windows.Documents
         /// </param>
         object IServiceProvider.GetService(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextView))
             {

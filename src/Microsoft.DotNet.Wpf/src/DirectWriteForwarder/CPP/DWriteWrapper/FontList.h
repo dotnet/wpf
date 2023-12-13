@@ -26,7 +26,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// <summary>
     /// Represents a list of fonts.
     /// </summary>
-    [System::Security::SecurityCritical(System::Security::SecurityCriticalScope::Everything)] 
     private ref class FontList : System::Collections::Generic::IEnumerable<Font^>
     {
         private:

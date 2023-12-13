@@ -10,9 +10,7 @@ using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal
 {
@@ -781,13 +779,6 @@ namespace MS.Internal
         /// </summary>
         /// <param name="hr"></param>
         /// <ExternalAPI/>
-        /// <SecurityNote>
-        ///   Critical: This code calls into Marshal.GetExceptionForHR which has a link demand on it
-        ///   Safe: Throwing an exception is deemed as a safe operation (throwing exceptions is allowed in Partial Trust). 
-        ///         We ensure the call to GetExceptionForHR is safe since we pass an IntPtr that has a value of -1 so that 
-        ///         GetExceptionForHR ignores IErrorInfo of the current thread, which could reveal critical information otherwise.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static Exception ConvertHRToException(int hr)
         {
             Exception exceptionForHR = Marshal.GetExceptionForHR(hr, (IntPtr)(-1));
@@ -812,163 +803,163 @@ namespace MS.Internal
                         return new System.OutOfMemoryException();
 
                     case (int)WinCodecErrors.WINCODEC_ERR_WRONGSTATE:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_WrongState), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_WrongState, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_VALUEOUTOFRANGE:
                     case (int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW:
-                        return new System.OverflowException(SR.Get(SRID.Image_Overflow), exceptionForHR);
+                        return new System.OverflowException(SR.Image_Overflow, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNKNOWNIMAGEFORMAT:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_UnknownFormat), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_UnknownFormat, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDVERSION:
-                        return new System.IO.FileLoadException(SR.Get(SRID.MilErr_UnsupportedVersion), exceptionForHR);
+                        return new System.IO.FileLoadException(SR.MilErr_UnsupportedVersion, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_NOTINITIALIZED:
-                        return new System.InvalidOperationException(SR.Get(SRID.WIC_NotInitialized), exceptionForHR);
+                        return new System.InvalidOperationException(SR.WIC_NotInitialized, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND:
-                        return new System.ArgumentException(SR.Get(SRID.Image_PropertyNotFound), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_PropertyNotFound, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_PROPERTYNOTSUPPORTED:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_PropertyNotSupported), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_PropertyNotSupported, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_PROPERTYSIZE:
-                        return new System.ArgumentException(SR.Get(SRID.Image_PropertySize), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_PropertySize, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_CODECPRESENT:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_CodecPresent), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_CodecPresent, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_CODECNOTHUMBNAIL:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_NoThumbnail), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_NoThumbnail, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_PALETTEUNAVAILABLE:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_NoPalette), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_NoPalette, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_CODECTOOMANYSCANLINES:
-                        return new System.ArgumentException(SR.Get(SRID.Image_TooManyScanlines), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_TooManyScanlines, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_INTERNALERROR:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_InternalError), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_InternalError, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_SOURCERECTDOESNOTMATCHDIMENSIONS:
-                        return new System.ArgumentException(SR.Get(SRID.Image_BadDimensions), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_BadDimensions, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_COMPONENTINITIALIZEFAILURE:
                     case (int)WinCodecErrors.WINCODEC_ERR_COMPONENTNOTFOUND:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_ComponentNotFound), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_ComponentNotFound, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNEXPECTEDSIZE:
                     case (int)WinCodecErrors.WINCODEC_ERR_BADIMAGE:             // error decoding image file
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_DecoderError), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_DecoderError, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_BADHEADER:             // error decoding header
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_HeaderError), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_HeaderError, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_FRAMEMISSING:
-                        return new System.ArgumentException(SR.Get(SRID.Image_FrameMissing), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_FrameMissing, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_BADMETADATAHEADER:
-                        return new System.ArgumentException(SR.Get(SRID.Image_BadMetadataHeader), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_BadMetadataHeader, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_BADSTREAMDATA:
-                        return new System.ArgumentException(SR.Get(SRID.Image_BadStreamData), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_BadStreamData, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_STREAMWRITE:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_StreamWrite), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_StreamWrite, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_UnsupportedPixelFormat), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_UnsupportedPixelFormat, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_UnsupportedOperation), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_UnsupportedOperation, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_IMAGESIZEOUTOFRANGE:
-                        return new System.ArgumentException(SR.Get(SRID.Image_SizeOutOfRange), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_SizeOutOfRange, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_STREAMREAD:
-                        return new System.IO.IOException(SR.Get(SRID.Image_StreamRead), exceptionForHR);
+                        return new System.IO.IOException(SR.Image_StreamRead, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_INVALIDQUERYREQUEST:
-                        return new System.IO.IOException(SR.Get(SRID.Image_InvalidQueryRequest), exceptionForHR);
+                        return new System.IO.IOException(SR.Image_InvalidQueryRequest, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_UNEXPECTEDMETADATATYPE:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_UnexpectedMetadataType), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_UnexpectedMetadataType, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_REQUESTONLYVALIDATMETADATAROOT:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_RequestOnlyValidAtMetadataRoot), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_RequestOnlyValidAtMetadataRoot, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_INVALIDQUERYCHARACTER:
-                        return new System.IO.IOException(SR.Get(SRID.Image_InvalidQueryCharacter), exceptionForHR);
+                        return new System.IO.IOException(SR.Image_InvalidQueryCharacter, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_DUPLICATEMETADATAPRESENT:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_DuplicateMetadataPresent), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_DuplicateMetadataPresent, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_PROPERTYUNEXPECTEDTYPE:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_PropertyUnexpectedType), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_PropertyUnexpectedType, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_TOOMUCHMETADATA:
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_TooMuchMetadata), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_TooMuchMetadata, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_STREAMNOTAVAILABLE:
-                        return new System.NotSupportedException(SR.Get(SRID.Image_StreamNotAvailable), exceptionForHR);
+                        return new System.NotSupportedException(SR.Image_StreamNotAvailable, exceptionForHR);
 
                     case (int)WinCodecErrors.WINCODEC_ERR_INSUFFICIENTBUFFER:
-                        return new System.ArgumentException(SR.Get(SRID.Image_InsufficientBuffer), exceptionForHR);
+                        return new System.ArgumentException(SR.Image_InsufficientBuffer, exceptionForHR);
 
                     case unchecked((int)0x80070057):
-                        return new System.ArgumentException(SR.Get(SRID.Media_InvalidArgument, null), exceptionForHR);
+                        return new System.ArgumentException(SR.Format(SR.Media_InvalidArgument, null), exceptionForHR);
 
                     case unchecked((int)0x800707db):
-                        return new System.IO.FileFormatException(null, SR.Get(SRID.Image_InvalidColorContext), exceptionForHR);
+                        return new System.IO.FileFormatException(null, SR.Image_InvalidColorContext, exceptionForHR);
 
                     case (int)MILErrors.WGXERR_DISPLAYSTATEINVALID:
-                        return new System.InvalidOperationException(SR.Get(SRID.Image_DisplayStateInvalid), exceptionForHR);
+                        return new System.InvalidOperationException(SR.Image_DisplayStateInvalid, exceptionForHR);
 
                     case (int)MILErrors.WGXERR_NONINVERTIBLEMATRIX:
-                        return new System.ArithmeticException(SR.Get(SRID.Image_SingularMatrix), exceptionForHR);
+                        return new System.ArithmeticException(SR.Image_SingularMatrix, exceptionForHR);
 
                     case (int)MILErrors.WGXERR_AV_INVALIDWMPVERSION:
-                        return new System.Windows.Media.InvalidWmpVersionException(SR.Get(SRID.Media_InvalidWmpVersion, null), exceptionForHR);
+                        return new System.Windows.Media.InvalidWmpVersionException(SR.Format(SR.Media_InvalidWmpVersion, null), exceptionForHR);
 
                     case (int)MILErrors.WGXERR_AV_INSUFFICIENTVIDEORESOURCES:
-                        return new System.NotSupportedException(SR.Get(SRID.Media_InsufficientVideoResources, null), exceptionForHR);
+                        return new System.NotSupportedException(SR.Format(SR.Media_InsufficientVideoResources, null), exceptionForHR);
 
                     case (int)MILErrors.WGXERR_AV_VIDEOACCELERATIONNOTAVAILABLE:
-                        return new System.NotSupportedException(SR.Get(SRID.Media_HardwareVideoAccelerationNotAvailable, null), exceptionForHR);
+                        return new System.NotSupportedException(SR.Format(SR.Media_HardwareVideoAccelerationNotAvailable, null), exceptionForHR);
 
                     case (int)MILErrors.WGXERR_AV_MEDIAPLAYERCLOSED:
-                        return new System.NotSupportedException(SR.Get(SRID.Media_PlayerIsClosed, null), exceptionForHR);
+                        return new System.NotSupportedException(SR.Format(SR.Media_PlayerIsClosed, null), exceptionForHR);
 
                     case (int)MediaPlayerErrors.NS_E_WMP_URLDOWNLOADFAILED:
-                        return new System.IO.FileNotFoundException(SR.Get(SRID.Media_DownloadFailed, null), exceptionForHR);
+                        return new System.IO.FileNotFoundException(SR.Format(SR.Media_DownloadFailed, null), exceptionForHR);
 
                     case (int)MediaPlayerErrors.NS_E_WMP_LOGON_FAILURE:
-                        return new System.Security.SecurityException(SR.Get(SRID.Media_LogonFailure), exceptionForHR);
+                        return new System.Security.SecurityException(SR.Media_LogonFailure, exceptionForHR);
 
                     case (int)MediaPlayerErrors.NS_E_WMP_CANNOT_FIND_FILE:
-                        return new System.IO.FileNotFoundException(SR.Get(SRID.Media_FileNotFound), exceptionForHR);
+                        return new System.IO.FileNotFoundException(SR.Media_FileNotFound, exceptionForHR);
 
                     case (int)MediaPlayerErrors.NS_E_WMP_UNSUPPORTED_FORMAT:
                     case (int)MediaPlayerErrors.NS_E_WMP_DSHOW_UNSUPPORTED_FORMAT:
-                        return new System.IO.FileFormatException(SR.Get(SRID.Media_FileFormatNotSupported), exceptionForHR);
+                        return new System.IO.FileFormatException(SR.Media_FileFormatNotSupported, exceptionForHR);
 
                     case (int)MediaPlayerErrors.NS_E_WMP_INVALID_ASX:
-                        return new System.IO.FileFormatException(SR.Get(SRID.Media_PlaylistFormatNotSupported), exceptionForHR);
+                        return new System.IO.FileFormatException(SR.Media_PlaylistFormatNotSupported, exceptionForHR);
 
                     case (int)MILErrors.WGXERR_BADNUMBER:
-                        return new System.ArithmeticException(SR.Get(SRID.Geometry_BadNumber), exceptionForHR);
+                        return new System.ArithmeticException(SR.Geometry_BadNumber, exceptionForHR);
 
                     case (int)MILErrors.WGXERR_D3DI_INVALIDSURFACEUSAGE:
-                        return new System.ArgumentException(SR.Get(SRID.D3DImage_InvalidUsage), exceptionForHR);
+                        return new System.ArgumentException(SR.D3DImage_InvalidUsage, exceptionForHR);
                     case (int)MILErrors.WGXERR_D3DI_INVALIDSURFACESIZE:
-                        return new System.ArgumentException(SR.Get(SRID.D3DImage_SurfaceTooBig), exceptionForHR);
+                        return new System.ArgumentException(SR.D3DImage_SurfaceTooBig, exceptionForHR);
                     case (int)MILErrors.WGXERR_D3DI_INVALIDSURFACEPOOL:
-                        return new System.ArgumentException(SR.Get(SRID.D3DImage_InvalidPool), exceptionForHR);
+                        return new System.ArgumentException(SR.D3DImage_InvalidPool, exceptionForHR);
                     case (int)MILErrors.WGXERR_D3DI_INVALIDSURFACEDEVICE:
-                        return new System.ArgumentException(SR.Get(SRID.D3DImage_InvalidDevice), exceptionForHR);
+                        return new System.ArgumentException(SR.D3DImage_InvalidDevice, exceptionForHR);
                     case (int)MILErrors.WGXERR_D3DI_INVALIDANTIALIASINGSETTINGS:
-                        return new System.ArgumentException(SR.Get(SRID.D3DImage_AARequires9Ex), exceptionForHR);
+                        return new System.ArgumentException(SR.D3DImage_AARequires9Ex, exceptionForHR);
 
                     default:
                         return exceptionForHR;

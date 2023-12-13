@@ -12,7 +12,6 @@ namespace MS.Internal.ComponentModel
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Security.Permissions;
     using System.Windows;
     using System.Security;
     using MS.Internal.WindowsBase;
@@ -641,7 +640,7 @@ namespace MS.Internal.ComponentModel
                 // TypeDescriptor does find and use non-public methods.
                 if( !methodInfo.IsPublic )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.SpecialMethodMustBePublic, methodInfo.Name));
+                    throw new InvalidOperationException(SR.Format(SR.SpecialMethodMustBePublic, methodInfo.Name));
                 }
             }
 

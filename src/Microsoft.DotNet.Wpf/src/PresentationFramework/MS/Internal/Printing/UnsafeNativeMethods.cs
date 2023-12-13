@@ -5,7 +5,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationFramework;
 
@@ -13,11 +12,6 @@ namespace MS.Internal.Printing
 {
     internal static class UnsafeNativeMethods
     {
-        /// <SecurityNote>
-        ///     Critical: Because of suppression
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("comdlg32.dll", CharSet = CharSet.Auto)]
         internal
         static
@@ -27,11 +21,6 @@ namespace MS.Internal.Printing
             IntPtr pdex
             );
 
-        /// <SecurityNote>
-        ///     Critical: Because of suppression
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static
@@ -41,11 +30,6 @@ namespace MS.Internal.Printing
             IntPtr hMem
             );
 
-        /// <SecurityNote>
-        ///     Critical: Because of suppression
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static
@@ -55,11 +39,6 @@ namespace MS.Internal.Printing
             IntPtr hMem
             );
 
-        /// <SecurityNote>
-        ///     Critical: Because of suppression
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         internal
         static

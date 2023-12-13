@@ -192,10 +192,6 @@ namespace System.Windows.Documents
         /// <summary>
         /// This function serializes text segment formed by rangeStart and rangeEnd to valid xml using xmlWriter.
         /// </summary>
-        /// <SecurityNote>
-        /// To mask the security exception from XamlWriter.Save in partial trust case,
-        /// this function checks if the current call stack has the all clipboard permission.
-        /// </SecurityNote>
         private static void WriteXamlTextSegment(XmlWriter xmlWriter, ITextPointer rangeStart, ITextPointer rangeEnd, XamlTypeMapper xamlTypeMapper, ref int elementLevel, WpfPayload wpfPayload, bool ignoreWriteHyperlinkEnd, List<int> ignoreList, bool preserveTextElements)
         {
             // Special case for pure text selection - we need a Run wrapper for it.
@@ -1065,25 +1061,8 @@ namespace System.Windows.Documents
         /// <summary>
         /// Writes complex properties in form of child elements with compound names
         /// </summary>
-        /// <SecurityNote>
-        /// To mask the security exception from XamlWriter.Save in partial trust case,
-        /// this function checks if the current call stack has unmanaged code permission.
-        /// </SecurityNote>
         private static void WriteComplexProperties(XmlWriter xmlWriter, DependencyObject complexProperties, Type elementType)
         {
-            if (!SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                // In partial trust, we cannot serialize any complex properties because
-                // XamlWriter.Save demands UnmanagedCodePermission.
-                //
-                // If we're in PT, drop the properties.
-                //
-                // If you're here debugging a lost complex property, consider adding
-                // code to DPTypeDescriptorContext to convert the complex property
-                // into a non-complex property, or consider modifying XamlWriter.Save.
-                return;
-            }
-
             LocalValueEnumerator properties = complexProperties.GetLocalValueEnumerator();
 
             properties.Reset();

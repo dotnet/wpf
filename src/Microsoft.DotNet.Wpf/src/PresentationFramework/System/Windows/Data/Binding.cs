@@ -180,8 +180,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static XmlNamespaceManager GetXmlNamespaceManager(DependencyObject target)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
 
             return (XmlNamespaceManager)target.GetValue(XmlNamespaceManagerProperty);
         }
@@ -190,8 +189,7 @@ namespace System.Windows.Data
         /// <exception cref="ArgumentNullException"> DependencyObject target cannot be null </exception>
         public static void SetXmlNamespaceManager(DependencyObject target, XmlNamespaceManager value)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(XmlNamespaceManagerProperty, value);
         }
@@ -342,7 +340,7 @@ namespace System.Windows.Data
                         SourceReference = StaticSourceRef;
                     }
                     else
-                        throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.StaticSource, _sourceInUse));
+                        throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.StaticSource, _sourceInUse));
                 }
             }
         }
@@ -541,7 +539,7 @@ namespace System.Windows.Data
                     }
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.Source, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.Source, _sourceInUse));
             }
         }
 
@@ -575,7 +573,7 @@ namespace System.Windows.Data
                     SourceReference = (value != null) ? new RelativeObjectRef(value) : null;
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.RelativeSource, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.RelativeSource, _sourceInUse));
             }
         }
 
@@ -594,7 +592,7 @@ namespace System.Windows.Data
                     SourceReference = (value != null) ? new ElementObjectRef(value) : null;
                 }
                 else
-                    throw new InvalidOperationException(SR.Get(SRID.BindingConflict, SourceProperties.ElementName, _sourceInUse));
+                    throw new InvalidOperationException(SR.Format(SR.BindingConflict, SourceProperties.ElementName, _sourceInUse));
             }
         }
 
@@ -779,7 +777,7 @@ namespace System.Windows.Data
                 treeContextIsRequired = (_attachedPropertiesInPath > 0);
 
                 // namespace prefixes in the XPath need an XmlNamespaceManager
-                if (!treeContextIsRequired && HasValue(Feature.XPath) && XPath.IndexOf(':') >= 0)
+                if (!treeContextIsRequired && HasValue(Feature.XPath) && XPath.Contains(':'))
                 {
                     treeContextIsRequired = true;
                 }

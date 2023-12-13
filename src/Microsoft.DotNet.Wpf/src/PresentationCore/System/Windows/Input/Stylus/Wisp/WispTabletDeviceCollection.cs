@@ -10,11 +10,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -29,10 +27,6 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: Calls ShouldEnableTablets
-        /// </SecurityNote>
-        [SecurityCritical]
         internal WispTabletDeviceCollection()
         {
             WispLogic stylusLogic = StylusLogic.GetCurrentStylusLogicAs<WispLogic>();
@@ -60,14 +54,6 @@ namespace System.Windows.Input.StylusWisp
         /// Checks if Tablets should be enabled.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Calls SecurityCritical routines (IsWisptisRegistered,
-        ///                HasTabletDevices, UnsafeNativeMethods.GetSystemMetrics,
-        ///                PenThreadPool.GetPenThreadForPenContext, PenThread.WorkerGetTabletsInfo,
-        ///                TabletDevice constructor, StylusLogic.EnableCore and
-        ///                StylusLogic.CurrentStylusLogic).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static bool ShouldEnableTablets()
         {
             bool enabled = false;
@@ -94,12 +80,6 @@ namespace System.Windows.Input.StylusWisp
             return enabled;
         }
 
-        ///<SecurityNote>
-        /// Critical - Asserts read registry permission...
-        ///           - TreatAsSafe boundry is HwndSource constructor and Tablet.TabletDevices.
-        ///           - called by this objects constructor
-        ///</SecurityNote>
-        [SecurityCritical]
         private static bool IsWisptisRegistered()
         {
             bool fRegistered = false;
@@ -123,20 +103,11 @@ namespace System.Windows.Input.StylusWisp
                     "ITablet2" :
                     "wisptis.exe";
 
-            // Perform the OS specific check for wisptis
-            new RegistryPermission(RegistryPermissionAccess.Read, keyToAssertPermissionFor).Assert(); // BlessedAssert
-            try
-            {
-                key = Registry.ClassesRoot.OpenSubKey(subkeyToOpen);
+            key = Registry.ClassesRoot.OpenSubKey(subkeyToOpen);
 
-                if (key != null)
-                {
-                    valDefault = key.GetValue("");
-                }
-            }
-            finally
+            if (key != null)
             {
-                RegistryPermission.RevertAssert();
+                valDefault = key.GetValue("");
             }
 
             if (key != null)
@@ -152,12 +123,6 @@ namespace System.Windows.Input.StylusWisp
             return fRegistered;
         }
 
-        ///<SecurityNote>
-        /// Critical - Calls critical methods (GetRawInputDeviceList, GetRawInputDeviceInfo, Marshal.SizeOf).
-        ///           - TreatAsSafe boundry is HwndSource constructor and Tablet.TabletDevices.
-        ///           - called by constructor
-        ///</SecurityNote>
-        [SecurityCritical]
         private static bool HasTabletDevices()
         {
             uint deviceCount = 0;
@@ -214,12 +179,6 @@ namespace System.Windows.Input.StylusWisp
 
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code with SuppressUnmangedCode
-        ///                 (GetTabletCount, GetTablet, PimcPInvoke and PimcManager)
-        ///                 and calls SecurityCritical code TabletDevice constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateTablets()
         {
             if (_tablets == null)
@@ -297,12 +256,6 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code with SuppressUnmangedCode
-        ///                 (GetTabletCount, GetTablet, PimcPInvoke and PimcManager)
-        ///                 and calls SecurityCritical code TabletDevice constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         void UpdateTabletsImpl()
         {
             // REENTRANCY NOTE: Let a PenThread do this work to avoid reentrancy!
@@ -447,12 +400,6 @@ namespace System.Windows.Input.StylusWisp
 
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code with SuppressUnmangedCode
-        ///                 (GetTablet, PimcPInvoke and PimcManager)
-        ///                 and calls SecurityCritical code TabletDevice constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool HandleTabletAdded(uint wisptisIndex, ref uint tabletIndexChanged)
         {
             if (_tablets == null)
@@ -557,10 +504,6 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code RemoveTablet.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal uint HandleTabletRemoved(uint wisptisIndex)
         {
             if (_tablets == null)
@@ -599,10 +542,6 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         //  NOTE: This routine takes indexes that are in the TabletCollection range
         //        and not in the wisptis tablet index range.
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code TabletDevice constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         void AddTablet(uint index, TabletDevice tabletDevice)
         {
             Debug.Assert(index <= Count);
@@ -623,10 +562,6 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         //  NOTE: This routine takes indexes that are in the TabletCollection range
         //        and not in the wisptis tablet index range.
-        /// <SecurityNote>
-        ///     Critical: calls SecurityCritical code TabletDevice.DisposeOrDeferDisposal.
-        /// </SecurityNote>
-        [SecurityCritical]
         void RemoveTablet(uint index)
         {
             System.Diagnostics.Debug.Assert(index < Count && Count > 0);
@@ -657,12 +592,6 @@ namespace System.Windows.Input.StylusWisp
 
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code with SuppressUnmangedCode
-        ///                 (GetTablet, PimcPInvoke and PimcManager)
-        ///                 and calls SecurityCritical code TabletDevice constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal WispStylusDevice UpdateStylusDevices(int tabletId, int stylusId)
         {
             if (_tablets == null)
@@ -680,10 +609,6 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code TabletDevice.DisposeOrDeferDisposal.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void DisposeTablets()
         {
             if (_tablets != null)
@@ -715,10 +640,6 @@ namespace System.Windows.Input.StylusWisp
         /// Dispose of and remove any tablets that had previously been deferred and
         /// can now be disposed.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:  Calls into security critical code TabletDevice.DisposeOrDeferDisposal
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void DisposeDeferredTablets()
         {
             List<TabletDevice> tabletTemp = new List<TabletDevice>();
@@ -741,12 +662,6 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        ///     Critical:  - calls into security critical code (PenContext constructor
-        ///                   and PenContext.CreateContext)
-        ///                - takes in data that is potential security risk (hwnd)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PenContext[] CreateContexts(IntPtr hwnd, PenContexts contexts)
         {
             int c = Count + _deferredTablets.Count;
@@ -786,7 +701,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        TabletDevice[]          _tablets = new TabletDevice[0];
+        TabletDevice[]          _tablets = Array.Empty<TabletDevice>();
         uint                    _indexMouseTablet = UInt32.MaxValue;
         bool                    _inUpdateTablets;       // detect re-entrancy
         bool                    _hasUpdateTabletsBeenCalledReentrantly;

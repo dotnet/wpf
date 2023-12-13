@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>BamlAvoidXmlTest</AssemblyName>
+    <RootNamespace>BamlAvoidXmlTest</RootNamespace>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <StartupObject>BamlAvoidXmlTest.Entry</StartupObject>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+  </ItemGroup>
+
+</Project>

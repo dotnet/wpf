@@ -213,11 +213,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// the row number of the element.  This is zero based.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int Row
             {
                 get
@@ -229,11 +224,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// the column number of the element.  This is zero based.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int Column
             {
                 get
@@ -246,11 +236,6 @@ namespace System.Windows.Automation
             /// count of how many rows the element spans
             /// -- non merged cells should always return 1
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int RowSpan
             {
                 get
@@ -263,11 +248,6 @@ namespace System.Windows.Automation
             /// count of how many columns the element spans
             /// -- non merged cells should always return 1
             ///</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int ColumnSpan
             {
                 get
@@ -279,11 +259,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// The logical element that supports the GripPattern for this Item
             ///</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public AutomationElement ContainingGrid
             {
                 get

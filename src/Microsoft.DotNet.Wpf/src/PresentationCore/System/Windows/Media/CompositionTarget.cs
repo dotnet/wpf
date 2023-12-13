@@ -19,24 +19,18 @@ using System.Windows.Media.Animation;
 using System.Windows.Automation.Provider;
 using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Security;
 using MS.Internal;
 using MS.Win32;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
     /// <summary>
     ///
     /// </summary>
-    /// <SecurityNote>
-    /// CompositionTarget subclassing is not allowed in Partial Trust - Demands UIPermissionWindow.AllWindows for inheritance
-    /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand,Window=UIPermissionWindow.AllWindows)]
     public abstract class CompositionTarget : DispatcherObject, IDisposable, ICompositionTarget
     {
         //
@@ -175,22 +169,14 @@ namespace System.Windows.Media
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code sets a rootvisual which is risky to do because
-        ///     it can destabilize assumptions made in popup code
-        ///     PublicOK: The getter is safe and the setter has a link demand and is critical
-        /// </SecurityNote>
         public virtual Visual RootVisual
         {
-            [SecurityCritical]
             get
             {
                 VerifyAPIReadOnly();
                 return (_rootVisual.Value);
             }
 
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
-            [SecurityCritical]
             set
             {
                 VerifyAPIReadWrite();
@@ -426,11 +412,6 @@ namespace System.Windows.Media
         /// <summary>
         /// The compile method transforms the Visual Scene Graph into the Composition Scene Graph.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access critical resources (handles)
-        /// TreatAsSafe - safe to compile the visual at anytime
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Compile(DUCE.Channel channel)
         {
             MediaContext mctx = MediaContext.From(Dispatcher);
@@ -488,11 +469,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="visual">Root visual, can be null, but can not be a child of another
         /// Visual.</param>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access critical resources
-        /// TreatAsSafe - safe to reparent a visual
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetRootVisual(Visual visual)
         {
             // We need to make this function robust by leaving the
@@ -505,7 +481,7 @@ namespace System.Windows.Media
                 // If a Visual has already a parent it can not be the root in a CompositionTarget because
                 // otherwise we would have two CompositionTargets party on the same Visual tree.
                 // If want to allow this we need to explicitly add support for this.
-                throw new System.ArgumentException(SR.Get(SRID.CompositionTarget_RootVisual_HasParent));
+                throw new System.ArgumentException(SR.CompositionTarget_RootVisual_HasParent);
             }
 
             DUCE.ChannelSet channelSet = MediaContext.From(Dispatcher).GetChannels();

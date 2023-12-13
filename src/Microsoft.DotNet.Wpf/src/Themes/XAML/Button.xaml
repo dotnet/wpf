@@ -1,0 +1,707 @@
+<!--=================================================================
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+
+<Style x:Key="ButtonFocusVisual">
+    <Setter Property="Control.Template">
+        <Setter.Value>
+            <ControlTemplate>
+                <Rectangle Margin="2"
+                           StrokeThickness="1"
+                           Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                           StrokeDashArray="1 2"
+                           SnapsToDevicePixels="true"/>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+<Style x:Key="ButtonFocusVisual">
+    <Setter Property="Control.Template">
+        <Setter.Value>
+            <ControlTemplate>
+                <Rectangle Margin="3"
+                           StrokeThickness="1"
+                           Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                           StrokeDashArray="1 2"
+                           SnapsToDevicePixels="true"/>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Classic]] -->
+
+<Style x:Key="ButtonFocusVisual">
+    <Setter Property="Control.Template">
+        <Setter.Value>
+            <ControlTemplate>
+                <Border>
+                    <Rectangle Margin="4"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Aero.NormalColor]] -->
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<!-- Normal -->
+<LinearGradientBrush x:Key="ButtonNormalBackground"
+                     StartPoint="0,0"
+                     EndPoint="0,1">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#F3F3F3"
+                      Offset="0"/>
+        <GradientStop Color="#EBEBEB"
+                      Offset="0.5"/>
+        <GradientStop Color="#DDDDDD"
+                      Offset="0.5"/>
+        <GradientStop Color="#CDCDCD"
+                      Offset="1"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+<SolidColorBrush x:Key="ButtonNormalBorder"
+                 Color="#FF707070"/>
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{StaticResource ButtonNormalBackground}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource ButtonNormalBorder}"/>
+    <Setter Property="BorderThickness"
+            Value="1"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Padding"
+            Value="1"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome Name="Chrome"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="#ADADAD"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Classic]] -->
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="BorderBrush"
+            Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+    <Setter Property="BorderThickness"
+            Value="3"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Padding"
+            Value="0,0,1,1"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ClassicBorderDecorator x:Name="ContentContainer"
+                                              BorderStyle="Raised"
+                                              Background="{TemplateBinding Background}"
+                                              BorderThickness="3"
+                                              BorderBrush="{TemplateBinding BorderBrush}"
+                                              SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ClassicBorderDecorator>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter Property="BorderStyle"
+                                Value="RaisedFocused"
+                                TargetName="ContentContainer"/>
+                    </Trigger>
+                    <Trigger Property="Button.IsDefaulted"
+                             Value="true">
+                        <Setter Property="BorderStyle"
+                                Value="RaisedFocused"
+                                TargetName="ContentContainer"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed"
+                             Value="true">
+                        <Setter Property="BorderStyle"
+                                Value="RaisedPressed"
+                                TargetName="ContentContainer"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter Property="BorderStyle"
+                                Value="RaisedPressed"
+                                TargetName="ContentContainer"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                        </MultiDataTrigger.Conditions>
+                        <!-- DDVSO:437426
+                               When in high contrast and the button is disabled, set the BorderBrush to Foreground in order to match
+                               Win32 button behavior. -->
+                        <Setter Property="BorderBrush" Value="{Binding Path=Foreground, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
+                        </MultiDataTrigger.Conditions>
+                        <!-- DDVSO:437425
+                                 When in high contrast and we have KB focus, set the appropriate fore/background colors to match
+                                 Win32 button behavior. -->
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+
+<!-- [[AeroLite.NormalColor]] -->
+
+<!-- Color Resources -->
+<SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
+<SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
+<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
+<SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
+<SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
+<SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
+<SolidColorBrush x:Key="Button.Checked.Background" Color="#FFBCDDEE" />
+<SolidColorBrush x:Key="Button.Checked.Border" Color="#FF245A83" />
+<SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
+<SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
+<SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
+
+<!-- Button -->
+<Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+    <Setter Property="Background" Value="{StaticResource Button.Static.Background}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="1"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <Border x:Name="border"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    SnapsToDevicePixels="true">
+                    <ContentPresenter x:Name="contentPresenter"
+                        RecognizesAccessKey="True"
+                        Margin="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Focusable="False">
+                    </ContentPresenter>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Button.IsDefaulted" Value="true">
+                        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Background" Value="{StaticResource Button.MouseOver.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="true">
+                        <Setter Property="Background" Value="{StaticResource Button.Pressed.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked" Value="true" >
+                        <Setter Property="Background" Value="{StaticResource Button.Checked.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Checked.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Background" Value="{StaticResource Button.Disabled.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" TargetName="border" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Aero2.NormalColor]] -->
+
+<!-- Color Resources -->
+<SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
+<SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
+<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
+<SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
+<SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
+<SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
+<SolidColorBrush x:Key="Button.Checked.Background" Color="#FFBCDDEE" />
+<SolidColorBrush x:Key="Button.Checked.Border" Color="#FF245A83" />
+<SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
+<SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
+<SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
+
+<!-- Button -->
+<Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+    <Setter Property="Background" Value="{StaticResource Button.Static.Background}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="1"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <Border x:Name="border"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    SnapsToDevicePixels="true">
+                    <ContentPresenter x:Name="contentPresenter"
+                        RecognizesAccessKey="True"
+                        Margin="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Focusable="False">
+                    </ContentPresenter>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Button.IsDefaulted" Value="true">
+                        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Background" Value="{StaticResource Button.MouseOver.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="true">
+                        <Setter Property="Background" Value="{StaticResource Button.Pressed.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked" Value="true" >
+                        <Setter Property="Background" Value="{StaticResource Button.Checked.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Checked.Border}" TargetName="border" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Background" Value="{StaticResource Button.Disabled.Background}" TargetName="border" />
+                        <Setter Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" TargetName="border" />
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Luna.Homestead]] -->
+
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<LinearGradientBrush x:Key="ButtonNormalBackgroundFill"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#FFFFFFFF"
+                      Offset="0"/>
+        <GradientStop Color="#FFF3EEDB"
+                      Offset="0.9"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+<SolidColorBrush x:Key="ButtonBorder"
+                 Color="#FF376206"/>
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{StaticResource ButtonNormalBackgroundFill}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource ButtonBorder}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome x:Name="Chrome"
+                                    ThemeColor="Homestead"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Fill="{TemplateBinding Background}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Luna.Metallic]] -->
+
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<LinearGradientBrush x:Key="ButtonNormalBackgroundFill"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="White"
+                      Offset="0"/>
+        <GradientStop Color="#FFE3E5F0"
+                      Offset="0.5"/>
+        <GradientStop Color="#FFC6C5D7"
+                      Offset="1.0"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+<SolidColorBrush x:Key="ButtonBorder"
+                 Color="#FF003C74"/>
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{StaticResource ButtonNormalBackgroundFill}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource ButtonBorder}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome x:Name="Chrome"
+                                    ThemeColor="Metallic"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Fill="{TemplateBinding Background}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Luna.NormalColor]] -->
+
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<LinearGradientBrush x:Key="ButtonNormalBackgroundFill"
+                    EndPoint="0.5,1"
+                    StartPoint="0.5,0">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#FFFFFFFF"
+                      Offset="0"/>
+        <GradientStop Color="#FFF0F0EA"
+                      Offset="0.9"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+
+<SolidColorBrush x:Key="ButtonBorder"
+             Color="#FF003C74"/>
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{StaticResource ButtonNormalBackgroundFill}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource ButtonBorder}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome x:Name="Chrome"
+                                    ThemeColor="NormalColor"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Fill="{TemplateBinding Background}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Royale.NormalColor]] -->
+
+
+<!--=================================================================
+        Button
+    ==================================================================-->
+<LinearGradientBrush x:Key="ButtonNormalBackgroundFill"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+    <LinearGradientBrush.GradientStops>
+        <GradientStop Color="#FFFFFFFF"
+                      Offset="0"/>
+        <GradientStop Color="#FFE3EBF3"
+                      Offset="0.5"/>
+        <GradientStop Color="#FFD0DCEB"
+                      Offset="0.5"/>
+        <GradientStop Color="#FFA6B8CF"
+                      Offset="1"/>
+    </LinearGradientBrush.GradientStops>
+</LinearGradientBrush>
+
+<SolidColorBrush x:Key="ButtonBorder"
+                 Color="#FF2B4F82"/>
+
+<Style x:Key="BaseButtonStyle"
+       TargetType="{x:Type ButtonBase}">
+    <Setter Property="FocusVisualStyle"
+            Value="{StaticResource ButtonFocusVisual}"/>
+    <Setter Property="Background"
+            Value="{StaticResource ButtonNormalBackgroundFill}"/>
+    <Setter Property="BorderBrush"
+            Value="{StaticResource ButtonBorder}"/>
+    <Setter Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center"/>
+    <Setter Property="VerticalContentAlignment"
+            Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <theme:ButtonChrome x:Name="Chrome"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Fill="{TemplateBinding Background}"
+                                    RenderDefaulted="{TemplateBinding Button.IsDefaulted}"
+                                    RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                    RenderPressed="{TemplateBinding IsPressed}"
+                                    SnapsToDevicePixels="true">
+                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </theme:ButtonChrome>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocused"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderDefaulted"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked"
+                             Value="true">
+                        <Setter TargetName="Chrome"
+                                Property="RenderPressed"
+                                Value="true"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, AeroLite.NormalColor, Classic, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+<Style x:Key="{x:Type ToggleButton}"
+       BasedOn="{StaticResource BaseButtonStyle}"
+       TargetType="{x:Type ToggleButton}">
+    <Style.Triggers>
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
+                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="false"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+        </MultiDataTrigger>
+        <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}" Value="true"/>
+                <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
+            </MultiDataTrigger.Conditions>
+            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+        </MultiDataTrigger>
+    </Style.Triggers>
+</Style>
+
+<Style x:Key="{x:Type RepeatButton}"
+       BasedOn="{StaticResource BaseButtonStyle}"
+       TargetType="{x:Type RepeatButton}">
+    <Setter Property="Stylus.IsPressAndHoldEnabled"
+            Value="false"/>
+</Style>
+
+<Style x:Key="{x:Type Button}"
+       BasedOn="{StaticResource BaseButtonStyle}"
+       TargetType="{x:Type Button}"/>

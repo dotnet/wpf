@@ -19,7 +19,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 using MS.Utility;
 
@@ -718,7 +717,7 @@ namespace MS.Internal.Media
 
             if (packedByte >= 16)
             {
-                throw new ArgumentException(SR.Get(SRID.UnknownPathOperationType));
+                throw new ArgumentException(SR.UnknownPathOperationType);
             }
 
             if (bool1)

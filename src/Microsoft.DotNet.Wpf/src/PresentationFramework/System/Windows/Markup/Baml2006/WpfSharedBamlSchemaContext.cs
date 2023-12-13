@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,11 +28,6 @@ namespace System.Windows.Baml2006
         public const Int16 XamlVector3DCollectionSerializer = 752;
     }
 
-    /// <SecurityNote>
-    /// This schema context is shared between all the WPF BAML loads in an AppDomain, including both 
-    /// full and partial trust callers. To be safe for sharing, it must be idempotent and order-independent.
-    /// See the SecurityNote on XamlSchemaContext for more details.
-    /// </SecurityNote>
     partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
         object _syncObject;
@@ -91,7 +86,7 @@ namespace System.Windows.Baml2006
         {
             if (assemblyId > 0)
             {
-                throw new ArgumentException(SR.Get(SRID.AssemblyIdNegative));
+                throw new ArgumentException(SR.AssemblyIdNegative);
             }
             assemblyId = (short)-assemblyId;
 
@@ -130,7 +125,7 @@ namespace System.Windows.Baml2006
 
             if (typeId >= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.KnownTypeIdNegative));
+                throw new ArgumentException(SR.KnownTypeIdNegative);
             }
 
             typeId = (short)-typeId;
@@ -159,7 +154,7 @@ namespace System.Windows.Baml2006
 
             if (memberId >= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.KnownTypeIdNegative));
+                throw new ArgumentException(SR.KnownTypeIdNegative);
             }
 
             memberId = (short)-memberId;
@@ -185,10 +180,7 @@ namespace System.Windows.Baml2006
         //
         public override XamlType GetXamlType(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             XamlType xamlType = GetKnownXamlType(type);
             if (xamlType == null)

@@ -14,7 +14,7 @@ using System.Collections;           // Hashtable
 using System.Collections.Generic;   // List<T>
 using System.Collections.Specialized; // HybridDictionary
 using System.Runtime.CompilerServices;  // RuntimeHelpers
-using System.Security;              // [SecurityCritical,SecurityTreatAsSafe]
+using System.Security;              // 
 using System.Threading;             // [ThreadStatic]
 using System.Windows;               // WeakEventManager
 using System.Windows.Threading;     // DispatcherObject

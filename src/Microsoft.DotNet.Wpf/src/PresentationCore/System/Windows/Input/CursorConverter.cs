@@ -113,7 +113,7 @@ namespace System.Windows.Input
 
                 if (text != String.Empty)
                 {
-                    if (text.LastIndexOf(".", StringComparison.Ordinal) == -1)
+                    if (text.LastIndexOf('.') == -1)
                     {
                         CursorType ct = (CursorType)Enum.Parse(typeof(CursorType), text);
 
@@ -217,13 +217,10 @@ namespace System.Windows.Input
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            
-	        // If value is not a Cursor or null, it will throw GetConvertToException.
-            if(destinationType == typeof(string))
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            // If value is not a Cursor or null, it will throw GetConvertToException.
+            if (destinationType == typeof(string))
             {
                 Cursor cursor = value as Cursor;
                 if (cursor != null)

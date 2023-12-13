@@ -45,15 +45,12 @@ namespace System.Windows
         /// </returns>
         public static DependencyObjectType FromSystemType(Type systemType)
         {
-            if (systemType == null)
-            {
-                throw new ArgumentNullException("systemType");
-            }
+            ArgumentNullException.ThrowIfNull(systemType);
 
             if (!typeof(DependencyObject).IsAssignableFrom(systemType))
             {
                 #pragma warning suppress 6506 // systemType is obviously not null
-                throw new ArgumentException(SR.Get(SRID.DTypeNotSupportForSystemType, systemType.Name));
+                throw new ArgumentException(SR.Format(SR.DTypeNotSupportForSystemType, systemType.Name));
             }
 
             return FromSystemTypeInternal(systemType);
@@ -231,7 +228,7 @@ namespace System.Windows
         // Synchronized: Covered by DispatcherLock
         private static int DTypeCount = 0;
 
-        private static object _lock = new object();
+        private static readonly object _lock = new object();
     }
 }
 

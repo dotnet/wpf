@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("ED90C8AD-5C34-4D05-A1EC-0E8A9B3AD7AF"), TypeLibType(TypeLibTypeFlags.FDual | TypeLibTypeFlags.FNonExtensible | TypeLibTypeFlags.FDispatchable)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IPrintDocumentPackageStatusEvent
     {
         [DispId(1)]

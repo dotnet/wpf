@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -291,11 +290,8 @@ namespace System.Windows.Xps.Serialization
         TypePropertyCache(
             PropertyInfo propertyInfo
             )
-        {  
-            if(propertyInfo == null)
-            {
-                throw new ArgumentNullException("propertyInfo");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(propertyInfo);
             this.propertyInfo                   = propertyInfo;
             this.visibility                     = DesignerSerializationVisibility.Visible;
             this.serializerTypeForProperty      = null;
@@ -314,11 +310,8 @@ namespace System.Windows.Xps.Serialization
             DefaultValueAttribute                   defaultValueAttr,
             DesignerSerializationOptionsAttribute     designerSerializationFlagsAttr
             )
-        {  
-            if(propertyInfo == null)
-            {
-                throw new ArgumentNullException("propertyInfo");
-            }
+        {
+            ArgumentNullException.ThrowIfNull(propertyInfo);
             this.propertyInfo                   = propertyInfo;
             this.visibility                     = visibility;
             this.serializerTypeForProperty      = serializerTypeForProperty;

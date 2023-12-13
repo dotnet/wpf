@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,11 +9,6 @@ using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
 {
-    /// <SecurityNote>
-    /// This class makes the assumption that any internal ShouldSerialize methods in System.Xaml are safe
-    /// for public invocation. If this becomes untrue, then ShouldSerializeValue needs an IsSystemXamlNonPublic
-    /// check, just like GetValue and SetValue have.
-    /// </SecurityNote>
     public class XamlMemberInvoker
     {
         private static XamlMemberInvoker s_Directive;
@@ -56,63 +51,39 @@ namespace System.Xaml.Schema
 
         public virtual object GetValue(object instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
             if (UnderlyingGetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantGetWriteonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
-            return GetValueSafeCritical(instance);
-        }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        private object GetValueSafeCritical(object instance)
-        {
             if (UnderlyingGetter.IsStatic)
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, null, new object[] { instance });
+                return UnderlyingGetter.Invoke(null, new object[] { instance });
             }
             else
             {
-                return SafeReflectionInvoker.InvokeMethod(UnderlyingGetter, instance, s_emptyObjectArray);
+                return UnderlyingGetter.Invoke(instance, s_emptyObjectArray);
             }
         }
 
         public virtual void SetValue(object instance, object value)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
             if (UnderlyingSetter == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.CantSetReadonlyProperty, _member));
+                throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
-            SetValueSafeCritical(instance, value);
-        }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        private void SetValueSafeCritical(object instance, object value)
-        {
             if (UnderlyingSetter.IsStatic)
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, null, new object[] { instance, value });
+                UnderlyingSetter.Invoke(null, new object[] { instance, value });
             }
             else
             {
-                SafeReflectionInvoker.InvokeMethod(UnderlyingSetter, instance, new object[] { value });
+                UnderlyingSetter.Invoke(instance, new object[] { value });
             }
         }
 
@@ -175,15 +146,6 @@ namespace System.Xaml.Schema
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Sets critical fields _getterIsSystemXamlNonPublic and _setterIsSystemXamlNonPublic
-        /// Safe: Gets the result from SafeCritical method SafeReflectionInvoker.IsSystemXamlNonPublic.
-        ///       The MethodInfo we're checking is exactly the one we're invoking, so even if the
-        ///       MethodInfo lies about its visibility, there is no harm.
-        /// Note: The [SecurityCritical] attribute isn't functionally necessary but flags the
-        ///       method as security critical and changes should be reviewed.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
             ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
@@ -206,7 +168,7 @@ namespace System.Xaml.Schema
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownMember));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownMember);
             }
         }
 
@@ -214,12 +176,12 @@ namespace System.Xaml.Schema
         {
             public override object GetValue(object instance)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
 
             public override void SetValue(object instance, object value)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnDirective));
+                throw new NotSupportedException(SR.NotSupportedOnDirective);
             }
         }
     }

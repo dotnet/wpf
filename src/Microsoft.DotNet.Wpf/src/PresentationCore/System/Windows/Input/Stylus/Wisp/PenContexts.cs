@@ -17,13 +17,11 @@ using MS.Internal;
 using MS.Win32;
 using MS.Utility;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
@@ -35,18 +33,12 @@ namespace System.Windows.Input
     {
         /////////////////////////////////////////////////////////////////////////
 
-        ///<SecurityNote>
-        ///     Critical - InputManager ctor is critical, ergo this is critical data.
-        ///                 Called by Stylus.RegisterHwndForInput.
-        ///                 TreatAsSafe boundary is Stylus.RegisterHwndForInput called when a window is created.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal PenContexts(WispLogic stylusLogic, PresentationSource inputSource)
         {
             HwndSource hwndSource = inputSource as HwndSource;
             if(hwndSource == null || IntPtr.Zero == (hwndSource).CriticalHandle)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Stylus_PenContextFailure));
+                throw new InvalidOperationException(SR.Stylus_PenContextFailure);
             }
 
             _stylusLogic  = stylusLogic;
@@ -55,15 +47,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////////
 
-        ///<SecurityNote>
-        /// Critical - Calls SecurityCritical code (TabletDevices.CreateContexts and PenContext.Enable) and accesses
-        ///            SecurityCritical data (_inputSource.Value and _contexts).
-        ///             Called by Stylus.EnableCore, Stylus.RegisterHwndForInput, Stylus.OnScreenMeasurementsChanged.
-        ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
-        ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage when
-        ///                a WM_DISPLAYCHANGE is processed by HwndStylusInputProvider).
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void Enable()
         {
             if (_contexts == null)
@@ -78,13 +61,6 @@ namespace System.Windows.Input
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - Accesses SecurityCritical data (_contexts).
-        ///             Called by Stylus.UnregisterHwndForInput and Dispose.
-        ///             TreatAsSafe boundry is Stylus.UnregisterHwndForInput
-        ///                and HwndStylusInputProvider.Dispose(bool).
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void Disable(bool shutdownWorkerThread)
         {
             if (_contexts != null)
@@ -112,12 +88,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePenDown.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnPenDown(PenContext penContext, int tabletDeviceId, int stylusPointerId, int[] data, int timestamp)
         {
             ProcessInput(RawStylusActions.Down, penContext, tabletDeviceId, stylusPointerId, data, timestamp);
@@ -125,12 +95,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePenUp.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnPenUp(PenContext penContext, int tabletDeviceId, int stylusPointerId, int[] data, int timestamp)
         {
             ProcessInput(RawStylusActions.Up, penContext, tabletDeviceId, stylusPointerId, data, timestamp);
@@ -138,12 +102,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePackets.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnPackets(PenContext penContext, int tabletDeviceId, int stylusPointerId, int[] data, int timestamp)
         {
             ProcessInput(RawStylusActions.Move, penContext, tabletDeviceId, stylusPointerId, data, timestamp);
@@ -151,12 +109,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePackets.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnInAirPackets(PenContext penContext, int tabletDeviceId, int stylusPointerId, int[] data, int timestamp)
         {
             ProcessInput(RawStylusActions.InAirMove, penContext, tabletDeviceId, stylusPointerId, data, timestamp);
@@ -164,12 +116,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePenInRange.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnPenInRange(PenContext penContext, int tabletDeviceId, int stylusPointerId, int[] data, int timestamp)
         {
             ProcessInput(RawStylusActions.InRange, penContext, tabletDeviceId, stylusPointerId, data, timestamp);
@@ -177,27 +123,14 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code ProcessInput.
-        ///             Called by PenContext.FirePenOutOfRange.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnPenOutOfRange(PenContext penContext, int tabletDeviceId, int stylusPointerId, int timestamp)
         {
-            ProcessInput(RawStylusActions.OutOfRange, penContext, tabletDeviceId, stylusPointerId, new int[]{}, timestamp);
+            ProcessInput(RawStylusActions.OutOfRange, penContext, tabletDeviceId, stylusPointerId, Array.Empty<int>(), timestamp);
         }
 
         /////////////////////////////////////////////////////////////////////
 
 
-        ///<SecurityNote>
-        ///     Critical: Uses critical data _inputSource and calls SecurityCritical code
-        ///               StylusLogic.ProcessSystemEvent.
-        ///             Called by PenContext.FireSystemGesture.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void OnSystemEvent(PenContext penContext, 
                                            int tabletDeviceId, 
                                            int stylusPointerId, 
@@ -220,13 +153,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        ///<SecurityNote>
-        ///     Critical: Uses critical data _inputSource and calls SecurityCritical
-        ///             code StylusLogic.ProcessInput.
-        ///             Called by OnPenDown, OnPenUp, OnPackets, OnInAirPackets, OnPenInRange and OnPenOutOfRange.
-        ///             TreatAsSafe boundary is PenThread.ThreadProc.
-        ///</SecurityNote>
-        [SecurityCritical]
         void ProcessInput(
             RawStylusActions actions,
             PenContext penContext,
@@ -247,11 +173,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        ///     Critical since it accesses SecurityCritical data _contexts and
-        ///     returns SecurityCritical data PenContext.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PenContext GetTabletDeviceIDPenContext(int tabletDeviceId)
         {
             if (_contexts != null)
@@ -268,10 +189,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        ///     Critical since it accesses SecurityCritical data _contexts.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool ConsiderInRange(int timestamp)
         {
             if (_contexts != null)
@@ -303,13 +220,6 @@ namespace System.Windows.Input
         /// This method adds the specified pen context index in response
         /// to the WM_TABLET_ADDED notification
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - Calls SecurityCritical code (Disable and TabletDevice.CreateContext)
-        ///                and accesses SecurityCritical data (_contexts).
-        ///             Called by Stylus.OnTabletAdded.
-        ///             TreatAsSafe boundary is HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void AddContext(uint index)
         {
             // We only tear down the old context when PenContexts are enabled without being
@@ -335,13 +245,6 @@ namespace System.Windows.Input
         /// This method removes the specified pen context index in response
         /// to the WM_TABLET_REMOVED notification
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - Calls SecurityCritical code (Disable and PenContext constructor) and 
-        ///                accesses SecurityCritical data (_contexts).
-        ///             Called by Stylus.OnTabletRemoved.
-        ///             TreatAsSafe boundary is HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void RemoveContext(uint index)
         {
             // We only tear down the old context when PenContexts are enabled without being
@@ -445,13 +348,6 @@ namespace System.Windows.Input
             return i; // this wasn't higher so return last index.
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls into security critical code TargetPlugInCollection.
-        ///             Called by StylusLogic.CallPluginsForMouse.
-        ///             TreatAsSafe boundary is mainly PenThread.ThreadProc and HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
-        /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection InvokeStylusPluginCollectionForMouse(RawStylusInputReport inputReport, IInputElement directlyOver, StylusPlugInCollection currentPlugInCollection)
         {
             StylusPlugInCollection newPlugInCollection = null;
@@ -512,13 +408,6 @@ namespace System.Windows.Input
             return newPlugInCollection;
         }
         
-        /// <SecurityNote>
-        /// Critical - Calls into security critical code TargetPlugInCollection.
-        ///             Called by StylusLogic.InvokeStylusPluginCollection.
-        ///             TreatAsSafe boundary is mainly PenThread.ThreadProc and HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             // Find PenContexts object for this inputReport.
@@ -550,7 +439,7 @@ namespace System.Windows.Input
                 {
                     // Create new RawStylusInput to send
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(currentPic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze(); // Must be frozen for multi-threaded access.
                     
@@ -569,7 +458,7 @@ namespace System.Windows.Input
                     //    The transformTabletToView matrix and plugincollection rects though can change based 
                     //    off of layout events which is why we need to lock this.
                     GeneralTransformGroup transformTabletToView = new GeneralTransformGroup();
-                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
+                    transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(pic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
                     
@@ -591,13 +480,6 @@ namespace System.Windows.Input
             } // lock(__rtiLock)
         }
         
-        /// <SecurityNote>
-        /// Critical - InputReport.InputSource has a LinkDemand so we need to be SecurityCritical.
-        ///             Called by InvokeStylusPluginCollection.
-        ///             TreatAsSafe boundary is mainly PenThread.ThreadProc and HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        ///                 It can also be called via anyone with priviledge to call InputManager.ProcessInput().
-        /// </SecurityNote>
-        [SecurityCritical]
         internal StylusPlugInCollection TargetPlugInCollection(RawStylusInputReport inputReport)
         {
             // Caller must make call to this routine inside of lock(__rtiLock)!
@@ -629,7 +511,7 @@ namespace System.Windows.Input
                 ptTablet = ptTablet * stylusDevice.TabletDevice.TabletDeviceImpl.TabletToScreen;
                 ptTablet.X = (int)Math.Round(ptTablet.X); // Make sure we snap to whole window pixels.
                 ptTablet.Y = (int)Math.Round(ptTablet.Y);
-                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(ptTablet); // change to measured units now.
+                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(stylusDevice.CriticalActiveSource, ptTablet); // change to measured units now.
 
                 pic = HittestPlugInCollection(ptTablet); // Use cached rectangles for UIElements.
             }
@@ -673,26 +555,17 @@ namespace System.Windows.Input
             return null;
         }
 
+        internal HwndSource InputSource { get { return _inputSource.Value; } }
+
         /////////////////////////////////////////////////////////////////////
 
-        ///<SecurityNote>
-        ///     Critical - PresentationSource is critical
-        ///</SecurityNote>
         internal SecurityCriticalData<HwndSource> _inputSource;
 
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
-        [SecurityCritical]
         WispLogic                      _stylusLogic;
 
         object                       __rtiLock = new object();
         List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
-        [SecurityCritical]
         PenContext[]        _contexts;
         
         bool                _isWindowDisabled;

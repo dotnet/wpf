@@ -1,25 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{BFF6C118-3369-43B5-ACA6-D65ED00EEBE0}</ProjectGuid>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
-    <IsShippingPackage>true</IsShippingPackage>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <UsingToolTemplateLocalizer>true</UsingToolTemplateLocalizer>    
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- 
+    <!--
       PlatformIndependentPackage = true means that this package does
       not require the automatic generation of a runtime.json file using
       the Bait & Switch technique to reference RID specific packages
     -->
     <PlatformIndependentPackage>true</PlatformIndependentPackage>
   </PropertyGroup>
-  
+
   <PropertyGroup>
-    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))</PackageName>
+    <PackageName>$(MSBuildProjectName.Replace('.ArchNeutral',''))$(TransportPackageNameSuffix)</PackageName>
     <AssemblyName>$(PackageName)</AssemblyName>
-    <PackageDescription>Project templates for .NET Core WPF Projects</PackageDescription>
+    <PackageDescription>Project templates for .NET WPF Projects</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

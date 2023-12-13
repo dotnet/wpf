@@ -6,7 +6,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Runtime.ConstrainedExecution;
@@ -20,10 +19,10 @@ namespace MS.Win32.Penimc
 {
     internal static class UnsafeNativeMethods
     {
-        
+
         // The flags in this region are all in support of COM hardening to add resilience
         // to (OSGVSO:10779198).
-        // They are special arguments to COM calls that allow us to re-purpose them for 
+        // They are special arguments to COM calls that allow us to re-purpose them for
         // functions relating to this hardening.
         #region PenIMC Operations Flags
 
@@ -64,10 +63,6 @@ namespace MS.Win32.Penimc
         /// <summary>
         /// The GIT key to use when managing the WISP Tablet Manager objects
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  This field can be used to manipulate the GIT entries for WISP objects.
-        /// </SecurityNote>
-        [SecurityCritical]
         [ThreadStatic]
         private static UInt32? _wispManagerKey;
 
@@ -77,18 +72,19 @@ namespace MS.Win32.Penimc
         [ThreadStatic]
         private static bool _wispManagerLocked = false;
 
-        /// <SecurityNote>
-        /// Critical to prevent inadvertant spread to transparent code
-        /// </SecurityNote>
-        [SecurityCritical]
         [ThreadStatic]
         private static IPimcManager3 _pimcManagerThreadStatic;
+
+        /// <summary>
+        /// The cookie for the PenIMC activation context.
+        /// </summary>
+        [ThreadStatic]
+        private static IntPtr _pimcActCtxCookie = IntPtr.Zero;
 
         #endregion
 
         #region PenIMC
-        
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
+
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern IntPtr RegisterDllForSxSCOM();
 
@@ -96,42 +92,50 @@ namespace MS.Win32.Penimc
 
         /// <summary>
         /// Make sure we load penimc.dll from WPF's installed location to avoid two instances of it.
+        ///
+        /// Add an activation context to the thread's stack to ensure the registration-free COM objects
+        /// are available.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Calls NativeLibraryLoader.EnsureLoaded
-        /// </SecurityNote>
-        [SecurityCritical]
-        static UnsafeNativeMethods()
+        /// <remarks>
+        /// PenIMC COM objects are only directly used (functions called on their interfaces) from inside the
+        /// PenThread.  As such, the PenThreads need to create the activation context.  The various Dispatcher
+        /// threads need not do so as they merely pass the RCWs around in manged objects and will only use
+        /// them via operations queued on their associated PenThread.
+        /// </remarks>
+        internal static void EnsurePenImcClassesActivated()
         {
-            // Register PenIMC for SxS COM for the lifetime of the process. No need to store the 
-            // cookie; PenIMC's ActivationContext will never be removed from the ActivationContext 
-            // stack.
-            //
-            // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
-            // succeeds, or IntPtr.Zero if SxS registration fails.
-            if (IntPtr.Zero == RegisterDllForSxSCOM())
+            if (_pimcActCtxCookie == IntPtr.Zero)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                // Register PenIMC for SxS COM for the lifetime of the thread.
+                //
+                // RegisterDllForSxSCOM returns a non-zero ActivationContextCookie if SxS registration
+                // succeeds, or IntPtr.Zero if SxS registration fails.
+                if ((_pimcActCtxCookie = RegisterDllForSxSCOM()) == IntPtr.Zero)
+                {
+                    throw new InvalidOperationException(SR.Format(SR.PenImcSxSRegistrationFailed, ExternDll.Penimc));
+                }
             }
+        }
 
-            // Ensure PenIMC loaded from the correct location.
-            var uncheckedDlls = WpfDllVerifier.VerifyWpfDllSet(ExternDll.Penimc);
-
-            if (uncheckedDlls.Contains(ExternDll.Penimc))
+        /// <summary>
+        /// Deactivates the activation context for PenIMC objects.
+        /// </summary>
+        internal static void DeactivatePenImcClasses()
+        {
+            if (_pimcActCtxCookie != IntPtr.Zero)
             {
-                throw new DllNotFoundException(SR.Get(SRID.PenImcDllVerificationFailed, ExternDll.Penimc));
+                if(DeactivateActCtx(0, _pimcActCtxCookie))
+                {
+                    _pimcActCtxCookie = IntPtr.Zero;
+                }
             }
         }
 
         /// <summary>
         /// Returns IPimcManager3 interface.  Creates this object the first time per thread.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical  - returns critial data _pimcManager.
-        /// </SecurityNote>
         internal static IPimcManager3 PimcManager
         {
-            [SecurityCritical]
             get
             {
                 if (_pimcManagerThreadStatic == null)
@@ -145,16 +149,12 @@ namespace MS.Win32.Penimc
         /// <summary>
         /// Creates a new instance of PimcManager.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical calls interop code that uses suppress unmanaged code security attributes
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IPimcManager3 CreatePimcManager()
         {
             // Instantiating PimcManager using "new PimcManager()" results
             // in calling CoCreateInstanceForApp from an immersive process
             // (like designer). Such a call would fail because PimcManager is not
-            // in white list for that call. Hence we call CoCreateInstance directly.
+            // in the allowlist for that call. Hence we call CoCreateInstance directly.
             // Note: Normally WPF is not supported for immersive processes
             // but designer is an exception.
             Guid clsid = Guid.Parse(PimcConstants.PimcManager3CLSID);
@@ -175,10 +175,6 @@ namespace MS.Win32.Penimc
         /// On Win7 these will always fail since WISP objects are always proxies (WISP is out of proc).
         /// </summary>
         /// <param name="gitKey">The GIT key for the object to lock.</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls LockWispObjectFromGit
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CheckedLockWispObjectFromGit(UInt32 gitKey)
         {
             if (OSVersionHelper.IsOsWindows8OrGreater)
@@ -195,10 +191,6 @@ namespace MS.Win32.Penimc
         /// On Win7 these will always fail since WISP objects are always proxies (WISP is out of proc).
         /// </summary>
         /// <param name="gitKey">The GIT key for the object to unlock.</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls UnlockWispObjectFromGit
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CheckedUnlockWispObjectFromGit(UInt32 gitKey)
         {
             if (OSVersionHelper.IsOsWindows8OrGreater)
@@ -220,10 +212,6 @@ namespace MS.Win32.Penimc
         /// the lock obtained previously by a CoLockObjectExternal call.
         /// </summary>
         /// <param name="manager">The manager to release the lock for.</param>'
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcManager3.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ReleaseManagerExternalLockImpl(IPimcManager3 manager)
         {
             IPimcTablet3 unused = null;
@@ -235,10 +223,6 @@ namespace MS.Win32.Penimc
         /// the lock obtained previously by a CoLockObjectExternal call.
         /// </summary>
         /// <param name="manager">The manager to release the lock for.</param>'
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcManager3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void ReleaseManagerExternalLock()
         {
             if (_pimcManagerThreadStatic != null)
@@ -251,10 +235,6 @@ namespace MS.Win32.Penimc
         /// Queries and sets the GIT key for the WISP Tablet Manager
         /// </summary>
         /// <param name="tablet">The tablet to call through</param>
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcTablet3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void SetWispManagerKey(IPimcTablet3 tablet)
         {
             UInt32 latestKey = QueryWispKeyFromTablet(GetWispManagerKey, tablet);
@@ -271,7 +251,6 @@ namespace MS.Win32.Penimc
         /// <summary>
         /// Calls down into PenIMC in order to lock the WISP Tablet Manager.
         /// </summary>
-        [SecurityCritical]
         internal static void LockWispManager()
         {
             if (!_wispManagerLocked && _wispManagerKey.HasValue)
@@ -284,7 +263,6 @@ namespace MS.Win32.Penimc
         /// <summary>
         /// Calls down into PenIMC in order to unlock the WISP Tablet Manager.
         /// </summary>
-        [SecurityCritical]
         internal static void UnlockWispManager()
         {
             if (_wispManagerLocked && _wispManagerKey.HasValue)
@@ -303,10 +281,6 @@ namespace MS.Win32.Penimc
         /// the external lock by a CoLockObjectExternal call.
         /// </summary>
         /// <param name="manager">The tablet to acquire the lock for.</param>'
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcTablet3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void AcquireTabletExternalLock(IPimcTablet3 tablet)
         {
             int unused = 0;
@@ -320,10 +294,6 @@ namespace MS.Win32.Penimc
         /// the lock obtained previously by a CoLockObjectExternal call.
         /// </summary>
         /// <param name="manager">The tablet to release the lock for.</param>'
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcTablet3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void ReleaseTabletExternalLock(IPimcTablet3 tablet)
         {
             int unused = 0;
@@ -338,10 +308,6 @@ namespace MS.Win32.Penimc
         /// <param name="keyType">The kind of key to instruct the tablet to return</param>
         /// <param name="tablet">The tablet to call through</param>
         /// <returns>The GIT key for the requested operation</returns>
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcTablet3.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static UInt32 QueryWispKeyFromTablet(int keyType, IPimcTablet3 tablet)
         {
             int key = 0;
@@ -361,10 +327,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="tablet">The tablet to call through</param>
         /// <returns>The GIT key for the WISP Tablet</returns>
-        /// <SecurityNote>
-        ///     Critical:       Accesses IPimcTablet3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static UInt32 QueryWispTabletKey(IPimcTablet3 tablet)
         {
             return QueryWispKeyFromTablet(GetWispTabletKey, tablet);
@@ -379,10 +341,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="context">The context to query through</param>
         /// <returns>The GIT key for the WISP Tablet Context</returns>
-        ///  <SecurityNote>
-        ///     Critical:       Accesses IPimcContext3.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static UInt32 QueryWispContextKey(IPimcContext3 context)
         {
             int key = 0;
@@ -421,16 +379,12 @@ namespace MS.Win32.Penimc
         /// </param>
         /// <param name="pbOutput">Buffer to hold the output</param>
         /// <returns>Status</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfCompressPropertyData(
                 [In] byte [] pbInput,
-                uint cbInput, 
-                ref byte pnAlgoByte, 
-                ref uint pcbOutput, 
+                uint cbInput,
+                ref byte pnAlgoByte,
+                ref uint pcbOutput,
                 [In, Out] byte [] pbOutput
             );
 
@@ -446,17 +400,13 @@ namespace MS.Win32.Penimc
         /// <param name="pbOutput">Output buffer</param>
         /// <param name="pnAlgoByte">Algorithm id and parameters</param>
         /// <returns>Status</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfDecompressPropertyData(
-                [In] byte [] pbCompressed,   
-                uint cbCompressed,   
-                ref uint pcbOutput,  
-                [In, Out] byte [] pbOutput, 
-                ref byte pnAlgoByte 
+                [In] byte [] pbCompressed,
+                uint cbCompressed,
+                ref uint pcbOutput,
+                [In, Out] byte [] pbOutput,
+                ref byte pnAlgoByte
             );
 
         /// <summary>
@@ -475,10 +425,6 @@ namespace MS.Win32.Penimc
         /// </param>
         /// <param name="pbOutput">Output buffer</param>
         /// <returns>Status</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfCompressPacketData(
                 CompressorSafeHandle hCompress,
@@ -502,10 +448,6 @@ namespace MS.Win32.Penimc
         /// <param name="pbOutput">Output buffer to receive the decompressed int's</param>
         /// <param name="pnAlgoData">Algorithm bytes</param>
         /// <returns>Status</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern int IsfDecompressPacketData(
                 CompressorSafeHandle hCompress,
@@ -525,10 +467,6 @@ namespace MS.Win32.Penimc
         /// Out: Number of bytes in the input buffer decompressed to construct compressor
         /// </param>
         /// <returns>Handle to the compression engine loaded</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern CompressorSafeHandle IsfLoadCompressor(
                 [In] byte [] pbInput,
@@ -539,10 +477,6 @@ namespace MS.Win32.Penimc
         /// Managed wrapper for IsfReleaseCompressor
         /// </summary>
         /// <param name="hCompress">Handle to the Compression Engine to be released</param>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern void IsfReleaseCompressor(
                 IntPtr hCompress
@@ -560,10 +494,6 @@ namespace MS.Win32.Penimc
         /// <param name="cbPacket">Byte count of packet data returned.</param>
         /// <param name="pPackets">Array of ints containing the packet data.</param>
         /// <returns>true if succeeded, false if failed or shutting down.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetPenEvent(
@@ -588,10 +518,6 @@ namespace MS.Win32.Penimc
         /// <param name="cbPacket">Byte count of packet data returned.</param>
         /// <param name="pPackets">Array of ints containing the packet data.</param>
         /// <returns>true if succeeded, false if failed or shutting down.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetPenEventMultiple(
@@ -617,10 +543,6 @@ namespace MS.Win32.Penimc
         /// <param name="cursorMode">Mode of the cursor.</param>
         /// <param name="buttonState">State of stylus buttons (flick returns custom data in this).</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetLastSystemEventData(
@@ -638,10 +560,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="handle">Win32 event handle created.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CreateResetEvent(out IntPtr handle);
@@ -651,10 +569,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="handle">Win32 event handle to destroy.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DestroyResetEvent(IntPtr handle);
@@ -664,10 +578,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="handle">Win32 event handle to set.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool RaiseResetEvent(IntPtr handle);
@@ -677,10 +587,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="gitKey">The key used to refer to this object in the GIT.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool LockWispObjectFromGit(UInt32 gitKey);
@@ -690,10 +596,6 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="gitKey">The key used to refer to this object in the GIT.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool UnlockWispObjectFromGit(UInt32 gitKey);
@@ -706,11 +608,8 @@ namespace MS.Win32.Penimc
         /// <param name="context">Context in which the newly created object will run</param>
         /// <param name="iid">Identifier of the Interface</param>
         /// <returns>Returns the COM object created by CoCreateInstance</returns>
-        /// <SecurityNote>
-        /// Critical as suppressing UnmanagedCodeSecurity
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
-        [return: MarshalAs(UnmanagedType.Interface)][DllImport(ExternDll.Ole32, ExactSpelling=true, PreserveSig=false)]
+        [return: MarshalAs(UnmanagedType.Interface)]
+        [DllImport(ExternDll.Ole32, ExactSpelling = true, PreserveSig = false)]
         private static extern object CoCreateInstance(
             [In]
             ref Guid clsid,
@@ -719,38 +618,39 @@ namespace MS.Win32.Penimc
             int context,
             [In]
             ref Guid iid);
+
+        /// <summary>
+        /// Deactivates the specified Activation Context.
+        /// </summary>
+        /// <remarks>
+        /// See: https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-deactivateactctx
+        /// </remarks>
+        /// <param name="flags">Flags that indicate how the deactivation is to occur.</param>
+        /// <param name="activationCtxCookie">The ULONG_PTR that was passed into the call to ActivateActCtx.
+        /// This value is used as a cookie to identify a specific activated activation context.</param>
+        /// <returns>True on success, false otherwise.</returns>
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(ExternDll.Kernel32, ExactSpelling = true)]
+        private static extern bool DeactivateActCtx(int flags, IntPtr activationCtxCookie);
     }
 
 #if OLD_ISF
     internal class CompressorSafeHandle: SafeHandle
     {
-        /// <SecurityNote>
-        /// Critical: This code calls into a base class which is protected by link demand and by inheritance demand
-        /// </SecurityNote>
-        [SecurityCritical]
-        private CompressorSafeHandle() 
+        private CompressorSafeHandle()
             : this(true)
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: This code calls into a base class which is protected by link demand and by inheritance demand
-        /// </SecurityNote>
-        [SecurityCritical]
-        private CompressorSafeHandle(bool ownHandle) 
+        private CompressorSafeHandle(bool ownHandle)
             : base(IntPtr.Zero, ownHandle)
         {
         }
 
         // Do not provide a finalizer - SafeHandle's critical finalizer will
         // call ReleaseHandle for you.
-        /// <SecurityNote>
-        /// Critical:This code calls into a base class which is protected by link demand an by inheritance demand
-        /// TreatAsSafe: It's safe to give out a boolean value.
-        /// </SecurityNote>
         public override bool IsInvalid
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
             get
             {
@@ -758,29 +658,21 @@ namespace MS.Win32.Penimc
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This code calls into a base class which is protected by link demand and by inheritance demand.
-        /// </SecurityNote>
-        [SecurityCritical]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         override protected bool ReleaseHandle()
         {
             //
-            // return code from this is void. 
-            // internally it just calls delete on 
+            // return code from this is void.
+            // internally it just calls delete on
             // the compressor pointer
             //
             UnsafeNativeMethods.IsfReleaseCompressor(handle);
             handle = IntPtr.Zero;
             return true;
         }
-    
-        /// <SecurityNote>
-        /// Critical: This code calls into a base class which is protected by link demand and by inheritance demand.
-        /// </SecurityNote>
+
         public static CompressorSafeHandle Null
         {
-            [SecurityCritical]
             get
             {
               return new CompressorSafeHandle(false);

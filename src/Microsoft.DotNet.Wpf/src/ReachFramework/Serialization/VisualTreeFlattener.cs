@@ -71,11 +71,6 @@ namespace MS.Internal.ReachFramework
             m_mainFile = mainFile;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calling image encoding, save to local files, used only by testing code path
-        /// TreatAsSafe - we demand Unmanaged code permission which is not granted in partial trust
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public
         override
         object
@@ -86,7 +81,6 @@ namespace MS.Internal.ReachFramework
             Type destinationType
             )
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             string bitmapName = "bitmap" + m_bitmapId;
 

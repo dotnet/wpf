@@ -5,7 +5,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Interop;
@@ -35,27 +34,28 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        /// <SecurityNote>
-        ///     Critical: As this accesses Handle
-        ///     TreatAsSafe: Returning the Window Title is considered safe - discussed on Automation TA review
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         override protected string GetNameCore()
         {
             string name = base.GetNameCore();
 
-            if(name == string.Empty)
+            if(name.Length == 0)
             {
                 Window window = (Window)Owner;
 
                 if(!window.IsSourceWindowNull)
                 {
-                    StringBuilder sb = new StringBuilder(512);
-                    UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
-                    name = sb.ToString();
+                    try
+                    {
+                        StringBuilder sb = new StringBuilder(512);
+                        UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
+                        name = sb.ToString();
+                    }
+                    catch (Win32Exception)
+                    {
+                        name = window.Title;
+                    }
 
-                    if (name == null)
-                        name = string.Empty;
+                    name ??= "";
                 }
             }
 
@@ -71,11 +71,6 @@ namespace System.Windows.Automation.Peers
 
 
         ///
-        ///<SecurityNote>
-        ///     Critical as this method accesses critical data.
-        ///     TreatAsSafe - window bounds by themselves is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe ]
         override protected Rect GetBoundingRectangleCore()
         {
             Window window = (Window)Owner;
@@ -99,7 +94,19 @@ namespace System.Windows.Automation.Peers
 
             return bounds;
         }
+
+        protected override bool IsDialogCore()
+        {
+            Window window = (Window)Owner;
+            if (MS.Internal.Helper.IsDefaultValue(AutomationProperties.IsDialogProperty, window))
+            {
+                return window.IsShowingAsDialog;
+            }
+            else
+            {
+                return AutomationProperties.GetIsDialog(window);
+            }
+        }
     }
 }
-
 

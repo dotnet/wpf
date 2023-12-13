@@ -206,7 +206,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new System.Windows.Markup.XamlParseException(SR.Get(SRID.TemplateContentSetTwice));
+                    throw new System.Windows.Markup.XamlParseException(SR.TemplateContentSetTwice);
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace System.Windows
 
                 if ( IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Template"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
                 }
 
                 _resources = value;
@@ -309,14 +309,11 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             if (this != templatedParent.TemplateInternal)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TemplateFindNameInInvalidElement));
+                throw new InvalidOperationException(SR.TemplateFindNameInInvalidElement);
             }
 
             return StyleHelper.FindNameInTemplateContent(templatedParent, name, this);
@@ -386,7 +383,7 @@ namespace System.Windows
             if (templateRoot != null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
-                throw new ArgumentException(SR.Get(SRID.VisualTreeRootIsFrameworkElement,
+                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
                     typeof(FrameworkElement).Name, templateRoot.Type.Name));
             }
         }
@@ -441,7 +438,7 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Template"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
             }
         }
 
@@ -625,7 +622,6 @@ namespace System.Windows
         //  1. Is an alternative approach to building a visual tree from a FEF
         //  2. Is used by ContentPresenter and Hyperlink to host their content
         //
-        //CASRemoval:[StrongNameIdentityPermissionAttribute(SecurityAction.InheritanceDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         internal virtual bool BuildVisualTree(FrameworkElement container)
         {
             return false;
@@ -850,7 +846,7 @@ namespace System.Windows
             {
                 if (!isMarkupExtension && !(value is DeferredReference))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, value, dependencyProperty.Name));
+                    throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, dependencyProperty.Name));
                 }
             }
 
@@ -964,32 +960,11 @@ namespace System.Windows
             return rootObject;
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses and asserts critical LoadPermission
-        /// Safe: The XAML to load comes from _templateHolder.PlayXaml, which is SecurityCritcal and
-        ///       guaranteed to have demanded _templateHolder.LoadPermission before being set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadTemplateXaml(XamlObjectWriter objectWriter)
         {
             System.Xaml.XamlReader templateReader = _templateHolder.PlayXaml();
             Debug.Assert(templateReader != null, "PlayXaml returned null");
-            if (_templateHolder.LoadPermission != null)
-            {
-                _templateHolder.LoadPermission.Assert();
-                try
-                {
-                    LoadTemplateXaml(templateReader, objectWriter);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            else
-            {
-                LoadTemplateXaml(templateReader, objectWriter);
-            }
+            LoadTemplateXaml(templateReader, objectWriter);
         }
 
         private void LoadTemplateXaml(System.Xaml.XamlReader templateReader, XamlObjectWriter currentWriter)
@@ -1162,7 +1137,7 @@ namespace System.Windows
                     UIElement rootElement = rootObject as UIElement;
                     if (rootElement == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.TemplateMustBeFE, new object[] { rootObject.GetType().FullName }));
+                        throw new InvalidOperationException(SR.Format(SR.TemplateMustBeFE, new object[] { rootObject.GetType().FullName }));
                     }
                     feContainer.TemplateChild = rootElement;
 

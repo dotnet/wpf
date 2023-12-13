@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -42,18 +41,13 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// This constructor is called by PInvoke when returning the critical handle
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls the setter of _ploPenaltyModule.
-        /// Safe - as it does not set the value arbitrarily from the value it receives from caller. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal TextPenaltyModule(SecurityCriticalDataForSet<IntPtr> ploc)
         {
             IntPtr ploPenaltyModule;
             LsErr lserr = UnsafeNativeMethods.LoAcquirePenaltyModule(ploc.Value, out ploPenaltyModule);
             if (lserr != LsErr.None)
             {
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.AcquirePenaltyModuleFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.AcquirePenaltyModuleFailure, lserr), lserr);
             }
 
             _ploPenaltyModule.Value = ploPenaltyModule;
@@ -79,11 +73,6 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        /// <SecurityNote>
-        /// Critical - as this calls method to dispose unmanaged penalty module.
-        /// Safe - as it does not arbitrarily set critical data.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             if (_ploPenaltyModule.Value != IntPtr.Zero)
@@ -101,22 +90,18 @@ namespace MS.Internal.TextFormatting
         /// unsafe LS penalty module for exclusive use of PTS during optimal paragraph 
         /// penalty calculation.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this returns pointer to unmanaged memory owned by LS.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr DangerousGetHandle()
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextPenaltyModuleHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextPenaltyModuleHasBeenDisposed);
             }
 
             IntPtr penaltyModuleInternalHandle;
             LsErr lserr = UnsafeNativeMethods.LoGetPenaltyModuleInternalHandle(_ploPenaltyModule.Value, out penaltyModuleInternalHandle);
 
             if (lserr != LsErr.None)
-                TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.GetPenaltyModuleHandleFailure, lserr), lserr);
+                TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.GetPenaltyModuleHandleFailure, lserr), lserr);
 
             GC.KeepAlive(this);
             return penaltyModuleInternalHandle;

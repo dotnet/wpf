@@ -86,11 +86,6 @@ namespace System.Windows.Automation
         /// Sets the current element as the selection
         /// This clears the selection from other elements in the container 
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Select()
         {
             UiaCoreApi.SelectionItemPattern_Select(_hPattern);
@@ -98,11 +93,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Adds current element to selection
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void AddToSelection()
         {
             UiaCoreApi.SelectionItemPattern_AddToSelection(_hPattern);
@@ -111,11 +101,6 @@ namespace System.Windows.Automation
         /// <summary>
         /// Removes current element from selection
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void RemoveFromSelection()
         {
             UiaCoreApi.SelectionItemPattern_RemoveFromSelection(_hPattern);
@@ -258,11 +243,6 @@ namespace System.Windows.Automation
             /// Check whether an element is selected
             /// </summary>
             /// <returns>returns true if the element is selected</returns>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsSelected
             {
                 get
@@ -275,11 +255,6 @@ namespace System.Windows.Automation
             /// The logical element that supports the SelectionPattern for this Item
             /// </summary>
             /// <returns>returns an AutomationElement</returns>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public AutomationElement SelectionContainer
             {
                 get

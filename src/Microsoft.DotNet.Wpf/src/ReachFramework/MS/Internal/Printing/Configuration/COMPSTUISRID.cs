@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿/*++
+/*++
 
  * Abstract:
 
@@ -21,11 +21,6 @@ namespace MS.Internal.Printing.Configuration
     /// </summary>
     internal sealed class COMPSTUISR
     {
-        ///<SecurityNote>
-        /// Critical    - Calls code with SUC applied to obtain resource strings from compstui.dll; 
-        ///               Accesses critical member
-        ///</SecurityNote>
-        [SecurityCritical]
         public string Get(uint srid)
         {
             // Limit input to range of known safe resource string ID's in compstui.dll
@@ -66,11 +61,6 @@ namespace MS.Internal.Printing.Configuration
         }
 
 
-        ///<SecurityNote>
-        /// Critical    - Calls Critical code to unload a resource dll that may still be in use; 
-        ///             - Accesses critical member
-        ///</SecurityNote>
-        [SecurityCritical]
         public void Release()
         {
             SafeModuleHandle handle = this._compstuiHandle;            
@@ -81,11 +71,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        ///<SecurityNote>
-        /// Critical    - Calls code with SUC applied to load a resource dll; 
-        ///             - Accesses critical member
-        ///</SecurityNote>
-        [SecurityCritical]
         private SafeModuleHandle EnsureModuleHandle()
         {
             if (this._compstuiHandle == null)
@@ -97,10 +82,6 @@ namespace MS.Internal.Printing.Configuration
             return this._compstuiHandle;
         }
 
-        ///<SecurityNote>
-        /// Critical    - Provides access to a native resource 
-        ///</SecurityNote>
-        [SecurityCritical]
         private SafeModuleHandle _compstuiHandle;
 
         public const uint IDS_NULL = uint.MaxValue;

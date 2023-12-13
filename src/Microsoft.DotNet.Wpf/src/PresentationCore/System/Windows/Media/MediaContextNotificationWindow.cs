@@ -26,16 +26,14 @@ using MS.Internal.PresentationCore;
 using MS.Internal.Interop;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using DllImport=MS.Internal.PresentationCore.DllImport;
 
 namespace System.Windows.Media
 {
     /// <summary>
-    /// The MediaContextNotificationWindow class provides its owner 
+    /// The MediaContextNotificationWindow class provides its owner
     /// MediaContext with the ability to receive and forward window
     /// messages broadcasted to top-level windows.
     /// </summary>
@@ -44,17 +42,12 @@ namespace System.Windows.Media
         /// <summary>
         /// Initializes static variables for this class.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical        - Sets the SecurityCritical static variables holding the message ids; calls RegisterWindowMessage.
-        /// TreatAsSafe     - The message ids are not exposed; no external parameters are taken in.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static MediaContextNotificationWindow()
         {
             s_channelNotifyMessage = UnsafeNativeMethods.RegisterWindowMessage("MilChannelNotify");
             s_dwmRedirectionEnvironmentChanged = UnsafeNativeMethods.RegisterWindowMessage("DwmRedirectionEnvironmentChangedHint");
         }
-                
+
         //+---------------------------------------------------------------------
         //
         //  Internal Methods
@@ -66,17 +59,12 @@ namespace System.Windows.Media
         /// <summary>
         /// Sets the owner MediaContext and creates the notification window.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Creates an HwndWrapper and adds a hook.
-        ///     TreatAsSafe: Critical data is not exposed.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal MediaContextNotificationWindow(MediaContext ownerMediaContext)
         {
             // Remember the pointer to the owner MediaContext that we'll forward the broadcasts to.
             _ownerMediaContext = ownerMediaContext;
 
-            // Create a top-level, invisible window so we can get the WM_DWMCOMPOSITIONCHANGED 
+            // Create a top-level, invisible window so we can get the WM_DWMCOMPOSITIONCHANGED
             // and other DWM notifications that are broadcasted to top-level windows only.
             HwndWrapper hwndNotification;
             hwndNotification = new HwndWrapper(0, NativeMethods.WS_POPUP, 0, 0, 0, 0, 0, "MediaContextNotificationWindow", IntPtr.Zero, null);
@@ -103,15 +91,8 @@ namespace System.Windows.Media
 
             ChangeWindowMessageFilter(s_dwmRedirectionEnvironmentChanged, 1 /* MSGFLT_ADD */);
             MS.Internal.HRESULT.Check(MilContent_AttachToHwnd(_hwndNotification.Value.Handle));
-
-            WpfDllVerifier.VerifyWpfDllSet();
         }
 
-        ///<SecurityNote>
-        ///     Critical - Calls dispose on the critical hwnd wrapper.
-        ///     TreatAsSafe: It is safe to dispose the wrapper
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             if (!_isDisposed)
@@ -129,13 +110,13 @@ namespace System.Windows.Media
                 _ownerMediaContext = null;
 
                 _isDisposed = true;
-                
+
                 GC.SuppressFinalize(this);
             }
         }
 
         #endregion Internal Methods
-        
+
 
         //+---------------------------------------------------------------------
         //
@@ -151,44 +132,30 @@ namespace System.Windows.Media
         /// <param name="channel">
         /// The channel from which we want notifications.
         /// </param>
-        /// <securitynote>
-        /// Critical        - Calls a critical channel method.
-        /// TreatAsSafe     - We are associated with the window handle that we
-        ///                   are passing to the channel, so somebody already
-        ///                   decided that it's OK for us to interact with that
-        ///                   window. We also registered a window message so
-        ///                   that we can avoid collisions with other messages.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetAsChannelNotificationWindow()
         {
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("MediaContextNotificationWindow");
             }
-            
+
             _ownerMediaContext.Channel.SetNotificationWindow(_hwndNotification.Value.Handle, s_channelNotifyMessage);
         }
 
         /// <summary>
         /// If any of the interesting broadcast messages is seen, forward them to the owner MediaContext.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls into unmanaged code, uses sensitive HWND data
-        ///     TreatAsSafe: No sensitive information is disclosed. It's safe to "attach" the window to the DWM. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IntPtr MessageFilter(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (_isDisposed)
             {
                 throw new ObjectDisposedException("MediaContextNotificationWindow");
             }
-            
+
             WindowMessage message = (WindowMessage)msg;
             Debug.Assert(_ownerMediaContext != null);
 
-            if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED) 
+            if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED)
             {
                 //
                 // We need to register as MIL content to receive the Vista Magnifier messages
@@ -211,19 +178,11 @@ namespace System.Windows.Media
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         private static extern int MilContent_AttachToHwnd(
             IntPtr hwnd
             );
 
-        /// <SecurityNote>
-        ///     Critical: This code causes unmanaged code elevation
-        /// </SecurityNote>
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(DllImport.MilCore)]
         private static extern int MilContent_DetachFromHwnd(
             IntPtr hwnd
@@ -234,12 +193,6 @@ namespace System.Windows.Media
         /// in case we are elevated. Failure is non-fatal and on down-level
         /// platforms this call will result in a no-op.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -- Calls unsafe native methods GetModuleHandle and GetProcAddress.
-        ///             Manually elevates unmanaged code permissions to pinvoke through
-        ///             a function pointer.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ChangeWindowMessageFilter(WindowMessage message, uint flag)
         {
             // Find the address of ChangeWindowMessageFilter in user32.dll.
@@ -259,17 +212,7 @@ namespace System.Windows.Media
                     functionAddress,
                     typeof(ChangeWindowMessageFilterNative)) as ChangeWindowMessageFilterNative;
 
-                // In order to call the function we need unmanaged code access,
-                // because the function is native code.
-                (new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    function(message, flag);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                function(message, flag);
             }
         }
 
@@ -299,10 +242,6 @@ namespace System.Windows.Media
         private SecurityCriticalDataClass<HwndWrapper> _hwndNotification;
 
         // The message filter hook for the top-level hidden window.
-        /// <SecurityNote>
-        /// Critical - Field for Critical type
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook _hwndNotificationHook;
 
         // The window message used to announce a channel notification.
@@ -311,7 +250,7 @@ namespace System.Windows.Media
         // We receive this when the Vista Magnifier goes on/off
         private static WindowMessage s_dwmRedirectionEnvironmentChanged;
 
-        #endregion Private Fields       
+        #endregion Private Fields
     }
 }
 

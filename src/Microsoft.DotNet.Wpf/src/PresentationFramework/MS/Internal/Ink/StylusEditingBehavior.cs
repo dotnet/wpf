@@ -18,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 
 namespace MS.Internal.Ink
 {
@@ -105,15 +104,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="stylusPoints">stylusPoints</param>
         /// <param name="userInitiated">true if the eventArgs source had UserInitiated set to true</param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical methods StylusInputBegin and StylusInputContinue
-        /// 
-        ///     Note that for InkCollectionBehavior, which inherits from this class, the stylusPoints
-        ///     passed through this API are critical.  For EraserBehavior and LassoSelectionBehavior, which
-        ///     also inherit from this class, the stylusPoints are not critical.  This is because only
-        ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
-        /// </SecurityNote>
-        [SecurityCritical]
         void IStylusEditing.AddStylusPoints(StylusPointCollection stylusPoints, bool userInitiated)
         {
             EditingCoordinator.DebugCheckActiveBehavior(this);
@@ -193,17 +183,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="stylusPoints">stylusPoints</param>
         /// <param name="userInitiated">true if the source eventArgs.UserInitiated flag is true</param>
-        /// <SecurityNote>
-        ///     Critical: Handles critical data stylusPoints, which is critical 
-        ///         when InkCollectionBehavior uses it to call critical method 
-        ///         InkCanvas.RaiseGestureOrStrokeCollected
-        /// 
-        ///     Note that for InkCollectionBehavior, which inherits from this class, the stylusPoints
-        ///     passed through this API are critical.  For EraserBehavior and LassoSelectionBehavior, which
-        ///     also inherit from this class, the stylusPoints are not critical.  This is because only
-        ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void StylusInputBegin(StylusPointCollection stylusPoints, bool userInitiated)
         {
             //defer to derived classes
@@ -214,16 +193,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="stylusPoints">stylusPoints</param>
         /// <param name="userInitiated">true if the source eventArgs.UserInitiated flag is true</param>
-        /// <SecurityNote>
-        ///     Critical: Handles critical data stylusPoints, which is critical 
-        ///         when InkCollectionBehavior uses it to call critical method InkCanvas.RaiseGestureOrStrokeCollected
-        /// 
-        ///     Note that for InkCollectionBehavior, which inherits from this class, the stylusPoints
-        ///     passed through this API are critical.  For EraserBehavior and LassoSelectionBehavior, which
-        ///     also inherit from this class, the stylusPoints are not critical.  This is because only
-        ///     InkCollectionBehavior calls a critical method with the stylusPoints as an argument.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected virtual void StylusInputContinue(StylusPointCollection stylusPoints, bool userInitiated)
         {
             //defer to derived classes

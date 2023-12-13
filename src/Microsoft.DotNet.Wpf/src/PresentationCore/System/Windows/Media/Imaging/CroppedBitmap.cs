@@ -16,7 +16,6 @@ using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
@@ -25,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -50,10 +48,7 @@ namespace System.Windows.Media.Imaging
         public CroppedBitmap(BitmapSource source, Int32Rect sourceRect)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             _bitmapInit.BeginInit();
 
@@ -78,11 +73,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Prepare the bitmap to accept initialize paramters.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resources
-        /// PublicOK - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public void EndInit()
         {
             WritePreamble();
@@ -105,10 +95,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();        
@@ -188,7 +174,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
                 }
                 return false;
             }

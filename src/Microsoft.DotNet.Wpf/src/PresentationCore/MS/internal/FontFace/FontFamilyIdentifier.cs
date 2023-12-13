@@ -232,11 +232,6 @@ namespace MS.Internal.FontFace
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as it accesses canonical names as raw strings
-        /// Safe - as information is not returned but stored in SecurityCritical _canonicalReferences field
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Canonicalize()
         {
             if (_canonicalReferences != null)

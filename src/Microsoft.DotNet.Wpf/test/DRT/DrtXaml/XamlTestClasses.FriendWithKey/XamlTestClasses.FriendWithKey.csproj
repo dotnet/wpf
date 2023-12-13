@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <AssemblyName>XamlTestClasses.FriendWithKey</AssemblyName>
-    <RootNamespace>XamlTestClasses.FriendWithKey</RootNamespace>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
-</Project>

@@ -35,10 +35,6 @@ namespace System.Windows.Input
     /// </summary>
     internal class TabletDeviceInfo
     {
-        /// <SecurityNote>
-        ///     This data is not safe to expose as it holds refrence to IPimcTablet
-        /// </SecurityNote>
-        [SecurityCritical]
         public SecurityCriticalDataClass<IPimcTablet3> PimcTablet;
         public int Id;
         public string Name;
@@ -53,10 +49,7 @@ namespace System.Windows.Input
         /// <summary>
         /// The GIT key for a WISP tablet COM object.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical:   This data can be used to manipulate COM objects in the GIT.
-        /// </SecurityNote>
-        public UInt32 WispTabletKey { [SecurityCritical] get; [SecurityCritical] set; }
+        public UInt32 WispTabletKey {  get;  set; }
     }    
 }
 

@@ -1,0 +1,4 @@
+Compat issues with assembly WindowsFormsIntegration:
+CannotChangeAttribute : Attribute 'System.ComponentModel.DesignerSerializationVisibilityAttribute' on 'System.Windows.Forms.Integration.ElementHost.Child' changed from '[DesignerSerializationVisibilityAttribute(0)]' in the contract to '[DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]' in the implementation.
+CannotChangeAttribute : Attribute 'System.ComponentModel.DesignerSerializationVisibilityAttribute' on 'System.Windows.Forms.Integration.ElementHost.HostContainer' changed from '[DesignerSerializationVisibilityAttribute(0)]' in the contract to '[DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]' in the implementation.
+Total Issues: 2

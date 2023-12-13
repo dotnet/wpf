@@ -6,8 +6,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;       // SafeHandle
-using System.Security;                      // [SecurityCritical]
-using System.Security.Permissions; 
+using System.Security;                      // 
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // ButtonBase
 using System.Windows.Input;                 // MouseButtonEventArgs
@@ -453,6 +452,19 @@ namespace System.Windows.Controls
             SetFlag(ignoreFlag, false);
         }
 
+        // Set column header width and associated column width
+        internal void UpdateColumnHeaderWidth(double width)
+        {
+            if (Column != null)
+            {
+                Column.Width = width;
+            }
+            else
+            {
+                Width = width;
+            }
+        }
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------
@@ -740,19 +752,6 @@ namespace System.Windows.Controls
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Asserts permissions required to call Cursor constructor in partial trust
-        /// TreatAsSafe - Can only be used to create one of two specific cursors (which are embedded resources within assembly). 
-        /// The following Permissions are required to invoke Cursor.LoadFromStream method which writes stream to a temporary file and loads the Cursor from that file.
-        /// The Environment permission is safe because even if the caller sets the %TEMP% variable to a critical location 
-        /// before executing the method, the caller does not choose the filename that is written to. 
-        /// Additionally the temp filename algorithm tries to avoid name collisions. 
-        /// Therefore it is reasonably unlikely that the caller can use this method to overwrite a critical file.
-        /// The FileIO write permission is safe because from the above justification the file being written to is reasonably safe.
-        /// The Unmanaged code permission is safe because it is used for a safe p-invoke to load a cursor from a file 
-        /// (the bytes read are never exposed to the caller)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Cursor GetCursor(int cursorID)
         {
             Invariant.Assert(cursorID == c_SPLIT || cursorID == c_SPLITOPEN, "incorrect cursor type");
@@ -773,24 +772,7 @@ namespace System.Windows.Controls
             Debug.Assert(stream != null, "stream is null");
             if (stream != null)
             {
-                PermissionSet permissions = new PermissionSet(null);
-
-                FileIOPermission filePermission = new FileIOPermission(PermissionState.None);
-                filePermission.AllLocalFiles = FileIOPermissionAccess.Write;
-                permissions.AddPermission(filePermission);
-                
-                permissions.AddPermission(new EnvironmentPermission(PermissionState.Unrestricted));
-                permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode));
-                permissions.Assert();
-
-                try
-                {
-                    cursor = new Cursor(stream);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+                cursor = new Cursor(stream);
             }
 
             return cursor;
@@ -816,19 +798,6 @@ namespace System.Windows.Controls
                 {
                     _headerGripper.Cursor = gripperCursor;
                 }
-            }
-        }
-
-        // Set column header width and associated column width
-        private void UpdateColumnHeaderWidth(double width)
-        {
-            if (Column != null)
-            {
-                Column.Width = width;
-            }
-            else
-            {
-                Width = width;
             }
         }
 
@@ -1010,7 +979,7 @@ namespace System.Windows.Controls
             // Define a Style with ContentTemplate and assign it to GridViewColumn.HeaderContainerStyle property. GridViewColumnHeader.OnPropertyChagned method will be called twice.
             // The first call is for ContentTemplate property. In this call, IgnoreContentTemplate is false.
             // The second call is for Style property. In this call, IgnoreStyle is true.
-            // One flag can’t distinguish them.
+            // One flag canÂ’t distinguish them.
             None                                = 0,
             StyleSetByUser                      = 0x00000001,
             IgnoreStyle                         = 0x00000002,

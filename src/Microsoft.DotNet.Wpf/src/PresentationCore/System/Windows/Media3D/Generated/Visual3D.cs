@@ -22,13 +22,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -80,15 +78,12 @@ namespace System.Windows.Media.Media3D
             AnimationClock clock,
             HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
         #pragma warning restore 56506
             }
 
@@ -96,18 +91,18 @@ namespace System.Windows.Media.Media3D
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
         #pragma warning restore 56506
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_UnrecognizedHandoffBehavior));
+                throw new ArgumentException(SR.Animation_UnrecognizedHandoffBehavior);
             }
 
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
             }                    
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
@@ -152,32 +147,29 @@ namespace System.Windows.Media.Media3D
         /// </param>
         public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
         #pragma warning restore 56506
             }
 
             if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_UnrecognizedHandoffBehavior));
+                throw new ArgumentException(SR.Animation_UnrecognizedHandoffBehavior);
             }
 
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
             }                    
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
@@ -211,10 +203,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public object GetAnimationBaseValue(DependencyProperty dp)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             return this.GetValueEntry(
                     LookupEntry(dp.GlobalIndex),
@@ -233,12 +222,6 @@ namespace System.Windows.Media.Media3D
         /// <param name="dp"></param>
         /// <param name="metadata"></param>
         /// <param name="entry">EffectiveValueEntry computed by base</param>
-        /// <SecurityNote>
-        ///     Putting an InheritanceDemand as a defense-in-depth measure,
-        ///     as this provides a hook to the property system that we don't
-        ///     want exposed under PartialTrust.
-        /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,

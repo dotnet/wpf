@@ -29,7 +29,7 @@ namespace MS.Internal.AutomationProxies
         WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item )
         {
-            _sType = SR.Get(SRID.LocalizedControlTypeRebar);
+            _sType = SR.LocalizedControlTypeRebar;
             _fIsContent = false;
 
             // support for events
@@ -50,11 +50,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.Get(SRID.ShouldBeZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsRebar(hwnd, null, idChild);
         }
@@ -263,7 +259,7 @@ namespace MS.Internal.AutomationProxies
             : base (hwnd, parent, item)
             {
                 // Set the strings to return properly the properties.
-                _sType = SR.Get(SRID.LocalizedControlTypeRebarBand);
+                _sType = SR.LocalizedControlTypeRebarBand;
                 _fIsContent = false;
             }
 
@@ -301,7 +297,7 @@ namespace MS.Internal.AutomationProxies
             {
                 get
                 {
-                    return SR.Get(SRID.LocalizedNameWindowsReBarBandItem);
+                    return SR.LocalizedNameWindowsReBarBandItem;
                 }
             }
 

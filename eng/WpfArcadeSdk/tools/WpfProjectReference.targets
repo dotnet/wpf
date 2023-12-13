@@ -1,16 +1,28 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="$(MicrosoftDotNetWpfGitHubPackage)" 
-                      Version="$(MicrosoftDotNetWpfGitHubVersion)" 
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
+                      Version="$(MicrosoftDotNetWpfGitHubVersion)"
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And $(TargetFramework.StartsWith('netcoreapp3')) And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'"/>
-  </ItemGroup>
+                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj' 
+                             And '$(TargetFrameworkIdentifier)' == '.NETCoreApp' 
+                             And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
 
+    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(GitHubTransportPackageName)"
+                  Version="$(MicrosoftDotNetWpfGitHubVersion)"
+                  ExcludeAssets="All"
+                  GeneratePathProperty="True"
+                  Condition="'$(MSBuildProjectExtension)'=='.vcxproj' 
+                             And '$(CLRSupport)' != 'true'
+                             And '$(NoAutoMicrosoftDotNetWpfGitHubPackageReference)'!='true'
+                             And '$(MicrosoftDotNetWpfGitHubPackage)'!=''"/>
+    
+  </ItemGroup>
   <ItemGroup>
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <WpfProjectPath Include="PresentationCore-CommonResources" ProjectPath="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </WpfProjectPath>
@@ -40,11 +52,34 @@
     <WpfProjectPath Include="UIAutomationProvider" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <WpfProjectPath Include="UIAutomationClient" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
     <WpfProjectPath Include="UIAutomationClientSideProviders" ProjectPath="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj" />
-    
 
-    <WpfProjectPath Include="PresentationNative_cor3" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj" />
-    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="@(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj" />
-    <WpfProjectPath Include="PenImc_cor3" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj" />
+
+    <WpfProjectPath Include="PresentationNative_cor3" ProjectPath="$(WpfSourceDir)PresentationNative\dll\PresentationNative.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+    <WpfProjectPath Include="WpfGfx_cor3" ProjectPath="$(WpfSourceDir)WpfGfx\core\dll\WpfGfx.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>    
+    </WpfProjectPath>
+    <WpfProjectPath Include="PenImc_cor3" ProjectPath="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+
+    <WpfProjectPath Include="bilinearspan" ProjectPath="$(WpfSourceDir)WpfGfx\core\sw\bilinearspan\bilinearspan.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </WpfProjectPath>
+
   </ItemGroup>
 
   <PropertyGroup>

@@ -988,7 +988,7 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
         <target state="translated">アクセスできるコンストラクターがないため、型 '{0}' のオブジェクトを読み込むことができません。この型を XAML で使用できるようにするには、既定のコンストラクターを追加するか、ConstructorArgumentAttribute を使用するか、または InstanceDescriptor を提供してください。</target>
         <note />
       </trans-unit>
@@ -1052,11 +1052,6 @@
         <target state="translated">XAML ノード ストリーム: StartMember '{2}' の前に '{0}.{1}' の EndMember がありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">プロパティ要素 '{0}' はオブジェクト要素に含まれていません。</target>
@@ -1079,7 +1074,7 @@
       </trans-unit>
       <trans-unit id="PositionalParamsWrongLength">
         <source>GetPositionalParameters returned the wrong length vector.</source>
-        <target state="translated">GetPositionalParameters から、誤った長さのベクターが返されました。</target>
+        <target state="translated">GetPositionalParameters から、誤った長さのベクトルが返されました。</target>
         <note />
       </trans-unit>
       <trans-unit id="PrefixNotFound">
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">循環する依存関係があるため、MarkupExtension.ProvideValue を呼び出すことができません。MarkupExtension 内のプロパティから、MarkupExtension の結果を参照するオブジェクトを参照することはできません。影響を受ける MarkupExtension は次のとおりです。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型名には、必要な形式 'className, assembly' がありません。</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">

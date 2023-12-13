@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32;
 using MS.Internal.WindowsBase;
@@ -62,19 +61,10 @@ namespace System.Windows.Interop
         /// Returns true if one or more components has gone modal.
         /// Although once one component is modal a 2nd shouldn't.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         public static bool IsThreadModal
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
                 return data.IsThreadModal;
             }
@@ -83,19 +73,10 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns "current" message.   More exactly the last MSG Raised.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         public static MSG CurrentKeyboardMessage
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
             }
         }
@@ -103,20 +84,15 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns "current" message.   More exactly the last MSG Raised.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        /// </SecurityNote>
         internal static MSG UnsecureCurrentKeyboardMessage
         {
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
-            [SecurityCritical]
             get
             {
                 return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
             }
 
             [FriendAccessAllowed] // Built into Base, used by Core or Framework.
-            [SecurityCritical]
             set
             {
                 ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage = value;
@@ -128,27 +104,14 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to go modal.  Current thread wide only.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
-        [SecurityCritical]
         public static void PushModal()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             CriticalPushModal();
         }
 
         /// <summary>
         /// A component calls this to go modal.  Current thread wide only.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This bypasses the demand for unrestricted UIPermission.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalPushModal()
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -158,27 +121,14 @@ namespace System.Windows.Interop
         /// <summary>
         /// A component calls this to end being modal.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
-        [SecurityCritical]
         public static void PopModal()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             CriticalPopModal();
         }
 
         /// <summary>
         /// A component calls this to end being modal.
         ///</summary>
-        /// <SecurityNote>
-        ///     Critical: This bypasses the demand for unrestricted UIPermission.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalPopModal()
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -188,15 +138,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this when it is time to do idle processing.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public static void RaiseIdle()
         {
@@ -207,17 +148,8 @@ namespace System.Windows.Interop
         /// <summary>
         /// The message loop pumper calls this for every keyboard message.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         [SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         public static bool RaiseThreadMessage(ref MSG msg)
         {
             ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
@@ -230,23 +162,12 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// thread idle processing.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         public static event EventHandler ThreadIdle
         {
-            [SecurityCritical]
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle += value;
             }
-            [SecurityCritical]
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadIdle -= value;
             }
         }
@@ -255,24 +176,13 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (first chance processing).
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
-            [SecurityCritical]
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage += value;
             }
-            [SecurityCritical]
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.ThreadFilterMessage -= value;
             }
         }
@@ -281,24 +191,13 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (second chance processing).
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Exposing the raw input enables tampering. (The MSG structure is passed by-ref.)
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
-            [SecurityCritical]
             add
             {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage += value;
             }
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
-            [SecurityCritical]
             remove {
                 ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage -= value;
             }
@@ -308,12 +207,6 @@ namespace System.Windows.Interop
         ///     Adds the specified handler to the front of the invocation list
         ///     of the PreprocessMessage event.
         /// <summary>
-        /// <SecurityNote>
-        ///     Critical: Not to expose raw input, which may be destined for a
-        ///     window in another security context. Also, MSG contains a window
-        ///     handle, which we don't want to expose.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalAddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             ComponentDispatcher.CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
@@ -323,12 +216,6 @@ namespace System.Windows.Interop
         ///     Removes the first occurance of the specified handler from the
         ///     invocation list of the PreprocessMessage event.
         /// <summary>
-        /// <SecurityNote>
-        ///     Critical: Not to expose raw input, which may be destined for a
-        ///     window in another security context. Also, MSG contains a window
-        ///     handle, which we don't want to expose.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CriticalRemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
             ComponentDispatcher.CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
@@ -338,23 +225,12 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// a component on this thread has "gone modal", when previously none were.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         public static event EventHandler EnterThreadModal
         {
-            [SecurityCritical]
             add {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal += value;
             }
-            [SecurityCritical]
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.EnterThreadModal -= value;
             }
         }
@@ -363,24 +239,13 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// all components on this thread are done being modal.
         ///</summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This is blocked off as defense in depth
-        ///     PublicOk: There is a demand here
-        /// </SecurityNote>
         public static event EventHandler LeaveThreadModal
         {
-            [SecurityCritical]
             add
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal += value;
             }
-            [SecurityCritical]
             remove {
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;
             }
         }

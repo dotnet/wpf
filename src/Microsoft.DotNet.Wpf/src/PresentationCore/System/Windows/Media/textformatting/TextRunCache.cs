@@ -93,7 +93,7 @@ namespace System.Windows.Media.TextFormatting
             }
 
             // otherwise, return an empty collection
-            return new TextSpan<TextRun>[0];
+            return Array.Empty<TextSpan<TextRun>>();
         }
 
 

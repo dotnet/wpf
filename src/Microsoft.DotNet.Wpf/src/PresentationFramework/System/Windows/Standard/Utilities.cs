@@ -48,13 +48,15 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static int GET_X_LPARAM(IntPtr lParam)
         {
-            return LOWORD(lParam.ToInt32());
+            // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
+            return LOWORD((int) lParam.ToInt64());
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static int GET_Y_LPARAM(IntPtr lParam)
         {
-            return HIWORD(lParam.ToInt32());
+            // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
+            return HIWORD((int) lParam.ToInt64());
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -187,11 +189,6 @@ namespace Standard
         // This can be cached.  It's not going to change under reasonable circumstances.
         private static int s_bitDepth; // = 0;
         
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods to obtain desktop bits per pixel 
-        ///   Safe     : BPP is considered safe information in partial trust
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private static int _GetBitDepth()
         {
             if (s_bitDepth == 0)
@@ -205,10 +202,6 @@ namespace Standard
         }
 
         /// <summary>GDI's DeleteObject</summary>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SafeDeleteObject(ref IntPtr gdiObject)
         {
@@ -220,10 +213,6 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SafeDestroyWindow(ref IntPtr hwnd)
         {
@@ -236,10 +225,6 @@ namespace Standard
         }
 
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static void SafeRelease<T>(ref T comObject) where T : class

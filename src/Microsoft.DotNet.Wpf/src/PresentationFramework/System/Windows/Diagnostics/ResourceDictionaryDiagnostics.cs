@@ -36,11 +36,10 @@ namespace System.Windows.Diagnostics
     public static class ResourceDictionaryDiagnostics
     {
         // Calls critical method IsEnvironmentVariableSet, but doesn't expose data
-        [SecuritySafeCritical]
         static ResourceDictionaryDiagnostics()
         {
             IsEnabled = VisualDiagnostics.IsEnabled &&
-                VisualDiagnostics.IsEnvironmentVariableSet(null, "ENABLE_XAML_DIAGNOSTICS_SOURCE_INFO");
+                VisualDiagnostics.IsEnvironmentVariableSet(null, XamlSourceInfoHelper.XamlSourceInfoEnvironmentVariable);
 
             // internal property, not visible to user
             IgnorableProperties.Add(typeof(ResourceDictionary).GetProperty("DeferrableContent"));
@@ -274,9 +273,9 @@ namespace System.Windows.Diagnostics
         }
 
         private static Dictionary<Uri, List<WeakReference<ResourceDictionary>>> _dictionariesFromUri;
-        private static object _dictionariesFromUriLock = new object();
-        private static readonly ReadOnlyCollection<ResourceDictionary> EmptyResourceDictionaries
-            = new List<ResourceDictionary>().AsReadOnly();
+        private static readonly object _dictionariesFromUriLock = new object();
+        private static IReadOnlyCollection<ResourceDictionary> EmptyResourceDictionaries
+            => Array.Empty<ResourceDictionary>();
 
         #endregion
 
@@ -318,12 +317,12 @@ namespace System.Windows.Diagnostics
             return result.AsReadOnly();
         }
 
-        private static readonly ReadOnlyCollection<FrameworkElement> EmptyFrameworkElementList
-            = new List<FrameworkElement>().AsReadOnly();
-        private static readonly ReadOnlyCollection<FrameworkContentElement> EmptyFrameworkContentElementList
-            = new List<FrameworkContentElement>().AsReadOnly();
-        private static readonly ReadOnlyCollection<Application> EmptyApplicationList
-            = new List<Application>().AsReadOnly();
+        private static IReadOnlyCollection<FrameworkElement> EmptyFrameworkElementList
+            => Array.Empty<FrameworkElement>();
+        private static IReadOnlyCollection<FrameworkContentElement> EmptyFrameworkContentElementList
+            => Array.Empty<FrameworkContentElement>();
+        private static IReadOnlyCollection<Application> EmptyApplicationList
+            => Array.Empty<Application>();
 
         #endregion
 

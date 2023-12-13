@@ -18,7 +18,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using Microsoft.Win32;
 using System.IO.Packaging;
 using System.Windows;
@@ -51,14 +50,6 @@ namespace MS.Internal.AppModel
         ///     originatingUri = the current uri
         ///     destinationUri = the uri you are going to. 
         ///</summary> 
-        ///<SecurityNote>
-        /// Critical - gets access to critical resource (uri), calls critical code (launch browser)
-        /// TreatAsSafe because 
-        ///                     we consider navigates to http or http to the top-level browser as safe. 
-        ///                     we consider navigates to mailto as safe. 
-        ///                     for all other cases - we demand Unmanaged Code Permission 
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void SafeLaunchBrowserDemandWhenUnsafe(Uri originatingUri, Uri destinationUri, bool fIsTopLevel)
         {
             LaunchResult launched = LaunchResult.NotLaunched;
@@ -66,7 +57,6 @@ namespace MS.Internal.AppModel
             launched = SafeLaunchBrowserOnlyIfPossible(originatingUri, destinationUri, fIsTopLevel);
             if (launched == LaunchResult.NotLaunched)
             {
-                SecurityHelper.DemandUnmanagedCode();
                 UnsafeLaunchBrowser(destinationUri);
             }
         }
@@ -90,17 +80,6 @@ namespace MS.Internal.AppModel
         ///     This function is appropriate for use when we launch the browser from partial trust 
         ///     ( as it doesn't perform demands for the "unsafe" cases ) 
         ///</summary> 
-        ///<SecurityNote>
-        /// Critical - gets access to critical resource (uri), calls critical code (launch browser)
-        ///
-        /// TreatAsSafe because 
-        ///                     we consider navigates to http or http to the top-level browser as safe. 
-        ///                     we consider navigates to mailto as safe. 
-        ///
-        ///                     for all other cases - we don't launch the browser - and return a result
-        ///                     indicating that we didn't launch. 
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static LaunchResult SafeLaunchBrowserOnlyIfPossible(Uri originatingUri, Uri destinationUri, string targetName, bool fIsTopLevel)
         {
             LaunchResult launched = LaunchResult.NotLaunched;
@@ -120,33 +99,10 @@ namespace MS.Internal.AppModel
             //
             // The check of IsInitialViewerNavigation is necessary because viewer applications will probably
             // need to call Navigate on the URI they receive, but we want them to be able to do it in partial trust.
-            if ((!BrowserInteropHelper.IsInitialViewerNavigation &&
-                MS.Internal.PresentationFramework.SecurityHelper.CallerHasUserInitiatedNavigationPermission()) &&
+            if (!BrowserInteropHelper.IsInitialViewerNavigation &&
                   ((fIsTopLevel && isKnownScheme) || fIsMailTo))
             {
-                if (isKnownScheme)
-                {
-#if NETFX
-                    IBrowserCallbackServices ibcs = ( Application.Current != null ) ? Application.Current.BrowserCallbackServices : null ;
-                    if (ibcs != null)
-                    {
-                        launched = CanNavigateToUrlWithZoneCheck(originatingUri , destinationUri); 
-                        if ( launched == LaunchResult.Launched ) 
-                        {
-                            // resetting launched to NotLaunched here; if the assert succeeds
-                            // and ibcs.DelegateNavigation does not throw then we will set it to Launched.
-                            launched = LaunchResult.NotLaunched;
-                            // Browser app.
-                            // We need to see if this is the right behavior when clicking on a link in
-                            // a secondary window in a multi-window browser app 
-                            ibcs.DelegateNavigation( BindUriHelper.UriToString( destinationUri ), targetName, GetHeaders(destinationUri));   
-
-                            launched = LaunchResult.Launched ; 
-                        }                           
-                    }
-#endif
-                }
-                else if (fIsMailTo) // unnecessary if - but being paranoid. 
+                if (!isKnownScheme && fIsMailTo) // unnecessary if - but being paranoid. 
                 {
                     // Shell-Exec the browser to the mailto url. 
                     // assumed safe - because we're only allowing this for mailto urls. 
@@ -167,38 +123,14 @@ namespace MS.Internal.AppModel
 
         // This invokes the browser unsafely.  
         // Whoever is calling this function should do the right demands.
-        /// <SecurityNote>
-        /// Critical - gets access to critical resource (uri and browsercallback services), calls critical code (launch browser)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void UnsafeLaunchBrowser(Uri uri, string targetFrame = null)
         {
-#if NETFX
-            // This'll likely go into SafeLaunchBrowser() function.
-            if (Application.Current != null && Application.Current.CheckAccess())
-            {
-                IBrowserCallbackServices ibcs = Application.Current.BrowserCallbackServices;
-                if (ibcs != null)
-                {
-                    // Browser app.
-                    // TODO: See if this is the right behavior when clicking on a link in
-                    // a secondary window in a multi-window browser app - PS # 840726
-                    ibcs.DelegateNavigation(BindUriHelper.UriToString(uri), targetFrame, GetHeaders(uri));
-                    return;
-                }
-            }
-#endif
-
             ShellExecuteDefaultBrowser(uri);
         }
 
         /// <summary>
         /// Opens the default browser for the passed in Uri.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code (ShellExecuteEx)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void ShellExecuteDefaultBrowser(Uri uri)
         {
             UnsafeNativeMethods.ShellExecuteInfo sei = new UnsafeNativeMethods.ShellExecuteInfo();
@@ -219,7 +151,7 @@ namespace MS.Internal.AppModel
             }
             sei.lpFile = uri.ToString(); // It's safe to use Uri.ToString since there's an inheritance demand on it that prevents spoofing by subclasses.
             if (!UnsafeNativeMethods.ShellExecuteEx(sei))
-                throw new InvalidOperationException(SR.Get(SRID.FailToLaunchDefaultBrowser),
+                throw new InvalidOperationException(SR.FailToLaunchDefaultBrowser,
                     new System.ComponentModel.Win32Exception(/*uses the last Win32 error*/));
         }
 
@@ -251,14 +183,6 @@ namespace MS.Internal.AppModel
         //  Checks to see whether a navigation is considered a zone elevation. 
         //  Once a zone elevation is identified - calls into urlmon to check settings. 
         // 
-        ///<SecurityNote> 
-        ///     Critical - performs elevations to call IsFeatureEnabled; call critical method MUTZ
-        ///
-        ///     TreatAsSafe - information disclosed is whether a navigation is "safe" or not. 
-        ///                   considered ok to give out. you will be able to get this anyway by trapping exceptions
-        ///                   or seeing whether a navigation succeeded/failed. 
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static LaunchResult CanNavigateToUrlWithZoneCheck(Uri originatingUri, Uri destinationUri)
         {
             LaunchResult launchResult = LaunchResult.NotLaunched; // fail securely - assume this is the default. 
@@ -312,26 +236,7 @@ namespace MS.Internal.AppModel
                 //
                 // For a - we will say there is no cross-domain check.     
                 //     b - we'll assume InternetZone, and use Source. 
-
-                bool fTrusted = SecurityHelper.CheckUnmanagedCodePermission();
-
-                if (fTrusted)
-                {
-                    return LaunchResult.Launched;
-                }
-                else
-                {
-                    //
-                    //  If we didn't get a SourceUri, we'll assume internet zone. 
-                    //  And use Source for the uri of origin. 
-                    //  
-                    //  This isn't quite right - but the sourceUri is only used to show a message to the user. 
-                    //  Worse case is confusing user experience. ( this uri is not used in the elevation determination). 
-                    //
-
-                    sourceZone = NativeMethods.URLZONE_INTERNET;
-                    sourceUri = originatingUri;
-                }
+                return LaunchResult.Launched;
             }
 
             // <Notes from Trident>
@@ -399,10 +304,6 @@ namespace MS.Internal.AppModel
         ///     Calls the Urlmon IsFeatureZoneElevationEnabled which may pop UI based on settings. 
         /// functionally equivalent to the BlockNavigation: label in Trident's CanNavigateToUrlWithZoneCheck    
         ///</summary> 
-        ///<SecurityNote> 
-        ///     Critical - calls a function that has a SUC on it. ( CoIntenrnetIsFeatureZoneElevationEnabled)
-        ///</SecurityNote> 
-        [SecurityCritical]
         private static LaunchResult CheckBlockNavigation(Uri originatingUri, Uri destinationUri, bool fEnabled)
         {
             if (fEnabled)
@@ -434,12 +335,6 @@ namespace MS.Internal.AppModel
         }
 
         // Is ZoneElevation setting set to prompt ?     
-        ///<SecurityNote> 
-        ///     Critical - elevates to call ProcessUrlAction. 
-        ///     TreatAsSafe - information return indicates whether we will prompt for the current zone. 
-        ///                   considered ok to expose. 
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool IsZoneElevationSettingPrompt(Uri target)
         {
             Invariant.Assert(_secMgr != null);
@@ -451,34 +346,20 @@ namespace MS.Internal.AppModel
             unsafe
             {
                 String targetString = BindUriHelper.UriToString(target);
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert: 
-                try
-                {
-                    _secMgr.ProcessUrlAction(targetString,
-                                              NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
-                                              (byte*)&policy,
-                                              Marshal.SizeOf(typeof(int)),
-                                              null,
-                                              0,
-                                              NativeMethods.PUAF_NOUI,
-                                              0);
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
+
+                _secMgr.ProcessUrlAction(targetString,
+                                            NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
+                                            (byte*)&policy,
+                                            Marshal.SizeOf(typeof(int)),
+                                            null,
+                                            0,
+                                            NativeMethods.PUAF_NOUI,
+                                            0);
             }
 
             return (policy == NativeMethods.URLPOLICY_QUERY);
         }
 
-        ///<SecurityNote> 
-        /// Critical - elevates to call unmanaged code to set the security site. 
-        ///     The SecurityManager is a critical resource.
-        /// Safe: The Security Manager is used only within this class (not exposed). Just creating it has 
-        ///     no observable side effects.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSecurityManager()
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
@@ -496,58 +377,31 @@ namespace MS.Internal.AppModel
                         // This enables any dialogs popped to be modal to our window. 
                         // 
                         _secMgrSite = new SecurityMgrSite();
-                        new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert: 
-                        try
-                        {
-                            _secMgr.SetSecuritySite((NativeMethods.IInternetSecurityMgrSite)_secMgrSite);
-                        }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
+
+                        _secMgr.SetSecuritySite((NativeMethods.IInternetSecurityMgrSite)_secMgrSite);
                     }
                 }
             }
         }
 
 
-        ///<SecurityNote> 
-        /// Critical - elevates to call SetSecuritySite. 
-        /// TreatAsSafe - clearing the security site is considered safe. 
-        ///               worse that can happen is any urlmon prompts will be non-modal. 
-        ///</SecurityNote> 
 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void ClearSecurityManager()
         {
             if (_secMgr != null)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();  // BlessedAssert: 
-                try
+                lock (_lockObj)
                 {
-                    lock (_lockObj)
+                    if (_secMgr != null)
                     {
-                        if (_secMgr != null)
-                        {
-                            _secMgr.SetSecuritySite(null);
-                            _secMgrSite = null;
-                            _secMgr = null;
-                        }
+                        _secMgr.SetSecuritySite(null);
+                        _secMgrSite = null;
+                        _secMgr = null;
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAssert();
                 }
             }
         }
 
-        ///<SecurityNote> 
-        /// Critical - Calls the COM method. A URL's security zone is not a big secret, and in most cases it 
-        ///     can be inferred by just parsing the URL, but it's still information obtained under elevation,
-        ///     and thus we shouldn't leak it without a good reason.
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal static int MapUrlToZone(Uri url)
         {
             EnsureSecurityManager();
@@ -573,12 +427,8 @@ namespace MS.Internal.AppModel
 
         // Object to be used for locking.  Using typeof(Util) causes an FxCop
         // violation DoNotLockOnObjectsWithWeakIdentity
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
-        ///<SecurityNote> 
-        ///     Critical - requires an elevation to create. 
-        ///</SecurityNote> 
-        [SecurityCritical]
         private static UnsafeNativeMethods.IInternetSecurityManager _secMgr;
 
         private static SecurityMgrSite _secMgrSite;

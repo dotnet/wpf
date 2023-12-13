@@ -163,13 +163,8 @@ namespace System.Windows.Automation.Peers
         /// It returns the ItemAutomationPeer if it exist corresponding to the item otherwise it creates
         /// one and does add the Handle and parent info by calling TrySetParentInfo.
         /// </summary>
-        /// <SecurityNote>
-        /// Security Critical - Calls a Security Critical operation
-        /// SecurityTreatAsSafe - It's being called from this object which is real parent for the item peer.
-        /// </SecurityNote>
         /// <param name="item"></param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];
@@ -286,7 +281,7 @@ namespace System.Windows.Automation.Peers
 
             if (!treeViewItem.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             treeViewItem.IsExpanded = true;
@@ -302,7 +297,7 @@ namespace System.Windows.Automation.Peers
 
             if (!treeViewItem.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             treeViewItem.IsExpanded = false;
@@ -354,7 +349,7 @@ namespace System.Windows.Automation.Peers
             // If TreeView already has a selected item different from current - we cannot add to selection and throw
             if (treeView == null || (treeView.SelectedItem != null && treeView.SelectedContainer != Owner))
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
             ((TreeViewItem)Owner).IsSelected = true;
         }

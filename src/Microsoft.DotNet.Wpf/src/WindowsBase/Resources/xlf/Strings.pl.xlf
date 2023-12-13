@@ -1292,11 +1292,6 @@
         <target state="translated">Określony obiekt odwołania wywołuje konflikt ze wstępnie zdefiniowanym odwołaniem specyficznym dla elementu Package.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">Wartość parametru musi należeć do przedziału od „{0}” do „{1}”.</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Nagłówek o zmiennej długości strumienia licencji publikowania ma bajtów: {0}, co przekracza maksymalną liczbę bajtów wynoszącą {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwaKlasy, zestaw”.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

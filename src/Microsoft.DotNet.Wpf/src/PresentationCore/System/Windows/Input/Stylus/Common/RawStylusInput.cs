@@ -6,12 +6,10 @@ using System;
 using System.Collections;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -33,18 +31,12 @@ namespace System.Windows.Input.StylusPlugIns
             GeneralTransform        tabletToElementTransform,
             StylusPlugInCollection targetPlugInCollection)
         {
-            if (report == null)
-            {
-                throw new ArgumentNullException("report");
-            }
+            ArgumentNullException.ThrowIfNull(report);
             if (tabletToElementTransform.Inverse == null)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_MatrixNotInvertable), "tabletToElementTransform");
+                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
             }
-            if (targetPlugInCollection == null)
-            {
-                throw new ArgumentNullException("targetPlugInCollection");
-            }
+            ArgumentNullException.ThrowIfNull(targetPlugInCollection);
 
             // We should always see this GeneralTransform is frozen since we access this from multiple threads.
             System.Diagnostics.Debug.Assert(tabletToElementTransform.IsFrozen);
@@ -79,15 +71,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// Internal method called by StylusDevice to prevent two copies
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code accesses InputReport.InputSource
-        ///    TreatAsSafe: The method only gets a transform from PresentationSource and returns StylusPointCollection.
-        ///                 Those operations are considered safe. 
-        ///                 This method is called by:
-        ///                                 RawStylusInput.GetStylusPoints
-        ///                                 StylusDevice.UpdateEventStylusPoints(RawStylusInputReport, Boolean)
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal StylusPointCollection GetStylusPoints(GeneralTransform transform)
         {
             if (_stylusPoints == null)
@@ -99,7 +82,10 @@ namespace System.Windows.Input.StylusPlugIns
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                group.Children.Add(transform);
+                if(transform != null)
+                {
+                    group.Children.Add(transform);
+                }
                 return new StylusPointCollection(_report.StylusPointDescription, _report.GetRawPacketData(), group, Matrix.Identity);
             }
             else
@@ -115,29 +101,18 @@ namespace System.Windows.Input.StylusPlugIns
         ///     Callers must have Unmanaged code permission to call this API.
         /// </remarks>
         /// <param name="stylusPoints">stylusPoints</param>
-        /// <SecurityNote>
-        ///     Critical : Callers must have Unmanaged code permission to call this API.
-        ///     Safe     : Demands unmanaged code permission
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void SetStylusPoints(StylusPointCollection stylusPoints)
         {
-            // To modify the points we require Unmanaged code permission.
-            SecurityHelper.DemandUnmanagedCode();
-            
-            if (null == stylusPoints)
-            {
-                throw new ArgumentNullException("stylusPoints");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPoints);
 
             if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
                                                         _report.StylusPointDescription))
             {
-                throw new ArgumentException(SR.Get(SRID.IncompatibleStylusPointDescriptions), "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
             }
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_StylusPointsCantBeEmpty), "stylusPoints");
+                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, "stylusPoints");
             }
 
             _stylusPoints = stylusPoints.Clone();
@@ -151,7 +126,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             if (_currentNotifyPlugIn == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Stylus_CanOnlyCallForDownMoveOrUp));
+                throw new InvalidOperationException(SR.Stylus_CanOnlyCallForDownMoveOrUp);
             }
             if (_customData == null)
             {

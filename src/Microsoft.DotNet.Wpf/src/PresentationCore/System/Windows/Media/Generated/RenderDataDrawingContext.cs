@@ -25,9 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Media
 {
@@ -44,11 +42,6 @@ namespace System.Windows.Media
         /// <param name="pen"> The Pen with which to stroke the line. </param>
         /// <param name="point0"> The start Point for the line. </param>
         /// <param name="point1"> The end Point for the line. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawLine(
             Pen pen,
             Point point0,
@@ -98,11 +91,6 @@ namespace System.Windows.Media
         /// <param name="point0Animations"> Optional AnimationClock for point0. </param>
         /// <param name="point1"> The end Point for the line. </param>
         /// <param name="point1Animations"> Optional AnimationClock for point1. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawLine(
             Pen pen,
             Point point0,
@@ -164,11 +152,6 @@ namespace System.Windows.Media
         ///     This is optional, and can be null, in which case no stroke is performed.
         /// </param>
         /// <param name="rectangle"> The Rect to fill and/or stroke. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRectangle(
             Brush brush,
             Pen pen,
@@ -223,11 +206,6 @@ namespace System.Windows.Media
         /// </param>
         /// <param name="rectangle"> The Rect to fill and/or stroke. </param>
         /// <param name="rectangleAnimations"> Optional AnimationClock for rectangle. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRectangle(
             Brush brush,
             Pen pen,
@@ -293,11 +271,6 @@ namespace System.Windows.Media
         ///     The radius in the Y dimension of the rounded corners of this
         ///     rounded Rect.  This value will be clamped to the range [0..rectangle.Height/2].
         /// </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRoundedRectangle(
             Brush brush,
             Pen pen,
@@ -366,11 +339,6 @@ namespace System.Windows.Media
         ///     rounded Rect.  This value will be clamped to the range [0..rectangle.Height/2].
         /// </param>
         /// <param name="radiusYAnimations"> Optional AnimationClock for radiusY. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawRoundedRectangle(
             Brush brush,
             Pen pen,
@@ -450,11 +418,6 @@ namespace System.Windows.Media
         ///     The radius in the Y dimension of the ellipse.
         ///     The absolute value of the radius provided will be used.
         /// </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawEllipse(
             Brush brush,
             Pen pen,
@@ -525,11 +488,6 @@ namespace System.Windows.Media
         ///     The absolute value of the radius provided will be used.
         /// </param>
         /// <param name="radiusYAnimations"> Optional AnimationClock for radiusY. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawEllipse(
             Brush brush,
             Pen pen,
@@ -599,11 +557,6 @@ namespace System.Windows.Media
         ///     This is optional, and can be null, in which case no stroke is performed.
         /// </param>
         /// <param name="geometry"> The Geometry to fill and/or stroke. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawGeometry(
             Brush brush,
             Pen pen,
@@ -654,11 +607,6 @@ namespace System.Windows.Media
         /// <param name="rectangle">
         ///     The Rect into which the ImageSource will be fit.
         /// </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawImage(
             ImageSource imageSource,
             Rect rectangle)
@@ -708,11 +656,6 @@ namespace System.Windows.Media
         ///     The Rect into which the ImageSource will be fit.
         /// </param>
         /// <param name="rectangleAnimations"> Optional AnimationClock for rectangle. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawImage(
             ImageSource imageSource,
             Rect rectangle,
@@ -762,11 +705,6 @@ namespace System.Windows.Media
         ///     Foreground brush to draw the GlyphRun with.
         /// </param>
         /// <param name="glyphRun"> The GlyphRun to draw.  </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawGlyphRun(
             Brush foregroundBrush,
             GlyphRun glyphRun)
@@ -809,11 +747,6 @@ namespace System.Windows.Media
         ///     Draw a Drawing by appending a sub-Drawing to the current Drawing.
         /// </summary>
         /// <param name="drawing"> The drawing to draw. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawDrawing(
             Drawing drawing)
         {
@@ -858,11 +791,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="player"> The MediaPlayer to draw. </param>
         /// <param name="rectangle"> The Rect into which the media will be fit. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawVideo(
             MediaPlayer player,
             Rect rectangle)
@@ -910,11 +838,6 @@ namespace System.Windows.Media
         /// <param name="player"> The MediaPlayer to draw. </param>
         /// <param name="rectangle"> The Rect into which the media will be fit. </param>
         /// <param name="rectangleAnimations"> Optional AnimationClock for rectangle. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void DrawVideo(
             MediaPlayer player,
             Rect rectangle,
@@ -962,11 +885,6 @@ namespace System.Windows.Media
         ///     corresponding Pop call.
         /// </summary>
         /// <param name="clipGeometry"> The Geometry to which we will clip. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushClip(
             Geometry clipGeometry)
         {
@@ -1006,11 +924,6 @@ namespace System.Windows.Media
         ///     until the corresponding Pop call.
         /// </summary>
         /// <param name="opacityMask"> The opacity mask </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacityMask(
             Brush opacityMask)
         {
@@ -1052,11 +965,6 @@ namespace System.Windows.Media
         /// <param name="opacity">
         ///     The opacity with which to blend - 0 is transparent, 1 is opaque.
         /// </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacity(
             Double opacity)
         {
@@ -1099,11 +1007,6 @@ namespace System.Windows.Media
         ///     The opacity with which to blend - 0 is transparent, 1 is opaque.
         /// </param>
         /// <param name="opacityAnimations"> Optional AnimationClock for opacity. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushOpacity(
             Double opacity,
             AnimationClock opacityAnimations)
@@ -1147,11 +1050,6 @@ namespace System.Windows.Media
         ///     Pop.
         /// </summary>
         /// <param name="transform"> The Transform to push. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushTransform(
             Transform transform)
         {
@@ -1191,11 +1089,6 @@ namespace System.Windows.Media
         ///     corresponding Pop.
         /// </summary>
         /// <param name="guidelines"> The GuidelineSet to push. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void PushGuidelineSet(
             GuidelineSet guidelines)
         {
@@ -1274,11 +1167,6 @@ namespace System.Windows.Media
         ///     Explicitly push one horizontal guideline.
         /// </summary>
         /// <param name="coordinate"> The coordinate of leading guideline. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void PushGuidelineY1(
             Double coordinate)
         {
@@ -1322,11 +1210,6 @@ namespace System.Windows.Media
         /// <param name="offsetToDrivenCoordinate">
         ///     The offset from leading guideline to driven guideline.
         /// </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void PushGuidelineY2(
             Double leadingCoordinate,
             Double offsetToDrivenCoordinate)
@@ -1369,11 +1252,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="effect"> The BitmapEffect to push. </param>
         /// <param name="effectInput"> The BitmapEffectInput. </param>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         public override void PushEffect(
             BitmapEffect effect,
@@ -1417,11 +1295,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Pop
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical:This code calls into unsafe code
-        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public override void Pop(
             )
         {
@@ -1429,7 +1302,7 @@ namespace System.Windows.Media
 
             if (_stackDepth <= 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DrawingContext_TooManyPops));
+                throw new InvalidOperationException(SR.DrawingContext_TooManyPops);
             }
 
         #if DEBUG

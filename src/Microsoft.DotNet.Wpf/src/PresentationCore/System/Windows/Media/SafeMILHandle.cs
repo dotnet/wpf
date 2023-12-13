@@ -23,11 +23,6 @@ namespace System.Windows.Media
         /// set the handle with SetHandle. SafeMILHandle owns the release
         /// of the handle.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This derives from a class that has a link demand and inheritance demand
-        ///    TreatAsSafe: Ok to call constructor
-        ///  </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal SafeMILHandle() : base(true) 
         { 
         }
@@ -36,10 +31,6 @@ namespace System.Windows.Media
         /// Use this constructor if the handle exists at construction time.
         /// SafeMILHandle owns the release of the parameter.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This derives from a class that has a link demand and inheritance demand
-        ///  </SecurityNote>
-        [SecurityCritical]
         internal SafeMILHandle(IntPtr handle) : base(true) 
         {
             SetHandle(handle);
@@ -48,11 +39,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Change our size to the new size specified
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code calls into AddMemoryPressure and RemoveMemoryPressure
-        ///                 both of which have link demands. It is used to keep memory around
-        ///  </SecurityNote>
-        [SecurityCritical]
         internal void UpdateEstimatedSize(long estimatedSize)
         {
             if (_gcPressure != null)
@@ -81,11 +67,6 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, not treat as safe because you must
-        ///            validate that handle is a valid COM object.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref handle);

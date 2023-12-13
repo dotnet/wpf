@@ -18,7 +18,6 @@ using System.IO.Packaging;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -39,14 +38,6 @@ namespace MS.Internal.FontCache
     {
         public FontSourceCollectionFactory() { }
 
-        /// <SecurityNote>
-        /// Critical - Calls FontSourceCollection security critical ctor
-        /// Safe     - The uriString is a user input and should not expose security critical info
-        ///            since the user provides this info. Also we never call the ctor with 
-        ///            isWindowsFonts = true. Thus it is safe to construct a FontSourceCollection 
-        ///            from a user string because the user string is treated as untrusted.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public IFontSourceCollection Create(string uriString)
         {
             return new FontSourceCollection(new Uri(uriString), false);
@@ -58,34 +49,16 @@ namespace MS.Internal.FontCache
     /// </summary>
     internal class FontSourceCollection : IFontSourceCollection
     {
-        /// <SecurityNote>
-        /// Critical - Calls into security critical Initialize() method.
-        /// </SecurityNote>
-        [SecurityCritical]
         public FontSourceCollection(Uri folderUri, bool isWindowsFonts)
         {
             Initialize(folderUri, isWindowsFonts, false);
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls into security critical Initialize() method.
-        /// </SecurityNote>
-        [SecurityCritical]
         public FontSourceCollection(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
         {
             Initialize(folderUri, isWindowsFonts, tryGetCompositeFontsOnly);
         }
 
-        /// <SecurityNote>
-        /// Critical - The folderUri parameter is critical as it may contain privileged information 
-        ///            about the file system (i.e., location of Windows Fonts); it is assigned to 
-        ///            the _uri field which is declared critical.
-        /// 
-        ///            The isWindowsFonts parameter is critical for set as it is used to make a 
-        ///            security decision (i.e., whether to assert read access); it is assigned to 
-        ///            the _isWindowsFonts field which is declared critical.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
         {
             _uri = folderUri;
@@ -109,11 +82,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses critical _uri and WindowsFontsUriObject
-        ///     TreatAsSafe: only does comparisons to determine if _uri is the system dir
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InitializeDirectoryProperties()
         {
             _isFileSystemFolder = false;
@@ -144,14 +112,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - as this allows you list files in windows font directory
-        ///            and returns the file list.
-        /// Safe     - This only does an elevation for WindowsFont directory which is safe,
-        ///            and relevant data is already protected via FontSource methods.       
-        ///            
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetFontSources()
         {
             if (_fontSources != null)
@@ -168,64 +128,40 @@ namespace MS.Internal.FontCache
                     {
                         if (_isWindowsFonts)
                         {
-                            PermissionSet permissionSet = new PermissionSet(null);
-
-                            // Read and path discovery permission for the %windir%\font path.
-                            permissionSet.AddPermission(new FileIOPermission(
-                                FileIOPermissionAccess.Read | FileIOPermissionAccess.PathDiscovery,
-                                Util.WindowsFontsUriObject.LocalPath));
-
-                            // Registry read permissions for the Fonts system registry entry.
-                            permissionSet.AddPermission(new RegistryPermission(
-                                RegistryPermissionAccess.Read,
-                                InstalledWindowsFontsRegistryKeyFullPath));
-
-                            permissionSet.Assert(); // BlessedAssert
-
-                            try
+                            if (_tryGetCompositeFontsOnly)
                             {
-                                if (_tryGetCompositeFontsOnly)
-                                {
-                                    files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                                    isOnlyCompositeFontFiles = true;
-                                }
-                                else
-                                {
-                                    // fontPaths accumulates font file paths obtained from the registry and the file system
-                                    // This collection is a set, i.e. only keys matter, not values.
-                                    Dictionary<string, object> fontPaths = new Dictionary<string, object>(512, StringComparer.OrdinalIgnoreCase);
+                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                                isOnlyCompositeFontFiles = true;
+                            }
+                            else
+                            {
+                                // fontPaths accumulates font file paths obtained from the registry and the file system
+                                // This collection is a set, i.e. only keys matter, not values.
+                                HashSet<string> fontPaths = new HashSet<string>(512, StringComparer.OrdinalIgnoreCase);
 
-                                    using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
+                                using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
+                                {
+                                    // The registry key should be present on a valid Windows installation.
+                                    Invariant.Assert(fontsKey != null);
+
+                                    foreach (string fontValue in fontsKey.GetValueNames())
                                     {
-                                        // The registry key should be present on a valid Windows installation.
-                                        Invariant.Assert(fontsKey != null);
-
-                                        foreach (string fontValue in fontsKey.GetValueNames())
+                                        string fileName = fontsKey.GetValue(fontValue) as string;
+                                        if (fileName != null)
                                         {
-                                            string fileName = fontsKey.GetValue(fontValue) as string;
-                                            if (fileName != null)
-                                            {
-                                                // See if the path doesn't contain any directory information.
-                                                // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.
-                                                if (Path.GetFileName(fileName) == fileName)
-                                                    fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
+                                            // See if the path doesn't contain any directory information.
+                                            // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.
+                                            if (Path.GetFileName(fileName) == fileName)
+                                                fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
 
-                                                fontPaths[fileName] = null;
-                                            }
+                                            fontPaths.Add(fileName);
                                         }
                                     }
-
-                                    foreach (string file in Directory.GetFiles(_uri.LocalPath))
-                                    {
-                                        fontPaths[file] = null;
-                                    }
-                                    files = fontPaths.Keys;
                                 }
-                            }
-                            finally
-                            {
-                                if (_isWindowsFonts)
-                                    CodeAccessPermission.RevertAssert();
+
+                                fontPaths.UnionWith(Directory.EnumerateFiles(_uri.LocalPath));
+
+                                files = fontPaths;
                             }
 }
                         else
@@ -321,17 +257,8 @@ namespace MS.Internal.FontCache
         #endregion
     
 
-        /// <SecurityNote>
-        /// Critical - fontUri can contain information about local file system.
-        /// </SecurityNote>
-        [SecurityCritical]
         private Uri                         _uri;
 
-        /// <SecurityNote>
-        /// Critical - this value is used to make security decisions (i.e., whether to do an Assert)
-        ///            so it can only be set by critical code.
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool                        _isWindowsFonts;
 
         // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.

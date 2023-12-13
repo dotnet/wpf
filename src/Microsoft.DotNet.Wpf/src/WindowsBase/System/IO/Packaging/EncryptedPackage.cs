@@ -63,8 +63,7 @@ namespace System.IO.Packaging
             CryptoProvider cryptoProvider
             )
         {
-            if (envelopeFileName == null)
-                throw new ArgumentNullException("envelopeFileName");
+            ArgumentNullException.ThrowIfNull(envelopeFileName);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
 
@@ -101,8 +100,7 @@ namespace System.IO.Packaging
             CryptoProvider cryptoProvider
             )
         {
-            if (envelopeStream == null)
-                throw new ArgumentNullException("envelopeStream");
+            ArgumentNullException.ThrowIfNull(envelopeStream);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
 
@@ -115,7 +113,7 @@ namespace System.IO.Packaging
             //
             if (_root.OpenAccess != FileAccess.ReadWrite)
             {
-                throw new NotSupportedException(SR.Get(SRID.StreamNeedsReadWriteAccess));
+                throw new NotSupportedException(SR.StreamNeedsReadWriteAccess);
             }
 
             InitializeRMForCreate(publishLicense, cryptoProvider);
@@ -148,11 +146,8 @@ namespace System.IO.Packaging
             CryptoProvider cryptoProvider
             )
         {
-            if (envelopeFileName == null)
-                throw new ArgumentNullException("envelopeFileName");
-
-            if (packageStream == null)
-                throw new ArgumentNullException("packageStream");
+            ArgumentNullException.ThrowIfNull(envelopeFileName);
+            ArgumentNullException.ThrowIfNull(packageStream);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
 
@@ -194,11 +189,8 @@ namespace System.IO.Packaging
             CryptoProvider cryptoProvider
             )
         {
-            if (envelopeStream == null)
-                throw new ArgumentNullException("envelopeStream");
-
-            if (packageStream == null)
-                throw new ArgumentNullException("packageStream");
+            ArgumentNullException.ThrowIfNull(envelopeStream);
+            ArgumentNullException.ThrowIfNull(packageStream);
 
             ThrowIfRMEncryptionInfoInvalid(publishLicense, cryptoProvider);
 
@@ -211,7 +203,7 @@ namespace System.IO.Packaging
             //
             if (_root.OpenAccess != FileAccess.ReadWrite)
             {
-                throw new NotSupportedException(SR.Get(SRID.StreamNeedsReadWriteAccess));
+                throw new NotSupportedException(SR.StreamNeedsReadWriteAccess);
             }
 
             InitializeRMForCreate(publishLicense, cryptoProvider);
@@ -239,8 +231,7 @@ namespace System.IO.Packaging
             FileShare sharing
             )
         {
-            if (envelopeFileName == null)
-                throw new ArgumentNullException("envelopeFileName");
+            ArgumentNullException.ThrowIfNull(envelopeFileName);
 
             _root = StorageRoot.Open(
                                     envelopeFileName,
@@ -264,8 +255,7 @@ namespace System.IO.Packaging
             Stream envelopeStream
             )
         {
-            if (envelopeStream == null)
-                throw new ArgumentNullException("envelopeStream");
+            ArgumentNullException.ThrowIfNull(envelopeStream);
 
             _root = StorageRoot.CreateOnStream(envelopeStream, _defaultFileModeForOpen);
 
@@ -494,8 +484,7 @@ namespace System.IO.Packaging
         {
             bool retval = false;
 
-            if (fileName == null)
-                throw new ArgumentNullException("fileName");
+            ArgumentNullException.ThrowIfNull(fileName);
 
             StorageRoot root = null;
 
@@ -552,8 +541,7 @@ namespace System.IO.Packaging
             Stream stream
             )
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            ArgumentNullException.ThrowIfNull(stream);
 
             bool retval = false;
             StorageRoot root = null;
@@ -921,7 +909,7 @@ namespace System.IO.Packaging
             StreamInfo siPackage = new StreamInfo(_root, PackageStreamName);
             if (!siPackage.InternalExists())
             {
-                throw new FileFormatException(SR.Get(SRID.PackageNotFound));
+                throw new FileFormatException(SR.PackageNotFound);
             }
 
             //If the StreamInfo exists we go on to check if correct transform has been
@@ -937,13 +925,12 @@ namespace System.IO.Packaging
             {
                 string id = dataTransform.TransformIdentifier as string;
                 if (id != null &&
-                        String.CompareOrdinal(id.ToUpperInvariant(),
-                            RightsManagementEncryptionTransform.ClassTransformIdentifier.ToUpperInvariant()) == 0)
+                    string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     // Do not allow more than one RM Transform
                     if (rmet != null)
                     {
-                        throw new FileFormatException(SR.Get(SRID.MultipleRightsManagementEncryptionTransformFound));
+                        throw new FileFormatException(SR.MultipleRightsManagementEncryptionTransformFound);
                     }
 
                     rmet = dataTransform as RightsManagementEncryptionTransform;
@@ -952,7 +939,7 @@ namespace System.IO.Packaging
 
             if (rmet == null)
             {
-                throw new FileFormatException(SR.Get(SRID.RightsManagementEncryptionTransformNotFound));
+                throw new FileFormatException(SR.RightsManagementEncryptionTransformNotFound);
             }
 
             //
@@ -1005,7 +992,7 @@ namespace System.IO.Packaging
                 {
                     //Error. This package is created in InitForCreate while creating EncryptedPackageEnvelope.
                     //If it does not exist, throw an error.
-                    throw new FileFormatException(SR.Get(SRID.PackageNotFound));
+                    throw new FileFormatException(SR.PackageNotFound);
                 }
             }
         }
@@ -1120,7 +1107,7 @@ namespace System.IO.Packaging
         CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.EncryptedPackageEnvelopeDisposed));
+                throw new ObjectDisposedException(null, SR.EncryptedPackageEnvelopeDisposed);
         }
 
         /// <summary>
@@ -1176,12 +1163,9 @@ namespace System.IO.Packaging
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider)
         {
-            if (publishLicense == null)
-                throw new ArgumentNullException("publishLicense");
-
-            if (cryptoProvider == null)
-                throw new ArgumentNullException("cryptoProvider");
-}
+            ArgumentNullException.ThrowIfNull(publishLicense);
+            ArgumentNullException.ThrowIfNull(cryptoProvider);
+        }
 
         #endregion Private Methods
 

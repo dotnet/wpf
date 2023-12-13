@@ -21,6 +21,7 @@
 namespace System.Windows.Documents
 {
     using MS.Internal; // Invariant
+    using MS.Internal.IO.Packaging;
     using System;
     using System.Xml;
     using System.Windows.Markup; // TypeConvertContext, ParserContext
@@ -191,10 +192,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static string SaveRange(ITextRange range, ref Stream stream, bool useFlowDocumentAsRoot, bool preserveTextElements)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException("range");
-            }
+            ArgumentNullException.ThrowIfNull(range);
 
             // Create the wpf package in the stream
             WpfPayload wpfPayload = new WpfPayload(/*package:*/null);
@@ -221,7 +219,7 @@ namespace System.Windows.Documents
                     PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                     // Write the part's content
-                    Stream xamlPartStream = xamlEntryPart.GetStream();
+                    Stream xamlPartStream = xamlEntryPart.GetSeekableStream();
                     using (xamlPartStream)
                     {
                         StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -243,10 +241,6 @@ namespace System.Windows.Documents
 
         // Creates a WPF container in new MemoryStream and places an image into it
         // with the simplest xaml part referring to it (wrapped into InlineUIContainer).
-        /// <SecurityNote>
-        /// Critical - calls Critical CreateImagePart with parameters coming from untrusted sources.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static MemoryStream SaveImage(BitmapSource bitmapSource, string imageContentType)
         {
             MemoryStream stream = new MemoryStream();
@@ -265,7 +259,7 @@ namespace System.Windows.Documents
                 PackagePart xamlEntryPart = wpfPayload.CreateWpfEntryPart();
 
                 // Write the part's content
-                Stream xamlPartStream = xamlEntryPart.GetStream();
+                Stream xamlPartStream = xamlEntryPart.GetSeekableStream();
                 using (xamlPartStream)
                 {
                     StreamWriter xamlPartWriter = new StreamWriter(xamlPartStream);
@@ -317,10 +311,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal static object LoadElement(Stream stream)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             object xamlObject;
 
@@ -338,8 +329,8 @@ namespace System.Windows.Documents
                     // Uniqueness is required to make sure that cached images are not mixed up.
                     int newWpfPayoutCount = Interlocked.Increment(ref _wpfPayloadCount);
                     Uri payloadUri = new Uri("payload://wpf" + newWpfPayoutCount, UriKind.Absolute);
-                    Uri entryPartUri = PackUriHelper.Create(payloadUri, xamlEntryPart.Uri); // gives an absolute uri of the entry part
-                    Uri packageUri = PackUriHelper.GetPackageUri(entryPartUri); // extracts package uri from combined package+part uri
+                    Uri entryPartUri = System.IO.Packaging.PackUriHelper.Create(payloadUri, xamlEntryPart.Uri); // gives an absolute uri of the entry part
+                    Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(entryPartUri); // extracts package uri from combined package+part uri
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
 
                     // Set this temporary uri as a base uri for xaml parser
@@ -347,8 +338,7 @@ namespace System.Windows.Documents
                     parserContext.BaseUri = entryPartUri;
 
                     // Call xaml parser
-                    bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                    xamlObject = XamlReader.Load(xamlEntryPart.GetStream(), parserContext, useRestrictiveXamlReader);
+                    xamlObject = XamlReader.Load(xamlEntryPart.GetSeekableStream(), parserContext, useRestrictiveXamlReader: true);
 
                     // Remove the temporary uri from the PackageStore
                     PackageStore.RemovePackage(packageUri);
@@ -387,7 +377,7 @@ namespace System.Windows.Documents
             PackagePart xamlEntryPart = this.GetWpfEntryPart();
             if (xamlEntryPart == null)
             {
-                throw new XamlParseException(SR.Get(SRID.TextEditorCopyPaste_EntryPartIsMissingInXamlPackage));
+                throw new XamlParseException(SR.TextEditorCopyPaste_EntryPartIsMissingInXamlPackage);
             }
 
             //  Add more validation for package structure
@@ -449,11 +439,6 @@ namespace System.Windows.Documents
         // Creates relationships from the given part to all images currently stored in _images array.
         // This method is supposed to be called at the end of each sourcePart processing
         // when _images array still contains a list of all images referenced from this part.
-        /// <SecurityNote>
-        /// Critical - calls Critical CreateImagePart, which is Critical.
-        /// TreatAsSafe - images passed to CreateImagePart are part of the payload.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CreateComponentParts(PackagePart sourcePart)
         {
             if (_images != null)
@@ -474,10 +459,6 @@ namespace System.Windows.Documents
         }
 
         // Creates a part containing an image with a relationship to it from a sourcePart
-        /// <SecurityNote>
-        /// Critical - calls BitmapEncoder.Save, which LinkDemand's.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void CreateImagePart(PackagePart sourcePart, BitmapSource imageSource, string imageContentType, int imageIndex)
         {
             // Generate a new unique image part name
@@ -497,7 +478,7 @@ namespace System.Windows.Documents
             bitmapEncoder.Frames.Add(BitmapFrame.Create(imageSource));
 
             // Save encoded image data into the image part in the package
-            Stream imageStream = imagePart.GetStream();
+            Stream imageStream = imagePart.GetSeekableStream();
             using (imageStream)
             {
                 bitmapEncoder.Save(imageStream);
@@ -509,10 +490,7 @@ namespace System.Windows.Documents
         // from the package - from its top level directory.
         internal string AddImage(Image image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException("image");
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             if (image.Source == null)
             {
@@ -521,7 +499,7 @@ namespace System.Windows.Documents
 
             if (string.IsNullOrEmpty(image.Source.ToString()))
             {
-                throw new ArgumentException(SR.Get(SRID.WpfPayload_InvalidImageSource));
+                throw new ArgumentException(SR.WpfPayload_InvalidImageSource);
             }
 
             if (_images == null)
@@ -655,11 +633,6 @@ namespace System.Windows.Documents
         }
 
         // Returns true if image bitmap data in memory aree the same instance for the both images
-        /// <SecurityNote>
-        /// Critical - calls BitsPerPixel, which LinkDemand's and returns info that's not supposed to be disclosed in partial trust scenarios.
-        /// TreatAsSafe - BitsPerPixel's returned information is not disclosed, just used for comparing images. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ImagesAreIdentical(BitmapSource imageSource1, BitmapSource imageSource2)
         {
             // First compare images as objects - the luckiest case is when it's the same object
@@ -710,7 +683,7 @@ namespace System.Windows.Documents
             PackagePart part = this.CreateWpfEntryPart();
 
             // Return a stream opened for writing an image data
-            return part.GetStream();
+            return part.GetSeekableStream();
         }
 
         internal Stream CreateImageStream(int imageCount, string contentType, out string imagePartUriString)
@@ -732,7 +705,7 @@ namespace System.Windows.Documents
             imagePartUriString = GetImageReference(imagePartUriString);
 
             // Return a stream opened for writing an image data
-            return imagePart.GetStream();
+            return imagePart.GetSeekableStream();
         }
 
         internal Stream GetImageStream(string imageSourceString)
@@ -741,7 +714,7 @@ namespace System.Windows.Documents
             imageSourceString = imageSourceString.Substring(1); // cut the leading dot out
             Uri imagePartUri = new Uri(XamlPayloadDirectory + imageSourceString, UriKind.Relative);
             PackagePart imagePart = _package.GetPart(imagePartUri);
-            return imagePart.GetStream();
+            return imagePart.GetSeekableStream();
         }
 
         // -------------------------------------------------------------

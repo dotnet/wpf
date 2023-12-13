@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,23 +18,6 @@ using System.Collections.Concurrent;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// SchemaContexts can potentially be shared between multiple callers in an AppDomain, including
-    /// both full and partial trust callers. To be safe for sharing, the default implementation should
-    /// be idempotent and order-independent--i.e. functionally immutable.
-    ///
-    /// Technically, we don't guarantee these properties (they're not enforced by the runtime), but
-    /// we should never knowingly break them.
-    ///
-    /// This means two things:
-    /// 1. No public mutability.
-    ///    Derived classes can potentially be mutable, but the base implementation should not be.
-    /// 2. No externally observable side effects from lookups.
-    ///    This means that all cached data should be generally applicable; it can't depend on any
-    ///    input other than the ctor arguments and AppDomain state.
-    ///    (For a subtle example of this, see the security note in Initialize().)
-    /// These principles apply to all classes in the schema hierarchy (XamlType, XamlMember, etc).
-    /// </SecurityNote>
     /// <remarks>
     /// This class, and the closure of its references (i.e. XamlType, XamlMember, etc) are all
     /// thread-safe in their base implementations. Derived implementations can choose whether or not
@@ -153,10 +136,7 @@ namespace System.Xaml
 
         public virtual string GetPreferredPrefix(string xmlns)
         {
-            if (xmlns == null)
-            {
-                throw new ArgumentNullException(nameof(xmlns));
-            }
+            ArgumentNullException.ThrowIfNull(xmlns);
             UpdateXmlNsInfo();
             if (_preferredPrefixes == null)
             {
@@ -267,14 +247,8 @@ namespace System.Xaml
 
         public virtual XamlDirective GetXamlDirective(string xamlNamespace, string name)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
 
             if (XamlLanguage.XamlNamespaces.Contains(xamlNamespace))
             {
@@ -289,17 +263,14 @@ namespace System.Xaml
 
         public XamlType GetXamlType(XamlTypeName xamlTypeName)
         {
-            if (xamlTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(xamlTypeName));
-            }
+            ArgumentNullException.ThrowIfNull(xamlTypeName);
             if (xamlTypeName.Name == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
             if (xamlTypeName.Namespace == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
 
             XamlType[] typeArgs = null;
@@ -310,7 +281,7 @@ namespace System.Xaml
                 {
                     if (xamlTypeName.TypeArguments[i] == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
                     if (typeArgs[i] == null)
@@ -324,21 +295,15 @@ namespace System.Xaml
 
         protected internal virtual XamlType GetXamlType(string xamlNamespace, string name, params XamlType[] typeArguments)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
+            ArgumentNullException.ThrowIfNull(name);
             if (typeArguments != null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
                     if (typeArg == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CollectionCannotContainNulls, "typeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
                     if (typeArg.UnderlyingType == null)
                     {
@@ -399,10 +364,7 @@ namespace System.Xaml
         // Note: this method doesn't apply transitive subsuming, the caller is responsible for doing that.
         public virtual bool TryGetCompatibleXamlNamespace(string xamlNamespace, out string compatibleNamespace)
         {
-            if (xamlNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(xamlNamespace));
-            }
+            ArgumentNullException.ThrowIfNull(xamlNamespace);
 
             // Note: this method has order-dependent behavior for backcompat.
             // When we look up a namespace, we throw if it has conflicting XmlnsCompatAttributes.
@@ -486,7 +448,7 @@ namespace System.Xaml
                     {
                         if (result != null && result != newNs)
                         {
-                            throw new XamlSchemaException(SR.Get(SRID.DuplicateXmlnsCompatAcrossAssemblies,
+                            throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
                         }
                         result = newNs;
@@ -530,7 +492,7 @@ namespace System.Xaml
             get
             {
                 if (_masterTypeList == null)
-                    Interlocked.CompareExchange(ref _masterTypeList, CreateDictionary<Type, XamlType>(ReferenceEqualityComparer<Type>.Singleton), null);
+                    Interlocked.CompareExchange(ref _masterTypeList, CreateDictionary<Type, XamlType>(ReferenceEqualityComparer.Instance), null);
                 return _masterTypeList;
             }
         }
@@ -559,15 +521,14 @@ namespace System.Xaml
 
         public virtual XamlType GetXamlType(Type type)
         {
+            ArgumentNullException.ThrowIfNull(type);
+
             return GetXamlType(type, XamlLanguage.TypeAlias(type));
         }
 
         internal XamlType GetXamlType(Type type, string alias)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
             XamlType xamlType = null;
             if (!MasterTypeList.TryGetValue(type, out xamlType))
             {
@@ -584,10 +545,7 @@ namespace System.Xaml
         /// </summary>
         internal Dictionary<string, SpecialBracketCharacters> InitBracketCharacterCacheForType(XamlType type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            ArgumentNullException.ThrowIfNull(type);
 
             Dictionary<string, SpecialBracketCharacters> bracketCharacterCache = null;
             if (type.IsMarkupExtension)
@@ -700,7 +658,7 @@ namespace System.Xaml
         #region Settings
 
         // Unchanging, initialized in ctor
-        private readonly XamlSchemaContextSettings _settings = null;
+        private readonly XamlSchemaContextSettings _settings;
 
         public bool SupportMarkupExtensionsWithDuplicateArity
         {
@@ -745,7 +703,7 @@ namespace System.Xaml
             get
             {
                 if (_xmlnsInfo == null)
-                    Interlocked.CompareExchange(ref _xmlnsInfo, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer<Assembly>.Singleton), null);
+                    Interlocked.CompareExchange(ref _xmlnsInfo, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 return _xmlnsInfo;
             }
         }
@@ -783,7 +741,7 @@ namespace System.Xaml
             {
                 if (_xmlnsInfoForUnreferencedAssemblies == null)
                 {
-                    Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer<Assembly>.Singleton), null);
+                    Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 }
                 return _xmlnsInfoForUnreferencedAssemblies;
             }
@@ -1191,8 +1149,10 @@ namespace System.Xaml
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            foreach (XmlNsInfo.XmlNsDefinition xmlnsDef in xmlnsDefs)
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
+                XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
                 AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
                 ns.AddAssemblyNamespacePair(pair);
@@ -1399,29 +1359,16 @@ namespace System.Xaml
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical: Accesses Critical event AppDomain.AssemblyLoad.
-            /// Safe: We only use the event to track what assemblies are loaded in to the AppDomain.
-            ///       This is not privileged info, as it is available via AppDomain.GetAssemblies().
-            /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             public void Hook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
             }
 
-            /// <SecurityNote>
-            /// Critical: Accesses Critical event AppDomain.AssemblyLoad.
-            /// Safe: We just remove a handler that we ourselves added.
-            /// </SecurityNote>
 #if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
 #else
-            [SecuritySafeCritical]
 #endif
             public void Unhook()
             {

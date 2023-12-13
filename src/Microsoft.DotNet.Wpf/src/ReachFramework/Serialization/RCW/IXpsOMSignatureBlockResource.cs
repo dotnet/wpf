@@ -23,8 +23,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("4776AD35-2E04-4357-8743-EBF6C171A905"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMSignatureBlockResource : IXpsOMResource
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

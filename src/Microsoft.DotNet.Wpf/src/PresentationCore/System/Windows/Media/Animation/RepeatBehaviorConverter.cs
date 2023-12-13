@@ -21,7 +21,7 @@ namespace System.Windows.Media.Animation
     {
         #region Data
 
-        private static char[] _iterationCharacter = new char[] { 'x' };
+        private const char _iterationCharacter = 'x';
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Animation
                     return RepeatBehavior.Forever;
                 }
                 else if (   stringValue.Length > 0
-                         && stringValue[stringValue.Length - 1] == _iterationCharacter[0])
+                         && stringValue[stringValue.Length - 1] == _iterationCharacter)
                 {
                     string stringDoubleValue = stringValue.TrimEnd(_iterationCharacter);
 
@@ -108,11 +108,6 @@ namespace System.Windows.Media.Animation
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for RepeatBehavior, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(
             ITypeDescriptorContext context, 
             CultureInfo cultureInfo, 

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
-    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and $(Platform.EndsWith('x64'))">$(ArtifactsDir)packaging\$(Configuration)\$(Platform)\</ArtifactsPackagingDir>
+    <ArtifactsPackagingDir Condition="'$(ArtifactsPackagingDir)'=='' and !$(Platform.EndsWith('x64'))">$(ArtifactsDir)packaging\$(Configuration)\</ArtifactsPackagingDir>
 
     <!-- We like using RID prefix when generating nuget package names -->
     <PackageRuntimeIdentifierPrefix Condition="'$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32'">runtime.win-$(Platform)</PackageRuntimeIdentifierPrefix>
@@ -15,20 +15,29 @@
 
     <!-- This repo builds a transport package - we don't ship from here -->
     <IsShippingPackage>false</IsShippingPackage>
-    
+
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright Condition="'$(CopyrightNetFoundation)' != ''">$(CopyrightNetFoundation)</Copyright>
 
     <PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)'!=''">false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
+  <!-- 
+    Add a ".Debug" suffix to transport package names
+  -->
   <PropertyGroup>
-    <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub</GitHubTransportPackageName>
-    <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng</DncEngTransportPackageName>
-    
-    <!-- When ready to go live, remove .private suffix -->
-    <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop</WindowsDesktopSdkPackageName>
+    <TransportPackageNameSuffix Condition="'$(Configuration)'=='Debug'">.$(Configuration)</TransportPackageNameSuffix>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <GitHubTransportPackageName>Microsoft.DotNet.Wpf.GitHub$(TransportPackageNameSuffix)</GitHubTransportPackageName>
+    <DncEngTransportPackageName>Microsoft.DotNet.Wpf.DncEng$(TransportPackageNameSuffix)</DncEngTransportPackageName>
+
+    <!-- When ready to go live, remove .private suffix -->
+    <WindowsDesktopSdkPackageName>Microsoft.NET.Sdk.WindowsDesktop$(TransportPackageNameSuffix)</WindowsDesktopSdkPackageName>
+  </PropertyGroup>
+
+
 
   <!-- 
       $(RepoLocation) is defined in ShippingProjects.props 

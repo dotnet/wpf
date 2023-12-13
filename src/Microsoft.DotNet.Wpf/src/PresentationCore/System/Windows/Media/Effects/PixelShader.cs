@@ -24,7 +24,6 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.PresentationCore; 
@@ -111,7 +110,7 @@ namespace System.Windows.Media.Effects
                     if (!newUri.IsFile && 
                         !MS.Internal.IO.Packaging.PackUriHelper.IsPackUri(newUri))
                     {
-                        throw new ArgumentException(SR.Get(SRID.Effect_SourceUriMustBeFileOrPack));
+                        throw new ArgumentException(SR.Effect_SourceUriMustBeFileOrPack);
                     }
 
                     stream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(newUri);
@@ -132,14 +131,8 @@ namespace System.Windows.Media.Effects
         /// Reads the byte code for the pixel shader into a local byte array. If the stream is null, the byte array
         /// will be empty (length 0). The compositor will use an identity shader.
         /// </summary>
-        /// <SecurityNote>
-        /// SecurityCritical - because this method sets the critical shader byte code data.
-        /// TreatAsSafe - Demands UI window permission which enforces that the caller is trusted.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LoadPixelShaderFromStreamIntoMemory(Stream source) 
         {
-            SecurityHelper.DemandUIWindowPermission();
             
             _shaderBytecode = new SecurityCriticalData<byte[]>(null);
             
@@ -147,14 +140,14 @@ namespace System.Windows.Media.Effects
             {
                 if (!source.CanSeek)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderSeekableStream));
+                    throw new InvalidOperationException(SR.Effect_ShaderSeekableStream);
                 }
 
                 int len = (int)source.Length;  // only works on seekable streams.
 
                 if (len % sizeof(int) != 0)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Effect_ShaderBytecodeSize));
+                    throw new InvalidOperationException(SR.Effect_ShaderBytecodeSize);
                 }
                 
                 BinaryReader br = new BinaryReader(source);
@@ -195,11 +188,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses unsafe code blocks
-        ///     TreatAsSafe: This code does is safe to call and calling a channel with pointers is ok
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel
@@ -288,14 +276,6 @@ namespace System.Windows.Media.Effects
         /// Clones values that do not have corresponding DPs.
         /// </summary>
         /// <param name="transform"></param>
-        /// <SecurityNote>
-        /// SecurityCritical - critical because it access the shader byte code which is a critical resource.
-        /// TreatAsSafe - this API is not dangereous (and could be exposed publicly) because it copies the shader
-        /// byte code from one PixelShader to another. Since the byte code is marked security critical, the source's byte
-        /// code is trusted (verified or provided by a trusted caller). There is also no way to modify the byte code during
-        /// the copy.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CopyCommon(PixelShader shader)
         {
             byte[] sourceBytecode = shader._shaderBytecode.Value;
@@ -310,14 +290,6 @@ namespace System.Windows.Media.Effects
             _shaderBytecode = new SecurityCriticalData<byte[]>(destinationBytecode);
         }
 
-        /// <SecurityNote>
-        /// We need to ensure that _shaderByteCode contains only trusted data/shader byte code. This can be
-        /// achieved via two means:
-        /// 1) Verify the byte code to be safe to run on the GPU.
-        /// 2) The shader byte code has been provided by a trusted source. 
-        /// Currently 1) is not possible since we have no means to verify shader byte code. Therefore we 
-        /// currently require that byte code provided to us can only come from a trusted source.
-        /// </SecurityNote>
         private SecurityCriticalData<byte[]> _shaderBytecode;
 
         //

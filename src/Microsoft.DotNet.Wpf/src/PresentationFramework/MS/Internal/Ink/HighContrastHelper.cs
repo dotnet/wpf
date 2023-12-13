@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -216,7 +215,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private static object                   __lock = new object();
+        private static readonly object          __lock = new object();
         private static List<WeakReference>      __highContrastCallbackList;
         private static int                      __increaseCount;
         private const int                       CleanTolerance = 100;

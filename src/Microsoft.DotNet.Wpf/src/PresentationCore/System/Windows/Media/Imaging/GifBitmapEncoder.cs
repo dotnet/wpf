@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -34,11 +33,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor for GifBitmapEncoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - will eventuall create unmanaged resources
-        /// PublicOK - all inputs are verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public GifBitmapEncoder() :
             base(true)
         {
@@ -57,12 +51,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Returns the container format for this encoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - uses guid to create unmanaged resources
-        /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -72,7 +62,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Setups the encoder and other properties before encoding each frame
         /// </summary>
-        [SecurityCritical]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.Initialize(
@@ -95,10 +84,6 @@ namespace System.Windows.Media.Imaging
 
         #region Data Members
 
-        /// <SecurityNote>
-        /// Critical - CLSID used for creation of critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatGif;
 
         #endregion

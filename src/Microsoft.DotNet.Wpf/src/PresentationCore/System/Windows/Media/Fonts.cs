@@ -53,8 +53,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<FontFamily> GetFontFamilies(string location)
         {
-            if (location == null)
-                throw new ArgumentNullException("location");
+            ArgumentNullException.ThrowIfNull(location);
 
             return GetFontFamilies(null, location);
         }
@@ -71,8 +70,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<FontFamily> GetFontFamilies(Uri baseUri)
         {
-            if (baseUri == null)
-                throw new ArgumentNullException("baseUri");
+            ArgumentNullException.ThrowIfNull(baseUri);
 
             return GetFontFamilies(baseUri, null);
         }
@@ -97,7 +95,7 @@ namespace System.Windows.Media
         {
             // Both Uri parameters are optional but neither can be relative.
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             // Determine the font location from the base URI and location string.
             Uri fontLocation;
@@ -105,7 +103,7 @@ namespace System.Windows.Media
             {
                 // absolute location; make sure we support absolute font family references for this scheme
                 if (!Util.IsSupportedSchemeForAbsoluteFontFamilyUri(fontLocation))
-                    throw new ArgumentException(SR.Get(SRID.InvalidAbsoluteUriInFontFamilyName), "location");
+                    throw new ArgumentException(SR.InvalidAbsoluteUriInFontFamilyName, "location");
 
                 // make sure the absolute location is a valid URI reference rather than a Win32 path as
                 // we don't support the latter in a font family reference
@@ -115,7 +113,7 @@ namespace System.Windows.Media
             {
                 // relative location; we need a base URI
                 if (baseUri == null)
-                    throw new ArgumentNullException("baseUri", SR.Get(SRID.NullBaseUriParam, "baseUri", "location"));
+                    throw new ArgumentNullException("baseUri", SR.Format(SR.NullBaseUriParam, "baseUri", "location"));
 
                 // the location part must include a path component, otherwise we'll look in windows fonts and ignore the base URI
                 if (string.IsNullOrEmpty(location))
@@ -148,8 +146,7 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<Typeface> GetTypefaces(string location)
         {
-            if (location == null)
-                throw new ArgumentNullException("location");
+            ArgumentNullException.ThrowIfNull(location);
 
             return new TypefaceCollection(GetFontFamilies(null, location));
         }
@@ -166,9 +163,8 @@ namespace System.Windows.Media
         /// </remarks>
         public static ICollection<Typeface> GetTypefaces(Uri baseUri)
         {
-            if (baseUri == null)
-                throw new ArgumentNullException("baseUri");
-            
+            ArgumentNullException.ThrowIfNull(baseUri);
+
             return new TypefaceCollection(GetFontFamilies(baseUri, null));
         }
 
@@ -246,12 +242,6 @@ namespace System.Windows.Media
         /// <param name="fontFamilyBaseUri">Optional base URI, exposed as the BaseUri property of each FontFamily.</param>
         /// <param name="fontFamilyLocationReference">Optional location reference, exposed as part of the Source
         /// property of each FontFamily.</param>
-        /// <SecurityNote>
-        /// SecurityCritical    - Calls the critical FamilyCollection constructor; fontLocation may be critical
-        /// TreatAsSafe         - FamilyCollection does security demands for the necessary permissions; fontLocation is
-        ///                       not exposed by the resulting FontFamily objects
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static ICollection<FontFamily> CreateFamilyCollection(
             Uri     fontLocation,
             Uri     fontFamilyBaseUri,
@@ -280,11 +270,6 @@ namespace System.Windows.Media
         /// safe wrapper for CreateFamilyCollection we avoid having to create a static initializer and
         /// declare it critical.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical    - This method accesses the critical Util.WindowsFontsUriObject
-        /// TreatAsSafe - It specifies null as the BaseUri of the resulting FontFamily objects
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static ICollection<FontFamily> CreateDefaultFamilyCollection()
         {
             return CreateFamilyCollection(
@@ -337,14 +322,11 @@ namespace System.Windows.Media
 
             public void CopyTo(Typeface[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count

@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;               // For Assert
 using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SRID exception strings
+using MS.Internal.PresentationCore;     // for SR exception strings
 using System.Security;                  // for SecurityCritical
 using MS.Internal;
 
@@ -66,6 +66,7 @@ namespace System.IO.Packaging
         /// <param name="cachedPackageIsThreadSafe">is the cacheEntry thread-safe?</param>
         /// <remarks>This should only be called by PackWebRequestFactory</remarks>
         /// <exception cref="ArgumentException">Will throw an ArgumentException if the given URI is not of the correct scheme</exception>
+        #pragma warning disable SYSLIB0014 
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
@@ -85,10 +86,11 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - working from Package Cache");
 #endif
         }
+        #pragma warning restore SYSLIB0014 
 
         //------------------------------------------------------
         //
@@ -111,15 +113,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <returns>PackWebResponse</returns>
         /// <remarks>Caller must eventually call Close() to avoid leaking resources.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        ///  2) calling Critical PackWebResponse constructor
-        /// Safe
-        ///  1) PublicOK
-        ///  2) PublicOK
-        /// </SecurityNote>
-        [SecurityCritical]
         public override WebResponse GetResponse()
         {
             bool cachedPackageAvailable = IsCachedPackage;
@@ -144,7 +137,7 @@ namespace System.IO.Packaging
                         {
                             // only use cached value
                             if (!cachedPackageAvailable)
-                                throw new WebException(SR.Get(SRID.ResourceNotFoundUnderCacheOnlyPolicy));
+                                throw new WebException(SR.ResourceNotFoundUnderCacheOnlyPolicy);
                         } break;
 
                     case RequestCacheLevel.CacheIfAvailable:
@@ -154,7 +147,7 @@ namespace System.IO.Packaging
 
                     default:
                         {
-                            throw new WebException(SR.Get(SRID.PackWebRequestCachePolicyIllegal));
+                            throw new WebException(SR.PackWebRequestCachePolicyIllegal);
                         }
                 }
             }
@@ -165,7 +158,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting response from Package Cache");
 #endif
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
@@ -175,13 +168,13 @@ namespace System.IO.Packaging
                 // only return a real WebRequest instance - throw on a PseudoWebRequest
                 WebRequest request = GetRequest(false);
                 if (_webRequest == null || _webRequest is PseudoWebRequest)
-                    throw new InvalidOperationException(SR.Get(SRID.SchemaInvalidForTransport));
+                    throw new InvalidOperationException(SR.SchemaInvalidForTransport);
 
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequest - Getting new response");
 #endif
                 // Create a new response for every call
@@ -220,7 +213,7 @@ namespace System.IO.Packaging
                         case RequestCacheLevel.CacheOnly: break;
                         case RequestCacheLevel.CacheIfAvailable: break;
                         default:
-                            throw new WebException(SR.Get(SRID.PackWebRequestCachePolicyIllegal));
+                            throw new WebException(SR.PackWebRequestCachePolicyIllegal);
                     }
 
                     _cachePolicy = value;
@@ -367,20 +360,12 @@ namespace System.IO.Packaging
         /// </summary>
         /// <value>network proxy to use to access this Internet resource</value>
         /// <remarks>This value is shared with the InnerRequest.</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) gets/sets Critical member _webRequest.Proxy()
-        /// Safe
-        ///  2) PublicOK
-        /// </SecurityNote>
         public override IWebProxy Proxy
         {
-            [SecurityCritical]
             get
             {
                 return GetRequest().Proxy;
             }
-            [SecurityCritical]
             set
             {
                 GetRequest().Proxy = value;
@@ -491,13 +476,6 @@ namespace System.IO.Packaging
         /// <param name="allowPseudoRequest">if this is false, caller will not accept a PseudoWebRequest</param>
         /// <returns>Actual WebRequest or PseudoWebRequest</returns>
         /// <exception cref="NotSupportedException">protocol does not have a registered handler</exception>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        /// Safe
-        ///  1) Not modifying Proxy member which is what is really Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private WebRequest GetRequest(bool allowPseudoRequest)
         {
             if (_webRequest == null)
@@ -590,7 +568,6 @@ namespace System.IO.Packaging
         private Uri                 _uri;                   // pack uri
         private Uri                 _innerUri;              // inner uri extracted from the pack uri
         private Uri                 _partName;              // name of PackagePart (if any) - null for full-container references
-        [SecurityCritical]                                  // only WebRequest.Proxy member is Critical
         private WebRequest          _webRequest;            // our "real" webrequest counterpart - may be a PseudoWebRequest
         private Package             _cacheEntry;            // non-null if we found this in a cache
         private bool                _respectCachePolicy;    // do we throw if cache policy conflicts?

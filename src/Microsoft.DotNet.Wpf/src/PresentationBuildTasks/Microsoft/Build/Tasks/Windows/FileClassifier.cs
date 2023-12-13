@@ -82,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             try
             {
-                TaskHelper.DisplayLogo(Log, SR.Get(SRID.FileClassifierTask));
+                TaskHelper.DisplayLogo(Log, nameof(FileClassifier));
 
                 ret = VerifyTaskInputs();
 
@@ -121,7 +121,7 @@ namespace Microsoft.Build.Tasks.Windows
                     if (String.IsNullOrEmpty(errorId))
                     {
                         errorId = UnknownErrorID;
-                        message = SR.Get(SRID.UnknownBuildError, message);
+                        message = SR.Format(SR.UnknownBuildError, message);
                     }
 
                     Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
@@ -132,7 +132,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
             catch // Non-CLS compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 return false;
             }
 #pragma warning restore 6500
@@ -280,7 +280,7 @@ namespace Microsoft.Build.Tasks.Windows
                 case SharedStrings.Exe     :
                     break;
                 default :
-                    Log.LogErrorWithCodeFromResources(SRID.TargetIsNotSupported, targetType);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), targetType);
                     bValidInput = false;
                     break;
             }
@@ -291,7 +291,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (TaskHelper.IsValidCultureName(Culture) == false)
             {
-                Log.LogErrorWithCodeFromResources(SRID.InvalidCulture, Culture);
+                Log.LogErrorWithCodeFromResources(nameof(SR.InvalidCulture), Culture);
                 bValidInput = false;
             }
 

@@ -12,10 +12,8 @@ using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Windows.Input.StylusPlugIns;
 using System.Security;
-using System.Security.Permissions;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -38,42 +36,24 @@ namespace System.Windows.Input.StylusWisp
         /// Get the current rect for the Element that the StylusPlugInCollection is attached to.
         /// May be empty rect if plug in is not in tree.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCritical data _penContexts.
-        /// TreatAsSafe - Just returns if _pencontexts is null.  No data goes in or out.  Knowing
-        ///               the fact that you can recieve real time input is something that is safe
-        ///               to know and we want to expose.
-        /// </SecurityNote>
         internal override bool IsActiveForInput
         {
-            [SecuritySafeCritical]
             get
             {
                 return _penContexts != null;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCritical data _penContexts.
-        /// TreatAsSafe - The Sync object on the _penContexts object is not considered security 
-        ///                 critical data.  It is already internally exposed directly on the
-        ///                 PenContexts object.
-        /// </SecurityNote>
         internal override object SyncRoot
         {
-            [SecuritySafeCritical]
             get
             {
                 return _penContexts != null ? _penContexts.SyncRoot : null;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:  Accesses critical member _penContexts.
-        /// </SecurityNote>
         internal PenContexts PenContexts
         {
-            [SecurityCritical]
             get
             {
                 return _penContexts;
@@ -84,14 +64,6 @@ namespace System.Windows.Input.StylusWisp
 
         #region Private APIs
 
-        /// <SecurityNote>
-        /// Critical - Presentation source access
-        ///            Calls SecurityCritical routines PresentationSource.CriticalFromVisual and
-        ///            HwndSource.CriticalHandle.
-        /// TreatAsSafe: 
-        ///          - no data handed out or accepted
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void UpdateState(UIElement element)
         {
             bool unhookPenContexts = true;
@@ -146,12 +118,6 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - _penContexts access
-        /// TreatAsSafe: 
-        ///          - no data handed out or accepted
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void Unhook()
         {
             // Are we currently unhooked?  If not then unhook.
@@ -178,10 +144,6 @@ namespace System.Windows.Input.StylusWisp
         #region Fields
 
         // Note that this is only set when the Element is in a state to receive input (visible,enabled,in tree).
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
-        [SecurityCritical]
         private PenContexts _penContexts;
 
         #endregion

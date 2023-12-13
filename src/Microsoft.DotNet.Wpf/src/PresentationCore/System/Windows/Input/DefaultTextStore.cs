@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Security;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
-using System.Security.Permissions;
 using MS.Win32;
 
 namespace System.Windows.Input
@@ -106,31 +105,16 @@ namespace System.Windows.Input
 
         #region ITfContextOwnerCompositionSink
 
-        /// <SecurityNote>
-        /// Critical - UnsafeNativeMethods.ITfCompositionView is a critical type.
-        /// Safe     - The method does nothing with the critical Input parameter.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void OnStartComposition(UnsafeNativeMethods.ITfCompositionView view, out bool ok)
         {
             // Return true in ok to start the composition.
             ok = true;
         }
 
-        /// <SecurityNote>
-        /// Critical - UnsafeNativeMethods.ITfCompositionView & UnsafeNativeMethods.ITfRange are critical types.
-        /// Safe     - The method does nothing.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void OnUpdateComposition(UnsafeNativeMethods.ITfCompositionView view, UnsafeNativeMethods.ITfRange rangeNew)
         {
         }
 
-        /// <SecurityNote>
-        /// Critical - UnsafeNativeMethods.ITfCompositionView is a critical type.
-        /// Safe     - The method does nothing.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void OnEndComposition(UnsafeNativeMethods.ITfCompositionView view)
         {
         }
@@ -147,14 +131,8 @@ namespace System.Windows.Input
 
         // Transitory Document has been updated.
         // This is the notification of the changes of the result string and the composition string.
-        ///<SecurityNote>
-        ///     Critical: This code acceses critical data in the form of TextCompositionManager
-        ///     TreatAsSafe: There exists a demand for unmanaged code.
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void OnTransitoryExtensionUpdated(UnsafeNativeMethods.ITfContext context, int ecReadOnly, UnsafeNativeMethods.ITfRange rangeResult, UnsafeNativeMethods.ITfRange rangeComposition, out bool fDeleteResultRange)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             fDeleteResultRange = true;
 
@@ -266,15 +244,10 @@ namespace System.Windows.Input
         //------------------------------------------------------
 
         // Pointer to ITfDocumentMgr interface.
-        /// <SecurityNote>
-        ///     Critical: This exposes ITfDocumentMgr that has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
         { 
-            [SecurityCritical]
             get { return _doc.Value;}
             
-            [SecurityCritical]
             set { _doc = new SecurityCriticalData<UnsafeNativeMethods.ITfDocumentMgr>(value); }
         }
 
@@ -294,16 +267,10 @@ namespace System.Windows.Input
         //
         // Get Transitory's DocumentMgr from GUID_COMPARTMENT_TRANSITORYEXTENSION_DOCUMENTMANAGER.
         //
-        /// <SecurityNote>
-        ///     Critical: This code acceses ITfDocumentMgr, ItfCompartment and ITfCompartmentMgr
-        ///     TreatAsSafe: There exists a demand for unmanaged code
-        /// </SecurityNote>
         internal UnsafeNativeMethods.ITfDocumentMgr TransitoryDocumentManager
         { 
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 UnsafeNativeMethods.ITfDocumentMgr doc;
                 UnsafeNativeMethods.ITfCompartmentMgr compartmentMgr;
@@ -340,10 +307,6 @@ namespace System.Windows.Input
         //------------------------------------------------------
 
         // get the text from ITfRange.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetExtent)
-        /// </SecurityNote>
-        [SecurityCritical]
         private string StringFromITfRange(UnsafeNativeMethods.ITfRange range, int ecReadOnly)
         {
             // Transitory Document uses ther TextStore, which is ACP base.
@@ -358,11 +321,6 @@ namespace System.Windows.Input
         }
 
         // This function calls TextServicesContext to create TSF document and start transitory extension.
-        /// <SecurityNote>
-        /// Critical - directly access the text store
-        /// TreatAsSafe - registers "this" as a text store (safe operation)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Register()
         {
             // Create TSF document and advise the sink to it.
@@ -388,10 +346,6 @@ namespace System.Windows.Input
         private TextComposition _composition;
 
         // The TSF document object.  This is a native resource.
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfDocumentMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalData<UnsafeNativeMethods.ITfDocumentMgr> _doc;
 
         // The edit cookie TSF returns from CreateContext.

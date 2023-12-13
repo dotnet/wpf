@@ -178,13 +178,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Set tab stops
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this calls TextFormatterContext.SetTabs which is Critical in four
-        ///            different places.
-        /// Safe - as the buffers are all created in the same function and the count
-        ///        passed in the same as used for creating the buffer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetTabs(TextFormatterContext context)
         {
             unsafe
@@ -241,10 +234,6 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Fill a fixed buffer of LsTbd with 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - This method writes into unmanaged array. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe void CreateLsTbds(
             ParaProp        pap,
             LsTbd*          plsTbds,

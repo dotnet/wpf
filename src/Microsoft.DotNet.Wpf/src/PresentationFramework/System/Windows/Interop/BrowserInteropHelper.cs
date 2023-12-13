@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Win32;
@@ -31,14 +30,8 @@ namespace System.Windows.Interop
     /// </summary>
     public static class BrowserInteropHelper
     {
-        /// <SecurityNote>
-        /// Critical because it sets critical data.
-        /// Safe because it is the static ctor, and the data doesn't go anywhere.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static BrowserInteropHelper()
         {
-            SetBrowserHosted(false);
             IsInitialViewerNavigation = true;
         }
 
@@ -48,69 +41,27 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///   Critical: Exposes a COM interface pointer to the IOleClientSite where the app is hosted
-        ///   PublicOK: It is public, but there is a demand
-        /// </SecurityNote>
         public static object ClientSite
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 object oleClientSite = null;
 
-#if NETFX
-                if (IsBrowserHosted)
-                {
-                    Application.Current.BrowserCallbackServices.GetOleClientSite(out oleClientSite);
-                }
-#endif
 
                 return oleClientSite;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls a COM interface method.
-        ///           Calls the constructor of DynamicScriptObject.
-        ///           Calls InitializeHostHtmlDocumentServiceProvider.
-        /// Safe: The browser's object model is safe for scripting.
-        ///       The implementation of IHostBrowser.GetHostScriptObject() is responsible to block cross-domain access.
-        /// </SecurityNote>
-        public static dynamic HostScript
-        {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get
-            {
-                // Allows to disable script interop through the registry in partial trust code.
-                EnsureScriptInteropAllowed();
-
-                // IE's marshaling proxy for the HTMLWindow object doesn't work in MTA.
-                Verify.IsApartmentState(ApartmentState.STA);
-
-                IHostBrowser2 hb2 = HostBrowser as IHostBrowser2;
-                if (hb2 == null)
-                    return null; // One possibility is we are running under NPWPF v3.5.
-                try
-                {
-                    var hostScriptObject = (UnsafeNativeMethods.IDispatch)hb2.HostScriptObject;
-                    if (hostScriptObject == null)
-                        return null;
-
-                    var scriptObject = new DynamicScriptObject(hostScriptObject);
-
-                    InitializeHostHtmlDocumentServiceProvider(scriptObject);
-
-                    return scriptObject;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    return null;
-                }
-            }
-        }
+        /// <summary>
+        /// Gets a script object that provides access to the HTML window object,
+        /// custom script functions, and global variables for the HTML page, if the XAML browser application (XBAP)
+        /// is hosted in a frame.
+        /// </summary>
+        /// <remarks>
+        /// Starting .NET Core 3.0, XBAP's are not supported - <see cref="HostScript"/> will always return <code>null</code>
+        /// </remarks>
+        public static dynamic HostScript => null;
 
         /// <summary>
         /// Returns true if the app is a browser hosted app.
@@ -119,33 +70,11 @@ namespace System.Windows.Interop
         /// Note that HostingFlags may not be set at the time this property is queried first. 
         /// That's why they are still separate. Also, this one is public.
         /// </remarks>
-        public static bool IsBrowserHosted
-        {
-            get
-            {
-                return _isBrowserHosted.Value;
-            }
-        }
+        public static bool IsBrowserHosted => false;
 
-        /// <SecurityNote>
-        /// This is critical because setting the BrowserHosted status is a critical resource.
-        /// </SecurityNote>
-        /// <remarks>
-        /// HostingFlags is set after this property.
-        /// </remarks>
-        [SecurityCritical]
-        internal static void SetBrowserHosted(bool value)
-        {
-            _isBrowserHosted.Value = value;
-        }
-
-        /// <SecurityNote>
-        /// Critical: These flags are a critical resource because they are used in security decisions.
-        /// </SecurityNote>
         internal static HostingFlags HostingFlags 
         { 
             get { return _hostingFlags.Value; }
-            [SecurityCritical]
             set { _hostingFlags.Value = value; }
         }
         
@@ -173,22 +102,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <summary>
-        /// Returns true if avalon it top level.
-        /// Also returns true if not browser-hosted.
-        /// </summary>
-        /// <SecurityNote>
-        /// Critical: setting this information is a critical resource.
-        /// </SecurityNote>
-        internal static bool IsAvalonTopLevel
-        {
-            get
-            {
-                if (!IsBrowserHosted)
-                    return true;
-                return (HostingFlags & HostingFlags.hfHostedInFrame) == 0;
-            }
-        }
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
@@ -207,45 +120,15 @@ namespace System.Windows.Interop
         /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
         /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: setting this information is a critical resource.
-        /// </SecurityNote>
         internal static bool IsInitialViewerNavigation
         {
             get
             {
                 return IsViewer && _isInitialViewerNavigation.Value;
             }
-            [SecurityCritical]
             set
             {
                 _isInitialViewerNavigation.Value = value;
-            }
-        }
-
-        ///<SecurityNote> 
-        ///     Critical : Field for critical type IHostBrowser
-        ///</SecurityNote> 
-        [SecurityCritical]
-        internal static IHostBrowser HostBrowser;
-
-        /// <SecurityNote>
-        /// Critical: Calls Marshal.ReleaseComObject().
-        ///           Drops the security critical service provider stored in _hostHtmlDocumentProvider.
-        /// </SecurityNote>
-        [SecurityCritical]
-        internal static void ReleaseBrowserInterfaces()
-        {
-            if (HostBrowser != null)
-            {
-                Marshal.ReleaseComObject(HostBrowser);
-                HostBrowser = null;
-            }
-
-            if (_hostHtmlDocumentServiceProvider.Value != null)
-            {
-                Marshal.ReleaseComObject(_hostHtmlDocumentServiceProvider.Value);
-                _hostHtmlDocumentServiceProvider.Value = null;
             }
         }
 
@@ -254,12 +137,8 @@ namespace System.Windows.Interop
         /// This is used for IDispatchEx operations in the script interop feature.
         /// Critical: Returns critical type UnsafeNativeMethods.IServiceProvider
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Returns critical type UnsafeNativeMethods.IServiceProvider
-        /// </SecurityNote>
         internal static UnsafeNativeMethods.IServiceProvider HostHtmlDocumentServiceProvider
         {
-            [SecurityCritical]
             get
             {
                 // HostHtmlDocumentServiceProvider is used by DynamicScriptObject for IDispatchEx
@@ -275,12 +154,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Sets the critical _hostHtmlDocumentServiceProvider field, which is used during script
-        ///           interop to let Internet Explorer make security decisions with regards to zones. By
-        ///           passing in another service provider it may be possible to interfere with this logic.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void InitializeHostHtmlDocumentServiceProvider(DynamicScriptObject scriptObject)
         {
             // The service provider is used for Internet Explorer IDispatchEx use.
@@ -311,10 +184,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: this calls ForwardTranslateAccelerator, which is SUC'ed.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void HostFilterInput(ref MSG msg, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg.message;
@@ -333,10 +202,6 @@ namespace System.Windows.Interop
         /// <summary> This hook gets a "last chance" to handle a key. Such applicaton-unhandled
         /// keys are forwarded to the browser frame.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: this calls ForwardTranslateAccelerator, which is SUC'ed.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr PostFilterInput(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (!handled)
@@ -353,66 +218,27 @@ namespace System.Windows.Interop
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///     Critical: this attaches an event to ThreadFilterMessage, which requires an assert
-        ///     Safe: doesn't expose anything, just does some internal plumbing stuff
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void InitializeHostFilterInput()
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert(); // Blessed assert
-            try
-            {
-                ComponentDispatcher.ThreadFilterMessage +=
-                                    new ThreadMessageEventHandler(HostFilterInput);
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            ComponentDispatcher.ThreadFilterMessage +=
+                                new ThreadMessageEventHandler(HostFilterInput);
         }
 
-        /// <SecurityNote>
-        ///     Critical: setting critical _isScriptInteropDisabled flag.
-        ///     Safe: _isScriptInteropDisabled is set from a trusted source.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureScriptInteropAllowed()
         {
             if (_isScriptInteropDisabled.Value == null)
             {
                 _isScriptInteropDisabled.Value = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
             }
-
-            // Similar approach as with WebBrowser.cs.
-            if (_isScriptInteropDisabled.Value.Value)
-            {
-                // Feature is disabled - demand unrestricted WebBrowserPermission to hand out the script object.
-                MS.Internal.PresentationFramework.SecurityHelper.DemandWebBrowserPermission();
-            }
-            else
-            {
-                // Feature is enabled - demand Safe level to hand out the script object, granted in Partial Trust by default.
-                (new WebBrowserPermission(WebBrowserPermissionLevel.Safe)).Demand();
-            }
         }
 
-        private static SecurityCriticalDataForSet<bool> _isBrowserHosted;
         private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;
         private static SecurityCriticalDataForSet<bool> _isInitialViewerNavigation;
         private static SecurityCriticalDataForSet<bool?> _isScriptInteropDisabled;
         
-        ///<SecurityNote> 
-        ///     Critical : Field for critical type UnsafeNativeMethods.IServiceProvider
-        ///</SecurityNote> 
-        [SecurityCritical]
         private static SecurityCriticalDataForSet<UnsafeNativeMethods.IServiceProvider> _hostHtmlDocumentServiceProvider;
         private static SecurityCriticalDataForSet<bool> _initializedHostScript;
 
-        ///<SecurityNote> 
-        ///     Critical - call is SUC'ed
-        ///</SecurityNote> 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [DllImport(ExternDll.PresentationHostDll, EntryPoint="ForwardTranslateAccelerator")]
         private static extern int ForwardTranslateAccelerator(ref MSG pMsg, bool appUnhandled);
     }

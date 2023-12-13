@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Automation;
@@ -29,10 +29,7 @@ namespace System.Windows.Automation.Peers
         public DataGridAutomationPeer(DataGrid owner)
             : base(owner)
         {
-            if (owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
+            ArgumentNullException.ThrowIfNull(owner);
         }
 
         #endregion
@@ -446,10 +443,7 @@ namespace System.Windows.Automation.Peers
 
         private void AddSelectedCells(List<IRawElementProviderSimple> cellProviders)
         {
-            if (cellProviders == null)
-            {
-                throw new ArgumentNullException("cellProviders");
-            }
+            ArgumentNullException.ThrowIfNull(cellProviders);
 
             // Add selected cells to selection
             if (this.OwningDataGrid.SelectedCells != null)
@@ -471,10 +465,7 @@ namespace System.Windows.Automation.Peers
 
         private void AddSelectedRows(List<IRawElementProviderSimple> itemProviders)
         {
-            if (itemProviders == null)
-            {
-                throw new ArgumentNullException("itemProviders");
-            }
+            ArgumentNullException.ThrowIfNull(itemProviders);
 
             // Add selected items to selection
             if (this.OwningDataGrid.SelectedItems != null)

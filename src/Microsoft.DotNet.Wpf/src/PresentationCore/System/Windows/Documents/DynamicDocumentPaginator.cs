@@ -12,7 +12,7 @@
 //
 
 using System.ComponentModel;        // AsyncCompletedEventArgs
-using MS.Internal.PresentationCore; // SR, SRID
+using MS.Internal.PresentationCore; // SR
 
 namespace System.Windows.Documents 
 {
@@ -71,14 +71,11 @@ namespace System.Windows.Documents
             int pageNumber;
 
             // Content position cannot be null.
-            if (contentPosition == null)
-            {
-                throw new ArgumentNullException("contentPosition");
-            }
+            ArgumentNullException.ThrowIfNull(contentPosition);
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {
-                throw new ArgumentException(SR.Get(SRID.PaginatorMissingContentPosition), "contentPosition");
+                throw new ArgumentException(SR.PaginatorMissingContentPosition, "contentPosition");
             }
 
             pageNumber = GetPageNumber(contentPosition);

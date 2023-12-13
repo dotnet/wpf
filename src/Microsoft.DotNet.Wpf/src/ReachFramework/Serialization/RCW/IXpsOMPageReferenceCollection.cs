@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("CA16BA4D-E7B9-45C5-958B-F98022473745"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMPageReferenceCollection
     {
         void Append([In] IXpsOMPageReference pageReference);

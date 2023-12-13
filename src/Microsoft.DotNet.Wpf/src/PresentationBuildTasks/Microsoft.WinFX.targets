@@ -1,0 +1,958 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">net9.0</_PresentationBuildTasksTfm>
+    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_PresentationBuildTasksTfm>
+    <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$([MSBuild]::Unescape($([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\$(_PresentationBuildTasksTfm)\PresentationBuildTasks.dll'))))</_PresentationBuildTasksAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass1" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.UidManager" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.ResourcesGenerator" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.FileClassifier" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MarkupCompilePass2" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.GenerateTemporaryTargetAssembly" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+  <UsingTask TaskName="Microsoft.Build.Tasks.Windows.MergeLocalizationDirectives" AssemblyFile="$(_PresentationBuildTasksAssembly)" />
+
+  <PropertyGroup>
+    <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(AlwaysCompileMarkupFilesInSeparateDomain)' == ''">true</AlwaysCompileMarkupFilesInSeparateDomain>
+    <AlwaysCompileMarkupFilesInSeparateDomain Condition="'$(AlwaysCompileMarkupFilesInSeparateDomain)' == '' ">true</AlwaysCompileMarkupFilesInSeparateDomain>
+    <LocalizationDirectivesToLocFile Condition="'$(LocalizationDirectivesToLocFile)' == ''">None</LocalizationDirectivesToLocFile>
+
+  </PropertyGroup>
+
+  <!-- Some Default Settings -->
+  <PropertyGroup>
+      <!--
+          XamlDebuggingInformation property controls whether or not to put line number information in the
+          generated binary file for a Xaml markup file.
+
+          If XamlDebuggingInformation is set in project file, take whatever setting.
+
+      If XamlDebuggingInformation property is not explicitly set, and the current build is for debug,
+          Set true to XamlDebuggingInformation, if the build is not for Debug, keep the empty setting for
+          XamlDebuggingInformation, it means not to put line number information in the generated binary file.
+      -->
+      <XamlDebuggingInformation Condition="'$(XamlDebuggingInformation)' == '' and '$(ConfigurationName)' == 'Debug'">true</XamlDebuggingInformation>
+
+      <HostInBrowser Condition="'$(HostInBrowser)'==''">false</HostInBrowser>
+      <Version Condition="'$(Version)'==''">1.0.0.0</Version>
+      <DeploymentType Condition="'$(DeploymentType)'==''">Installed</DeploymentType>
+      <RunAfterInstall Condition="'$(RunAfterInstall)'==''">true</RunAfterInstall>
+      <GeneratedFileExtension>.g$(DefaultLanguageSourceExtension)</GeneratedFileExtension>
+      <OSVersion Condition="'$(OSVersion)' == ''">5.1.2600.0</OSVersion>
+
+      <!-- Initialize some Local-Type_Ref related properties -->
+      <_RequireMCPass2ForSatelliteAssemblyOnly>false</_RequireMCPass2ForSatelliteAssemblyOnly>
+      <_RequireMCPass2ForMainAssembly>false</_RequireMCPass2ForMainAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <IsApplication Condition="'$(OutputType)'=='exe'">true</IsApplication>
+      <IsApplication Condition="'$(OutputType)'=='winexe'">true</IsApplication>
+      <IsLibrary Condition="'$(OutputType)'=='library'">true</IsLibrary>
+      <IsLibrary Condition="'$(OutputType)'=='module'">true</IsLibrary>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <!--
+          Inject AssignWinFXEmbeddedResource target at right stage.
+      -->
+      <PrepareResourceNamesDependsOn>
+                    AssignWinFXEmbeddedResource;
+                    $(PrepareResourceNamesDependsOn)
+      </PrepareResourceNamesDependsOn>
+  </PropertyGroup>
+
+  <!-- Common Application and Library Property settings -->
+  <PropertyGroup>
+      <PrepareResourcesDependsOn>
+                MarkupCompilePass1;
+                AfterMarkupCompilePass1;
+                MarkupCompilePass2ForMainAssembly;
+                FileClassification;
+                MainResourcesGeneration;
+                $(PrepareResourcesDependsOn)
+      </PrepareResourcesDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+        <!-- Add Markup compilation to the CoreCompileDependsOn so that the IDE inproc compilers (particularly VB)
+             can "see" the generated source files. -->
+      <CoreCompileDependsOn Condition="'$(BuildingInsideVisualStudio)' == 'true' ">
+          DesignTimeMarkupCompilation;
+          $(CoreCompileDependsOn)
+      </CoreCompileDependsOn>
+  </PropertyGroup>
+
+
+  <Target Name="DesignTimeMarkupCompilation">
+        <!-- Only if we are not actually performing a compile i.e. we are in design mode -->
+        <CallTarget Condition="'$(BuildingProject)' != 'true' Or $(DesignTimeBuild) == 'true'"
+                Targets="MarkupCompilePass1" />
+  </Target>
+
+
+    <!--  WinFX specific ItemGroup  -->
+
+    <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
+         <!--
+            Add WinFX specific Item names to AvailableItemName item, so that they can show up
+            in a drop-down menu for Build Action field of the properties window in VisualStudio.
+         -->
+         <AvailableItemName Include="ApplicationDefinition" />
+         <AvailableItemName Include="Page" />
+         <AvailableItemName Include="Resource" />
+         <AvailableItemName Include="SplashScreen" />
+         <AvailableItemName Include="DesignData" />
+         <AvailableItemName Include="DesignDataWithDesignTimeCreatableTypes" />
+    </ItemGroup>
+
+
+  <!--
+       Prepare Resource For SatelliteAssemblies.
+  -->
+
+  <PropertyGroup Condition="'$(UICulture)' != ''" >
+      <PrepareResourcesForSatelliteAssembliesDependsOn>
+               SatelliteOnlyMarkupCompilePass2;
+               SatelliteResourceGeneration;
+               GenerateResourceWithCultureItem;
+      </PrepareResourcesForSatelliteAssembliesDependsOn>
+  </PropertyGroup>
+
+
+  <Target Name="PrepareResourcesForSatelliteAssemblies"
+          Condition="'$(UICulture)' != ''"
+          DependsOnTargets="$(PrepareResourcesForSatelliteAssembliesDependsOn)" >
+  </Target>
+
+
+  <PropertyGroup>
+    <!--
+         Hook up AfterCompileWinFX to that it runs
+         where AfterCompile would have run
+    -->
+    <CompileDependsOn>
+        $(CompileDependsOn);
+        _AfterCompileWinFXInternal
+    </CompileDependsOn>
+    <!--
+         Any targets that _AfterCompileWinFXInternal depends on.
+
+         After the xaml file is compiled, the build system needs to generate a final .loc file
+         for localization support. MergeLocalizationDirectives target does this.
+
+         If UICulture is set, it needs to do below extra work before generating the .loc file:
+
+             1. Calls the MarkupCompilePass2 for those xaml file which reference local types.
+             2. Generate the .resources for given culture from .baml and other resource files.
+
+         Target PrepareResourcesForSatelliteAssemblies is for this.
+    -->
+    <_AfterCompileWinFXInternalDependsOn>
+        PrepareResourcesForSatelliteAssemblies;
+        MergeLocalizationDirectives;
+        AfterCompileWinFX
+    </_AfterCompileWinFXInternalDependsOn>
+  </PropertyGroup>
+
+  <!-- Work that we want to be done after the "Compile" target in Microsoft.Common.targets -->
+  <Target Name="_AfterCompileWinFXInternal" DependsOnTargets="$(_AfterCompileWinFXInternalDependsOn)" />
+
+
+  <!--
+    ===========================================================================================
+                                        Extensibility Points
+
+         Redefine these targets in your project in order to run tasks just after
+         MarkupCompilePass1, MarkupCompilePass2 or the entire WinFXCompile.
+
+    ===========================================================================================
+  -->
+
+  <Target Name="AfterCompileWinFX"/>
+  <Target Name="AfterMarkupCompilePass1" />
+  <Target Name="AfterMarkupCompilePass2" />
+
+  <!--
+    Name : MarkupCompilePass1
+    This target generates code for every xaml file as well it also generates code for main and IResourceLoader.
+    This target uses MarkupCompilePass1 task.
+  -->
+
+  <!--
+  ================================================================
+                                   MarkupCompilePass1
+  ================================================================
+  -->
+
+  <Target Name="MarkupCompilePass1"
+          DependsOnTargets="$(MarkupCompilePass1DependsOn);SplashScreenValidation"
+          Condition="'@(Page)' != '' or '@(ApplicationDefinition)' != '' " >
+
+        <Message Text="(in) Page: '@(Page)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(in) ApplicationDefinition: '@(ApplicationDefinition)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(in) Resource: '@(Resource)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(in) CodeGenReference: '@(ReferencePath)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+        <!--
+             When performing an intellisense compile, we don't want to abort the compile if
+             MarkupCompilePass1 fails.  This would prevent the list of files from being handed
+             off to the compiler, thereby breaking all intellisense.  For intellisense compiles
+             we set ContinueOnError to true.  The property defined here is used as the value
+             for ContinueOnError on the MarkupCompilePass1 task.
+        -->
+        <PropertyGroup>
+            <_IntellisenseOnlyCompile>false</_IntellisenseOnlyCompile>
+            <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true'">true</_IntellisenseOnlyCompile>
+        </PropertyGroup>
+
+        <MarkupCompilePass1
+               Language="$(Language)"
+               UICulture="$(UICulture)"
+               ApplicationMarkup="@(ApplicationDefinition)"
+               SplashScreen="@(SplashScreen)"
+               LanguageSourceExtension="$(DefaultLanguageSourceExtension)"
+               PageMarkup="@(Page)"
+               ContentFiles="@(Content)"
+               AssemblyName="$(AssemblyName)"
+               OutputType="$(OutputType)"
+               AssemblyVersion="$(AssemblyVersion)"
+               AssemblyPublicKeyToken="$(AssemblyPublicKeyToken)"
+               References="@(ReferencePath)"
+               RootNamespace="$(RootNamespace)"
+               KnownReferencePaths="$(MSBuildBinPath);$(TargetFrameworkDirectory);@(_TargetFrameworkSDKDirectoryItem);@(KnownReferencePaths)"
+               AssembliesGeneratedDuringBuild="@(AssembliesGeneratedDuringBuild)"
+               AlwaysCompileMarkupFilesInSeparateDomain="$(AlwaysCompileMarkupFilesInSeparateDomain)"
+               HostInBrowser="$(HostInBrowser)"
+               LocalizationDirectivesToLocFile="$(LocalizationDirectivesToLocFile)"
+               ContinueOnError="$(_IntellisenseOnlyCompile)"
+               SourceCodeFiles="@(Compile)"
+               DefineConstants="$(DefineConstants)"
+               ExtraBuildControlFiles="@(ExtraBuildControlFiles)"
+               XamlDebuggingInformation="$(XamlDebuggingInformation)"
+               ChecksumAlgorithm="$(ChecksumAlgorithm)"
+               IsRunningInVisualStudio="$(BuildingInsideVisualStudio)"
+               OutputPath="$(IntermediateOutputPath)"
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
+
+              <Output ItemName="GeneratedBaml" TaskParameter="GeneratedBamlFiles"/>
+              <Output ItemName="GeneratedLocalizationFiles" TaskParameter="GeneratedLocalizationFiles" />
+              <Output PropertyName="_RequireMCPass2ForMainAssembly" TaskParameter="RequirePass2ForMainAssembly" />
+              <Output PropertyName="_RequireMCPass2ForSatelliteAssemblyOnly" TaskParameter="RequirePass2ForSatelliteAssembly" />
+              <Output ItemName="Compile" TaskParameter="GeneratedCodeFiles" />
+
+              <!-- Keep a list of all the generated files, it is used to clean up for a next clean build -->
+              <Output ItemName="FileWrites" TaskParameter="AllGeneratedFiles" />
+
+              <Output ItemName="_GeneratedCodeFiles"
+                      TaskParameter="GeneratedCodeFiles" />
+        </MarkupCompilePass1>
+
+        <Message Text="(out) GeneratedBamlFiles: '@(GeneratedBaml)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(out) SourceCodeFiles: '@(Compile)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(Out) GeneratedCodeFiles: '@(_GeneratedCodeFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(out) GeneratedLocalizationFiles: @(GeneratedLocalizationFiles)" Condition="'$(MSBuildTargetsVerbose)'=='true'" />
+
+        <Message Text="(out) _RequireMCPass2ForMainAssembly : '$(_RequireMCPass2ForMainAssembly)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(out) _RequireMCPass2ForSatelliteAssemblyOnly : '$(_RequireMCPass2ForSatelliteAssemblyOnly)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+  </Target>
+
+
+  <!--
+    ================================================================
+                                   MarkupCompilePass2
+    ================================================================
+
+    Name: MarkupCompilePass2
+
+    For those xaml files that contain local-implemented types, this target will invoke MarkupCompilePass2
+    task to compile those xaml files after the main assembly is generated.
+
+    If MarkupCompilePass1 task is not invoked, that means there is no any Xaml input file change since last build,
+    and then it is not required to run this MarkupCompilePass2 either.
+  -->
+  <Target Name="MarkupCompilePass2"
+          Condition="Exists('$(IntermediateOutputPath)$(AssemblyName)_MarkupCompile.lref')" >
+
+        <Message Text="(in) References: '@(ReferencePath);@(AssemblyForLocalTypeReference)'"  Condition="'$(MSBuildTargetsVerbose)'=='true'" />
+
+        <MarkupCompilePass2
+               AssemblyName="$(AssemblyName)"
+               OutputType="$(OutputType)"
+               Language="$(Language)"
+               LocalizationDirectivesToLocFile="$(LocalizationDirectivesToLocFile)"
+               RootNamespace="$(RootNamespace)"
+               References="@(ReferencePath);@(AssemblyForLocalTypeReference)"
+               KnownReferencePaths="$(MSBuildBinPath);$(TargetFrameworkDirectory);@(_TargetFrameworkSDKDirectoryItem);@(KnownReferencePaths)"
+               AssembliesGeneratedDuringBuild="@(AssembliesGeneratedDuringBuild)"
+               AlwaysCompileMarkupFilesInSeparateDomain="$(AlwaysCompileMarkupFilesInSeparateDomain)"
+               XamlDebuggingInformation="$(XamlDebuggingInformation)"
+               GeneratedBaml=""
+               OutputPath="$(IntermediateOutputPath)"
+               ContinueOnError="false"
+               SupportCustomOutputPaths="$(IncludePackageReferencesDuringMarkupCompilation)">
+
+          <!--
+               Output Items for MarkupCompilePass2
+
+               If MarkupCompilePass2 is only for SatelliteAssembly, Append all the generated baml files into SatelliteEmbeddedFiles, No FileClassifier is required.
+               If MarupCompilePass2 is for Main Assembly as well, output the Baml files into GeneratedBaml, FileClassifier task will be invoked later.
+          -->
+
+            <Output ItemName="GeneratedBamlWithLocalType"
+                    TaskParameter="GeneratedBaml"
+                    Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+            <Output ItemName="GeneratedBaml"
+                    TaskParameter="GeneratedBaml"
+                    Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true'" />
+
+            <Output ItemName="SatelliteEmbeddedFiles"
+                    TaskParameter="GeneratedBaml"
+                    Condition="'$(_RequireMCPass2ForSatelliteAssemblyOnly)' == 'true'" />
+
+            <!-- Put the generated files in item FileWrites so that they can be cleaned up appropriately in a next Rebuild -->
+            <Output ItemName="FileWrites" TaskParameter="GeneratedBaml" />
+        </MarkupCompilePass2>
+
+        <Message Text="(out) After MarkupCompilePass2, SatelliteEmbeddedFiles: '@(SatelliteEmbeddedFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(out) GeneratedBamlWithLocalType: '@(GeneratedBamlWithLocalType)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+  </Target>
+
+ <!--
+    ================================================================
+                                   MarkupCompilePass2ForMainAssembly
+    ================================================================
+
+        Name : MarkupCompilePass2ForMainAssembly
+
+        This target is invoked only when there is a xaml file which references local-type and is to embed into main assembly.
+        It is possible when UICulture is not set, or the xaml file has explicitly set Localizable metadata to false.
+
+        Condition: _RequireMCPass2ForMainAssembly == true
+  -->
+
+  <PropertyGroup>
+       <MarkupCompilePass2ForMainAssemblyDependsOn>
+                     GenerateTemporaryTargetAssembly;
+                     MarkupCompilePass2;
+                     AfterMarkupCompilePass2;
+                     CleanupTemporaryTargetAssembly
+       </MarkupCompilePass2ForMainAssemblyDependsOn>
+
+        <_CompileTargetNameForLocalType Condition="'$(_CompileTargetNameForLocalType)' == ''">_CompileTemporaryAssembly</_CompileTargetNameForLocalType>
+        <!-- The updated .NET 5.0.2 GenerateTemporaryTargetAssembly behavior that supports source generators is off by default. -->
+        <IncludePackageReferencesDuringMarkupCompilation Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' == ''">true</IncludePackageReferencesDuringMarkupCompilation>
+        <_ResolveProjectReferencesTargetName Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">ResolveProjectReferences</_ResolveProjectReferencesTargetName>
+        <_CompileTemporaryAssemblyDependsOn>BuildOnlySettings;ResolveKeySource;$(_ResolveProjectReferencesTargetName);CoreCompile</_CompileTemporaryAssemblyDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_CompileTemporaryAssembly"  DependsOnTargets="$(_CompileTemporaryAssemblyDependsOn)" Returns="$(IntermediateOutputPath)$(TargetFileName)"/>
+
+
+  <Target Name="MarkupCompilePass2ForMainAssembly"
+               Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true' "
+               DependsOnTargets="$(MarkupCompilePass2ForMainAssemblyDependsOn)" >
+  </Target>
+
+
+  <!--
+                ==========================================
+                       GenerateTemporaryTargetAssembly
+                ==========================================
+
+                Name : GenerateTemporaryTargetAssembly
+  -->
+  <Target Name="GenerateTemporaryTargetAssembly" Condition="'$(_RequireMCPass2ForMainAssembly)' == 'true'">
+
+     <Message Text="MSBuildProjectFile is $(MSBuildProjectFile)" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+
+       <!-- Create a temporary target assembly project name with a random component. -->
+       <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
+            <_ParentProjectName>$([System.IO.Path]::GetFileNameWithoutExtension('$(MSBuildProjectFullPath)'))</_ParentProjectName>
+            <_ParentProjectExtension>$([System.IO.Path]::GetExtension($(MSBuildProjectFullPath)))</_ParentProjectExtension>
+            <_TemporaryTargetAssemblyProjectNameNoExtension>$([System.String]::Join("_", "$(_ParentProjectName)", "$([System.IO.Path]::GetFileNameWithoutExtension($([System.IO.Path]::GetRandomFileName())))", "wpftmp"))</_TemporaryTargetAssemblyProjectNameNoExtension>
+            <_TemporaryTargetAssemblyProjectName>$(_TemporaryTargetAssemblyProjectNameNoExtension)$(_ParentProjectExtension)</_TemporaryTargetAssemblyProjectName>
+       </PropertyGroup>
+
+      <!-- Collect the generated NuGet files from the parent project required to support PackageReferences. -->
+
+      <!--
+          Note that MSBuildProjectExtensionsPath defaults to BaseIntermediateOutputPath (Microsoft.Common.props)
+          unless it it set prior to importing the .NET SDK. In the WPF temp project, MSBuildProjectExtensionsPath
+          cannot be defined before the .NET SDK is imported, and always defaults to BaseIntermediateOutputPath.
+      -->
+
+      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'">
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.props"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.g.targets"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)$(_ParentProjectName)$(_ParentProjectExtension).nuget.dgspec.json"/>
+
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.props"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.g.targets"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)$(_TemporaryTargetAssemblyProjectName).nuget.dgspec.json"/>
+      </ItemGroup>
+
+      <!-- Project assets and nuget.cache files must also be copied if a custom BaseIntermediateOutputPath is set. -->
+      <ItemGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and '$(_InitialBaseIntermediateOutputPath)' != '$(BaseIntermediateOutputPath)'">
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.assets.json"/>
+        <_SourceGeneratedNuGetPropsAndTargets Include="$(MSBuildProjectExtensionsPath)project.nuget.cache"/>
+
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.assets.json"/>
+        <_DestGeneratedNuGetPropsAndTargets Include="$(BaseIntermediateOutputPath)project.nuget.cache"/>
+      </ItemGroup>
+
+      <!-- Copy the renamed outer project NuGet props/targets files to the MSBuildProjectExtensionsPath used by NuGet. -->
+      <Copy Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'"
+            SourceFiles="@(_SourceGeneratedNuGetPropsAndTargets)"
+            DestinationFiles="@(_DestGeneratedNuGetPropsAndTargets)"
+       />
+
+       <!--
+        Undo TargetFramework and RID append set in Microsoft.NET.RuntimeIdentifierInference.targets to prevent
+        a duplicate target framework and runtime identifier in the IntermediateOutputPath when the new BuildEngine
+        instance runs.
+
+        'Append $(RuntimeIdentifier) to directory to output and intermediate paths to prevent bin clashes between
+        targets. But do not append the implicit default runtime identifier for .NET Framework apps as that would
+        append a RID the user never mentioned in the path and do so even in the AnyCPU case.'
+       -->
+
+      <PropertyGroup>
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$(IntermediateOutputPath)</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
+          '$(AppendRuntimeIdentifierToOutputPath)' == 'true' and '$(RuntimeIdentifier)' != '' and
+          '$(_UsingDefaultRuntimeIdentifier)' != 'true'">
+        <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(RuntimeIdentifier)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+      <PropertyGroup Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false' and
+          '$(AppendTargetFrameworkToOutputPath)' == 'true' and '$(TargetFramework)' != '' and
+          '$(_UnsupportedTargetFrameworkError)' != 'true'">
+          <_IntermediateOutputPathNoTargetFrameworkOrRID>$([System.Text.RegularExpressions.Regex]::Replace($(_IntermediateOutputPathNoTargetFrameworkOrRID), "$(TargetFramework)\\$",, System.Text.RegularExpressions.RegexOptions.IgnoreCase))</_IntermediateOutputPathNoTargetFrameworkOrRID>
+      </PropertyGroup>
+
+       <!--  Use the legacy .NET Framework/.NET Core 3.0 GenerateTemporaryTargetAssembly path if 'IncludePackageReferencesDuringMarkupCompilation' is 'false',. -->
+       <GenerateTemporaryTargetAssembly
+                CurrentProject="$(MSBuildProjectFullPath)"
+                MSBuildBinPath="$(MSBuildBinPath)"
+                ReferencePathTypeName="ReferencePath"
+                CompileTypeName="Compile"
+                AnalyzerTypeName="Analyzer"
+                GeneratedCodeFiles="@(_GeneratedCodeFiles)"
+                ReferencePath="@(ReferencePath)"
+                BaseIntermediateOutputPath="$(BaseIntermediateOutputPath)"
+                IntermediateOutputPath="$(_IntermediateOutputPathNoTargetFrameworkOrRID)"
+                AssemblyName="$(AssemblyName)"
+                CompileTargetName="$(_CompileTargetNameForLocalType)"
+                GenerateTemporaryTargetAssemblyDebuggingInformation="$(GenerateTemporaryTargetAssemblyDebuggingInformation)"
+                IncludePackageReferencesDuringMarkupCompilation="$(IncludePackageReferencesDuringMarkupCompilation)"
+                Analyzers="@(Analyzer)"
+                TemporaryTargetAssemblyProjectName="$(_TemporaryTargetAssemblyProjectName)"
+                MSBuildProjectExtensionsPath="$(MSBuildProjectExtensionsPath)"
+                RootNamespace="$(RootNamespace)"
+                 >
+
+          <Output TaskParameter="TemporaryAssemblyForLocalTypeReference" PropertyName="_AssemblyForLocalTypeReference" />
+       </GenerateTemporaryTargetAssembly>
+
+       <CreateItem Include="$(_AssemblyForLocalTypeReference)">
+               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
+       </CreateItem>
+
+       <!-- Remove generated NuGet props/targets files. -->
+       <Delete
+           Condition="'$(IncludePackageReferencesDuringMarkupCompilation)' != 'false'
+            and '$(GenerateTemporaryTargetAssemblyDebuggingInformation)' != 'true'"
+            Files="@(_DestGeneratedNuGetPropsAndTargets)" />
+   </Target>
+
+
+  <!--
+                 ===========================================
+                          CleanupTemporaryTargetAssembly
+                 ===========================================
+
+                Name : CleanupTemporaryTargetAssembly
+  -->
+
+  <Target Name="CleanupTemporaryTargetAssembly" >
+
+         <Message Text="Remove the temporary project and target assembly" Condition="'$(MSBuildTargetsVerbose)'=='true'" />
+
+         <Delete Files="@(AssemblyForLocalTypeReference)"
+                     Condition="Exists('%(Fullpath)')" />
+  </Target>
+
+  <!--
+                 ===========================================
+                          RemoveDuplicateAnalyzers
+                 ===========================================
+
+                Name : RemoveDuplicateAnalyzers
+  -->
+  <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+    <ItemGroup>
+        <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+        <Analyzer Remove="@(Analyzer)" />
+        <Analyzer Include="@(FilteredAnalyzer)" />
+    </ItemGroup>
+  </Target>
+
+<!--
+    ================================================================
+                                   SatelliteOnlyMarkupCompilePass2
+    ================================================================
+
+        Name : SatelliteOnlyMarkupCompilePass2
+
+        This target is invoked only when there is a xaml file which references local-type and no such xaml file is going
+         to be embedded into main assembly.
+
+        Condition: _RequireMCPass2ForSatelliteAssemblyOnly == true
+  -->
+
+  <Target Name="AddIntermediateAssemblyToReferenceList" >
+
+          <CreateItem Include="@(IntermediateAssembly)" >
+               <Output TaskParameter="Include" ItemName="AssemblyForLocalTypeReference" />
+          </CreateItem>
+  </Target>
+
+  <Target Name="SatelliteOnlyMarkupCompilePass2"  Condition="'$(_RequireMCPass2ForSatelliteAssemblyOnly)' == 'true'"
+               DependsOnTargets="AddIntermediateAssemblyToReferenceList;MarkupCompilePass2" >
+  </Target>
+
+
+
+  <!--
+         ============ Manifest Generation Related Properties, Targets ==============
+  -->
+
+
+  <PropertyGroup Condition="'$(HostInBrowser)' == 'true' and '$(IsApplication)' == 'true'" >
+
+     <!-- Set default value for some related properties -->
+
+     <!-- For Browser application, manifests should be signed even if the project is not getting published -->
+     <GenerateManifestsDependsOn>
+             HostInBrowserValidation;
+             GenerateApplicationManifest;
+             ResignApplicationManifest;
+             GenerateDeploymentManifest;
+             SignDeploymentManifest
+     </GenerateManifestsDependsOn>
+
+     <GenerateManifests Condition="'$(GenerateManifests)' == ''" >true</GenerateManifests>
+     <GenerateClickOnceManifests Condition="'$(GenerateClickOnceManifests)' == ''">$(GenerateManifests)</GenerateClickOnceManifests>
+     <!--
+         If 'install' is not set in project file, set it to false here.
+         But if 'install' is set in project, don't change it now. Later
+         the PropertyValidation target will check if it is correct or not.
+     -->
+     <Install Condition="'$(Install)'==''">false</Install>
+     <!--
+         The valid values for TargetZone are :
+              Internet, Intranet, LocalMachine, Custom
+
+         User can set all above vaild values in project file.
+
+         If this property is not set in project, for HostInBrowser,
+         we set default value 'Internet' here.
+     -->
+     <TargetZone Condition="'$(TargetZone)' == ''">Internet</TargetZone>
+     <!--
+        Overwrite below properties which have been set in Microsoft.Common.targets.
+     -->
+     <TargetUrl Condition="'$(TargetUrl)' != ''">$(TargetUrl)/$(TargetDeployManifestFileName)</TargetUrl>
+     <StartURL Condition="'$(StartURL)'==''">$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetDeployManifestFileName)</StartURL>
+     <StartArguments Condition="'$(StartArguments)' == ''">-debug  "$(StartURL)"</StartArguments>
+     <StartArguments Condition="'$(DebugSecurityZoneURL)' != ''">$(StartArguments) -DebugSecurityZoneURL "$(DebugSecurityZoneURL)"</StartArguments>
+  </PropertyGroup>
+
+
+  <!--
+      Do some property value check before the real manifest generation task starts.
+
+      WinFX.targets should care about the property setting for Browser application only.
+
+      For a regular ClickOnce application, Microsoft.Common.targets is responsible for
+      the setting validation.
+  -->
+
+  <Target Name="HostInBrowserValidation" Condition="'$(HostInBrowser)' == 'true'" >
+
+     <Message Text="(in) Install: '$(Install)'" Condition="'$(MSBuildTargetsVerbose)' == 'true'" />
+
+     <!--
+         TODO: Will get error message from Build task resource so that the message is
+         localizable and can be set an unique error ID.
+     -->
+
+     <Error Condition="'$(GenerateManifests)' != 'true'" Text="Property GenerateManifests should not be set a value other than true for a browser application." />
+
+     <Error  Condition="'$(Install)' == 'true'" Text="Property Install and HostInBrowser should not be both set to true." />
+
+      <Error Condition=" '$(PlatformTarget)' != '' and '$(PlatformTarget)' != 'AnyCpu' "
+             Text="Cannot build a platform-specific XAML Browser Application. If HostInBrowser property is set to 'True', either do not set the PlatformTarget property or set it to 'AnyCpu'." />
+  </Target>
+
+  <Target Name="SplashScreenValidation" Condition="'@(SplashScreen)' != ''" >
+    <Error Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' And
+                      '$(_TargetFrameworkVersionWithoutV)' != ''        And
+                      '$(_TargetFrameworkVersionWithoutV)' == '3.0'"
+           Text="The SplashScreen Build Action is not supported on $(TargetFrameworkIdentifier) $(TargetFrameworkVersion)." />
+  </Target>
+
+
+  <!--
+         Resign Application Manifest after update.
+         _DeploymentResolvedManifestCertificateThumbprint property is set only when SignManifest is set to true.
+   -->
+  <Target Name="ResignApplicationManifest" Condition="'$(_DeploymentResolvedManifestCertificateThumbprint)'!= ''" >
+
+       <Message Text="(in) ApplicationManifest: '@(ApplicationManifest)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+       <Message Text="(in) ManifestKeyFile: '$(ManifestKeyFile)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+       <Message Text="(in) _DeploymentResolvedManifestCertificateThumbprint: '$(_DeploymentResolvedManifestCertificateThumbprint)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+        <SignFile
+            CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
+            TimestampUrl="$(ManifestTimestampUrl)"
+            SigningTarget="@(ApplicationManifest)"/>
+  </Target>
+
+
+  <!--
+         Sign Deployment Manifest if SignManifest is set to true.
+         _DeploymentResolvedManifestCertificateThumbprint property is set only when SignManifest is set to true.
+  -->
+  <Target Name="SignDeploymentManifest" Condition=" '$(_DeploymentResolvedManifestCertificateThumbprint)' != '' " >
+
+       <Message Text="(in) DeployManifest: '@(DeployManifest)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+       <Message Text="(in) ManifestKeyFile: '$(ManifestKeyFile)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+       <Message Text="(in) _DeploymentResolvedManifestCertificateThumbprint: '$(_DeploymentResolvedManifestCertificateThumbprint)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+        <SignFile
+            CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
+            TimestampUrl="$(ManifestTimestampUrl)"
+            SigningTarget="@(DeployManifest)"/>
+  </Target>
+
+
+  <!--
+      ================================================================
+                                   FileClassification
+      ================================================================
+
+     Classify baml and image files into different groups for Main assembly and satellite assembly respectively.
+  -->
+  <Target Name="FileClassification">
+
+      <FileClassifier Condition="'@(GeneratedBaml)' != '' or '@(Resource)' != '' or '@(Font)' != ''"
+                      SourceFiles="@(SplashScreen);@(GeneratedBaml);@(Resource);@(Font)"
+                      Culture="$(UICulture)"
+                      OutputType="$(OutputType)"
+                      MainEmbeddedFiles="@(MainEmbeddedFiles)"
+                      SatelliteEmbeddedFiles="@(SatelliteEmbeddedFiles)"
+                      CLREmbeddedResource="@(CLREmbeddedResources)"
+                      CLRSatelliteEmbeddedResource="@(CLRSatelliteEmbeddedResources)"
+                      CLRResourceFiles="@(CLRResources)" >
+
+          <Output ItemName="MainEmbeddedFiles" TaskParameter="MainEmbeddedFiles" />
+          <Output ItemName="SatelliteEmbeddedFiles" TaskParameter="SatelliteEmbeddedFiles" />
+          <Output ItemName="WinFXEmbeddedResource" TaskParameter="CLREmbeddedResource" />
+          <Output ItemName="WinFXEmbeddedResource" TaskParameter="CLRSatelliteEmbeddedResource" />
+      </FileClassifier>
+
+        <Message Text="(out) EmbeddedFiles: '@(MainEmbeddedFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+        <Message Text="(out) SatelliteEmbeddedFiles: '@(SatelliteEmbeddedFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+  </Target>
+
+  <!--
+      ================================================================
+                                   MainResourcesGeneration
+      ================================================================
+
+  -->
+
+  <PropertyGroup>
+     <!--
+          If the UICulture is not set, resources will be embedded into main assembly.
+          keep $(AssemblyName).g.resources as resource name for this scenario.
+
+          If the UICulture is set to some culture, all the localizable resources will
+          be embedded into satellite assembly, and all the non-localizable resources
+          will be embedded into main assembly.  for this scenario,  keep
+
+              $(AssemblyName).g for localizable resources,
+              $(AssemblyName).unlocalizable.g for unlocalizable resources
+      -->
+     <_ResourceNameInMainAssembly Condition="'$(UICulture)' == ''">$(AssemblyName).g.resources</_ResourceNameInMainAssembly>
+     <_ResourceNameInMainAssembly Condition="'$(UICulture)' != ''">$(AssemblyName).unlocalizable.g.resources</_ResourceNameInMainAssembly>
+  </PropertyGroup>
+
+  <Target Name="MainResourcesGeneration" Inputs="@(MainEmbeddedFiles)" Outputs="$(IntermediateOutputPath)$(_ResourceNameInMainAssembly)" Condition="'@(MainEmbeddedFiles)' != ''">
+
+    <!--
+        This generates .resources file containing all the resources that are to be
+        embedded in the main assembly and dont need to be localized
+    -->
+
+    <Message Text="(in) EmbeddedFiles: '@(MainEmbeddedFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+    <ResourcesGenerator
+                   ResourceFiles="@(MainEmbeddedFiles)"
+                   OutputPath="$(IntermediateOutputPath)"
+                   OutputResourcesFile="$(IntermediateOutputPath)$(_ResourceNameInMainAssembly)"
+                   Condition="'@(MainEmbeddedFiles)' != ''">
+
+          <!-- Put the generated files in item FileWrites so that they can be cleaned up appropriately in a next Rebuild -->
+          <Output ItemName="FileWrites" TaskParameter="OutputResourcesFile" />
+    </ResourcesGenerator>
+
+    <ItemGroup>
+          <EmbeddedResource Include="$(IntermediateOutputPath)$(_ResourceNameInMainAssembly)">
+                <GenerateResource>false</GenerateResource>
+                <Type>Resx</Type>
+                <WithCulture>false</WithCulture>
+                <OutputResource>$(IntermediateOutputPath)$(_ResourceNameInMainAssembly)</OutputResource>
+          </EmbeddedResource>
+    </ItemGroup>
+  </Target>
+
+
+  <!--
+       ================================================================
+                                   SatelliteResourceGeneration
+       ================================================================
+
+       This target just takes the SatelliteEmbeddedFiles such as .baml, images, fonts. etc
+       But not any $(Culture).resx and .resText etc.  those files should have been handled by
+       PrepareResource target.
+
+       This target should output an EmbeddedResource Item, which is then taken by
+       CreateSatelliteAssemblies target.
+  -->
+
+  <Target Name="SatelliteResourceGeneration"
+          Condition="'$(UICulture)' != ''"
+          Inputs="@(SatelliteEmbeddedFiles)"
+          Outputs="$(IntermediateOutputPath)$(AssemblyName).g.$(UICulture).resources">
+
+      <!--
+        This generates .resources file containing all the resources that are to be embedded
+        in the satellite  assembly and need to be localized.
+
+        This task only runs if the default culture of the build is not NULL
+      -->
+
+      <Message Text="(in) SatelliteEmbeddedFiles: '@(SatelliteEmbeddedFiles)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+      <ResourcesGenerator
+                     ResourceFiles="@(SatelliteEmbeddedFiles)"
+                     OutputPath="$(IntermediateOutputPath)"
+                     OutputResourcesFile="$(IntermediateOutputPath)$(AssemblyName).g.$(UICulture).resources"
+                     Condition="'@(SatelliteEmbeddedFiles)' != ''">
+
+            <Output ItemName="_SatelliteResourceFile" TaskParameter="OutputResourcesFile" />
+
+            <!-- Put the generated files in item FileWrites so that they can be cleaned up appropriately in a next Rebuild -->
+            <Output ItemName="FileWrites" TaskParameter="OutputResourcesFile" />
+      </ResourcesGenerator>
+
+      <Message Text="(out) _SatelliteResourceFile is '@(_SatelliteResourceFile)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+  </Target>
+
+
+  <!--
+      This target should always run after SatelliteResourceGeneration, so that it
+      can generate the correct Item which contains right Culture attribute even for
+      incremental build.
+  -->
+
+  <Target Name="GenerateResourceWithCultureItem" Condition="'$(UICulture)' != ''" >
+
+      <Message Text="(out) _SatelliteResourceFile: '@(_SatelliteResourceFile)'" Condition="'$(MSBuildTargetsVerbose)'=='true'"/>
+
+      <ItemGroup>
+          <EmbeddedResource Include="@(_SatelliteResourceFile)">
+                <Culture>$(UICulture)</Culture>
+                <GenerateResource>false</GenerateResource>
+                <Type>Resx</Type>
+                <WithCulture>true</WithCulture>
+                <OutputResource>@(_SatelliteResourceFile)</OutputResource>
+          </EmbeddedResource>
+      </ItemGroup>
+  </Target>
+
+
+  <!-- Overwrite some target and properties for Publish support -->
+
+   <!--
+         PublishBuildDependsOn property is defined in Microsoft.Common.targets, but it doesn't handle WinFX
+         resx file, since this resx file is not set into project file, but is generated at build time.
+
+         For Publish Build, we need to make sure the $(Target).g.$(UICulture).resources is handled correctly.
+         Add target "PrepareResourcesForSatelliteAssemblies" to the place prior to CreateSatelliteAssemblies.
+    -->
+    <PropertyGroup>
+        <PublishBuildDependsOn>
+            BuildOnlySettings;
+            PrepareForBuild;
+            ResolveReferences;
+            PrepareResources;
+            ResolveKeySource;
+            PrepareResourcesForSatelliteAssemblies;
+            GenerateSerializationAssemblies;
+            CreateSatelliteAssemblies;
+        </PublishBuildDependsOn>
+    </PropertyGroup>
+
+   <!--
+         SatelliteDllsProjectOutputGroup target is implemented in Microsoft.Common.targets, but it doesn't handle WinFX
+         satellite assembly, since for WinFX, the $(targetname).g.$(UICulture).resx is not set into project file, but is generated
+         at build time after Xaml file is compiled, (for some case, it is generated after the main dll is compiled).
+
+        So overwrite this target, copy the content from Microsoft.Common.targets and inject the part for our UICulture support.
+    -->
+
+    <!--
+    ================================================================
+                                         SatelliteDllsProjectOutputGroup
+    ================================================================
+
+    This target performs population of the Satellite Files project output group.
+    -->
+    <Target
+        Name="SatelliteDllsProjectOutputGroup"
+        DependsOnTargets="PrepareResourceNames"
+        Returns="@(SatelliteDllsProjectOutputGroupOutput)"
+        KeepDuplicateOutputs="False">
+
+        <CreateItem
+            Include="$(IntermediateOutputPath)%(ResxWithCulture.Culture)\$(TargetName).resources.dll"
+            AdditionalMetadata="TargetPath=%(ResxWithCulture.Culture)\$(TargetName).resources.dll"
+            Condition="'@(ResxWithCulture)' != ''">
+
+           <Output ItemName="SatelliteDllsProjectOutputGroupOutputIntermediate" TaskParameter="Include" />
+        </CreateItem>
+
+        <!--  This task is WinFX specific. -->
+
+        <CreateItem
+            Include="$(IntermediateOutputPath)$(UICulture)\$(TargetName).resources.dll"
+            AdditionalMetadata="TargetPath=$(UICulture)\$(TargetName).resources.dll"
+            Condition="'$(UICulture)' != ''">
+
+           <Output ItemName="SatelliteDllsProjectOutputGroupOutputIntermediate" TaskParameter="Include" />
+        </CreateItem>
+
+        <!-- End of WinFX specific -->
+
+        <CreateItem
+            Include="$(IntermediateOutputPath)%(NonResxWithCulture.Culture)\$(TargetName).resources.dll"
+            AdditionalMetadata="TargetPath=%(NonResxWithCulture.Culture)\$(TargetName).resources.dll"
+            Condition="'@(NonResxWithCulture)' != ''">
+
+            <Output ItemName="SatelliteDllsProjectOutputGroupOutputIntermediate" TaskParameter="Include" />
+        </CreateItem>
+
+        <CreateItem Include="$(IntermediateOutputPath)">
+            <Output ItemName="SatelliteDllsProjectOutputGroupRootRelativeUrlBaseIntermediate" TaskParameter="Include"/>
+        </CreateItem>
+
+        <!-- Convert intermediate items into final items; this way we can get the full path for each item. -->
+        <CreateItem Include="@(SatelliteDllsProjectOutputGroupOutputIntermediate->'%(FullPath)')">
+            <Output ItemName="SatelliteDllsProjectOutputGroupOutput" TaskParameter="Include"/>
+        </CreateItem>
+    </Target>
+
+
+  <!-- Other Targets  -->
+  <Target Name="CheckUid"
+          Condition="'@(Page)' != '' or '@(ApplicationDefinition)' != ''">
+
+       <UidManager MarkupFiles="@(Page);@(ApplicationDefinition)" Task="Check" />
+  </Target>
+
+  <Target Name="UpdateUid"
+          Condition="'@(Page)' != '' or '@(ApplicationDefinition)' != ''">
+
+      <UidManager MarkupFiles="@(Page);
+                               @(ApplicationDefinition)"
+                  IntermediateDirectory ="$(IntermediateOutputPath)"
+                  Task="Update" />
+  </Target>
+
+  <Target Name="RemoveUid"
+          Condition="'@(Page)' != '' or '@(ApplicationDefinition)' != ''">
+
+      <UidManager MarkupFiles="@(Page);
+                               @(ApplicationDefinition)"
+
+                  IntermediateDirectory ="$(IntermediateOutputPath)"
+                  Task="Remove" />
+  </Target>
+
+
+  <!--
+      ================================================================
+                                  MergeLocalizationDirectives
+      ================================================================
+
+      Merge localization comments of single bamls into one file for the whole assembly.
+  -->
+  <Target Name="MergeLocalizationDirectives"
+          Condition="'@(GeneratedLocalizationFiles)' !=''"
+          Inputs="@(GeneratedLocalizationFiles)"
+          Outputs="$(IntermediateOutputPath)$(AssemblyName).loc"
+  >
+       <MergeLocalizationDirectives GeneratedLocalizationFiles="@(GeneratedLocalizationFiles)"
+                                    OutputFile="$(IntermediateOutputPath)$(AssemblyName).loc"/>
+       <!--
+          Add the merged loc file into _NoneWithTargetPath so that it will be copied to the
+          output directory
+       -->
+       <CreateItem Condition="Exists('$(IntermediateOutputPath)$(AssemblyName).loc')"
+                   Include="$(IntermediateOutputPath)$(AssemblyName).loc"
+                   AdditionalMetadata="CopyToOutputDirectory=PreserveNewest; TargetPath=$(AssemblyName).loc" >
+           <Output ItemName="_NoneWithTargetPath" TaskParameter="Include"/>
+           <Output ItemName="FileWrites" TaskParameter="Include"/>
+       </CreateItem>
+  </Target>
+
+  <!-- End of other targets -->
+
+
+  <!--
+     This is similar to AssignTargetPaths target in Microsoft.Common.targets.
+     But it handles only the generated WinFXEmbeddedResource item type.
+
+     After this target is done, SplitResourceByCulture target can take the right input
+     and handle the resource correctly.
+  -->
+  <Target Name="AssignWinFXEmbeddedResource"
+          Condition="'@(WinFXEmbeddedResource)' != ''" >
+
+     <ItemGroup>
+         <_Temporary Remove="@(_Temporary)" />
+     </ItemGroup>
+
+     <AssignTargetPath Files="@(WinFXEmbeddedResource)" RootFolder="$(MSBuildProjectDirectory)">
+            <Output TaskParameter="AssignedFiles" ItemName="_Temporary" />
+     </AssignTargetPath>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="@(_Temporary)" />
+        <EmbeddedResource Include="@(_Temporary)" />
+        <_Temporary Remove="@(_Temporary)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- End of the project file, Do not add any more propeties, items, targets etc. -->
+
+</Project>

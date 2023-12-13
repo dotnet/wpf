@@ -15,7 +15,6 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Xps.Packaging;
 
 using MS.Internal;
@@ -40,12 +39,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// Returns a reference to a new BitmapEncoder.
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - 1)   Asserts to access the registry.  May return path information which
-        ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
-        ///             
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         BitmapEncoder
         GetEncoder(
@@ -68,15 +61,7 @@ namespace System.Windows.Xps.Serialization
 
                 if (codecInfo != null)
                 {
-                    (new RegistryPermission(PermissionState.Unrestricted)).Assert();
-                    try
-                    {
-                        encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
-                    }
-                    finally
-                    {
-                        RegistryPermission.RevertAssert();
-                    }
+                    encoder = BitmapEncoder.Create(codecInfo.ContainerFormat);
 
                     // Avoid GIF encoder which does not save transparency well
                     if ( !( encoder is JpegBitmapEncoder || 
@@ -121,12 +106,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// Returns true if the bitmapSource is of supported mimetype
         /// </returns>
-        /// <SecurityNote>
-        /// Critical - 1)   Asserts to access the registry.  May return path information which
-        ///                 could disclose windows directory (ie. c:\windows\media\sound.wav)
-        ///             
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         bool
         IsSupportedMimeType(
@@ -152,15 +131,7 @@ namespace System.Windows.Xps.Serialization
             
             if (codecInfo != null)
             {
-                (new RegistryPermission(PermissionState.Unrestricted)).Assert();
-                try
-                {
-                    imageMimeType = codecInfo.MimeTypes;
-                }
-                finally
-                {
-                    RegistryPermission.RevertAssert();
-                }
+                imageMimeType = codecInfo.MimeTypes;
             }
             int start = 0;
             int comma = imageMimeType.IndexOf(',', start);

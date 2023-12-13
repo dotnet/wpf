@@ -1,0 +1,20 @@
+<Project>
+  <PropertyGroup>
+    <WpfTest>true</WpfTest>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
+    <SignAssembly>false</SignAssembly>
+    <IsShipping>false</IsShipping>
+    <EnableXlfLocalization>false</EnableXlfLocalization>
+    <CLSCompliant>false</CLSCompliant>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <EmbeddedResource>
+      <GenerateSource>false</GenerateSource>
+    </EmbeddedResource>
+  </ItemDefinitionGroup>
+  <Import Project="$(WpfTestsDir)MultiTargeting.props" />
+</Project>

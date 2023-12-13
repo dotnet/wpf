@@ -69,10 +69,7 @@ namespace System.Xaml
                 return;
             }
 
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
             if (ap != null)
@@ -201,7 +198,7 @@ namespace System.Xaml
                         {
                             //
                             // If for some reason it doesn't, throw.
-                            throw new InvalidOperationException(SR.Get(SRID.DefaultAttachablePropertyStoreCannotAddInstance));
+                            throw new InvalidOperationException(SR.DefaultAttachablePropertyStoreCannotAddInstance);
                         }
                     }
                 }

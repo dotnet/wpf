@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,15 +22,14 @@ using System.Windows.Ink;
 using MS.Internal.IO.Packaging;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
     internal class StrokeCollectionSerializer
     {
         #region Constants (Static Fields)
-        internal static readonly double AvalonToHimetricMultiplier = 2540.0d / 96.0d;
-        internal static readonly double HimetricToAvalonMultiplier = 96.0d / 2540.0d;
+        internal const double AvalonToHimetricMultiplier = 2540.0d / 96.0d;
+        internal const double HimetricToAvalonMultiplier = 96.0d / 2540.0d;
         internal static readonly TransformDescriptor IdentityTransformDescriptor;
 
         static StrokeCollectionSerializer()
@@ -146,57 +144,57 @@ namespace MS.Internal.Ink.InkSerializedFormat
             catch (ArgumentException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (InvalidOperationException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (IndexOutOfRangeException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (NullReferenceException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (EndOfStreamException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
             catch (OverflowException ex)
             {
                 //only include an inner exception in debug builds
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), ex);
+                throw new ArgumentException(SR.IsfOperationFailed, ex);
             }
 #else
             catch (ArgumentException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (InvalidOperationException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (IndexOutOfRangeException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (NullReferenceException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (EndOfStreamException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
             catch (OverflowException)
             {
-                throw new ArgumentException(SR.Get(SRID.IsfOperationFailed), "stream");//stream comes from StrokeCollection.ctor()
+                throw new ArgumentException(SR.IsfOperationFailed, "stream");//stream comes from StrokeCollection.ctor()
             }
 #endif
         }
@@ -298,12 +296,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         ///  attached to this StrokeCollectionSerializer.
         /// </summary>
         /// <param name="inkdata">a byte[] of the raw isf to decode</param>
-        /// <SecurityNote>
-        ///     Critical - Calls critical methods in Compressor
-        ///     TreatAsSafe - inkdata is a disconnected copy from the one passed in
-        ///         underlying unmanaged code has been security reviewed and fuzzed
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
 #else
         /// <summary>
         /// Takes an ISF Stream and populates the StrokeCollection
@@ -362,7 +354,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint uiTag;
             uint localBytesDecoded = SerializationHelper.Decode(inputStream, out uiTag);
             if (0x00 != uiTag)
-                throw new ArgumentException(SR.Get(SRID.InvalidStream));
+                throw new ArgumentException(SR.InvalidStream);
 
             // Now read the size of the stream
             localBytesDecoded = SerializationHelper.Decode(inputStream, out remainingBytesInStream);
@@ -826,10 +818,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// list passed
     /// </summary>
     /// <returns></returns>
-    /// <SecurityNote>
-    ///     Critical - Calls the DrawingAttributeSerializer.DecodeAsISF critical method
-    /// </SecurityNote>
-    [SecurityCritical]
 #else
     /// <summary>
     /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
@@ -1692,22 +1680,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// This functions Saves the Ink as Ink Serialized Format based on the Compression code
         /// </summary>
         /// <returns>A byte[] with the encoded ISF</returns>
-        /// <SecurityNote>
-        ///     Critical - Calls critical methods:
-        ///             StrokeCollectionSerializer.SaveStrokeIds
-        ///             ExtendedPropertySerializer.EncodeAsISF
-        ///             StrokeCollectionSerializer.StoreStrokeData
-        ///
-        ///
-        ///     TreatAsSafe - We're saving a StrokeCollection and we control and verify
-        ///             all of the data the StrokeCollection directly and indirectly contains
-        ///
-        ///             This codepath calls into unmanaged code in Compressor.CompressPacketData
-        ///             and Compressor.CompressPropertyData.  The underlying unmanaged code has been
-        ///              security reviewed and fuzzed
-        ///
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
 #else
         /// <summary>
         /// This functions Saves the Ink as Ink Serialized Format based on the Compression code
@@ -1904,15 +1876,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <Summary>
         /// Encodes all of the strokes in a strokecollection to ISF
         /// </Summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method StrokeSerializer.EncodeStroke
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <Summary>
         /// Encodes all of the strokes in a strokecollection to ISF
@@ -2035,15 +1998,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="strm"></param>
         /// <param name="forceSave">save ids even if they are contiguous</param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method Compressor.CompressPacketData
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves the stroke Ids in the stream.
@@ -2511,16 +2465,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stream"></param>
         /// <param name="guidList"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method
-        ///         DrawingAttributeSerializer.EncodeAsISF
-        ///
-        ///     This directly called by StrokeCollectionSerializer.EncodeISF
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// This function serializes Drawing Attributes Table in the stream. For information on how they are serialized, please refer to the spec.
@@ -2755,7 +2699,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #if DEBUG
             return debugMessage;
 #else
-            return SR.Get(SRID.IsfOperationFailed);
+            return SR.IsfOperationFailed;
 #endif
         }
 

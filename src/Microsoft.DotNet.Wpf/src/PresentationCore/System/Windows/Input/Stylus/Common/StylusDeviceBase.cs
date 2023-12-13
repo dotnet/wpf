@@ -12,7 +12,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusWisp;
@@ -20,7 +19,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -112,9 +110,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - accesses critical data (_inputSource) and returns it.
-        /// </SecurityNote>
         internal abstract PresentationSource CriticalActiveSource { get; }
 
         /// <summary>
@@ -214,10 +209,6 @@ namespace System.Windows.Input
 
         internal abstract int DoubleTapDeltaY { get; }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical method StylusLogic.CurrentlStylusLogic.
-        /// TreatAsSafe: Takes no input and returns safe data (double tap info - time delta for double tap).
-        /// </SecurityNote>
         internal abstract int DoubleTapDeltaTime { get; }
 
         internal abstract Point GetMouseScreenPosition(MouseDevice mouseDevice);

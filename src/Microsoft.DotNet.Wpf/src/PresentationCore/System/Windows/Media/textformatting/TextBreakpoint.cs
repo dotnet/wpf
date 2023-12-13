@@ -72,10 +72,6 @@ namespace System.Windows.Media.TextFormatting
         /// We would make a correspondent call to notify our unmanaged wrapper to release them from duty of managing this 
         /// resource. 
         /// </remarks>
-        /// <SecurityNote>
-        ///  Critical - as this method returns unmanaged resource to the client.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource();
 
 

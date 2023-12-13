@@ -14,7 +14,6 @@ using System.Reflection;
 using System.Threading;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;
@@ -586,7 +585,7 @@ namespace System.Windows.Markup
                 {
                     // if local assemblies can be resolved, but the type could not be resolved, then
                     // we need to throw an exception
-                    ThrowException(SRID.ParserNotMarkupExtension, attributeValue, typename,
+                    ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
                                    namespaceURI, lineNumber, linePosition);
                 }
                 else
@@ -601,7 +600,7 @@ namespace System.Windows.Markup
             else if (!KnownTypes.Types[(int)KnownElements.MarkupExtension].IsAssignableFrom(targetType))
             {
                 // if the type is not known, throw an exception
-                ThrowException(SRID.ParserNotMarkupExtension, attributeValue, typename,
+                ThrowException(nameof(SR.ParserNotMarkupExtension), attributeValue, typename,
                                namespaceURI, lineNumber, linePosition);
             }
 
@@ -1050,7 +1049,7 @@ namespace System.Windows.Markup
                             }
                             else
                             {
-                                ThrowException(SRID.ParserMarkupExtensionInvalidClosingBracketCharacers, args[i].ToString(), lineNumber, linePosition);
+                                ThrowException(nameof(SR.ParserMarkupExtensionInvalidClosingBracketCharacers), args[i].ToString(), lineNumber, linePosition);
                             }
                         }
 
@@ -1069,7 +1068,7 @@ namespace System.Windows.Markup
                             // occur as the first non-whitespace character in a name or value.
                             if (stringBuilder.Length != 0)
                             {
-                                ThrowException(SRID.ParserMarkupExtensionNoQuotesInName, args,
+                                ThrowException(nameof(SR.ParserMarkupExtensionNoQuotesInName), args,
                                                lineNumber, linePosition);
                             }
                             inQuotes = true;
@@ -1094,13 +1093,13 @@ namespace System.Windows.Markup
                                 AddToTokenList(list, stringBuilder, true);
                                 if (bracketCharacterStack.Count != 0)
                                 {
-                                    ThrowException(SRID.ParserMarkupExtensionMalformedBracketCharacers, bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
+                                    ThrowException(nameof(SR.ParserMarkupExtensionMalformedBracketCharacers), bracketCharacterStack.Peek().ToString(), lineNumber, linePosition);
                                 }
                             }
                             else if (list.Count == 0)
                             {
                                 // Must have an attribute before you have the first delimeter
-                                ThrowException(SRID.ParserMarkupExtensionDelimiterBeforeFirstAttribute, args,
+                                ThrowException(nameof(SR.ParserMarkupExtensionDelimiterBeforeFirstAttribute), args,
                                                lineNumber, linePosition);
                             }
                             else if (list[list.Count - 1] is Char)
@@ -1108,7 +1107,7 @@ namespace System.Windows.Markup
                                 // Can't have two delimiters in a row, so check what is on
                                 // the list and complain if the last item is a character, or if
                                 // a delimiter is the first item.
-                                ThrowException(SRID.ParserMarkupExtensionBadDelimiter, args,
+                                ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
                                                lineNumber, linePosition);
                             }
 
@@ -1138,7 +1137,7 @@ namespace System.Windows.Markup
                                 }
                                 else if (list.Count > 0 && (list[list.Count-1] is Char))
                                 {
-                                    ThrowException(SRID.ParserMarkupExtensionBadDelimiter, args,
+                                    ThrowException(nameof(SR.ParserMarkupExtensionBadDelimiter), args,
                                                    lineNumber, linePosition);
                                 }
                             }
@@ -1170,12 +1169,12 @@ namespace System.Windows.Markup
             // format is bad, so complain.
             if (!gotFinalCloseCurly)
             {
-                ThrowException(SRID.ParserMarkupExtensionNoEndCurlie, "}", lineNumber, linePosition);
+                ThrowException(nameof(SR.ParserMarkupExtensionNoEndCurlie), "}", lineNumber, linePosition);
             }
             // If there is junk after the closing '}', complain
             else if (i < length)
             {
-                ThrowException(SRID.ParserMarkupExtensionTrailingGarbage, "}",
+                ThrowException(nameof(SR.ParserMarkupExtensionTrailingGarbage), "}",
                                args.Substring(i,length-(i)), lineNumber, linePosition);
             }
 
@@ -1250,7 +1249,7 @@ namespace System.Windows.Markup
                 {
                     if (!(list[listIndex] is String))
                     {
-                        ThrowException(SRID.ParserMarkupExtensionBadConstructorParam, data.Args,
+                        ThrowException(nameof(SR.ParserMarkupExtensionBadConstructorParam), data.Args,
                                        data.LineNumber, data.LinePosition);
                     }
 
@@ -1322,7 +1321,7 @@ namespace System.Windows.Markup
                     }
 
                     // If we get to here, then no matching constructor was found, so complain
-                    ThrowException(SRID.ParserBadConstructorParams, data.TargetType.Name,
+                    ThrowException(nameof(SR.ParserBadConstructorParams), data.TargetType.Name,
                                    numberOfConstructorAttributes.ToString(CultureInfo.CurrentCulture),
                                    data.LineNumber, data.LinePosition);
                 }
@@ -1354,7 +1353,7 @@ namespace System.Windows.Markup
                         (list[k+1] is String) ||
                         ((Char)list[k+1]) != '=')
                     {
-                        ThrowException(SRID.ParserMarkupExtensionNoNameValue, data.Args,
+                        ThrowException(nameof(SR.ParserMarkupExtensionNoNameValue), data.Args,
                                        data.LineNumber, data.LinePosition);
                     }
 
@@ -1366,7 +1365,7 @@ namespace System.Windows.Markup
 
                     if (propertyNamesSoFar.Contains(propertyName))
                     {
-                        ThrowException(SRID.ParserDuplicateMarkupExtensionProperty, propertyName, data.LineNumber, data.LinePosition);
+                        ThrowException(nameof(SR.ParserDuplicateMarkupExtensionProperty), propertyName, data.LineNumber, data.LinePosition);
                     }
                     propertyNamesSoFar.Add( propertyName );
 
@@ -1520,7 +1519,7 @@ namespace System.Windows.Markup
 
             if (String.IsNullOrEmpty(attribNamespaceURI))
             {
-               ThrowException(SRID.ParserPrefixNSProperty, prefix, name, lineNumber, linePosition);
+               ThrowException(nameof(SR.ParserPrefixNSProperty), prefix, name, lineNumber, linePosition);
             }
 
             AttributeContext attributeContext = GetAttributeContext(
@@ -1536,7 +1535,7 @@ namespace System.Windows.Markup
 
             if (attributeContext != AttributeContext.Property)
             {
-                ThrowException(SRID.ParserMarkupExtensionUnknownAttr, localName,
+                ThrowException(nameof(SR.ParserMarkupExtensionUnknownAttr), localName,
                                parentType.FullName, lineNumber, linePosition);
             }
 
@@ -1697,7 +1696,7 @@ namespace System.Windows.Markup
             int    lineNumber,
             int    linePosition)
         {
-            string message = SR.Get(id, parameter1);
+            string message = SR.Format(SR.GetResourceString(id), parameter1);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
@@ -1711,7 +1710,7 @@ namespace System.Windows.Markup
             int    lineNumber,
             int    linePosition)
         {
-            string message = SR.Get(id, parameter1, parameter2);
+            string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
@@ -1726,7 +1725,7 @@ namespace System.Windows.Markup
             int    lineNumber,
             int    linePosition)
         {
-            string message = SR.Get(id, parameter1, parameter2, parameter3);
+            string message = SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
@@ -1739,7 +1738,7 @@ namespace System.Windows.Markup
             int    linePosition)
         {
             message += " ";
-            message += SR.Get(SRID.ParserLineAndOffset,
+            message += SR.Format(SR.ParserLineAndOffset,
                               lineNumber.ToString(CultureInfo.CurrentCulture),
                               linePosition.ToString(CultureInfo.CurrentCulture));
 

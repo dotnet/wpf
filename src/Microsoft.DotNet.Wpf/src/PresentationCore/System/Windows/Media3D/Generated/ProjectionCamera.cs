@@ -29,9 +29,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;

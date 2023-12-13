@@ -23,7 +23,6 @@ using System.Diagnostics;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.Effects
@@ -48,11 +47,6 @@ namespace System.Windows.Media.Effects
         /// 3. Wraps the list with the aggregate effect
         /// </summary>
         /// <param name="unmanagedEffect">Unmanaged handle for aggregate effect</param>
-        /// <SecurityNote>
-        /// Critical - recieves a security critical type SafeHandle.
-        /// Safe     - The method does nothing.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
@@ -62,11 +56,6 @@ namespace System.Windows.Media.Effects
         /// Create an unmanaged handle for the group effect
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - returns a security critical type SafeHandle.
-        /// Safe     - Always returns null.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         [Obsolete(MS.Internal.Media.VisualTreeUtils.BitmapEffectObsoleteMessage)]
         protected override unsafe SafeHandle CreateUnmanagedEffect()
         {

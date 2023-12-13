@@ -16,7 +16,6 @@ using System.Reflection;
 using MS.Internal;
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
@@ -24,7 +23,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -41,10 +39,10 @@ namespace System.Windows.Media.Imaging
         public void BeginInit()
         {
             if (IsInitAtLeastOnce)
-                throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOneInit, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_OnlyOneInit, null));
 
             if (IsInInit)
-                throw new InvalidOperationException(SR.Get(SRID.Image_InInitialize, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_InInitialize, null));
 
             _inInit = true;
         }
@@ -52,7 +50,7 @@ namespace System.Windows.Media.Imaging
         public void EndInit()
         {
             if (!IsInInit)
-                throw new InvalidOperationException(SR.Get(SRID.Image_EndInitWithoutBeginInit, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_EndInitWithoutBeginInit, null));
 
             _inInit = false;
             _isInitialized = true;
@@ -62,7 +60,7 @@ namespace System.Windows.Media.Imaging
         {
             if (!IsInInit)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_SetPropertyOutsideBeginEndInit, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_SetPropertyOutsideBeginEndInit, null));
             }
         }
 
@@ -85,10 +83,10 @@ namespace System.Windows.Media.Imaging
         public void EnsureInitializedComplete()
         {
             if (IsInInit)
-                throw new InvalidOperationException(SR.Get(SRID.Image_InitializationIncomplete, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_InitializationIncomplete, null));
 
             if (!IsInitAtLeastOnce)
-                throw new InvalidOperationException(SR.Get(SRID.Image_NotInitialized, null));
+                throw new InvalidOperationException(SR.Format(SR.Image_NotInitialized, null));
         }
 
         public void Reset()

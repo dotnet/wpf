@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.PresentationCore;
@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
@@ -71,23 +70,9 @@ namespace System.Windows.Interop
         /// Creates a new input provider for a particular source that handles WM_POINTER messages
         /// </summary>
         /// <param name="source">The source to handle messages for</param>
-        /// <SecurityNote>
-        ///     Critical:   Calls InputManager.Current.RegisterInputProvider
-        ///                 Calls StylusLogic.GetCurrentStylusLogicAs<T>
-        ///                 Calls MS.Win32.UnsafeNativeMethods.GetWindowLong
-        /// </SecurityNote>
-        [SecurityCritical]
         internal HwndPointerInputProvider(HwndSource source)
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed Assert for InputManager.Current.RegisterInputProvider
-            {
-                _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
 
             _source = new SecurityCriticalDataClass<HwndSource>(source);
             _pointerLogic = new SecurityCriticalDataClass<PointerLogic>(StylusLogic.GetCurrentStylusLogicAs<PointerLogic>());
@@ -100,10 +85,6 @@ namespace System.Windows.Interop
             IsWindowEnabled = (style & MS.Win32.NativeMethods.WS_DISABLED) == 0;
         }
 
-        /// <SecurityNote>
-        ///     Critical:   Calls Dispose(bool)
-        /// </SecurityNote>
-        [SecurityCritical]
         ~HwndPointerInputProvider()
         {
             Dispose(false);
@@ -112,10 +93,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Clean up any held resources
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   InputProviderSite.Dispose
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -135,10 +112,6 @@ namespace System.Windows.Interop
             _disposed = true;
         }
 
-        /// <SecurityNote>
-        ///     SafeCritical:   Calls Dispose(bool)
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -165,11 +138,6 @@ namespace System.Windows.Interop
         /// <param name="pointerData">The current pointer info</param>
         /// <param name="tabletDevice">The current TabletDevice</param>
         /// <returns>An array of raw pointer data</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls UnsafeNativeMethods.GetRawPointerDeviceData
-        ///                 Returns raw pointer data
-        /// </SecurityNote>
-        [SecurityCritical]
         private int[] GenerateRawStylusData(PointerData pointerData, PointerTabletDevice tabletDevice)
         {
             // Since we are copying raw pointer data, we want to use every property supported by this pointer.
@@ -180,7 +148,7 @@ namespace System.Windows.Interop
             // The data is as wide as the pointer properties and is per history point
             int[] rawPointerData = new int[pointerPropertyCount * pointerData.Info.historyCount];
 
-            int[] data = new int[0];
+            int[] data = Array.Empty<int>();
 
             // Get the raw data formatted to our supported properties
             if (UnsafeNativeMethods.GetRawPointerDeviceData(
@@ -244,15 +212,6 @@ namespace System.Windows.Interop
         /// <param name="action">The stylus action being done</param>
         /// <param name="timestamp">The time (in ticks) the message arrived</param>
         /// <returns>True if successfully processed (handled), false otherwise</returns>
-        /// <SecurityNote>
-        ///     Critical:   Calls UnsafeNativeMethods.GetPointerCursorId
-        ///                 Calls PointerData.PointerData
-        ///                 Calls PointerStylusPlugInManager.InvokeStylusPluginCollection
-        ///                 Calls InputManager.UnsecureCurrent.ProcessInput
-        ///                 Calls PointerStylusDevice.ProcessInteractions
-        ///                 Can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool ProcessMessage(uint pointerId, RawStylusActions action, int timestamp)
         {
             bool handled = false;
@@ -364,13 +323,6 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="originOffsetX">The X offset in logical coordinates</param>
         /// <param name="originOffsetY">The Y offset in logical coordiantes</param>
-        /// <SecurityNote>
-        ///     SafeCritical:   Accesses critical member _source.Value
-        ///                     Does not expose any secure data
-        ///     UIPermission for calling PointToScreen
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        [UIPermission(SecurityAction.Assert, Window = UIPermissionWindow.AllWindows)]
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
             Point originScreenCoord = _source.Value.RootVisual.PointToScreen(new Point(0, 0));
@@ -446,7 +398,6 @@ namespace System.Windows.Interop
         /// <param name="lParam"></param>
         /// <param name="handled">If this has been successfully processed</param>
         /// <returns></returns>
-        [SecurityCritical]
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             handled = false;
@@ -518,7 +469,7 @@ namespace System.Windows.Interop
         /// </summary>
         public void NotifyDeactivate()
         {
-}
+        }
 
         #endregion
     }

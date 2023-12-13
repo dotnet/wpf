@@ -14,7 +14,6 @@ using System.Windows.Markup;
 using CultureInfo = System.Globalization.CultureInfo;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -113,7 +112,7 @@ namespace System.Windows.Media.Media3D
                 //   singular matrices.
 
                 // Need to handle singular matrix cameras
-                throw new NotSupportedException(SR.Get(SRID.HitTest_Singular));
+                throw new NotSupportedException(SR.HitTest_Singular);
             }
             
             cameraToWorld.Invert();
@@ -185,7 +184,7 @@ namespace System.Windows.Media.Media3D
             viewportMatrix.ScalePrepend(new Vector3D(viewSize.Width/2,-viewSize.Height/2,1));
             viewportMatrix.TranslatePrepend(new Vector3D(1,1,0));
             
-            // `First world-to-camera, then camera's projection, then normalized clip space to viewport.
+            // First, world-to-camera, then camera's projection, then normalized clip space to viewport.
             rayParameters.HitTestProjectionMatrix = 
                 worldToCamera *
                 viewportMatrix;

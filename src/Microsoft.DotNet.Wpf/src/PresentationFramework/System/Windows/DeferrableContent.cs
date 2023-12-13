@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -17,28 +17,9 @@ namespace System.Windows
     [TypeConverter(typeof(DeferrableContentConverter))]
     public class DeferrableContent
     {
-        /// <SecurityNote>
-        /// Critical to write: We will assert this permission before realizing the deferred content.
-        /// Critical to read: Can be mutated via FromXml method.
-        /// </SecurityNote>
-        internal XamlLoadPermission LoadPermission
-        {
-            [SecurityCritical]
-            get;
-            [SecurityCritical]
-            private set;
-        }
-
-        /// <SecurityNote>
-        /// Critical to write: This describes the content that is allowed to be loaded with LoadPermission.
-        ///                    If LoadPermission is null then this is non-critical.
-        /// Safe to read: Carries no privilege in itself.
-        /// </SecurityNote>
         internal Stream Stream
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get;
-            [SecurityCritical]
             private set;
         }
 
@@ -51,23 +32,11 @@ namespace System.Windows
         // valid outside the scope of a DeferringContentLoader.Load call.
         internal IServiceProvider ServiceProvider { get; private set; }
 
-        /// <SecurityNote>
-        /// Critical: Sets critical properties LoadPermission and Stream
-        /// Safe: Demands LoadPermission before setting it
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal DeferrableContent(Stream stream, Baml2006SchemaContext schemaContext, 
             IXamlObjectWriterFactory objectWriterFactory, IServiceProvider serviceProvider,
             object rootObject)
         {
             ObjectWriterParentSettings = objectWriterFactory.GetParentSettings();
-            if (ObjectWriterParentSettings.AccessLevel != null)
-            {
-                XamlLoadPermission loadPermission = 
-                    new XamlLoadPermission(ObjectWriterParentSettings.AccessLevel);
-                loadPermission.Demand();
-                this.LoadPermission = loadPermission;
-            }
             bool assemblyTargetsFramework2 = false;
             // The local assembly can be null if it is not specified in the XamlReaderSettings.
             if (schemaContext.LocalAssembly != null)

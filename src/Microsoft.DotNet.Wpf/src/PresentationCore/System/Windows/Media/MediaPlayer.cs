@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.ComponentModel;
 using MS.Internal;
@@ -25,7 +24,6 @@ using System.Security.AccessControl;//for semaphore access permissions
 using System.Net;
 using Microsoft.Win32;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 //
@@ -50,10 +48,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged pointers (proxy), calls critical code, indirectly access arbitrary file resources
-        /// PublicOK: The URI holds relative path which is resolved just before being passed to media player
-        /// </SecurityNote>
         public MediaPlayer()
         {
         }
@@ -532,10 +526,6 @@ namespace System.Windows.Media
         /// <summary>
         /// AddRefOnChannel
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code
-        /// </SecurityNote>
-        [SecurityCritical]
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
             EnsureState();
@@ -550,10 +540,6 @@ namespace System.Windows.Media
         /// AddRefOnChannelCore
         /// </summary>
         /// <param name="channel">Channel</param>
-        /// <SecurityNote>
-        /// Critical - accesses unmanaged objects, and critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         internal DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
             //
@@ -841,7 +827,7 @@ namespace System.Windows.Media
                     break;
 
                 default:
-                    throw new System.NotSupportedException(SR.Get(SRID.Media_UnknownChannelType));
+                    throw new System.NotSupportedException(SR.Media_UnknownChannelType);
             }
 
             //

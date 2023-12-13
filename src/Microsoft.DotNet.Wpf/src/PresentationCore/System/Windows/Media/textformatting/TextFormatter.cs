@@ -35,7 +35,7 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public abstract class TextFormatter : IDisposable
     {
-        private static object _staticLock = new object();
+        private static readonly object _staticLock = new object();
 
         /// <summary>
         /// Client to create a new instance of TextFormatter
@@ -126,7 +126,7 @@ namespace System.Windows.Media.TextFormatting
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
             if (dispatcher == null)
-                throw new ArgumentException(SR.Get(SRID.CurrentDispatcherNotFound));
+                throw new ArgumentException(SR.CurrentDispatcherNotFound);
 
             TextFormatter defaultTextFormatter;
             if (textFormattingMode == TextFormattingMode.Display)

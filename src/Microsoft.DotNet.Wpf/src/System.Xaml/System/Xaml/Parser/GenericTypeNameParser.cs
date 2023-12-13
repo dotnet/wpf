@@ -19,10 +19,11 @@ namespace MS.Internal.Xaml.Parser
                 : base(message)
             {
             }
-
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             protected TypeNameParserException(SerializationInfo si, StreamingContext sc) : base(si, sc)
             {
             }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         }
 
         private GenericTypeNameScanner _scanner;
@@ -51,14 +52,14 @@ namespace MS.Internal.Xaml.Parser
             error = string.Empty;
             if (!XamlQualifiedName.Parse(text, out prefix, out simpleName))
             {
-                error = SR.Get(SRID.InvalidTypeString, text);
+                error = SR.Format(SR.InvalidTypeString, text);
                 return null;
             }
 
             string ns = prefixResolver(prefix);
             if (String.IsNullOrEmpty(ns))
             {
-                error = SR.Get(SRID.PrefixNotFound, prefix);
+                error = SR.Format(SR.PrefixNotFound, prefix);
                 return null;
             }
             XamlTypeName xamlTypeName = new XamlTypeName(ns, simpleName);
@@ -247,7 +248,7 @@ namespace MS.Internal.Xaml.Parser
 
         private void ThrowOnBadInput()
         {
-            throw new TypeNameParserException(SR.Get(SRID.InvalidCharInTypeName, _scanner.ErrorCurrentChar, _inputText));
+            throw new TypeNameParserException(SR.Format(SR.InvalidCharInTypeName, _scanner.ErrorCurrentChar, _inputText));
         }
 
         private void StartStack()
@@ -263,7 +264,7 @@ namespace MS.Internal.Xaml.Parser
             TypeNameFrame frame = new TypeNameFrame();
             frame.Name = name;
             string ns = _prefixResolver(prefix);
-            frame.Namespace = ns ?? throw new TypeNameParserException(SR.Get(SRID.PrefixNotFound, prefix));
+            frame.Namespace = ns ?? throw new TypeNameParserException(SR.Format(SR.PrefixNotFound, prefix));
             _stack.Push(frame);
         }
 
@@ -290,13 +291,13 @@ namespace MS.Internal.Xaml.Parser
         {
             if (_stack.Count != 1)
             {
-                throw new TypeNameParserException(SR.Get(SRID.InvalidTypeString, _inputText));
+                throw new TypeNameParserException(SR.Format(SR.InvalidTypeString, _inputText));
             }
 
             TypeNameFrame frame = _stack.Peek();
             if (frame.TypeArgs.Count != 1)
             {
-                throw new TypeNameParserException(SR.Get(SRID.InvalidTypeString, _inputText));
+                throw new TypeNameParserException(SR.Format(SR.InvalidTypeString, _inputText));
             }
 
             XamlTypeName xamlTypeName = frame.TypeArgs[0];
@@ -307,7 +308,7 @@ namespace MS.Internal.Xaml.Parser
         {
             if (_stack.Count != 1)
             {
-                throw new TypeNameParserException(SR.Get(SRID.InvalidTypeString, _inputText));
+                throw new TypeNameParserException(SR.Format(SR.InvalidTypeString, _inputText));
             }
 
             TypeNameFrame frame = _stack.Peek();

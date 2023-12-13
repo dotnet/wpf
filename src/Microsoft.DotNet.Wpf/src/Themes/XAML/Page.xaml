@@ -1,0 +1,46 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor,Aero2.NormalColor, AeroLite.NormalColor,Luna.NormalColor,Luna.Homestead,Luna.Metallic,Royale.NormalColor]] -->
+
+ 
+   
+    <!--=================================================================
+        Page
+    ==================================================================-->
+    <Style x:Key="{x:Type Page}"
+           TargetType="{x:Type Page}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Page}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter Content="{TemplateBinding Page.Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Classic]] -->
+
+    <!--=================================================================
+        Page
+    ==================================================================-->
+    <Style x:Key="{x:Type Page}"
+           TargetType="{x:Type Page}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Page}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter ClipToBounds="true"
+                                          Content="{TemplateBinding Page.Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+

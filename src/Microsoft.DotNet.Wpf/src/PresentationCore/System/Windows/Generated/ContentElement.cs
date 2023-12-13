@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -73,15 +72,12 @@ namespace System.Windows
             AnimationClock clock,
             HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
         #pragma warning restore 56506
             }
 
@@ -89,18 +85,18 @@ namespace System.Windows
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
         #pragma warning restore 56506
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_UnrecognizedHandoffBehavior));
+                throw new ArgumentException(SR.Animation_UnrecognizedHandoffBehavior);
             }
 
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
             }                    
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
@@ -145,32 +141,29 @@ namespace System.Windows
         /// </param>
         public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
         #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Get(SRID.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
         #pragma warning restore 56506
             }
 
             if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
             {
-                throw new ArgumentException(SR.Get(SRID.Animation_UnrecognizedHandoffBehavior));
+                throw new ArgumentException(SR.Animation_UnrecognizedHandoffBehavior);
             }
 
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
             }                    
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
@@ -204,10 +197,7 @@ namespace System.Windows
         /// </returns>
         public object GetAnimationBaseValue(DependencyProperty dp)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             return this.GetValueEntry(
                     LookupEntry(dp.GlobalIndex),
@@ -226,12 +216,6 @@ namespace System.Windows
         /// <param name="dp"></param>
         /// <param name="metadata"></param>
         /// <param name="entry">EffectiveValueEntry computed by base</param>
-        /// <SecurityNote>
-        ///     Putting an InheritanceDemand as a defense-in-depth measure,
-        ///     as this provides a hook to the property system that we don't
-        ///     want exposed under PartialTrust.
-        /// </SecurityNote>
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
         internal sealed override void EvaluateAnimatedValueCore(
                 DependencyProperty  dp,
                 PropertyMetadata    metadata,
@@ -413,18 +397,11 @@ namespace System.Windows
         ///     <see cref="RoutedEventArgs"/> for the event to
         ///     be raised
         /// </param>
-        ///<SecurityNote>
-        ///     By default clears the user initiated bit.
-        ///     To guard against "replay" attacks.
-        ///</SecurityNote>
         public void RaiseEvent(RoutedEventArgs e)
         {
             // VerifyAccess();
 
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
             e.ClearUserInitiated();
 
             UIElement.RaiseEventImpl(this, e);
@@ -434,16 +411,9 @@ namespace System.Windows
         ///     "Trusted" internal flavor of RaiseEvent.
         ///     Used to set the User-initated RaiseEvent.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
         internal void RaiseEvent(RoutedEventArgs args, bool trusted)
         {
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             if (trusted)
             {
@@ -457,17 +427,9 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - sets the MarkAsUserInitiated bit.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
         internal void RaiseTrustedEvent(RoutedEventArgs args)
         {
-            if (args == null)
-            {
-                throw new ArgumentNullException("args");
-            }
+            ArgumentNullException.ThrowIfNull(args);
 
             // Try/finally to ensure that UserInitiated bit is cleared.
             args.MarkAsUserInitiated();
@@ -567,19 +529,13 @@ namespace System.Windows
         {
             // VerifyAccess();
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             EnsureEventHandlersStore();
@@ -628,19 +584,13 @@ namespace System.Windows
         {
             // VerifyAccess();
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
 
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (!routedEvent.IsLegalHandler(handler))
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             EventHandlersStore store = EventHandlersStore;
@@ -694,14 +644,8 @@ namespace System.Windows
         /// </summary>
         public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException("route");
-            }
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(route);
+            ArgumentNullException.ThrowIfNull(e);
 
             // Get class listeners for this ContentElement
             RoutedEventHandlerInfoList classListeners =
@@ -2115,7 +2059,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger touched the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchDown
         {
             add { AddHandler(Touch.PreviewTouchDownEvent, value, false); }
@@ -2135,7 +2079,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger touched the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchDown
         {
             add { AddHandler(Touch.TouchDownEvent, value, false); }
@@ -2155,7 +2099,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger moved across the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchMove
         {
             add { AddHandler(Touch.PreviewTouchMoveEvent, value, false); }
@@ -2175,7 +2119,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger moved across the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchMove
         {
             add { AddHandler(Touch.TouchMoveEvent, value, false); }
@@ -2195,7 +2139,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger lifted off the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> PreviewTouchUp
         {
             add { AddHandler(Touch.PreviewTouchUpEvent, value, false); }
@@ -2215,7 +2159,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger lifted off the screen
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchUp
         {
             add { AddHandler(Touch.TouchUpEvent, value, false); }
@@ -2235,7 +2179,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger was captured to an element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> GotTouchCapture
         {
             add { AddHandler(Touch.GotTouchCaptureEvent, value, false); }
@@ -2255,7 +2199,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting a finger is no longer captured to an element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> LostTouchCapture
         {
             add { AddHandler(Touch.LostTouchCaptureEvent, value, false); }
@@ -2275,7 +2219,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting the mouse entered this element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchEnter
         {
             add { AddHandler(Touch.TouchEnterEvent, value, false); }
@@ -2295,7 +2239,7 @@ namespace System.Windows
         /// <summary>
         ///     Event reporting the mouse left this element
         /// </summary>
-        [CustomCategory(SRID.Touch_Category)]
+        [CustomCategory(nameof(SR.Touch_Category))]
         public event EventHandler<TouchEventArgs> TouchLeave
         {
             add { AddHandler(Touch.TouchLeaveEvent, value, false); }

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System.Collections.Generic;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -68,13 +68,13 @@ namespace System.Windows.Automation.Peers
                     //The focus should have gone to the TextBox inside DatePicker
                     if (tb == null || !tb.IsKeyboardFocused)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                        throw new InvalidOperationException(SR.SetFocusFailed);
                     }
                 }
             }
             else
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
             }
         }
 
@@ -118,7 +118,7 @@ namespace System.Windows.Automation.Peers
         /// <returns></returns>
         protected override string GetLocalizedControlTypeCore()
         {
-            return SR.Get(SRID.DatePickerAutomationPeer_LocalizedControlType);
+            return SR.DatePickerAutomationPeer_LocalizedControlType;
         }
 
         #endregion Protected Methods

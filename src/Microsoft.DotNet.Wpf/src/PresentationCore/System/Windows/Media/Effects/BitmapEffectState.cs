@@ -15,7 +15,6 @@ using System.Windows.Threading;
 
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -30,7 +29,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Effects
 {    

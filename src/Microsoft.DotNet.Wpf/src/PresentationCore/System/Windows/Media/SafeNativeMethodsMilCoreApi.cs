@@ -17,7 +17,6 @@ namespace MS.Win32.PresentationCore
     using System.Runtime.InteropServices.ComTypes;
     using System;
     using System.Security;
-    using System.Security.Permissions;
     using System.Collections;
     using System.IO;
     using System.Text;
@@ -29,38 +28,21 @@ namespace MS.Win32.PresentationCore
     
     internal static partial class SafeNativeMethods
     {
-       ///<SecurityNote>
-       ///  TreatAsSafe: The security model here is that these APIs could be publicly exposed to partial trust
-       ///               callers - no risk. 
-       ///  Critical: This code elevates priviliges by adding a SuppressUnmanagedCodeSecurity  
-       ///</SecurityNote>
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static int MilCompositionEngine_InitializePartitionManager(int nPriority)
        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_InitializePartitionManager(nPriority);
        }
 
-       ///<SecurityNote>
-       ///  TreatAsSafe: The security model here is that these APIs could be publicly exposed to partial trust
-       ///               callers - no risk. 
-       ///  Critical: This code elevates priviliges by adding a SuppressUnmanagedCodeSecurity  
-       ///</SecurityNote>
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static int MilCompositionEngine_DeinitializePartitionManager()
        {
             return SafeNativeMethodsPrivate.MilCompositionEngine_DeinitializePartitionManager();
        }
 
-       [SecurityCritical, SecurityTreatAsSafe]
        internal static long GetNextPerfElementId()
        {
            return SafeNativeMethodsPrivate.GetNextPerfElementId();
        }
 
-       /// <SecurityNote>
-       ///  Critical - Uses SuppressUnmanagedCodeSecurityAttribute.
-       /// </SecurityNote>
-       [SuppressUnmanagedCodeSecurity, SecurityCritical(SecurityCriticalScope.Everything)]
        private static partial class SafeNativeMethodsPrivate
        {
             [DllImport(DllImport.MilCore)]

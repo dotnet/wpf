@@ -1292,11 +1292,6 @@
         <target state="translated">Das angegebene Verweisobjekt verursacht einen Konflikt mit dem vordefinierten Package-spezifischen Verweis.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Der Parameter muss größer oder gleich null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">Der Parameterwert muss zwischen "{0}" und "{1}" liegen.</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">Der Header mit variabler Länge im Datenstrom für die Veröffentlichungslizenz umfasst {0} Bytes. Die maximal zulässige Länge von {1} Bytes wird damit überschritten.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Typname "{0}" hat nicht das erwartete Format "className, assembly".</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

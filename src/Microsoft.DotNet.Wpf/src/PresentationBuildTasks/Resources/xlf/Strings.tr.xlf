@@ -97,11 +97,6 @@
         <target state="translated">MC6021: {0}:Name veya Name özniteliği kümesi olmadığı ya da etiket yerel olarak tanımlanmadığı ve izin verilmeyen bir Name özniteliği kümesine sahip olduğu için {0}:FieldModifier bu etikette belirtilemiyor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFound">
         <source>BG1002: File '{0}' cannot be found.</source>
         <target state="translated">BG1002: '{0}' dosyası bulunamıyor.</target>
@@ -142,11 +137,6 @@
         <target state="translated">Oluşturulan kod dosyası: '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: '{0}:{1}' öğesi '{2}' içeriyor. '{0}:{1}' iç içe geçmiş içerik içeremez.</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">InternalTypeHelper sınıfı bu proje için gerekli değil, '{0}' dosyasını boşaltın.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: Geçersiz AssemblyVersion saptandı: {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -252,24 +247,9 @@
         <target state="translated">Giriş: Yerel başvuru işaretleme Page dosyası: '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">MarkupCompilePass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: '{0}' olayı genel bir olay işleyicisi temsilci türü '{1}' içeriyor. '{1}' öğesindeki tür parametresi '{2}' içeren '{3}' genel etiketindeki herhangi bir tür parametresiyle eşleşmiyor.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -799,7 +779,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlIslandMissing">
         <source>MC3086: Parent element or property '{0}' requires an XML data island. To distinguish an XML island from surrounding XAML, wrap the XML data island in &lt;x:XData&gt; ... &lt;/x:XData&gt;.</source>
-        <target state="translated">MC3086: Üst öğe veya '{0}' özelliği için bir XML veri adası gerekiyor. Bir XML veri adasını, çevreleyen XAML'den ayırmak için, XML veri adasını &lt;x:XData&gt; ... &lt;/x:XData&gt; içine alın.</target>
+        <target state="translated">MC3086: Üst öğe veya '{0}' özelliği için bir XML veri adası gerekiyor. Bir XML veri adasını, çevreleyen XAML'den ayırmak için, XML veri adasını &lt;x:XData&gt; ... &lt;/x:XData&gt; içinde sarmalayın.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserXmlIslandUnexpected">
@@ -830,11 +810,6 @@
       <trans-unit id="PreparingCompile">
         <source>Preparing for the markup compilation...</source>
         <target state="translated">İşaretleme derlemesi için hazırlanıyor...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: '{0}' tür adı beklenen 'className, assembly' biçiminde değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReadResourceFile">
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">.resources dosyası oluşturuluyor: '{0}'...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: Erken dize sonu bulundu.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: '{0}' öğesi için Uid eksik.</target>
@@ -1085,11 +1050,6 @@
       <trans-unit id="UnmatchedLocComment">
         <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
         <target state="translated">LC1003: Yerelleştirme açıklamasında hedef özellik için ayarlanmış değer yok: '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
         <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -374,7 +374,7 @@ namespace System.Windows.Baml2006
                 }
                 if (s_EmptyAttributes == null)
                 {
-                    s_EmptyAttributes = new Attribute[0];
+                    s_EmptyAttributes = Array.Empty<Attribute>();
                 }
                 return s_EmptyAttributes;
             }

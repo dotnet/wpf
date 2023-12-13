@@ -1,0 +1,10 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+
+#define FX_VER_FILEDESCRIPTION_STR     "Windows Presentation Foundation WindowsForms Integration Library"
+
+#include <fxver.h>
+#include <fxver.rc>

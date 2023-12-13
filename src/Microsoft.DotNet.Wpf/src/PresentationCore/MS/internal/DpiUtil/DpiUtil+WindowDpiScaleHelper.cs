@@ -89,11 +89,6 @@ namespace MS.Internal
             /// </summary>
             /// <param name="hWnd">Handle to the window</param>
             /// <returns>DPI of the monitor nearest to the window</returns>
-            /// <SecurityNote>
-            ///     Critical: Calls into native methods
-            ///     Safe: Returns only non-critical data back to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private static DpiScale2 GetDpiForWindowFromNearestMonitor(IntPtr hWnd)
             {
                 IntPtr hMon =

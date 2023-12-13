@@ -94,13 +94,21 @@ namespace System.Windows.Automation.Peers
         override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
-
+            
             if (sizeOfSet == AutomationProperties.AutomationSizeOfSetDefault)
             {
                 MenuItem owner = (MenuItem)Owner;
                 ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
                 sizeOfSet = ItemAutomationPeer.GetSizeOfSetFromItemsControl(parent, owner);
+
+                foreach (var item in parent.Items)
+                {
+                    if (item is Separator)
+                    {
+                        sizeOfSet -= 1;
+                    }
+                }
             }
 
             return sizeOfSet;
@@ -118,12 +126,25 @@ namespace System.Windows.Automation.Peers
         override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
-
+            
             if (positionInSet == AutomationProperties.AutomationPositionInSetDefault)
             {
                 MenuItem owner = (MenuItem)Owner;
                 ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
+
                 positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
+                
+                foreach (var item in parent.Items)
+                {
+                    if (item == owner)
+                    {
+                        break;
+                    }
+                    if (item is Separator)
+                    {
+                        positionInSet -= 1;
+                    }
+                }
             }
 
             return positionInSet;
@@ -192,7 +213,7 @@ namespace System.Windows.Automation.Peers
             if (    (role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
                 ||  !owner.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             owner.OpenMenu();
@@ -210,7 +231,7 @@ namespace System.Windows.Automation.Peers
             if (    (role != MenuItemRole.TopLevelHeader && role != MenuItemRole.SubmenuHeader)
                 ||  !owner.HasItems)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             owner.SetCurrentValueInternal(MenuItem.IsSubmenuOpenProperty, MS.Internal.KnownBoxes.BooleanBoxes.FalseBox);
@@ -268,7 +289,7 @@ namespace System.Windows.Automation.Peers
 
             if (!owner.IsCheckable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.UIA_OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
             owner.SetCurrentValueInternal(MenuItem.IsCheckedProperty, MS.Internal.KnownBoxes.BooleanBoxes.Box(!owner.IsChecked));
@@ -294,6 +315,16 @@ namespace System.Windows.Automation.Peers
                 oldValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed,
                 newValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
         }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        internal void RaiseToggleStatePropertyChangedEvent(bool oldValue, bool newValue)
+        {
+            RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty,
+                oldValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue),
+                newValue ? ConvertToToggleState(oldValue) : ConvertToToggleState(newValue));
+        }
+
+        private static ToggleState ConvertToToggleState(bool value) => value ? ToggleState.On : ToggleState.Off;
 
         // Return the base without the AccessKey character
         ///

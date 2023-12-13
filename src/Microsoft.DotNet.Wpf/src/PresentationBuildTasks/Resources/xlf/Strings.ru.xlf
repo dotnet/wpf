@@ -97,11 +97,6 @@
         <target state="translated">MC6021: невозможно задать {0}:FieldModifier в данном теге, так как у него либо не заданы {0}:Name или атрибут Name, либо тег определен локально и для него задан атрибут Name, что не допускается.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFound">
         <source>BG1002: File '{0}' cannot be found.</source>
         <target state="translated">BG1002: не удается найти файл "{0}".</target>
@@ -142,11 +137,6 @@
         <target state="translated">Сгенерирован файл кода: "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: "{0}:{1}" содержит "{2}". В "{0}:{1}" не может быть вложенного содержимого.</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">Для данного проекта класс InternalTypeHelper не требуется, сделайте пустой файл "{0}".</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: обнаружена недопустимая версия AssemblyVersion: {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -252,24 +247,9 @@
         <target state="translated">Входные данные: файл Page для разметки локальных ссылок - "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">MarkupCompilePass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: в событии "{0}" используется тип делегата "{1}" для общего обработчика событий. Параметр типа "{2}" для "{1}" не соответствует ни одному из параметров типа в содержащем общем теге "{3}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -832,11 +812,6 @@
         <target state="translated">Подготовка компиляции разметки...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: имя типа "{0}" не имеет ожидаемый формат "имя_класса, сборка".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">Чтение файла Resource: "{0}"...</target>
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">Генерация файла .resources: "{0}"...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: обнаружено преждевременное завершение строки.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: для элемента "{0}" отсутствует Uid.</target>
@@ -1085,11 +1050,6 @@
       <trans-unit id="UnmatchedLocComment">
         <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
         <target state="translated">LC1003: в примечании локализации не задано значение конечного свойства: "{0}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
         <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">

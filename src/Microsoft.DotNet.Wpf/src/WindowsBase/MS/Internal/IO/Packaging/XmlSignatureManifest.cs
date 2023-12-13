@@ -131,8 +131,8 @@ namespace MS.Internal.IO.Packaging
             while (reader.Read() && (reader.MoveToContent() == XmlNodeType.Element))
             {
                 // should be on a <Reference> tag
-                if (String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) == 0
-                    && (String.CompareOrdinal(reader.LocalName, referenceTagName) == 0)
+                if (string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)
+                    && (string.Equals(reader.LocalName, referenceTagName, StringComparison.Ordinal))
                     && reader.Depth == 2)
                 {
                     // Parse each reference - distinguish between Relationships and Parts
@@ -152,12 +152,12 @@ namespace MS.Internal.IO.Packaging
                     referenceCount++;
                 }
                 else
-                    throw new XmlException(SR.Get(SRID.UnexpectedXmlTag, reader.Name));
+                    throw new XmlException(SR.Format(SR.UnexpectedXmlTag, reader.Name));
             }
 
             // XmlDSig xsd requires at least one <Reference> tag
             if (referenceCount == 0)
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace MS.Internal.IO.Packaging
         {
             // verify namespace and lack of attributes
             if (PackagingUtilities.GetNonXmlnsAttributeCount(reader) > 1
-                || String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0
+                || !string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)
                 || reader.Depth != 3)
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
 
             // get the Algorithm attribute
             string hashAlgorithm = null;
@@ -180,7 +180,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             if (hashAlgorithm == null || hashAlgorithm.Length == 0)
-                throw new XmlException(SR.Get(SRID.UnsupportedHashAlgorithm));
+                throw new XmlException(SR.UnsupportedHashAlgorithm);
 
             return hashAlgorithm;
         }
@@ -195,13 +195,13 @@ namespace MS.Internal.IO.Packaging
 
             // verify namespace and lack of attributes
             if (PackagingUtilities.GetNonXmlnsAttributeCount(reader) > 0
-                || String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0
+                || !string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)
                 || reader.Depth != 3)
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
 
             // there are no legal attributes and the only content must be text
             if (reader.HasAttributes || (reader.Read() && reader.MoveToContent() != XmlNodeType.Text))
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
 
             // get the Value
             return reader.ReadString();
@@ -231,7 +231,7 @@ namespace MS.Internal.IO.Packaging
 
             // will be null if we had no success
             if (partUri == null)
-                throw new XmlException(SR.Get(SRID.RequiredXmlAttributeMissing, XTable.Get(XTable.ID.UriAttrName)));
+                throw new XmlException(SR.Format(SR.RequiredXmlAttributeMissing, XTable.Get(XTable.ID.UriAttrName)));
 
             return partUri;
         }
@@ -261,15 +261,15 @@ namespace MS.Internal.IO.Packaging
             while (reader.Read() && (reader.MoveToContent() == XmlNodeType.Element))
             {
                 // Correct Namespace?
-                if (String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0
+                if (!string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)
                     || reader.Depth != 3)
                 {
-                    throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                    throw new XmlException(SR.PackageSignatureCorruption);
                 }
 
                 // DigestMethod?
                 if (hashAlgorithm == null &&
-                    String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.DigestMethodTagName)) == 0)
+                    string.Equals(reader.LocalName, XTable.Get(XTable.ID.DigestMethodTagName), StringComparison.Ordinal))
                 {
                     hashAlgorithm = ParseDigestAlgorithmTag(reader);
                     continue;
@@ -277,7 +277,7 @@ namespace MS.Internal.IO.Packaging
 
                 // DigestValue?
                 if (hashValue == null &&
-                    String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.DigestValueTagName)) == 0)
+                    string.Equals(reader.LocalName, XTable.Get(XTable.ID.DigestValueTagName), StringComparison.Ordinal))
                 {
                     hashValue = ParseDigestValueTag(reader);
                     continue;
@@ -285,7 +285,7 @@ namespace MS.Internal.IO.Packaging
 
                 // TransformsTag?
                 if (!transformsParsed &&
-                    String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.TransformsTagName)) == 0)
+                    string.Equals(reader.LocalName, XTable.Get(XTable.ID.TransformsTagName), StringComparison.Ordinal))
                 {
                     transforms = ParseTransformsTag(reader, partUri, ref relationshipSelectors);
                     transformsParsed = true;
@@ -293,7 +293,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // if we get to here, we didn't see what we expected
-                throw new XmlException(SR.Get(SRID.PackageSignatureCorruption));
+                throw new XmlException(SR.PackageSignatureCorruption);
             }
 
             // add to our list
@@ -326,7 +326,7 @@ namespace MS.Internal.IO.Packaging
 
             // verify lack of attributes
             if (PackagingUtilities.GetNonXmlnsAttributeCount(reader) != 0)
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
 
             List<String> transforms = null;
             bool relationshipTransformFound = false;
@@ -341,10 +341,10 @@ namespace MS.Internal.IO.Packaging
 
                 // at this level, all tags must be Transform tags
                 if (reader.Depth != 4
-                    || String.CompareOrdinal(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl) != 0
-                    || String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.TransformTagName)) != 0)
+                    || !string.Equals(reader.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal)
+                    || !string.Equals(reader.LocalName, XTable.Get(XTable.ID.TransformTagName), StringComparison.Ordinal))
                 {
-                    throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                    throw new XmlException(SR.XmlSignatureParseError);
                 }
 
                 // inspect the Algorithm attribute to determine the type of transform
@@ -357,7 +357,7 @@ namespace MS.Internal.IO.Packaging
                 if ((transformName != null) && (transformName.Length > 0))
                 {
                     // what type of transform?
-                    if (String.CompareOrdinal(transformName, XTable.Get(XTable.ID.RelationshipsTransformName)) == 0)
+                    if (string.Equals(transformName, XTable.Get(XTable.ID.RelationshipsTransformName), StringComparison.Ordinal))
                     {
                         if (!relationshipTransformFound)
                         {
@@ -374,7 +374,7 @@ namespace MS.Internal.IO.Packaging
                             continue;   // success
                         }
                         else
-                            throw new XmlException(SR.Get(SRID.MultipleRelationshipTransformsFound));
+                            throw new XmlException(SR.MultipleRelationshipTransformsFound);
                     }                    
                     else
                     {
@@ -390,22 +390,22 @@ namespace MS.Internal.IO.Packaging
                                 continue;   // success
                             }
                             else
-                                throw new InvalidOperationException(SR.Get(SRID.UnsupportedTransformAlgorithm));
+                                throw new InvalidOperationException(SR.UnsupportedTransformAlgorithm);
                         }
                     }
                 }
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
             }
 
             if (transforms.Count == 0)
-                throw new XmlException(SR.Get(SRID.XmlSignatureParseError));
+                throw new XmlException(SR.XmlSignatureParseError);
             
             //If we found another transform after the Relationship transform, it will be validated earlier
             //in this method to make sure that its a supported xml canonicalization algorithm and so we can 
             //simplify this test condition - As per the OPC spec - Relationship transform must be followed
             //by a canonicalization algorithm.
             if (relationshipTransformFound && (transforms.Count == transformsCountWhenRelationshipTransformFound))
-                throw new XmlException(SR.Get(SRID.RelationshipTransformNotFollowedByCanonicalizationTransform));
+                throw new XmlException(SR.RelationshipTransformNotFollowedByCanonicalizationTransform);
 
             return transforms;
         }
@@ -430,10 +430,10 @@ namespace MS.Internal.IO.Packaging
                 // both types have no children, a single required attribute and belong to the OPC namespace
                 if (reader.IsEmptyElement
                     && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == 1
-                    && (String.CompareOrdinal(reader.NamespaceURI, XTable.Get(XTable.ID.OpcSignatureNamespace)) == 0))
+                    && (string.Equals(reader.NamespaceURI, XTable.Get(XTable.ID.OpcSignatureNamespace), StringComparison.Ordinal)))
                 {
                     // <RelationshipReference>?
-                    if (String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.RelationshipReferenceTagName)) == 0)
+                    if (string.Equals(reader.LocalName, XTable.Get(XTable.ID.RelationshipReferenceTagName), StringComparison.Ordinal))
                     {
                         // RelationshipReference tags are legal and these must be empty with a single SourceId attribute
                         // get the SourceId attribute 
@@ -448,7 +448,7 @@ namespace MS.Internal.IO.Packaging
                             continue;
                         }
                     }   // <RelationshipsGroupReference>?
-                    else if ((String.CompareOrdinal(reader.LocalName, XTable.Get(XTable.ID.RelationshipsGroupReferenceTagName)) == 0))
+                    else if ((string.Equals(reader.LocalName, XTable.Get(XTable.ID.RelationshipsGroupReferenceTagName), StringComparison.Ordinal)))
                     {
                         // RelationshipsGroupReference tags must be empty with a single SourceType attribute
                         string type = reader.GetAttribute(XTable.Get(XTable.ID.SourceTypeAttrName));
@@ -466,7 +466,7 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // if we get to here, we have not found a legal tag so we throw
-                throw new XmlException(SR.Get(SRID.UnexpectedXmlTag, reader.LocalName));
+                throw new XmlException(SR.Format(SR.UnexpectedXmlTag, reader.LocalName));
             }
         }
 
@@ -493,7 +493,7 @@ namespace MS.Internal.IO.Packaging
 
             // check args
             if (!hashAlgorithm.CanReuseTransform)
-                throw new ArgumentException(SR.Get(SRID.HashAlgorithmMustBeReusable));
+                throw new ArgumentException(SR.HashAlgorithmMustBeReusable);
 
             // <Manifest>
             XmlNode manifest = xDoc.CreateNode(XmlNodeType.Element,
@@ -520,7 +520,7 @@ namespace MS.Internal.IO.Packaging
 
             // did we sign anything? Manifest can NOT be empty
             if (parts == null && relationshipCount == 0)
-                throw new ArgumentException(SR.Get(SRID.NothingToSign));
+                throw new ArgumentException(SR.NothingToSign);
 
             return manifest;
         }
@@ -619,13 +619,13 @@ namespace MS.Internal.IO.Packaging
                 {
                     // Content type or part uri is malformed so we have a bad signature.
                     // Rethrow as XmlException so outer validation loop can catch it and return validation result.
-                    throw new XmlException(SR.Get(SRID.PartReferenceUriMalformed), ae);
+                    throw new XmlException(SR.PartReferenceUriMalformed, ae);
                 }
             }
 
             // throw if we failed
             if (contentType.ToString().Length <= 0)
-                throw new XmlException(SR.Get(SRID.PartReferenceUriMalformed));
+                throw new XmlException(SR.PartReferenceUriMalformed);
 
             return uri;
         }
@@ -720,7 +720,7 @@ namespace MS.Internal.IO.Packaging
                 if (transformName == null || 
                     transformName.Length == 0 ||
                     !XmlDigitalSignatureProcessor.IsValidXmlCanonicalizationTransform(transformName))
-                    throw new InvalidOperationException(SR.Get(SRID.UnsupportedTransformAlgorithm));
+                    throw new InvalidOperationException(SR.UnsupportedTransformAlgorithm);
 
                 // <Transform>
                 transform = xDoc.CreateElement(XTable.Get(XTable.ID.TransformTagName), SignedXml.XmlDsigNamespaceUrl);
@@ -783,7 +783,7 @@ namespace MS.Internal.IO.Packaging
             reference.AppendChild(GenerateDigestMethod(manager, xDoc));
 
             // <DigestValue>
-            using (Stream s = part.GetStream(FileMode.Open, FileAccess.Read))
+            using (Stream s = part.GetSeekableStream(FileMode.Open, FileAccess.Read))
             {
                 reference.AppendChild(GenerateDigestValueNode(xDoc, hashAlgorithm, s, transformName));
             }

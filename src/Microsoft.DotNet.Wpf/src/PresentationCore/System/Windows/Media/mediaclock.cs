@@ -14,7 +14,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
-using System.Security.Permissions;
 using System.Security;
 using MS.Internal.PresentationCore;                   // SecurityHelper
 using System.Windows.Threading;
@@ -23,7 +22,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media

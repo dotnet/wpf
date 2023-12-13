@@ -61,7 +61,7 @@ namespace System.Windows.Documents
             new CultureInfo("zh-HANS"),     // Chinese Simplified
             new CultureInfo("zh-HANT"),     // Chinese Traditional
             new CultureInfo("zh-HK"),       // Chinese Hong Kong SAR
-            new CultureInfo("zh-MO"),       // Chinese Macau SAR
+            new CultureInfo("zh-MO"),       // Chinese Macao SAR
             new CultureInfo("zh-CN"),       // Chinese China
             new CultureInfo("zh-SG"),       // Chinese Singapore
             new CultureInfo("zh-TW"),       // Chinese `Taiwan
@@ -1033,7 +1033,7 @@ namespace System.Windows.Documents
                                 newPathPrefix,         // otherwise use this path prefix
                                 constructLines,
                                 fixedNodes,
-                                transform * localTransform.Value
+                                localTransform.Value * transform
                                 );
                     }//endofElementIsCanvas
                 }

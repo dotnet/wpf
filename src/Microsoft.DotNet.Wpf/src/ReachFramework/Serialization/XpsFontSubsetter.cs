@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.IO.Packaging;
 using System.Windows.Xps.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Utility;
 using MS.Internal.IO.Packaging;
 
@@ -106,10 +105,7 @@ namespace System.Windows.Xps.Serialization
             BasePackagingPolicy packagingPolicy
             )
         {
-            if (null == packagingPolicy)
-            {
-                throw new ArgumentNullException("packagingPolicy");
-            }
+            ArgumentNullException.ThrowIfNull(packagingPolicy);
 
             _packagingPolicy = packagingPolicy;
             _fontEmbeddingManagerCache = new Dictionary<Uri, FEMCacheItem>(3, MS.Internal.UriComparer.Default);
@@ -130,42 +126,17 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A Uri to locate the font within the Xps package.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         ComputeFontSubset(
             GlyphRun        glyphRun
             )
         {
-            FontEmbeddingRight embeddingRights = FontEmbeddingRight.RestrictedLicense;
-            if (null == glyphRun)
-            {
-                throw new ArgumentNullException("glyphRun");
-            }
+            ArgumentNullException.ThrowIfNull(glyphRun);
+
+            FontEmbeddingRight embeddingRights = glyphRun.GlyphTypeface.EmbeddingRights;
 
             Uri fontUri = null;
-
-            CodeAccessPermission fontReadPermission = glyphRun.GlyphTypeface.CriticalFileReadPermission;
-
-            if (fontReadPermission != null)
-            {
-                fontReadPermission.Assert();
-            }
-
-            try
-            {
-                embeddingRights  = glyphRun.GlyphTypeface.EmbeddingRights;
-            }
-            finally
-            {
-                if (fontReadPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
 
             if (DetermineEmbeddingAction(embeddingRights) ==
                     FontEmbeddingAction.ImageOnlyFont)
@@ -288,35 +259,12 @@ namespace System.Windows.Xps.Serialization
         /// Determines Embedding action based
         /// on flags in the fsType field
         /// </summery>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         FontEmbeddingAction
         DetermineEmbeddingAction(GlyphTypeface glyphTypeface)
         {
-            FontEmbeddingRight fsType = FontEmbeddingRight.RestrictedLicense;
-            CodeAccessPermission fontReadPermission = glyphTypeface.CriticalFileReadPermission;
-
-            if (fontReadPermission != null)
-            {
-                fontReadPermission.Assert();
-            }
-
-            try
-            {
-                fsType = glyphTypeface.EmbeddingRights;
-            }
-            finally
-            {
-                if (fontReadPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            return DetermineEmbeddingAction(fsType);
+            return DetermineEmbeddingAction(glyphTypeface.EmbeddingRights);
         }
         /// <summary> 
         /// Determines Embedding action based
@@ -362,35 +310,12 @@ namespace System.Windows.Xps.Serialization
         /// Determines Embedding action based
         /// on flags in the fsType field
         /// </summery>
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         static
         bool
         IsRestrictedFont(GlyphTypeface glyphTypeface)
         {
-            FontEmbeddingRight fsType = FontEmbeddingRight.RestrictedLicense;
-            CodeAccessPermission fontReadPermission = glyphTypeface.CriticalFileReadPermission;
-
-            if (fontReadPermission != null)
-            {
-                fontReadPermission.Assert();
-            }
-
-            try
-            {
-                fsType = glyphTypeface.EmbeddingRights;
-            }
-            finally
-            {
-                if (fontReadPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-            return IsRestrictedFont(fsType);
+            return IsRestrictedFont(glyphTypeface.EmbeddingRights);
         }
         /// <summary> 
         /// Determines Embedding action based
@@ -425,7 +350,7 @@ namespace System.Windows.Xps.Serialization
            if( policy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 _commitCountPolicy != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
           _commitPolicy = policy;
         }
@@ -440,12 +365,12 @@ namespace System.Windows.Xps.Serialization
             if( _commitPolicy == FontSubsetterCommitPolicies.CommitEntireSequence &&
                 commitCount != 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_SequenceCntMustBe1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_SequenceCntMustBe1);
             }
             else
             if( commitCount < 1 )
             {
-                throw new ArgumentOutOfRangeException(SR.Get(SRID.ReachPackaging_CommitCountPolicyLessThan1));
+                throw new ArgumentOutOfRangeException(SR.ReachPackaging_CommitCountPolicyLessThan1);
             }
             _commitCountPolicy = commitCount;
         }
@@ -472,10 +397,6 @@ namespace System.Windows.Xps.Serialization
         /// <returns>
         /// A reference to a FEMCacheItem.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
-        ///</SecurityNote>
-        [SecurityCritical]
         private
         FEMCacheItem
         AcquireCacheItem(
@@ -483,25 +404,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             FEMCacheItem manager = null;
-            Uri fontUri;
-            CodeAccessPermission uriDiscoveryPermission = glyphTypeface.CriticalUriDiscoveryPermission;
-
-            if (uriDiscoveryPermission != null)
-            {
-                uriDiscoveryPermission.Assert();
-            }
-
-            try
-            {
-                fontUri = glyphTypeface.FontUri;
-            }
-            finally
-            {
-                if (uriDiscoveryPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
+            Uri fontUri = glyphTypeface.FontUri;
 
             if (!_fontEmbeddingManagerCache.TryGetValue(fontUri, out manager))
             {
@@ -534,24 +437,14 @@ namespace System.Windows.Xps.Serialization
         /// <param name="packagingPolicy">
         /// The BasePackagingPolicy to write to.
         /// </param>
-        ///<SecurityNote>
-        /// Critical    - Assert permision to read glyphtypeface uri.  Uri is used internally never returned
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         FEMCacheItem(
             GlyphTypeface                   glyphTypeface,
             BasePackagingPolicy             packagingPolicy
             )
         {
-            if (null == packagingPolicy)
-            {
-                throw new ArgumentNullException("packagingPolicy");
-            }
-            if (null == glyphTypeface)
-            {
-                throw new ArgumentNullException("glyphTypeface");
-            }
+            ArgumentNullException.ThrowIfNull(packagingPolicy);
+            ArgumentNullException.ThrowIfNull(glyphTypeface);
 
             _packagingPolicy = packagingPolicy;
             _streamWritten = false;
@@ -563,25 +456,7 @@ namespace System.Windows.Xps.Serialization
             //
             _fontEmbeddingManager = new FontEmbeddingManager();
             _glyphTypeface = glyphTypeface;
-            
-            CodeAccessPermission uriDiscoveryPermission = glyphTypeface.CriticalUriDiscoveryPermission;
-
-            if (uriDiscoveryPermission != null)
-            {
-                uriDiscoveryPermission.Assert();
-            }
-
-            try
-            {
-                _fontUri = glyphTypeface.FontUri;
-            }
-            finally
-            {
-                if (uriDiscoveryPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
+            _fontUri = glyphTypeface.FontUri;
             
             Uri fontUri = new Uri(_fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
             string fontUriAsString = fontUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
@@ -608,10 +483,6 @@ namespace System.Windows.Xps.Serialization
         /// A reference to a Uri where font is stored
         /// within the package.
         /// </returns>
-        ///<SecurityNote>
-        /// Critical    - Calls RecordUsage which demands descovery permision for GlyphTypeFace
-        ///</SecurityNote>
-        [SecurityCritical]
         public
         Uri
         AddGlyphRunUsage(
@@ -636,25 +507,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                     
                 case FontEmbeddingAction.ObfuscateSubsetFont:
-                    CodeAccessPermission uriDiscoveryPermission = glyphRun.GlyphTypeface.CriticalUriDiscoveryPermission;
-
-                    if (uriDiscoveryPermission != null)
-                    {
-                        uriDiscoveryPermission.Assert();
-                    }
-
-                    try
-                    {
-                        _fontEmbeddingManager.RecordUsage(glyphRun);
-                    }
-                    finally
-                    {
-                        if (uriDiscoveryPermission != null)
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
-                    }
-                    
+                    _fontEmbeddingManager.RecordUsage(glyphRun);
                     fontUri = _fontResourceStream.Uri;
                     break;
             }
@@ -666,10 +519,6 @@ namespace System.Windows.Xps.Serialization
         /// and commits the font to the Xps package.
         /// This ends the lifetime of this cache item.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical -  1)  Calls SubSet font which assert unmanaged and returns raw font data
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         void
         Commit(
@@ -741,14 +590,6 @@ namespace System.Windows.Xps.Serialization
 
         #region Private static methods
 
-        /// <SecurityNote>
-        /// Critical -  1)  Asserts to access the unmanged code.  Access unmanged which is 
-        ///                 capable of memory overuns and uncontroled access the resources.
-        /// 
-        ///             2)  returns raw font data.
-        ///             
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         void
         SubSetFont(
@@ -756,25 +597,7 @@ namespace System.Windows.Xps.Serialization
             Stream stream
             )
         {
-            byte[] fontData;
-
-            PermissionSet permissions = new PermissionSet(null);
-            permissions.AddPermission(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode));
-            CodeAccessPermission criticalFileReadPermission = _glyphTypeface.CriticalFileReadPermission;
-            if (criticalFileReadPermission != null)
-            {
-                permissions.AddPermission(criticalFileReadPermission);
-            }
-            
-            permissions.Assert();
-            try
-            {
-                fontData = _glyphTypeface.ComputeSubset(glyphs);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            byte[] fontData = _glyphTypeface.ComputeSubset(glyphs);
             
             Guid guid = ParseGuidFromUri(_fontResourceStream.Uri);
             ObfuscateData(fontData, guid);
@@ -788,10 +611,6 @@ namespace System.Windows.Xps.Serialization
             _streamWritten = true;
         }
 
-        ///<SecurityNote>
-        /// Critical    - It calls critical internal function CriticalFileReadPermission
-        ///</SecurityNote>
-        [SecurityCritical]
         internal
         Uri
         CopyFontStream()
@@ -802,24 +621,8 @@ namespace System.Windows.Xps.Serialization
             Stream sourceStream = null;
             byte [] memoryFont;
             GlyphTypeface glyphTypeface = new GlyphTypeface(sourceUri);
-            CodeAccessPermission fontReadPermission = glyphTypeface.CriticalFileReadPermission;
 
-            if (fontReadPermission != null)
-            {
-                fontReadPermission.Assert();
-            }
-
-            try
-            {
-                sourceStream = glyphTypeface.GetFontStream();
-            }
-            finally
-            {
-                if (fontReadPermission != null)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
+            sourceStream = glyphTypeface.GetFontStream();
             
             memoryFont = new byte[_readBlockSize];
             Guid guid = ParseGuidFromUri(destUri);
@@ -883,23 +686,19 @@ namespace System.Windows.Xps.Serialization
         void
         ObfuscateData( byte[] fontData, Guid guid )
         {
-            byte[] guidByteArray = new byte[16];
-          // Convert the GUID into string in 32 digits format (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
+            // Convert the GUID into string in 32 digits format (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
+            Span<byte> guidByteArray = stackalloc byte[16];
             string guidString = guid.ToString("N");
-
   
             for (int i = 0; i < guidByteArray.Length; i++)
             {
-
                 guidByteArray[i] = Convert.ToByte(guidString.Substring(i * 2, 2), 16);
-
             }
- 
-
  
             for( int j = 0; j < 2; j++ )
             {
-                for( int i = 0; i < 16; i ++ )                {
+                for( int i = 0; i < 16; i ++ )
+                {
                     fontData[i+j*16] ^= guidByteArray[15-i];
                 }
             }
@@ -941,11 +740,6 @@ namespace System.Windows.Xps.Serialization
         private XpsResourceStream       _fontResourceStream;
         private GlyphTypeface           _glyphTypeface;
         private bool                    _streamWritten; 
-        ///<SecurityNote>
-        /// Critical    - This property is filled under assert permision thus 
-        ///               must be security critical
-        ///</SecurityNote>
-        [SecurityCritical]
         private Uri _fontUri;
         private static readonly int _readBlockSize = 1048576; //1MB
 

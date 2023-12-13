@@ -173,14 +173,14 @@ namespace System.Windows.Documents
                 {
                     // Collection was modified 
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorCollectionDisposed));
+                    throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
                 if (_currentPosition == null)
                 {
                     // Enumerator not started. Call MoveNext to see if we can move ahead
 #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                    throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+                    throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
                 IInputElement currentElement = null;

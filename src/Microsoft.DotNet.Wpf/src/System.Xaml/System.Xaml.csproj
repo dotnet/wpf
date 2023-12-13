@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    
+    <Platforms>AnyCPU;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
     <EnableAnalyzers>true</EnableAnalyzers>
@@ -60,7 +60,6 @@
 
   <ItemGroup>
     <Compile Remove="System\Xaml\XamlProperty.cs" />
-    <Compile Remove="System\Windows\Markup\ValueSerializerAttribute.cs" />
     <Compile Remove="System\Xaml\Schema\ClrProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ImplicitProperty.cs" />
     <Compile Remove="System\Xaml\Schema\ClrAttachableEvent.cs" />
@@ -83,7 +82,8 @@
     <Compile Remove="System\Xaml\Context\HashSet.cs" />
     <Compile Remove="System\Xaml\MS\Impl\ConcurrentDictionary.cs" />
     <Compile Remove="System\Xaml\MS\Impl\XamlPropertyInfoKey.cs" />
-
+    <!-- Do not include reference assembly files. -->
+    <Compile Remove="ref\System.Xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,6 +100,7 @@
     <NetCoreReference Include="System.Diagnostics.Tools" />
     <NetCoreReference Include="System.Globalization" />
     <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Reflection.Emit.ILGeneration" />
     <NetCoreReference Include="System.Reflection.Emit.Lightweight" />
@@ -121,5 +122,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+    <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -22,8 +22,6 @@ using System.Globalization;
 using System.Printing;
 using MS.Internal.Printing.Configuration;
 using System.Security;
-using System.Drawing.Printing;
-using System.Security.Permissions;
 
 //[assembly:System.Runtime.InteropServices.ComVisibleAttribute(false)]
 
@@ -79,16 +77,13 @@ namespace System.Printing.Interop
         public PrintTicketConverter(string deviceName, int clientPrintSchemaVersion)
         {
             // Check input argument
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException("deviceName");
-            }
+            ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
             if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
                 (clientPrintSchemaVersion <= 0))
             {
-                throw new ArgumentOutOfRangeException("clientPrintSchemaVersion");
+                throw new ArgumentOutOfRangeException(nameof(clientPrintSchemaVersion));
             }
 
             // Instantiate the provider object this converter instance will use.
@@ -253,17 +248,14 @@ namespace System.Printing.Interop
                                                                         PrintTicketScope scope)
         {
             // validate devMode parameter
-            if (devMode == null)
-            {
-                throw new ArgumentNullException("devMode");
-            }
+            ArgumentNullException.ThrowIfNull(devMode);
 
             // validate sope parameter
             if ((scope != PrintTicketScope.PageScope) &&
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException("scope");
+                throw new ArgumentOutOfRangeException(nameof(scope));
             }
 
             MemoryStream ptStream = provider.ConvertDevModeToPrintTicket(devMode, scope);
@@ -276,25 +268,22 @@ namespace System.Printing.Interop
                                                                    BaseDevModeType baseType,
                                                                    PrintTicketScope scope)
         {
-            // Input PrinTicket can't be null
-            if (printTicket == null)
-            {
-                throw new ArgumentNullException("printTicket");
-            }
+            // Input PrinTicket can't be null.
+            ArgumentNullException.ThrowIfNull(printTicket);
 
-            // validate the base type value
+            // Validate the base type value.
             if ((baseType != BaseDevModeType.UserDefault) &&
                 (baseType != BaseDevModeType.PrinterDefault))
             {
-                throw new ArgumentOutOfRangeException("baseType");
+                throw new ArgumentOutOfRangeException(nameof(baseType));
             }
 
-            // validate scope value
+            // Validate scope value.
             if ((scope != PrintTicketScope.PageScope) &&
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException("scope");
+                throw new ArgumentOutOfRangeException(nameof(scope));
             }
 
             MemoryStream ptStream = printTicket.GetXmlStream();
@@ -334,11 +323,6 @@ namespace System.Printing.Interop
         /// <summary>
         /// Dispose this instance.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical    - calls into SafeHandle Dispose() method to release unmanaged handle
-        ///</SecurityNote>
-        [SecurityCritical]
-        [PrintingPermission(SecurityAction.Demand, Level = PrintingPermissionLevel.DefaultPrinting)]
         private void DisposeImpl()
         {
             if (!this._disposed)

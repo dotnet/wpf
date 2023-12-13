@@ -8,7 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Security.Permissions;
 using System.Windows.Threading;
 
 using System.Windows;

@@ -20,9 +20,7 @@ using System.Windows.Input;
 using System.Collections;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Internal; // CommandHelper
 
 namespace System.Windows.Input
@@ -236,38 +234,6 @@ namespace System.Windows.Input
         //------------------------------------------------------
 #region Private Methods
 
-        /// <SecurityNote>
-        /// Critical - determines the permission to be applied for a command
-        /// TreatAsSafe - callers don't need to worry, but we need to review
-        ///               any changes to this.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        private static PermissionSet GetRequiredPermissions(CommandId commandId)
-        {
-            PermissionSet permissions;
-
-            switch (commandId)
-            {
-                // In .NET v4.0, we made clipboard access in partial trust on par with IE's
-                // security model for the internet zone where all clipboard accesses are secured.
-                // The AllClipboard permission requested here reflects this. Notice Cut and Copy
-                // operations would only need OwnClipboard which is added to the permission set
-                // in the Internet zone. To be more restrictive, given IE's raised security bar,
-                // we use AllClipboard.
-                case CommandId.Cut:
-                case CommandId.Copy:
-                case CommandId.Paste:
-                    permissions = new PermissionSet(PermissionState.None);
-                    permissions.AddPermission(new UIPermission(UIPermissionClipboard.AllClipboard));
-                    break;
-                default:
-                    permissions = null;
-                    break;
-            }
-
-            return permissions;
-        }
-
 
         private static string GetPropertyName(CommandId commandId)
         {
@@ -308,29 +274,29 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.Cut: uiText = SR.Get(SRID.CutText); break;
-                case  CommandId.Copy: uiText = SR.Get(SRID.CopyText);break;
-                case  CommandId.Paste: uiText = SR.Get(SRID.PasteText);break;
-                case  CommandId.Undo: uiText = SR.Get(SRID.UndoText);break;
-                case  CommandId.Redo: uiText =  SR.Get(SRID.RedoText); break;
-                case  CommandId.Delete: uiText =  SR.Get(SRID.DeleteText); break;
-                case  CommandId.Find: uiText =  SR.Get(SRID.FindText); break;
-                case  CommandId.Replace: uiText =  SR.Get(SRID.ReplaceText); break;
-                case  CommandId.SelectAll: uiText =  SR.Get(SRID.SelectAllText); break;
-                case  CommandId.Help: uiText =  SR.Get(SRID.HelpText); break;
-                case  CommandId.New: uiText =  SR.Get(SRID.NewText); break;
-                case  CommandId.Open: uiText =  SR.Get(SRID.OpenText); break;
-                case  CommandId.Save: uiText =  SR.Get(SRID.SaveText); break;
-                case  CommandId.SaveAs: uiText =  SR.Get(SRID.SaveAsText); break;
-                case  CommandId.Print: uiText =  SR.Get(SRID.PrintText); break;
-                case  CommandId.CancelPrint: uiText =  SR.Get(SRID.CancelPrintText); break;
-                case  CommandId.PrintPreview: uiText =  SR.Get(SRID.PrintPreviewText); break;
-                case  CommandId.Close: uiText =  SR.Get(SRID.CloseText); break;
-                case  CommandId.ContextMenu: uiText =  SR.Get(SRID.ContextMenuText); break;
-                case  CommandId.CorrectionList: uiText =  SR.Get(SRID.CorrectionListText); break;
-                case  CommandId.Properties: uiText =  SR.Get(SRID.PropertiesText); break;
-                case  CommandId.Stop: uiText =  SR.Get(SRID.StopText); break;
-                case  CommandId.NotACommand: uiText =  SR.Get(SRID.NotACommandText); break;
+                case  CommandId.Cut: uiText = SR.CutText; break;
+                case  CommandId.Copy: uiText = SR.CopyText;break;
+                case  CommandId.Paste: uiText = SR.PasteText;break;
+                case  CommandId.Undo: uiText = SR.UndoText;break;
+                case  CommandId.Redo: uiText =  SR.RedoText; break;
+                case  CommandId.Delete: uiText =  SR.DeleteText; break;
+                case  CommandId.Find: uiText =  SR.FindText; break;
+                case  CommandId.Replace: uiText =  SR.ReplaceText; break;
+                case  CommandId.SelectAll: uiText =  SR.SelectAllText; break;
+                case  CommandId.Help: uiText =  SR.HelpText; break;
+                case  CommandId.New: uiText =  SR.NewText; break;
+                case  CommandId.Open: uiText =  SR.OpenText; break;
+                case  CommandId.Save: uiText =  SR.SaveText; break;
+                case  CommandId.SaveAs: uiText =  SR.SaveAsText; break;
+                case  CommandId.Print: uiText =  SR.PrintText; break;
+                case  CommandId.CancelPrint: uiText =  SR.CancelPrintText; break;
+                case  CommandId.PrintPreview: uiText =  SR.PrintPreviewText; break;
+                case  CommandId.Close: uiText =  SR.CloseText; break;
+                case  CommandId.ContextMenu: uiText =  SR.ContextMenuText; break;
+                case  CommandId.CorrectionList: uiText =  SR.CorrectionListText; break;
+                case  CommandId.Properties: uiText =  SR.PropertiesText; break;
+                case  CommandId.Stop: uiText =  SR.StopText; break;
+                case  CommandId.NotACommand: uiText =  SR.NotACommandText; break;
             }
 
             return uiText;
@@ -345,122 +311,122 @@ namespace System.Windows.Input
             {
                 case  CommandId.Cut:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.CutKey),
-                        SR.Get(SRID.CutKeyDisplayString),
+                        CutKey,
+                        SR.CutKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Copy:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.CopyKey),
-                        SR.Get(SRID.CopyKeyDisplayString),
+                        CopyKey,
+                        SR.CopyKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Paste:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.PasteKey),
-                        SR.Get(SRID.PasteKeyDisplayString),
+                        PasteKey,
+                        SR.PasteKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Undo:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.UndoKey),
-                        SR.Get(SRID.UndoKeyDisplayString),
+                        UndoKey,
+                        SR.UndoKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Redo:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.RedoKey),
-                        SR.Get(SRID.RedoKeyDisplayString),
+                        RedoKey,
+                        SR.RedoKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Delete:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.DeleteKey),
-                        SR.Get(SRID.DeleteKeyDisplayString),
+                        DeleteKey,
+                        SR.DeleteKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Find:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.FindKey),
-                        SR.Get(SRID.FindKeyDisplayString),
+                        FindKey,
+                        SR.FindKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Replace:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.ReplaceKey),
-                        SR.Get(SRID.ReplaceKeyDisplayString),
+                        ReplaceKey,
+                        SR.ReplaceKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.SelectAll:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.SelectAllKey),
-                        SR.Get(SRID.SelectAllKeyDisplayString),
+                        SelectAllKey,
+                        SR.SelectAllKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Help:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.HelpKey),
-                        SR.Get(SRID.HelpKeyDisplayString),
+                        HelpKey,
+                        SR.HelpKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.New:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.NewKey),
-                        SR.Get(SRID.NewKeyDisplayString),
+                        NewKey,
+                        SR.NewKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Open:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.OpenKey),
-                        SR.Get(SRID.OpenKeyDisplayString),
+                        OpenKey,
+                        SR.OpenKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Save:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.SaveKey),
-                        SR.Get(SRID.SaveKeyDisplayString),
+                        SaveKey,
+                        SR.SaveKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.SaveAs:
                     break; // there are no default bindings for  CommandId.SaveAs
                 case  CommandId.Print:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.PrintKey),
-                        SR.Get(SRID.PrintKeyDisplayString),
+                        PrintKey,
+                        SR.PrintKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.CancelPrint:
                     break; // there are no default bindings for  CommandId.CancelPrint
                 case  CommandId.PrintPreview:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.PrintPreviewKey),
-                        SR.Get(SRID.PrintPreviewKeyDisplayString),
+                        PrintPreviewKey,
+                        SR.PrintPreviewKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Close:
                     break; // there are no default bindings for  CommandId.Close
                 case  CommandId.ContextMenu:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.ContextMenuKey),
-                        SR.Get(SRID.ContextMenuKeyDisplayString),
+                        ContextMenuKey,
+                        SR.ContextMenuKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.CorrectionList:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.CorrectionListKey),
-                        SR.Get(SRID.CorrectionListKeyDisplayString),
+                        SR.CorrectionListKey,
+                        SR.CorrectionListKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Properties:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.PropertiesKey),
-                        SR.Get(SRID.PropertiesKeyDisplayString),
+                        PropertiesKey,
+                        SR.PropertiesKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.Stop:
                     KeyGesture.AddGesturesFromResourceStrings(
-                        SR.Get(SRID.StopKey),
-                        SR.Get(SRID.StopKeyDisplayString),
+                        StopKey,
+                        SR.StopKeyDisplayString,
                         gestures);
                     break;
                 case  CommandId.NotACommand:
@@ -480,8 +446,7 @@ namespace System.Windows.Input
                     {
                         RoutedUICommand newCommand = CommandLibraryHelper.CreateUICommand(
                             GetPropertyName(idCommand),
-                            typeof(ApplicationCommands), (byte)idCommand,
-                            GetRequiredPermissions(idCommand));
+                            typeof(ApplicationCommands), (byte)idCommand);
 
                         _internalCommands[(int)idCommand] = newCommand;
                     }
@@ -531,5 +496,24 @@ namespace System.Windows.Input
 
         private static RoutedUICommand[] _internalCommands = new RoutedUICommand[(int)CommandId.Last];
 #endregion Private Fields
+
+        private const string ContextMenuKey = "Shift+F10;Apps";
+        private const string CopyKey = "Ctrl+C;Ctrl+Insert";
+        private const string CutKey = "Ctrl+X;Shift+Delete";
+        private const string DeleteKey = "Del";
+        private const string FindKey = "Ctrl+F";
+        private const string HelpKey = "F1";
+        private const string NewKey = "Ctrl+N";
+        private const string OpenKey = "Ctrl+O";
+        private const string PasteKey = "Ctrl+V;Shift+Insert";
+        private const string PrintKey = "Ctrl+P";
+        private const string PrintPreviewKey = "Ctrl+F2";
+        private const string PropertiesKey = "F4";
+        private const string RedoKey = "Ctrl+Y";
+        private const string ReplaceKey = "Ctrl+H";
+        private const string SaveKey = "Ctrl+S";
+        private const string SelectAllKey = "Ctrl+A";
+        private const string StopKey = "Esc";
+        private const string UndoKey = "Ctrl+Z";
     }
 }

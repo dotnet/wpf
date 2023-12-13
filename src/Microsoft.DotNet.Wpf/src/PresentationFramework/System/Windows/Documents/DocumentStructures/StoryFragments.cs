@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Security.Permissions;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -40,11 +39,8 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(StoryFragment storyFragment)
         {
-            if (storyFragment == null)
-            {
-                throw new ArgumentNullException("storyFragment");
-            }
-            
+            ArgumentNullException.ThrowIfNull(storyFragment);
+
             ((IAddChild) this).AddChild(storyFragment);
         }
 
@@ -59,7 +55,7 @@ namespace System.Windows.Documents.DocumentStructures
                 return;
             }
 
-            throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(StoryFragment)), "value");
+            throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(StoryFragment)), "value");
         }
         
         void IAddChild.AddText(string text) { } 
@@ -101,10 +97,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         public void Add(BlockElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             ((IAddChild) this).AddChild(element);
         }
         
@@ -122,7 +115,7 @@ namespace System.Windows.Documents.DocumentStructures
                 return;
             }
 
-            throw new ArgumentException(SR.Get(SRID.DocumentStructureUnexpectedParameterType6, value.GetType(),
+            throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType6, value.GetType(),
                 typeof(SectionStructure), typeof(ParagraphStructure), typeof(FigureStructure), typeof(ListStructure), typeof(TableStructure), typeof(StoryBreak)),
                 "value");
         }

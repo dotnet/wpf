@@ -14,8 +14,6 @@ using System.Windows;                          // for SR
 using System.Security.Cryptography.Xml;
 using MS.Internal.WindowsBase;
 using Microsoft.Win32;                          // for Registry and RegistryKey classes
-using System.Security;                          // for SecurityException
-using System.Security.Permissions;              // for RegistryPermission
 using System.Globalization;                     // for CultureInfo
 
 namespace MS.Internal.IO.Packaging
@@ -82,11 +80,11 @@ namespace MS.Internal.IO.Packaging
             foreach (DataObject dataObject in signature.ObjectList)
             {
                 // direct reference to Object id - supported for all reference typs
-                if (String.CompareOrdinal(idValue, dataObject.Id) == 0)
+                if (string.Equals(idValue, dataObject.Id, StringComparison.Ordinal))
                 {
                     // anticipate duplicate ID's and throw if any found
                     if (node != null)
-                        throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                        throw new XmlException(SR.DuplicateObjectId);
 
                     node = dataObject.GetXml();
                 }
@@ -118,7 +116,7 @@ namespace MS.Internal.IO.Packaging
             foreach (Reference reference in signature.SignedInfo.References)
             {
                 // if we get a match by Type?
-                if (String.CompareOrdinal(reference.Type, _XAdESTargetType) == 0)
+                if (string.Equals(reference.Type, _XAdESTargetType, StringComparison.Ordinal))
                 {
                     // now try to match by Uri
                     // strip off any preceding # mark to facilitate matching
@@ -130,7 +128,7 @@ namespace MS.Internal.IO.Packaging
 
                     // if we have a XAdES type reference and the ID matches the requested one
                     // search all object tags for the XML with this ID
-                    if (String.CompareOrdinal(uri, idValue) == 0)
+                    if (string.Equals(uri, idValue, StringComparison.Ordinal))
                     {
                         node = SelectSubObjectNodeForXAdESInDataObjects(signature, idValue);
                         break;
@@ -157,7 +155,7 @@ namespace MS.Internal.IO.Packaging
             foreach (DataObject dataObject in signature.ObjectList)
             {
                 // skip the package object
-                if (String.CompareOrdinal(dataObject.Id, XTable.Get(XTable.ID.OpcAttrValue)) != 0)
+                if (!string.Equals(dataObject.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
                 {
                     XmlElement element = dataObject.GetXml();
 
@@ -171,7 +169,7 @@ namespace MS.Internal.IO.Packaging
                         if (!AllowAmbiguousReferenceTargets() &&
                             (nodeList.Count > 1 || foundMatch))
                         {
-                            throw new XmlException(SR.Get(SRID.DuplicateObjectId));
+                            throw new XmlException(SR.DuplicateObjectId);
                         }
 
                         foundMatch = true;
@@ -186,7 +184,7 @@ namespace MS.Internal.IO.Packaging
                                 temp = temp.ParentNode;
 
                             // only match if the target is in the XAdES namespace
-                            if ((temp != null) && (String.CompareOrdinal(temp.NamespaceURI, _XAdESNameSpace) == 0))
+                            if ((temp != null) && (string.Equals(temp.NamespaceURI, _XAdESNameSpace, StringComparison.Ordinal)))
                             {
                                 node = local as XmlElement;
                                 // continue searching, to find duplicates from different objects
@@ -207,42 +205,23 @@ namespace MS.Internal.IO.Packaging
         private const string _NetFxSecurityFullKeyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\Security";
         private const string _NetFxSecurityKey = @"SOFTWARE\Microsoft\.NETFramework\Security";
 
-        [SecurityCritical]
         private static long GetNetFxSecurityRegistryValue(string regValueName, long defaultValue)
         {
-            // Acquire permissions to read the one key we care about from the registry
-            RegistryPermission permission = new RegistryPermission(
-                    RegistryPermissionAccess.Read,
-                    System.Security.AccessControl.AccessControlActions.View,
-                    _NetFxSecurityFullKeyName);
 
-            permission.Assert();
-
-            try
+            using (RegistryKey securityRegKey = Registry.LocalMachine.OpenSubKey(_NetFxSecurityKey, false))
             {
-                using (RegistryKey securityRegKey = Registry.LocalMachine.OpenSubKey(_NetFxSecurityKey, false))
+                if (securityRegKey != null)
                 {
-                    if (securityRegKey != null)
+                    object regValue = securityRegKey.GetValue(regValueName);
+                    if (regValue != null)
                     {
-                        object regValue = securityRegKey.GetValue(regValueName);
-                        if (regValue != null)
+                        RegistryValueKind valueKind = securityRegKey.GetValueKind(regValueName);
+                        if (valueKind == RegistryValueKind.DWord || valueKind == RegistryValueKind.QWord)
                         {
-                            RegistryValueKind valueKind = securityRegKey.GetValueKind(regValueName);
-                            if (valueKind == RegistryValueKind.DWord || valueKind == RegistryValueKind.QWord)
-                            {
-                                return Convert.ToInt64(regValue, CultureInfo.InvariantCulture);
-                            }
+                            return Convert.ToInt64(regValue, CultureInfo.InvariantCulture);
                         }
                     }
                 }
-            }
-            catch (SecurityException)
-            {
-                // we could not open the key - that's fine, we can proceed with the default value
-            }
-            finally
-            {
-                RegistryPermission.RevertAssert();
             }
 
             return defaultValue;
@@ -252,7 +231,6 @@ namespace MS.Internal.IO.Packaging
         private static bool s_readRequireNCNameIdentifier = false;
         private static bool s_requireNCNameIdentifier = true;
 
-        [SecuritySafeCritical]
         private static bool RequireNCNameIdentifier()
         {
             if (s_readRequireNCNameIdentifier)
@@ -273,7 +251,6 @@ namespace MS.Internal.IO.Packaging
 
         private static bool? s_allowAmbiguousReferenceTarget = null;
 
-        [SecuritySafeCritical]
         private static bool AllowAmbiguousReferenceTargets()
         {
             // Allow machine administrators to specify that the legacy behavior of matching the first element

@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("7D3BABE7-88B2-46BA-85CB-4203CB016C87"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), TypeLibType(TypeLibTypeFlags.FNonExtensible)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IOpcPartUri : IOpcUri
     {
         int ComparePartUri([In] IOpcPartUri partUri);

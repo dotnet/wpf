@@ -40,8 +40,7 @@ namespace MS.Internal.Controls
         /// </summary>
         protected override void InsertItem(int index, ValidationRule item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             base.InsertItem(index, item);
         }
 
@@ -51,8 +50,7 @@ namespace MS.Internal.Controls
         /// </summary>
         protected override void SetItem(int index, ValidationRule item)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            ArgumentNullException.ThrowIfNull(item);
             base.SetItem(index, item);
         }
 

@@ -22,7 +22,6 @@ using System.Xml;
 using System.IO;
 using System.Printing;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -173,10 +172,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if(serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             FixedPage fixedPage = serializableObjectContext.TargetObject as FixedPage;
 
@@ -253,7 +249,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_WrongPropertyTypeForFixedPage));
+                    throw new XpsSerializationException(SR.ReachSerialization_WrongPropertyTypeForFixedPage);
                 }
 
             }
@@ -273,10 +269,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
             String attributeValue = String.Empty;
 
@@ -305,10 +298,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
             String valueAsString                  = null;
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
@@ -323,16 +313,13 @@ namespace System.Windows.Xps.Serialization
                                                                        propertyValue);
 
 
-                if (typeof(Type).IsInstanceOfType(propertyValue))
+                if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-
-                    if (index > 0)
-                    {
-                        valueAsString = valueAsString.Substring(index + 1);
-                    }
-
-                    valueAsString = XpsSerializationManager.TypeOfString + valueAsString + "}";
+                    valueAsString = string.Concat(
+                        XpsSerializationManager.TypeOfString,
+                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
+                        "}");
                 }
             }
             else
@@ -392,7 +379,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
 
             return needEndVisual;

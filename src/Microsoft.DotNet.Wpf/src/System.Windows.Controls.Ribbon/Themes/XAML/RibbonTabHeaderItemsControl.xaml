@@ -1,0 +1,29 @@
+<!-- [[Generic]] -->
+
+<!--=================================================================
+            RibbonTabHeaderItemsControl
+    ==================================================================-->
+
+<Style x:Key="{x:Type ribbon:RibbonTabHeaderItemsControl}"  TargetType="{x:Type ribbon:RibbonTabHeaderItemsControl}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:RibbonTabHeaderItemsControl}">
+                <Border x:Name="MainBorder" Background="{TemplateBinding Background}">
+                    <ScrollViewer x:Name="ScrollViewer" Style="{StaticResource RibbonTabScrollViewer}">
+                            <ItemsPresenter x:Name="ItemsPresenter"/>
+                    </ScrollViewer>
+                </Border>
+                <ControlTemplate.Triggers>
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="MainBorder" Property="Background" Value="Transparent" />
+                    </DataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>

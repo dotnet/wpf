@@ -804,12 +804,12 @@ namespace System.Windows.Input
         OemTilde      = Oem3,
 
         /// <summary>
-        ///     The ABNT_C1 (Brazilian) key.
+        ///     The ABNT_C1 Portuguese (Brazilian) key.
         /// </summary>
         AbntC1,
 
         /// <summary>
-        ///     The ABNT_C2 (Brazilian) key.
+        ///     The ABNT_C2 Portuguese (Brazilian) key.
         /// </summary>
         AbntC2,
         

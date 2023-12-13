@@ -97,11 +97,6 @@
         <target state="translated">MC6021: {0}: Na tomto tagu nelze specifikovat třídu FieldModifier, protože buď nemá atribut {0}: Name nebo Name atribut není nastaven, nebo je tag lokálně definován a má parametr Name nastaven, což není povoleno.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFound">
         <source>BG1002: File '{0}' cannot be found.</source>
         <target state="translated">BG1002: Soubor {0} nelze nalézt.</target>
@@ -142,11 +137,6 @@
         <target state="translated">Vygenerovaný soubor kódu: {0}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: Soubor {0}:{1} obsahuje obsah souboru {2}. Soubor {0}:{1} nemůže obsahovat vnořený obsah.</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">Třída InternalTypeHelper není pro tento projekt požadována, vyprázdněte soubor {0}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: Zjistila se neplatná verze AssemblyVersion: {0}</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -252,24 +247,9 @@
         <target state="translated">Vstup: Místní referenční soubor označení Page: {0}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">MarkupCompilePass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: Událost {0} má ovladač generických událostí typu {1}. Typový parametr {2} v souboru {1} neodpovídá žádným typovým parametrům generického tagu {3}, který jej obsahuje.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -284,7 +264,7 @@
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForTypeArgs">
         <source>MC6025: '{0}' root element is a generic type and requires a {1}:Class attribute to support the {1}:TypeArguments attribute specified on the root element tag.</source>
-        <target state="translated">MC6025: Kořenový prvek {0} je generický typ a vyžaduje atribut {1}:Class, aby podporoval atribut třídy  {1}:TypeArguments určený na tagu kořenového prvku.</target>
+        <target state="translated">MC6025: Kořenový prvek {0} je generický typ a vyžaduje atribut {1}:Class, aby podporoval atribut třídy {1}:TypeArguments určený na tagu kořenového prvku.</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassWithFieldModifier">
@@ -484,7 +464,7 @@
       </trans-unit>
       <trans-unit id="ParserDupDictionaryKey">
         <source>MC3020: The dictionary key '{0}' is already used. Key attributes are used as keys when inserting objects into a dictionary and must be unique.</source>
-        <target state="translated">MC3020: Klíč slovníku {0} je již používán. Klíčové atributy se používají jako klíče při vkládání  objektů do slovníku a musejí být jedinečné.</target>
+        <target state="translated">MC3020: Klíč slovníku {0} je již používán. Klíčové atributy se používají jako klíče při vkládání objektů do slovníku a musejí být jedinečné.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserDuplicateMarkupExtensionProperty">
@@ -564,7 +544,7 @@
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionBadDelimiter">
         <source>MC3041: Markup extensions require a single '=' between name and value, and a single ',' between constructor parameters and name/value pairs. The arguments '{0}' are not valid.</source>
-        <target state="translated">MC3041: Přípony označení vyžadují jedno rovnítko  = mezi názvem a hodnotou a jednu čárku , mezi parametry konstruktoru a dvojicemi název/hodnota. Argumenty {0} nejsou platné.</target>
+        <target state="translated">MC3041: Přípony označení vyžadují jedno rovnítko = mezi názvem a hodnotou a jednu čárku, mezi parametry konstruktoru a dvojicemi název/hodnota. Argumenty {0} nejsou platné.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionDelimiterBeforeFirstAttribute">
@@ -589,7 +569,7 @@
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoNameValue">
         <source>MC3042: Name/value pairs in MarkupExtensions must have the format 'Name = Value' and each pair is separated by a comma. '{0}' does not follow this format.</source>
-        <target state="translated">MC3042: Dvojice název/hodnota ve třídě MarkupExtensions musejí být ve formátu Název = Hodnota a jednotlivé dvojice musejí být odděleny  čárkou. Element {0} tento formát nedodržuje.</target>
+        <target state="translated">MC3042: Dvojice název/hodnota ve třídě MarkupExtensions musejí být ve formátu Název = Hodnota a jednotlivé dvojice musejí být odděleny čárkou. Element {0} tento formát nedodržuje.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserMarkupExtensionNoQuotesInName">
@@ -664,7 +644,7 @@
       </trans-unit>
       <trans-unit id="ParserNoNameOnType">
         <source>MC3054: The type '{0}' cannot have a Name attribute. Value types and types without a default constructor can be used as items within a ResourceDictionary.</source>
-        <target state="translated">MC3054: Typ {0} nemůže obsahovat atribut Name. Tyto hodnoty a typy bez výchozího konstruktoru  mohou být použity jako položky slovníku ResourceDictionary.</target>
+        <target state="translated">MC3054: Typ {0} nemůže obsahovat atribut Name. Tyto hodnoty a typy bez výchozího konstruktoru mohou být použity jako položky slovníku ResourceDictionary.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserNoNameUnderDefinitionScopeType">
@@ -814,7 +794,7 @@
       </trans-unit>
       <trans-unit id="ParserXmlReaderNoLineInfo">
         <source>MC3077: The class '{0}' does not implement IXmlLineInfo. This is required to get position information for the XAML being parsed.</source>
-        <target state="translated">MC3077: Třída {0} neimplementuje IXmlLineInfo. To je požadováno pro získání informace o pozici pro analyzovaný soubor  XAML.</target>
+        <target state="translated">MC3077: Třída {0} neimplementuje IXmlLineInfo. To je požadováno pro získání informace o pozici pro analyzovaný soubor XAML.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_UnexpectedToken">
@@ -830,11 +810,6 @@
       <trans-unit id="PreparingCompile">
         <source>Preparing for the markup compilation...</source>
         <target state="translated">Připravuji kompilaci označení...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: Název typu {0} není v očekávaném formátu className, assembly.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReadResourceFile">
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">Generuji soubor .resources: {0}...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: Program narazil na předčasné ukončení řetězce.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: Chybí identifikátor Uid pro prvek {0}.</target>
@@ -1087,11 +1052,6 @@
         <target state="translated">LC1003: Lokalizační poznámka nemá nastavenu hodnotu pro cílovou vlastnost: {0}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>MC4501: Major and minor version number components cannot be negative.</source>
         <target state="translated">MC4501: Komponenty čísla hlavní verze a podverze nemohou být záporné.</target>
@@ -1104,7 +1064,7 @@
       </trans-unit>
       <trans-unit id="WrongLocalizationPropertySetting_Pass1">
         <source>MC1001: The LocalizationDirectivesToLocFile property value is not valid and must be changed to None, CommentsOnly, or All for the MarkupCompilePass1 task.</source>
-        <target state="translated">MC1001: Hodnota vlastnosti  LocalizationDirectivesToLocFile není platná a musí být změněna na None, CommentsOnly, nebo All pro úlohu MarkupCompilePass1.</target>
+        <target state="translated">MC1001: Hodnota vlastnosti LocalizationDirectivesToLocFile není platná a musí být změněna na None, CommentsOnly, nebo All pro úlohu MarkupCompilePass1.</target>
         <note />
       </trans-unit>
       <trans-unit id="WrongPropertySetting">

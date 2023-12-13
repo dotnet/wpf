@@ -1,6 +1,9 @@
 <Project>
   <PropertyGroup>
-    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppVersion)'!='' And '$(NoTargets)'!='true' And $(TargetFramework.StartsWith('netcoreapp3.'))">$(MicrosoftNETCoreAppVersion)</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)'!='' And 
+                                        '$(NoTargets)'!='true' And 
+                                        '$(TargetFrameworkIdentifier)' == '.NETCoreApp' And 
+                                        $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))">$(MicrosoftNETCoreAppRuntimewinx64Version)</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <!-- workaround for package downgrade in Microsoft.NetCore.Platforms -->

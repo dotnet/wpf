@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -109,7 +108,7 @@ namespace System.Windows.Input
         void IList.Insert(int index, object value)
         {
             if (IsReadOnly)
-                 throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));    
+                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);    
 
             this.Insert(index, value as InputGesture);
         }
@@ -121,7 +120,7 @@ namespace System.Windows.Input
         int IList.Add(object inputGesture) 
         {
             if (IsReadOnly)
-                throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             
             return this.Add(inputGesture as InputGesture);
         }
@@ -133,7 +132,7 @@ namespace System.Windows.Input
         void IList.Remove(object inputGesture) 
         {
             if (IsReadOnly)
-                throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             
             this.Remove(inputGesture as InputGesture);
         }
@@ -151,7 +150,7 @@ namespace System.Windows.Input
             {
                 InputGesture inputGesture = value as InputGesture;
                 if (inputGesture == null)
-                    throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputGestures));
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
                 this[index] = inputGesture;
             }
@@ -184,7 +183,7 @@ namespace System.Windows.Input
              set
              {
                  if (IsReadOnly)
-                     throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                     throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
                  EnsureList();
 
@@ -237,7 +236,7 @@ namespace System.Windows.Input
          public void RemoveAt(int index)
          {
              if (IsReadOnly)
-                 throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
              if (_innerGestureList != null)
                 _innerGestureList.RemoveAt(index);
@@ -262,13 +261,10 @@ namespace System.Windows.Input
         {
             if (IsReadOnly)
             {
-                throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-	    if (inputGesture == null)
-            {
-		throw new ArgumentNullException("inputGesture");
-            }
+            ArgumentNullException.ThrowIfNull(inputGesture);
 
             EnsureList();
             _innerGestureList.Add(inputGesture);
@@ -285,13 +281,12 @@ namespace System.Windows.Input
         {
             if (IsReadOnly)
             {
-                throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            
-            if( collection.Count > 0) 
+            ArgumentNullException.ThrowIfNull(collection);
+
+            if ( collection.Count > 0) 
             {
                 if (_innerGestureList == null)
                     _innerGestureList = new System.Collections.Generic.List<InputGesture>(collection.Count);
@@ -306,7 +301,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputGestures));
+                        throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 		    }
                 }
             }
@@ -320,10 +315,10 @@ namespace System.Windows.Input
         public void Insert(int index, InputGesture inputGesture)
         {
             if (IsReadOnly)
-                 throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));    
+                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);    
 
             if (inputGesture == null)
-                throw new NotSupportedException(SR.Get(SRID.CollectionOnlyAcceptsInputGestures));
+                throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
             if (_innerGestureList != null)
                 _innerGestureList.Insert(index, inputGesture);
@@ -348,13 +343,10 @@ namespace System.Windows.Input
         {
             if (IsReadOnly)
             {
-                 throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
-            if (inputGesture == null)
- 	        {
-                throw new ArgumentNullException("inputGesture");
-	        }
+            ArgumentNullException.ThrowIfNull(inputGesture);
 
             if (_innerGestureList != null && _innerGestureList.Contains(inputGesture))
             {
@@ -380,7 +372,7 @@ namespace System.Windows.Input
         {
             if (IsReadOnly)
             {
-                 throw new NotSupportedException(SR.Get(SRID.ReadOnlyInputGesturesCollection));
+                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
          
 	    if (_innerGestureList != null)

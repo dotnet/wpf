@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
@@ -23,7 +22,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -38,12 +36,6 @@ namespace System.Windows
         /// <summary>
         ///     Static Constructor for ContentElement
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This hooks up a bunch of thunks which are all critical since they
-        ///     can be used to spoof input
-        ///     TreatAsSafe: Since it does not expose the thunks
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static ContentElement()
         {
             UIElement.RegisterEvents(typeof(ContentElement));
@@ -873,10 +865,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -888,10 +877,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

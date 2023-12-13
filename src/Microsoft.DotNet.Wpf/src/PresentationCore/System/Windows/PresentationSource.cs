@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions; 
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Markup;
@@ -20,7 +19,6 @@ using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -33,10 +31,6 @@ namespace System.Windows
     ///     We currently have one implementation - HwndSource - that
     ///     presents content in a Win32 HWND.
     /// </remarks>
-    /// <SecurityNote>
-    ///     Keep this from being derived from in partial-trust code.
-    /// </SecurityNote>
-    [UIPermissionAttribute(SecurityAction.InheritanceDemand,Unrestricted=true)]                
     public abstract class PresentationSource : DispatcherObject
     {
         //------------------------------------------------------
@@ -56,12 +50,6 @@ namespace System.Windows
         {
         }
 
-        /// <SecurityNote>
-        ///     This constructor exists since the code gen for managed code generates a static constructor
-        ///     and in that code it initializes a critical field which causes an fxcop violation for the codegen
-        ///     constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         static PresentationSource()
         {
         }
@@ -78,12 +66,6 @@ namespace System.Windows
         /// <summary>
         ///     InputProvider given the Device type.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Sub classing this can let you provide fake input providers which
-        ///     can compromise the input system
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.InheritanceDemand, Unrestricted = true)]
         internal virtual IInputProvider GetInputProvider(Type inputDevice) 
         { 
             return null; 
@@ -106,14 +88,8 @@ namespace System.Windows
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks> 
-        /// <SecurityNote> 
-        ///     Critical - calls CriticalFromVisual. and returns the PresentationSource
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
-        [SecurityCritical]
         public static PresentationSource FromVisual(Visual visual)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalFromVisual(visual);
         }
@@ -126,14 +102,8 @@ namespace System.Windows
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks> 
-        /// <SecurityNote> 
-        ///     Critical - calls CriticalFromVisual. and returns the PresentationSource
-        ///     PublicOK: There exists a demand
-        /// </SecurityNote>
-        [SecurityCritical]
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             return CriticalFromVisual(dependencyObject);
         }
@@ -151,24 +121,14 @@ namespace System.Windows
         ///     3) The handlers will receive the SourceChanged event even if it was handled.
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code lets you get access to a presentationSource object. Here the link demand
-        ///     is defense in depth since , the object by itself has all public properties blocked off. Also this
-        ///     is part of startup code.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]                
         public static void AddSourceChangedHandler(IInputElement element, SourceChangedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
-            // Either UIElement or ContentElement
+            // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(element))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "element");
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), nameof(element));
             }
             DependencyObject o = (DependencyObject)element;
 
@@ -181,9 +141,8 @@ namespace System.Windows
             {
                 FrugalObjectList<RoutedEventHandlerInfo> info;
 
-                if (InputElement.IsUIElement(o))
+                if (o is UIElement uie)
                 {
-                    UIElement uie = o as UIElement;
                     uie.AddHandler(SourceChangedEvent, handler);
                     info = uie.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
@@ -192,9 +151,8 @@ namespace System.Windows
                         AddElementToWatchList(uie);
                     }
                 }
-                else if (InputElement.IsUIElement3D(o))
+                else if (o is UIElement3D uie3D)
                 {
-                    UIElement3D uie3D = o as UIElement3D;
                     uie3D.AddHandler(SourceChangedEvent, handler);
                     info = uie3D.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
@@ -203,13 +161,18 @@ namespace System.Windows
                         AddElementToWatchList(uie3D);
                     }
                 }
-                else
+                else if (o is ContentElement ce)
                 {
-                    ContentElement ce = o as ContentElement;
                     ce.AddHandler(SourceChangedEvent, handler);
                     info = ce.EventHandlersStore[SourceChangedEvent];
                     if (1 == info.Count)
+                    {
                         AddElementToWatchList(ce);
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                 }
             }
         }
@@ -226,14 +189,12 @@ namespace System.Windows
         /// </remarks>
         public static void RemoveSourceChangedHandler(IInputElement e, SourceChangedEventHandler handler)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
+            // Either UIElement, ContentElement or UIElement3D.
             if (!InputElement.IsValid(e))
             {
-                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement), "e");
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, e.GetType()), nameof(e));
             }
             DependencyObject o = (DependencyObject)e;
 
@@ -246,10 +207,11 @@ namespace System.Windows
                 FrugalObjectList<RoutedEventHandlerInfo> info = null;
                 EventHandlersStore store;
 
-                // Either UIElement or ContentElement.
-                if (InputElement.IsUIElement(o))
+
+                // Either UIElement, ContentElement or UIElement3D.
+                if (o is UIElement uie)
+
                 {
-                    UIElement uie = o as UIElement;
                     uie.RemoveHandler(SourceChangedEvent, handler);
                     store = uie.EventHandlersStore;
                     if (store != null)
@@ -262,9 +224,8 @@ namespace System.Windows
                         RemoveElementFromWatchList(uie);
                     }
                 }
-                else if (InputElement.IsUIElement3D(o))
+                else if (o is UIElement3D uie3D)
                 {
-                    UIElement3D uie3D = o as UIElement3D;
                     uie3D.RemoveHandler(SourceChangedEvent, handler);
                     store = uie3D.EventHandlersStore;
                     if (store != null)
@@ -277,9 +238,8 @@ namespace System.Windows
                         RemoveElementFromWatchList(uie3D);
                     }
                 }
-                else
+                else if (o is ContentElement ce)
                 {
-                    ContentElement ce = o as ContentElement;
                     ce.RemoveHandler(SourceChangedEvent, handler);
                     store = ce.EventHandlersStore;
                     if (store != null)
@@ -291,6 +251,10 @@ namespace System.Windows
                         RemoveElementFromWatchList(ce);
                     }
                 }
+                else
+                {
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
+                }
             }
         }
 
@@ -301,20 +265,10 @@ namespace System.Windows
         /// <param name="ce">
         ///     The element whose ancestory may have changed.
         /// </param>
-        /// <SecurityNote>
-        ///     This API is not available in the internet zone.It was protected 
-        ///     as defense in depth since we did not want the PresentationSource 
-        ///     surface to be exposed.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]                
         [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void OnAncestorChanged(ContentElement ce)
         {
-            if (ce == null)
-            {
-                throw new ArgumentNullException("ce");
-            }
+            ArgumentNullException.ThrowIfNull(ce);
 
 
             if (true == (bool)ce.GetValue(GetsSourceChangedEventProperty))
@@ -335,14 +289,8 @@ namespace System.Windows
         /// <summary>
         ///     The visual target for the visuals being presented in the source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Calls GetCompositionTargetCore() and returns a CompositionTarget object, which is considered critical.
-        ///     PublicOk: Protected by a LinkDemand
-        /// </SecurityNote>
         public CompositionTarget CompositionTarget
         {
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
-            [SecurityCritical]
             get
             {
                 return GetCompositionTargetCore();
@@ -355,18 +303,9 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code is not safe to expose publicly since it lets you 
-        ///     change rootvisual which puts popup code at risk
-        ///     PublicOK: Inheritance demand prevents random subclassing in partial trust 
-        ///     and Linkdemand prevents unauthorized public callers
-        /// </SecurityNote>
         public abstract Visual RootVisual
         {
             get;
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
-            [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
             set;
         }
 
@@ -440,16 +379,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code exposes the sources which are deemed as critical. This is defense in depth.
-        ///     PublicOK: There exists a demand in this code
-        /// </SecurityNote>
         public static IEnumerable CurrentSources
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return CriticalCurrentSources;
             }
         }
@@ -493,17 +426,6 @@ namespace System.Windows
         /// </remarks>
         /// <param name="oldRoot">The old root visual.</param>
         /// <param name="newRoot">The new root visual.</param>
-        ///<SecurityNote> 
-        ///     Critical - Uses RootSourceProperty
-        ///     TreatAsSafe -net effect is changing the root of the hwnd's visual tree.
-        ///                         equivalent to changing what's displayed. Considered safe. 
-        ///
-        ///                         The critical data "the RootSource" is stored on the new tree. 
-        ///                         However this is still considered safe - as : 
-        ///                                 to access this data you need to use RootSourceProperty - which is critical ( so we'll catch all access to this). 
-        ///                                 the public methods to get to PresentationSource ( FromSource) do a demand. 
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         protected void RootChanged(Visual oldRoot, Visual newRoot)
         {
             PresentationSource oldSource = null;
@@ -516,14 +438,14 @@ namespace System.Windows
             // Always clear the RootSourceProperty on the old root.
             if (oldRoot != null)
             {
-                oldSource = CriticalGetPresentationSourceFromElement(oldRoot, RootSourceProperty);
+                oldSource = (PresentationSource)oldRoot.GetValue(RootSourceProperty);
                 oldRoot.ClearValue(RootSourceProperty);
             }
             
             // Always set the SourceProperty on the new root.
             if (newRoot != null)
             {
-                newRoot.SetValue(RootSourceProperty, new SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(this));
+                newRoot.SetValue(RootSourceProperty, this);
             }
 
             UIElement oldRootUIElement = oldRoot as UIElement;
@@ -561,7 +483,7 @@ namespace System.Windows
                 // same context as this presentation source.
                 if (element.Dispatcher == Dispatcher)
                 {
-                    PresentationSource testSource = CriticalGetPresentationSourceFromElement(element,CachedSourceProperty);
+                    PresentationSource testSource = (PresentationSource)element.GetValue(CachedSourceProperty);
                     // 1) If we are removing the rootvisual, then fire on any node whos old
                     // PresetationSource was the oldSource.
                     // 2) If we are attaching a rootvisual then fire on any node whos old
@@ -621,15 +543,9 @@ namespace System.Windows
         /// </summary>
         /// <param name="uie">The UIElement whose ancestory may have changed.</param>
         /// <param name="e">  Event Args.</param>
-        /// <SecurityNote>
-        ///     Critical: This code calls into a critical code path UpdateSourceOfElement.
-        ///     TreatAsSafe: This code does not access any critical data itself and does not expose
-        ///     anything
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void OnVisualAncestorChanged(DependencyObject uie, AncestorChangedEventArgs e)
         {
-            Debug.Assert(InputElement.IsUIElement3D(uie) || InputElement.IsUIElement(uie));
+            Debug.Assert(uie is UIElement3D or UIElement);
             
             if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
@@ -637,32 +553,21 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote> 
-        ///     Critical - Returns the PresentationSource
-        /// </SecurityNote>
         [FriendAccessAllowed] // To allow internal code paths to access this function 
-        [SecurityCritical]
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
         }
 
-        /// <SecurityNote> 
-        ///     Critical - uses RootSourceProperty. and returns the PresentationSource
-        /// </SecurityNote>
         /// <param name="v">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
         [FriendAccessAllowed] // To allow internal code paths to access this function 
-        [SecurityCritical]
         internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
         {
-            if (v == null)
-            {
-                throw new ArgumentNullException("v");
-            }
+            ArgumentNullException.ThrowIfNull(v);
 
             PresentationSource source = FindSource(v, enable2DTo3DTransition);
 
@@ -694,7 +599,6 @@ namespace System.Windows
         ///     are in the same presentation source.
         /// </summary>
         [FriendAccessAllowed] // To allow internal code paths to access this function 
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
         {
             if (visuals == null || visuals.Length == 0)
@@ -744,60 +648,24 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code exposes the sources which are deemed as critical. This is internal access point.
-        ///     Public consumers should use CurrentSources
-        /// </SecurityNote>
-        internal static IEnumerable CriticalCurrentSources
+        internal static WeakReferenceList CriticalCurrentSources
         {
-            [SecurityCritical]
             get
             {
-                return (IEnumerable)_sources;
+                return _sources;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Returns a presentationsource given a canister
-        /// </SecurityNote>
-        [SecurityCritical]
-        private static PresentationSource CriticalGetPresentationSourceFromElement(DependencyObject dObject,DependencyProperty dp)
-        {
-            PresentationSource testSource;
-            SecurityCriticalDataForMultipleGetAndSet<PresentationSource> tempCriticalDataWrapper =
-                (SecurityCriticalDataForMultipleGetAndSet < PresentationSource > )
-                dObject.GetValue(dp);
-            if (tempCriticalDataWrapper == null || tempCriticalDataWrapper.Value == null)
-            {
-                testSource = null;
-            }
-            else
-            {   
-                testSource = tempCriticalDataWrapper.Value;
-            }
-            return testSource;
-        }
-
-        /// <SecurityNote>
-        ///     Critical: This code acceses PresentationSource and stores it.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void AddElementToWatchList(DependencyObject element)
         {
             if(_watchers.Add(element))
             {
-                element.SetValue(CachedSourceProperty,new 
-                    SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(PresentationSource.FindSource(element)));
+                element.SetValue(CachedSourceProperty, PresentationSource.FindSource(element));
                 element.SetValue(GetsSourceChangedEventProperty, true);
             }
         }
 
 
-        /// <SecurityNote>
-        ///     Critical: This code acceses PresentationSource 
-        ///     TreatAsSafe: This code is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void RemoveElementFromWatchList(DependencyObject element)
         {
             if(_watchers.Remove(element))
@@ -807,24 +675,16 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote> 
-        ///     Critical - Returns a PresentationSource.
-        ///</SecurityNote> 
-        [SecurityCritical] 
         private static PresentationSource FindSource(DependencyObject o)
         {
             return FindSource(o, true /* enable2DTo3DTransition */);
         }
 
-        ///<SecurityNote> 
-        ///     Critical - uses RootSourceProperty and returns the PresentationSource 
-        ///</SecurityNote> 
         /// <param name="o">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        [SecurityCritical] 
         private static PresentationSource FindSource(DependencyObject o, bool enable2DTo3DTransition)
         {
             PresentationSource source = null;
@@ -836,16 +696,11 @@ namespace System.Windows
             DependencyObject v = InputElement.GetRootVisual(o, enable2DTo3DTransition);
             if (v != null)
             {
-               source = CriticalGetPresentationSourceFromElement(v, RootSourceProperty);
+               source = (PresentationSource)v.GetValue(RootSourceProperty);
             }
             return source;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses PresentationSource which is a critical resource. It then
-        ///     packages it into an event args and fires it into the tree.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static bool UpdateSourceOfElement(DependencyObject doTarget,
                                                   DependencyObject doAncestor,
                                                   DependencyObject doOldParent)
@@ -853,25 +708,29 @@ namespace System.Windows
             bool calledOut = false;
             
             PresentationSource realSource = FindSource(doTarget);
-            PresentationSource cachedSource = CriticalGetPresentationSourceFromElement(doTarget, CachedSourceProperty);
+            PresentationSource cachedSource = (PresentationSource)doTarget.GetValue(CachedSourceProperty);
             if (cachedSource != realSource)
             {
-                doTarget.SetValue(CachedSourceProperty, new SecurityCriticalDataForMultipleGetAndSet<PresentationSource>(realSource));
+                doTarget.SetValue(CachedSourceProperty, realSource);
 
                 SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
 
                 args.RoutedEvent=SourceChangedEvent;
-                if (InputElement.IsUIElement(doTarget))
+                if (doTarget is UIElement uiElement)
                 {
-                    ((UIElement)doTarget).RaiseEvent(args);
+                    uiElement.RaiseEvent(args);
                 }                
-                else if (InputElement.IsContentElement(doTarget))
+                else if (doTarget is ContentElement contentElement)
                 {
-                    ((ContentElement)doTarget).RaiseEvent(args);
+                    contentElement.RaiseEvent(args);
+                }
+                else if (doTarget is UIElement3D uiElement3D)
+                {
+                    uiElement3D.RaiseEvent(args);
                 }
                 else
                 {
-                    ((UIElement3D)doTarget).RaiseEvent(args);
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doTarget.GetType())); 
                 }
 
                 calledOut = true;
@@ -892,25 +751,17 @@ namespace System.Windows
         // We use a private DP for the RootSource (the connection from the root
         // element in a tree to the source it is displayed in).  Use the public
         // API FromVisual to get the source that a visual is displayed in.
-        ///<SecurityNote>
-        ///     Critical - used to store PresentationSource
-        ///</SecurityNote>        
-        [SecurityCritical] 
         private static readonly DependencyProperty RootSourceProperty   
-            = DependencyProperty.RegisterAttached("RootSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
-                                          new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));
+            = DependencyProperty.RegisterAttached("RootSource", typeof(PresentationSource), typeof(PresentationSource),
+                                          new PropertyMetadata((PresentationSource)null));
 
         // We use a private DP for the CachedSource (stored on the elements 
         // that we are watching, so that we can send a change notification).
         // Use the public API FromVisual to get the source that a visual is
         // displayed in.
-        ///<SecurityNote>
-        ///     Critical - used to store PresentationSource
-        ///</SecurityNote>        
-        [SecurityCritical]
         private static readonly DependencyProperty CachedSourceProperty
-            = DependencyProperty.RegisterAttached("CachedSource", typeof(SecurityCriticalDataForMultipleGetAndSet<PresentationSource>), typeof(PresentationSource),
-                                          new PropertyMetadata((SecurityCriticalDataForMultipleGetAndSet<PresentationSource>)null));
+            = DependencyProperty.RegisterAttached("CachedSource", typeof(PresentationSource), typeof(PresentationSource),
+                                          new PropertyMetadata((PresentationSource)null));
 
         // We use a private DP to mark elements that we are watchin.
         private static readonly DependencyProperty GetsSourceChangedEventProperty = DependencyProperty.RegisterAttached("IsBeingWatched", typeof(bool), typeof(PresentationSource), new PropertyMetadata((bool)false));
@@ -921,7 +772,7 @@ namespace System.Windows
         private static readonly RoutedEvent SourceChangedEvent = EventManager.RegisterRoutedEvent("SourceChanged", RoutingStrategy.Direct, typeof(SourceChangedEventHandler), typeof(PresentationSource));
 
         // The lock we use to protect our static data.
-        private static object _globalLock = new object();
+        private static readonly object _globalLock = new object();
 
         // An array of weak-references to sources that we know about.
         private static WeakReferenceList _sources = new WeakReferenceList(_globalLock);

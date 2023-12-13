@@ -108,14 +108,14 @@ namespace MS.Internal.Annotations.Anchoring
                 TextSelectionHelper.GetPointerPage(startPointer, out startPage);
                 start = TextSelectionHelper.GetPointForPointer(startPointer);
                 if (startPage == int.MinValue)
-                    throw new ArgumentException(SR.Get(SRID.SelectionDoesNotResolveToAPage, "start"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), "selection");
 
                 int endPage = int.MinValue;
                 ITextPointer endPointer = segment.End.CreatePointer(LogicalDirection.Backward);
                 TextSelectionHelper.GetPointerPage(endPointer, out endPage);
                 end = TextSelectionHelper.GetPointForPointer(endPointer);
                 if (endPage == int.MinValue)
-                    throw new ArgumentException(SR.Get(SRID.SelectionDoesNotResolveToAPage, "end"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), "selection");
 
                 int firstPage = pageEl.Count;
                 int numOfPages = endPage - startPage;
@@ -194,18 +194,15 @@ namespace MS.Internal.Annotations.Anchoring
         public override IList<ContentLocatorPart>
             GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(selection);
 
             CheckSelection(selection);
 
             FixedPageProxy fp = startNode as FixedPageProxy;
 
             if (fp == null)
-                throw new ArgumentException(SR.Get(SRID.StartNodeMustBeFixedPageProxy), "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, "startNode");
 
             ContentLocatorPart part = new ContentLocatorPart(FixedTextElementName);
             if (fp.Segments.Count == 0)
@@ -222,20 +219,20 @@ namespace MS.Internal.Annotations.Anchoring
                     string value = "";
                     if (!double.IsNaN(fp.Segments[i].Start.X))
                     {
-                        value += fp.Segments[i].Start.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + fp.Segments[i].Start.Y.ToString(NumberFormatInfo.InvariantInfo);
+                        value += fp.Segments[i].Start.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + fp.Segments[i].Start.Y.ToString(NumberFormatInfo.InvariantInfo);
                     }
                     else
                     {
-                        value += TextSelectionProcessor.Separator[0];
+                        value += TextSelectionProcessor.Separator;
                     }
-                    value += TextSelectionProcessor.Separator[0];
+                    value += TextSelectionProcessor.Separator;
                     if (!double.IsNaN(fp.Segments[i].End.X))
                     {
-                        value += fp.Segments[i].End.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator[0] + fp.Segments[i].End.Y.ToString(NumberFormatInfo.InvariantInfo);
+                        value += fp.Segments[i].End.X.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + fp.Segments[i].End.Y.ToString(NumberFormatInfo.InvariantInfo);
                     }
                     else
                     {
-                        value += TextSelectionProcessor.Separator[0];
+                        value += TextSelectionProcessor.Separator;
                     }
 
                     part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + i.ToString(NumberFormatInfo.InvariantInfo), value);
@@ -266,8 +263,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">startNode does not belong to the DocumentViewer</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
+            ArgumentNullException.ThrowIfNull(startNode);
 
             DocumentPage docPage = null;
             FixedPage page = startNode as FixedPage;
@@ -294,11 +290,10 @@ namespace MS.Internal.Annotations.Anchoring
 
             if (docPage == null)
             {
-                throw new ArgumentException(SR.Get(SRID.StartNodeMustBeDocumentPageViewOrFixedPage), "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, "startNode");
             }
 
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             attachmentLevel = AttachmentLevel.Unresolved;
 
@@ -317,7 +312,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 string stringCount = locatorPart.NameValuePairs["Count"];
                 if (stringCount == null)
-                    throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
+                    throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.CountAttribute));
                 int count = Int32.Parse(stringCount, NumberFormatInfo.InvariantInfo);
 
                 for (int i = 0; i < count; i++)
@@ -442,8 +437,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>ITextRange interface, implemented by the object</returns>
         private IList<TextSegment> CheckSelection(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             IList<TextSegment> textSegments = null;
             ITextPointer start = null;
@@ -464,13 +458,13 @@ namespace MS.Internal.Annotations.Anchoring
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection: type=" + selection.GetType().ToString());
+                    throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
                 }
             }
 
             if (!(start.TextContainer is FixedTextContainer ||
                 start.TextContainer is DocumentSequenceTextContainer))
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection: type=" + selection.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
 
             return textSegments;
         }
@@ -483,15 +477,14 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>ITextRange interface, implemented by the object</returns>
         private TextAnchor CheckAnchor(object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             TextAnchor anchor = selection as TextAnchor;
 
             if (anchor == null || !(anchor.Start.TextContainer is FixedTextContainer ||
                     anchor.Start.TextContainer is DocumentSequenceTextContainer))
             {
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection: type=" + selection.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
             }
 
             return anchor;
@@ -506,19 +499,18 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="end">the end point value based on EndXAttribyte and EndYattribute values</param>
         private void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out Point start, out Point end)
         {
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (FixedTextElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Get(SRID.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
 
             string segmentValue = locatorPart.NameValuePairs[TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
             if (segmentValue == null)
-                throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
+                throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
 
             string[] values = segmentValue.Split(TextSelectionProcessor.Separator);
             if (values.Length != 4)
-                throw new ArgumentException(SR.Get(SRID.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
+                throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
             start = GetPoint(values[0], values[1]);
             end = GetPoint(values[2], values[3]);
         }

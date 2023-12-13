@@ -74,11 +74,6 @@ namespace System.Windows.Automation
         /// There is no way to determine what happened, when it happend, or whether
         /// anything happened at all.
         /// </summary>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Invoke()
         {
             UiaCoreApi.InvokePattern_Invoke(_hPattern);

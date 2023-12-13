@@ -20,7 +20,6 @@ using System.Xml;
 using System.IO;
 using System.IO.Packaging;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -532,11 +531,8 @@ namespace System.Windows.Xps.Serialization
             ):
         base()
         {
-            if( xpsPackage == null)
-            {
-                throw new ArgumentNullException("xpsPackage");
-            }                
-            
+            ArgumentNullException.ThrowIfNull(xpsPackage);
+
             this._reachPackage = xpsPackage;
             Initialize();
 
@@ -622,7 +618,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -697,7 +693,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -778,7 +774,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -813,7 +809,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                        throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                     }
 
                     //
@@ -890,7 +886,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                        throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                     }
                 }
                 else
@@ -930,7 +926,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
                 }
             }
         }
@@ -967,7 +963,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
                 }
             }
         }
@@ -1000,7 +996,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                 }
 
                 //
@@ -1044,7 +1040,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -1076,7 +1072,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                 }
 
                 //
@@ -1120,7 +1116,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -1152,7 +1148,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else
                 {
-                    throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoFixedPageWriter));
+                    throw new XpsSerializationException(SR.ReachSerialization_NoFixedPageWriter);
                 }
 
                 //
@@ -1196,7 +1192,7 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_CannotReleaseXmlWriter));
+                throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
             }
         }
 
@@ -1267,28 +1263,23 @@ namespace System.Windows.Xps.Serialization
             PrintTicket printTicket
             )
         {
-            if(printTicket == null)
+            ArgumentNullException.ThrowIfNull(printTicket);
+
+            //
+            // We need to figure out at which level of the package
+            // is this printTicket targeted
+            //
+            if (_currentFixedPageWriter != null)
             {
-                throw new ArgumentNullException("printTicket");
+                _currentFixedPageWriter.PrintTicket = printTicket;
             }
-            else
+            else if(_currentFixedDocumentWriter != null)
             {
-                //
-                // We need to figure out at which level of the package
-                // is this printTicket targeted
-                //
-                if(_currentFixedPageWriter != null)
-                {
-                    _currentFixedPageWriter.PrintTicket = printTicket;
-                }
-                else if(_currentFixedDocumentWriter != null)
-                {
-                    _currentFixedDocumentWriter.PrintTicket = printTicket;
-                }
-                else if(_currentFixedDocumentSequenceWriter != null)
-                {
-                    _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
-                }
+                _currentFixedDocumentWriter.PrintTicket = printTicket;
+            }
+            else if(_currentFixedDocumentSequenceWriter != null)
+            {
+                _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
             }
         }
 

@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("819B3199-0A5A-4B64-BEC7-A9E17E780DE2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMGlyphs : IXpsOMVisual
     {
         IXpsOMGlyphs Clone();

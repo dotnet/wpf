@@ -11,7 +11,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Interop;
@@ -27,7 +26,6 @@ using MS.Internal.TextFormatting;
 using System.Reflection;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.FontFace
 {
@@ -35,9 +33,9 @@ namespace MS.Internal.FontFace
     {
         internal static void VerifyMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
+                throw new ArgumentException(SR.Format(SR.PropertyValueCannotBeNaN, propertyName));
             }
             else if (value > Constants.GreatestMutiplierOfEm)
             {
@@ -51,9 +49,9 @@ namespace MS.Internal.FontFace
 
         internal static void VerifyPositiveMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
+                throw new ArgumentException(SR.Format(SR.PropertyValueCannotBeNaN, propertyName));
             }
             else if (value > Constants.GreatestMutiplierOfEm)
             {
@@ -61,15 +59,15 @@ namespace MS.Internal.FontFace
             }
             else if (value <= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyMustBeGreaterThanZero, propertyName));
+                throw new ArgumentException(SR.Format(SR.PropertyMustBeGreaterThanZero, propertyName));
             }
         }
 
         internal static void VerifyNonNegativeMultiplierOfEm(string propertyName, ref double value)
         {
-            if (DoubleUtil.IsNaN(value))
+            if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyValueCannotBeNaN, propertyName));
+                throw new ArgumentException(SR.Format(SR.PropertyValueCannotBeNaN, propertyName));
             }
             else if (value > Constants.GreatestMutiplierOfEm)
             {
@@ -77,7 +75,7 @@ namespace MS.Internal.FontFace
             }
             else if (value < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.PropertyCannotBeNegative, propertyName));
+                throw new ArgumentException(SR.Format(SR.PropertyCannotBeNegative, propertyName));
             }
         }
 
@@ -204,7 +202,7 @@ namespace MS.Internal.FontFace
             {
                 FailNotWellFormed(x);
             }
-            catch (XmlSyntaxException x)
+            catch (Exception x) when(string.Equals(x.GetType().FullName, "System.Security.XmlSyntaxException", StringComparison.OrdinalIgnoreCase))
             {
                 FailNotWellFormed(x);
             }
@@ -872,10 +870,10 @@ namespace MS.Internal.FontFace
         private void VerifyCompositeFontInfo()
         {
             if (_compositeFontInfo.FamilyMaps.Count == 0)
-                Fail(SR.Get(SRID.CompositeFontMissingElement, FamilyMapElement));
+                Fail(SR.Format(SR.CompositeFontMissingElement, FamilyMapElement));
 
             if (_compositeFontInfo.FamilyNames.Count == 0)
-                Fail(SR.Get(SRID.CompositeFontMissingElement, StringElement));
+                Fail(SR.Format(SR.CompositeFontMissingElement, StringElement));
         }
 
         /// <summary>
@@ -891,8 +889,8 @@ namespace MS.Internal.FontFace
         /// </summary>
         private void FailAttributeValue()
         {
-            Fail(SR.Get(
-                SRID.CompositeFontAttributeValue1,
+            Fail(SR.Format(
+                SR.CompositeFontAttributeValue1,
                 _reader.LocalName));
         }
 
@@ -901,8 +899,8 @@ namespace MS.Internal.FontFace
         /// </summary>
         private void FailAttributeValue(Exception x)
         {
-            Fail(SR.Get(
-                SRID.CompositeFontAttributeValue2,
+            Fail(SR.Format(
+                SR.CompositeFontAttributeValue2,
                 _reader.LocalName,
                 x.Message),
                 x);
@@ -913,8 +911,8 @@ namespace MS.Internal.FontFace
         /// </summary>
         private void FailUnknownElement()
         {
-            Fail(SR.Get(
-                SRID.CompositeFontUnknownElement,
+            Fail(SR.Format(
+                SR.CompositeFontUnknownElement,
                 _reader.LocalName,
                 _reader.NamespaceURI));
         }
@@ -924,8 +922,8 @@ namespace MS.Internal.FontFace
         /// </summary>
         private void FailUnknownAttribute()
         {
-            Fail(SR.Get(
-                SRID.CompositeFontUnknownAttribute,
+            Fail(SR.Format(
+                SR.CompositeFontUnknownAttribute,
                 _reader.LocalName,
                 _reader.NamespaceURI));
         }
@@ -936,7 +934,7 @@ namespace MS.Internal.FontFace
         /// <param name="name"></param>
         private void FailMissingAttribute(string name)
         {
-            Fail(SR.Get(SRID.CompositeFontMissingAttribute, name));
+            Fail(SR.Format(SR.CompositeFontMissingAttribute, name));
         }
 
         /// <summary>

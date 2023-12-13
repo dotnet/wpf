@@ -6,18 +6,12 @@
 
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System;
 using System.IO;
 
 namespace MS.Internal.Shaping
 {
 
-    /// <SecurityNote>
-    /// Critical - Everything in this class is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal static class Positioning
     {
         public static int DesignToPixels(ushort DesignUnitsPerEm, ushort PixelsPerEm, int Value)
@@ -142,11 +136,6 @@ namespace MS.Internal.Shaping
 }
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct DeviceTable
     {
         private const int offsetStartSize = 0;
@@ -224,11 +213,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct ValueRecordTable
     {
         const ushort XPlacmentFlag = 0x0001;
@@ -352,11 +336,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct AnchorTable
     {
         private const int offsetFormat = 0;
@@ -483,11 +462,6 @@ namespace MS.Internal.Shaping
         private ushort format;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct SinglePositioningSubtable
     {
         private const int offsetFormat = 0;
@@ -595,11 +569,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     internal struct PairPositioningSubtable
     {
         private const int offsetFormat = 0;
@@ -720,11 +689,6 @@ namespace MS.Internal.Shaping
         
 #region Pair positioing child structures
 
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]    
         private struct PairSetTable
         {
             private const int offsetPairValueCount = 0;
@@ -889,11 +853,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]   
     internal struct MarkArray
     {
         private const int offsetClassArray = 2;
@@ -926,11 +885,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]   
     internal struct MarkToBasePositioningSubtable
     {
         private const int offsetFormat = 0;
@@ -972,11 +926,6 @@ namespace MS.Internal.Shaping
         }
         
 #region Mark to base positioning child structures
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]   
         private struct BaseArray
         {
             private const int offsetAnchorArray = 2;
@@ -1085,11 +1034,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]   
     internal struct MarkToMarkPositioningSubtable
     {
         private const int offsetFormat = 0;
@@ -1130,11 +1074,6 @@ namespace MS.Internal.Shaping
         }
         
 #region Mark to mark positioning child structures
-        /// <SecurityNote>
-        /// Critical - Everything in this struct is considered critical 
-        ///            because they either operate on raw font table bits or unsafe pointers. 
-        /// </SecurityNote>    
-        [SecurityCritical(SecurityCriticalScope.Everything)]   
         private struct Mark2Array
         {
             private const int offsetCount = 0;
@@ -1245,11 +1184,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]   
     struct CursivePositioningSubtable
     {
         private const ushort offsetFormat = 0;
@@ -1436,11 +1370,6 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]   
     internal struct LigatureAttachTable
     {
         private const int offsetAnchorArray = 2;
@@ -1471,11 +1400,6 @@ namespace MS.Internal.Shaping
         private int classCount;
     }
 
-    /// <SecurityNote>
-    /// Critical - Everything in this struct is considered critical 
-    ///            because they either operate on raw font table bits or unsafe pointers. 
-    /// </SecurityNote>    
-    [SecurityCritical(SecurityCriticalScope.Everything)]  
     internal struct MarkToLigaturePositioningSubtable
     {
         private const int offsetFormat = 0;

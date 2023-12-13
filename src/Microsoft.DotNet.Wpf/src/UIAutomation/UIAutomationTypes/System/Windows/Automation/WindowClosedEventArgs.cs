@@ -33,10 +33,7 @@ namespace System.Windows.Automation
         public WindowClosedEventArgs (int [] runtimeId) 
             : base(WindowPatternIdentifiers.WindowClosedEvent)
         {
-            if (runtimeId == null)
-            {
-                throw new ArgumentNullException("runtimeId");
-            }
+            ArgumentNullException.ThrowIfNull(runtimeId);
             _runtimeId = (int[])runtimeId.Clone();
         }
 

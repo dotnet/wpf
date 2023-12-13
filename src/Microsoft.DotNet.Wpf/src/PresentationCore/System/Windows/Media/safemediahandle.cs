@@ -8,7 +8,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Reflection;
 using MS.Internal;
@@ -33,21 +32,11 @@ namespace System.Windows.Media
 
         /// <summary>
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls SafeHandle.SetHandle which LinkDemands
-        ///               also takes arbitrary IntPtr as a handle
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal SafeMediaHandle(IntPtr handle)
         {
             SetHandle(handle);
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, not treat as safe because you must
-        ///            validate that handle is a valid COM object.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override bool ReleaseHandle()
         {
             HRESULT.Check(MILMedia.Shutdown(handle));

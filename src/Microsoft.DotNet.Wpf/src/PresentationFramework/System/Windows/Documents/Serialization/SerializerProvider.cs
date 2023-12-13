@@ -16,7 +16,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Xps.Serialization;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32;
@@ -42,15 +41,8 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerProvider()
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerDescriptor sd = null;
 
@@ -89,27 +81,17 @@ namespace System.Windows.Documents.Serialization
         /// <summary>
         /// Registers the serializer plug-in identified by serializerDescriptor in the registry
         /// </summary>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not install 
-        ///  potentially unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void RegisterSerializer(SerializerDescriptor serializerDescriptor, bool overwrite)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
 
             if (!overwrite && plugIns.OpenSubKey(serializerKey) != null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderAlreadyRegistered), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderAlreadyRegistered, serializerKey);
             }
 
             RegistryKey newPlugIn = plugIns.CreateSubKey(serializerKey);
@@ -125,27 +107,17 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe: The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical: Full trust is required, so that partial trust applications do not uninstall
-        ///  serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static void UnregisterSerializer(SerializerDescriptor serializerDescriptor)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
 
             if (plugIns.OpenSubKey(serializerKey) == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderNotRegistered), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderNotRegistered, serializerKey);
             }
 
             plugIns.DeleteSubKeyTree(serializerKey);
@@ -160,33 +132,20 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe : The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public SerializerWriter CreateSerializerWriter(SerializerDescriptor serializerDescriptor, Stream stream)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerWriter serializerWriter = null;
 
-            if (serializerDescriptor == null)
-            {
-                throw new ArgumentNullException("serializerDescriptor");
-            }
+            ArgumentNullException.ThrowIfNull(serializerDescriptor);
 
             string serializerKey = serializerDescriptor.DisplayName + "/" + serializerDescriptor.AssemblyName + "/" + serializerDescriptor.AssemblyVersion + "/" + serializerDescriptor.WinFXVersion;
 
             if (!serializerDescriptor.IsLoadable)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderWrongVersion), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderWrongVersion, serializerKey);
             }
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             bool found = false;
             foreach (SerializerDescriptor sd in InstalledSerializers)
@@ -200,7 +159,7 @@ namespace System.Windows.Documents.Serialization
 
             if (!found)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderUnknownSerializer), serializerKey);
+                throw new ArgumentException(SR.SerializerProviderUnknownSerializer, serializerKey);
             }
 
             try
@@ -211,19 +170,19 @@ namespace System.Windows.Documents.Serialization
             }
             catch (FileNotFoundException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (FileLoadException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (BadImageFormatException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
             catch (MissingMethodException)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderCannotLoad), serializerDescriptor.DisplayName);
+                throw new ArgumentException(SR.SerializerProviderCannotLoad, serializerDescriptor.DisplayName);
             }
 
             return serializerWriter;
@@ -238,22 +197,10 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         /// <remarks>
         ///     Creates the Xps default serializer
-        ///
-        ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical: XpsSerializerFactory..ctor is defined in a non-APTCA assembly.
-        /// TreatAsSafe: demands appropriate permissions.
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load the ReachFramework.dll
-        ///  which does not the Aptca attribute set
-        ///</SecurityNote> 
         /// <returns>SerializerDescriptor for new serializer</returns>
-        [SuppressMessage("Microsoft.Security", "CA2116:AptcaMethodsShouldOnlyCallAptcaMethods")]
-        [SecurityCritical, SecurityTreatAsSafe]        
         private SerializerDescriptor CreateSystemSerializerDescriptor()
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerDescriptor serializerDescriptor = null;
 

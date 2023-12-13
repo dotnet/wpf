@@ -11,12 +11,10 @@
 using Microsoft.Win32;              // Registry, RegistryKey
 using MS.Internal;                  // CoreAppContextSwitches
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Interop;       // HwndSource
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Diagnostics
 {
@@ -37,11 +35,7 @@ namespace System.Windows.Diagnostics
         [ThreadStatic]
         private static bool s_IsVisualTreeChangedInProgress;
 
-        /// <SecurityNote>
-        ///     critical - used to store HwndSource
-        /// </SecurityNote>
         [ThreadStatic]
-        [SecurityCritical]
         private static HwndSource s_ActiveHwndSource;
 
         static VisualDiagnostics()
@@ -139,12 +133,6 @@ namespace System.Windows.Diagnostics
             }
         }
 
-        /// <SecurityNote>
-        ///     critical - uses critical field s_ActiveHwndSource,
-        ///                calls critical method PresentationSource.FromDependencyObject
-        ///     safe - does not expose the value
-        /// </SecurityNode>
-        [SecuritySafeCritical]
         private static void RaiseVisualTreeChangedEvent(
                                 EventHandler<VisualTreeChangeEventArgs> visualTreeChanged,
                                 VisualTreeChangeEventArgs args,
@@ -228,12 +216,11 @@ namespace System.Windows.Diagnostics
             {
                 if (!EnableHelper.AllowChangesDuringVisualTreeChanged(d))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ReentrantVisualTreeChangeError, nameof(VisualTreeChanged)));
+                    throw new InvalidOperationException(SR.Format(SR.ReentrantVisualTreeChangeError, nameof(VisualTreeChanged)));
                 }
             }
         }
 
-        [SecurityCritical]      // elevates to read environment
         internal static bool IsEnvironmentVariableSet(string value, string environmentVariable)
         {
             if (value != null)
@@ -241,15 +228,7 @@ namespace System.Windows.Diagnostics
                 return IsEnvironmentValueSet(value);
             }
 
-            new EnvironmentPermission(EnvironmentPermissionAccess.Read, environmentVariable).Assert();
-            try
-            {
-                value = Environment.GetEnvironmentVariable(environmentVariable);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAll();
-            }
+            value = Environment.GetEnvironmentVariable(environmentVariable);
 
             return IsEnvironmentValueSet(value);
         }
@@ -278,7 +257,7 @@ namespace System.Windows.Diagnostics
             internal static void EnableVisualTreeChanged()
             {
                 if (!IsEnableVisualTreeChangedAllowed)
-                    throw new InvalidOperationException(SR.Get(SRID.MethodCallNotAllowed, nameof(VisualDiagnostics.EnableVisualTreeChanged)));
+                    throw new InvalidOperationException(SR.Format(SR.MethodCallNotAllowed, nameof(VisualDiagnostics.EnableVisualTreeChanged)));
 
                 s_IsVisualTreeChangedEnabled = true;
             }
@@ -312,7 +291,7 @@ namespace System.Windows.Diagnostics
                     {
                         // user wants to allow re-entrant changes, and this is the first one.
                         // Issue a warning to debug output
-                        System.Diagnostics.Debug.WriteLine(SR.Get(SRID.ReentrantVisualTreeChangeWarning, nameof(VisualTreeChanged)));
+                        System.Diagnostics.Debug.WriteLine(SR.Format(SR.ReentrantVisualTreeChangeWarning, nameof(VisualTreeChanged)));
                     }
 
                     return (s_AllowChangesDuringVisualTreeChanged == true);
@@ -339,11 +318,6 @@ namespace System.Windows.Diagnostics
             // asynchronously, outside the scope of VisualTreeChanged, but they
             // already shipped with this flaw.]
             //
-            // <SecurityNote>
-            //      Critical - calls PresentationSource.FromDependencyObject
-            //      Safe - result used for comparison only, not exposed
-            // </SecurityNote>
-            [SecuritySafeCritical]
             private static bool IsChangePermitted(DependencyObject d)
             {
                 // if the outer change was type (a), OnVisualChildChanged saved
@@ -356,11 +330,6 @@ namespace System.Windows.Diagnostics
             ///     EnableVisualTreeChanged can be called only in certain scenarios.
             ///     Here we precompute the parts of the rule that can't change at runtime.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - calls IsEnvironmentVariableSet
-            ///     Safe - not controlled by caller.  Value not directly exposed.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private static bool? PrecomputeIsEnableVisualTreeChangedAllowed()
             {
                 if (!IsEnabled)
@@ -375,34 +344,21 @@ namespace System.Windows.Diagnostics
             /// <summary>
             ///     read the registry to see if Win10 Dev Mode is set
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - elevates to read registry
-            ///     Safe - not controlled by caller.  Value not directly exposed to user
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private static bool GetDevModeFromRegistry()
             {
-                new RegistryPermission(RegistryPermissionAccess.Read, c_devmodeRegKeyFullPath).Assert();
-                try
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(c_devmodeRegKey);
+
+                if (key != null)
                 {
-                    RegistryKey key = Registry.LocalMachine.OpenSubKey(c_devmodeRegKey);
-
-                    if (key != null)
+                    using (key)
                     {
-                        using (key)
-                        {
-                            object obj = key.GetValue(c_devmodeValueName);
+                        object obj = key.GetValue(c_devmodeValueName);
 
-                            if (obj is int)
-                            {
-                                return ((int)obj != 0);
-                            }
+                        if (obj is int)
+                        {
+                            return ((int)obj != 0);
                         }
                     }
-                }
-                finally
-                {
-                    CodeAccessPermission.RevertAll();
                 }
 
                 return false;

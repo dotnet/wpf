@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,12 +12,6 @@ using System.Windows.Markup;
 
 namespace System.Xaml.Schema
 {
-    /// <SecurityNote>
-    /// This class uses SafeReflectionInvoker to invoke all user-supplied methods
-    /// and constructors, including the "add methods" for collections.   Normally
-    /// these are merely public methods from standard interfaces like IList, but
-    /// they can be spoofed by a derived class that overrides GetAddMethod.
-    /// </SecurityNote>
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
@@ -27,26 +21,11 @@ namespace System.Xaml.Schema
         internal MethodInfo EnumeratorMethod { get; set; }
         private XamlType _xamlType;
 
-        /// <SecurityNote>
-        /// Critical: Used in combination with GetUninitializedObject to ensure that the object
-        ///           is initialized.
-        ///           Can be used to instantiate object bypassing ctor access checks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private Action<object> _constructorDelegate;
 
-        /// <SecurityNote>
-        /// Critical: Used to determine whether it's safe to instantiate this object via _constructorDelegate,
-        ///           and thus bypass security checks.
-        /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isPublic;
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Used to determine whether we need to demand ReflectionPermission before instantiating this type
-        /// </SecurityNote>
-        [SecurityCritical]
         private ThreeValuedBool _isInSystemXaml;
         // ^^^^^----- End of unused members.  -----^^^^^
 
@@ -83,10 +62,7 @@ namespace System.Xaml.Schema
 
         public virtual void AddToCollection(object instance, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IList list = instance as IList;
             if (list != null)
             {
@@ -97,7 +73,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollections));
+                throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
             XamlType itemType;
             if (item != null)
@@ -111,17 +87,14 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { item });
+            addMethod.Invoke(instance, new object[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IDictionary dictionary = instance as IDictionary;
             if (dictionary != null)
             {
@@ -132,7 +105,7 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
             XamlType itemType;
             if (item != null)
@@ -146,9 +119,9 @@ namespace System.Xaml.Schema
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
-                throw new XamlSchemaException(SR.Get(SRID.NoAddMethodFound, _xamlType, itemType));
+                throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
-            SafeReflectionInvoker.InvokeMethod(addMethod, instance, new object[] { key, item });
+            addMethod.Invoke(instance, new object[] { key, item });
         }
 
         public virtual object CreateInstance(object[] arguments)
@@ -162,20 +135,12 @@ namespace System.Xaml.Schema
                     return result;
                 }
             }
-            return CreateInstanceWithActivator(_xamlType.UnderlyingType, arguments);
+            return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
-        /// <SecurityNote>
-        /// Because this is a public virtual method, idempotence cannot be guaranteed.
-        /// S.X doesn't use this method at all; but any externals consumers who are doing security checks
-        /// based on the returned method should make sure that they are resillient to changing results.
-        /// </SecurityNote>
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            ArgumentNullException.ThrowIfNull(contentType);
             if (IsUnknown || _xamlType.ItemType == null)
             {
                 return null;
@@ -206,7 +171,9 @@ namespace System.Xaml.Schema
                         _xamlType.UnderlyingType, type.UnderlyingType);
                     if (addMethod != null)
                     {
-                        addMethods.Add(type, addMethod);
+                        // Use TryAdd as AllowedContentTypes can contain
+                        // duplicate types.
+                        addMethods.TryAdd(type, addMethod);
                     }
                 }
                 _addMethods = addMethods;
@@ -230,22 +197,19 @@ namespace System.Xaml.Schema
             return null;
         }
 
-        /// <SecurityNote>
-        /// Because this is a public virtual method, idempotence cannot be guaranteed.
-        /// S.X doesn't use this method at all; but any externals consumers who are doing security checks
-        /// based on the returned method should make sure that they are resillient to changing results.
-        /// </SecurityNote>
         public virtual MethodInfo GetEnumeratorMethod()
         {
+            if (IsUnknown)
+            {
+                return null;
+            }
+
             return _xamlType.GetEnumeratorMethod;
         }
 
         public virtual IEnumerator GetItems(object instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            ArgumentNullException.ThrowIfNull(instance);
             IEnumerable enumerable = instance as IEnumerable;
             if (enumerable != null)
             {
@@ -254,21 +218,15 @@ namespace System.Xaml.Schema
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
-                throw new NotSupportedException(SR.Get(SRID.OnlySupportedOnCollectionsAndDictionaries));
+                throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
             MethodInfo getEnumMethod = GetEnumeratorMethod();
-            return (IEnumerator)SafeReflectionInvoker.InvokeMethod(getEnumMethod, instance, s_emptyObjectArray);
+            return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        /// <SecurityNote>
-        /// Critical: Sets critical field _isInSystemXaml
-        /// Safe: Gets the result from SafeCritical SafeReflectionInvoker.IsInSystemXaml.
-        ///       Uses the type's UnderlyingSystemType, which is what's actually created by Activator.CreateInstance.
-        /// </SecurityNote>
         private bool IsInSystemXaml
         {
-            [SecuritySafeCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
             get
             {
@@ -283,14 +241,8 @@ namespace System.Xaml.Schema
         }
         // ^^^^^----- End of unused members.  -----^^^^^
 
-        /// <SecurityNote>
-        /// Critical: Sets critical field _isPublic
-        /// Safe: Gets the result from SafeCritical method TypeReflector.IsPublic.
-        ///       Uses the type's UnderlyingSystemType, which is what's actually created by Activator.CreateInstance.
-        /// </SecurityNote>
         private bool IsPublic
         {
-            [SecuritySafeCritical]
             get
             {
                 if (_isPublic == ThreeValuedBool.NotSet)
@@ -307,21 +259,11 @@ namespace System.Xaml.Schema
             get { return _xamlType == null || _xamlType.UnderlyingType == null; }
         }
 
-        /// <SecurityNote>
-        /// Critical: See explanation in SafeReflectionInvoker.
-        /// Safe: See explanation in SafeReflectionInvoker.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        private object CreateInstanceWithActivator(Type type, object[] arguments)
-        {
-            return SafeReflectionInvoker.CreateInstance(type, arguments);
-        }
-
         private void ThrowIfUnknown()
         {
             if (IsUnknown)
             {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                throw new NotSupportedException(SR.NotSupportedOnUnknownType);
             }
         }
 
@@ -341,42 +283,19 @@ namespace System.Xaml.Schema
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
-
-            /// <SecurityNote>
-            /// Critical: Calls critical method FormatterServices.GetUninitializedObject
-            /// Safe: Never leaks the uninitialized object, always calls constructor first.
-            /// </SecurityNote>
-#if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
-#else
-            [SecuritySafeCritical]
-#endif
+#pragma warning disable SYSLIB0050
             private static object CallCtorDelegate(XamlTypeInvoker type)
             {
                 object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
                 InvokeDelegate(type._constructorDelegate, inst);
                 return inst;
             }
-
-            /// <SecurityNote>
-            /// Must NOT be critical: we don't want to accidentally satisfy SecurityCritical or
-            /// LinkDemand from the target of the invocation.
-            /// </SecurityNote>
+#pragma warning restore SYSLIB0050
             private static void InvokeDelegate(Action<object> action, object argument)
             {
                 action.Invoke(argument);
             }
 
-            /// <SecurityNote>
-            /// Critical: sets critical field XamlType.ConstructorDelegate
-            /// Safe: gets the value from reflection. Doesn't set it if it's non-public
-            ///       (so it can't be accidentally reused on a partial-trust callstack).
-            /// </SecurityNote>
-#if TARGETTING35SP1
-            [SecurityTreatAsSafe, SecurityCritical]
-#else
-            [SecuritySafeCritical]
-#endif
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {
@@ -391,72 +310,36 @@ namespace System.Xaml.Schema
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
-#if PARTIALTRUST
-                        !AppDomain.CurrentDomain.PermissionSet.IsUnrestricted() ? ThreeValuedBool.True : ThreeValuedBool.False;
-#else
                         ThreeValuedBool.False;
-#endif
                 }
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
                 }
 
-                try
+                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
+                // Look up public ctors only, for equivalence with Activator.CreateInstance
+                ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
+                if (tConstInfo == null)
                 {
-                    Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
-                    // Look up public ctors only, for equivalence with Activator.CreateInstance
-                    ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                    if (tConstInfo == null)
-                    {
-                        // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                        throw new MissingMethodException(SR.Get(SRID.NoDefaultConstructor, underlyingType.FullName));
-                    }
-                    if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
-                        (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
-                        (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
-                    {
-                        // We don't want to bypass security checks for a critical or demanding ctor,
-                        // so just treat it as if it were non-public
-                        type._isPublic = ThreeValuedBool.False;
-                        return false;
-                    }
-                    IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
-                    // This requires Reflection Permission
-                    Action<object> ctorDelegate = ctorDelegate =
-                        (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
-                    type._constructorDelegate = ctorDelegate;
-                    return true;
-
+                    // Throwing MissingMethodException for equivalence with Activator.CreateInstance
+                    throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
-                catch (SecurityException)
+                if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
+                    (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
+                    (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
                 {
-                    s_securityFailureWithCtorDelegate = ThreeValuedBool.True;
+                    // We don't want to bypass security checks for a critical or demanding ctor,
+                    // so just treat it as if it were non-public
+                    type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
-            }
-        }
-
-        private class UnknownTypeInvoker : XamlTypeInvoker
-        {
-            public override void AddToCollection(object instance, object item)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override void AddToDictionary(object instance, object key, object item)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override object CreateInstance(object[] arguments)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
-            }
-
-            public override IEnumerator GetItems(object instance)
-            {
-                throw new NotSupportedException(SR.Get(SRID.NotSupportedOnUnknownType));
+                IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
+                // This requires Reflection Permission
+                Action<object> ctorDelegate = ctorDelegate =
+                    (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
+                type._constructorDelegate = ctorDelegate;
+                return true;
             }
         }
     }

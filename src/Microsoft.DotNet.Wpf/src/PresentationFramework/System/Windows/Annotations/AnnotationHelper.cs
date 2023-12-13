@@ -188,8 +188,7 @@ namespace System.Windows.Annotations
         {
             CheckInputs(service);
 
-            if (annotation == null)
-                throw new ArgumentNullException("annotation");
+            ArgumentNullException.ThrowIfNull(annotation);
 
             bool isFlow = true;
 
@@ -509,7 +508,7 @@ namespace System.Windows.Annotations
             // Cannot create an annotation with zero length text anchor
             if (selection.IsEmpty)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EmptySelectionNotSupported));
+                throw new InvalidOperationException(SR.EmptySelectionNotSupported);
             }
 
             Annotation annotation = null;
@@ -610,7 +609,7 @@ namespace System.Windows.Annotations
                 // is invalid.  This can happen if the selection was created programmatically
                 // for TextPointers that don't have pages because pagination failed.
                 if (selStartPage == -1 || selEndPage == -1)
-                    throw new ArgumentException(SR.Get(SRID.InvalidSelectionPages));
+                    throw new ArgumentException(SR.InvalidSelectionPages);
 
                 allPagesVisible = AreAllPagesVisible(viewer, selStartPage, selEndPage);
             }
@@ -933,7 +932,7 @@ namespace System.Windows.Annotations
             // Cannot create an annotation with zero length text anchor
             if (selection.IsEmpty)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EmptySelectionNotSupported));
+                throw new InvalidOperationException(SR.EmptySelectionNotSupported);
             }
 
             Nullable<Color> color = null;
@@ -941,7 +940,7 @@ namespace System.Windows.Annotations
             {
                 SolidColorBrush brush = highlightBrush as SolidColorBrush;
                 if (brush == null)
-                    throw new ArgumentException(SR.Get(SRID.InvalidHighlightColor), "highlightBrush");
+                    throw new ArgumentException(SR.InvalidHighlightColor, "highlightBrush");
 
                 // Opacity less than 0 is treated as 0; greater than 1 is treated a 1.
                 byte alpha;
@@ -1093,14 +1092,11 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentException">service is not enabled</exception>
         private static void CheckInputs(AnnotationService service)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(service);
 
             if (!service.IsEnabled)
             {
-                throw new ArgumentException(SR.Get(SRID.AnnotationServiceNotEnabled), "service");
+                throw new ArgumentException(SR.AnnotationServiceNotEnabled, "service");
             }
 
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;
@@ -1114,7 +1110,7 @@ namespace System.Windows.Annotations
             {
                 if (viewer.Document == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.OnlyFlowFixedSupported));
+                    throw new InvalidOperationException(SR.OnlyFlowFixedSupported);
                 }
             }
         }

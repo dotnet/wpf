@@ -3,12 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Security.Permissions;
 using System.Security; 
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -32,10 +30,6 @@ namespace System.Windows.Input
         // Only we can make these.  Note that we cache and resuse instances.
         internal ProcessInputEventArgs() {}
         
-        ///<SecurityNote> 
-        /// Critical - calls a critical method base.Reset
-        ///</SecurityNote>        
-        [SecurityCritical]        
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _allowAccessToStagingArea = true;
@@ -55,21 +49,12 @@ namespace System.Windows.Input
         /// <returns>
         ///     The staging area input item that wraps the specified input.
         /// </returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        ///</remarks> 
-        ///<SecurityNote> 
-        /// Critical - calls a critical method ( PushInput) 
-        /// PublicOK - there is a link demand for public callers.
-        ///</SecurityNote>
-        [SecurityCritical ]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]        
         public StagingAreaInputItem PushInput(InputEventArgs input, 
                                               StagingAreaInputItem promote) // Note: this should be a bool, and always use the InputItem available on these args.
         {
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PushInput(input, promote);
@@ -84,21 +69,12 @@ namespace System.Windows.Input
         /// </param>
         /// <returns>
         ///     The specified staging area input item.
-        /// </returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        ///</remarks>        
-        ///<SecurityNote> 
-        /// Critical - calls a critical method ( PushInput) 
-        /// PublicOK - there is a link demand for public callers.
-        ///</SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand,Unrestricted=true)]        
+        /// </returns>      
         public StagingAreaInputItem PushInput(StagingAreaInputItem input)
         {
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PushInput(input);
@@ -110,22 +86,13 @@ namespace System.Windows.Input
         /// <returns>
         ///     The input event that was on the top of the staging area.
         ///     This can be null, if the staging area was empty.
-        /// </returns>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>        
-        /// <SecurityNote> 
-        ///     Critical - calls a critical function ( InputManager.PopInput)
-        ///     PublicOK - there is a demand.
-        /// </SecurityNote> 
-        [SecurityCritical]
+        /// </returns>    
         public StagingAreaInputItem PopInput()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
             
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PopInput();
@@ -138,21 +105,12 @@ namespace System.Windows.Input
         ///     The input event that is on the top of the staging area.
         ///     This can be null, if the staging area is empty.
         /// </returns>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - accesses UnsecureInputManager
-        ///     PublicOK - there is a demand.
-        ///</SecurityNote> 
-        [SecurityCritical]
         public StagingAreaInputItem PeekInput()
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             if(!_allowAccessToStagingArea)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NotAllowedToAccessStagingArea));
+                throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
             return this.UnsecureInputManager.PeekInput();

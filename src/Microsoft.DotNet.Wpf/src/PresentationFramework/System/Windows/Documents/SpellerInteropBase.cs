@@ -36,6 +36,11 @@ namespace System.Windows.Documents
         internal interface ISpellerSegment
         {
             /// <summary>
+            /// Source String for which <see cref="TextRange"/> provides a position
+            /// </summary>
+            string SourceString { get; }
+
+            /// <summary>
             /// Identifies sub-words, if any. 
             /// </summary>
             IReadOnlyList<ISpellerSegment> SubSegments { get; }
@@ -44,6 +49,11 @@ namespace System.Windows.Documents
             /// Obtains the position of this segment in it's source text string
             /// </summary>
             ITextRange TextRange { get; }
+
+            /// <summary>
+            /// Text represented by <see cref="TextRange"/>
+            /// </summary>
+            string Text { get; }
 
             /// <summary>
             /// Queries the spell-checker to obtain suggestions for this segment
@@ -99,7 +109,6 @@ namespace System.Windows.Documents
 
         #region Factory
 
-        [SecuritySafeCritical]
         public static SpellerInteropBase CreateInstance()
         {
             SpellerInteropBase spellerInterop = null;
@@ -143,20 +152,11 @@ namespace System.Windows.Documents
 
         #region Abstract Methods
 
-        /// <SecurityNote>
-        /// Critical - Implementors may call into COM interop. 
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void SetLocale(CultureInfo culture);
 
 
         // Helper for methods that need to iterate over segments within a text run.
         // Returns the total number of segments encountered.
-        /// <SecurityNote>
-        /// Critical - Implementeors may call into COM interop. 
-        /// All known callers are marked SecurityTreatAsSafe, so we need not mark this SecuritySafeCritical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract int EnumTextSegments(char[] text, int count,
             EnumSentencesCallback sentenceCallback, EnumTextSegmentsCallback segmentCallback, object data);
 
@@ -164,10 +164,6 @@ namespace System.Windows.Documents
         /// Unloads given custom dictionary
         /// </summary>
         /// <param name="lexicon"></param>
-        /// <SecurityNote>
-        /// Critical - Implementors may call into COM interop. 
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void UnloadDictionary(object dictionary); 
 
          /// <summary>
@@ -175,10 +171,6 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="lexiconFilePath"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// critical - returns reference to internal wrapper to COM interface.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract object LoadDictionary(string lexiconFilePath);
 
 
@@ -193,9 +185,6 @@ namespace System.Windows.Documents
         /// which we created and filled with data from pack Uri locations specified by user.
         /// These 'trusted' files are placed under <paramref name="trustedFolder"/>.
         ///
-        /// Explicitly specified file locations will be passed to COM APIs without asserting
-        /// Security permissions, so it would pass in FullTrust and fail in PartialTrust.
-        ///
         /// Files specified in <paramref name="trustedFolder"/> are wrapped in FileIOPermission.Assert(),
         /// providing read access to trusted files under <paramref name="trustedFolder"/>, i.e. additionally
         /// we're making sure that specified trusted locations are under the trusted Folder.
@@ -203,46 +192,28 @@ namespace System.Windows.Documents
         /// This is needed to differentiate a case when user passes in a local path location which just happens to be under
         /// trusted folder. We still want to fail in this case, since we want to trust only files that we've created.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical -
-        /// 1. Works with paths, loads files. See also remarks section for more detail.
-        /// 2. Asserts FileIOPermission to load file from specified locations.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract object LoadDictionary(Uri item, string trustedFolder);
 
         /// <summary>
         /// Releases all currently loaded lexicons.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Implementors may call into COM interop. 
-        /// </SecurityNote>
-        [SecurityCritical]
         internal abstract void ReleaseAllLexicons();
 
         /// <summary>
         /// Sets the speller mode to be wordbreaking only, wordbreaking + spellchecking or 
         /// wordbreaking+spellchecking+suggestion generation
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Implementors may call into COM interop. 
-        /// TreatAsSafe - Called by transparent caller Speller.GetSuggestionsForError
-        /// </SecurityNote>
         internal abstract SpellerMode Mode
         {
-            [SecuritySafeCritical] 
             set;
         }
 
         /// <summary>
         /// Tells the spellchecker whether to check for multi-word spelling errors
-        /// <SecurityNote>
-        /// Critical - Implementors may call into COM interop. 
-        /// </SecurityNote>
         /// </summary>
         internal abstract bool MultiWordMode
         {
-            [SecurityCritical] set;
+             set;
         }
 
         /// <summary>
@@ -250,7 +221,6 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="culture"></param>
         /// <param name="spellingReform"></param>
-        [SecurityCritical]
         internal abstract void SetReformMode(CultureInfo culture, SpellingReform spellingReform);
 
         /// <summary>

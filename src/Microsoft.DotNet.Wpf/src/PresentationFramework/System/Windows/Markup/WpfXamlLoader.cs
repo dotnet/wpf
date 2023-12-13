@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using MS.Internal.Xaml.Context;
+using MS.Internal.Xaml.Context;
 using MS.Utility;
 using System.Collections;
 using System.Windows.Baml2006;
@@ -116,6 +116,23 @@ namespace System.Windows.Markup
                 }
 
                 stack.CurrentFrame.Instance = args.Instance;
+                
+                if (xamlReader is RestrictiveXamlXmlReader && args != null)
+                {
+                    if (args.Instance is System.Windows.ResourceDictionary rd)
+                    {
+                        rd.IsUnsafe = true;
+                    }
+                    else if (args.Instance is System.Windows.Controls.Frame frame)
+                    {
+                        frame.NavigationService.IsUnsafe = true;
+                    }
+                    else if (args.Instance is System.Windows.Navigation.NavigationWindow nw)
+                    {
+                        nw.NavigationService.IsUnsafe = true;
+                    }
+                }
+
             };
             if (writerFactory != null)
             {
@@ -349,7 +366,7 @@ namespace System.Windows.Markup
                     {
                         if (!(xamlReader is Baml2006Reader))
                         {
-                            throw new XamlParseException(SR.Get(SRID.SharedAttributeInLooseXaml));
+                            throw new XamlParseException(SR.SharedAttributeInLooseXaml);
                         }
                     }
                 }

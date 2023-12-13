@@ -10,7 +10,6 @@
 using System;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
@@ -63,11 +62,6 @@ namespace MS.Internal.Documents.Application
         /// </summary>
         /// <param name="navigationService">NavigationService currently running</param>
         /// <param name="mode">Navigation direction</param>
-        /// <SecurityNote>
-        /// Critical: set_StoredDocumentApplicationState is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to set_StoredDocumentApplicationState does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void Replay(NavigationService navigationService, NavigationMode mode)
         {
             ContentControl navigator = (ContentControl)navigationService.INavigatorHost;

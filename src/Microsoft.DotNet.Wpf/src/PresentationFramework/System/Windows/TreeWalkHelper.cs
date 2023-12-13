@@ -181,13 +181,6 @@ namespace System.Windows
         ///     OnAncestorChanged variant when we know what type (FE/FCE) the
         ///     tree node is.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into PresentationSource.OnAncestorChanged which is link demand protected
-        ///     it does so only for content elements and not for FEs. But if called externally and configured
-        ///     inappropriately it can be used to change the tree
-        ///     TreatAsSafe: This does not let you get at the presentationsource which is what we do not want to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnAncestorChanged(
             FrameworkElement        fe,
             FrameworkContentElement fce,
@@ -1007,7 +1000,7 @@ namespace System.Windows
                 // only then do we need to Invalidate the property
                 if (BaseValueSourceInternal.Inherited >= oldEntry.BaseValueSourceInternal)
                 {
-                    if (visitedViaVisualTree && FrameworkElement.DType.IsInstanceOfType(d))
+                    if (visitedViaVisualTree && d is FrameworkElement)
                     {
                         DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
                         if (logicalParent != null)

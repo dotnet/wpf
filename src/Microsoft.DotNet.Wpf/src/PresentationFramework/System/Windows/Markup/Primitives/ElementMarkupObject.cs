@@ -360,18 +360,8 @@ namespace System.Windows.Markup.Primitives
             }
         }
         
-        /// <SecurityNote>
-        ///  Critical : References InstanceDescriptor and ConstructorInfo types which are not accessible in partial trust (protected by by class level full trust link demand)
-        ///  Safe     : Access to ConstructorInfo is protected by a full demand for Unmanaged code which we consider to be an equivalent privilage level.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private bool TryGetConstructorInfoArguments(object instance, out ParameterInfo[] parameters, out ICollection arguments)
         {        
-            // InstanceDescriptor and ConstructorInfo are protected from use in partial trust by a link demand
-            // Accessing it from a non private method defeats this protection so we trigger a full demand
-            // for Unmanaged Code which we consider an equivalent privilage level to full trust
-            MS.Internal.SecurityHelper.DemandUnmanagedCode();                                
-            
             // Detect if the instance should be constructed using constructor parameters by
             // seeing if it can be converted to an instance descriptor that uses a constructor.
             TypeConverter converter = TypeDescriptor.GetConverter(instance);
@@ -416,7 +406,7 @@ namespace System.Windows.Markup.Primitives
             return false;
         }
 
-        private static object _shouldSerializeCacheLock = new object();
+        private static readonly object _shouldSerializeCacheLock = new object();
         private static Hashtable _shouldSerializeCache = new Hashtable();
         private static Type[] _shouldSerializeArgsObject = new Type[] { typeof(DependencyObject) };
         private static Type[] _shouldSerializeArgsManager = new Type[] { typeof(XamlDesignerSerializationManager) };
@@ -1072,7 +1062,7 @@ namespace System.Windows.Markup.Primitives
 
         public override IEnumerable<Type> TypeReferences
         {
-            get { return new Type[0]; }
+            get { return Array.Empty<Type>(); }
         }
 
         private object _value;

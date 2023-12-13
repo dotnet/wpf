@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="NoPublishLicenseStream">
         <source>File does not contain a stream to hold the publish license.</source>
-        <target state="translated">ファイルには、発行ライセンスを保持するストリームが含まれていません。</target>
+        <target state="translated">ファイルには、公開ライセンスを保持するストリームが含まれていません。</target>
         <note />
       </trans-unit>
       <trans-unit id="NoStructuredContentInsideProperties">
@@ -1292,11 +1292,6 @@
         <target state="translated">指定された参照オブジェクトは、定義済みの Package 固有の参照と競合しています。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">パラメーターは 0 以上でなければなりません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">パラメーター値は、'{0}' と '{1}' の間である必要があります。</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">公開ライセンス ストリームの可変長ヘッダーが {0} バイトです。これは、最大長の {1} バイトを超えています。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">'{0}' 型名には、必要な形式 'className, assembly' がありません。</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">

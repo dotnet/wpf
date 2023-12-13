@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 
 namespace System.Windows.Interop
@@ -29,11 +28,6 @@ namespace System.Windows.Interop
         ///     demand since those don't work declaratively on interface methods.  The implementors
         ///     of this interface method all do a full demand since that's really the protection we want.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This method can be used to intercept and potentially tamper with raw input.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         IKeyboardInputSite RegisterKeyboardInputSink(IKeyboardInputSink sink);
 
         /// <summary>
@@ -48,11 +42,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateAccelerator(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -71,15 +60,10 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     The setter for this property requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
         IKeyboardInputSite KeyboardInputSite 
         {
             get;
             
-            [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
             set;
         }
 
@@ -94,11 +78,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool OnMnemonic(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -112,11 +91,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This API requires unrestricted UI Window permission.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         bool TranslateChar(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>

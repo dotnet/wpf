@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="zh-HANT" original="../Strings.resx">
+  <file datatype="xml" source-language="en" target-language="zh-Hant" original="../Strings.resx">
     <body>
       <trans-unit id="AnalysisResult">
         <source>Analysis Result : '{0}'.</source>
@@ -97,11 +97,6 @@
         <target state="translated">MC6021: 無法在此標記上指定 {0}:FieldModifier，因為它並未設定 {0}:Name 或 Name 屬性，或是標記已在本機定義且已設定 Name 屬性，上述兩種情況都是不允許的。</target>
         <note />
       </trans-unit>
-      <trans-unit id="FileClassifierTask">
-        <source>FileClassifier</source>
-        <target state="translated">FileClassifier</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FileNotFound">
         <source>BG1002: File '{0}' cannot be found.</source>
         <target state="translated">BG1002: 找不到檔案 '{0}'。</target>
@@ -142,11 +137,6 @@
         <target state="translated">已產生程式碼檔案: '{0}'。</target>
         <note />
       </trans-unit>
-      <trans-unit id="GetWinFXPathTask">
-        <source>GetWinFXPath</source>
-        <target state="translated">GetWinFXPath</target>
-        <note />
-      </trans-unit>
       <trans-unit id="IllegalCDataTextScoping">
         <source>MC6003: '{0}:{1}' contains '{2}'. '{0}:{1}' cannot contain nested content.</source>
         <target state="translated">MC6003: '{0}:{1}' 包含 '{2}'。'{0}:{1}' 不能包含巢狀內容。</target>
@@ -160,6 +150,11 @@
       <trans-unit id="InternalTypeHelperNotRequired">
         <source>InternalTypeHelper class is not required for this project, make file '{0}' empty.</source>
         <target state="translated">對於此專案，InternalTypeHelper 類別不是必要項目，將檔案 '{0}' 清空。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidAssemblyVersion">
+        <source>MC1005: Invalid AssemblyVersion detected: {0}.</source>
+        <target state="translated">MC1005: 偵測到無效的 AssemblyVersion: {0}。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidBaseClassName">
@@ -252,24 +247,9 @@
         <target state="translated">輸入: 本機參考標記 Page 檔案: '{0}'。</target>
         <note />
       </trans-unit>
-      <trans-unit id="MarkupCompilePass1Task">
-        <source>MarkupCompilePass1</source>
-        <target state="translated">MarkupCompilePass1</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MarkupCompilePass2Task">
-        <source>MarkupCompilePass2</source>
-        <target state="translated">MarkupCompilePass2</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MatchingTypeArgsNotFoundInRefType">
         <source>MC6012: '{0}' event has a generic event handler delegate type '{1}'. The type parameter '{2}' on '{1}' does not match any type parameters on the containing generic tag '{3}'.</source>
         <target state="translated">MC6012: '{0}' 事件具有泛用事件處理常式委派型別 '{1}'。'{1}' 上的型別參數 '{2}' 不符合容器泛用標記 '{3}' 上的任何型別參數。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MergeLocalizationDirectivesTask">
-        <source>MergeLocalizationDirectives</source>
-        <target state="translated">MergeLocalizationDirectives</target>
         <note />
       </trans-unit>
       <trans-unit id="MissingClassDefinitionForCodeTag">
@@ -324,7 +304,7 @@
       </trans-unit>
       <trans-unit id="NamedResDictItemWarning">
         <source>A '{0}' is named '{1}'. Do not name ResourceDictionary contents because their instantiation is deferred.</source>
-        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為執行個體化已延後。</target>
+        <target state="translated">'{0}' 已命名為 '{1}'。請勿將 ResourceDictionary 內容命名，因為具現化已延後。</target>
         <note />
       </trans-unit>
       <trans-unit id="NonClsError">
@@ -789,7 +769,7 @@
       </trans-unit>
       <trans-unit id="ParserUnknownTag">
         <source>MC3074: The tag '{0}' does not exist in XML namespace '{1}'.</source>
-        <target state="translated">MC3074: 標記 '{0}' 不存在於 XML 命名空間  '{1}' 中。</target>
+        <target state="translated">MC3074: 標記 '{0}' 不存在於 XML 命名空間 '{1}' 中。</target>
         <note />
       </trans-unit>
       <trans-unit id="ParserUnknownXmlType">
@@ -832,11 +812,6 @@
         <target state="translated">正在準備標記編譯...</target>
         <note />
       </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</source>
-        <target state="translated">MC4301: 型別名稱 '{0}' 不是預期的格式 'className, assembly'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ReadResourceFile">
         <source>Reading Resource file: '{0}'...</source>
         <target state="translated">正在讀取 Resource 檔案: '{0}'...</target>
@@ -870,11 +845,6 @@
       <trans-unit id="ResourcesGenerating">
         <source>Generating .resources file: '{0}'...</source>
         <target state="translated">正在產生 .resources 檔案: '{0}'...</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ResourcesGeneratorTask">
-        <source>ResourcesGenerator</source>
-        <target state="translated">ResourcesGenerator</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventNotRegistered">
@@ -1032,11 +1002,6 @@
         <target state="translated">MC7001: 字串過早結束。</target>
         <note />
       </trans-unit>
-      <trans-unit id="UidManagerTask">
-        <source>UidManager</source>
-        <target state="translated">UidManager</target>
-        <note />
-      </trans-unit>
       <trans-unit id="UidMissing">
         <source>UM1003: Uid is missing for element '{0}'.</source>
         <target state="translated">UM1003: 項目 '{0}' 遺失 Uid。</target>
@@ -1085,11 +1050,6 @@
       <trans-unit id="UnmatchedLocComment">
         <source>LC1003: Localization comment has no value set for target property: '{0}'.</source>
         <target state="translated">LC1003: 未設定目標屬性的當地語系化註解: '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UpdateManifestForBrowserApplicationTask">
-        <source>UpdateManifestForBrowserApplication</source>
-        <target state="translated">UpdateManifestForBrowserApplication</target>
         <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">

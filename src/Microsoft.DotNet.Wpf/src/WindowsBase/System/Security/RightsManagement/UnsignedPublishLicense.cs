@@ -33,18 +33,6 @@ namespace System.Security.RightsManagement
     /// UnsignedPublishLicense class is used to represent publish license information before it was signed. 
     /// It can be used to build and sign Publish License, and it also can be used to build and serialize Publish License Template.   
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attribute is automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class UnsignedPublishLicense
     {
         /// <summary>
@@ -52,7 +40,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             _grantCollection = new Collection<ContentGrant>();
             _contentId = Guid.NewGuid();
@@ -64,14 +51,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense(string publishLicenseTemplate) :this ()
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
-            if (publishLicenseTemplate == null)
-            {   
-                throw new ArgumentNullException("publishLicenseTemplate");
-            }
-            
-            using(IssuanceLicense issuanceLicense = new IssuanceLicense(
+            ArgumentNullException.ThrowIfNull(publishLicenseTemplate);
+
+            using (IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue,  // validFrom, - default 
                                         DateTime.MaxValue,  // validUntil, - default 
                                         null,  // referralInfoName,
@@ -97,12 +80,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         public PublishLicense Sign(SecureEnvironment secureEnvironment, out UseLicense authorUseLicense)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
-            if (secureEnvironment == null)
-            {
-                throw new ArgumentNullException("secureEnvironment");
-            }
+            ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // in case owner wasn't specified we can just assume default owner 
             // based on the user identity that was used to build the secure environment
@@ -149,13 +128,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _owner; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 _owner = value; 
             }
@@ -169,13 +146,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoName; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
                 
                 _referralInfoName = value; 
             }
@@ -189,13 +164,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _referralInfoUri; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 _referralInfoUri = value; 
             }
@@ -209,13 +182,11 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _contentId; 
             }
             set 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 // Guid is a value type, so it can never be null; therefore, there is no nreed to check this
                 _contentId = value;
@@ -229,7 +200,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
             
                 return _grantCollection; 
             }
@@ -243,7 +213,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_localizedNameDescriptionDictionary == null)
                 {
@@ -260,7 +229,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         override public string ToString()
         {
-            SecurityHelper.DemandRightsManagementPermission();
         
             using(IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue, 
@@ -336,7 +304,6 @@ namespace System.Security.RightsManagement
         {
             get 
             { 
-                SecurityHelper.DemandRightsManagementPermission();
 
                 if (_applicationSpecificDataDictionary == null)
                 {

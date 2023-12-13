@@ -20,10 +20,8 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -40,26 +38,15 @@ namespace System.Windows.Media.Imaging
         internal ushort cfType;
         internal IntPtr dwHint;
 
-        [SecurityCritical]
         internal IntPtr pstrName; //this is string array
 
         internal Guid clsid;
 
-        /// <SecurityNote>
-        /// Critical -Initializes a pointer to unmanaged memory to hold onto a string
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Init(String name)
         {
             pstrName = Marshal.StringToCoTaskMemUni(name);
         }
 
-        /// <SecurityNote>
-        /// Critical -Releases an unmanaged pointer into unmanaged memory.
-        /// TreatAsSafe - there are no inputs
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Clear()
         {
             Marshal.FreeCoTaskMem(pstrName);
@@ -100,16 +87,12 @@ namespace System.Windows.Media.Imaging
         /// Creates a BitmapEncoder from a container format Guid
         /// </summary>
         /// <param name="containerFormat">Container format for the codec</param>
-        /// <SecurityNote>
-        /// Critical - guid used for creation of critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         public static BitmapEncoder Create(Guid containerFormat)
         {
             if (containerFormat == Guid.Empty)
             {
                 throw new ArgumentException(
-                    SR.Get(SRID.Image_GuidEmpty, "containerFormat"),
+                    SR.Format(SR.Image_GuidEmpty, "containerFormat"),
                     "containerFormat"
                     );
             }
@@ -163,14 +146,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsColorContext)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoColorContext));
+                    throw new InvalidOperationException(SR.Image_EncoderNoColorContext);
                 }
 
                 _readOnlycolorContexts = value;
@@ -193,14 +173,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsGlobalThumbnail)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoGlobalThumbnail));
+                    throw new InvalidOperationException(SR.Image_EncoderNoGlobalThumbnail);
                 }
 
                 _thumbnail = value;
@@ -225,19 +202,16 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (value.GuidFormat != ContainerFormat)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_MetadataNotCompatible));
+                    throw new InvalidOperationException(SR.Image_MetadataNotCompatible);
                 }
 
                 if (!_supportsGlobalMetadata)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoGlobalMetadata));
+                    throw new InvalidOperationException(SR.Image_EncoderNoGlobalMetadata);
                 }
 
                 _metadata = value;
@@ -260,14 +234,11 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_supportsPreview)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_EncoderNoPreview));
+                    throw new InvalidOperationException(SR.Image_EncoderNoPreview);
                 }
 
                 _preview = value;
@@ -277,13 +248,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// The info that identifies this codec.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Access unmanaged code, codecs
-        /// PublicOK - Getting codecinfo data is OK
-        /// </SecurityNote>
         public virtual BitmapCodecInfo CodecInfo
         {
-            [SecurityCritical ]
             get
             {
                 VerifyAccess();
@@ -323,10 +289,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _palette = value;
             }
@@ -353,10 +316,7 @@ namespace System.Windows.Media.Imaging
                 VerifyAccess();
                 EnsureBuiltIn();
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _frames = value;
             }
@@ -370,12 +330,6 @@ namespace System.Windows.Media.Imaging
         /// Save (encode) the bitmap to the specified stream.
         /// </summary>
         /// <param name="stream">Stream to save into</param>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityPermission(SecurityAction.InheritanceDemand, Flags=SecurityPermissionFlag.UnmanagedCode)]
-        [SecurityCritical]
         public virtual void Save(System.IO.Stream stream)
         {
             VerifyAccess();
@@ -389,18 +343,18 @@ namespace System.Windows.Media.Imaging
 
             if (_hasSaved)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOneSave));
+                throw new InvalidOperationException(SR.Image_OnlyOneSave);
             }
 
             if (_frames == null)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_NoFrames, null));
+                throw new System.NotSupportedException(SR.Format(SR.Image_NoFrames, null));
             }
 
             int count = _frames.Count;
             if (count <= 0)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_NoFrames, null));
+                throw new System.NotSupportedException(SR.Format(SR.Image_NoFrames, null));
             }
 
             IntPtr comStream = IntPtr.Zero;
@@ -572,11 +526,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Checks to see if encoder has built-in metadata.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Accesses unmanaged code
-        /// TreatAsSafe - inputs are verified or safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureMetadata(bool createBitmapMetadata)
         {
             if (!_supportsGlobalMetadata)
@@ -614,10 +563,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Creates the unmanaged encoder object
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, codecs, creates codec based on GUID
-        /// </SecurityNote>
-        [SecurityCritical]
         private void EnsureUnmanagedEncoder()
         {
             if (_encoderHandle == null)
@@ -644,10 +589,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Save the frame
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         private void SaveFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions, BitmapFrame frame)
         {
             SetupFrame(frameEncodeHandle, encoderOptions);

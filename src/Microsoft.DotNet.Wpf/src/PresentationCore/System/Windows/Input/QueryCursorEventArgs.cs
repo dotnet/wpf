@@ -18,7 +18,7 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         public QueryCursorEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp)
         {
@@ -31,7 +31,7 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="stylusDevice">
         ///     The stylus pointer that was involved with this event.

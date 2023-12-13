@@ -45,17 +45,7 @@ namespace MS.Internal.Ink
         internal override bool CanPaste(IDataObject dataObject)
         {
             // Check if we have Xaml data
-            bool hasXamlData = false;
-            try
-            {
-                hasXamlData = dataObject.GetDataPresent(DataFormats.Xaml, false);
-            }
-            catch ( SecurityException )
-            {
-                // If we are under the partial trust, the Xaml format will fail when it needs to be registered.
-                // In this case, we should just disable the Paste Xaml format content.
-                hasXamlData = false;
-            }
+            bool hasXamlData = dataObject.GetDataPresent(DataFormats.Xaml, false);
             
             return hasXamlData;
         }
@@ -82,15 +72,6 @@ namespace MS.Internal.Ink
         /// 
         /// </summary>
         /// <param name="dataObject"></param>
-        ///<SecurityNote>
-        ///  Critical: Calls critical method 
-        ///     SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin
-        /// 
-        ///     We call this to ensure that the appdomain permission set is on the clipboard.
-        ///     The Clipboard methods use this information to ensure that apps can not paste data
-        ///     that was copied in low trust to application to a high trust application
-        ///</SecurityNote>
-        [SecurityCritical]
         protected override void DoCopy(IDataObject dataObject)
         {
             // Serialize the selected elements and add it to the data object.
@@ -107,16 +88,7 @@ namespace MS.Internal.Ink
 
             // Set the data object as XML format.
             dataObject.SetData(DataFormats.Xaml, xmlData.ToString());
-
-            //
-            //  we need to copy the permission set on the clipboard for 
-            //  the Clipboard class methods.  See security note for details.
-            //
-            PermissionSet permSet = SecurityHelper.ExtractAppDomainPermissionSetMinusSiteOfOrigin();
-            string setString = permSet.ToString();
-            Debug.Assert(setString.Length > 0);
-            dataObject.SetData(DataFormats.ApplicationTrust, setString);
-}
+        }
 
         // Retrieves the Xaml from the IDataObject and instantiate the elements based on the Xaml
         protected override void DoPaste(IDataObject dataObject)
@@ -128,8 +100,7 @@ namespace MS.Internal.Ink
 
             if ( !String.IsNullOrEmpty(xml) )
             {
-                bool useRestrictiveXamlReader = !Clipboard.UseLegacyDangerousClipboardDeserializationMode();
-                UIElement element = XamlReader.Load(new System.Xml.XmlTextReader(new System.IO.StringReader(xml)), useRestrictiveXamlReader) as UIElement;
+                UIElement element = XamlReader.Load(new System.Xml.XmlTextReader(new System.IO.StringReader(xml)), useRestrictiveXamlReader: true) as UIElement;
                 if (element != null)
                 {
                     ElementList.Add(element);

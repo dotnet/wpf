@@ -22,11 +22,9 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -37,11 +35,6 @@ namespace System.Windows.Interop
     /// </summary>
     public class HwndSource : PresentationSource, IDisposable, IWin32Window, IKeyboardInputSink
     {
-        /// <SecurityNote>
-        ///     Critical: This code calls into RegisterWindowMesssage which is critical
-        ///     TreatAsSafe: This is safe to call as no external parameters are taken in
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static HwndSource()
         {
             _threadSlot = Thread.AllocateDataSlot();
@@ -74,13 +67,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Added a demand - so that this API does not work in InternetZone.
-        ///     Critical: This accesses critical code Initialize
-        ///     PublicOK: This code has a demand which will ensure that it does
-        ///     not work in partial trust without the correct permissions
-        /// </SecurityNote>
-        [SecurityCritical]
         public HwndSource(
             int classStyle,
             int style,
@@ -90,7 +76,6 @@ namespace System.Windows.Interop
             string name,
             IntPtr parent)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters param = new HwndSourceParameters(name);
             param.WindowClassStyle = classStyle;
@@ -139,13 +124,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Added a demand - so that this API does not work in InternetZone.
-        ///     Critical: This acceses critical code Initialize
-        ///     PublicOK: This code has a demand which will ensure that it does
-        ///     not work in partial trust without the correct permissions
-        /// </SecurityNote>
-        [SecurityCritical]
         public HwndSource(int classStyle,
                           int style,
                           int exStyle,
@@ -157,7 +135,6 @@ namespace System.Windows.Interop
                           IntPtr parent,
                           bool adjustSizingForNonClientArea)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
             parameters.WindowClassStyle = classStyle;
@@ -203,13 +180,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Added a demand - so that this API does not work in InternetZone.
-        ///     Critical: This accesses critical code Initialize
-        ///     PublicOK: This code has a demand which will ensure that it does
-        ///     not work in partial trust without the correct permissions
-        /// </SecurityNote>
-        [SecurityCritical]
         public HwndSource(
             int classStyle,
             int style,
@@ -221,7 +191,6 @@ namespace System.Windows.Interop
             string name,
             IntPtr parent)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
             parameters.WindowClassStyle = classStyle;
@@ -239,11 +208,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This acceses critical code Initialize
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Window = UIPermissionWindow.AllWindows)]
         public HwndSource(HwndSourceParameters parameters)
         {
             Initialize(parameters);
@@ -253,12 +217,6 @@ namespace System.Windows.Interop
         ///    HwndSource Ctor
         /// </summary>
         /// <param name="parameters"> parameter block </param>
-        /// <SecurityNote>
-        ///     Critical: This code access critical (HwndMouseInputProvider, HwndKeyboardInputProvider
-        ///     ,HwndStylusInputProvider and the various hooks)objects and creates the
-        ///     providers under elevation.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Initialize(HwndSourceParameters parameters)
         {
             _mouse = new SecurityCriticalDataClass<HwndMouseInputProvider>(new HwndMouseInputProvider(this));
@@ -286,7 +244,7 @@ namespace System.Windows.Interop
                 Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
                 for (int i = handlers.Length -1; i >= 0; --i)
                 {
-                    _hooks += (HwndSourceHook)handlers[i];
+                    EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
                 }
                 wrapperHooks[3] = _publicHook;
             }
@@ -377,13 +335,7 @@ namespace System.Windows.Interop
             AddSource();
 
             // Register dropable window.
-            // The checking CallerHasPermissionWithAppDomainOptimization will call RegisterDropTarget
-            // safely without the security exception in case of no unmanaged code permission.
-            // So RegisterDropTarget will be called safely in case of having the unmanged code permission.
-            // Otherwise, the security exception cause System.Printing to be instatiated which will
-            // load system.drawing module.
-            if (_hwndWrapper.Handle != IntPtr.Zero &&
-                SecurityHelper.CallerHasPermissionWithAppDomainOptimization(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)))
+            if (_hwndWrapper.Handle != IntPtr.Zero)
             {
                 // This call is safe since DragDrop.RegisterDropTarget is checking the unmanged
                 // code permission.
@@ -413,14 +365,8 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        ///<SecurityNote>
-        /// Critical - uses a critical field.
-        /// PublicOK - as there's a demand.
-        ///</SecurityNote>
-        [SecurityCritical ]
         public void AddHook(HwndSourceHook hook)
         {
-            SecurityHelper.DemandUIWindowPermission();
             Verify.IsNotNull(hook, "hook");
 
             CheckDisposed(true);
@@ -429,7 +375,7 @@ namespace System.Windows.Interop
             {
                 _hwndWrapper.AddHook(_publicHook);
             }
-            _hooks += hook;
+            EventHelper.AddHandler(ref _hooks, hook);
         }
 
         /// <summary>
@@ -441,18 +387,12 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        ///<SecurityNote>
-        /// Critical - accesses a crtical field - _publicHook
-        /// PublicOK - performs a demand.
-        ///</SecurityNote>
-        [SecurityCritical ]
         public void RemoveHook(HwndSourceHook hook)
         {
-            SecurityHelper.DemandUIWindowPermission();
 
             //this.VerifyAccess();
 
-            _hooks -= hook;
+            EventHelper.RemoveHandler(ref _hooks, hook);
             if(_hooks == null)
             {
                 _hwndWrapper.RemoveHook(_publicHook);
@@ -467,10 +407,6 @@ namespace System.Windows.Interop
         ///<remarks>
         /// This API is not available in Internet Zone.
         ///</remarks>
-        /// <SecurityNote>
-        ///     Critical: This code accesses and returns critical data *providers*
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override IInputProvider GetInputProvider(Type inputDevice)
         {
             if (inputDevice == typeof(MouseDevice))
@@ -505,11 +441,6 @@ namespace System.Windows.Interop
         ///     Announces when the DPI is going to change for the window. If the user handles this event,
         ///     WPF does not scale any visual.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data *hwndTarget*
-        ///     Safe: Does not expose Critical data to caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected virtual void OnDpiChanged(HwndDpiChangedEventArgs e)
         {
             DpiChanged?.Invoke(this, e);
@@ -555,11 +486,6 @@ namespace System.Windows.Interop
         /// and then use that rect as a proxy for the "suggested rectangle" when notifying listeners
         /// of DPI change via the <see cref="DpiChanged"/> event.
         /// </remarks>
-        /// <securitynote>
-        /// Critical: Accesses <see cref="_hwndTarget"/>
-        /// Safe: Does not expose Critical data to callers
-        /// </securitynote>
-        [SecuritySafeCritical]
         private void OnDpiChangedAfterParent(HwndDpiChangedAfterParentEventArgs e)
         {
             if (_hwndTarget != null)
@@ -625,23 +551,14 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code sets a rootvisual which is risky to do because
-        ///     it can destabilize assumptions made in popup code
-        ///     PublicOK: The getter is safe and the setter has a link demand to block unwarrented
-        ///     public use
-        /// </SecurityNote>
         public override Visual RootVisual
         {
-            [SecurityCritical]
             get
             {
                 if (_isDisposed)
                     return null;
                 return (_rootVisual.Value);
             }
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
             set
             {
                 CheckDisposed(true);
@@ -650,13 +567,8 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Acceses KeyboardInputProvider which is considered as critical data
-        /// also it can be used to set root visual which is deemed as an unsafe operation
-        /// </SecurityNote>
         private Visual RootVisualInternal
         {
-            [SecurityCritical]
             set
             {
                 if (_rootVisual.Value != value)
@@ -760,29 +672,16 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        /// <SecurityNote>
-        ///     Critical: This information is not ok to expose since this HwndSource
-        ///     is deemed critical to expose
-        ///     PublicOK: There is a demand on this method that prevents this
-        ///     from working in partial trust unless you have the right permissions.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static HwndSource FromHwnd(IntPtr hwnd)
         {
-            SecurityHelper.DemandUIWindowPermission();
             return CriticalFromHwnd(hwnd);
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code extracts the HwndSource for an HWND
-        ///    This function is only for internal consumption
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static HwndSource CriticalFromHwnd(IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero)
             {
-                throw new ArgumentException(SR.Get(SRID.NullHwnd));
+                throw new ArgumentException(SR.NullHwnd);
             }
             HwndSource hwndSource = null;
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
@@ -804,14 +703,8 @@ namespace System.Windows.Interop
         ///     The visual manager for the visuals being presented in the source.
         ///     Type-specific version of the CompositionTarget property for this source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Accesses hwndTarget and returns it
-        ///     PublicOk: Protected by a LinkDemand
-        /// </SecurityNote>
         public new HwndTarget CompositionTarget
         {
-            [SecurityCritical]
-            [UIPermissionAttribute(SecurityAction.LinkDemand,Window=UIPermissionWindow.AllWindows)]
             get
             {
                 if (_isDisposed)
@@ -831,10 +724,6 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Returns visual target for this source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: calls get_CompositionTarget() and returns its value.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override CompositionTarget GetCompositionTargetCore()
         {
             return CompositionTarget;
@@ -850,12 +739,6 @@ namespace System.Windows.Interop
         ///     independent of the handler for the same event used for
         ///     keyboard processing by top-level windows.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Accesses the ComponentDispatcher, which is generally
-        ///               considered critical.
-        ///     TreatAsSafe: MenuMode is approved for public access.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void OnEnterMenuMode()
         {
             // We opt-in this HwndSource to the new behavior for "exclusive"
@@ -883,12 +766,6 @@ namespace System.Windows.Interop
         ///     independent of the handler for the same event used for
         ///     keyboard processing by top-level windows.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Accesses the ComponentDispatcher, which is generally
-        ///               considered critical.
-        ///     TreatAsSafe: MenuMode is approved for public access.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void OnLeaveMenuMode()
         {
             if(IsInExclusiveMenuMode)
@@ -916,10 +793,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Handler for LayoutUpdated event of a rootVisual.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code causes resize of window and accesses HwndTarget
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnLayoutUpdated(object obj, EventArgs args)
         {
             UIElement root = _rootVisual.Value as UIElement;
@@ -954,11 +827,6 @@ namespace System.Windows.Interop
         /// This is called when LayoutManager was updated and its size (the layout size of top element) changed.
         /// Ask LayoutManager.Size to see what the new value is.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code causes resize of window and accesses HwndTarget
-        ///     TreatAsSafe: In RBW the resize values are clamped also one cannot construct or get to a HwndSource in partial trust
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Resize(Size newSize)
         {
             try
@@ -992,11 +860,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// This shows the system menu for the top level window that this HwndSource is in.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Accesses GetAncestor & PostMessage.  This method is deemed inherently unsafe
-        ///               because opening the system menu will eat user input.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void ShowSystemMenu()
         {
             // Find the topmost window.  This will handle the case where the HwndSource
@@ -1007,32 +870,17 @@ namespace System.Windows.Interop
             UnsafeNativeMethods.PostMessage(new HandleRef(this, hwndRoot), MS.Internal.Interop.WindowMessage.WM_SYSCOMMAND, new IntPtr(NativeMethods.SC_KEYMENU), new IntPtr(NativeMethods.VK_SPACE));
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical member _hwndTarget.
-        ///     TreatAsSafe: It calculates the new point without changing the HWND.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Point TransformToDevice(Point pt)
         {
             // Any instances where this is done in Core and Framework should be updated to use this method
             return _hwndTarget.TransformToDevice.Transform(pt);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical member _hwndTarget.
-        ///     TreatAsSafe: It calculates the new point without changing the HWND.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal Point TransformFromDevice(Point pt)
         {
             return _hwndTarget.TransformFromDevice.Transform(pt);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses _hwndWrapper.
-        ///     TreatAsSafe: It calculates the hwnd size without changing it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private NativeMethods.RECT AdjustWindowSize(Size newSize)
         {
             // Gather the new client dimensions
@@ -1080,28 +928,17 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         ///</remarks>
-        /// <SecurityNote>
-        ///     Critical:This is not safe to expose in internet zone, it returns a window handle
-        ///     PublicOK: There exists a demand on this code
-        /// </SecurityNote>
         public IntPtr Handle
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUIWindowPermission();
                 return CriticalHandle;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:Internal helper to retrieve handle for security purposes only Please
-        ///     DO NOT USE THIS TO  EXPOSE HANDLE TO OUTSIDE WORLD
-        /// </SecurityNote>
         internal IntPtr CriticalHandle
         {
             [FriendAccessAllowed]
-            [SecurityCritical]
             get
             {
                 if (null != _hwndWrapper)
@@ -1110,23 +947,14 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: returns the critical _hwndWrapper.
-        /// </SecurityNote>
         internal HwndWrapper HwndWrapper
         {
-            [SecurityCritical]
             get { return _hwndWrapper; }
         }
 
         // Return whether this presentation source has capture.
-        /// <SecurityNote>
-        ///     Critical: calls CriticalHandle
-        ///     TreatAsSafe: Returning whether a presentation source has capture is considered safe.
-        /// </SecurityNote>
         internal bool HasCapture
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 IntPtr capture = SafeNativeMethods.GetCapture();
@@ -1135,13 +963,8 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        ///     Critical - accesses _hwndWrapper.
-        ///     TreatAsSafe - checking for null is considered safe.
-        ///</SecurityNote>
         internal bool IsHandleNull
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {
                 return _hwndWrapper.Handle == IntPtr.Zero ;
@@ -1199,11 +1022,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to access hwndtarget
-        ///     TreatAsSafe: ok to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool IsLayoutActive()
         {
             if ((_rootVisual.Value is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
@@ -1218,12 +1036,6 @@ namespace System.Windows.Interop
         /// This is the helper method that sets Layout's size basing it on
         /// the current value of SizeToContent.
         /// </summary>
-        ///<SecurityNote>
-        ///  TreatAsSafe: This API could be public in terms of security.
-        ///  It does three calls to UnsafeNativeMethods all in a safe way
-        ///  Critical: Makes 3 calls to UnsafeNativeMethods
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void SetLayoutSize()
         {
             Debug.Assert(_hwndTarget!= null, "HwndTarget is null");
@@ -1327,13 +1139,8 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     By enabling per-pixel opacity, the system will no longer draw the non-client area.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Because it accesses _hwndTarget
-        ///     PublicOK: We don't pass it out; it is just used to query UsesPerPixelOpacity
-        /// </SecurityNote>
         public bool UsesPerPixelOpacity
         {
-            [SecurityCritical]
             get
             {
                 CheckDisposed(true);
@@ -1350,11 +1157,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Accesses _hwndWrapper.Handle to call unmanaged code to get the client rectangle.
-        ///     TreatAsSafe: The handle is not passed out, and the client rectangle does not need to be protected.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Size GetSizeFromHwnd()
         {
             // Compute View's size and set
@@ -1373,10 +1175,6 @@ namespace System.Windows.Interop
             return new Size(convertedPt.X, convertedPt.Y);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr HwndTargetFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -1397,10 +1195,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        /// Critical:These hooks can all be used for input spoofing
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr LayoutFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -1553,10 +1347,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        /// Critical: Because it uses _hwndTarget
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Process_WM_WINDOWPOSCHANGING(UIElement rootUIElement, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             // Only if SizeToContent overrides Win32 sizing change calls.
@@ -1577,7 +1367,7 @@ namespace System.Windows.Interop
 
                 // Get WINDOWPOS structure data from lParam; it contains information about the window's
                 // new size and position.
-                NativeMethods.WINDOWPOS windowPos = (NativeMethods.WINDOWPOS)UnsafeNativeMethods.PtrToStructure(lParam, typeof(NativeMethods.WINDOWPOS));
+                NativeMethods.WINDOWPOS windowPos = Marshal.PtrToStructure<NativeMethods.WINDOWPOS>(lParam);
 
                 bool sizeChanged = false;
 
@@ -1631,11 +1421,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Has access to the window handle and uses the parameters provided to modify the layout
-        ///         of elements within the window.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void Process_WM_SIZE(UIElement rootUIElement, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             int x = NativeMethods.SignedLOWORD(lParam);
@@ -1724,10 +1509,6 @@ namespace System.Windows.Interop
 }
         }
 
-        /// <SecurityNote>
-        /// Critical: Because it uses _hwndTarget
-        /// </SecurityNote>
-        [SecurityCritical]
         private void DisableSizeToContent(UIElement rootUIElement, IntPtr hwnd)
         {
             if (_sizeToContent != SizeToContent.Manual)
@@ -1760,11 +1541,6 @@ namespace System.Windows.Interop
         // either the window rect of this window, or of our ancestor root
         // window, depending on the value of
         // HwndSourceParameters.TreatAncestorsAsNonClientArea setting.
-        /// <SecurityNote>
-        /// Critical - calls critical methods (HwndSourceHelper.GetHandle and GetAncestor)
-        /// TreatAsSafe - it's ok to return size of window. it doesn't return info gotten through critical calls.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void GetNonClientRect(ref NativeMethods.RECT rc)
         {
             Debug.Assert(_adjustSizingForNonClientArea == true);
@@ -1783,15 +1559,26 @@ namespace System.Windows.Interop
             SafeNativeMethods.GetWindowRect(new HandleRef(this, hwndRoot), ref rc);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This is a hook that gets called back with information about messages related to input
-        ///     Calling this from outside or causing this to be invoked could yield risky situations
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr InputFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
             WindowMessage message = (WindowMessage)msg;
+
+            if (message == WindowMessage.WM_DESTROY)
+            {
+                // shut down the stylus stack on WM_DESTROY.  This is normally done
+                // in PublicHooksFilterMessage (see remarks there), but that won't
+                // get called if no public hooks have ever been installed.  Do it
+                // here as a backup for that case.
+                // For maintenance, there are three workflows to consider:
+                // 1. The normal case - public hooks are present, none of them
+                //      handle WM_DESTROY.  DisposeStylusInputProvider gets
+                //      called twice, but the second call is a no-op.
+                // 2. No public hooks present.  Only this call happens.
+                // 3. Public hooks are present, one of them handles WM_DESTROY.
+                //      Only the call in PublicHooksFilterMessage happens.
+                DisposeStylusInputProvider();
+            }
 
             // NOTE (alexz): invoke _stylus.FilterMessage before _mouse.FilterMessage
             // to give _stylus a chance to eat mouse message generated by stylus
@@ -1852,10 +1639,6 @@ namespace System.Windows.Interop
         ///    Called from HwndWrapper on all window messages.
         ///    Assumes Context.Access() is held.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  Accesses security critical HwndStylusInputProvider.Dispose
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr PublicHooksFilterMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // The default result for messages we handle is 0.
@@ -1867,7 +1650,7 @@ namespace System.Windows.Interop
             // would never see the WM_DESTROY etc. message.
             if (_hooks != null)
             {
-                Delegate[] handlers = _hooks.GetInvocationList();
+                Delegate[] handlers = _hooks.Item2;
                 for (int i = handlers.Length -1; i >= 0; --i)
                 {
                     var hook = (HwndSourceHook)handlers[i];
@@ -1911,11 +1694,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Disposes the HwndStylusInputProvider to shutdown stylus/touch input.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  Accesses critical data _stylus
-        ///                Calls IStylusInputProvider.Dispose
-        /// </SecurityNote>
-        [SecurityCritical]
         private void DisposeStylusInputProvider()
         {
             // Dispose the HwndStylusInputProvider BEFORE we destroy the HWND.
@@ -1952,7 +1730,6 @@ namespace System.Windows.Interop
         ///     declarative Demand doesn't work on interface methods. In addition, we try to take advantage
         ///     of the fact LinkDemands are consistently enforced between base and overridden virtual methods,
         ///     something full Demands do not give us, even when applied declaratively.
-        /// </SecurityNote>
 
         private class MSGDATA
         {
@@ -1965,10 +1742,6 @@ namespace System.Windows.Interop
         /// Child Hwnd interop requirments.  If there are no child hwnds or focus
         /// is on this non-child hwnd then normal Avalon processing is done.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - This can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnPreprocessMessageThunk(ref MSG msg, ref bool handled)
         {
 //             VerifyAccess();
@@ -2015,16 +1788,6 @@ namespace System.Windows.Interop
         }
 
 
-        /// <SecurityNote>
-        ///     Critical:
-        ///     Can be used to spoof input.
-        ///     Asserts UnmanagedCode permission to call IKeyboardInputSink
-        ///     methods.
-        ///     For HANDLED_KEYDOWN_STILL_GENERATES_CHARS we also cause the
-        ///     Dispatcher to defer processing the queue until after any
-        ///     currently pending messages.
-        /// </SecurityNote>
-        [SecurityCritical]
         private object OnPreprocessMessage(object param)
         {
             MSGDATA msgdata = (MSGDATA) param;
@@ -2114,20 +1877,11 @@ namespace System.Windows.Interop
                 // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
                 if(!_eatCharMessages)
                 {
-                    // IKIS implementation does a demand.
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                    try
-                    {
-                        msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
+                    msgdata.handled = ((IKeyboardInputSink)this).TranslateChar(ref msgdata.msg, modifierKeys);
 
-                        if (!msgdata.handled)
-                        {
-                            msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
-                        }
-                    }
-                    finally
+                    if (!msgdata.handled)
                     {
-                        SecurityPermission.RevertAssert();
+                        msgdata.handled = ((IKeyboardInputSink)this).OnMnemonic(ref msgdata.msg, modifierKeys);
                     }
 
                     if (!msgdata.handled)
@@ -2169,25 +1923,15 @@ namespace System.Windows.Interop
         ///     IKIS interface, there's still a way for advanced developers to override
         ///     the behavior by re-implementing the interface.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     Also see SecurityNote named IKeyboardInputSink_Implementation higher up.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.Demand, Unrestricted=true)]
         protected IKeyboardInputSite RegisterKeyboardInputSinkCore(IKeyboardInputSink sink)
         {
             CheckDisposed(true);
 
-            if (sink == null)
-            {
-                throw new ArgumentNullException("sink");
-            }
+            ArgumentNullException.ThrowIfNull(sink);
 
             if (sink.KeyboardInputSite != null)
             {
-                throw new ArgumentException(SR.Get(SRID.KeyboardSinkAlreadyOwned));
+                throw new ArgumentException(SR.KeyboardSinkAlreadyOwned);
             }
 
             HwndSourceKeyboardInputSite site = new HwndSourceKeyboardInputSite(this, sink);
@@ -2199,11 +1943,6 @@ namespace System.Windows.Interop
             return site;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This method can be used to intercept and potentially tamper with raw input.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         IKeyboardInputSite IKeyboardInputSink.RegisterKeyboardInputSink(IKeyboardInputSink sink)
         {
             return RegisterKeyboardInputSinkCore(sink);
@@ -2221,26 +1960,13 @@ namespace System.Windows.Interop
         ///<remarks>
         /// This API is not available in Internet Zone.
         ///</remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     Also see SecurityNote named IKeyboardInputSink_Implementation higher up.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateAcceleratorCore(ref MSG msg, ModifierKeys modifiers)
         {
-            SecurityHelper.DemandUnmanagedCode();
 //             VerifyAccess();
 
             return CriticalTranslateAccelerator(ref msg, modifiers);
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical]
         bool IKeyboardInputSink.TranslateAccelerator(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateAcceleratorCore(ref msg, modifiers);
@@ -2255,10 +1981,7 @@ namespace System.Windows.Interop
         {
             bool traversed = false;
 
-            if(request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             UIElement root =_rootVisual.Value as UIElement;
             if(root != null)
@@ -2274,10 +1997,7 @@ namespace System.Windows.Interop
 
         bool IKeyboardInputSink.TabInto(TraversalRequest request)
         {
-            if(request == null)
-            {
-                throw new ArgumentNullException("request");
-            }
+            ArgumentNullException.ThrowIfNull(request);
 
             return TabIntoCore(request);
         }
@@ -2297,34 +2017,20 @@ namespace System.Windows.Interop
         ///     there's still a way for advanced developers to override the behavior by
         ///     re-implementing the interface.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This property has demands on its accessors.
-        ///
-        ///     Also see SecurityNote named IKeyboardInputSink_Implementation higher up.
-        /// </SecurityNote>
         protected IKeyboardInputSite KeyboardInputSiteCore
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 return _keyboardInputSite;
             }
 
-            [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
             set
             {
-                SecurityHelper.DemandUnmanagedCode();
 
                 _keyboardInputSite = value;
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a property with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this property has a demand on it.
-        /// </SecurityNote>
         IKeyboardInputSite IKeyboardInputSink.KeyboardInputSite
         {
             get
@@ -2332,7 +2038,6 @@ namespace System.Windows.Interop
                 return KeyboardInputSiteCore;
             }
 
-            [SecurityCritical]
             set
             {
                 KeyboardInputSiteCore = value;
@@ -2347,17 +2052,9 @@ namespace System.Windows.Interop
         ///     If this component contains child components, the container
         ///     OnMnemonic will need to call the child's OnMnemonic method.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     Also see SecurityNote named IKeyboardInputSink_Implementation higher up.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool OnMnemonicCore(ref MSG msg, ModifierKeys modifiers)
         {
 //             VerifyAccess();
-            SecurityHelper.DemandUnmanagedCode();
             switch((WindowMessage)msg.message)
             {
                 case WindowMessage.WM_SYSCHAR:
@@ -2413,7 +2110,7 @@ namespace System.Windows.Interop
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+                    throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
             }
 
             // We record the last message that was processed by us.
@@ -2433,11 +2130,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical]
         bool IKeyboardInputSink.OnMnemonic(ref MSG msg, ModifierKeys modifiers)
         {
             return OnMnemonicCore(ref msg, modifiers);
@@ -2451,16 +2143,8 @@ namespace System.Windows.Interop
         ///     It is illegal to modify the MSG structure, it's passed by reference
         ///     only as a performance optimization.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This API can be used for input spoofing.
-        ///     PublicOK: This method has a demand on it.
-        ///
-        ///     Also see SecurityNote named IKeyboardInputSink_Implementation higher up.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted=true)]
         protected virtual bool TranslateCharCore(ref MSG msg, ModifierKeys modifiers)
         {
-            SecurityHelper.DemandUnmanagedCode();
             if(HasFocus || IsInExclusiveMenuMode)
                 return false;
 
@@ -2472,11 +2156,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls a method with a LinkDemand on it.
-        ///     PublicOK: The interface declaration for this method has a demand on it.
-        /// </SecurityNote>
-        [SecurityCritical]
         bool IKeyboardInputSink.TranslateChar(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateCharCore(ref msg, modifiers);
@@ -2568,10 +2247,6 @@ namespace System.Windows.Interop
         ///   The method is not part of the interface (IKeyboardInputSink).
         /// </summary>
         /// <param name="site">The Site that containes the sink to unregister</param>
-        /// <SecurityNote>
-        ///     Critical - calls critical methods.
-        /// </SecurityNote>
-        [ SecurityCritical ]
         internal void CriticalUnregisterKeyboardInputSink(HwndSourceKeyboardInputSite site)
         {
             if(_isDisposed)
@@ -2581,7 +2256,7 @@ namespace System.Windows.Interop
             {
                 if (!_keyboardInputSinkChildren.Remove(site))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.KeyboardSinkNotAChild));
+                    throw new InvalidOperationException(SR.KeyboardSinkNotAChild);
                 }
             }
         }
@@ -2611,10 +2286,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This API could be vulnerable to input spoofing.
-        /// </SecurityNote>
-        [SecurityCritical, FriendAccessAllowed]
         internal bool CriticalTranslateAccelerator(ref MSG msg, ModifierKeys modifiers)
         {
             switch ((WindowMessage)msg.message)
@@ -2627,7 +2298,7 @@ namespace System.Windows.Interop
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+                    throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
             }
 
             if (_keyboard == null)
@@ -2837,14 +2508,6 @@ namespace System.Windows.Interop
         // NOTE: shutdown order is very important.  Review any changes
         // carefully.
         //
-        /// <SecurityNote>
-        ///     Critical: This accesses the various sites and providers.
-        ///               Asserting UnmanagedCode to access site, this is consistent with the requirements of the interface declaration
-        ///               as it can potentially be used for spoofing.
-        ///     Safe: Disposing the object is a safe operation.
-        ///           Not exposing IKIS, just using it to unregister.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             if(disposing)
@@ -2886,23 +2549,15 @@ namespace System.Windows.Interop
                     RootVisualInternal = null;
                     RemoveSource();
 
-                    new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert();
-                    try
+                    // Unregister ourselves if we are a registered KeyboardInputSink.
+                    // Use the property instead of the backing field in case a subclass has overridden it.
+                    IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
+                    if (keyboardInputSite != null)
                     {
-                        // Unregister ourselves if we are a registered KeyboardInputSink.
-                        // Use the property instead of the backing field in case a subclass has overridden it.
-                        IKeyboardInputSite keyboardInputSite = ((IKeyboardInputSink)this).KeyboardInputSite;
-                        if (keyboardInputSite != null)
-                        {
-                            keyboardInputSite.Unregister();
-                            ((IKeyboardInputSink)this).KeyboardInputSite = null;
-                        }
-                        _keyboardInputSinkChildren = null;
+                        keyboardInputSite.Unregister();
+                        ((IKeyboardInputSink)this).KeyboardInputSite = null;
                     }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    _keyboardInputSinkChildren = null;
 
                     if (!_inRealHwndDispose)
                     {
@@ -3009,17 +2664,12 @@ namespace System.Windows.Interop
 
             if(_isDisposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.HwndSourceDisposed));
+                throw new ObjectDisposedException(null, SR.HwndSourceDisposed);
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses hwndtarget
-        ///     TreatAsSafe: Information is ok to expose
-        /// </SecurityNote>
         private bool IsUsable
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 return _isDisposed == false &&
@@ -3028,14 +2678,8 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - calls a method with an elevation ( GetFocus )
-        ///     TreatAsSafe - determining whether you have focus within the window is considered safe.
-        ///                   Worst case you can know whether keyboard/keypress events will go to the current window.
-        /// </SecurityNote>
         private bool HasFocus
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return UnsafeNativeMethods.GetFocus() == CriticalHandle;
@@ -3110,11 +2754,6 @@ namespace System.Windows.Interop
 
         private class WeakEventPreprocessMessage: WeakReference
         {
-            /// <SecurityNote>
-            ///     Critical: This code calls attaches an arbitrary window
-            ///     to the call path for the component dispatcher call back
-            /// </SecurityNote>
-            [SecurityCritical]
             public WeakEventPreprocessMessage(HwndSource source, bool addToFront): base(source)
             {
                 _addToFront = addToFront;
@@ -3130,10 +2769,6 @@ namespace System.Windows.Interop
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: This can be used to spoof and change input
-            /// </SecurityNote>
-            [SecurityCritical]
             public void OnPreprocessMessage(ref MSG msg, ref bool handled)
             {
                 HwndSource source = this.Target as HwndSource;
@@ -3148,12 +2783,6 @@ namespace System.Windows.Interop
             }
 
 
-            /// <SecurityNote>
-            ///     Critical:This code calls into ComponentDispatcher
-            ///     to disconnect a listener
-            ///     TreatAsSafe: This code is ok to call
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public void Dispose()
             {
                 if(_addToFront)
@@ -3191,46 +2820,20 @@ namespace System.Windows.Interop
         private SizeToContent               _sizeToContent = SizeToContent.Manual;
         private Size?                       _previousSize;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapper                 _hwndWrapper;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndTarget                  _hwndTarget;
 
         private SecurityCriticalDataForSet<Visual>                      _rootVisual;
 
-        private event HwndSourceHook _hooks;
+        private Tuple<HwndSourceHook, Delegate[]> _hooks;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndMouseInputProvider>      _mouse;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndKeyboardInputProvider>   _keyboard;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<IStylusInputProvider>        _stylus;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data is considered critical.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndAppCommandInputProvider> _appCommand;
 
         WeakEventDispatcherShutdown _weakShutdownHandler;
@@ -3248,42 +2851,17 @@ namespace System.Windows.Interop
         private MSG                         _lastKeyboardMessage;
         private List<HwndSourceKeyboardInputSite> _keyboardInputSinkChildren;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data can be used to spoof input
-        /// </SecurityNote>
         // Be careful about accessing this field directly.
         // It's bound to IKeyboardInputSink.KeyboardInputSite, so if a derived class overrides
         // that property then this field will be incorrect.
-        [SecurityCritical]
         private IKeyboardInputSite          _keyboardInputSite = null;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook             _layoutHook;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook             _inputHook;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook             _hwndTargetHook;
 
-        /// <SecurityNote>
-        ///     Critical:This reference cannot be given out or assigned to outside of a verified
-        ///     elevation. This data can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         private HwndWrapperHook             _publicHook;
 
         // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS

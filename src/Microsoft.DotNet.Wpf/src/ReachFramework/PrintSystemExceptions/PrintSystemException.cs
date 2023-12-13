@@ -145,10 +145,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical System.Exception.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override
         void
         GetObjectData(
@@ -158,6 +156,8 @@ namespace System.Printing
         {
             base.GetObjectData(info, context);
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
 
         ///<summary>
         ///
@@ -203,6 +203,7 @@ namespace System.Printing
         /// </summary>
         /// <param name="info"> The object that holds the serialized object data. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected
         PrintSystemException(
             System.Runtime.Serialization.SerializationInfo  info,
@@ -210,6 +211,7 @@ namespace System.Printing
             ) : base(info, context)
         {
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
 
         /// <summary>
         /// Loads the resource string for a given resource key.
@@ -263,10 +265,6 @@ namespace System.Printing
         ///<summary>
         ///
         ///</summary>
-        ///<SecurityNote>
-        /// Critical    - calls Win32 FormatMessage API
-        /// </SecurityNote>
-        [System.Security.SecurityCritical]
         private static
         String
         GetFormattedWin32Error(
@@ -405,10 +403,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical System.Exception.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override
         void
         GetObjectData(
@@ -422,7 +418,8 @@ namespace System.Printing
             }
             base.GetObjectData(info, context);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         ///<summary>
         ///
         ///</summary>
@@ -573,10 +570,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override
         void
         GetObjectData(
@@ -591,7 +586,8 @@ namespace System.Printing
 
             base.GetObjectData(info, context);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         ///<summary>
         ///
         ///</summary>
@@ -728,10 +724,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override
         void
         GetObjectData(
@@ -748,7 +742,8 @@ namespace System.Printing
 
             base.GetObjectData(info, context);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         ///<summary>
         ///
         ///</summary>
@@ -934,10 +929,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override
         void
         GetObjectData(
@@ -951,7 +944,8 @@ namespace System.Printing
             }
             base.GetObjectData(info, context);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         /// <summary>
         /// PrintJobException constructor.
         /// </summary>
@@ -1291,6 +1285,7 @@ namespace System.Printing
         /// </summary>
         /// <param name="info"> The object that holds the serialized object data. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         protected PrintingNotSupportedException(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context
@@ -1298,6 +1293,7 @@ namespace System.Printing
             : base(info, context)
         {
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
 
         /// <summary>
         /// Sets the SerializationInfo with information about the exception.
@@ -1307,10 +1303,8 @@ namespace System.Printing
         /// </remarks>
         /// <param name="info"> Holds the serialized object data about the exception being thrown. </param>
         /// <param name="context"> The contextual information about the source or destination. </param>
-        /// <SecurityNote>
-        ///     Critical    -   Calls critical PrintSystemException.GetObjectData
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context
@@ -1318,5 +1312,7 @@ namespace System.Printing
         {
             base.GetObjectData(info, context);
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
     };
 }

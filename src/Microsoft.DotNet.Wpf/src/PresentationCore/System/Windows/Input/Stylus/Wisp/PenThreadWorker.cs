@@ -13,7 +13,6 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Threading;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Collections.Generic;
@@ -21,7 +20,6 @@ using System.Collections.ObjectModel;
 using MS.Win32.Penimc;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -41,36 +39,17 @@ namespace System.Windows.Input
         const int MaxContextPerThread  = 31;  // (64 - 1) / 2 = 31.  Max handle limit for MsgWaitForMultipleMessageEx()
         const int EventsFrequency       = 8;
 
-        /// <SecurityNote>
-        /// Critical - Marked critical to prevent inadvertant code from modifying this.
-        /// </SecurityNote>
-        [SecurityCritical]
-        IntPtr []             _handles = new IntPtr[0];
+        IntPtr []             _handles = Array.Empty<IntPtr>();
 
-        /// <SecurityNote>
-        /// Critical - Marked critical to prevent inadvertant code from modifying this.
-        /// </SecurityNote>
-        [SecurityCritical]
-        WeakReference []      _penContexts = new WeakReference[0];
+        WeakReference []      _penContexts = Array.Empty<WeakReference>();
 
-        /// <SecurityNote>
-        /// Critical - Marked critical to prevent inadvertant code from modifying this.
-        /// </SecurityNote>
-        [SecurityCritical]
-        IPimcContext3 []       _pimcContexts = new IPimcContext3[0];
+        IPimcContext3 []       _pimcContexts = Array.Empty<IPimcContext3>();
 
         /// <summary>
         /// A list of all WISP context COM object GIT keys that are locked via this thread.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Marked critical to prevent inadvertant code from modifying this.
-        /// </SecurityNote>
-        [SecurityCritical]
-        UInt32[] _wispContextKeys = new UInt32[0];
+        UInt32[] _wispContextKeys = Array.Empty<UInt32>();
 
-        /// <SecurityNote>
-         ///     SecurityCritical - This is got under an elevation and is hence critical.
-        /// </SecurityNote>
         private SecurityCriticalData<IntPtr>   _pimcResetHandle;
         private volatile bool                  __disposed;
         private List <WorkerOperation>         _workerOperation = new List<WorkerOperation>();
@@ -78,10 +57,6 @@ namespace System.Windows.Input
 
         // For caching move events.
         
-        /// <SecurityNote>
-        ///     Critical to prevent accidental spread to transparent code
-        /// </SecurityNote>
-        [SecurityCritical]
         private PenContext                      _cachedMovePenContext;
         
         private int                             _cachedMoveStylusPointerId;
@@ -110,7 +85,6 @@ namespace System.Windows.Input
             /// Critical - Calls SecurityCritical code OnDoWork which is differred based on the various derived class.
             ///             Called by PenThreadWorker.ThreadProc().
             /// </summary>
-            [SecurityCritical]
             internal void DoWork()
             {
                 try
@@ -127,7 +101,6 @@ namespace System.Windows.Input
             /// Critical - Calls SecurityCritical code OnDoWork which is differred based on the various derived class.
             ///             Called by WorkerOperation.DoWork().
             /// </summary>
-            [SecurityCritical]
             protected abstract void OnDoWork();
 
             internal AutoResetEvent DoneEvent
@@ -164,11 +137,6 @@ namespace System.Windows.Input
             ///     Returns the list of TabletDeviceInfo structs that contain information
             ///     about all of the TabletDevices on the system.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-            ///               - returns security critical data _pimcTablet
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 try
@@ -197,16 +165,12 @@ namespace System.Windows.Input
                 }
             }
 
-            TabletDeviceInfo[] _tabletDevicesInfo = new TabletDeviceInfo[0];
+            TabletDeviceInfo[] _tabletDevicesInfo = Array.Empty<TabletDeviceInfo>();
         }
 
         // Class that handles creating a context for a particular tablet device.        
         private class WorkerOperationCreateContext : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationCreateContext(IntPtr hwnd, IPimcTablet3 pimcTablet)
             {
                 _hwnd = hwnd;
@@ -223,11 +187,6 @@ namespace System.Windows.Input
             ///     Creates a new context for this a window and given tablet device and
             ///     returns a new PenContext in the workOperation class.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-            ///               - handle security critical data _hwnd, _pimcTablet.
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 IPimcContext3 pimcContext;
@@ -262,15 +221,7 @@ namespace System.Windows.Input
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             IntPtr _hwnd;
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             IPimcTablet3 _pimcTablet;
             PenContextInfo _result = new PenContextInfo();
         }
@@ -280,10 +231,6 @@ namespace System.Windows.Input
         /// </summary>
         private class WorkerOperationAcquireTabletLocks : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationAcquireTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
             {
                 _tablet = tablet;
@@ -295,10 +242,6 @@ namespace System.Windows.Input
             /// <summary>
             /// Releases the lock on the PenThread.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - Calls MS.Win32.Penimc.UnsafeNativeMethods.UnlockWispObjectFromGit
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 MS.Win32.Penimc.UnsafeNativeMethods.AcquireTabletExternalLock(_tablet);
@@ -309,13 +252,11 @@ namespace System.Windows.Input
             /// <summary>
             /// The PenIMC tablet
             /// </summary>
-            [SecurityCritical]
             IPimcTablet3 _tablet;
 
             /// <summary>
             /// The GIT key for the WISP COM object.
             /// </summary>
-            [SecurityCritical]
             UInt32 _wispTabletKey;
         }
 
@@ -324,10 +265,6 @@ namespace System.Windows.Input
         /// </summary>
         private class WorkerOperationReleaseTabletLocks : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationReleaseTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
             {
                 _tablet = tablet;
@@ -339,10 +276,6 @@ namespace System.Windows.Input
             /// <summary>
             /// Releases the lock on the PenThread.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - Calls MS.Win32.Penimc.UnsafeNativeMethods.UnlockWispObjectFromGit
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 MS.Win32.Penimc.UnsafeNativeMethods.CheckedUnlockWispObjectFromGit(_wispTabletKey);
@@ -353,23 +286,17 @@ namespace System.Windows.Input
             /// <summary>
             /// The PenIMC tablet
             /// </summary>
-            [SecurityCritical]
             IPimcTablet3 _tablet;
             
             /// <summary>
             /// The GIT key for the WISP COM object.
             /// </summary>
-            [SecurityCritical]
             UInt32 _wispTabletKey;
         }
 
         // Class that handles refreshing the cursor devices for a particular tablet device.        
         private class WorkerOperationRefreshCursorInfo : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationRefreshCursorInfo(IPimcTablet3 pimcTablet)
             {
                 _pimcTablet = pimcTablet;
@@ -388,11 +315,6 @@ namespace System.Windows.Input
             ///     Causes the stylus devices info (cursors) in penimc to be refreshed 
             ///     for the passed in IPimcTablet3. 
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-            ///               - handle security critical data _pimcTablet.
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 try
@@ -406,13 +328,9 @@ namespace System.Windows.Input
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             IPimcTablet3 _pimcTablet;
 
-            StylusDeviceInfo[]  _stylusDevicesInfo = new StylusDeviceInfo[0];
+            StylusDeviceInfo[]  _stylusDevicesInfo = Array.Empty<StylusDeviceInfo>();
         }
 
         // Class that handles getting info about a specific tablet device.
@@ -433,11 +351,6 @@ namespace System.Windows.Input
             ///     Fills in a struct containing the list of TabletDevice properties for
             ///     a given tablet device index.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-            ///               - returns security critical data _pimcTablet
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 try
@@ -464,10 +377,6 @@ namespace System.Windows.Input
         // Class that handles getting the current rect for a tablet device.
         private class WorkerOperationWorkerGetUpdatedSizes : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationWorkerGetUpdatedSizes(IPimcTablet3 pimcTablet)
             {
                 _pimcTablet = pimcTablet;
@@ -483,11 +392,6 @@ namespace System.Windows.Input
             /// <summary>
             ///     Gets the current rectangle for a tablet device and returns in workOperation class.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-            ///               - handles security critical data _pimcTablet
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 try
@@ -506,10 +410,6 @@ namespace System.Windows.Input
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             IPimcTablet3          _pimcTablet;
             TabletDeviceSizeInfo _tabletDeviceSizeInfo = new TabletDeviceSizeInfo(new Size( 1, 1), new Size( 1, 1));
         }
@@ -518,10 +418,6 @@ namespace System.Windows.Input
         // Class that handles getting the current rect for a tablet device.
         private class WorkerOperationAddContext : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationAddContext(PenContext penContext, PenThreadWorker penThreadWorker)
             {
                 _newPenContext = penContext;
@@ -538,24 +434,12 @@ namespace System.Windows.Input
             ///     Adds a PenContext to the list of contexts that events can be received
             ///     from and returns whether it was successful in workOperation class.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - handles security critical data _penContexts, _handles, _pimcContexts
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 _result = _penThreadWorker.AddPenContext(_newPenContext);
             }
                     
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             PenContext      _newPenContext;
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             PenThreadWorker _penThreadWorker;
 
             bool _result;
@@ -564,10 +448,6 @@ namespace System.Windows.Input
         // Class that handles getting the current rect for a tablet device.
         private class WorkerOperationRemoveContext : WorkerOperation
         {
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal WorkerOperationRemoveContext(PenContext penContext, PenThreadWorker penThreadWorker)
             {
                 _penContextToRemove = penContext;
@@ -584,24 +464,12 @@ namespace System.Windows.Input
             ///     Adds a PenContext to the list of contexts that events can be received
             ///     from and returns whether it was successful in workOperation class.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical: - handles security critical data _penContexts, _handles, _pimcContexts
-            /// </SecurityNote>
-            [SecurityCritical]
             protected override void OnDoWork()
             {
                 _result = _penThreadWorker.RemovePenContext(_penContextToRemove);
             }
                     
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             PenContext  _penContextToRemove;
-            /// <SecurityNote>
-            ///     Critical - Critical data got under an elevation and is hence critical.
-            /// </SecurityNote>
-            [SecurityCritical]
             PenThreadWorker _penThreadWorker;
 
             bool _result;
@@ -610,14 +478,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        ///    Critical - Calls SecurityCritical code MS.Win32.Penimc.UnsafeNativeMethods.CreateResetEvent
-        ///         and handles SecurityCritical data resetHandle.
-        ///             Called by PenThread constructor.
-        ///             TreatAsSafe boundry is Stylus.EnableCore, Stylus.RegisterHwndForInput
-        ///                and HwndWrapperHook class (via HwndSource.InputFilterMessage).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PenThreadWorker()
         {
             IntPtr resetHandle;
@@ -640,12 +500,6 @@ namespace System.Windows.Input
             started.DoneEvent.Close();
         }
 
-        /// <SecurityNote>
-        /// Critical - Needs to call SupressUnmanagedCodeSecurity attributed
-        ///               code to free unmanaged resource handle.  Needs to be
-        ///               SecurityCritical for that.  Also references SecurityCriticalData.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void Dispose()
         {
             if(!__disposed)
@@ -661,17 +515,11 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle and handles SecurityCritical data penContext.
-        ///             Called by PenThread.AddPenContext.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerAddPenContext(PenContext penContext)
         {
             if (__disposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.Penservice_Disposed));
+                throw new ObjectDisposedException(null, SR.Penservice_Disposed);
             }
 
             Debug.Assert(penContext != null);
@@ -694,12 +542,6 @@ namespace System.Windows.Input
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle and handles SecurityCritical data penContext.
-        ///             Called by PenThread.Disable.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerRemovePenContext(PenContext penContext)
         {
             if (__disposed)
@@ -728,12 +570,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle.
-        ///             Called by PenThreadPool.WorkerGetTabletsInfo.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceInfo[] WorkerGetTabletsInfo()
         {
             // Set data up for this call
@@ -755,15 +591,6 @@ namespace System.Windows.Input
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle and handles SecurityCritical data
-        ///             (hwnd, pimcTablet).
-        ///             Called by PenThreadPool.WorkerCreateContext.
-        ///             TreatAsSafe boundry is Stylus.EnableCore and HwndWrapperHook class 
-        ///             (via HwndSource.InputFilterMessage).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PenContextInfo WorkerCreateContext(IntPtr hwnd, IPimcTablet3 pimcTablet)
         {
             WorkerOperationCreateContext createContextOperation = new WorkerOperationCreateContext(
@@ -789,11 +616,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="gitKey">The GIT key for the WISP COM object.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             Accesses SecurityCriticalData _pimcResetHandle.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerAcquireTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
         {
             WorkerOperationAcquireTabletLocks acquireOperation =
@@ -819,11 +641,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="gitKey">The GIT key for the WISP COM object.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             Accesses SecurityCriticalData _pimcResetHandle.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool WorkerReleaseTabletLocks(IPimcTablet3 tablet, UInt32 wispTabletKey)
         {
             WorkerOperationReleaseTabletLocks releaseOperation = 
@@ -844,12 +661,6 @@ namespace System.Windows.Input
             return releaseOperation.Result;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle and handles SecurityCritical data pimcTablet.
-        ///             Called by PenThreadPool.WorkerRefreshCursorInfo.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal StylusDeviceInfo[] WorkerRefreshCursorInfo(IPimcTablet3 pimcTablet)
         {
             WorkerOperationRefreshCursorInfo refreshCursorInfo = new WorkerOperationRefreshCursorInfo(
@@ -869,12 +680,6 @@ namespace System.Windows.Input
             return refreshCursorInfo.StylusDevicesInfo;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle.
-        ///             Called by PenThreadPool.WorkerGetTabletInfo.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceInfo WorkerGetTabletInfo(uint index)
         {
             // Set up data for call
@@ -895,12 +700,6 @@ namespace System.Windows.Input
             return getTabletInfo.TabletDeviceInfo;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.RaiseResetEvent),
-        ///             accesses SecurityCriticalData _pimcResetHandle and pimcTablet.
-        ///             Called by PenThreadPool.WorkerGetUpdatedTabletRect.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TabletDeviceSizeInfo WorkerGetUpdatedSizes(IPimcTablet3 pimcTablet)
         {           
             // Set data up for call
@@ -921,12 +720,6 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code PenContext.FirePenInRange and PenContext.FirePackets.
-        ///             Called by FireEvent and ThreadProc.
-        ///             TreatAsSafe boundry is ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         void FlushCache(bool goingOutOfRange)
         {
             // Force any cached move/inairmove data to be flushed if we have any.
@@ -948,10 +741,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// SecurityCritical: Accesses SecurityCritical data _cachedMovePenContext.
-        /// </SecurityNote>
-        [SecurityCritical]
         bool DoCacheEvent(int evt, PenContext penContext, int stylusPointerId, int [] data, int timestamp)
         {
             // NOTE: Big assumption is that we always get other events between packets (ie don't get move
@@ -991,13 +780,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code FlushCache, PenContext.FirePenDown, PenContext.FirePenUp, 
-        ///             PenContext.FirePenInRange, PenContext.FirePackets, PenContext.FirePenOutOfRange, PenContext.FireSystemGesture.
-        ///             Called by ThreadProc.
-        ///             TreatAsSafe boundry is ThreadProc.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FireEvent(PenContext penContext, int evt, int stylusPointerId, int cPackets, int cbPacket, IntPtr pPackets)
         {
             // disposed?
@@ -1009,7 +791,7 @@ namespace System.Windows.Input
             // marshal the data to our cache
             if (cbPacket % 4 != 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.PenService_InvalidPacketData));
+                throw new InvalidOperationException(SR.PenService_InvalidPacketData);
             }
 
             int cItems = cPackets * (cbPacket / 4);
@@ -1078,11 +860,6 @@ namespace System.Windows.Input
         ///     Returns a struct containing the list of TabletDevice properties for
         ///     a given tablet device (pimcTablet).
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-        ///               - handles security critical data pimcTablet
-        /// </SecurityNote>
-        [SecurityCritical]
         private static TabletDeviceInfo GetTabletInfoHelper(IPimcTablet3 pimcTablet)
         {
             TabletDeviceInfo tabletInfo = new TabletDeviceInfo();
@@ -1127,11 +904,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Initializing the supported stylus point properties. and returns in workOperation class.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-        ///               - handles security critical data pimcTablet
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void InitializeSupportedStylusPointProperties(IPimcTablet3 pimcTablet, TabletDeviceInfo tabletInfo)
         {
             int cProps;
@@ -1192,11 +964,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Getting the cursor info of the stylus devices.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: - calls into unmanaged code that is SecurityCritical with SUC attribute.
-        ///               - handles security critical data pimcTablet
-        /// </SecurityNote>
-        [SecurityCritical]
         private static StylusDeviceInfo[] GetStylusDevicesInfo(IPimcTablet3 pimcTablet)
         {
             int cCursors;
@@ -1235,11 +1002,6 @@ namespace System.Windows.Input
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCriticalData (penContext, _penContexts, PenContext.CommHandle,
-        ///             _pimcContexts, and _handles).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool AddPenContext(PenContext penContext)
         {
             List <PenContext> penContextRefs = new List<PenContext>(); // keep them alive while processing!
@@ -1299,11 +1061,6 @@ namespace System.Windows.Input
         }
 
 
-        /// <SecurityNote>
-        /// Critical - Accesses SecurityCriticalData (penContext, _penContexts, PenContext.CommHandle,
-        ///             _pimcContexts, and _handles).
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool RemovePenContext(PenContext penContext)
         {
             List <PenContext> penContextRefs = new List<PenContext>(); // keep them alive while processing!
@@ -1370,13 +1127,7 @@ namespace System.Windows.Input
                 
                 // Release the PenIMC object only when we are assured that the
                 // context was removed from the list of waiting handles.
-                
-                // Restrict COM releases to Win7 as this can cause issues with later versions
-                // of PenIMC and WISP due to using a context after it is released.
-                if (!OSVersionHelper.IsOsWindows8OrGreater)
-                {
-                    Marshal.ReleaseComObject(penContext._pimcContext.Value);
-                }
+                Marshal.ReleaseComObject(penContext._pimcContext.Value);
             }
 
             return removed;
@@ -1397,14 +1148,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical code (MS.Win32.Penimc.UnsafeNativeMethods.GetPenEvent, 
-        ///              MS.Win32.Penimc.UnsafeNativeMethods.GetPenEventMultiple, 
-        ///              MS.Win32.Penimc.UnsafeNativeMethods.DestroyResetEvent, FireEvent and FlushCache) and 
-        ///              accesses SecurityCriticalData (PenContext.CommHandle and _pimcResetHandle.Value).
-        ///             It is a thread proc so it is top of stack and is created by PenThreadWorker constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void ThreadProc()
         {
             Thread.CurrentThread.Name = "Stylus Input";
@@ -1420,7 +1163,12 @@ namespace System.Windows.Input
                     Debug.WriteLine(String.Format("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop"));
 #endif
 
-                    WorkerOperation [] workerOps = null;
+                    // We need to ensure that the PenIMC COM objects can be used from this thread.
+                    // Try this every outer loop since we're, generally, about to do management
+                    // operations.
+                    MS.Win32.Penimc.UnsafeNativeMethods.EnsurePenImcClassesActivated();
+
+                    WorkerOperation[] workerOps = null;
 
                     lock(_workerOperationLock)
                     {
@@ -1544,6 +1292,9 @@ namespace System.Windows.Input
                     // Ensure that all native references are released.
                     _pimcContexts[i].ShutdownComm();
                 }
+
+                // Ensure that any activation contexts used on this thread are cleaned.
+                MS.Win32.Penimc.UnsafeNativeMethods.DeactivatePenImcClasses();
 
                 // Make sure the _pimcResetHandle is still valid after Dispose is called and before
                 // our thread exits.

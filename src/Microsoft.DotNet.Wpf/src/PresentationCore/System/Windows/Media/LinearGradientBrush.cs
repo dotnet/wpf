@@ -23,9 +23,7 @@ using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -131,11 +129,6 @@ namespace System.Windows.Media
 
         #endregion Constructors
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses unsafe code blocks
-        ///     TreatAsSafe: This code does is safe to call but needs to be verified for correctness
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ManualUpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

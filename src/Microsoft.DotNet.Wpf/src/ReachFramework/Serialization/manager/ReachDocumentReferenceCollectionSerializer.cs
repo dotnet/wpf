@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -50,17 +49,14 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             // get DocumentReferenceCollection
             System.Collections.Generic.IEnumerable<DocumentReference> enumerableObject = serializableObjectContext.TargetObject as System.Collections.Generic.IEnumerable<DocumentReference>;
 
             if (enumerableObject == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.MustBeOfType, "serializableObjectContext.TargetObject", typeof(System.Collections.Generic.IEnumerable<DocumentReference>)));
+                throw new XpsSerializationException(SR.Format(SR.MustBeOfType, "serializableObjectContext.TargetObject", typeof(System.Collections.Generic.IEnumerable<DocumentReference>)));
             }
 
             SerializeDocumentReferences(serializableObjectContext);
@@ -108,7 +104,7 @@ namespace System.Windows.Xps.Serialization
             else
             {
                 // should we throw if this is not a DocumentReference or just not do anything?
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_NoSerializer));
+                throw new XpsSerializationException(SR.ReachSerialization_NoSerializer);
             }
         }
     };

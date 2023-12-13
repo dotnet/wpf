@@ -1,0 +1,70 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, Classic, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+<!--=================================================================
+        Thumb
+    ==================================================================-->
+    <!--
+TODO:
+    1. Add ThumbMinWidth & ThumbMinHeight to SystemMetrics
+       (MinWidth = 2 * cxEdge, MinHeight = 2 * cyEdge)
+-->
+    <Style x:Key="{x:Type Thumb}"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled"
+                Value="false"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <!-- Draw Edge -->
+                            <Border BorderThickness="0,0,1,1"
+                                    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                            <Border BorderThickness="0,0,1,1"
+                                    Margin="1"
+                                    Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                            <Border Margin="2"
+                                    Background="{TemplateBinding Background}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor]] -->
+
+<!--=================================================================
+        Thumb
+    ==================================================================-->
+    <Style x:Key="{x:Type Thumb}" TargetType="{x:Type Thumb}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

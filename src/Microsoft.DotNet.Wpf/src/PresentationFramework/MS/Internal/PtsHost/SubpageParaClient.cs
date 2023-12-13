@@ -45,13 +45,6 @@ namespace MS.Internal.PtsHost
         /// <remarks>
         /// This method is called by PTS to notify that this para client is not is use anymore.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsDestroySubpage.  This
-        ///            also calls the setter for _paraHandle.Value but is just set to zero.
-        /// Safe - as the parameters passed in, PtsContext.Context and _paraHandle are
-        ///        both marked Critical for set.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void Dispose()
         {
             _visual = null;
@@ -70,14 +63,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Arrange paragraph.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsQuerySubpageDetails and
-        ///            some PtsHelper functions.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnArrange()
         {
             base.OnArrange();
@@ -167,14 +152,6 @@ namespace MS.Internal.PtsHost
         // Hit tests to the correct IInputElement within the paragraph
         // that the mouse is over.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsQuerySubpageDetails
-        ///            and some PtsHelper functions.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override IInputElement InputHitTest(PTS.FSPOINT pt)
         {
             IInputElement ie = null;
@@ -244,14 +221,6 @@ namespace MS.Internal.PtsHost
         // start: int representing start offset of e.
         // length: int representing number of positions occupied by e.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsQuerySubpageDetails and
-        ///            some PtsHelper functions.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override List<Rect> GetRectangles(ContentElement e, int start, int length)
         {
             List<Rect> rectangles = new List<Rect>();
@@ -312,14 +281,6 @@ namespace MS.Internal.PtsHost
         //      fskupdInherited - inherited update info
         //      fswdir - inherited flow direction
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsQuerySubpageDetails and
-        ///            some PtsHelper functions.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void ValidateVisual(PTS.FSKUPDATE fskupdInherited)
         {
             // Query subpage details
@@ -455,14 +416,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Updates viewport
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls Critical functions PTS.FsQuerySubpageDetails,
-        ///            and PtsHelper.TrackListFromSubpage.
-        /// Safe - The IntPtr parameters passed to PTS.FsQuerySubpageDetails are SecurityCriticalDataForSet
-        ///        which ensures that partial trust code won't be able to set it to a random value.
-        ///        The subpageDetails parameter passed to other methods is generated securely in this function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override void UpdateViewport(ref PTS.FSRECT viewport)
         {
             // Query subpage details
@@ -519,13 +472,6 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Return TextContentRange for the content of the paragraph.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical function PTS.FsQuerySubpageDetails.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override TextContentRange GetTextContentRange()
         {
             TextContentRange textContentRange;
@@ -592,14 +538,6 @@ namespace MS.Internal.PtsHost
         /// <param name="hasTextContent">
         /// True if any column in the subpage has text content, i.e. does not contain only figures/floaters
         /// </param>
-        /// <SecurityNote>
-        /// Critical - as this calls the Critical functions PTS.FsQuerySubpageDetails
-        ///            and PTS.FsQueryTrackDetails.
-        /// Safe - as this can't be used to pass random parameters.  PtsContext.Context
-        ///        is marked Critical for set and _paraHandle is readonly data for this
-        ///        function.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ReadOnlyCollection<ColumnResult> GetColumnResults(out bool hasTextContent)
         {
             List<ColumnResult> columnResults = new List<ColumnResult>(0);
@@ -671,10 +609,6 @@ namespace MS.Internal.PtsHost
         //      parentOffset - Parent offset from the top of the page.
         //      hasTextContent - true if any of the children paras has text content
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsQueryTrackDetails.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ReadOnlyCollection<ParagraphResult> GetParagraphResultsFromColumn(IntPtr pfstrack, Vector parentOffset, out bool hasTextContent)
         {
             // Get track details
@@ -708,10 +642,6 @@ namespace MS.Internal.PtsHost
         //
         //      pfstrack - Pointer to PTS track representing a column.
         // ------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical - as this calls Critical function PTS.FsQueryTrackDetails.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TextContentRange GetTextContentRangeFromColumn(IntPtr pfstrack)
         {
             // Get track details

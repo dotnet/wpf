@@ -4,7 +4,6 @@
 
 using System.Windows.Media; 
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using MS.Win32;
@@ -31,7 +30,7 @@ namespace System.Windows.Input
         ///     The mode in which the input is being provided.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="inputSource">
         ///     The PresentationSource over which the mouse is moved.
@@ -51,11 +50,6 @@ namespace System.Windows.Input
         /// <param name="extraInformation">
         ///     Any extra information being provided along with the input.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This handles critical data in the form of PresentationSource and ExtraInformation 
-        ///     TreatAsSafe:There are demands on the  critical data(PresentationSource/ExtraInformation)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public RawMouseInputReport(
             InputMode mode,
             int timestamp, 
@@ -101,13 +95,8 @@ namespace System.Windows.Input
         ///     Read-only access to the extra information was provided along
         ///     with the input.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This data was got under an elevation. There exists a link demand to 
-        ///     block access. The critical exists to catch new callers too.
-        /// </SecurityNote>
         public IntPtr ExtraInformation 
         {
-            [SecurityCritical]
             get 
             {
                 return _extraInformation.Value;
@@ -151,9 +140,6 @@ namespace System.Windows.Input
         
         internal bool _isSynchronize; // Set from MouseDevice.Synchronize.
         
-        /// <SecurityNote>
-        ///     Critical:This data was got under an elevation and is not safe to expose.
-        /// </SecurityNote>
         private SecurityCriticalData<IntPtr> _extraInformation;
     }    
 }

@@ -16,10 +16,6 @@ using System.Security;
 
 namespace MS.Internal.FontCache
 {
-    ///<SecurityNote>
-    ///     Critical - Interprocess communication between client and service is critical.
-    ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     [FriendAccessAllowed]
     internal class FontCacheConfig
     {
@@ -412,10 +408,6 @@ namespace MS.Internal.FontCache
     /// Manages the client side of the inter-process communications between the client
     /// and the server regarding the font cache.
     /// </summary>
-    ///<SecurityNote>
-    ///     Critical - Interprocess communication between client and service is critical.
-    ///</SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal class IPCCacheManager
     {
         //----------------------

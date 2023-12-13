@@ -17,7 +17,6 @@ namespace System.Windows.Documents
     using System.Collections; // ArrayList
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Threading;
     using System.Windows.Input;
     using System.Windows.Controls; // ScrollChangedEventArgs
@@ -152,12 +151,6 @@ namespace System.Windows.Documents
         /// <remarks>
         /// innternal - ta make it accessible from TextEditor class.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this calls Critical method ImmComposition.GetImmComposition().
-        /// Safe - as this just gets the ImmComposition for the current element and invokes
-        ///        the OnDetach event.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnDetach()
         {
             Invariant.Assert(_textContainer != null);
@@ -331,11 +324,6 @@ namespace System.Windows.Documents
         // its own class listener for events it needs.
         //
         // This method will always register private command listeners.
-        /// <SecurityNote>
-        ///    Critical:This code register command handlers for texteditor related events and commands (OnGotFocus)
-        ///    TreatAsSafe: This just hooks up methods that are internal to this class
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RegisterCommandHandlers(Type controlType, bool acceptsRichContent, bool readOnly, bool registerEventListeners)
         {
             // Check if we already registered handlers for this type
@@ -356,7 +344,7 @@ namespace System.Windows.Documents
                     if (controlType.IsAssignableFrom((Type)_registeredEditingTypes[i]))
                     {
                         throw new InvalidOperationException(
-                            SR.Get(SRID.TextEditorCanNotRegisterCommandHandler, ((Type)_registeredEditingTypes[i]).Name, controlType.Name));
+                            SR.Format(SR.TextEditorCanNotRegisterCommandHandler, ((Type)_registeredEditingTypes[i]).Name, controlType.Name));
                     }
                 }
 
@@ -416,8 +404,8 @@ namespace System.Windows.Documents
             // ---------
             if (!readOnly)
             {
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyUndo), SR.Get(SRID.KeyUndoDisplayString)), KeyGesture.CreateFromResourceStrings(SR.Get(SRID.KeyAltUndo), SR.Get(SRID.KeyAltUndoDisplayString)));
-                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), SRID.KeyRedo, SRID.KeyRedoDisplayString);
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Undo, new ExecutedRoutedEventHandler(OnUndo), new CanExecuteRoutedEventHandler(OnQueryStatusUndo), KeyGesture.CreateFromResourceStrings(KeyUndo, SR.KeyUndoDisplayString), KeyGesture.CreateFromResourceStrings(KeyAltUndo, SR.KeyAltUndoDisplayString));
+                CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.Redo, new ExecutedRoutedEventHandler(OnRedo), new CanExecuteRoutedEventHandler(OnQueryStatusRedo), KeyGesture.CreateFromResourceStrings(KeyRedo, nameof(SR.KeyRedoDisplayString)));
             }
         }
 
@@ -561,24 +549,12 @@ namespace System.Windows.Documents
         /// </summary>
         internal void CloseToolTip()
         {
-            PopupControlService popupControlService = PopupControlService.Current;
-
-            if (popupControlService.CurrentToolTip != null &&
-                popupControlService.CurrentToolTip.IsOpen &&
-                popupControlService.CurrentToolTip.PlacementTarget == _uiScope)
-            {
-                popupControlService.CurrentToolTip.IsOpen = false;
-            }
+            PopupControlService.Current.DismissToolTipsForOwner(_uiScope);
         }
 
         /// <summary>
         /// Undo worker.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:Calls Composition.Complete which has a link demand
-        ///     TreatAsSafe: Does not expose the call
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void Undo()
         {
             TextEditorTyping._FlushPendingInputItems(this);
@@ -1562,11 +1538,6 @@ namespace System.Windows.Documents
         }
 
         // This method is called asynchronously after the first layout update.
-        /// <SecurityNote>
-        /// Critical: Calls critical code (TextServicesLoader.Load)
-        /// TreatAsSafe: Queries for the TSF thread manager, a safe operation
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private object InitTextStore(object o)
         {
             // We might have been detached before this callback got dispatched.
@@ -1713,12 +1684,6 @@ namespace System.Windows.Documents
         // ................................................................
 
         // GotKeyboardFocusEvent handler.
-        /// <SecurityNote>
-        /// Critical - adjusts internal state dealing with focus (including notifying
-        ///            unmanaged IME about this)
-        /// Safe - exposes no state, passes no state to the IME.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // Ignore the event if the sender is not new focus element.
@@ -1774,11 +1739,6 @@ namespace System.Windows.Documents
         // LostKeyboardFocusEvent handler
         //
         // Stop the caret from blinking
-        /// <SecurityNote>
-        /// Critical - manipulates focus, including calling critical method (GetImmComposition)
-        /// Safe - exposes no state, passes no state to the IME.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // Ignore the event if the sender is not old focus element.
@@ -1971,12 +1931,6 @@ namespace System.Windows.Documents
         // a strong referrence fromDispatcher. So TextEditorShutDownListener wraps this.
         private sealed class TextEditorShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public TextEditorShutDownListener(TextEditor target)
                 : base(target, ShutDownEvents.DomainUnload | ShutDownEvents.DispatcherShutdown)
             {
@@ -2135,5 +2089,9 @@ namespace System.Windows.Documents
         internal bool _isNextLineAdvanceMovingPositionAtDocumentHead;
 
         #endregion Private Fields
+
+        private const string KeyAltUndo = "Alt+Backspace";
+        private const string KeyRedo = "Ctrl+Y";
+        private const string KeyUndo = "Ctrl+Z";
     }
 }

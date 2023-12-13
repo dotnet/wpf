@@ -3,12 +3,12 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <CharacterSet>Unicode</CharacterSet>
 
-    <!-- v142 = Visual Studio 2019 -->
-    <PlatformToolset>v142</PlatformToolset>
+    <!-- v143 = Visual Studio 2022 -->
+    <PlatformToolset>v143</PlatformToolset>
 
-    <!-- 17134 is Windows 10 v1803 (RS4) SDK -->
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
-    
+    <!-- 17134 is Windows 10 v1903 (19H1) SDK -->
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+
     <ConfigurationType Condition="'$(ConfigurationType)'==''">DynamicLibrary</ConfigurationType>
     
     <!-- Windows 10 installation location is often not reliably set in msbuild -->
@@ -20,7 +20,10 @@
     <Architecture Condition="'$(Platform)'=='Win32'">x86</Architecture>
     <Architecture Condition="'$(Architecture)'==''">x64</Architecture>
 
-    <TraceWpp>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(Architecture)\tracewpp.exe</TraceWpp>
+    <!-- This should always use either x86 or x64 --> 
+    <TraceWppArchitecture Condition="'$(Architecture)'=='ARM64'">x64</TraceWppArchitecture>
+    <TraceWppArchitecture Condition="'$(Architecture)'!='ARM64'">$(Architecture)</TraceWppArchitecture>
+    <TraceWpp>$(Windows10SdkPath)bin\$(WindowsTargetPlatformVersion)\$(TraceWppArchitecture)\tracewpp.exe</TraceWpp>
 
     <GenerateAssemblyInfo>$(ManagedCxx)</GenerateAssemblyInfo>
     <BuildProjectReferences>true</BuildProjectReferences>
@@ -49,6 +52,22 @@
     <ManagedCxx Condition="'$(CLRSupport)'=='true'">true</ManagedCxx>
     <ManagedCxx Condition="'$(CLRSupport)'=='pure'">true</ManagedCxx>
   </PropertyGroup>
+  
+  <!-- 
+    Enable IDE support for C++/CLI .NET Core builds
+    -->
+  <PropertyGroup>
+    <CLRSupport Condition="'$(CLRSupport)' == 'pure'">NetCore</CLRSupport>
+  </PropertyGroup>
+  
+  <!-- 
+    When building C++/CLI..
+      ... Disable C# CoreGenerateSatelliteAssemblies target
+  -->
+  <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
+    <GenerateSatelliteAssembliesForCore>false</GenerateSatelliteAssembliesForCore>
+  </PropertyGroup>
+
 
   <PropertyGroup Condition="'$(ManagedCxx)' == 'true'">
       <!-- This is usually set by the Microsoft.NETFramework.CurrentVersion.props file, 
@@ -89,28 +108,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- 
-      If there is ever need to use a private C++ compiler front-end, use the logic in the commented section below,
-      and update global.json with the corresponding version of msvcurt-c1xx
-      
-      There is also a corresponding section (also commented out) in Wpf.Cpp.targets.
-      
-      msvcurt-c1xx should reference a blob hosted in azure storage that contains
-      msvcurt[d]_netcore.lib and c1xx.dll 
-    -->
-    <!-- <UsePrivateFrontEnd Condition="'$(UsePrivateFrontEnd)'==''">true</UsePrivateFrontEnd> --> 
-    <!-- Also update in global.json -->
-    <!--<MsvcurtC1xxVersion>0.0.0.4</MsvcurtC1xxVersion>-->
-    <!--<MsvcurtC1xxToolsPath>$(RepoRoot).tools\native\bin\msvcurt-c1xx\$(MsvcurtC1xxVersion)\$(Architecture)\</MsvcurtC1xxToolsPath>-->
-    <!--<MsvcurtNetCoreLib>$(MsvcurtC1xxToolsPath)msvcurt$(LibSuffix)_netcore.lib</MsvcurtNetCoreLib>-->
+    <UsePrivateCppTools Condition="'$(UsePrivateCppTools)' == ''">false</UsePrivateCppTools>
   </PropertyGroup>
+  <Import Project="Wpf.Cpp.PrivateTools.props" Condition="Exists('Wpf.Cpp.PrivateTools.props') And '$(UsePrivateCppTools)'=='true'"/>
   
-  <ItemDefinitionGroup Condition="'$(UsePrivateFrontEnd)'=='true' And '$(ManagedCxx)'=='true' and '$(ExplicitCrts)'=='true'">
-    <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(MsvcurtNetCoreLib)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-
   <!-- Set up standard libraries for Native C++ projects -->
   <PropertyGroup>
     <!-- Explicitly set up CRT and VC runtime libraries -->
@@ -123,10 +124,6 @@
 
     <!-- Always use Static VC Runtime -->
     <UseStaticVCRT Condition="'$(UseStaticVCRT)'==''">true</UseStaticVCRT>
-
-    <!-- Set up Directories -->
-    <VcrtLibDir>$(VCToolsInstallDir)lib\$(Architecture)\</VcrtLibDir>
-    <UcrtLibDir>$(UniversalCRTSdkDir)Lib\$(WindowsTargetPlatformVersion)\UCRT\$(Architecture)\</UcrtLibDir>
 
     <LibSuffix Condition="'$(Configuration)'=='Debug'">d</LibSuffix>
 
@@ -167,7 +164,7 @@
             linking to a privatized copy of vcruntime140d.dll here. Such build should simply copy over the debug version of vcruntime DLL's 
             to the appropriate location for testing purposes.
     -->
-    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
+    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure' or '$(CLRSupport)' == 'NetCore') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
 
 
     <StandardLibrariesForNativeCpp Condition="'$(ManagedCxx)'=='false'">$(StaticUCRTLibrary);$(StaticVCRTLibrary);$(StaticCRTStartupLibrary);$(StaticStandardCppLibrary);$(DynamicUCRTLibrary);$(DynamicVCRTLibrary);$(DynamicCRTStartupLibrary);$(DynamicStandardCppLibrary)</StandardLibrariesForNativeCpp>
@@ -176,7 +173,7 @@
     <!-- These runtime libs should not have their default lib requests included during link. Instead, just use the explicitly intended libraries from this section -->
     <NoDefaultLibClauseForRuntimeLibs>$(NoDefaultLibClauseForRuntimeLibs) /nodefaultlib:ucrt$(LibSuffix).lib /nodefaultlib:libucrt$(LibSuffix).lib /nodefaultlib:msvcrt$(LibSuffix).lib /nodefaultlib:libcmt$(LibSuffix).lib</NoDefaultLibClauseForRuntimeLibs>
 
-	  <!-- Disable managed incremental builds to disable MetaGen task, which currently fails -->
+    <!-- Disable managed incremental builds to disable MetaGen task, which currently fails -->
     <EnableManagedIncrementalBuild Condition="'$(ManagedCxx)'=='true'">false</EnableManagedIncrementalBuild>
 
     <!-- Do not enable this - see GenerateTargetFrameworkMonikerAttribute2 target in Wpf.Cpp.targets for additional information -->
@@ -192,13 +189,6 @@
 
     <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
     <ProduceReferenceAssembly Condition="'$(ManagedCxx)'=='true'">false</ProduceReferenceAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ComputeCompileInputsTargets Condition="$(ManagedCxx) == 'true'">
-      $(ComputeCompileInputsTargets);
-      SetMscorlibAdditionalUsingDirectory;
-    </ComputeCompileInputsTargets>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
@@ -257,7 +247,8 @@
       <!--<AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>-->
       <!--<ConformanceMode>false</ConformanceMode>-->
 
-      <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /clr:netcore</AdditionalOptions>
+      <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /clr:netcore /wd4956</AdditionalOptions>
+      <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -274,8 +265,6 @@
       <AdditionalOptions Condition="'$(ManagedCxx)'=='false'">%(AdditionalOptions) /MACHINE:$(Architecture)</AdditionalOptions>
       <TargetMachine>Machine$(Architecture)</TargetMachine>
 
-
-      <AdditionalLibraryDirectories Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">$(VcrtLibDir);$(UcrtLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalDependencies);$(StandardLibrariesForNativeCpp)</AdditionalDependencies>
       <AdditionalOptions Condition="('$(ManagedCxx)'=='false') and ('$(ExplicitCrts)'=='true')">%(AdditionalOptions) $(NoDefaultLibClauseForRuntimeLibs) $(DisallowLibClause)</AdditionalOptions>
       <AdditionalOptions Condition="'$(DllRenameClause)'!=''">%(AdditionalOptions) $(DllRenameClause)</AdditionalOptions>

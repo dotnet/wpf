@@ -15,7 +15,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.IO
 {
@@ -90,10 +89,6 @@ namespace System.IO
         /// <param name="fileOptions">desired options for the temp file (defaults to None)</param>
         /// <param name="extension">desired extension, or null (defaults to null)</param>
         /// <param name="subFolder">desired subfolder of temp folder, or null (defaults to "WPF")</param>
-        /// <SecurityNote>
-        ///     Critical - Calls into filesystem functions, returns local file path.
-        /// </SecurityNote>
-        [SecurityCritical]
         static internal FileStream CreateAndOpenTemporaryFile(
                     out string filePath,
                     FileAccess fileAccess=FileAccess.Write,
@@ -104,8 +99,6 @@ namespace System.IO
             const int MaxRetries = 5;
             int retries = MaxRetries;
             filePath = null;
-            bool needAsserts = System.Security.SecurityManager.CurrentThreadRequiresSecurityContextCapture();
-
             string folderPath = Path.GetTempPath();
 
             if (!String.IsNullOrEmpty(subFolder))
@@ -114,24 +107,10 @@ namespace System.IO
 
                 if (!Directory.Exists(subFolderPath))
                 {
-                    if (!needAsserts)
-                    {
-                        Directory.CreateDirectory(subFolderPath);
-                    }
-                    else
-                    {
-                        new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write, folderPath).Assert();
-                        Directory.CreateDirectory(subFolderPath);
-                        FileIOPermission.RevertAssert();
-                    }
+                    Directory.CreateDirectory(subFolderPath);
                 }
 
                 folderPath = subFolderPath;
-            }
-
-            if (needAsserts)
-            {
-                new FileIOPermission(FileIOPermissionAccess.Read | FileIOPermissionAccess.Write, folderPath).Assert();
             }
 
             FileStream stream = null;
@@ -175,19 +154,10 @@ namespace System.IO
         /// Delete a temporary file robustly.
         ///</summary>
         /// <param name="filePath">Path to the temp file.</param>
-        /// <SecurityNote>
-        ///     Critical - Calls into filesystem functions, asserts permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         static internal void DeleteTemporaryFile(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))
             {
-                bool needAsserts = System.Security.SecurityManager.CurrentThreadRequiresSecurityContextCapture();
-                if (needAsserts)
-                {
-                    new FileIOPermission(FileIOPermissionAccess.Write, filePath).Assert();
-                }
 
                 try
                 {
@@ -196,6 +166,11 @@ namespace System.IO
                 catch(System.IO.IOException)
                 {
                     // We may not be able to delete the file if it's being used by some other process (e.g. Anti-virus check).
+                    // There's nothing we can do in that case, so just eat the exception and leave the file behind
+                }
+                catch(System.UnauthorizedAccessException)
+                {
+                    // We may not be able to delete the file if we do not have rights to delete from the file folder.
                     // There's nothing we can do in that case, so just eat the exception and leave the file behind
                 }
             }

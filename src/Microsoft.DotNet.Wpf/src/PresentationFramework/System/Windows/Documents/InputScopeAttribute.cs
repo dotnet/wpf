@@ -9,7 +9,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 
@@ -55,10 +54,6 @@ namespace System.Windows.Documents
 
         // A method of ITfInputScope.
         // This returns InputScopes in the array that is allocated by CoTaskMemAlloc.
-        /// <SecurityNote>
-        /// Critical - it satisfies Marshal.* LinkDemands for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void GetInputScopes(out IntPtr ppinputscopes, out int count)
         {
             if (_inputScope != null)
@@ -71,7 +66,7 @@ namespace System.Windows.Documents
                 }
                 catch (OutOfMemoryException)
                 {
-                    throw new COMException(SR.Get(SRID.InputScopeAttribute_E_OUTOFMEMORY), NativeMethods.E_OUTOFMEMORY);
+                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
                 }
 
                 for (int i = 0; i < count; i++)
@@ -90,10 +85,6 @@ namespace System.Windows.Documents
 
         // A method of ITfInputScope.
         // This returns BSTRs in the array that is allocated by CoTaskMemAlloc.
-        /// <SecurityNote>
-        /// Critical - it satisfies Marshal.AllocCoTaskMem() LinkDemand for unmanaged code permissions. handles out a valid pointer to unmanaged memory.
-        /// </SecurityNote>
-        [SecurityCritical]
         public int GetPhrase(out IntPtr ppbstrPhrases, out int count)
         {
             count = _inputScope == null ? 0 : _inputScope.PhraseList.Count;
@@ -103,7 +94,7 @@ namespace System.Windows.Documents
             }
             catch (OutOfMemoryException)
             {
-                throw new COMException(SR.Get(SRID.InputScopeAttribute_E_OUTOFMEMORY), NativeMethods.E_OUTOFMEMORY);
+                throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
             }
 
             int offset = 0;
@@ -122,7 +113,7 @@ namespace System.Windows.Documents
                         Marshal.FreeBSTR(Marshal.ReadIntPtr(ppbstrPhrases,  offset));
                         offset += Marshal.SizeOf(typeof(IntPtr));
                     }
-                    throw new COMException(SR.Get(SRID.InputScopeAttribute_E_OUTOFMEMORY), NativeMethods.E_OUTOFMEMORY);
+                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
                 }
 
                 Marshal.WriteIntPtr(ppbstrPhrases , offset, pbstr);

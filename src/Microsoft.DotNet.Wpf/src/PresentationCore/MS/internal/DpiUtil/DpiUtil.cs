@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 namespace MS.Internal
 {
     using MS.Utility;
@@ -35,10 +35,6 @@ namespace MS.Internal
         ///     .. gets the value from the PROCESS_DPI_AWARENESS of
         ///             the currently executing process
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls into critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static DpiAwarenessContextHandle GetDpiAwarenessContext(IntPtr hWnd)
         {
             return DpiAwarenessContextHelper.GetDpiAwarenessContext(hWnd);
@@ -55,11 +51,6 @@ namespace MS.Internal
         /// PROCESS_DPI_AWARENESS value, then the value is obtained from the
         /// current process' DPI awareness information.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: Passes critical window handle (HWND)
-        ///     Safe: Returns only non-critical information to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static PROCESS_DPI_AWARENESS GetProcessDpiAwareness(IntPtr hWnd)
         {
             return ProcessDpiAwarenessHelper.GetProcessDpiAwareness(hWnd);
@@ -148,11 +139,6 @@ namespace MS.Internal
         /// <param name="hWnd">The handle to the HWND</param>
         /// <param name="fallbackToNearestMonitorHeuristic">The semantics of this parameter are identical to that in <see cref="GetWindowDpi(IntPtr, bool)"/></param>
         /// <returns>Extended DPI information</returns>
-        /// <SecurityNote>
-        ///     Critical:   Takes a native handle as input
-        ///     Safe:   Does not return any Critical information back to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static HwndDpiInfo GetExtendedDpiInfoForWindow(IntPtr hWnd, bool fallbackToNearestMonitorHeuristic)
         {
             return new HwndDpiInfo(hWnd, fallbackToNearestMonitorHeuristic);
@@ -166,11 +152,6 @@ namespace MS.Internal
         /// <returns>Extended DPI information</returns>
         /// <remarks>If the window DPI could not be obtained directly, then it uses the DPI of the nearest
         /// monitor as a fall-back value</remarks>
-        /// <SecurityNote>
-        ///     Critical:   Takes a native handle as input
-        ///     Safe:   Does not return any Critical information back to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static HwndDpiInfo GetExtendedDpiInfoForWindow(IntPtr hWnd)
         {
             return GetExtendedDpiInfoForWindow(hWnd, true);

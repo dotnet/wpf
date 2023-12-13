@@ -2,13 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows;
+using MS.Internal.Text;
 
 namespace System.Windows.Controls
 {
@@ -84,7 +85,7 @@ namespace System.Windows.Controls
             // There are characters in Asian languages which require more than 2 bytes for encoding into UTF-8
             // Marshal.SystemDefaultCharSize is 2 and would not be appropriate in all cases. We have to explicitly calculate the number of bytes.  
             byte[] sourceBytes = Encoding.Unicode.GetBytes(content.ToString());
-            byte[] destinationBytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, sourceBytes);
+            byte[] destinationBytes = InternalEncoding.Convert(Encoding.Unicode, Encoding.UTF8, sourceBytes);
 
             int bytecountEndOfFragment = bytecountPrefixContext + destinationBytes.Length;
             int bytecountEndOfHtml = bytecountEndOfFragment + bytecountSuffixContext;

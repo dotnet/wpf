@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink
 {
@@ -23,8 +22,8 @@ namespace MS.Internal.Ink
     internal struct StrokeFIndices : IEquatable<StrokeFIndices>
     {
         #region Private statics
-        private static StrokeFIndices s_empty = new StrokeFIndices(AfterLast, BeforeFirst);
-        private static StrokeFIndices s_full = new StrokeFIndices(BeforeFirst, AfterLast);
+        private static readonly StrokeFIndices s_empty = new StrokeFIndices(AfterLast, BeforeFirst);
+        private static readonly StrokeFIndices s_full = new StrokeFIndices(BeforeFirst, AfterLast);
         #endregion
 
         #region Internal API

@@ -369,7 +369,7 @@
       </trans-unit>
       <trans-unit id="XpsSerializerFactory_ManufacturerWebsite">
         <source>http://www.microsoft.com</source>
-        <target state="translated">http://www.microsoft.com/ko/kr/default.aspx</target>
+        <target state="translated">http://www.microsoft.com</target>
         <note />
       </trans-unit>
       <trans-unit id="XpsSerializerFactory_WriterIsClosed">

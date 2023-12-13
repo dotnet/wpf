@@ -19,7 +19,6 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.PresentationFramework;                   // SecurityHelper
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Documents
 {
@@ -64,10 +63,6 @@ namespace System.Windows.Documents
         //------------------------------------------------------
 
         // TextStore calls this to register it and advise sink.
-        /// <SecurityNote>
-        ///     Critical: This code accesses DocumentMgr,Source (inside of _RegisterTextStore)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterTextStore(TextStore textstore)
         {
             // VerifyAccess();
@@ -81,10 +76,6 @@ namespace System.Windows.Documents
         }
 
         // Free all resources associated with a TextStore.
-        /// <SecurityNote>
-        ///     Critical: This code invokes OnUnregisterTextStore which is a Critical method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void UnregisterTextStore(TextStore textstore, bool finalizer)
         {
             if (!finalizer)
@@ -102,10 +93,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into native code.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void RegisterWinEventSink(TextStore textstore)
         {
             // Start WinEvent hook to listen windows move/size event.
@@ -119,10 +106,6 @@ namespace System.Windows.Documents
             _winEvent.RegisterTextStore(textstore);
         }
 
-        /// <SecurityNote>
-        ///    Critical: This code calls into native code.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void UnregisterWinEventSink(TextStore textstore)
         {
             _winEvent.UnregisterTextStore(textstore);
@@ -137,10 +120,6 @@ namespace System.Windows.Documents
         }
 
         // Start the transitory extestion for Cicero Level1/Level2 composition window support.
-        /// <SecurityNote>
-        ///    Critical: This code calls into ITfCompartmentMgr and ItfCompartment both of which are critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void StartTransitoryExtension(TextStore textstore)
         {
             Guid guid;
@@ -173,10 +152,6 @@ namespace System.Windows.Documents
         }
 
         // Stop TransitoryExtesion
-        /// <SecurityNote>
-        ///    Critical: This code calls into ITfCompartmentMgr and ItfCompartment both of which are critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void StopTransitoryExtension(TextStore textstore)
         {
             Guid guid;
@@ -232,12 +207,8 @@ namespace System.Windows.Documents
 
 
         // Return ITfThreadMgr
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfThreadMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
         internal UnsafeNativeMethods.ITfThreadMgr ThreadManager
         {
-            [SecurityCritical]
             get
             {
                 if (_threadManager == null)
@@ -258,11 +229,6 @@ namespace System.Windows.Documents
         #region Private Method
 
         // This is a callback in the dispacher thread to unregister TextStore.
-        /// <SecurityNote>
-        /// Critical - As this calls methods on ITfContext, ItfSource and ITfDocumentMgr
-        ///            under elevation to unregister the text source.
-        /// </SecurityNote>
-        [SecurityCritical]
         private object OnUnregisterTextStore(object arg)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -273,7 +239,6 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            SecurityPermission secperm = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
             TextStore textstore = (TextStore)arg;
 
             // We don't have to release Dispatcher.
@@ -298,15 +263,7 @@ namespace System.Windows.Documents
                 Marshal.ReleaseComObject(context);
             }
 
-            secperm.Assert();
-            try
-            {
-                textstore.DocumentManager.Pop(UnsafeNativeMethods.PopFlags.TF_POPF_ALL);
-            }
-            finally
-            {
-                SecurityPermission.RevertAssert();
-            }
+            textstore.DocumentManager.Pop(UnsafeNativeMethods.PopFlags.TF_POPF_ALL);
             Marshal.ReleaseComObject(textstore.DocumentManager);
             textstore.DocumentManager = null;
 
@@ -326,10 +283,6 @@ namespace System.Windows.Documents
         }
 
         // This is a callback when Dispatcher is finished.
-        /// <SecurityNote>
-        ///     Critical: This code diactivate thread manager.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnDispatcherShutdownFinished(object sender, EventArgs args)
         {
             Debug.Assert(CheckAccess(), "OnDispatcherShutdownFinished called on bad thread!");
@@ -351,10 +304,6 @@ namespace System.Windows.Documents
 
         // Activate TIM if it is not activated yet by this TextServicesHost.
         // And advise sinks for the given textstore.
-        /// <SecurityNote>
-        ///     Critical: This code accesses DocumentMgr,Source
-        /// </SecurityNote>
-        [SecurityCritical]
         private void _RegisterTextStore(TextStore textstore)
         {
             UnsafeNativeMethods.ITfDocumentMgr doc;
@@ -432,10 +381,6 @@ namespace System.Windows.Documents
         }
 
         // Deactivate and release ThreadManager.
-        /// <SecurityNote>
-        ///     Critical: This code deactivate ThreadManager by accessing ITfThreadMgr
-        /// </SecurityNote>
-        [SecurityCritical]
         private void DeactivateThreadManager()
         {
             if (_threadManager != null) 
@@ -480,16 +425,9 @@ namespace System.Windows.Documents
         private int _registeredtextstorecount;
 
         // TSF ClientId from Activate call.
-        /// <SecurityNote>
-        ///     Critical: _clientId is an identifier for Cicero.
-        /// </SecurityNote>
         private SecurityCriticalData<int> _clientId;
 
         // The root TSF object, created on demand.
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfThreadMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr> _threadManager;
 
         // This is true if Dispatcher is finished.

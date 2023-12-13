@@ -25,16 +25,9 @@ namespace MS.Internal.Printing.Configuration
         /// Encode with UTF-8
         /// Include XML declaration
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical    - Sets Critical member; 
-        ///</SecurityNote>
-        [SecurityCritical]
         public PrintCapabilitiesWriter(Stream stream, string privateQname, string privateNamespace, bool indent)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.CheckCharacters = false;
@@ -51,11 +44,6 @@ namespace MS.Internal.Printing.Configuration
             this._strings = new COMPSTUISR();
         }
 
-        ///<SecurityNote>
-        /// Critical    - Calls Critical code to dispose a native resource that may still be in use; 
-        ///             - Sets critical member
-        ///</SecurityNote>
-        [SecurityCritical]
         public void Release()
         {
             if (this._writer != null)
@@ -830,19 +818,11 @@ namespace MS.Internal.Printing.Configuration
             this._writer.WriteEndAttribute();
         }
 
-        ///<SecurityNote>
-        /// Critical    - Accesses critical member
-        ///</SecurityNote>
-        [SecurityCritical]
         private string GetDisplayString(uint srid)
         {
             return _strings.Get(srid);
         }
 
-        ///<SecurityNote>
-        /// Critical    - Provides access to native resource.
-        ///</SecurityNote>
-        [SecurityCritical]
         private COMPSTUISR _strings;
 
         private XmlWriter _writer;

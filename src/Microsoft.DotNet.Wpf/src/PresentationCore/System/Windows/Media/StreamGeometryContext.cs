@@ -13,7 +13,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 
 
 #if !PBTCOMPILER 
@@ -28,7 +27,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.PresentationCore;
 

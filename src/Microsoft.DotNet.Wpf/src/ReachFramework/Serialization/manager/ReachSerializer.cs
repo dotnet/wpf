@@ -18,7 +18,6 @@ using System.Reflection;
 using System.Xml;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
@@ -47,10 +46,7 @@ namespace System.Windows.Xps.Serialization
             PackageSerializationManager   manager
             )
         {
-            if(manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(manager);
             _serializationManager = manager;
             _xmlWriter            = null;
         }
@@ -77,11 +73,6 @@ namespace System.Windows.Xps.Serialization
         /// <param name="serializedObject">
         /// Instance of object to be serialized.
         /// </param>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         public
         virtual
         void
@@ -89,13 +80,10 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            if(serializedObject == null)
+            ArgumentNullException.ThrowIfNull(serializedObject);
+            if (SerializationManager == null)
             {
-                throw new ArgumentNullException("serializedObject");
-            }
-            if(SerializationManager == null)
-            {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_MustHaveSerializationManager));
+                throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
             //
             // At this stage discover the graph of properties of the object that
@@ -144,11 +132,6 @@ namespace System.Windows.Xps.Serialization
         /// The context of the property being serialized at this time and
         /// it points internally to the object encapsulated by that node.
         /// </param>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         internal
         virtual
         void
@@ -156,14 +139,11 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializedProperty
             )
         {
-            if(serializedProperty == null)
-            {
-                throw new ArgumentNullException("serializedProperty");
-            }
+            ArgumentNullException.ThrowIfNull(serializedProperty);
 
-            if(SerializationManager == null)
+            if (SerializationManager == null)
             {
-                throw new XpsSerializationException(SR.Get(SRID.ReachSerialization_MustHaveSerializationManager));
+                throw new XpsSerializationException(SR.ReachSerialization_MustHaveSerializationManager);
             }
 
             //
@@ -238,10 +218,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             if (!serializableObjectContext.IsReadOnlyValue && 
                 serializableObjectContext.IsComplexValue)
@@ -264,10 +241,7 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
         }
 
         #endregion Internal Methods
@@ -288,11 +262,6 @@ namespace System.Windows.Xps.Serialization
         /// object stemmed. This could be null if this is the node object
         /// or the object has no parent.
         /// </param>
-        /// <SecurityNote>
-        /// Critical -  Access the SerializationManager GraphContextStack which is a 
-        /// ContextStack which is link critical
-        /// </SecurityNote>
-        [SecurityCritical]
         private
         SerializableObjectContext
         DiscoverObjectData(
@@ -337,10 +306,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext   serializableObjectContext
             )
         {
-            if (serializableObjectContext == null)
-            {
-                throw new ArgumentNullException("serializableObjectContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             SerializablePropertyCollection propertyCollection = serializableObjectContext.PropertiesCollection;
 
@@ -369,12 +335,9 @@ namespace System.Windows.Xps.Serialization
             SerializablePropertyContext serializablePropertyContext
             )
         {
-            if(serializablePropertyContext == null)
-            {
-                throw new ArgumentNullException("serializablePropertyContext");
-            }
+            ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
-            if(!serializablePropertyContext.IsComplex)
+            if (!serializablePropertyContext.IsComplex)
             {
                 //
                 // Non-Complex Properties are serialized as attributes

@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
@@ -21,7 +20,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -37,11 +35,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor for WmpBitmapEncoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - will eventually create unmanaged resources
-        /// PublicOk - all inputs are verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public WmpBitmapEncoder() :
             base(true)
         {
@@ -72,7 +65,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0.0) || (value > 1.0))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0.0, 1.0));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0.0, 1.0));
                 }
 
                 _imagequalitylevel= value;
@@ -236,7 +229,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 1) || (value > 255))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 1, 255));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 1, 255));
                 }
 
                 _qualitylevel = value;
@@ -257,7 +250,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 3))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 3));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 3));
                 }
 
                 _subsamplinglevel = value;
@@ -278,7 +271,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 2))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 2));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 2));
                 }
 
                 _overlaplevel = value;
@@ -299,7 +292,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 4096))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 4096));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 4096));
                 }
 
                 _horizontaltileslices = value;
@@ -320,7 +313,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 4096))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 4096));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 4096));
                 }
 
                 _verticaltileslices = value;
@@ -371,7 +364,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 255))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 255));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 255));
                 }
 
                 _alphaqualitylevel = value;
@@ -407,7 +400,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 3))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 3));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 3));
                 }
 
                 _imagedatadiscardlevel = value;
@@ -428,7 +421,7 @@ namespace System.Windows.Media.Imaging
             {
                 if ((value < 0) || (value > 4))
                 {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeBetween, 0, 4));
+                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 0, 4));
                 }
 
                 _alphadatadiscardlevel = value;
@@ -455,10 +448,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Setups the encoder and other properties before encoding each frame
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls Critical IPropertyBag2.Write() and Critical Initialize()
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             PROPBAG2 propBag = new PROPBAG2();
@@ -890,12 +879,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Returns the container format for this encoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - uses guid to create unmanaged resources
-        /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -916,10 +901,6 @@ namespace System.Windows.Media.Imaging
 
         #region Data Members
 
-        /// <SecurityNote>
-        /// Critical - CLSID used for creation of critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatWmp;
 
         private const bool c_defaultLossless = false;

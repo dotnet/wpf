@@ -56,10 +56,7 @@ namespace MS.Internal.Ink
 
         internal ClipboardProcessor(InkCanvas inkCanvas)
         {
-            if ( inkCanvas == null )
-            {
-                throw new ArgumentNullException("inkCanvas");
-            }
+            ArgumentNullException.ThrowIfNull(inkCanvas);
 
             _inkCanvas = inkCanvas;
 
@@ -105,11 +102,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="dataObject">The IDataObject instance</param>
         /// <returns>true if there is data being copied. Otherwise return false</returns>
-        /// <SecurityNote>
-        ///     Critical: This code copies ink content to the clipboard
-        ///                 Note the TAS boundary is InkCanvas.CopyToDataObject
-        /// </SecurityNote>
-        [SecurityCritical]
         internal InkCanvasClipboardDataFormats CopySelectedData(IDataObject dataObject)
         {
             InkCanvasClipboardDataFormats copiedDataFormat = InkCanvasClipboardDataFormats.None;
@@ -218,9 +210,9 @@ namespace MS.Internal.Ink
                                 // If the Xaml data has been set in an InkCanvas, the top element will be a container InkCanvas.
                                 // In this case, the new elements will be the children of the container.
                                 // Otherwise, the new elements will be whatever data from the data object.
-                                if (elements.Count == 1 && ClipboardProcessor.InkCanvasDType.IsInstanceOfType(elements[0]))
+                                if (elements.Count == 1 && elements[0] is InkCanvas inkCanvas)
                                 {
-                                    TearDownInkCanvasContainer((InkCanvas)( elements[0] ), ref newStrokes, ref newElements);
+                                    TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
                                 }
                                 else
                                 {
@@ -295,7 +287,7 @@ namespace MS.Internal.Ink
                                 clipboardData = new TextClipboardData();
                                 break;
                             default:
-                                throw new ArgumentException(SR.Get(SRID.InvalidClipboardFormat), "value");
+                                throw new ArgumentException(SR.InvalidClipboardFormat, "value");
                         }
 
                         preferredData.Add(format, clipboardData);
@@ -326,27 +318,10 @@ namespace MS.Internal.Ink
         /// <param name="transform"></param>
         /// <param name="size"></param>
         /// <returns>True if the copy is succeeded</returns>
-        /// <SecurityNote>
-        ///     Critical:   This code calls CopyToDataObject which is critical. 
-        ///                 Note the TAS boundary is InkCanvas.CopyToDataObject
-        /// 
-        ///     TreatAsSafe: We only execute this code if the application has UnmanagedCode permission 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool CopySelectionInXAML(IDataObject dataObject, StrokeCollection strokes, List<UIElement> elements, Matrix transform, Size size)
         {
-            //NOTE: after meeting with the partial trust team, we have 
-            //collectively decided to only allow copy / cut of XAML if the caller
-            //has unmanagedcode permission, else we silently ignore the XAML
-            if (!SecurityHelper.CheckUnmanagedCodePermission())
-            {
-                return false;
-            }
-            else
-            {
                 InkCanvas inkCanvas = new InkCanvas();
 
-                // NOTICE-2005/12/06-WAYNEZEN,
                 // We already transform the Strokes in CopySelectedData.
                 if (strokes.Count != 0)
                 {
@@ -367,25 +342,13 @@ namespace MS.Internal.Ink
                         //      1. Presist the elements to Xaml 
                         //      2. Load the xaml to create the new instances of the elements.
                         //      3. Add the new instances to the new container.
-                        string xml;
+                        string xml = XamlWriter.Save(elements[i]);
 
-                        try
-                        {
-                            xml = XamlWriter.Save(elements[i]);
+                        UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
+                        ((IAddChild)inkCanvas).AddChild(newElement);
 
-                            UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
-                            ((IAddChild)inkCanvas).AddChild(newElement);
-
-                            // Now we tranform the element.
-                            inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
-                        }
-                        catch (SecurityException)
-                        {
-                            // If we hit a SecurityException under the PartialTrust, we should just stop generating
-                            // the containing InkCanvas.
-                            inkCanvas = null;
-                            break;
-                        }
+                        // Now we tranform the element.
+                        inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
                     }
                 }
 
@@ -409,7 +372,6 @@ namespace MS.Internal.Ink
                 }
 
                 return inkCanvas != null;
-            }
         }
 
         private void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)

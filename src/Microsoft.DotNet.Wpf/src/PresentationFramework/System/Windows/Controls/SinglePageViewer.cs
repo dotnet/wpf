@@ -375,11 +375,6 @@ namespace System.Windows.Controls
         /// This is the method that responds to the KeyDown event.
         /// </summary>
         /// <param name="e">Event arguments</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnKeyDown(KeyEventArgs e)
         {
             // Esc -- Close FindToolBar
@@ -519,7 +514,7 @@ namespace System.Windows.Controls
                 // Undo new document assignment.
                 Document = null;
                 // Throw exception.
-                throw new NotSupportedException(SR.Get(SRID.FlowDocumentPageViewerOnlySupportsFlowDocument));
+                throw new NotSupportedException(SR.FlowDocumentPageViewerOnlySupportsFlowDocument);
             }
 
             if(Document != null)
@@ -1452,7 +1447,7 @@ namespace System.Windows.Controls
         private static bool ZoomValidateValue(object o)
         {
             double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThan(value, 0d));
+            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
         }
 
         /// <summary>

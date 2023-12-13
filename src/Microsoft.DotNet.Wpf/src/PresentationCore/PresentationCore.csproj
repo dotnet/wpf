@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);CORE_NATIVEMETHODS;PRESENTATION_CORE;COMMONDPS</DefineConstants>
@@ -8,14 +8,19 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <GenerateResourcesSRNamespace>MS.Internal.PresentationCore</GenerateResourcesSRNamespace>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
-  
+
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>  
+    
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
+    <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="System\AppContextDefaultValues.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
@@ -31,7 +36,6 @@
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\AppDomainShutdownMonitor.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataForMultipleGetAndSet.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
@@ -91,17 +95,16 @@
     <Compile Include="$(WpfSharedDir)\System\Windows\Ink\KnownIds.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OperatingSystemVersion.cs" />
     <Compile Include="$(WpfSharedDir)\System\Windows\Interop\OSVersionHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\System\Windows\Media\TypeConverterHelper.cs" />        
+    <Compile Include="$(WpfSharedDir)\System\Windows\Media\TypeConverterHelper.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\EventSourceActivity.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\XpsOMPrintingTraceLogger.cs" />
-    <Compile Include="otherassemblyattrs.cs" />
-    <Compile Include="SR.cs" />
+    <Compile Include="ModuleInitializer.cs" />
+    <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
     <Compile Include="MS\Internal\CheckedPointers.cs" />
     <Compile Include="MS\Internal\Classification.cs" />
-    <Compile Include="MS\Internal\ConstrainedDataObject.cs" />
     <Compile Include="MS\Internal\CoreAppContextSwitches.cs" />
     <Compile Include="MS\Internal\CustomCategoryAttribute.cs" />
     <Compile Include="MS\Internal\DeferredElementTreeState.cs" />
@@ -109,7 +112,7 @@
     <Compile Include="MS\Internal\DpiUtil\DpiUtil.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+DpiAwarenessContextHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+DpiAwarenessScope.cs" />
-    <Compile Include="MS\Internal\DpiUtil\DpiUtil+HwndDpiInfo.cs" />    
+    <Compile Include="MS\Internal\DpiUtil\DpiUtil+HwndDpiInfo.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+ProcessDpiAwarenessHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+SystemDpiHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+WindowDpiScaleHelper.cs" />
@@ -226,6 +229,17 @@
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeDescriptor.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeSerializer.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\TransformDescriptor.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFace.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFile.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFileLoader.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteTextAnalyzer.cs" />
+    <Compile Include="MS\Internal\Interop\IUnknown.cs" />
+    <Compile Include="MS\Internal\Interop\NativePointerCriticalHandle.cs" />
     <Compile Include="MS\Internal\Interop\TipTsfHelper.cs" />
     <Compile Include="MS\Internal\IO\Packaging\ByteRangeDownloader.cs" />
     <Compile Include="MS\Internal\IO\Packaging\DeobfuscatingStream.cs" />
@@ -259,6 +273,9 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />
@@ -289,6 +306,7 @@
     <Compile Include="MS\Internal\TextFormatting\ThousandthOfEmRealPoints.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPane.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPaneRcw.cs" />
+    <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\NativeMethods.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPenimc.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPointer.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsTablet.cs" />
@@ -328,6 +346,7 @@
     <Compile Include="System\Windows\Duration.cs" />
     <Compile Include="System\Windows\DurationConverter.cs" />
     <Compile Include="System\Windows\EventHandlersStore.cs" />
+    <Compile Include="System\Windows\EventHelper.cs" />
     <Compile Include="System\Windows\EventManager.cs" />
     <Compile Include="System\Windows\EventPrivateKey.cs" />
     <Compile Include="System\Windows\EventRoute.cs" />
@@ -385,6 +404,7 @@
     <Compile Include="System\Windows\UIElement3D.cs" />
     <Compile Include="System\Windows\UIPropertyMetadata.cs" />
     <Compile Include="System\Windows\Automation\AutomationLiveSetting.cs" />
+    <Compile Include="System\Windows\Automation\AutomationHeadingLevel.cs" />
     <Compile Include="System\Windows\Automation\AutomationProperties.cs" />
     <Compile Include="System\Windows\Automation\IsOffscreenBehavior.cs" />
     <Compile Include="System\Windows\Automation\Peers\AutomationPeer.cs" />
@@ -542,7 +562,6 @@
     <Compile Include="System\Windows\Input\Command\CommandManager.cs" />
     <Compile Include="System\Windows\Input\Command\ComponentCommands.cs" />
     <Compile Include="System\Windows\Input\Command\ExecutedRoutedEventArgs.cs" />
-    <Compile Include="System\Windows\Input\Command\ICommand.cs" />
     <Compile Include="System\Windows\Input\Command\ICommandSource.cs" />
     <Compile Include="System\Windows\Input\Command\InputBinding.cs" />
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
@@ -654,7 +673,7 @@
     <Compile Include="System\Windows\InterOp\Imaging.cs" />
     <Compile Include="System\Windows\InterOp\IStylusInputProvider.cs" />
     <Compile Include="System\Windows\InterOp\IWin32Window.cs" />
-    <Compile Include="System\Windows\InterOp\OperatingSystemVersionCheck.cs" />
+    <Compile Include="System\Windows\Interop\OperatingSystemVersionCheck.cs" />
     <Compile Include="System\Windows\Markup\IAddChild.cs" />
     <Compile Include="System\Windows\Markup\IProvidePropertyFallback.cs" />
     <Compile Include="System\Windows\Markup\XamlSerializerUtil.cs" />
@@ -768,7 +787,7 @@
     <Compile Include="System\Windows\Media\MILUtilities.cs" />
     <!-- Empty and clashes with NativeMethods in WindowsBase, which we require <Compile Include="System\Windows\Media\NativeMethodsMilCoreApi.cs" /> -->
     <Compile Include="System\Windows\Media\Parsers.cs" />
-    <Compile Include="System\Windows\Media\parserscommon.cs" />
+    <Compile Include="System\Windows\Media\ParsersCommon.cs" />
     <Compile Include="System\Windows\Media\PathFigure.cs" />
     <Compile Include="System\Windows\Media\PathFigureCollection.cs" />
     <Compile Include="System\Windows\Media\PathGeometry.cs" />
@@ -1358,57 +1377,55 @@
 
   <ItemGroup>
     <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="netstandard" />    
-    <NetCoreReference Include="System" />    
+    <NetCoreReference Include="Microsoft.Win32.Registry" />
+    <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />    
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
     <NetCoreReference Include="System.ComponentModel.Primitives" />
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Console" />
     <NetCoreReference Include="System.Diagnostics.Contracts" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Diagnostics.Tracing" />
-    <NetCoreReference Include="System.Diagnostics.TraceSource" />
-    <NetCoreReference Include="System.Diagnostics.TextWriterTraceListener" />
-    <NetCoreReference Include="System.Diagnostics.StackTrace" />
     <NetCoreReference Include="System.Diagnostics.Debug" />
     <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.StackTrace" />
+    <NetCoreReference Include="System.Diagnostics.TextWriterTraceListener" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Diagnostics.Tracing" />
     <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Net.Requests" />
-    <NetCoreReference Include="System.Net.WebHeaderCollection" />    
+    <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.CompilerServices.VisualC" />
     <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices.WindowsRuntime" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
+    <NetCoreReference Include="System.Text.Encoding.Extensions" />
+    <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Tasks" />
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
-    <NetCoreReference Include="System.Threading.Timer" />    
-    <NetCoreReference Include="System.Text.Encoding.Extensions" />
-    <NetCoreReference Include="System.Text.RegularExpressions" />
+    <NetCoreReference Include="System.Threading.Timer" />
     <NetCoreReference Include="System.Xml.ReaderWriter" />
+    <NetCoreReference Include="netstandard" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
-    <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- required for internals access -->
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore-CommonResources\PresentationCore-CommonResources.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
@@ -1417,6 +1434,24 @@
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+  <!--
+    Need Microsoft.WinFX.targets to embed *.compositefont
+    files using MainResourcesGeneration target
+  -->
+  <PropertyGroup>
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\*.CompositeFont">
+      <GenerateSource>false</GenerateSource>
+      <XlfSource>false</XlfSource>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -1427,11 +1462,34 @@
       <XlfInput>false</XlfInput>
       <ManifestResourceName>ColorProfiles</ManifestResourceName>
     </EmbeddedResource>
+
+    <!--
+        Workaround for https://github.com/dotnet/wpf/issues/1385
+        ReadyToRun images of WPF applications crash
+
+        When producing ReadyToRun images, the ILLinker is configured to skip
+        C++/CLI images. See https://github.com/mono/linker/issues/651 and
+        https://github.com/mono/linker/pull/658.
+
+        In turn, this results in the failure of the dependencies of such assemblies from being
+        identified and included in the ReadyToRun images.
+
+        This linker hint exists to ensure that such dependencies are included. We need
+        to place these hints in an assembly that has a reference to the corresponding
+        C++/CLI assembly.
+
+             PresentationCore -> DirectWriteFowarder
+             ReachFramework -> System.Printing
+    -->
+    <EmbeddedResource Condition="Exists('ILLinkTrim.xml')" Include="ILLinkTrim.xml">
+      <XlfInput>false</XlfInput>
+      <LogicalName>$(AssemblyName).xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <!-- Including the Microsoft.TextTemplating.targets requires us to manually import Sdk.Targets because
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
-       which is modified by the T4 targets, to be overwritten, so the TransformAll target 
+       which is modified by the T4 targets, to be overwritten, so the TransformAll target
        doesn’t run before the Build target. -->
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />

@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -24,7 +23,6 @@ using System.Windows.Media.Media3D;
 using MS.Internal.PresentationCore;
 using MS.Internal.Media3D;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Media3D
 {

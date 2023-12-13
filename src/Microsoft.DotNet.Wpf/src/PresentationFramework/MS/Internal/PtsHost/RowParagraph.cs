@@ -186,10 +186,6 @@ namespace MS.Internal.PtsHost
         /// <param name="rgpfsCell">Cell clients</param>
         /// <param name="urBBox">Bounding box</param>
         /// <param name="durBBox">Bounding box</param>
-        /// <SecurityNote>
-        /// Critical, because it is unsafe method.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void CalcHorizontalBBoxOfRow(
             int cCells,
             IntPtr* rgnmCell,
@@ -221,10 +217,6 @@ namespace MS.Internal.PtsHost
         /// <param name="cCells">Cell amount reserves by PTS for the row</param>
         /// <param name="rgnmCell">Array of cell names</param>
         /// <param name="rgkcellmerge">Array of vertical merge flags</param>
-        /// <SecurityNote>
-        /// Critical - takes pointers that cannot be validated by this method
-        /// </SecurityNote>
-        [SecurityCritical]
         internal unsafe void GetCells(
             int cCells,
             IntPtr* rgnmCell,
@@ -323,7 +315,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-                _spannedCells = new CellParagraph[0];
+                _spannedCells = Array.Empty<CellParagraph>();
             }
 
             for(int index = 0; index < _spannedCells.Length; index++)

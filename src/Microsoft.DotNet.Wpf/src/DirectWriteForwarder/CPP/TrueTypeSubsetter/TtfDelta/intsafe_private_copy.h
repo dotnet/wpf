@@ -46,7 +46,6 @@ typedef unsigned __int64    ULONGLONG;
 //
 // UINT addition
 //
-[System::Security::SecurityCritical]
 __checkReturn
 __inline
 HRESULT
@@ -74,7 +73,6 @@ UIntAdd(
 //
 // ULONGLONG -> ULONG conversion
 //
-[System::Security::SecurityCritical]
 __checkReturn
 __inline
 HRESULT
@@ -101,7 +99,6 @@ ULongLongToULong(
 //
 // ULONG multiplication
 //
-[System::Security::SecurityCritical]
 __checkReturn
 __inline
 HRESULT
@@ -118,7 +115,6 @@ ULongMult(
 //
 // ULONG subtraction
 //
-[System::Security::SecurityCritical]
 __checkReturn
 __inline
 HRESULT

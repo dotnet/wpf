@@ -49,11 +49,8 @@ namespace System.Windows.Threading
         /// </param>
         public DispatcherTimer(DispatcherPriority priority, Dispatcher dispatcher)  // NOTE: should be Priority
         {
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
-            
+            ArgumentNullException.ThrowIfNull(dispatcher);
+
             Initialize(dispatcher, priority, TimeSpan.FromMilliseconds(0));
         }
 
@@ -76,20 +73,14 @@ namespace System.Windows.Threading
         /// </param>
         public DispatcherTimer(TimeSpan interval, DispatcherPriority priority, EventHandler callback, Dispatcher dispatcher) // NOTE: should be Priority
         {
-            if(callback == null)
-            {
-                throw new ArgumentNullException("callback");
-            }
-            if(dispatcher == null)
-            {
-                throw new ArgumentNullException("dispatcher");
-            }
+            ArgumentNullException.ThrowIfNull(callback);
+            ArgumentNullException.ThrowIfNull(dispatcher);
 
             if (interval.TotalMilliseconds < 0)
-                throw new ArgumentOutOfRangeException("interval", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooSmall));
+                throw new ArgumentOutOfRangeException("interval", SR.TimeSpanPeriodOutOfRange_TooSmall);
 
             if (interval.TotalMilliseconds > Int32.MaxValue)
-                throw new ArgumentOutOfRangeException("interval", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooLarge));
+                throw new ArgumentOutOfRangeException("interval", SR.TimeSpanPeriodOutOfRange_TooLarge);
 
             Initialize(dispatcher, priority, interval);
             
@@ -149,10 +140,10 @@ namespace System.Windows.Threading
                 bool updateWin32Timer = false;
                 
                 if (value.TotalMilliseconds < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooSmall));
+                    throw new ArgumentOutOfRangeException("value", SR.TimeSpanPeriodOutOfRange_TooSmall);
 
                 if (value.TotalMilliseconds > Int32.MaxValue)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.TimeSpanPeriodOutOfRange_TooLarge));
+                    throw new ArgumentOutOfRangeException("value", SR.TimeSpanPeriodOutOfRange_TooLarge);
 
                 lock(_instanceLock)
                 {
@@ -246,7 +237,7 @@ namespace System.Windows.Threading
             Dispatcher.ValidatePriority(priority, "priority");
             if(priority == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPriority), "priority");
+                throw new ArgumentException(SR.InvalidPriority, "priority");
             }
 
             _dispatcher = dispatcher;
@@ -267,8 +258,8 @@ namespace System.Windows.Threading
                 // BeginInvoke a new operation.
                 _operation = _dispatcher.BeginInvoke(
                     DispatcherPriority.Inactive,
-                    new DispatcherOperationCallback(FireTick),
-                    null);
+                    (DispatcherOperationCallback)(state => ((DispatcherTimer)state).FireTick()),
+                    this);
 
                 
                 _dueTimeInTicks = Environment.TickCount + (int) _interval.TotalMilliseconds;
@@ -297,7 +288,7 @@ namespace System.Windows.Threading
             }
         }
 
-        private object FireTick(object unused)
+        private object FireTick()
         {
             // The operation has been invoked, so forget about it.
             _operation = null;
@@ -319,7 +310,7 @@ namespace System.Windows.Threading
         }
         
         // This is the object we use to synchronize access.
-        private object _instanceLock = new object();
+        private readonly object _instanceLock = new object();
         
         // Note: We cannot BE a dispatcher-affinity object because we can be
         // created by a worker thread.  We are still associated with a

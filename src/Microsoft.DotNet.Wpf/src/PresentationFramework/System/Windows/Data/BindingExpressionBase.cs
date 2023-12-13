@@ -129,8 +129,7 @@ namespace System.Windows.Data
         /// <summary> Constructor </summary>
         internal BindingExpressionBase(BindingBase binding, BindingExpressionBase parent) : base(ExpressionMode.SupportsUnboundSources)
         {
-            if (binding == null)
-                throw new ArgumentNullException("binding");
+            ArgumentNullException.ThrowIfNull(binding);
 
             _binding = binding;
             SetValue(Feature.ParentBindingExpressionBase, parent, null);
@@ -161,18 +160,20 @@ namespace System.Windows.Data
             {
                 if (parent == null)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.CreatedExpression(
                                             TraceData.Identify(this),
-                                            TraceData.Identify(binding)));
+                                            TraceData.Identify(binding)),
+                                        this);
                 }
                 else
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.CreatedExpressionInParent(
                                             TraceData.Identify(this),
                                             TraceData.Identify(binding),
-                                            TraceData.Identify(parent)));
+                                            TraceData.Identify(parent)),
+                                        this);
                 }
             }
 
@@ -365,10 +366,8 @@ namespace System.Windows.Data
         /// <param name="dp">Property being set</param>
         internal sealed override void OnAttach(DependencyObject d, DependencyProperty dp)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
-            if (dp == null)
-                throw new ArgumentNullException("dp");
+            ArgumentNullException.ThrowIfNull(d);
+            ArgumentNullException.ThrowIfNull(dp);
 
             Attach(d, dp);
         }
@@ -940,10 +939,11 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Attach))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.AttachExpression(
                                         TraceData.Identify(this),
-                                        target.GetType().FullName, dp.Name, AvTrace.GetHashCodeHelper(target)));
+                                        target.GetType().FullName, dp.Name, AvTrace.GetHashCodeHelper(target)),
+                                    this);
             }
 
             return true;
@@ -975,9 +975,10 @@ namespace System.Windows.Data
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Attach))
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.DetachExpression(
-                                        TraceData.Identify(this)));
+                                        TraceData.Identify(this)),
+                                    this);
             }
         }
 
@@ -1170,7 +1171,7 @@ namespace System.Windows.Data
             ValidationError oldValidationError = GetValidationErrors(validationStep);
 
             // ignore an error from the implicit DataError rule - this is checked
-            // separately (in BindingExpression.Validate). 
+            // separately (in BindingExpression.Validate).
             if (oldValidationError != null &&
                 oldValidationError.RuleInError == DataErrorValidationRule.Instance)
             {
@@ -1193,10 +1194,11 @@ namespace System.Windows.Data
                         {
                             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Update))
                             {
-                                TraceData.Trace(TraceEventType.Warning,
+                                TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                                     TraceData.ValidationRuleFailed(
                                                         TraceData.Identify(this),
-                                                        TraceData.Identify(validationRule)));
+                                                        TraceData.Identify(validationRule)),
+                                                    this);
                             }
 
                             UpdateValidationError( new ValidationError(validationRule, this, validationResult.ErrorContent, null));
@@ -1277,10 +1279,11 @@ namespace System.Windows.Data
                             // supported (bug 1274874).
                             if (TraceData.IsEnabled)
                             {
-                                TraceData.Trace(TraceEventType.Critical, TraceData.RequiresExplicitCulture, TargetProperty.Name, this);
+                                TraceData.TraceAndNotify(TraceEventType.Critical, TraceData.RequiresExplicitCulture, this,
+                                    traceParameters: new object[] { TargetProperty.Name, this });
                             }
 
-                            throw new InvalidOperationException(SR.Get(SRID.RequiresExplicitCulture, TargetProperty.Name));
+                            throw new InvalidOperationException(SR.Format(SR.RequiresExplicitCulture, TargetProperty.Name));
                         }
 
                         // cache CultureInfo since requerying an inheritable property on every Transfer/Update can be quite expensive
@@ -1478,6 +1481,15 @@ namespace System.Windows.Data
         {
             if (IsUpdateOnPropertyChanged)
             {
+                // cancel a pending UpdateTarget, so that it doesn't negate
+                // the effect of this change to the target value
+                DispatcherOperation op = (DispatcherOperation)GetValue(Feature.UpdateTargetOperation, null);
+                if (op != null)
+                {
+                    ClearValue(Feature.UpdateTargetOperation);
+                    op.Abort();
+                }
+
                 if (Helper.IsComposing(Target, TargetProperty))
                 {
                     // wait for the IME composition to complete
@@ -1572,7 +1584,7 @@ namespace System.Windows.Data
 
                     if (TraceData.IsEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Information, TraceData.NoValueToTransfer, this);
+                        TraceData.TraceAndNotify(TraceEventType.Information, TraceData.NoValueToTransfer, this);
                     }
                 }
             }
@@ -1756,11 +1768,12 @@ namespace System.Windows.Data
                     {
                         if (bgCandidate.SharesProposedValues && TraceData.IsEnabled)
                         {
-                            TraceData.Trace(TraceEventType.Warning,
+                            TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                     TraceData.SharesProposedValuesRequriesImplicitBindingGroup(
                                             TraceData.Identify(this),
                                             groupName,
-                                            TraceData.Identify(bgCandidate)));
+                                            TraceData.Identify(bgCandidate)),
+                                    this);
                         }
 
                         // return the matching group
@@ -1773,7 +1786,7 @@ namespace System.Windows.Data
                 // no match - report an error
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                             TraceData.BindingGroupNameMatchFailed(groupName),
                             this);
                 }
@@ -1824,18 +1837,19 @@ namespace System.Windows.Data
 
                     if (bg.SharesProposedValues && TraceData.IsEnabled)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                 TraceData.SharesProposedValuesRequriesImplicitBindingGroup(
                                         TraceData.Identify(root),
                                         root.ParentBindingBase.BindingGroupName,
-                                        TraceData.Identify(bg)));
+                                        TraceData.Identify(bg)),
+                                this);
                     }
                 }
             }
             else
             {
                 if (root.BindingGroup != bg)
-                    throw new InvalidOperationException(SR.Get(SRID.BindingGroup_CannotChangeGroups));
+                    throw new InvalidOperationException(SR.BindingGroup_CannotChangeGroups);
             }
         }
 
@@ -2108,7 +2122,7 @@ namespace System.Windows.Data
         {
             if (IsDetached && status != _status)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BindingExpressionStatusChanged, _status, status));
+                throw new InvalidOperationException(SR.Format(SR.BindingExpressionStatusChanged, _status, status));
             }
 
             _status = status;
@@ -2127,13 +2141,13 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                             TraceData.FallbackConversionFailed(
                                 AvTrace.ToStringHelper(value),
                                 AvTrace.TypeName(value),
                                 dp.Name,
                                 dp.PropertyType.Name),
-                            sender, e);
+                            sender as BindingExpressionBase, e);
                 }
             }
 
@@ -2153,13 +2167,13 @@ namespace System.Windows.Data
             {
                 if (TraceData.IsEnabled)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                             TraceData.TargetNullValueConversionFailed(
                                 AvTrace.ToStringHelper(value),
                                 AvTrace.TypeName(value),
                                 dp.Name,
                                 dp.PropertyType.Name),
-                            sender, e);
+                            sender as BindingExpressionBase, e);
                 }
             }
 
@@ -2447,7 +2461,7 @@ namespace System.Windows.Data
                 count++;
             }
 
-            Collection<WeakDependencySource> tempList = new Collection<WeakDependencySource>();
+            var tempList = new List<WeakDependencySource>();
 
             if (commonSources != null)
             {
@@ -2485,19 +2499,9 @@ namespace System.Windows.Data
                 }
             }
 
-            WeakDependencySource[] result;
-            if (tempList.Count > 0)
-            {
-                result = new WeakDependencySource[tempList.Count];
-                tempList.CopyTo(result, 0);
-                tempList.Clear();
-            }
-            else
-            {
-                result = null;
-            }
-
-            return result;
+            return tempList.Count > 0 ?
+                tempList.ToArray() :
+                null;
         }
 
         internal void ResolvePropertyDefaultSettings(BindingMode mode, UpdateSourceTrigger updateTrigger, FrameworkPropertyMetadata fwMetaData)
@@ -2516,10 +2520,11 @@ namespace System.Windows.Data
 
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ResolveDefaults))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.ResolveDefaultMode(
                                             TraceData.Identify(this),
-                                            (f == BindingFlags.OneWay) ? BindingMode.OneWay : BindingMode.TwoWay));
+                                            (f == BindingFlags.OneWay) ? BindingMode.OneWay : BindingMode.TwoWay),
+                                        this);
                 }
             }
 
@@ -2535,10 +2540,11 @@ namespace System.Windows.Data
 
                 if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.ResolveDefaults))
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotifyWithNoParameters(TraceEventType.Warning,
                                         TraceData.ResolveDefaultUpdate(
                                             TraceData.Identify(this),
-                                            ust));
+                                            ust),
+                                        this);
                 }
             }
 

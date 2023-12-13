@@ -31,22 +31,6 @@ using System.Collections.Generic;
 
 namespace MS.Internal.Tasks
 {
-    //
-    // This is required by the unmanaged API GetGacPath.
-    // the value indicates the source of the cached assembly.
-    //
-    // For our scenario, we just care about GACed assembly.
-    //
-    [Flags]
-    internal enum AssemblyCacheFlags
-    {
-        ZAP = 1,
-        GAC = 2,
-        DOWNLOAD = 4,
-        ROOT = 8,
-        ROOT_EX = 0x80
-    }
-
     #region BaseTask class
     //<summary>
     // TaskHelper which implements some helper methods.
@@ -74,8 +58,8 @@ namespace MS.Internal.Tasks
             string avalonFileVersion = acFileVersionInfo.FileVersion;
 
             log.LogMessage(MessageImportance.Low,Environment.NewLine);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskLogo, taskName, avalonFileVersion);
-            log.LogMessageFromResources(MessageImportance.Low, SRID.TaskRight);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskLogo), taskName, avalonFileVersion);
+            log.LogMessageFromResources(MessageImportance.Low, nameof(SR.TaskRight));
             log.LogMessage(MessageImportance.Low, Environment.NewLine);
         }
 
@@ -89,14 +73,13 @@ namespace MS.Internal.Tasks
         internal static string CreateFullFilePath(string thePath, string rootPath)
         {
             // make it an absolute path if not already so
-            if ( !Path.IsPathRooted(thePath) )
+            if (!Path.IsPathRooted(thePath) )
             {
                 thePath = rootPath + thePath;
             }
 
             // get rid of '..' and '.' if any
             thePath = Path.GetFullPath(thePath);
-
             return thePath;
         }
 
@@ -116,7 +99,7 @@ namespace MS.Internal.Tasks
             string fullpath1;
             string fullpath2;
 
-            string sourceDir = Directory.GetCurrentDirectory() + "\\";
+            string sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
 
             // make sure path1 and Path2 are both full path
             // so that they can be compared on right base.
@@ -212,133 +195,6 @@ namespace MS.Internal.Tasks
             return bValid;
         }
 
-#if false
-        [DllImport("fusion.dll", CharSet = CharSet.Unicode)]
-        internal static extern int GetCachePath(AssemblyCacheFlags cacheFlags, StringBuilder cachePath, ref int pcchPath);
-#endif
-
-        private static List<string> _gacPaths;
-        internal static IEnumerable<string> GetGacPaths()
-        {
-            if (_gacPaths != null) return _gacPaths;
-
-#if false
-            List<string> gacPaths = new List<string>();
-
-            AssemblyCacheFlags[] flags = new AssemblyCacheFlags[] {
-                AssemblyCacheFlags.ROOT,
-                AssemblyCacheFlags.ROOT_EX
-            };
-
-            foreach (AssemblyCacheFlags flag in flags)
-            {
-                int gacPathLength = 0;
-
-                // Request the size of buffer for the path.
-                int hresult = GetCachePath(flag, null, ref gacPathLength);
-
-                //
-                // When gacPathLength is set to 0 and passed to this method, the return value
-                // is an error which indicates INSUFFICIENT_BUFFER, so the code here doesn't
-                // check that return value, but just check whether the returned desired buffer
-                // length is valid or not.
-                //
-                if (gacPathLength > 0)
-                {
-                    // Allocate the right size for that buffer.
-                    StringBuilder gacPath = new StringBuilder(gacPathLength);
-
-                    // Get the real path string to the buffer.
-                    hresult = GetCachePath(flag, gacPath, ref gacPathLength);
-
-                    if (hresult >= 0)
-                    {
-                        gacPaths.Add(gacPath.ToString());
-                    }
-                }
-            }
-            if (gacPaths.Count > 0)
-            {
-                _gacPaths = gacPaths;
-            }
-#else
-            _gacPaths = new List<string>();
-#endif
-            return _gacPaths;
-        }
-
-
-        //
-        // Detect whether the referenced assembly could be changed during the build procedure.
-        //
-        // Current logic:
-        //      By default, assume it could be changed during the build.
-        //      If knownChangedAssemblies are set, only those assemblies are changeable, all others are not.
-        //
-        //      If the assembly is not in the knownChangedAssemblies list,
-        //              but it is under GAC or under knownUnchangedReferencePaths, it is not changeable.
-        //
-        internal static bool CouldReferenceAssemblyBeChanged(string assemblyPath, string[] knownUnchangedReferencePaths, string[] knownChangedAssemblies)
-        {
-            Debug.Assert(String.IsNullOrEmpty(assemblyPath) == false, "assemblyPath should not be empty.");
-
-            bool bCouldbeChanged = true;
-
-            if (String.Compare(Path.GetExtension(assemblyPath), SharedStrings.MetadataDll, StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                return false;
-            }
-
-            if (knownChangedAssemblies != null && knownChangedAssemblies.Length > 0)
-            {
-                int length = assemblyPath.Length;
-                bool bInKnownChangedList = false;
-
-                foreach (string changedAsm in knownChangedAssemblies)
-                {
-                    if (String.Compare(assemblyPath, 0, changedAsm, 0, length, StringComparison.OrdinalIgnoreCase) == 0)
-                    {
-                        bInKnownChangedList = true;
-                        break;
-                    }
-                }
-
-                bCouldbeChanged = bInKnownChangedList;
-            }
-            else
-            {
-                if (knownUnchangedReferencePaths != null && knownUnchangedReferencePaths.Length > 0)
-                {
-                    foreach (string unchangePath in knownUnchangedReferencePaths)
-                    {
-                        if (assemblyPath.StartsWith(unchangePath, StringComparison.OrdinalIgnoreCase) == true)
-                        {
-                            bCouldbeChanged = false;
-                            break;
-                        }
-                    }
-                }
-                if (bCouldbeChanged)
-                {
-                    IEnumerable<string> gacRoots = GetGacPaths();
-                    if (gacRoots != null)
-                    {
-                        foreach (string gacRoot in gacRoots)
-                        {
-                            if (!String.IsNullOrEmpty(gacRoot) && assemblyPath.StartsWith(gacRoot, StringComparison.OrdinalIgnoreCase) == true)
-                            {
-                                bCouldbeChanged = false;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return bCouldbeChanged;
-
-        }
-
-
         internal static string GetWholeExceptionMessage(Exception exception)
         {
             Exception e = exception;
@@ -367,7 +223,7 @@ namespace MS.Internal.Tasks
         //
         // Helper to create CompilerWrapper.
         //
-        internal static CompilerWrapper CreateCompilerWrapper(bool fInSeparateDomain, ref AppDomain  appDomain)
+        internal static CompilerWrapper CreateCompilerWrapper()
         {
             return new CompilerWrapper();
         }

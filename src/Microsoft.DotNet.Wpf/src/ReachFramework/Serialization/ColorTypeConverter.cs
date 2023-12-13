@@ -108,13 +108,10 @@ namespace System.Windows.Xps.Serialization
             object                              value
             )
         {
-            if( value == null )
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             if (!IsSupportedType(value.GetType()))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertFromNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertFromNotSupported);
             }
 
             throw new NotImplementedException();
@@ -152,7 +149,7 @@ namespace System.Windows.Xps.Serialization
         {
             if (!IsSupportedType(destinationType))
             {
-                throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
             }
 
             Color color = (Color)value;
@@ -255,18 +252,7 @@ namespace System.Windows.Xps.Serialization
             Type            type
             )
         {
-            bool isSupported = false;
-
-            foreach (Type t in SupportedTargetTypes)
-            {
-                if (t.Equals(type))
-                {
-                    isSupported = true;
-                    break;
-                }
-            }
-
-            return isSupported;
+            return typeof(string).Equals(type);
         }
 
         #endregion Private static helper methods
@@ -295,10 +281,7 @@ namespace System.Windows.Xps.Serialization
         {
             Uri profileUri = null;
 
-            if( colorContext == null )
-            {
-                throw new ArgumentNullException("colorContext");
-            }
+            ArgumentNullException.ThrowIfNull(colorContext);
             if ( context!= null )
             {
                 PackageSerializationManager manager = (PackageSerializationManager)context.GetService(typeof(XpsSerializationManager));
@@ -385,13 +368,6 @@ namespace System.Windows.Xps.Serialization
         #endregion Public static helper methods
 
         #region Private static data
-
-        /// <summary>
-        /// A table of supported types for this type converter
-        /// </summary>
-        private static Type[] SupportedTargetTypes = {
-            typeof(string)
-        };
 
         #endregion Private static data
     }

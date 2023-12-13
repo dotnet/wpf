@@ -11,7 +11,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -31,20 +30,6 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    // <SecurityNote>
-    //     Critical:  This class serves as a depository of all well-known pre-populated
-    //          packages. This class is marked as SecurityCritical to ensure that
-    //          1. only trusted code can add/get/remove trusted packages into the depository
-    //          2. a whole package will never be given out to the platform client
-    //              Note: it is OK to give out a part stream from a package instance but
-    //                      the package related objects such as Package, PackagePart,
-    //                      PackageRelationship should NEVER be given out to a client.
-    //      List of the trusted packages allowed:
-    //          1. ResourceContainer
-    //          2. SiteOfOriginContainer
-    //          3. ZipPackage that is only instantiated by XPS Viewer
-    // </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {
@@ -175,14 +160,11 @@ namespace MS.Internal.IO.Packaging
 
         private static void ValidateUriKey(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException("uri");
-            }
+            ArgumentNullException.ThrowIfNull(uri);
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
             }
         }
 
@@ -256,7 +238,7 @@ namespace MS.Internal.IO.Packaging
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
         static private HybridDictionary _packagePairs;
-        static private Object           _globalLock;
+        static private readonly Object  _globalLock;
 
         #endregion Private Fields
     }

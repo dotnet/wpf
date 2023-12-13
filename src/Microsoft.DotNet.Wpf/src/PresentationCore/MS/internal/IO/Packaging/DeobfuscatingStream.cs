@@ -72,7 +72,7 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 
-            throw new NotSupportedException(SR.Get(SRID.WriteNotSupported));
+            throw new NotSupportedException(SR.WriteNotSupported);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 
-            throw new NotSupportedException(SR.Get(SRID.SetLengthNotSupported));
+            throw new NotSupportedException(SR.SetLengthNotSupported);
        }
 
         /// <summary>
@@ -196,17 +196,14 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>streamUri has to be a pack Uri</remarks>
         internal DeobfuscatingStream(Stream obfuscatedStream, Uri streamUri, bool leaveOpen)
         {
-            if (obfuscatedStream == null)
-            {
-                throw new ArgumentNullException("obfuscatedStream");
-            }
+            ArgumentNullException.ThrowIfNull(obfuscatedStream);
 
             // Make sure streamUri is in the correct form; getting partUri from it will do all necessary checks for error
             //    conditions; We also have to make sure that it has a part name
-            Uri partUri = PackUriHelper.GetPartUri(streamUri);
+            Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri);
             if (partUri == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidPartName));
+                throw new InvalidOperationException(SR.InvalidPartName);
             }
 
             // Normally we should use PackUriHelper.GetStringForPartUri to get the string representation of part Uri
@@ -272,7 +269,7 @@ namespace MS.Internal.IO.Packaging
         private void CheckDisposed()
         {
             if (_obfuscatedStream == null)
-                throw new ObjectDisposedException(null, SR.Get(SRID.Media_StreamClosed));
+                throw new ObjectDisposedException(null, SR.Media_StreamClosed);
         }
 
         /// <summary>
@@ -326,9 +323,9 @@ namespace MS.Internal.IO.Packaging
         {
             // Make sure we have at least on '-' since Guid constructor will take both dash'ed and non-dash'ed format of GUID string
             //  while XPS spec requires dash'ed format of GUID
-            if (guidString.IndexOf('-') == -1)
+            if (!guidString.Contains('-'))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPartName));
+                throw new ArgumentException(SR.InvalidPartName);
             }
             
             // Use Guid constructor to do error checking in parsing

@@ -15,7 +15,6 @@
 using System;
 using System.ComponentModel;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input
@@ -31,12 +30,5 @@ namespace System.Windows.Input
     [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     internal interface ISecureCommand : ICommand
     {
-        /// <summary>
-        /// Permission required to modify bindings for this
-        /// command, and the permission to assert when
-        /// the command is invoked in a user interactive
-        /// (trusted) fashion.
-        /// </summary>
-        PermissionSet UserInitiatedPermission { get; }
     }
 }

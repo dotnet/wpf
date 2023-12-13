@@ -14,7 +14,6 @@ namespace System.Windows.Controls.Primitives
     using System.ComponentModel; // DefaultValue
 
     using System.Security;
-    using System.Security.Permissions;
 
     using System.Windows.Automation; // TextPattern
     using System.Windows.Automation.Provider; // AutomationProvider
@@ -83,14 +82,6 @@ namespace System.Windows.Controls.Primitives
             // b) create TextContainer and call InitializeTextContainer
             // c) configure TextEditor by setting appropriate properties
             CoerceValue(HorizontalScrollBarVisibilityProperty);
-
-            // Security team really wants to set AllowDrop property value as "False"
-            // not to generate the security exception that can be happened in the
-            // partial trust environment.
-            if (!SecurityHelper.CallerHasPermissionWithAppDomainOptimization(new SecurityPermission(SecurityPermissionFlag.UnmanagedCode)))
-            {
-                AllowDrop = false;
-            }
         }
 
         #endregion Constructors
@@ -139,12 +130,6 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Copy the current selection in the text box to the clipboard
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical - Calls TextEditorCopyPaste.Copy which sets data on the clipboard.
-        ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Copy will
-        ///     check for clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Copy()
         {
             TextEditorCopyPaste.Copy(this.TextEditor, false);
@@ -153,12 +138,6 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Moves the current selection in the textbox to the clipboard
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical - Calls TextEditorCopyPaste.Cut which sets data on the clipboard.
-        ///   PublicOK - Indicates that this was not a user-initiated call, so TextEditorCopyPaste.Cut will
-        ///     check for clipboard permission.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Cut()
         {
             TextEditorCopyPaste.Cut(this.TextEditor, false);
@@ -422,7 +401,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (this.TextEditor.Selection.ChangeBlockLevel == 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_UnmatchedEndChange));
+                throw new InvalidOperationException(SR.TextBoxBase_UnmatchedEndChange);
             }
 
             this.TextEditor.Selection.EndChange();
@@ -1067,10 +1046,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="e">MouseWheelEventArgs</param>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException("e");
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             if (this.ScrollViewer != null)
             {
@@ -1604,10 +1580,7 @@ namespace System.Windows.Controls.Primitives
         {
             Point offset;
 
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // Validate layout information on TextView
             if (TextEditor.GetTextView(this.RenderScope).Validate(position))
@@ -1728,7 +1701,7 @@ namespace System.Windows.Controls.Primitives
             // to change....
             if (this.TextSelectionInternal.ChangeBlockLevel > 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock));
+                throw new InvalidOperationException(SR.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock);
             }
 
             UndoManager undoManager = UndoManager.GetUndoManager(this);
@@ -1758,7 +1731,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     // the exception text isn't exactly right, but we can't
                     // introduce new strings in v3.5.
-                    throw new InvalidOperationException(SR.Get(SRID.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock));
+                    throw new InvalidOperationException(SR.TextBoxBase_CantSetIsUndoEnabledInsideChangeBlock);
                 }
 
                 int limit;
@@ -2016,7 +1989,7 @@ namespace System.Windows.Controls.Primitives
                     _renderScope = null;
                     _textBoxContentHost = null;
                     //  Do not throw exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -2031,7 +2004,7 @@ namespace System.Windows.Controls.Primitives
                     _renderScope = null;
                     _textBoxContentHost = null;
                     //  Do not throw exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent));
+                    throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);
                 }
                 else
                 {
@@ -2050,7 +2023,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     _textBoxContentHost = null;
                     //  Remove the exception
-                    throw new NotSupportedException(SR.Get(SRID.TextBoxInvalidTextContainer));
+                    throw new NotSupportedException(SR.TextBoxInvalidTextContainer);
                 }
             }
 
@@ -2196,11 +2169,6 @@ namespace System.Windows.Controls.Primitives
         /// TextBoxBase on which the property is changed
         /// </param>
         /// <param name="e">event args</param>
-        /// <SecurityNote>
-        ///    Critical:This code register command handlers for texteditor related events and commands (OnGotFocus)
-        ///    TreatAsSafe: This just hooks up methods that are internal to this class
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private static void OnInputMethodEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TextBoxBase textBox = (TextBoxBase)d;

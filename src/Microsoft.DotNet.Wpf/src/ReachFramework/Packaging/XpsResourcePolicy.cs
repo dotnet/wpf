@@ -82,14 +82,8 @@ namespace System.Windows.Xps.Packaging
             Type        serviceType
             )
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
-            if (service == null)
-            {
-                throw new ArgumentNullException("service");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
+            ArgumentNullException.ThrowIfNull(service);
 
             if (!_objDict.ContainsKey(serviceType))
             {
@@ -97,7 +91,7 @@ namespace System.Windows.Xps.Packaging
             }
             else if (_objDict[serviceType] != service)
             {
-                throw new XpsPackagingException(SR.Get(SRID.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
+                throw new XpsPackagingException(SR.Format(SR.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
             }
         }
         

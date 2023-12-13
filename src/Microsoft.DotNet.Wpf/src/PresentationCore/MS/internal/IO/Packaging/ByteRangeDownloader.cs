@@ -26,7 +26,6 @@ using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                  // For Mutex
 using Microsoft.Win32.SafeHandles;
 using MS.Internal.PresentationCore;
-using System.Security.Permissions;      // for WebPermission
 
 namespace MS.Internal.IO.Packaging
 {
@@ -54,22 +53,14 @@ namespace MS.Internal.IO.Packaging
         /// <param name="eventHandle">event to signal when new data is available in tempStream</param>
         /// <param name="requestedUri">uri we should make requests to</param>
         /// <param name="tempFileName">temp file to write to</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ByteRangeDownloader(Uri requestedUri, string tempFileName, SafeWaitHandle eventHandle)
             : this(requestedUri, eventHandle)
         {
-            if (tempFileName == null)
-            {
-                throw new ArgumentNullException("tempFileName");
-            }
+            ArgumentNullException.ThrowIfNull(tempFileName);
 
             if (tempFileName.Length <= 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidTempFileName), "tempFileName");
+                throw new ArgumentException(SR.InvalidTempFileName, "tempFileName");
             }
 
             _tempFileStream = File.Open(tempFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
@@ -82,11 +73,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="fileMutex">mutex to synchronize access to tempStream</param>
         /// <param name="requestedUri">uri we should make requests to</param>
         /// <param name="tempStream">stream to write data to</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         internal ByteRangeDownloader(Uri requestedUri, Stream tempStream, SafeWaitHandle eventHandle, Mutex fileMutex)
             : this(requestedUri, eventHandle)
         {
@@ -112,15 +98,6 @@ namespace MS.Internal.IO.Packaging
             GC.SuppressFinalize(this);  // not strictly necessary, but if we ever have a subclass with a finalizer, this will be more efficient
         }
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _readEventHandle
-        ///  2) modifies Critical data _proxy
-        /// Safe
-        ///  1) _eventHandle is Critical for set but we are just nulling it out for dispose
-        ///  2) _proxy is Critical for set but safe to null for dispose
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -201,23 +178,12 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="byteRanges">byte ranges to be downloaded; byteRanges is two dimensional
         /// array consisting pairs of offset and length</param>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Sets the callback function (ResponseCallback) which is critical
-        /// Safe
-        ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
-        ///     the callback function
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void RequestByteRanges(int[,] byteRanges)
         {
             // The worker thread will never call dispose nor this method; no need to lock
             CheckDisposed();
 
-            if (byteRanges == null)
-            {
-                throw new ArgumentNullException("byteRanges");
-            }
+            ArgumentNullException.ThrowIfNull(byteRanges);
 
             CheckTwoDimensionalByteRanges(byteRanges);
 
@@ -326,20 +292,12 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Proxy for all requests to ByteRangeDownloader
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical member _proxy
-        /// </SecurityNote>
         internal IWebProxy Proxy
         {
-            [SecurityCritical]
             set
             {
                 CheckDisposed();
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!_firstRequestMade)
                 {
@@ -347,7 +305,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 else    // Once first request is made it cannot change
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RequestAlreadyStarted));
+                    throw new InvalidOperationException(SR.RequestAlreadyStarted);
                 }
             }
         }
@@ -378,7 +336,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 else    // Once first request is made it cannot cahnge
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.RequestAlreadyStarted));
+                    throw new InvalidOperationException(SR.RequestAlreadyStarted);
                 }
             }
         }
@@ -435,40 +393,28 @@ namespace MS.Internal.IO.Packaging
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException(null, SR.Get(SRID.ByteRangeDownloaderDisposed));
+                throw new ObjectDisposedException(null, SR.ByteRangeDownloaderDisposed);
             }
         }
 
         /// <summary>
         /// Constructor for ByteRangeDownloader
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) modifies Critical data _eventHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private ByteRangeDownloader(Uri requestedUri, SafeWaitHandle eventHandle)
         {
-            if (requestedUri == null)
-            {
-                throw new ArgumentNullException("requestedUri");
-            }
+            ArgumentNullException.ThrowIfNull(requestedUri);
 
             // Ensure uri is correct scheme (http or https) Do case-sensitive comparison since Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) != 0
-                    && String.Compare(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal) != 0)
+            if (!string.Equals(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) && !string.Equals(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidScheme), "requestedUri");
+                throw new ArgumentException(SR.InvalidScheme, "requestedUri");
             }
 
-            if (eventHandle == null)
-            {
-                throw new ArgumentNullException("eventHandle");
-            }
+            ArgumentNullException.ThrowIfNull(eventHandle);
 
             if (eventHandle.IsInvalid || eventHandle.IsClosed)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidEventHandle), "eventHandle");
+                throw new ArgumentException(SR.InvalidEventHandle, "eventHandle");
             }
 
             _requestedUri = requestedUri;
@@ -484,23 +430,13 @@ namespace MS.Internal.IO.Packaging
         {
             if (_erroredOut)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ByteRangeDownloaderErroredOut), _erroredOutException);
+                throw new InvalidOperationException(SR.ByteRangeDownloaderErroredOut, _erroredOutException);
             }
         }
 
         /// <summary>
         /// Download the requested bytes
         /// </summary>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) local assert of WebPermission to access get_Proxy property
-        ///  2) accesses Critical member _proxy
-        /// Safe
-        ///  1) WebPermission assert is local and needed only to synchronize two WebRequest properties
-        ///  2) Safe use of Critical member _proxy - used only to ensure that multiple WebRequests
-        ///     share the same proxy settings.  Proxy member is known safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private HttpWebRequest CreateHttpWebRequest(int[,] byteRanges)
         {
             HttpWebRequest request;
@@ -517,16 +453,7 @@ namespace MS.Internal.IO.Packaging
             //            IWebProxy emptyProxy = GlobalProxySelection.GetEmptyWebProxy();
             //            request.Proxy = emptyProxy;
 
-            // Local assert to allow Proxy get/set under partial trust
-            new WebPermission(PermissionState.Unrestricted).Assert();   // Blessed
-            try
-            {
-                request.Proxy = _proxy;
-            }
-            finally
-            {
-                WebPermission.RevertAssert();
-            }
+            request.Proxy = _proxy;
 
             request.Credentials = _credentials;
             request.CachePolicy = _cachePolicy;
@@ -546,12 +473,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="throwExceptionOnError">indicates if an exception to be thrown on fail to set event</param>
         /// <remarks></remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) This method calls into SetEvent which is critical marked SUC
-        ///  2) It accesses Critical data _eventHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         private void RaiseEvent(bool throwExceptionOnError)
         {
             if (_eventHandle != null && !_eventHandle.IsInvalid && !_eventHandle.IsClosed)
@@ -571,11 +492,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="ar">async result</param>
         /// <remarks>static method not necessary</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) It calls RaiseEvent which is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ResponseCallback(IAsyncResult ar)
         {
             HttpWebResponse webResponse = null;
@@ -631,7 +547,7 @@ namespace MS.Internal.IO.Packaging
                         else
                         {
                             _erroredOut = true;
-                            _erroredOutException = new NotSupportedException(SR.Get(SRID.ByteRangeRequestIsNotSupported));
+                            _erroredOutException = new NotSupportedException(SR.ByteRangeRequestIsNotSupported);
                         }
                     }
                     else
@@ -644,7 +560,7 @@ namespace MS.Internal.IO.Packaging
                     _erroredOut = true;
                     _erroredOutException = e;
 
-                    throw e;
+                    throw;
                 }
                 catch   // catch (and re-throw) all kinds of exceptions so we can inform the other thread
                 {
@@ -750,14 +666,6 @@ namespace MS.Internal.IO.Packaging
         /// Process the requests that are in the wait queue
         /// </summary>
         /// <remarks>This is only called from ResponseCallback which synchronize the call</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Sets the callback function (ResponseCallback) which is critical
-        /// Safe
-        ///  1) Creates new CLR HttWebRequest where HttWebReponse is the caller of
-        ///     the callback function
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ProcessWaitQueue()
         {
             // There is other requests waiting in the queue; Process those
@@ -793,14 +701,14 @@ namespace MS.Internal.IO.Packaging
             // The byteRanges should never be less; perf optimization
             if (byteRanges.Length < 2 || (byteRanges.Length % 2) != 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidByteRanges, "byteRanges"));
+                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
             }
 
             for (int i = 0; i < byteRanges.Length; i++)
             {
                 if (byteRanges[i] < 0 || byteRanges[i+1] <= 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidByteRanges, "byteRanges"));
+                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
                 i++;
             }
@@ -818,14 +726,14 @@ namespace MS.Internal.IO.Packaging
         {
             if (byteRanges.GetLength(0) <= 0 || byteRanges.GetLength(1) != 2)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidByteRanges, "byteRanges"));
+                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
             }
 
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
                 if (byteRanges[i,Offset_Index] < 0 || byteRanges[i,Length_Index] <= 0)
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidByteRanges, "byteRanges"));
+                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
             }
         }
@@ -874,13 +782,13 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the first byte offset of the range (XXX)
-            int firstByteOffset = Int32.Parse(contentRange.Substring(ByteRangeUnit.Length,
+            int firstByteOffset = Int32.Parse(contentRange.AsSpan(ByteRangeUnit.Length,
                                                                         index - ByteRangeUnit.Length),
                                                 NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
-            contentRange = contentRange.Substring(index + 1);
+            ReadOnlySpan<char> contentRangeSpan = contentRange.AsSpan(index + 1);
             // ContentRange: YYY/ZZZ
-            index = contentRange.IndexOf('/');
+            index = contentRangeSpan.IndexOf('/');
 
             if (index == -1)
             {
@@ -888,18 +796,18 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the last byte offset of the range (YYY)
-            int lastByteOffset = Int32.Parse(contentRange.Substring(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
+            int lastByteOffset = Int32.Parse(contentRangeSpan.Slice(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
             // Get the instance length
             // ContentRange: ZZZ
-            contentRange = contentRange.Substring(index + 1);
-            if (String.CompareOrdinal(contentRange, "*") != 0)
+            contentRangeSpan = contentRangeSpan.Slice(index + 1);
+            if (!contentRangeSpan.Equals("*", StringComparison.Ordinal))
             {
                 // Note: for firstByteOffset and lastByteOffset, we are using Int32.Parse to make sure Int32.Parse to throw
                 //  if it is not an integer or the integer is bigger than Int32 since HttpWebRequest.AddRange
                 //  only supports Int32
                 //  Once HttpWebRequest.AddRange start supporting Int64 we should change it to Int64 and long
-                Int32.Parse(contentRange, NumberStyles.None, NumberFormatInfo.InvariantInfo);
+                Int32.Parse(contentRangeSpan, NumberStyles.None, NumberFormatInfo.InvariantInfo);
             }
 
             // The response is considered to be successful if
@@ -944,16 +852,10 @@ namespace MS.Internal.IO.Packaging
         private Uri _requestedUri;            // url to be downloaded
         private RequestCachePolicy _cachePolicy;
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) _proxy is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
-        [SecurityCritical]
         private IWebProxy _proxy;
         private ICredentials _credentials;
         private CookieContainer _cookieContainer = new CookieContainer(1);
 
-        [SecurityCritical]
         private SafeWaitHandle _eventHandle;    // event handle which needs to be raised to inform the caller that
                                          //  the requested bytes are available
         private Mutex _fileMutex;       // object controlling synchronization on the temp file - if this is null, we own the stream

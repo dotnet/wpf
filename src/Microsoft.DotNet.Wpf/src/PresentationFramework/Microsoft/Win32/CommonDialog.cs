@@ -20,7 +20,6 @@ namespace Microsoft.Win32
     using System;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Threading;
     using System.Windows;
     using System.Windows.Interop;
@@ -35,11 +34,6 @@ namespace Microsoft.Win32
     /// <Remarks>
     ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
     /// </Remarks>
-    /// <SecurityNote> 
-    ///     We Don't want arbitrary Partially trusted code deriving from CommonDialog.
-    ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
-    /// </SecurityNote>
-    [UIPermission(SecurityAction.InheritanceDemand, Window = UIPermissionWindow.AllWindows)]
     public abstract class CommonDialog
     {
         //---------------------------------------------------
@@ -61,12 +55,6 @@ namespace Microsoft.Win32
         ///  When overridden in a derived class, resets the properties 
         ///  of a common dialog to their default values.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Changes Dialog options
-        ///     PublicOk: This method is abstract, and there is an InheritanceDemand for 
-        ///             UIPermission (UIPermissionWindow.AllWindows) to derive from CommonDialog.
-        /// </SecurityNote>
-        [SecurityCritical]
         public abstract void Reset();
 
         /// <summary>
@@ -78,12 +66,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </Remarks>
-        /// <SecurityNote> 
-        ///     Critical: Calls RunDialog, and accesses parking window hwnd from Application.
-        ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
-        ///     PublicOk: Demands Permission appropriate to the dialog (defaults to UIPermissionWindow.AllWindows)
-        /// </SecurityNote>
-        [SecurityCritical]
         public virtual Nullable<bool> ShowDialog()
         {
             CheckPermissionsToShowDialog();
@@ -92,7 +74,7 @@ namespace Microsoft.Win32
             // (for example, if we're running as a service)
             if (!Environment.UserInteractive)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+                throw new InvalidOperationException(SR.CantShowModalOnNonInteractive);
             }
 
             // Call GetActiveWindow to retrieve the window handle to the active window
@@ -153,12 +135,6 @@ namespace Microsoft.Win32
         /// <Remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </Remarks>
-        /// <SecurityNote>
-        ///     Critical: Calls RunDialog and accesses owner handle and parking window hwnd from Application.
-        ///               Calls critical methods ComponentDispatcher.CriticalPushModal/CriticalPopModal.
-        ///     PublicOk: Demands UIPermission (UIPermissionWindow.AllWindows)
-        /// </SecurityNote>
-        [SecurityCritical]
         public Nullable<bool> ShowDialog(Window owner)
         {
             CheckPermissionsToShowDialog();
@@ -175,7 +151,7 @@ namespace Microsoft.Win32
             // (for example, if we're running as a service)
             if (!Environment.UserInteractive)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowModalOnNonInteractive));
+                throw new InvalidOperationException(SR.CantShowModalOnNonInteractive);
             }
 
             // Get the handle of the owner window using WindowInteropHelper.
@@ -245,15 +221,11 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Protected Methods
 
-
+        // This method is not used by IFileDialog API. Kept for compatibility as CommonDialog can be derived from.
         /// <summary>
         ///  Defines the common dialog box hook procedure that is overridden to 
         ///  add specific functionality to a common dialog box.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical:  Calls UnsafeNativeMethods.SetFocus() and UnsafeNativeMethods.PostMessage()
-        /// </SecurityNote>
-        [SecurityCritical]
         protected virtual IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
         {
             // WM_INITDIALOG
@@ -283,17 +255,15 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Demands permissions appropriate to the dialog to be shown.
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void CheckPermissionsToShowDialog()
         {
             // Verify we're on the right thread.  
             // This mitigates multi-threaded attacks without having to make the file dialogs thread-safe.
             if (_thread != Thread.CurrentThread)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CantShowOnDifferentThread));
+                throw new InvalidOperationException(SR.CantShowOnDifferentThread);
             }
 
-            SecurityHelper.DemandUIWindowPermission();
         }
 
         #endregion Protected Methods
@@ -305,17 +275,12 @@ namespace Microsoft.Win32
         //---------------------------------------------------
         #region Internal Methods
 
+        // This method is not used by IFileDialog API. Kept for compatibility (see HookProc).
         /// <summary>
         ///  Centers the given window on the screen. This method is used by HookProc
-        ///  to center the dialog on the screen before it is shown.  We can't mark it
-        ///  private because we need to call it from our derived classes like
-        ///  FileDialog.
+        ///  to center the dialog on the screen before it is shown.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: Calls UnsafeNativeMethods.SetWindowPos()
-        /// </SecurityNote>
-        [SecurityCritical]
-        internal void MoveToScreenCenter(HandleRef hWnd)
+        private void MoveToScreenCenter(HandleRef hWnd)
         {
             // Create an IntPtr to store a handle to the monitor.
             IntPtr hMonitor = IntPtr.Zero;
@@ -377,9 +342,8 @@ namespace Microsoft.Win32
         // Internal Properties
         //
         //---------------------------------------------------
-        #region Internal Properties
-
-        #endregion Internal Properties
+        //#region Internal Properties
+        //#endregion Internal Properties
 
         //---------------------------------------------------
         //
@@ -422,10 +386,6 @@ namespace Microsoft.Win32
         ///  member so that the dialog can be properly centered onscreen.
         ///  It is exposed through the OwnerWindowHandle property.
         /// </summary>
-        /// <SecurityNote> 
-        ///     Critical: hWnds are critical data.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _hwndOwnerWindow;
 
         #endregion Private Fields

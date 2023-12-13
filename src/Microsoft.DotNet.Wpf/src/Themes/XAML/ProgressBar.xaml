@@ -1,0 +1,725 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor]] -->
+
+    <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ProgressBarBorderBrush"
+                         EndPoint="0,1"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#B2B2B2"
+                          Offset="0"/>
+            <GradientStop Color="#8C8C8C"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarBackground"
+                         EndPoint="1,0"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#BABABA"
+                          Offset="0"/>
+            <GradientStop Color="#C7C7C7"
+                          Offset="0.5"/>
+            <GradientStop Color="#BABABA"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarTopHighlight"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#80FFFFFF"
+                          Offset="0.05"/>
+            <GradientStop Color="#00FFFFFF"
+                          Offset="0.25"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarGlassyHighlight"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#50FFFFFF"
+                          Offset="0.5385"/>
+            <GradientStop Color="#00FFFFFF"
+                          Offset="0.5385"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarIndicatorGlassyHighlight"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#90FFFFFF"
+                          Offset="0.5385"/>
+            <GradientStop Color="#00FFFFFF"
+                          Offset="0.5385"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="ProgressBarIndicatorLightingEffectLeft"
+                         RadiusX="1"
+                         RadiusY="1"
+                         RelativeTransform="1,0,0,1,0.5,0.5">
+        <RadialGradientBrush.GradientStops>
+            <GradientStop Color="#60FFFFC4"
+                          Offset="0"/>
+            <GradientStop Color="#00FFFFC4"
+                          Offset="1"/>
+        </RadialGradientBrush.GradientStops>
+    </RadialGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarIndicatorLightingEffect"
+                         StartPoint="0,1"
+                         EndPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#60FFFFC4"
+                          Offset="0"/>
+            <GradientStop Color="#00FFFFC4"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="ProgressBarIndicatorLightingEffectRight"
+                         RadiusX="1"
+                         RadiusY="1"
+                         RelativeTransform="1,0,0,1,-0.5,0.5">
+        <RadialGradientBrush.GradientStops>
+            <GradientStop Color="#60FFFFC4"
+                          Offset="0"/>
+            <GradientStop Color="#00FFFFC4"
+                          Offset="1"/>
+        </RadialGradientBrush.GradientStops>
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressBarIndicatorDarkEdgeLeft"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#0C000000"
+                          Offset="0"/>
+            <GradientStop Color="#20000000"
+                          Offset="0.3"/>
+            <GradientStop Color="#00000000"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ProgressBarIndicatorDarkEdgeRight"
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#00000000"
+                          Offset="0"/>
+            <GradientStop Color="#20000000"
+                          Offset="0.7"/>
+            <GradientStop Color="#0C000000"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" 
+                         StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#00FFFFFF"
+                          Offset="0"/>
+            <GradientStop Color="#60FFFFFF"
+                          Offset="0.4"/>
+            <GradientStop Color="#60FFFFFF"
+                          Offset="0.6"/>
+            <GradientStop Color="#00FFFFFF"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+        
+    <Style x:Key="{x:Type ProgressBar}"
+           TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground"
+                Value="#01D328"/>
+        <Setter Property="Background"
+                Value="{StaticResource ProgressBarBackground}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource ProgressBarBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid Name="TemplateRoot"
+                          SnapsToDevicePixels="true">
+                        <!--Background -->
+                        <Rectangle Fill="{TemplateBinding Background}"
+                                   RadiusX="2"
+                                   RadiusY="2"/>
+                        <!--Glassy Highlight -->
+                        <Border Background="{StaticResource ProgressBarGlassyHighlight}"
+                                Margin="1"
+                                CornerRadius="2"/>
+                        <!--Edges and Top Highlight -->
+                        <Border BorderBrush="#80FFFFFF"
+                                Background="{StaticResource ProgressBarTopHighlight}"
+                                BorderThickness="1,0,1,1"
+                                Margin="1"/>
+                        <Rectangle Name="PART_Track"
+                                   Margin="1"/>
+
+                        <!--Indicator -->
+                        <Decorator x:Name="PART_Indicator"
+                                   HorizontalAlignment="Left"
+                                   Margin="1">
+                            <Grid Name="Foreground">
+                                <!-- Indicator Background -->
+                                <Rectangle x:Name="Indicator"
+                                           Fill="{TemplateBinding Foreground}"/>
+                                <!-- Animated Background -->
+                                <Grid x:Name="Animation" ClipToBounds="true">
+                                    <!-- Animated White glow -->
+                                    <Rectangle x:Name="PART_GlowRect" Width="100" 
+                                                Fill="{StaticResource ProgressBarIndicatorAnimatedFill}"
+                                                Margin="-100,0,0,0"
+                                                HorizontalAlignment="Left">
+                                    </Rectangle>
+                                </Grid>
+                                <Grid x:Name="Overlay">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MaxWidth="15"/>
+                                        <ColumnDefinition Width="0.1*"/>
+                                        <ColumnDefinition MaxWidth="15"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <!--Dark Edges -->
+                                    <Rectangle x:Name="LeftDark"
+                                               Grid.RowSpan="2"
+                                               Fill="{StaticResource ProgressBarIndicatorDarkEdgeLeft}"
+                                               RadiusX="1"
+                                               RadiusY="1"
+                                               Margin="1,1,0,1"/>
+                                    <Rectangle x:Name="RightDark"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="2"
+                                               RadiusX="1"
+                                               RadiusY="1"
+                                               Fill="{StaticResource ProgressBarIndicatorDarkEdgeRight}"
+                                               Margin="0,1,1,1"/>
+                                    <!--Lighting Effect -->
+                                    <Rectangle x:Name="LeftLight"
+                                               Grid.Column="0"
+                                               Grid.Row="2"
+                                               Fill="{StaticResource ProgressBarIndicatorLightingEffectLeft}"/>
+                                    <Rectangle x:Name="CenterLight"
+                                               Grid.Column="1"
+                                               Grid.Row="2"
+                                               Fill="{StaticResource ProgressBarIndicatorLightingEffect}"/>
+                                    <Rectangle x:Name="RightLight"
+                                               Grid.Column="2"
+                                               Grid.Row="2"
+                                               Fill="{StaticResource ProgressBarIndicatorLightingEffectRight}"/>
+                                    <!--Glassy Highlight -->
+                                    <Border x:Name="Highlight1"
+                                            Grid.RowSpan="2"
+                                            Grid.ColumnSpan="3"
+                                            Background="{StaticResource ProgressBarIndicatorGlassyHighlight}"/>
+                                    <Border x:Name="Highlight2"
+                                            Grid.RowSpan="2" 
+                                            Grid.ColumnSpan="3"
+                                            Background="{StaticResource ProgressBarTopHighlight}"/>
+                                </Grid>
+                            </Grid>
+                        </Decorator>
+
+                        <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="2"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation"
+                                 Value="Vertical">
+                            <Setter TargetName="TemplateRoot"
+                                    Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="IsIndeterminate"
+                                 Value="true">
+                            <!-- Hide the indicator and just use the AnimatedBackground -->
+                            <Setter TargetName="LeftDark"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="RightDark"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="LeftLight"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="CenterLight"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="RightLight"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                            <Setter TargetName="Indicator"
+                                    Property="Visibility"
+                                    Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate"
+                                 Value="false">
+                            <Setter TargetName="Animation"
+                                    Property="Background"
+                                    Value="#80B5FFA9"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+<!-- [[Classic]] -->
+
+  
+   
+    <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <Style x:Key="{x:Type ProgressBar}"
+           TargetType="{x:Type ProgressBar}">
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <theme:ClassicBorderDecorator BorderStyle="ThinPressed"
+                                                  Background="{TemplateBinding Background}"
+                                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  x:Name="TemplateRoot">
+                        <DockPanel x:Name="PART_Track"
+                                   Margin="0,0,2,2"
+                                   LastChildFill="false">
+                            <Rectangle x:Name="PART_Indicator">
+                                <Rectangle.Fill>
+                                    <MultiBinding>
+                                        <MultiBinding.Converter>
+                                            <theme:ProgressBarBrushConverter/>
+                                        </MultiBinding.Converter>
+                                        <Binding Path="Foreground"
+                                                 RelativeSource="{RelativeSource TemplatedParent}"/>
+                                        <Binding Path="IsIndeterminate"
+                                                 RelativeSource="{RelativeSource TemplatedParent}"/>
+                                        <Binding Path="ActualWidth"
+                                                 ElementName="PART_Indicator"/>
+                                        <Binding Path="ActualHeight"
+                                                 ElementName="PART_Indicator"/>
+                                        <Binding Path="ActualWidth"
+                                                 ElementName="PART_Track"/>
+                                    </MultiBinding>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </DockPanel>
+                    </theme:ClassicBorderDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="TemplateRoot"
+                            Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+
+        </Style.Triggers>
+    </Style>
+
+
+<!-- [[Aero2.NormalColor]] -->
+
+	<SolidColorBrush x:Key="ProgressBar.Progress" Color="#FF06B025" />
+	<SolidColorBrush x:Key="ProgressBar.Background" Color="#FFE6E6E6" />
+	<SolidColorBrush x:Key="ProgressBar.Border" Color="#FFBCBCBC" />
+
+	<Style TargetType="{x:Type ProgressBar}">
+		<Setter Property="Foreground" Value="{StaticResource ProgressBar.Progress}" />
+		<Setter Property="Background" Value="{StaticResource ProgressBar.Background}" />
+		<Setter Property="BorderBrush" Value="{StaticResource ProgressBar.Border}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ProgressBar}">
+					<Grid x:Name="TemplateRoot">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Determinate"/>
+								<VisualState x:Name="Indeterminate">
+									<Storyboard RepeatBehavior="Forever">
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="Animation">
+											<EasingDoubleKeyFrame KeyTime="0" Value="0.25"/>
+											<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.25"/>
+											<EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.25"/>
+										</DoubleAnimationUsingKeyFrames>
+										<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="Animation">
+											<EasingPointKeyFrame KeyTime="0" Value="-0.5,0.5"/>
+											<EasingPointKeyFrame KeyTime="0:0:1" Value="0.5,0.5"/>
+											<EasingPointKeyFrame KeyTime="0:0:2" Value="1.5,0.5"/>
+										</PointAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<Border 
+						    BorderThickness="{TemplateBinding BorderThickness}" 
+						    BorderBrush="{TemplateBinding BorderBrush}" 
+						    Background="{TemplateBinding Background}" />
+						<Rectangle x:Name="PART_Track"/>
+						<Grid x:Name="PART_Indicator"
+						    HorizontalAlignment="Left"
+						    ClipToBounds="true">
+							<Rectangle x:Name="Indicator" 
+							    Fill="{TemplateBinding Foreground}" />
+							<Rectangle x:Name="Animation" 
+							    RenderTransformOrigin="0.5,0.5" 
+							    Fill="{TemplateBinding Foreground}">
+								<Rectangle.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+						</Grid>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="Orientation" Value="Vertical">
+							<Setter Property="LayoutTransform" TargetName="TemplateRoot">
+								<Setter.Value>
+									<RotateTransform Angle="-90"/>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="IsIndeterminate" Value="true">
+							<Setter Property="Visibility" TargetName="Indicator" Value="Collapsed"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+
+<!-- [[AeroLite.NormalColor]] -->
+
+	<SolidColorBrush x:Key="ProgressBar.Progress" Color="#FF00D228" />
+	<SolidColorBrush x:Key="ProgressBar.Background" Color="#FFDBDBDB" />
+	<SolidColorBrush x:Key="ProgressBar.Border" Color="#FFA1A1A1" />
+
+	<Style TargetType="{x:Type ProgressBar}">
+		<Setter Property="Foreground" Value="{StaticResource ProgressBar.Progress}" />
+		<Setter Property="Background" Value="{StaticResource ProgressBar.Background}" />
+		<Setter Property="BorderBrush" Value="{StaticResource ProgressBar.Border}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ProgressBar}">
+					<Grid x:Name="TemplateRoot">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Determinate"/>
+								<VisualState x:Name="Indeterminate">
+									<Storyboard RepeatBehavior="Forever">
+										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="Animation">
+											<EasingDoubleKeyFrame KeyTime="0" Value="0.25"/>
+											<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.25"/>
+											<EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.25"/>
+										</DoubleAnimationUsingKeyFrames>
+										<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="Animation">
+											<EasingPointKeyFrame KeyTime="0" Value="-0.5,0.5"/>
+											<EasingPointKeyFrame KeyTime="0:0:1" Value="0.5,0.5"/>
+											<EasingPointKeyFrame KeyTime="0:0:2" Value="1.5,0.5"/>
+										</PointAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<Border 
+						    BorderThickness="{TemplateBinding BorderThickness}" 
+						    BorderBrush="{TemplateBinding BorderBrush}" 
+						    Background="{TemplateBinding Background}" />
+						<Rectangle x:Name="PART_Track"/>
+						<Grid x:Name="PART_Indicator"
+						    HorizontalAlignment="Left"
+						    ClipToBounds="true">
+							<Rectangle x:Name="Indicator" 
+							    Fill="{TemplateBinding Foreground}" />
+							<Rectangle x:Name="Animation" 
+							    RenderTransformOrigin="0.5,0.5" 
+							    Fill="{TemplateBinding Foreground}">
+								<Rectangle.RenderTransform>
+									<TransformGroup>
+										<ScaleTransform/>
+										<SkewTransform/>
+										<RotateTransform/>
+										<TranslateTransform/>
+									</TransformGroup>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+						</Grid>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="Orientation" Value="Vertical">
+							<Setter Property="LayoutTransform" TargetName="TemplateRoot">
+								<Setter.Value>
+									<RotateTransform Angle="-90"/>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="IsIndeterminate" Value="true">
+							<Setter Property="Visibility" TargetName="Indicator" Value="Collapsed"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+<!-- [[Luna.Homestead]] -->
+
+ <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ProgressBarFill"
+                         EndPoint="0,1"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#EBB593"
+                          Offset="0"/>
+            <GradientStop Color="#E48245"
+                          Offset="0.3"/>
+            <GradientStop Color="#ECC7AE"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+   
+
+
+<!-- [[Luna.Metallic]] -->
+ 
+    
+    <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ProgressBarFill"
+                         EndPoint="0,1"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#95B38E"
+                          Offset="0"/>
+            <GradientStop Color="#A4D498"
+                          Offset="0.14"/>
+            <GradientStop Color="#A4D498"
+                          Offset="0.43"/>
+            <GradientStop Color="#76A66A"
+                          Offset="0.43"/>
+            <GradientStop Color="#98C88C"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    
+
+<!-- [[Luna.NormalColor]] -->
+
+  
+    
+    <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ProgressBarFill"
+                         EndPoint="0,1"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#ABEDAC"
+                          Offset="0"/>
+            <GradientStop Color="#2ED331"
+                          Offset="0.5"/>
+            <GradientStop Color="#8EE790"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+<!-- [[Luna.Homestead, Luna.Metallic, Luna.NormalColor]] -->
+    <Style x:Key="{x:Type ProgressBar}"
+           TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground"
+                Value="{StaticResource ProgressBarFill}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true"
+                            x:Name="TemplateRoot">
+                        <Border BorderThickness="1,1,1,0"
+                                BorderBrush="#BEBEBE"
+                                CornerRadius="2">
+                            <Border BorderThickness="1"
+                                    BorderBrush="#EFEFEF"
+                                    CornerRadius="1">
+                                <DockPanel x:Name="PART_Track"
+                                           Margin="1,0,0,1"
+                                           LastChildFill="false">
+                                    <Rectangle x:Name="PART_Indicator">
+                                        <Rectangle.Fill>
+                                            <MultiBinding>
+                                                <MultiBinding.Converter>
+                                                    <theme:ProgressBarBrushConverter/>
+                                                </MultiBinding.Converter>
+                                                <Binding Path="Foreground"
+                                                         RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="IsIndeterminate"
+                                                         RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="ActualWidth"
+                                                         ElementName="PART_Indicator"/>
+                                                <Binding Path="ActualHeight"
+                                                         ElementName="PART_Indicator"/>
+                                                <Binding Path="ActualWidth"
+                                                         ElementName="PART_Track"/>
+                                            </MultiBinding>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </DockPanel>
+                            </Border>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="TemplateRoot"
+                            Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Royale.NormalColor]] -->
+
+    <!--=================================================================
+        ProgressBar
+    ==================================================================-->
+    <LinearGradientBrush x:Key="ProgressBarFill"
+                         EndPoint="0,1"
+                         StartPoint="0,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#16834E"
+                          Offset="0"/>
+            <GradientStop Color="#16834E"
+                          Offset="0.1"/>
+            <GradientStop Color="#7CC383"
+                          Offset="0.1"/>
+            <GradientStop Color="#5EBF63"
+                          Offset="0.4"/>
+            <GradientStop Color="#18D927"
+                          Offset="0.5"/>
+            <GradientStop Color="#15E81E"
+                          Offset="0.9"/>
+            <GradientStop Color="#16834E"
+                          Offset="0.9"/>
+            <GradientStop Color="#16834E"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="{x:Type ProgressBar}"
+           TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground"
+                Value="{StaticResource ProgressBarFill}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="#686868"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true"
+                            x:Name="TemplateRoot">
+                        <Border BorderThickness="1,1,1,0"
+                                BorderBrush="#BEBEBE"
+                                CornerRadius="2">
+                            <Border BorderThickness="1"
+                                    BorderBrush="#EFEFEF"
+                                    CornerRadius="1">
+                                <DockPanel x:Name="PART_Track"
+                                           Margin="1,0,0,1"
+                                           LastChildFill="false">
+                                    <Rectangle x:Name="PART_Indicator">
+                                        <Rectangle.Fill>
+                                            <MultiBinding>
+                                                <MultiBinding.Converter>
+                                                    <theme:ProgressBarBrushConverter/>
+                                                </MultiBinding.Converter>
+                                                <Binding Path="Foreground"
+                                                         RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="IsIndeterminate"
+                                                         RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="ActualWidth"
+                                                         ElementName="PART_Indicator"/>
+                                                <Binding Path="ActualHeight"
+                                                         ElementName="PART_Indicator"/>
+                                                <Binding Path="ActualWidth"
+                                                         ElementName="PART_Track"/>
+                                            </MultiBinding>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </DockPanel>
+                            </Border>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="TemplateRoot"
+                            Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

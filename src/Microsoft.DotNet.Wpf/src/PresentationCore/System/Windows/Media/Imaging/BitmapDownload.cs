@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
@@ -29,7 +28,6 @@ using MS.Win32.PresentationCore;
 using MS.Internal.AppModel;
 using MS.Internal.PresentationCore;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
@@ -67,11 +65,6 @@ namespace System.Windows.Media.Imaging
     ///
     internal static class BitmapDownload
     {           
-        /// <SecurityNote>
-        ///     Critical: This code initializes critical member queue
-        ///     TreatAsSafe: This code does not expose the critical data
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static BitmapDownload()
         {
             _waitEvent = new AutoResetEvent(false);
@@ -93,12 +86,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Begin a download
         ///
-        /// <SecurityNote>
-        ///     Critical: This code elevates to create a file and initiate download.
-        ///               UnmanagedCode permission is asserted to allow the creation
-        ///               of a FileStream from a handle obtained by CreateFile.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void BeginDownload(
             BitmapDecoder decoder, 
             Uri uri, 
@@ -146,52 +133,44 @@ namespace System.Windows.Media.Imaging
             string cacheFolder = MS.Win32.WinInet.InternetCacheFolder.LocalPath;
             bool passed = false;
 
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
+            // Get the file path 
+            StringBuilder tmpFileName = new StringBuilder(NativeMethods.MAX_PATH);
+            MS.Win32.UnsafeNativeMethods.GetTempFileName(cacheFolder, "WPF", 0, tmpFileName);
+              
             try
             {
-                // Get the file path 
-                StringBuilder tmpFileName = new StringBuilder(NativeMethods.MAX_PATH);
-                MS.Win32.UnsafeNativeMethods.GetTempFileName(cacheFolder, "WPF", 0, tmpFileName);
-              
-                try
-                {
-                    string pathToUse = tmpFileName.ToString();
-                    SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
-                        pathToUse, 
-                        NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE, /* dwDesiredAccess */
-                        0,                                                        /* dwShare */
-                        null,                                                     /* lpSecurityAttributes */
-                        NativeMethods.CREATE_ALWAYS,                              /* dwCreationDisposition */
-                        NativeMethods.FILE_ATTRIBUTE_TEMPORARY | 
-                        NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,                  /* dwFlagsAndAttributes */
-                        IntPtr.Zero                                               /* hTemplateFile */
-                        );
+                string pathToUse = tmpFileName.ToString();
+                SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
+                    pathToUse, 
+                    NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE, /* dwDesiredAccess */
+                    0,                                                        /* dwShare */
+                    null,                                                     /* lpSecurityAttributes */
+                    NativeMethods.CREATE_ALWAYS,                              /* dwCreationDisposition */
+                    NativeMethods.FILE_ATTRIBUTE_TEMPORARY | 
+                    NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,                  /* dwFlagsAndAttributes */
+                    IntPtr.Zero                                               /* hTemplateFile */
+                    );
 
-                    if (fileHandle.IsInvalid)
-                    {
-                        throw new Win32Exception();
-                    }
-                    
-                    entry.outputStream = new FileStream(fileHandle, FileAccess.ReadWrite);
-                    entry.streamPath = pathToUse;
-                    passed = true;
-                }
-                catch(Exception e)
+                if (fileHandle.IsInvalid)
                 {
-                    if (CriticalExceptions.IsCriticalException(e))
-                    {
-                        throw;
-                    }
+                    throw new Win32Exception();
                 }
+                    
+                entry.outputStream = new FileStream(fileHandle, FileAccess.ReadWrite);
+                entry.streamPath = pathToUse;
+                passed = true;
             }
-            finally
+            catch(Exception e)
             {
-                SecurityPermission.RevertAssert();
+                if (CriticalExceptions.IsCriticalException(e))
+                {
+                    throw;
+                }
             }
 
             if (!passed)
             {
-                throw new IOException(SR.Get(SRID.Image_CannotCreateTempFile));
+                throw new IOException(SR.Image_CannotCreateTempFile);
             }
 
             entry.readBuffer  = new byte[READ_SIZE];
@@ -210,41 +189,10 @@ namespace System.Windows.Media.Imaging
 
             if (stream == null)
             {
-                bool fElevate = false;
-                if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
+                if (uriCachePolicy != null)
                 {
-                    SecurityHelper.BlockCrossDomainForHttpsApps(uri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain), if it
-                    // does we assert and run the code that requires the assert
-                    if (SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.NoAudio,
-                                                                MediaPermissionVideo.NoVideo,
-                                                                MediaPermissionImage.SafeImage))
-                    {
-                        fElevate = true;
-                    }
-                }
-
-                // This is the case where we are accessing an http image from an http site and we have media permission
-                if (fElevate)
-                {
-                    (new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uri))).Assert(); // BlessedAssert
-                }
-                try
-                {
-                    entry.webRequest = WpfWebRequestHelper.CreateRequest(uri);
-                    if (uriCachePolicy != null)
-                    {
-                        entry.webRequest.CachePolicy = uriCachePolicy;
-                    }
-                }
-                finally
-                {
-                    if(fElevate)
-                    {
-                        WebPermission.RevertAssert();
-                    }
+                    entry.webRequest.CachePolicy = uriCachePolicy;
                 }
 
                 entry.webRequest.BeginGetResponse(_responseCallback, entry);
@@ -260,11 +208,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Thread Proc
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue, extracts entries and reads content
-        ///     TreatAsSafe: This code does not expose the queue and the read from the stream are sent to a callback.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void DownloadThreadProc()
         {
             Queue workQueue = _workQueue;
@@ -310,10 +253,6 @@ namespace System.Windows.Media.Imaging
 
         ///
         /// Response callback
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue and also calls into WebRequest methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ResponseCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -344,10 +283,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Read callback
         ///
-        /// <SecurityNote>
-        ///     Critical: This code accesses the queue
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void ReadCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
@@ -521,10 +456,6 @@ namespace System.Windows.Media.Imaging
         internal static AutoResetEvent _waitEvent = new AutoResetEvent(false);
 
         /// Work Queue
-        /// <SecurityNote>
-        ///     Critical: This element holds data that is obtained under an elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Queue _workQueue;
 
         /// Uri hash table
@@ -540,7 +471,7 @@ namespace System.Windows.Media.Imaging
         private static Thread _thread;
 
         /// lock object
-        private static object _syncLock;
+        private static readonly object _syncLock;
 
         /// Default async read size
         private const int READ_SIZE = 1024;

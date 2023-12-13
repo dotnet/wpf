@@ -68,11 +68,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</exception>
         public override bool MergeSelections(Object selection1, Object selection2, out Object newSelection)
         {
-            if (selection1 == null)
-                throw new ArgumentNullException("selection1");
-
-            if (selection2 == null)
-                throw new ArgumentNullException("selection2");
+            ArgumentNullException.ThrowIfNull(selection1);
+            ArgumentNullException.ThrowIfNull(selection2);
 
             newSelection = null;
             return false;
@@ -100,13 +97,12 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public override UIElement GetParent(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             UIElement element = selection as UIElement;
             if (element == null)
             {
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection");
+                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
             }
 
             return element;
@@ -121,13 +117,12 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         public override Point GetAnchorPoint(Object selection)
         {
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(selection);
 
             Visual element = selection as Visual;
 
             if (element == null)
-                throw new ArgumentException(SR.Get(SRID.WrongSelectionType), "selection");
+                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
 
             // get the Visual's bounding rectangle's let, top and store them in a point
             Rect rect = element.VisualContentBounds;
@@ -149,11 +144,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// selection is of the wrong type</exception>
         public override IList<ContentLocatorPart> GenerateLocatorParts(Object selection, DependencyObject startNode)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (selection == null)
-                throw new ArgumentNullException("selection");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(selection);
 
             return new List<ContentLocatorPart>(0);
         }
@@ -173,11 +165,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentException">locatorPart is of the incorrect type</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
         {
-            if (startNode == null)
-                throw new ArgumentNullException("startNode");
-
-            if (locatorPart == null)
-                throw new ArgumentNullException("locatorPart");
+            ArgumentNullException.ThrowIfNull(startNode);
+            ArgumentNullException.ThrowIfNull(locatorPart);
 
             attachmentLevel = AttachmentLevel.Full;
 
@@ -220,7 +209,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames = new XmlQualifiedName[0];
+        private static readonly XmlQualifiedName[] LocatorPartTypeNames = Array.Empty<XmlQualifiedName>();
 
         #endregion Private Fields        
     }

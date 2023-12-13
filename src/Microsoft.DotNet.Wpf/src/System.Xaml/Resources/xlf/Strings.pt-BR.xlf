@@ -988,8 +988,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Não é possível ler objetos do tipo {0}, pois não há construtores acessíveis. Para permitir que esse tipo seja usado em XAML, adicione um construtor padrão, use ConstructorArgumentAttribute ou fornece um InstanceDescriptor.</target>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Não é possível ler objetos do tipo '{0}', pois não há nenhum construtor acessível. Para permitir que esse tipo seja usado no XAML, adicione um construtor padrão, use ConstructorArgumentAttribute ou forneça um InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNameScopeResultsInClonedObject">
         <source>The object graph contains multiple references to an instance of type '{0}' and the serializer cannot find a commonly visible location to write the instance. You should examine your use of name scopes.</source>
-        <target state="translated">O gráfico do objeto contém várias referências a uma instância do tipo '{0}' e o serializador não pode encontrar um local visível comumente para gravar a instância. Você deve examinar o uso de escopos de nome.</target>
+        <target state="translated">O grafo do objetos contém várias referências a uma instância do tipo '{0}' e o serializador não pode encontrar um local visível comumente para gravar a instância. Você deve examinar o uso de escopos de nome.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderXamlNamedElementAlreadyRegistered">
@@ -1050,11 +1050,6 @@
       <trans-unit id="OpenPropertyInCurrentFrame_SM">
         <source>XAML Node Stream: Missing EndMember for '{0}.{1}' before StartMember '{2}'.</source>
         <target state="translated">Fluxo do Nó XAML: EndMember ausente para '{0}.{1}' antes de StartMember '{2}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">O parâmetro deve ser maior ou igual a zero.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">Não é possível chamar MarkupExtension.ProvideValue devido a uma dependência cíclica. As propriedades em uma MarkupExtension não podem referenciar objetos que referenciam o resultado da MarkupExtension. As MarkupExtensions afetadas são:</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">O nome de tipo '{0}' não tem o formato esperado 'nomeDaClasse, assembly'.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">

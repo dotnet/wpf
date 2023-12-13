@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -58,11 +57,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Constructor for PngBitmapEncoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - will eventually create unmanaged resources
-        /// PublicOK - all inputs are verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public PngBitmapEncoder() :
             base(true)
         {
@@ -100,12 +94,8 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Returns the container format for this encoder
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - uses guid to create unmanaged resources
-        /// </SecurityNote>
         internal override Guid ContainerFormat
         {
-            [SecurityCritical]
             get
             {
                 return _containerFormat;
@@ -115,10 +105,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Setups the encoder and other properties before encoding each frame
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls Critical Initialize()
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void SetupFrame(SafeMILHandle frameEncodeHandle, SafeMILHandle encoderOptions)
         {
             PROPBAG2 propBag = new PROPBAG2();
@@ -166,10 +152,6 @@ namespace System.Windows.Media.Imaging
 
         #region Data Members
 
-        /// <SecurityNote>
-        /// Critical - CLSID used for creation of critical resources
-        /// </SecurityNote>
-        [SecurityCritical]
         private Guid _containerFormat = MILGuidData.GUID_ContainerFormatPng;
 
         private const PngInterlaceOption c_defaultInterlaceOption = PngInterlaceOption.Default;

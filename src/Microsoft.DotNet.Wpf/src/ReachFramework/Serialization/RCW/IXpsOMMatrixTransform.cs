@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("B77330FF-BB37-4501-A93E-F1B1E50BFC46"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMMatrixTransform : IXpsOMShareable
     {
         IXpsOMMatrixTransform Clone();

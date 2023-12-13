@@ -25,7 +25,6 @@ using MS.Internal.Ink;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
     
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -109,11 +108,8 @@ namespace System.Windows.Input.StylusPlugIns
             { 
                 get { return _strokeNodeIterator; }
                 set 
-                { 
-                    if (value == null) 
-                    {
-                        throw new ArgumentNullException("StrokeNodeIterator");
-                    }
+                {
+                    ArgumentNullException.ThrowIfNull(value);
                     _strokeNodeIterator = value; 
                 }
             }
@@ -207,13 +203,8 @@ namespace System.Windows.Input.StylusPlugIns
                 _strokeInfoList.Remove(si);
             }
             
-            /// <SecurityNote>
-            /// Critical - Calls SecurityCritical method with LinkDemand (CompositionTarget.RootVisual).
-            /// TreatAsSafe: You can't set the RootVisual to an arbitrary value.
-            /// </SecurityNote>
             internal VisualTarget VisualTarget
             {
-                [SecuritySafeCritical]
                 get 
                 { 
                     if (_visualTarget == null)
@@ -268,7 +259,7 @@ namespace System.Windows.Input.StylusPlugIns
             
             if (inAir)
             {
-                throw new ArgumentException(SR.Get(SRID.Stylus_MustBeDownToCallReset), "stylusDevice");
+                throw new ArgumentException(SR.Stylus_MustBeDownToCallReset, "stylusDevice");
             }
 
             // Avoid reentrancy due to lock() call.
@@ -525,7 +516,8 @@ namespace System.Windows.Input.StylusPlugIns
                 // See if we are done transitioning this stroke!!
                 if (si.StrokeHV.Clip == null)
                 {
-                    TransitionComplete(si);
+                    // Getting _applicationDispatcher is safe, because this runs in main UI thread.
+                    TransitionComplete(si, _applicationDispatcher);
                     _renderCompleteStrokeInfo = null;
                 }
                 else
@@ -607,12 +599,12 @@ namespace System.Windows.Input.StylusPlugIns
                         else
                         {
                             Debug.Assert(_waitingForRenderComplete, "We were expecting to be waiting for a RenderComplete to call our OnRenderComplete, we might never reset and get flashing strokes from here on out");
-                            TransitionComplete(si); // We're done
+                            TransitionComplete(si, dispatcher); // We're done
                         }
                     }
                     else
                     {
-                        TransitionComplete(si); // We're done
+                        TransitionComplete(si, dispatcher); // We're done
                     }
                     return null;
                 },
@@ -702,7 +694,7 @@ namespace System.Windows.Input.StylusPlugIns
             TransitionStrokeVisuals(si, !targetVerified);
         }
 
-        private void OnInternalRenderComplete(object sender, EventArgs e)
+        private void  OnInternalRenderComplete(object sender, EventArgs e)
         {
             // First unhook event handler
             MediaContext.From(_applicationDispatcher).RenderComplete -= _onRenderComplete;
@@ -752,10 +744,7 @@ namespace System.Windows.Input.StylusPlugIns
                                         Geometry geometry, 
                                         Brush fillBrush)
         {
-            if (drawingContext == null)
-            {
-                throw new ArgumentNullException("drawingContext");
-            }
+            ArgumentNullException.ThrowIfNull(drawingContext);
             drawingContext.DrawGeometry(fillBrush, null, geometry);
         }
         
@@ -1028,10 +1017,10 @@ namespace System.Windows.Input.StylusPlugIns
 
 
         // Removes ref from DynamicRendererHostVisual.
-        void TransitionComplete(StrokeInfo si)
+        void TransitionComplete(StrokeInfo si, Dispatcher applicationDispatcher)
         {
             // make sure lock does not cause reentrancy on application thread!
-            using(_applicationDispatcher.DisableProcessing())
+            using(applicationDispatcher.DisableProcessing())
             {
                 lock(__siLock)
                 {
@@ -1080,9 +1069,8 @@ namespace System.Windows.Input.StylusPlugIns
             }
             set // (called in UIContext)
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-                
+                ArgumentNullException.ThrowIfNull(value);
+
                 _drawAttrsSource = value;
 
                 OnDrawingAttributesReplaced();
@@ -1239,7 +1227,7 @@ namespace System.Windows.Input.StylusPlugIns
         // For OnRenderComplete support (for UI Thread)
         EventHandler  _onRenderComplete;
         bool          _waitingForRenderComplete;
-        object        __siLock = new object();
+        readonly object        __siLock = new object();
         private StrokeInfo  _renderCompleteStrokeInfo;
 
         // On internal real time ink rendering thread.

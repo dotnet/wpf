@@ -4,19 +4,16 @@
 
 #include "precomp.hxx"
 #include "util2.h"
-#include <wpfvcclr.h>
-
 
 namespace MS { namespace Internal { namespace FontCache {
 
    
 
-[System::Security::SecurityCritical]
 bool Util2::GetRegistryKeyLastWriteTimeUtc(System::String ^ registryKey, [System::Runtime::InteropServices::Out] System::Int64 % lastWriteTime)
 {
     HKEY hkey = NULL;
 
-    pin_ptr<const wchar_t> registryKeyUnmanaged = CriticalPtrToStringChars(registryKey);
+    pin_ptr<const wchar_t> registryKeyUnmanaged = PtrToStringChars(registryKey);
 
     if (::RegOpenKeyExW(HKEY_LOCAL_MACHINE, registryKeyUnmanaged, 0, KEY_QUERY_VALUE, &hkey) == ERROR_SUCCESS)
     {

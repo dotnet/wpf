@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.IO;
 using System.ComponentModel;
 
@@ -24,10 +24,7 @@ namespace System.Windows.Baml2006
 
         public SharedStream(Stream baseStream)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException("baseStream");
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, 0, baseStream.Length);
         }
@@ -40,10 +37,7 @@ namespace System.Windows.Baml2006
         /// <param name="length"></param>
         public SharedStream(Stream baseStream, long offset, long length)
         {
-            if (baseStream == null)
-            {
-                throw new ArgumentNullException("baseStream");
-            }
+            ArgumentNullException.ThrowIfNull(baseStream);
 
             Initialize(baseStream, offset, length);
         }
@@ -55,15 +49,9 @@ namespace System.Windows.Baml2006
                 throw new ArgumentException("can\u2019t seek on baseStream");
             }
 
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException("offset");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             SharedStream subStream = baseStream as SharedStream;
             if (subStream != null)
@@ -146,7 +134,7 @@ namespace System.Windows.Baml2006
             {
                 if (value < 0 || value >= _length)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, string.Empty);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, string.Empty);
                 }
 
                 _position = value;
@@ -176,19 +164,16 @@ namespace System.Windows.Baml2006
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
+            ArgumentNullException.ThrowIfNull(buffer);
 
             if (offset < 0 || offset >= buffer.Length)
             {
-                throw new ArgumentOutOfRangeException("offset");
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             if ((offset + count) > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             CheckDisposed();
@@ -213,15 +198,15 @@ namespace System.Windows.Baml2006
 #else
             if(buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if(offset < 0 || offset >= buffer.Length) {
-                throw new ArgumentOutOfRangeException("offset");
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             if((offset + count) > buffer.Length) {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             CheckDisposed(); 
@@ -254,12 +239,12 @@ namespace System.Windows.Baml2006
                     break;
 
                 default:
-                    throw new InvalidEnumArgumentException("origin", (int)origin, typeof(SeekOrigin));
+                    throw new InvalidEnumArgumentException(nameof(origin), (int)origin, typeof(SeekOrigin));
             }
 
             if (newPosition < 0 || newPosition >= _length)
             {
-                throw new ArgumentOutOfRangeException("offset", offset, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(offset), offset, string.Empty);
             }
 
             CheckDisposed();

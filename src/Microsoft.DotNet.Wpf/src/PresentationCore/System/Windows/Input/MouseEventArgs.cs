@@ -21,14 +21,11 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         public MouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp)
         {
-            if( mouse == null )
-            {
-                throw new System.ArgumentNullException("mouse");
-            }
+            ArgumentNullException.ThrowIfNull(mouse);
             _stylusDevice = null;
         }
 
@@ -39,17 +36,14 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="stylusDevice">
         ///     The stylus device that was involved with this event.
         /// </param>
         public MouseEventArgs(MouseDevice mouse, int timestamp, StylusDevice stylusDevice) : base(mouse, timestamp)
         {
-            if( mouse == null )
-            {
-                throw new System.ArgumentNullException("mouse");
-            }
+            ArgumentNullException.ThrowIfNull(mouse);
             _stylusDevice = stylusDevice;
         }
 

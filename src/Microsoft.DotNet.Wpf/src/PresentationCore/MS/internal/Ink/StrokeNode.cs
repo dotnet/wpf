@@ -35,8 +35,8 @@ namespace MS.Internal.Ink
         internal StrokeNode(
             StrokeNodeOperations operations,
             int index,
-            StrokeNodeData nodeData,
-            StrokeNodeData lastNodeData,
+            in StrokeNodeData nodeData,
+            in StrokeNodeData lastNodeData,
             bool isLastNode)
         {
             System.Diagnostics.Debug.Assert(operations != null);
@@ -441,7 +441,6 @@ namespace MS.Internal.Ink
                         {
                             Rect node1Bounds = _operations.GetNodeBounds(previous._lastNode);
                             Rect node2Bounds = _operations.GetNodeBounds(_lastNode);
-                            Rect node3Bounds = _operations.GetNodeBounds(_thisNode);
 #if DEBUG_RENDERING_FEEDBACK
                             if (showFeedback)
                             {

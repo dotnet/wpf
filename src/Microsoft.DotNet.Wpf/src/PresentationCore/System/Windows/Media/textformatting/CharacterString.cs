@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Security;
 using MS.Internal;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -74,11 +73,6 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="unsafeCharacterString">pointer to character string</param>
         /// <param name="characterLength">character length</param>
-        /// <SecurityNote>
-        /// Critical: this stores a pointer to an unmanaged string of characters
-        /// PublicOK: The caller needs unmanaged code permission in order to pass unsafe pointers to us.
-        /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public unsafe CharacterBufferRange(
             char*       unsafeCharacterString,
@@ -101,19 +95,13 @@ namespace System.Windows.Media.TextFormatting
             int                         characterLength
             )
         {
-            if (characterLength < 0)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
 
             int maxLength = (characterBufferReference.CharacterBuffer != null) ?
                 characterBufferReference.CharacterBuffer.Count - characterBufferReference.OffsetToFirstChar :
                 0;
 
-            if (characterLength > maxLength)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Get(SRID.ParameterCannotBeGreaterThan, maxLength));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(characterLength, maxLength);
 
             _charBufferRef = characterBufferReference;
             _length = characterLength;

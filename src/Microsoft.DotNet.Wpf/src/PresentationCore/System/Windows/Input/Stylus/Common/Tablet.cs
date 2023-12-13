@@ -35,14 +35,8 @@ namespace System.Windows.Input
         /// <summary>
         ///		Returns the collection of Tablet Devices defined on this tablet. 
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: calls into SecurityCritical code (Stylus.TabletDevices)
-        ///     PublicOK:  - asserts for unmanaged code access (via SUC) to create TabletDevices.
-        ///                 - returns our collection of TabletDevices which we want public.
-        /// </SecurityNote>
         public static TabletDeviceCollection TabletDevices
         { 
-            [SecurityCritical]
             get 
             {
                 // If there is no stylus logic (the stacks are disabled) return an empty collection.

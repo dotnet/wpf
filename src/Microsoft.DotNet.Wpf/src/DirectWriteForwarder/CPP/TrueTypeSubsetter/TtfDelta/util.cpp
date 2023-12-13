@@ -21,7 +21,6 @@
 
 /* ---------------------------------------------------------------------- */
 /* stolen from ffconfig mtxcalc.c */
-[System::Security::SecurityCritical]
 uint16 log2( uint16 arg )
    {
    if ( arg < 2 )     return( 0 );
@@ -43,7 +42,6 @@ uint16 log2( uint16 arg )
    }
 
 /* ---------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ValueOKForShort(uint32 ulValue)
 {
     if (ulValue & 0xFFFF0000) /* any high bits turned on */

@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.IO.Packaging;
 
 using System.Reflection;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Data; // BindingBase
 using System.Windows.Markup; // IProvideValueTarget
@@ -55,7 +54,7 @@ namespace MS.Internal
 
             private object DoTryCatchWhen(object arg)
             {
-                throw new ResourceReferenceKeyNotFoundException(SR.Get(SRID.MarkupExtensionResourceNotFound, _name), _name);
+                throw new ResourceReferenceKeyNotFoundException(SR.Format(SR.MarkupExtensionResourceNotFound, _name), _name);
             }
 
             private object CatchHandler(object arg)
@@ -287,19 +286,19 @@ namespace MS.Internal
                                     out FrameworkElement fe, out FrameworkContentElement fce,
                                     bool throwIfNeither)
         {
-            if (FrameworkElement.DType.IsInstanceOfType(d))
+            if (d is FrameworkElement frameworkElement)
             {
-                fe = (FrameworkElement)d;
+                fe = frameworkElement;
                 fce = null;
             }
-            else if (FrameworkContentElement.DType.IsInstanceOfType(d))
+            else if (d is FrameworkContentElement frameworkContentElement)
             {
                 fe = null;
-                fce = (FrameworkContentElement)d;
+                fce = frameworkContentElement;
             }
             else if (throwIfNeither)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MustBeFrameworkDerived, d.GetType()));
+                throw new InvalidOperationException(SR.Format(SR.MustBeFrameworkDerived, d.GetType()));
             }
             else
             {
@@ -335,7 +334,8 @@ namespace MS.Internal
                     if (style != DependencyProperty.UnsetValue &&
                         (style is Style || style is ResourceReferenceExpression))
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.StyleAndStyleSelectorDefined(name), d);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.StyleAndStyleSelectorDefined(name), null,
+                            traceParameters: new object[] { d });
                     }
                 }
             }
@@ -361,7 +361,8 @@ namespace MS.Internal
                 {
                     if (IsTemplateDefined(templateProperty, d))
                     {
-                        TraceData.Trace(TraceEventType.Error, TraceData.TemplateAndTemplateSelectorDefined(name), d);
+                        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.TemplateAndTemplateSelectorDefined(name), null,
+                            traceParameters: new object[] { d });
                     }
                 }
             }
@@ -510,14 +511,9 @@ namespace MS.Internal
         /// Indicates whether our content is inside an old-style container
         /// </summary>
         /// <value></value>
-        ///<SecurityNote>
-        /// Critical as it accesses the container object
-        /// TreatAsSafe as it only returns safe data
-        ///</SecurityNote>
 
         internal static bool IsContainer
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return BindUriHelper.Container != null;
@@ -678,7 +674,7 @@ namespace MS.Internal
                         if (!typeof(MarkupExtension).IsAssignableFrom(memberType) ||
                              !memberType.IsAssignableFrom(markupExtension.GetType()))
                         {
-                            throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingOnClrProp,
+                            throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingOnClrProp,
                                                                 markupExtension.GetType().Name,
                                                                 targetMember.Name,
                                                                 targetType.Name));
@@ -699,7 +695,7 @@ namespace MS.Internal
                         if (!typeof(BindingBase).IsAssignableFrom(markupExtension.GetType()) ||
                             !typeof(Collection<BindingBase>).IsAssignableFrom(targetProperty.GetType()))
                         {
-                            throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingInCollection,
+                            throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingInCollection,
                                                                 markupExtension.GetType().Name,
                                                                 targetProperty.GetType().Name));
                         }
@@ -723,7 +719,7 @@ namespace MS.Internal
                 if (!typeof(BindingBase).IsAssignableFrom(markupExtension.GetType()) ||
                     !typeof(Collection<BindingBase>).IsAssignableFrom(targetType))
                 {
-                    throw new XamlParseException(SR.Get(SRID.MarkupExtensionDynamicOrBindingInCollection,
+                    throw new XamlParseException(SR.Format(SR.MarkupExtensionDynamicOrBindingInCollection,
                                                         markupExtension.GetType().Name,
                                                         targetType.Name));
                 }
@@ -1113,7 +1109,7 @@ namespace MS.Internal
                 Thickness correctionFactor = new Thickness(0);
                 Size desiredSize = virtualizingElement.DesiredSize;
 
-                if (DoubleUtil.GreaterThan(itemPixelSize.Height, 0))
+                if (DoubleUtil.GreaterThanZero(itemPixelSize.Height))
                 {
                     correctionFactor = GroupItem.DesiredPixelItemsSizeCorrectionFactorField.GetValue(virtualizingElement);
                     itemPixelSize.Height += correctionFactor.Bottom;
@@ -1123,7 +1119,7 @@ namespace MS.Internal
 
                 if (DoubleUtil.AreClose(itemDesiredSizes.PixelSizeAfterViewport.Height, 0) &&
                     DoubleUtil.AreClose(itemDesiredSizes.PixelSizeInViewport.Height, 0) &&
-                    DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeBeforeViewport.Height, 0))
+                    DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeBeforeViewport.Height))
                 {
                     if (!correctionComputed)
                     {
@@ -1134,8 +1130,8 @@ namespace MS.Internal
                 }
                 itemPixelSizeBeforeViewport.Width = Math.Max(desiredSize.Width, itemPixelSizeBeforeViewport.Width);
 
-                if (DoubleUtil.AreClose(itemDesiredSizes.PixelSizeAfterViewport.Height, 0) &&
-                    DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeInViewport.Height, 0))
+                if (DoubleUtil.IsZero(itemDesiredSizes.PixelSizeAfterViewport.Height) &&
+                    DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeInViewport.Height))
                 {
                     if (!correctionComputed)
                     {
@@ -1146,7 +1142,7 @@ namespace MS.Internal
                 }
                 itemPixelSizeInViewport.Width = Math.Max(desiredSize.Width, itemPixelSizeInViewport.Width);
 
-                if (DoubleUtil.GreaterThan(itemDesiredSizes.PixelSizeAfterViewport.Height, 0))
+                if (DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeAfterViewport.Height))
                 {
                     if (!correctionComputed)
                     {

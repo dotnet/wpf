@@ -28,7 +28,6 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal;
 using MS.Internal.AppModel;
@@ -57,11 +56,6 @@ namespace System.Windows.Navigation
             _Initialize();
         }
 
-        /// <SecurityNote>
-        ///   Critical : Writes security sensitive data into SerializationInfo argument
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("_journalEntryList", _journalEntryList);
@@ -285,10 +279,7 @@ namespace System.Windows.Navigation
         /// <param name="journalEntry"></param>
         internal void UpdateCurrentEntry(JournalEntry journalEntry)
         {
-            if (journalEntry == null)
-            {
-                throw new ArgumentNullException("journalEntry");
-            }
+            ArgumentNullException.ThrowIfNull(journalEntry);
             Debug.Assert(journalEntry.ContentId != 0);
             Debug.Assert(!(journalEntry.IsAlive() && journalEntry.JEGroupState.JournalDataStreams != null),
                 "Keep-alive content state should not be serialized.");
@@ -345,7 +336,7 @@ namespace System.Windows.Navigation
                 return false; // nothing to do
 
             if(_uncommittedCurrentIndex > _currentEntryIndex)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CannotClearFwdStack));
+                throw new InvalidOperationException(SR.InvalidOperation_CannotClearFwdStack);
 
             _journalEntryList.RemoveRange(_currentEntryIndex, _journalEntryList.Count - _currentEntryIndex);
             UpdateView();
@@ -374,7 +365,7 @@ namespace System.Windows.Navigation
             int index;
             JournalEntry journalEntry = GetGoBackEntry(out index);
             if (journalEntry == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoBackEntry));
+                throw new InvalidOperationException(SR.NoBackEntry);
             _uncommittedCurrentIndex = index;
             UpdateView();
             if (_uncommittedCurrentIndex == _currentEntryIndex)
@@ -390,7 +381,7 @@ namespace System.Windows.Navigation
 
             GetGoForwardEntryIndex(out fwdEntryIndex);
             if (fwdEntryIndex == -1)
-                throw new InvalidOperationException(SR.Get(SRID.NoForwardEntry));
+                throw new InvalidOperationException(SR.NoForwardEntry);
 
             _uncommittedCurrentIndex = fwdEntryIndex;
             UpdateView();
@@ -439,7 +430,7 @@ namespace System.Windows.Navigation
             int index = _journalEntryList.IndexOf(target);
 
             // When navigating back to a page which contains a previously navigated frame a 
-            // saved journal entry is replayed to restore the frame’s location, in many cases 
+            // saved journal entry is replayed to restore the frame's location, in many cases 
             // this entry is not in the journal.
             if (index > -1)
             {
@@ -470,6 +461,7 @@ namespace System.Windows.Navigation
         //  What happens to a bunch of PageFunctions, some of which are KeepAlive
         // and some of which are not? We'll get "holes" in the "call stack" when we go
         // back.
+#pragma warning disable SYSLIB0050
         internal void PruneKeepAliveEntries()
         {
             for (int i = TotalCount - 1; i >= 0; --i)
@@ -496,6 +488,7 @@ namespace System.Windows.Navigation
                 }
             }
         }
+#pragma warning restore SYSLIB0050
 
         /// <remarks> The caller is responsible for calling UpdateView(). </remarks>
         internal JournalEntry RemoveEntryInternal(int index)

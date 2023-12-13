@@ -1,0 +1,3 @@
+Compat issues with assembly UIAutomationClientsideProviders:
+TypesMustExist : Type 'UIAutomationClientsideProviders.UIAutomationClientSideProviders' does not exist in the implementation but it does exist in the contract.
+Total Issues: 1

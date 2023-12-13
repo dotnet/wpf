@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Interop;
@@ -26,7 +25,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using System;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input 
 {
@@ -238,10 +236,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodEnabled(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodEnabledProperty, value);
         }
@@ -252,10 +247,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodEnabled(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodEnabledProperty));
         }
@@ -277,10 +269,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetIsInputMethodSuspended(DependencyObject target, bool value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(IsInputMethodSuspendedProperty, value);
         }
@@ -291,10 +280,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static bool GetIsInputMethodSuspended(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (bool)(target.GetValue(IsInputMethodSuspendedProperty));
         }
@@ -317,10 +303,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeState(DependencyObject target, InputMethodState value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeStateProperty, value);
         }
@@ -331,10 +314,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputMethodState GetPreferredImeState(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputMethodState)(target.GetValue(PreferredImeStateProperty));
         }
@@ -356,10 +336,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeConversionMode(DependencyObject target, ImeConversionModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeConversionModeProperty, value);
         }
@@ -370,10 +347,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeConversionModeValues GetPreferredImeConversionMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeConversionModeValues)(target.GetValue(PreferredImeConversionModeProperty));
         }
@@ -395,10 +369,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetPreferredImeSentenceMode(DependencyObject target, ImeSentenceModeValues value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(PreferredImeSentenceModeProperty, value);
         }
@@ -409,10 +380,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static ImeSentenceModeValues GetPreferredImeSentenceMode(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (ImeSentenceModeValues)(target.GetValue(PreferredImeSentenceModeProperty));
         }
@@ -433,10 +401,7 @@ namespace System.Windows.Input
         /// </summary>
         public static void SetInputScope(DependencyObject target, InputScope value)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             target.SetValue(InputScopeProperty, value);
         }
@@ -447,10 +412,7 @@ namespace System.Windows.Input
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static InputScope GetInputScope(DependencyObject target)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException("target");
-            }
+            ArgumentNullException.ThrowIfNull(target);
 
             return (InputScope)(target.GetValue(InputScopeProperty));
         }
@@ -563,13 +525,8 @@ namespace System.Windows.Input
         /// <summary>
         /// Access the current keyboard on/off (open/close) status.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - adjusts the IME state, safe to do at anytime (only DOS possible)
-        /// </SecurityNote>
         public InputMethodState ImeState
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -603,7 +560,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical ]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -649,19 +605,9 @@ namespace System.Windows.Input
 
         /// <summary> 
         /// Access the current microphone on/off status.
-        /// </summary> 
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:    MicrophoneState may update the global compartment that may effects all threads in 
-        ///                  the desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     PublicOK:    There is a link demand.  (safe to get it.)
-        /// </SecurityNote>
+        /// </summary>
         public InputMethodState MicrophoneState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -674,10 +620,8 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 Debug.Assert(value != InputMethodState.DoNotCare);
 
@@ -697,13 +641,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current handwriting on/off status.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - adjusts the HW state, safe to do at anytime (only DOS possible)
-        /// </SecurityNote>
         public InputMethodState HandwritingState
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -716,7 +655,6 @@ namespace System.Windows.Input
                 return InputMethodState.Off;
             }
 
-            [SecurityCritical]
             set
             {
                 Debug.Assert(value != InputMethodState.DoNotCare);
@@ -738,18 +676,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current speech mode
         /// </summary> 
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical:    SpeechMode may update the global compartment that may effects all threads in 
-        ///                  the desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     PublicOK:    There is a link demand.  (safe to get it.)
-        /// </SecurityNote>
         public SpeechMode SpeechMode
         {
-            [SecurityCritical]
             get
             {
                 TextServicesCompartment compartment;
@@ -767,10 +695,8 @@ namespace System.Windows.Input
                 return SpeechMode.Indeterminate;
             }
 
-            [SecurityCritical]
             set
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 TextServicesCompartment compartment;
                 compartment = TextServicesCompartmentContext.Current.GetCompartment(InputMethodStateType.SpeechMode);
@@ -809,13 +735,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current ime conversion mode
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (direct query of IME)
-        /// PublicOK - current conversion mode is safe to expose
-        /// </SecurityNote>
         public ImeConversionModeValues ImeConversionMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -898,12 +819,11 @@ namespace System.Windows.Input
                 return ImeConversionModeValues.Alphanumeric;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidConversionMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidConversionMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidConversionMode, value));
                 }
 
                 Debug.Assert((value & ImeConversionModeValues.DoNotCare) == 0);
@@ -1078,13 +998,8 @@ namespace System.Windows.Input
         /// <summary> 
         /// Access the current ime sentence mode
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the IME
-        /// PublicOK - only allows setting the sentence mode, which is safe
-        /// </SecurityNote>
         public ImeSentenceModeValues ImeSentenceMode
         {
-            [SecurityCritical ]
             get
             {
                 if (!IsImm32ImeCurrent())
@@ -1155,12 +1070,11 @@ namespace System.Windows.Input
                 return ImeSentenceModeValues.None;
             }
 
-            [SecurityCritical ]
             set
             {
                 if (!IsValidSentenceMode(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InputMethod_InvalidSentenceMode, value));
+                    throw new ArgumentException(SR.Format(SR.InputMethod_InvalidSentenceMode, value));
                 }
 
                 Debug.Assert((value & ImeSentenceModeValues.DoNotCare) == 0);
@@ -1267,10 +1181,7 @@ namespace System.Windows.Input
         {
             add
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 // Advise compartment event sink to Win32 Cicero only when someone
                 // has StateChanged event handler.
@@ -1283,10 +1194,7 @@ namespace System.Windows.Input
             }
             remove
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _StateChanged -= value;
                 if ((_StateChanged == null) && TextServicesLoader.ServicesInstalled)
@@ -1406,12 +1314,6 @@ namespace System.Windows.Input
         ///     InputMethod enabling/disabling function.
         ///     This takes care of both Cicero and IMM32.
         /// </summary> 
-        /// <SecurityNote>
-        ///     Critical: This code calls into DefaultIMC which returns data (the hImc) retrieved under
-        ///     an elevation of privilige. 
-        ///     TreatAsSafe: This method is safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void EnableOrDisableInputMethod(bool bEnabled)
         {
             // InputMethod enable/disabled status was changed on the current focus Element.
@@ -1509,10 +1411,6 @@ namespace System.Windows.Input
         /// Converts Imm32 conversion mode values into TSF conversion mode values.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged Windowing and IME APIs.
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ConversionModeFlags Imm32ConversionModeToTSFConversionMode(IntPtr hwnd)
         {
             UnsafeNativeMethods.ConversionModeFlags convMode = 0;
@@ -1551,11 +1449,6 @@ namespace System.Windows.Input
         ///     Advice event sink to Cicero's compartment so we can get the notification
         ///     of the compartment change.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - accesses message pump/input manager directly
-        /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1580,11 +1473,6 @@ namespace System.Windows.Input
         ///     Uninitialize the sink for compartments
         ///     Unadvise the cicero's compartment event sink.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - accesses message pump/input manager directly
-        /// TreatAsSafe - safe to uninitialize/initialize event sink (worst case is breaking input for the app)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UninitializeCompartmentEventSink()
         {
             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
@@ -1605,16 +1493,8 @@ namespace System.Windows.Input
         ///    If there is no function provider in the current keyboard TIP or the keyboard TIP does
         ///    not have ITfFnConfigure, this returns false.
         /// </summary> 
-        /// <SecurityNote>
-        ///     This code calls IME/TIP to show its configuration UI.
-        ///     Critical:    The configuration UI usually have a capability to change session wide state.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     TreatAsSafe: There is Demand.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowConfigureUI(UIElement element, bool fShow)
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             bool bCanShown = false;
             IntPtr hkl = SafeNativeMethods.GetKeyboardLayout(0);
@@ -1666,17 +1546,8 @@ namespace System.Windows.Input
         ///    If there is no function provider in the current keyboard TIP or the keyboard TIP does
         ///    not have ITfFnConfigureRegisterWord, this returns false.
         /// </summary> 
-        /// <SecurityNote>
-        ///     This code calls IME/TIP to show its register word UI.
-        ///     Critical:    The word registration usually update the uesr custom dictionary. And the change
-        ///                  of this custom dictionary may affect the conversion of whole desktop.
-        ///                  It should be shown only with unrestricted UI permission.
-        ///     TreatAsSafe: There is Demand.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool _ShowRegisterWordUI(UIElement element, bool fShow, string strRegister)
         {
-            SecurityHelper.DemandUnrestrictedUIPermission();
 
             bool bCanShown = false;
             IntPtr hkl = SafeNativeMethods.GetKeyboardLayout(0);
@@ -1729,10 +1600,6 @@ namespace System.Windows.Input
         /// <summary>
         ///    Get hwnd handle value as IntPtr from UIElement.
         /// </summary> 
-	/// <SecurityNote>
-	///   Critical: This code calls into CriticalFromVisual and also elevates.It exposes the handle.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static IntPtr HwndFromInputElement(IInputElement element)
         {
             IntPtr hwnd = (IntPtr)0;
@@ -1752,15 +1619,7 @@ namespace System.Windows.Input
                             win32Window = source as IWin32Window;
                             if (win32Window != null)
                             {
-                                (new UIPermission(UIPermissionWindow.AllWindows)).Assert();//Blessed Assert
-                                try
-                                {
-                                    hwnd = win32Window.Handle;
-                                }
-                                finally
-                                {
-                                    UIPermission.RevertAssert();
-                                }
+                                hwnd = win32Window.Handle;
                             }
                         }
 }
@@ -1773,14 +1632,8 @@ namespace System.Windows.Input
         /// <summary>
         ///    Get ITfFunctionProvider of the current active keyboard TIP.
         /// </summary> 
-        /// <SecurityNote>
-        ///     Critical: This code calls into COM interop pointers (ITfFunctionProvider)
-        ///     TreatAsSafe: This code has a demand for unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private UnsafeNativeMethods.ITfFunctionProvider GetFunctionPrvForCurrentKeyboardTIP(out UnsafeNativeMethods.TF_LANGUAGEPROFILE tf_profile)
         {
-            SecurityHelper.DemandUnmanagedCode();
             // Get the profile info structre of the current active keyboard TIP.
             tf_profile = GetCurrentKeybordTipProfile();
 
@@ -1805,11 +1658,6 @@ namespace System.Windows.Input
         ///    Return the profile info structre of the current active keyboard TIP.
         ///    This enumelates all TIP's profiles and find the active keyboard category TIP.
         /// </summary> 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to get the keyboard information
-        /// TreatAsSafe - discovery of the input language is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private UnsafeNativeMethods.TF_LANGUAGEPROFILE GetCurrentKeybordTipProfile()
         {
             UnsafeNativeMethods.ITfInputProcessorProfiles ipp = InputProcessorProfilesLoader.Load();
@@ -1896,39 +1744,22 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        ///     Critical: This code returns the input method context which is not safe to expose
-        ///               especially so because it can be used to get to Cicero (any input methods)
-        ///               and IME. It also retrieves the window handle for the default IME Window 
-        ///               although this is not exposed.
-        /// </SecurityNote>
         private IntPtr DefaultImc
         {
-            [SecurityCritical]
             get
             {
                 if (_defaultImc==null)
                 {
-                    //this code causes elevation of privilige to unmanaged code permsission
-                    SecurityPermission sp = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                    sp.Assert();//Blessed Assert
-                    try
-                    {
-                        // 
-                        //  Get the default HIMC from default IME window.
-                        // 
-                        IntPtr hwnd = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, IntPtr.Zero));
-                        IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
+                    // 
+                    //  Get the default HIMC from default IME window.
+                    // 
+                    IntPtr hwnd = UnsafeNativeMethods.ImmGetDefaultIMEWnd(new HandleRef(this, IntPtr.Zero));
+                    IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
-                        // Store the default imc to _defaultImc.
-                        _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
+                    // Store the default imc to _defaultImc.
+                    _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
 
-                        UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
-                    }
-                    finally
-                    {
-                        SecurityPermission.RevertAssert();
-                    }
+                    UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
                 return _defaultImc.Value;
             }

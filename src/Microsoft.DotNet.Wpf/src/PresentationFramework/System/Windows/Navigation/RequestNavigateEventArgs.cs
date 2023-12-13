@@ -49,9 +49,6 @@ namespace System.Windows.Navigation
         /// Uri to navigate
         /// </summary>
         /// <ExternalAPI Inherit="true"/>
-        /// <SecurityNote>
-        /// Don't add a setter to this property since it could open up for spoofing attacks.
-        /// </SecurityNote>
         public Uri Uri
         {
             get{return _uri;}
@@ -75,7 +72,7 @@ namespace System.Windows.Navigation
         {
             if (RoutedEvent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RequestNavigateEventMustHaveRoutedEvent));
+                throw new InvalidOperationException(SR.RequestNavigateEventMustHaveRoutedEvent);
             }
 
             RequestNavigateEventHandler handler = (RequestNavigateEventHandler)genericHandler;

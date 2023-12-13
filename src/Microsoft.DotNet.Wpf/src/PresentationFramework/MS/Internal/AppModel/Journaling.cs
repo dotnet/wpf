@@ -8,7 +8,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.Windows;
@@ -279,12 +278,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -520,12 +513,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -552,14 +539,13 @@ namespace MS.Internal.AppModel
         //
         internal override void RestoreState(object contentObject)
         {
-            if (contentObject == null)
-                throw new ArgumentNullException("contentObject");
+            ArgumentNullException.ThrowIfNull(contentObject);
 
             PageFunctionBase pageFunction = (PageFunctionBase)contentObject;
 
             if (pageFunction == null)
             {
-                throw new Exception(SR.Get(SRID.InvalidPageFunctionType, contentObject.GetType()));
+                throw new Exception(SR.Format(SR.InvalidPageFunctionType, contentObject.GetType()));
             }
 
             pageFunction.ParentPageFunctionId = ParentPageFunctionId;
@@ -635,11 +621,6 @@ namespace MS.Internal.AppModel
 
         #region Ctors
 
-        /// <SecurityNote>
-        /// Critical: Sets the crtical _typeName.
-        /// Safe: The type is a subtype of PageFunctionBase, and the application has access to it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal JournalEntryPageFunctionType(JournalEntryGroupState jeGroupState, PageFunctionBase pageFunction)
             : base(jeGroupState, pageFunction)
         {
@@ -652,10 +633,6 @@ namespace MS.Internal.AppModel
         /// Serialization constructor. Marked Protected so derived classes can be deserialized correctly
         /// The base implementation needs to be called if this class is overridden
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Sets the critical _typeName.
-        /// </SecurityNote>
-        [SecurityCritical]
         protected JournalEntryPageFunctionType(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -665,12 +642,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -696,12 +667,6 @@ namespace MS.Internal.AppModel
         //
         // The PageFunction should be implemented in pure code file without xaml file involved.
         //
-        /// <SecurityNote>
-        /// Critical: Asserts ReflectionPermission to create an instance of the page function type.
-        /// Safe: The object created is of the same type that the application originally navigated to.
-        ///     It is necessarily derived from PageFunctionBase.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal override PageFunctionBase ResumePageFunction()
         {
             PageFunctionBase pageFunction;
@@ -715,18 +680,13 @@ namespace MS.Internal.AppModel
             //fail.
 
             Type pfType = Type.GetType(this._typeName.Value);
-            new ReflectionPermission(ReflectionPermissionFlag.MemberAccess).Assert();
             try
             {
                 pageFunction = (PageFunctionBase)Activator.CreateInstance(pfType);
             }
             catch (Exception ex)
             {
-                throw new Exception(SR.Get(SRID.FailedResumePageFunction, this._typeName.Value), ex);
-            }
-            finally
-            {
-                ReflectionPermission.RevertAssert();
+                throw new Exception(SR.Format(SR.FailedResumePageFunction, this._typeName.Value), ex);
             }
 
             InitializeComponent(pageFunction);
@@ -766,10 +726,6 @@ namespace MS.Internal.AppModel
         #region Private fields
 
         /// AssemblyQualifiedName of the PageFunction Type
-        /// <SecurityNote>
-        /// Critical: The type name is used to create an instance under elevation. We have to make
-        ///     sure that it is the same page function type that the application originally navigated to.
-        /// </SecurityNote>
         private SecurityCriticalDataForSet<string> _typeName;
 
         #endregion
@@ -804,12 +760,6 @@ namespace MS.Internal.AppModel
         //
         //  ISerializable implementation
         //
-        /// <SecurityNote>
-        /// Critical: does object serialization
-        /// Public OK: has a LinkDemand
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.LinkDemand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

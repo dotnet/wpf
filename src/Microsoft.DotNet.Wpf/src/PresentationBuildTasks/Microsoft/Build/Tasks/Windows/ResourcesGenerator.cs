@@ -61,7 +61,7 @@ namespace Microsoft.Build.Tasks.Windows
                         long length = _sourceStream.Length;
                         if (length > (long)System.Int32.MaxValue)
                         {
-                            throw new ApplicationException(SR.Get(SRID.ResourceTooBig, _sourcePath, System.Int32.MaxValue));
+                            throw new ApplicationException(SR.Format(SR.ResourceTooBig, _sourcePath, System.Int32.MaxValue));
                         }
 
                     }
@@ -151,7 +151,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         public override bool Execute()
         {
-            TaskHelper.DisplayLogo(Log, SR.Get(SRID.ResourcesGeneratorTask));
+            TaskHelper.DisplayLogo(Log, nameof(ResourcesGenerator));
 
             //
             // Validate the property settings
@@ -167,7 +167,7 @@ namespace Microsoft.Build.Tasks.Windows
             if (OutputResourcesFile != null && OutputResourcesFile.Length > 1)
             {
                 // Every task should generate only one .resources.
-                Log.LogErrorWithCodeFromResources(SRID.MoreResourcesFiles);
+                Log.LogErrorWithCodeFromResources(nameof(SR.MoreResourcesFiles));
                 return false;
             }
 
@@ -181,7 +181,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 string resourcesFile = OutputResourcesFile[0].ItemSpec;
 
-                Log.LogMessageFromResources(MessageImportance.Low, SRID.ResourcesGenerating, resourcesFile);
+                Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ResourcesGenerating), resourcesFile);
 
                 // Go through all the files and create a resources file.
                 using (var resWriter = new ResourceWriter(resourcesFile))
@@ -195,15 +195,15 @@ namespace Microsoft.Build.Tasks.Windows
                         // True for the third argument tells resWriter to dispose of the stream when it's done.
                         resWriter.AddResource(resourceId, new LazyFileStream(resFileName), true);
 
-                        Log.LogMessageFromResources(MessageImportance.Low, SRID.ReadResourceFile, resFileName);
-                        Log.LogMessageFromResources(MessageImportance.Low, SRID.ResourceId, resourceId);
+                        Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ReadResourceFile), resFileName);
+                        Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ResourceId), resourceId);
 
                     }
                     // Generate the .resources file.
                     resWriter.Generate();
                 }
 
-                Log.LogMessageFromResources(MessageImportance.Low, SRID.ResourcesGenerated, resourcesFile);
+                Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ResourcesGenerated), resourcesFile);
             }
             catch (Exception e)
             {
@@ -220,7 +220,7 @@ namespace Microsoft.Build.Tasks.Windows
                     if (string.IsNullOrEmpty(errorId))
                     {
                         errorId = UnknownErrorID;
-                        message = SR.Get(SRID.UnknownBuildError, message);
+                        message = SR.Format(SR.UnknownBuildError, message);
                     }
 
                     Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
@@ -230,7 +230,7 @@ namespace Microsoft.Build.Tasks.Windows
 #pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
-                Log.LogErrorWithCodeFromResources(SRID.NonClsError);
+                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 return false;
             }
 #pragma warning restore 6500
@@ -310,7 +310,7 @@ namespace Microsoft.Build.Tasks.Windows
                 if (!File.Exists(TaskHelper.CreateFullFilePath(strFileName, SourceDir)))
                 {
                     bValid = false;
-                    Log.LogErrorWithCodeFromResources(SRID.FileNotFound, strFileName);
+                    Log.LogErrorWithCodeFromResources(nameof(SR.FileNotFound), strFileName);
                 }
             }
 

@@ -9,8 +9,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -206,7 +206,7 @@ namespace System.Windows.Controls
         private static bool ValidateMinColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value) || Double.IsPositiveInfinity(value));
+            return !(value < 0d || double.IsNaN(value) || Double.IsPositiveInfinity(value));
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace System.Windows.Controls
         private static bool ValidateMaxColumnWidth(object v)
         {
             double value = (double)v;
-            return !(value < 0d || DoubleUtil.IsNaN(value));
+            return !(value < 0d || double.IsNaN(value));
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace System.Windows.Controls
         {
             if (displayIndex < 0 || displayIndex >= Columns.Count)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Get(SRID.DataGrid_DisplayIndexOutOfRange));
+                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
             }
 
             return InternalColumns.ColumnFromDisplayIndex(displayIndex);
@@ -1262,7 +1262,7 @@ namespace System.Windows.Controls
             var dataGrid = ((DataGrid)d);
             var newValue = (double)e.NewValue;
 
-            if (!DoubleUtil.IsNaN(newValue))
+            if (!double.IsNaN(newValue))
             {
                 dataGrid.RowHeaderActualWidth = newValue;
             }
@@ -1281,7 +1281,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ResetRowHeaderActualWidth()
         {
-            if (DoubleUtil.IsNaN(RowHeaderWidth))
+            if (double.IsNaN(RowHeaderWidth))
             {
                 RowHeaderActualWidth = 0.0;
             }
@@ -1540,10 +1540,7 @@ namespace System.Windows.Controls
         /// <param name="item">The data item of the row to bring into view.</param>
         public void ScrollIntoView(object item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
+            ArgumentNullException.ThrowIfNull(item);
 
             ScrollIntoView(NewItemInfo(item));
         }
@@ -4154,7 +4151,7 @@ namespace System.Windows.Controls
             DataGridSelectionUnit selectionUnit = SelectionUnit;
             if (!IsUpdatingSelectedCells && (selectionUnit == DataGridSelectionUnit.FullRow))
             {
-                throw new InvalidOperationException(SR.Get(SRID.DataGrid_CannotSelectCell));
+                throw new InvalidOperationException(SR.DataGrid_CannotSelectCell);
             }
 
             // Update the pending list of changes
@@ -6886,17 +6883,20 @@ namespace System.Windows.Controls
                     if (AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged))
                     {
                         DataGridColumn column = (_cell != null) ? _cell.Column : _column;
-                        DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
-                        if (peer != null)
+                        if (column.DataGridOwner != null)
                         {
-                            object item = (_cell != null) ? _cell.DataContext : _item;
-                            DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
-                            if (dataGridItemAutomationPeer != null)
+                            DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(column.DataGridOwner) as DataGridAutomationPeer;
+                            if (peer != null)
                             {
-                                DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                                if (cellPeer != null)
+                                object item = (_cell != null) ? _cell.DataContext : _item;
+                                DataGridItemAutomationPeer dataGridItemAutomationPeer = peer.FindOrCreateItemAutomationPeer(item) as DataGridItemAutomationPeer;
+                                if (dataGridItemAutomationPeer != null)
                                 {
-                                    cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
+                                    if (cellPeer != null)
+                                    {
+                                        cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
+                                    }
                                 }
                             }
                         }
@@ -7156,7 +7156,7 @@ namespace System.Windows.Controls
                     catch (InvalidOperationException invalidOperationException)
                     {
                         Items.SortDescriptions.Clear();
-                        throw new InvalidOperationException(SR.Get(SRID.DataGrid_ProbableInvalidSortDescription), invalidOperationException);
+                        throw new InvalidOperationException(SR.DataGrid_ProbableInvalidSortDescription, invalidOperationException);
                     }
                 }
             }
@@ -7250,7 +7250,7 @@ namespace System.Windows.Controls
                 }
                 catch (InvalidOperationException invalidOperationException)
                 {
-                    TraceData.Trace(TraceEventType.Error,
+                    TraceData.TraceAndNotify(TraceEventType.Error,
                                     TraceData.CannotSort(sortPropertyName),
                                     invalidOperationException);
                     Items.SortDescriptions.Clear();
@@ -7856,10 +7856,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         public static Collection<DataGridColumn> GenerateColumns(IItemProperties itemProperties)
         {
-            if (itemProperties == null)
-            {
-                throw new ArgumentNullException("itemProperties");
-            }
+            ArgumentNullException.ThrowIfNull(itemProperties);
 
             Collection<DataGridColumn> columnCollection = new Collection<DataGridColumn>();
             DataGrid.GenerateColumns(
@@ -8271,16 +8268,11 @@ namespace System.Windows.Controls
         /// This virtual method is called when ApplicationCommands.Copy command is executed.
         /// </summary>
         /// <param name="args"></param>
-        ///<SecurityNote>
-        /// Critical: Calls Secuirty Critical Clipboard operations in full and partial trust.
-        /// TreatAsSafe: Only puts text on the clipboard in full trust or a userinitiated command in partial trust through secured critical functions.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual void OnExecutedCopy(ExecutedRoutedEventArgs args)
         {
             if (ClipboardCopyMode == DataGridClipboardCopyMode.None)
             {
-                throw new NotSupportedException(SR.Get(SRID.ClipboardCopyMode_Disabled));
+                throw new NotSupportedException(SR.ClipboardCopyMode_Disabled);
             }
 
             args.Handled = true;
@@ -8334,38 +8326,22 @@ namespace System.Windows.Controls
 
             DataGridClipboardHelper.GetClipboardContentForHtml(dataGridStringBuilders[DataFormats.Html]);
 
-            DataObject dataObject;
-            bool hasPerms = SecurityHelper.CallerHasAllClipboardPermission() && SecurityHelper.CallerHasSerializationPermission();
+            DataObject dataObject = new DataObject();
 
-            // Copy unconditionally in full trust.
-            // Only copy in partial trust if user initiated.
-            if (hasPerms ||  args.UserInitiated )
+
+            foreach (string format in formats)
             {
-                (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();
-                try
-                {
-                    dataObject = new DataObject();
-                }
-                finally
-                {
-                    UIPermission.RevertAssert();
-                }
+                dataObject.SetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
+            }
 
-                foreach (string format in formats)
-                {
-                        dataObject.CriticalSetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
-                }
-
-                // This assert is there for an OLE Callback to register CSV type for the clipboard
-                (new SecurityPermission(SecurityPermissionFlag.SerializationFormatter | SecurityPermissionFlag.UnmanagedCode)).Assert();
-                try
-                {
-                    Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAll();
-                }
+            try
+            {
+                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+            }
+            catch (ExternalException)
+            {
+                // Clipboard failed to set the data object - fail silently.
+                return;
             }
         }
 

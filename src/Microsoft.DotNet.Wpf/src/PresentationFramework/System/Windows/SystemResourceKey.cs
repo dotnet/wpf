@@ -366,9 +366,6 @@ namespace System.Windows
             bool isKey = false;
             bool found = true;
 
-            // Initialization needed to keep compiler happy!
-            SystemResourceKeyID srkId = SystemResourceKeyID.InternalSystemColorsStart;
-
             if (memberName.EndsWith("Key", false, TypeConverterHelper.InvariantEnglishUS))
             {
                 srkField = memberName.Remove(memberName.Length - 3);
@@ -386,17 +383,15 @@ namespace System.Windows
             {
                 srkField = memberName;
             }
+#if PBTCOMPILER
+            
+            found &= targetType.Assembly == XamlTypeMapper.AssemblyPF &&
+                targetType.FullName == "System.Windows.SystemParameters";
+                
+#endif
 
-            try
-            {
-                srkId = (SystemResourceKeyID)Enum.Parse(typeof(SystemResourceKeyID), srkField);
-            }
-            catch (ArgumentException)
-            {
-                found = false;
-            }
-
-            if (found)
+            if (found &&
+                Enum.TryParse(srkField, out SystemResourceKeyID srkId))
             {
                 bool isExtended = ((short)srkId > SystemResourceKeyIDExtendedStart &&
                                    (short)srkId < SystemResourceKeyIDExtendedEnd);

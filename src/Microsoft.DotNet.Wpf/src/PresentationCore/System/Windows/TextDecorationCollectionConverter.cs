@@ -19,7 +19,6 @@ using System.Reflection;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {
@@ -81,7 +80,7 @@ namespace System.Windows
             
             if (null == value)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "input");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "input");
             }                       
                         
             return ConvertFromString(value);            
@@ -164,7 +163,7 @@ namespace System.Windows
 
             if (index < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidTextDecorationCollectionString, text));
+                throw new ArgumentException(SR.Format(SR.InvalidTextDecorationCollectionString, text));
             }
             
             return textDecorations;            
@@ -178,11 +177,6 @@ namespace System.Windows
         /// <param name="value"> the object to be converted to another type </param>
         /// <param name="destinationType"> The destination type of the conversion </param>
         /// <returns> null will always be returned because TextDecorations cannot be converted to any other type. </returns>        
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for TextDecoration, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor) && value is IEnumerable<TextDecoration>)

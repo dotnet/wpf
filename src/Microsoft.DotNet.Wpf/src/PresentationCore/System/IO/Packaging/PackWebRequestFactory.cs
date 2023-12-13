@@ -19,7 +19,6 @@ using System.Diagnostics;               // for Assert
 using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 
 namespace System.IO.Packaging
@@ -29,12 +28,6 @@ namespace System.IO.Packaging
     /// </summary>
     public sealed class PackWebRequestFactory : IWebRequestCreate
     {
-        /// <SecurityNote>
-        /// Critical as the BooleanSwitch has a LinkDemand
-        /// TreatAsSafe as this is just a diag switch, Debug-only, no input data is used,
-        ///   and the usage is considered safe (tracing).
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static PackWebRequestFactory()
         {
 #if DEBUG
@@ -56,39 +49,31 @@ namespace System.IO.Packaging
         /// for "pack" scheme web requests.  Because of this, callers should be sure to use the PackUriHelper static class
         /// to prepare their Uri's.  Calling any PackUriHelper method has the side effect of registering
         /// the "pack" scheme and associating this factory class as its default handler.</remarks>
-        /// <SecurityNote>
-        /// Critical: Access a package instance from PreloadedPackages.
-        /// TreatAsSafe: because it is a public method and no Package related objects
-        ///         are given out from this API other than a part stream
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         WebRequest IWebRequestCreate.Create(Uri uri)
         {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
             // Ensure uri is absolute - if we don't check now, the get_Scheme property will throw 
             // InvalidOperationException which would be misleading to the caller.
             if (!uri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriMustBeAbsolute), "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
 
             // Ensure uri is correct scheme because we can be called directly.  Case sensitive
             // is fine because Uri.Scheme contract is to return in lower case only.
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) != 0)
-                throw new ArgumentException(SR.Get(SRID.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
+            if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
+                throw new ArgumentException(SR.Format(SR.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
 
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - responding to uri: " + uri);
 #endif
             // only inspect cache if part name is present because cache only contains an object, not
             // the stream it was derived from
-            Uri packageUri;
-            Uri partUri;
-            MS.Internal.IO.Packaging.PackUriHelper.ValidateAndGetPackUriComponents(uri, out packageUri, out partUri);
+            Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(uri);
+            Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(uri);
 
             if (partUri != null)
             {
@@ -121,7 +106,7 @@ namespace System.IO.Packaging
                     if (_traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                                Environment.CurrentManagedThreadId + ": " + 
                                 "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
 #endif
                     // use the cached object
@@ -134,7 +119,7 @@ namespace System.IO.Packaging
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + 
+                        Environment.CurrentManagedThreadId + ": " + 
                         "PackWebRequestFactory - spawning regular PackWebRequest");
 #endif
             return new PackWebRequest(uri, packageUri, partUri);
@@ -154,7 +139,7 @@ namespace System.IO.Packaging
         [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
-            if (String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal) == 0)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
             {
                 return ((IWebRequestCreate) _factorySingleton).Create(uri);
             }
@@ -165,10 +150,6 @@ namespace System.IO.Packaging
         }
 
 #if DEBUG
-        ///<SecurityNote>
-        ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
-        ///     TreatAsSafe: ok to enable tracing, and it's in debug only
-        ///</SecurityNote> 
         internal static bool TraceSwitchEnabled
         {
             get
@@ -176,7 +157,6 @@ namespace System.IO.Packaging
                 return _traceSwitch.Enabled;
             }
 
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 _traceSwitch.Enabled = value;

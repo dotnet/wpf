@@ -22,8 +22,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("70B4A6BB-88D4-4FA8-AAF9-6D9C596FDBAD"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMFontResourceCollection
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

@@ -28,7 +28,6 @@ using System.Globalization;
 using MS.Internal.PresentationCore;                        // SafeSecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Automation
 {
@@ -162,13 +161,6 @@ namespace MS.Internal.Automation
         }
 
         // Get element at given point (screen coords)
-        ///<SecurityNote> 
-        ///     Critical    - accepts critical data. Hwnd was created under an elevation. 
-        ///                 - calls HwndSource.CriticalFromHwnd to get the HwndSource for this  visual
-        ///     TreatAsSafe - returning an element is considered safe. 
-        ///                 - the hwndSource is not exposed.
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe ]
         internal static Visual GetElementFromPoint( IntPtr hwnd, Visual root, Point pointScreen )
         {
             HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
@@ -248,11 +240,11 @@ namespace MS.Internal.Automation
 
                 if(dispatcherInShutdown)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.AutomationDispatcherShutdown));
+                    throw new InvalidOperationException(SR.AutomationDispatcherShutdown);
                 }
                 else
                 {
-                    throw new TimeoutException(SR.Get(SRID.AutomationTimeout));
+                    throw new TimeoutException(SR.AutomationTimeout);
                 }
             }
             

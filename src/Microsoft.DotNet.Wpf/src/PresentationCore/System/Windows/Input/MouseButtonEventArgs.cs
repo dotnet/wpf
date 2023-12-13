@@ -19,7 +19,7 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="button">
         ///     The mouse button whose state is being described.
@@ -41,7 +41,7 @@ namespace System.Windows.Input
         ///     The logical Mouse device associated with this event.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="button">
         ///     The Mouse button whose state is being described.

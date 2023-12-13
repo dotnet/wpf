@@ -129,11 +129,6 @@ namespace MS.Internal.PtsHost
         ///     f) Your Finalizer runs in a delicate security context.
         /// See: http://blogs.msdn.com/cbrumme/archive/2004/02/20/77460.aspx
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical, because sets SecurityCriticalDataForSet.
-        /// Safe, because sets SecurityCriticalDataForSet to IntPtr.Zero, which is safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             PtsContext ptsContext = null;

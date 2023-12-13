@@ -15,11 +15,9 @@ using System.Runtime.InteropServices;
 using System.IO;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using MS.Win32.PresentationCore;
 
 namespace System.Windows.Media.Imaging
@@ -41,14 +39,11 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapTarget">Where the resulting bitmap is rendered</param>
         public BitmapVisualManager(RenderTargetBitmap bitmapTarget)
         {
-            if (bitmapTarget == null)
-            {
-                throw new ArgumentNullException("bitmapTarget");
-            }
+            ArgumentNullException.ThrowIfNull(bitmapTarget);
 
             if (bitmapTarget.IsFrozen)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_CantBeFrozen, null));
+                throw new ArgumentException(SR.Format(SR.Image_CantBeFrozen, null));
             }
 
             _bitmapTarget = bitmapTarget;
@@ -75,17 +70,9 @@ namespace System.Windows.Media.Imaging
         /// <param name="fRenderForBitmapEffect">True if we are rendering the visual
         /// to apply an effect to it</param>
         /// 
-        /// <SecurityNote>
-        /// Critical - Deals with bitmap handles
-        /// TreatAsSafe - validates all parameters, uses safe wrappers
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void Render(Visual visual, Matrix worldTransform, Rect windowClip)
         {
-            if (visual == null)
-            {
-                throw new ArgumentNullException("visual");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
 
             // If the bitmapTarget we're writing to is frozen then we can't proceed.  Note that
             // it's possible for the BitmapVisualManager to be constructed with a mutable BitmapImage
@@ -93,7 +80,7 @@ namespace System.Windows.Media.Imaging
             // they subsequently try to render to the BitmapImage.
             if (_bitmapTarget.IsFrozen)
             {
-                throw new ArgumentException(SR.Get(SRID.Image_CantBeFrozen));
+                throw new ArgumentException(SR.Image_CantBeFrozen);
             }
 
             int sizeX = _bitmapTarget.PixelWidth;

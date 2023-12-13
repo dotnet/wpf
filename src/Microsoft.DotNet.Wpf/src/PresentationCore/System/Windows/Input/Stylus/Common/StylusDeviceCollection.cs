@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -37,10 +36,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: calls SecurityCritical method stylusDevice.Dispose.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void Dispose()
         {
             foreach (StylusDevice stylusDevice in this.Items)

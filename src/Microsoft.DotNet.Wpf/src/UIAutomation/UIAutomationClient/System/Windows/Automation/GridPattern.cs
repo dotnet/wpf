@@ -68,11 +68,6 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="row">Row of item to get</param>
         /// <param name="column">Column of item to get</param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public AutomationElement GetItem(int row, int column) 
         {
             SafeNodeHandle hNode = UiaCoreApi.GridPattern_GetItem(_hPattern, row, column);
@@ -214,11 +209,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// number of rows in the grid
             /// </summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int RowCount
             {
                 get
@@ -230,11 +220,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// number of columns in the grid
             /// </summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int ColumnCount
             {
                 get

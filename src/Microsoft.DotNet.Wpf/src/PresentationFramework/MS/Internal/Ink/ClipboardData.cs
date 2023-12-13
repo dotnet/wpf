@@ -38,11 +38,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="dataObject">The IDataObject instance</param>
         /// <returns>Returns true if the data is copied. Otherwise, returns false</returns>
-        /// <SecurityNote>
-        ///     Critical: This code copies ink content to the clipboard and accepts a dataobject which is
-        ///     created under an elevation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal bool CopyToDataObject(IDataObject dataObject)
         {
             // Check if the data can be copied

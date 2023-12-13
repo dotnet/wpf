@@ -16,10 +16,8 @@ using MS.Internal;
 using System.Diagnostics;
 using System.Windows;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -38,10 +36,7 @@ namespace System.Windows.Input
         /// <param name="element">The registration element</param>
         public static void Register(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -72,10 +67,7 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         public static void Unregister(string key, IInputElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
@@ -121,11 +113,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Executes the command on the given command source.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls critical function (ProcessKeyForScope)
-        ///     PublicOK - always passes in false for userInitiated, which is safe
-        /// </SecurityNote>
-        [SecurityCritical]
         public static bool ProcessKey(object scope, string key, bool isMultiple)
         {
             key = NormalizeKey(key);
@@ -142,16 +129,13 @@ namespace System.Windows.Input
         /// <returns></returns>
         private static string NormalizeKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key);
 
             string firstCharacter = StringInfo.GetNextTextElement(key);
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Get(SRID.AccessKeyManager_NotAUnicodeCharacter, "key"));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
             }
 
             return firstCharacter.ToUpperInvariant();
@@ -187,11 +171,6 @@ namespace System.Windows.Input
         #endregion
         
         #region Constructor
-        /// <SecurityNote>
-        ///     Critical: This code accesses InputManager.Current which is critical
-        ///     TreatAsSafe: This code does not expose it and simply adds an event handler that is internal
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private AccessKeyManager()
         {
             InputManager.Current.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
@@ -225,10 +204,6 @@ namespace System.Windows.Input
             LastMatch
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.Handled) return;
@@ -244,11 +219,6 @@ namespace System.Windows.Input
 }
 
         // Assumes key is already a single unicode character
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
         {
             // This comes from OnKeyDown or OnText and though it is a single character it might not be uppercased.
@@ -261,11 +231,6 @@ namespace System.Windows.Input
         }
 
         // Assumes key is already a single unicode character AND is uppercased
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private ProcessKeyResult ProcessKeyForScope(object scope, string key, bool existsElsewhere, bool userInitiated)
         {
             List<IInputElement> targets = GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
@@ -273,11 +238,6 @@ namespace System.Windows.Input
             return ProcessKey(targets, key, existsElsewhere, userInitiated);
         }
 
-        /// <SecurityNote>
-        /// Critical - Sets calls AccessKeyPressedEventArgs setting the userInitiated bit which is used
-        ///            for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
         {
             if (targets != null)
@@ -333,11 +293,6 @@ namespace System.Windows.Input
             return ProcessKeyResult.NoMatch;
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls ProcessKeyForSender, setting the userInitiated 
-        ///             bit, which is used for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnText(TextCompositionEventArgs e)
         {
             // AccessKeyManager handles both text and system text.
@@ -356,11 +311,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls ProcessKeyForSender, setting the userInitiated 
-        ///             bit, which is used for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnKeyDown(KeyEventArgs e)
         {
             KeyboardDevice keyboard = (KeyboardDevice)e.Device;
@@ -393,11 +343,6 @@ namespace System.Windows.Input
         /// <param name="sender"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: calls Critical member GetInfoForElement() and accesses Scope from AccessKeyInformation.
-        ///     TreatAsSafe:  Does not pass the sender info (which may contain a PresentationSource) out.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private List<IInputElement> GetTargetsForSender(IInputElement sender, string key)
         {
             // Find the scope for the sender -- will be matched against the possible targets' scopes
@@ -406,12 +351,6 @@ namespace System.Windows.Input
             return GetTargetsForScope(senderInfo.Scope, key, sender, senderInfo);
         }
         
-        /// <SecurityNote>
-        ///     Critical: calls CriticalGetActiveSource()
-        ///     TreatAsSafe:  Does not pass the returned scope to any other method, nor is it
-        ///                 returned from GetTargetsForScope.  Also returned value is not critical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
         {
             // null scope defaults to the active window
@@ -488,10 +427,6 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         /// <param name="key"></param>
         /// <returns>Scope for the given element, null means the context global scope</returns>
-        /// <SecurityNote>
-        ///     Critical: calls GetSourceForElement(), CriticalGetActiveSource(), and returns AccessKeyInformation.
-        /// </SecurityNote>
-        [SecurityCritical]
         private AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
             AccessKeyInformation info = new AccessKeyInformation();
@@ -514,10 +449,6 @@ namespace System.Windows.Input
             return info;
         }
 
-        /// <SecurityNote>
-        ///     Critical: calls PresentationSource.CriticalFromVisual, and returns PresentationSource
-        /// </SecurityNote>
-        [SecurityCritical]
         private PresentationSource GetSourceForElement(IInputElement element)
         {
             PresentationSource source = null;
@@ -541,14 +472,6 @@ namespace System.Windows.Input
             return source;
         }
 
-        /// <SecurityNote>
-        ///     Critical: calls UnsafeNativeMethod GetActiveWindow(), and Critical method
-        ///               HwndSource.FromHwnd().
-        ///     TreatAsSafe: Does not pass any parameters to GetActiveWindow(), and does
-        ///                 not expose the return value, and HwndSource.FromHwnd will demand 
-        ///                 UIPermissionWindow.AllWindows.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private PresentationSource GetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
@@ -558,10 +481,6 @@ namespace System.Windows.Input
             return null;
         }
 
-        /// <SecurityNote>
-        ///     Critical: calls UnsafeNativeMethod GetActiveWindow() and HwndSource.CriticalFromHwnd()
-        /// </SecurityNote>
-        [SecurityCritical]
         private PresentationSource CriticalGetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
@@ -624,13 +543,8 @@ namespace System.Windows.Input
 
         private struct AccessKeyInformation
         {
-            /// <SecurityNote>
-            ///     Critical: Scope may contain an PresentationSource which we
-            ///               would not want exposed.
-            /// </SecurityNote>
             public object Scope
             {
-                [SecurityCritical]
                 get 
                 {
                     return _scope;
@@ -930,11 +844,6 @@ namespace System.Windows.Input
         /// <summary>
         /// 
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         internal AccessKeyEventArgs(string key, bool isMultiple, bool userInitiated)
         {
             _key = key;
@@ -942,12 +851,6 @@ namespace System.Windows.Input
             _userInitiated = new SecurityCriticalDataForSet<bool>(userInitiated);
         }
 
-        /// <SecurityNote>
-        /// Critical - sets the userInitiated bit on a command, which is used
-        ///            for security purposes later. 
-        /// TreatAsSafe: Resets the user initiated bit
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal void ClearUserInitiated()
         {
             _userInitiated.Value = false;
@@ -978,9 +881,6 @@ namespace System.Windows.Input
 
         private string _key;
         private bool _isMultiple;
-        /// <SecurityNote>
-        /// Critical -  This is critical for set, setting this bool can cause the spoofing of paste
-        /// </SecurityNote>        
         private SecurityCriticalDataForSet<bool >_userInitiated;
 }
 }

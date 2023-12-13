@@ -44,7 +44,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Windows;   // SR, SRID
+using System.Windows;   // SR
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace MS.Internal.Data
@@ -127,7 +127,7 @@ namespace MS.Internal.Data
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_IComparerFailed), e);
+                throw new InvalidOperationException(SR.InvalidOperation_IComparerFailed, e);
             }
         }
 
@@ -574,12 +574,10 @@ namespace MS.Internal.Data
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
-            if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex");
+            ArgumentNullException.ThrowIfNull(array);
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
             if (arrayIndex + Count > array.Length)
-                throw new ArgumentException(SR.Get(SRID.Argument_InvalidOffLen));
+                throw new ArgumentException(SR.Argument_InvalidOffLen);
 
             foreach (T item in this)
             {

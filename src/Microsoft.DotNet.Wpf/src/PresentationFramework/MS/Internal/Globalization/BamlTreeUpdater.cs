@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.Xml;
 using System.Windows;

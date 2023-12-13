@@ -49,10 +49,8 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateAddListener(source, listener, propertyName);
         }
@@ -66,8 +64,7 @@ namespace System.ComponentModel
             if (source == null)
                 throw new ArgumentNullException("source");
             */
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateRemoveListener(source, listener, propertyName);
         }
@@ -77,8 +74,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void AddHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateAddHandler(source, handler, propertyName);
         }
@@ -88,8 +84,7 @@ namespace System.ComponentModel
         /// </summary>
         public static void RemoveHandler(INotifyPropertyChanged source, EventHandler<PropertyChangedEventArgs> handler, string propertyName)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager.PrivateRemoveHandler(source, handler, propertyName);
         }
@@ -158,7 +153,7 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
@@ -188,6 +183,16 @@ namespace System.ComponentModel
                 {
                     Debug.Assert(_toRemove.Count == 0, "to-remove list should be empty");
 
+                    // If an "in-use" list is changed, we will re-install its clone
+                    // back into the dictionary.  Doing this inside the loop
+                    // causes an exception "collection was modified after the enumerator
+                    // was instantiated", so instead just record
+                    // what to do and do the actual work after the loop.
+                    // This is a rare case - it only arises if a PropertyChanged event
+                    // handler calls (indirectly) into the cleanup code - so allocate
+                    // the temporary memory lazily on the stack.
+                    HybridDictionary toInstall = null;
+
                     // enumerate the dictionary using IDE explicitly rather than
                     // foreach, to avoid allocating temporary DictionaryEntry objects
                     IDictionaryEnumerator ide = dict.GetEnumerator() as IDictionaryEnumerator;
@@ -201,17 +206,34 @@ namespace System.ComponentModel
                         }
 
                         // for each key, remove dead entries in its list
-                        bool removeList = purgeAll || source == null;
+                        bool removeList = /*purgeAll || purgeAll is always false*/ source == null;
 
                         if (!removeList)
                         {
                             ListenerList list = (ListenerList)ide.Value;
 
-                            if (ListenerList.PrepareForWriting(ref list))
-                                dict[key] = list;
+                            bool inUse = ListenerList.PrepareForWriting(ref list);
+                            bool isChanged = false;
 
                             if (list.Purge())
+                            {
+                                isChanged = true;
                                 foundDirt = true;
+                            }
+
+                            // if a cloned list changed, remember the details
+                            // so that the clone can be installed back into the
+                            // dictionary outside the iteration
+                            if (/*!removeList && !removeList is always true*/ inUse && isChanged)
+                            {
+                                if (toInstall == null)
+                                {
+                                    // lazy allocation
+                                    toInstall = new HybridDictionary();
+                                }
+
+                                toInstall[key] = list;
+                            }
 
                             removeList = (list.IsEmpty);
                         }
@@ -232,6 +254,18 @@ namespace System.ComponentModel
                         }
                         _toRemove.Clear();
                         _toRemove.TrimExcess();
+                    }
+
+                    // do the actual re-install of "in-use" lists that changed
+                    if (toInstall != null)
+                    {
+                        IDictionaryEnumerator installDE = toInstall.GetEnumerator() as IDictionaryEnumerator;
+                        while (installDE.MoveNext())
+                        {
+                            String key = (String)installDE.Key;
+                            ListenerList list = (ListenerList)installDE.Value;
+                            dict[key] = list;
+                        }
                     }
 
 #if WeakEventTelemetry

@@ -9,7 +9,6 @@
 using System.Runtime.InteropServices;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -17,7 +16,6 @@ using System.Text;
 namespace MS.Win32
 {
     // This class *MUST* be internal for security purposes
-    //CASRemoval:[SuppressUnmanagedCodeSecurity]
     internal static class SafeNativeMethods
     {
         //

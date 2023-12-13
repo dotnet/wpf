@@ -113,15 +113,8 @@ namespace MS.Internal.Printing.Configuration
 
         public static bool TryEmbedDevMode(InternalPrintTicket ticket, string oemDriverNamespace, DevMode devMode)
         {
-            if (ticket == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
-
-            if (oemDriverNamespace == null)
-            {
-                throw new ArgumentNullException("ticket");
-            }
+            ArgumentNullException.ThrowIfNull(ticket);
+            ArgumentNullException.ThrowIfNull(oemDriverNamespace);
 
             if (devMode == null)
             {
@@ -414,10 +407,6 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        /// <SecurityNote>
-        /// Critical    - Calls critical WinSpoolPrinterCapabilities methods
-        /// </SecurityNote>
-        [SecurityCritical]
         public static bool PruneFeatures(DevMode inDevMode, WinSpoolPrinterCapabilities capabilities)
         {
             bool featurePruned = false;

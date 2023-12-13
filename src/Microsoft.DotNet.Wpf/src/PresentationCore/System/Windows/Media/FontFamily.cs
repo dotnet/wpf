@@ -28,7 +28,6 @@ using MS.Internal.Shaping;
 using System.Security;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -89,11 +88,10 @@ namespace System.Windows.Media
         /// (e.g., "file:///c:/windows/fonts/#Arial").</param>
         public FontFamily(Uri baseUri, string familyName)
         {
-            if (familyName == null)
-                throw new ArgumentNullException("familyName");
+            ArgumentNullException.ThrowIfNull(familyName);
 
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.Get(SRID.UriNotAbsolute), "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
 
             _familyIdentifier = new FontFamilyIdentifier(familyName, baseUri);
         }
@@ -323,7 +321,7 @@ namespace System.Windows.Media
 
             if (mutableFamily == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.FontFamily_ReadOnly));
+                throw new NotSupportedException(SR.FontFamily_ReadOnly);
             }
 
             return mutableFamily;
@@ -448,11 +446,6 @@ namespace System.Windows.Media
         /// every time for it.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - Exposes windows font information.
-        /// Safe     - as this doesn't expose sensitive font directly
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static FamilyCollection PreCreateDefaultFamilyCollection()
         {
             FamilyCollection familyCollection = FamilyCollection.FromWindowsFonts(Util.WindowsFontsUriObject);
@@ -501,12 +494,6 @@ namespace System.Windows.Media
         /// <param name="weight">FontWeight implied by the font family.</param>
         /// <param name="stretch">FontStretch implied by the font family.</param>
         /// <returns>The font family object.</returns>
-        /// <SecurityNote>
-        /// Critical - This method accesses the Util.WindowsFontsUriObject which is privileged information
-        ///            and looks up from the font cache which is a critical operation. 
-        /// Safe     - This method returns a IFontFamily which is safe to passed around. 
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static IFontFamily LookupFontFamilyAndFace(
             CanonicalFontFamilyReference canonicalFamilyReference,
             ref FontStyle                style,

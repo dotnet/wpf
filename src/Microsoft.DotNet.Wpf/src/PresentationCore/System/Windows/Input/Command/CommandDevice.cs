@@ -10,7 +10,6 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Media;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // VK translation.
@@ -23,12 +22,6 @@ namespace System.Windows.Input
     /// </summary>
     internal sealed class CommandDevice : InputDevice
     {
-        /// <SecurityNote>
-        /// Critical - This code stores a reference to inputmanager which is critical data
-        /// TreatAsSafe: This constructor handles critical data but does not expose it
-        ///             It stores instance but there are demands on the instances.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal CommandDevice( InputManager inputManager )
         {
             _inputManager = new SecurityCriticalData<InputManager>(inputManager);
@@ -51,26 +44,15 @@ namespace System.Windows.Input
         /// <summary>
         /// Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - critical hands out presentation source. 
-        ///     TreatAsSafe - Right now presentation source is null. 
-        ///     However there's a demand in place as a defense-in-depth measure ( just in case someone implements this). 
-        ///</SecurityNote> 
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical, SecurityTreatAsSafe ]
             get
             {  
-                SecurityHelper.DemandUnrestrictedUIPermission();
                 
                 return null;
             }
         }
 
-        ///<SecurityNote>
-        /// Critical: accesses e.StagingItem.Input
-        ///</SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput( object sender, PreProcessInputEventArgs e )
         {
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
@@ -98,11 +80,6 @@ namespace System.Windows.Input
                                              typeof(CommandDeviceEventHandler),
                                              typeof(CommandDevice));
 
-        ///<SecurityNote>
-        /// Critical: Calls a critical function (PushInput)
-        ///           Accesses e.StagingItem.Input
-        ///</SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput( object sender, ProcessInputEventArgs e )
         {
             if (e.StagingItem.Input.RoutedEvent == InputManager.InputReportEvent)
@@ -325,15 +302,12 @@ namespace System.Windows.Input
         ///     Initializes a new instance of this class.
         /// </summary>
         /// <param name="commandDevice">The logical CommandDevice associated with this event.</param>
-        /// <param name="timestamp">The time when the input occured.</param>
+        /// <param name="timestamp">The time when the input occurred.</param>
         /// <param name="command">Command associated with this event.</param>
         internal CommandDeviceEventArgs(CommandDevice commandDevice, int timestamp, ICommand command)
             : base(commandDevice, timestamp)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            ArgumentNullException.ThrowIfNull(command);
 
             _command = command;
         }

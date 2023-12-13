@@ -18,10 +18,8 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -74,11 +72,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Create
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This function hooks up and exposes the unmanaged proxy that
-        ///     sinks events from windows media
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void CreateMediaEventsHelper(MediaPlayer mediaPlayer,
                                                      out MediaEventsHelper eventsHelper,
                                                      out SafeMILHandle unmanagedProxy)

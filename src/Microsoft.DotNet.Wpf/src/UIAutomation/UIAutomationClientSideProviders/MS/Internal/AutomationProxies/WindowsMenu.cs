@@ -383,7 +383,7 @@ namespace MS.Internal.AutomationProxies
                 }
                 else
                 {
-                    return SR.Get(GetLocalizedNameFromType());
+                    return SR.GetResourceString(GetLocalizedNameFromType());
                 }
             }
         }
@@ -846,25 +846,25 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        //Returns the SRID of the resource name string
+        //Returns the key of the resource name string
         private string GetLocalizedNameFromType()
         {
             switch (_type)
             {
                 case MenuType.Toplevel:
-                    return SRID.LocalizedNameWindowsMenuBar;
+                    return nameof(SR.LocalizedNameWindowsMenuBar);
 
                 case MenuType.System:
-                    return SRID.LocalizedNameWindowsSystemMenuBar;
+                    return nameof(SR.LocalizedNameWindowsSystemMenuBar);
 
                 case MenuType.SystemPopup:
-                    return SRID.LocalizedNameWindowsMenu;
+                    return nameof(SR.LocalizedNameWindowsMenu);
 
                 case MenuType.Submenu:
-                    return SRID.LocalizedNameWindowsMenu;
+                    return nameof(SR.LocalizedNameWindowsMenu);
 
                 default:
-                    return SRID.LocalizedNameWindowsMenu;
+                    return nameof(SR.LocalizedNameWindowsMenu);
             }
         }
 
@@ -1301,7 +1301,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (_menuType == WindowsMenu.MenuType.System)
                     {
-                        return SR.Get(SRID.LocalizedNameWindowsSystemMenuItem);
+                        return SR.LocalizedNameWindowsSystemMenuItem;
                     }
 
                     string menuRawText = Text;
@@ -1326,11 +1326,11 @@ namespace MS.Internal.AutomationProxies
                     // Be caution modifying this code, it must miror the code for AcceleratorKeyProperty
 
                     // Try to look for a combination Ctrl or Alt + something
-                    string keyCtrl = SR.Get(SRID.KeyCtrl);
-                    string keyControl = SR.Get(SRID.KeyControl);
-                    string keyAlt = SR.Get(SRID.KeyAlt);
-                    string keyShift = SR.Get(SRID.KeyShift);
-                    string keyWin = SR.Get(SRID.KeyWinKey);
+                    string keyCtrl = SR.KeyCtrl;
+                    string keyControl = SR.KeyControl;
+                    string keyAlt = SR.KeyAlt;
+                    string keyShift = SR.KeyShift;
+                    string keyWin = SR.KeyWinKey;
 
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
@@ -1536,7 +1536,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     case MenuType.System:
                         {
-                            return SR.Get(SRID.KeyAlt) + " + " + SR.Get(SRID.KeySpace);
+                            return SR.KeyAlt + " + " + SR.KeySpace;
                         }
                     case MenuType.Submenu:
                     case MenuType.SystemPopup:
@@ -1710,7 +1710,7 @@ namespace MS.Internal.AutomationProxies
                         if (ExpandCollapseSystem(true))
                             return;
 
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // top level
@@ -1719,7 +1719,7 @@ namespace MS.Internal.AutomationProxies
                         if (ExpandTopLevelMenu())
                             return;
 
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // submenu
@@ -1727,7 +1727,7 @@ namespace MS.Internal.AutomationProxies
                         return;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Hide all Children
@@ -1753,7 +1753,7 @@ namespace MS.Internal.AutomationProxies
                         if (ExpandCollapseSystem(false))
                             return;
 
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // top-level
@@ -1762,7 +1762,7 @@ namespace MS.Internal.AutomationProxies
                         if (CollapseTopLevelMenu())
                             return;
 
-                        throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
 
                     // submenu
@@ -1771,7 +1771,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 // probably should throw
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed));
+                throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
             // Indicates an elements current Collapsed or Expanded state
@@ -1805,13 +1805,13 @@ namespace MS.Internal.AutomationProxies
             // Adds this element to the selection
             void ISelectionItemProvider.AddToSelection()
             {
-                throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
             }
 
             // Removes this element from the selection
             void ISelectionItemProvider.RemoveFromSelection()
             {
-                throw new InvalidOperationException(SR.Get(SRID.DoesNotSupportMultipleSelection));
+                throw new InvalidOperationException(SR.DoesNotSupportMultipleSelection);
             }
 
             // True if this element is part of the the selection
@@ -1924,21 +1924,21 @@ namespace MS.Internal.AutomationProxies
             private string[] GetKeywordsAccelerators()
             {
                 return new string[] {
-                    SR.Get(SRID.KeyHome),
-                    SR.Get(SRID.KeyEnd),
-                    SR.Get(SRID.KeyDel),
-                    SR.Get(SRID.KeyDelete),
-                    SR.Get(SRID.KeyIns),
-                    SR.Get(SRID.KeyInsert),
-                    SR.Get(SRID.KeyPageUp),
-                    SR.Get(SRID.KeyPageDown),
-                    SR.Get(SRID.KeyEsc),
-                    SR.Get(SRID.KeyScrLk),
-                    SR.Get(SRID.KeyPause),
-                    SR.Get(SRID.KeySysRq),
-                    SR.Get(SRID.KeyPrtScn),
-                    SR.Get(SRID.KeyTab),
-                    SR.Get(SRID.KeyHelp),
+                    SR.KeyHome,
+                    SR.KeyEnd,
+                    SR.KeyDel,
+                    SR.KeyDelete,
+                    SR.KeyIns,
+                    SR.KeyInsert,
+                    SR.KeyPageUp,
+                    SR.KeyPageDown,
+                    SR.KeyEsc,
+                    SR.KeyScrLk,
+                    SR.KeyPause,
+                    SR.KeySysRq,
+                    SR.KeyPrtScn,
+                    SR.KeyTab,
+                    SR.KeyHelp,
                 };
             }
 
@@ -2568,7 +2568,7 @@ namespace MS.Internal.AutomationProxies
                                 Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBARBREAK) ||
                                 Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBREAK))
                             {
-                                return SR.Get(SRID.LocalizedNameWindowsMenuSeparator);
+                                return SR.LocalizedNameWindowsMenuSeparator;
                             }
                             else if (Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_OWNERDRAW))
                             {
@@ -2750,11 +2750,11 @@ namespace MS.Internal.AutomationProxies
                     // !!! Be caution modifying this code, it must miror the code for the Name Property
 
                     // Try to look for a combination Ctrl or Alt + something
-                    string keyCtrl = SR.Get(SRID.KeyCtrl);
-                    string keyControl = SR.Get(SRID.KeyControl);
-                    string keyAlt = SR.Get(SRID.KeyAlt);
-                    string keyShift = SR.Get(SRID.KeyShift);
-                    string keyWin = SR.Get(SRID.KeyWinKey);
+                    string keyCtrl = SR.KeyCtrl;
+                    string keyControl = SR.KeyControl;
+                    string keyAlt = SR.KeyAlt;
+                    string keyShift = SR.KeyShift;
+                    string keyWin = SR.KeyWinKey;
 
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;

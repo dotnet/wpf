@@ -21,7 +21,6 @@ using System.Windows.Markup;
 using System.ComponentModel;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -52,10 +51,7 @@ namespace System.Windows.Media
             int positionCount
             )            
         {
-            if (positionCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("positionCount", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(positionCount);
 
             Transform       = transform;
             Foreground      = foreground;

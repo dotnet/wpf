@@ -11,7 +11,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,10 +48,6 @@ namespace MS.Internal.Shaping
         /// <summary>
         /// ShaperBuffers - constructor
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code accepts checked pointers and extracts
-        ///         unsafe pointers.
-        /// </SecurityNote>
         public ShaperBuffers(ushort charCount, ushort glyphCount)
         {
             // the charCount is used to provide an initial size for the

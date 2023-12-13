@@ -87,11 +87,6 @@ namespace System.Windows.Automation
         /// vertically provides simple panning support.</summary>
         /// <param name="horizontalPercent">Amount to scroll by horizontally</param>
         /// <param name="verticalPercent">Amount to scroll by vertically </param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetScrollPercent( double horizontalPercent, double verticalPercent )
         {
             UiaCoreApi.ScrollPattern_SetScrollPercent(_hPattern, horizontalPercent, verticalPercent);
@@ -105,11 +100,6 @@ namespace System.Windows.Automation
         ///
         /// <param name="horizontalAmount">amount to scroll by horizontally</param>
         /// <param name="verticalAmount">amount to scroll by vertically </param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void Scroll( ScrollAmount horizontalAmount, ScrollAmount verticalAmount )
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, horizontalAmount, verticalAmount);
@@ -119,11 +109,6 @@ namespace System.Windows.Automation
         /// Request to scroll horizontally by the specified amount
         /// </summary>
         /// <param name="amount">Amount to scroll by</param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void ScrollHorizontal( ScrollAmount amount )
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, amount, ScrollAmount.NoAmount);
@@ -133,11 +118,6 @@ namespace System.Windows.Automation
         /// Request to scroll vertically by the specified amount
         /// </summary>
         /// <param name="amount">Amount to scroll by</param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void ScrollVertical( ScrollAmount amount )
         {
             UiaCoreApi.ScrollPattern_Scroll(_hPattern, ScrollAmount.NoAmount, amount);
@@ -278,11 +258,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// Get the current horizontal scroll position
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double HorizontalScrollPercent
             {
                 get
@@ -294,11 +269,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// Get the current vertical scroll position
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double VerticalScrollPercent
             {
                 get
@@ -310,11 +280,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// Equal to the horizontal percentage of the entire control that is currently viewable.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double HorizontalViewSize
             {
                 get
@@ -326,11 +291,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// Equal to the horizontal percentage of the entire control that is currently viewable.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double VerticalViewSize
             {
                 get
@@ -342,11 +302,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// True if control can scroll horizontally
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool HorizontallyScrollable
             {
                 get
@@ -358,11 +313,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// True if control can scroll vertically
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool VerticallyScrollable
             {
                 get

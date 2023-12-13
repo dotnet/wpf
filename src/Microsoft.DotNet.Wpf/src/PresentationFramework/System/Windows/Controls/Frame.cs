@@ -54,13 +54,13 @@ namespace System.Windows.Navigation
         Automatic = 0,
 
         /// <summary>
-        /// The Frame has its own Journal which operates independent of the hosting container’s
+        /// The Frame has its own Journal which operates independent of the hosting container's
         /// journal (if it has one).
         /// </summary>
         OwnsJournal,
 
         /// <summary>
-        /// The Frame’s journal entries are merged into the hosting container’s journal, if available.
+        /// The Frame's journal entries are merged into the hosting container's journal, if available.
         /// Otherwise navigations in this frame are not journaled.
         /// </summary>
         UsesParentJournal
@@ -268,11 +268,6 @@ namespace System.Windows.Controls
         /// <summary>
         ///    Called when SourceProperty is invalidated on 'd'
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as it access the base uri through GetUriToNavigate
-        /// TreatAsSafe since it does not disclose this
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Frame frame = (Frame)d;
@@ -382,9 +377,7 @@ namespace System.Windows.Controls
             get { return (bool) GetValue(SandboxExternalContentProperty); }
             set
             {
-                // This feature is disabled in partial trust due to a P3P violation
                 bool fSandBox = (bool)value;
-                SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
                 SetValue(SandboxExternalContentProperty, fSandBox);
             }
         }
@@ -396,11 +389,7 @@ namespace System.Windows.Controls
         private static void OnSandboxExternalContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Frame frame = (Frame)d;
-            // we do not want an individual to be able to set this property to true
-            // in partial trust
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)e.NewValue;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             if (fSandBox && !(bool)e.OldValue)
             {
                 frame.NavigationService.Refresh();
@@ -409,11 +398,7 @@ namespace System.Windows.Controls
 
         private static object CoerceSandBoxExternalContentValue(DependencyObject d, object value)
         {
-            // we do not want an individual to be able to set this property to true
-            // in partial trust
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)value;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             return fSandBox;
         }
 
@@ -563,7 +548,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override void AddChild(object value)
         {
-            throw new InvalidOperationException(SR.Get(SRID.FrameNoAddChild));
+            throw new InvalidOperationException(SR.FrameNoAddChild);
         }
 
         /// <summary>
@@ -630,10 +615,11 @@ namespace System.Windows.Controls
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object unused)
+                                   (DispatcherOperationCallback) delegate (object arg)
                                    {
-                                       _contentRenderedCallback = null;
-                                       OnContentRendered(EventArgs.Empty);
+                                       Frame thisRef = (Frame)arg;
+                                       thisRef._contentRenderedCallback = null;
+                                       thisRef.OnContentRendered(EventArgs.Empty);
                                        return null;
                                    },
                                    this);
@@ -874,7 +860,7 @@ namespace System.Windows.Controls
         public JournalEntry RemoveBackEntry()
         {
             if (_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             return _ownJournalScope.RemoveBackEntry();
         }
 
@@ -948,7 +934,7 @@ namespace System.Windows.Controls
         public void GoForward()
         {
             if (_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoForward();
         }
 
@@ -962,7 +948,7 @@ namespace System.Windows.Controls
         public void GoBack()
         {
             if(_ownJournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_NoJournal));
+                throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoBack();
         }
 
@@ -1205,6 +1191,7 @@ namespace System.Windows.Controls
         /// state. It will become part of the journal entry created for the navigation in the parent
         /// container (stored within a DataStreams instance).
         /// </summary>
+#pragma warning disable SYSLIB0050
         [Serializable]
         private class FramePersistState : CustomJournalStateInternal
         {
@@ -1234,7 +1221,7 @@ namespace System.Windows.Controls
                 }
             }
         };
-
+#pragma warning restore SYSLIB0050
         CustomJournalStateInternal IJournalState.GetJournalState(JournalReason journalReason)
         {
             if (journalReason != JournalReason.NewContentNavigation)

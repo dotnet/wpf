@@ -54,7 +54,7 @@ namespace MS.Internal.IO.Packaging
                     case PropSpecType.Name: break;
 
                     default:
-                        throw new ArgumentException(SR.Get(SRID.FilterPropSpecUnknownUnionSelector), "propSpec");
+                        throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, "propSpec");
                 }
                 _propType = value;
             }
@@ -74,8 +74,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 _name = value;
                 _id = 0;
@@ -115,15 +114,8 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Create a ManagedPropSpec from an unmanaged one
         /// </summary>
-        /// <SecurityNote>
-        /// Critical    - This code could be used to attempt to build a string from arbitrary data.
-        /// TreatAsSafe - There is a demand in this code. This code is not intended to be called from PT code.
-        ///   Not designed to be exposed to public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal ManagedPropSpec(PROPSPEC propSpec)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             // Assign to properties rather than fields to ensure consistency through side-effects.
             switch ((PropSpecType)propSpec.propType)
@@ -140,7 +132,7 @@ namespace MS.Internal.IO.Packaging
                         break;
                     }
                 default:
-                    throw new ArgumentException(SR.Get(SRID.FilterPropSpecUnknownUnionSelector), "propSpec");
+                    throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, "propSpec");
             }
         }
 

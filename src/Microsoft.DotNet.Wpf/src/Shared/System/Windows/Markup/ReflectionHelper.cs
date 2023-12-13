@@ -79,64 +79,45 @@ namespace System.Xaml
 
 #region Type
         /// <summary>
-        /// Parse and get the type of the passed in string
+        /// Parse and get the type of the passed-in string.
         /// </summary>
         internal static Type GetQualifiedType(string typeName)
         {
-            // ISSUE: we only parse the assembly name and type name
-            // all other Type.GetType() type fragments (version, culture info, pub key token etc) are ignored!!!
-            string[] nameFrags = typeName.Split(new Char[] { ',' }, 2);
-            Type type = null;
+            // We only parse the assembly name and type name.
+            // All other Type.GetType() type fragments (version, culture info, public
+            // key token etc) are ignored.
+            string[] nameFrags = typeName.Split(new char[] { ',' }, 2);
             if (nameFrags.Length == 1)
             {
-                // treat it as an absolute name
-                type = Type.GetType(nameFrags[0]);
+                // Treat this as an absolute name.
+                return Type.GetType(nameFrags[0]);
             }
-            else
+
+            Assembly a = null;
+            try
             {
-                if (nameFrags.Length != 2)
-                    throw new InvalidOperationException(SR.Get(SRID.QualifiedNameHasWrongFormat, typeName));
-
-                Assembly a = null;
-                try
-                {
-                    a = LoadAssembly(nameFrags[1].TrimStart(), null);
-                }
-                // ifdef magic to save compiler update.
-                // the fix below is for an FxCop rule about non-CLR exceptions.
-                // however this rule has now been removed.
-                catch (Exception e)   // Load throws generic Exceptions, so this can't be made more specific.
-                {
-                    if (CriticalExceptions.IsCriticalException(e))
-                    {
-                        throw;
-                    }
-                    else
-                    {
-                        // If we can't load the assembly, just return null (fall-through).
-                        a = null;
-                    }
-                }
-
-                if (a != null)
-                {
-                    try
-                    {
-                        type = a.GetType(nameFrags[0]);
-                        // If we can't get the type, just return null (fall-through).
-                    }
-                    catch (ArgumentException)
-                    {
-                        a = null;
-                    }
-                    catch (System.Security.SecurityException)
-                    {
-                        a = null;
-                    }
-                }
+                a = LoadAssembly(nameFrags[1].TrimStart(), null);
+            }
+            catch (Exception e) when (!CriticalExceptions.IsCriticalException(e))
+            {
             }
 
-            return type;
+            // If we can't load the assembly, just return null.
+            if (a == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return a.GetType(nameFrags[0]);
+            }
+            catch (ArgumentException)
+            {
+            }
+
+            // If we can't get the type, just return null.
+            return null;
         }
 
         internal static bool IsNullableType(Type type)
@@ -200,10 +181,12 @@ namespace System.Xaml
             return type;
         }
 
+#if PBTCOMPILER
         internal static Type GetMscorlibType(Type type)
         {
             return GetFrameworkType(MscorlibReflectionAssemblyName, type);
         }
+#endif
 
         internal static Type GetSystemType(Type type)
         {
@@ -365,7 +348,7 @@ namespace System.Xaml
 
                     if (attrValue == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else if (constructorArguments.Count == 0)
@@ -378,12 +361,12 @@ namespace System.Xaml
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                    throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, attrType.Name));
                 }
             }
 
@@ -443,7 +426,7 @@ namespace System.Xaml
                     {
                         string request = assemblyName.ToString();
                         string found = cachedName.ToString();
-                        throw new InvalidOperationException(SR.Get(SRID.ParserAssemblyLoadVersionMismatch, request, found));
+                        throw new InvalidOperationException(SR.Format(SR.ParserAssemblyLoadVersionMismatch, request, found));
                     }
                 }
             }
@@ -461,7 +444,7 @@ namespace System.Xaml
                     {
                         // assemblyPath is set, Load the assembly from this specified place.
                         // the path must be full file path which contains directory, file name and extension.
-                        Debug.Assert(!assemblyPath.EndsWith("\\", StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
+                        Debug.Assert(!assemblyPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal), "the assembly path should be a full file path containing file extension");
 
                         // LoadFile will only override your request only if it is in the GAC
                         retassem = Assembly.LoadFile(assemblyPath);
@@ -509,7 +492,7 @@ namespace System.Xaml
 
             for (int j = 0; j < list.Count; j++)
             {
-                friendAssemblyName = GetCustomAttributeData(list[j], typeof(InternalsVisibleToAttribute), out typeValue, false, false, false);
+                friendAssemblyName = GetCustomAttributeData(list[j], GetMscorlibType(typeof(InternalsVisibleToAttribute)), out typeValue, false, false, false);
                 if (friendAssemblyName != null && friendAssemblyName == LocalAssemblyName)
                 {
                     isFriend = true;
@@ -520,10 +503,12 @@ namespace System.Xaml
             return isFriend;
         }
 
+#if PBTCOMPILER
         internal static bool IsInternalAllowedOnType(Type type)
         {
             return ((LocalAssemblyName == type.Assembly.GetName().Name) || IsFriendAssembly(type.Assembly));
         }
+#endif
 
         // The local assembly that contains the baml.
         internal static string LocalAssemblyName

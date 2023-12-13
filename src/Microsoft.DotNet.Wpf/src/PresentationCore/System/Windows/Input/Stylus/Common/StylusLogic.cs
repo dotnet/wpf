@@ -15,7 +15,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
@@ -25,7 +24,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace System.Windows.Input
@@ -181,6 +179,9 @@ namespace System.Windows.Input
         // Caches the pointer stack enabled state
         private static bool? _isPointerStackEnabled = null;
 
+        // Caches TransformToDevice matrices per DpiScale2
+        private readonly Dictionary<DpiScale2, Matrix> _transformToDeviceMatrices = new Dictionary<DpiScale2, Matrix>();
+
         #endregion
 
         #region Construction/Initilization
@@ -190,13 +191,8 @@ namespace System.Windows.Input
         /// True if the StylusLogic for the thread of the caller has been instantiated.
         /// False if otherwise.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses _currentStylusLogic
-        ///     Safe:       Does not expose any critical data
-        /// </SecurityNote>
         internal static bool IsInstantiated
         {
-            [SecuritySafeCritical]
             get
             {
                 return _currentStylusLogic?.Value != null;
@@ -219,13 +215,8 @@ namespace System.Windows.Input
         /// Determines if the WM_POINTER based stack is enabled.
         /// Pointer is only supported on >= RS2, otherwise gracefully degrade to WISP stack.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses IsPointerEnabledInRegistry
-        ///                 Accesses OsVersionHelper.IsOsWindowsRS2OrGreater
-        /// </SecurityNote>
         internal static bool IsPointerStackEnabled
         {
-            [SecurityCritical]
             get
             {
                 if (!_isPointerStackEnabled.HasValue)
@@ -251,14 +242,8 @@ namespace System.Windows.Input
         /// on first use by either HwndSource or SystemResources, depending on what is created
         /// first.  There is one StylusLogic per dispatcher thread.
         /// </summary>
-        /// <SecurityNote>
-        ///     Get:
-        ///         Critical accesses and returns _currentStylusLogic which can be used to
-        ///         falsify input.
-        /// </SecurityNote>
         internal static StylusLogic CurrentStylusLogic
         {
-            [SecurityCritical]
             get
             {
                 if (_currentStylusLogic?.Value == null)
@@ -275,10 +260,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <typeparam name="T">The type to cast to</typeparam>
         /// <returns>An object of T if the cast succeeds, otherwise null</returns>
-        /// <SecurityNote>
-        ///     Critical:   Accesses CurrentStylusLogic
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static T GetCurrentStylusLogicAs<T>()
             where T : StylusLogic
         {
@@ -289,11 +270,6 @@ namespace System.Windows.Input
         /// Initializes a new StylusLogic based on the AppContext switches.
         /// </summary>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical: Accesses InputManager.UnsecureCurrent
-        ///               Accesses IsPointerStackEnabled
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void Initialize()
         {
             // Initialize a new StylusLogic based on AppContext switches
@@ -316,13 +292,8 @@ namespace System.Windows.Input
         /// Detect if the registry key for enabling WM_POINTER has been set.  This key is primarily to allow for stack selection
         /// during testing without having to broadly change test code.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:   Accesses Registry class and functions.
-        /// </SecurityNote>
         private static bool IsPointerEnabledInRegistry
         {
-            [SecurityCritical]
-            [RegistryPermission(SecurityAction.Assert, Read = WpfPointerKeyAssert)]
             get
             {
                 bool result = false;
@@ -331,7 +302,7 @@ namespace System.Windows.Input
                 {
                     result = ((int)(Registry.CurrentUser.OpenSubKey(WpfPointerKey, RegistryKeyPermissionCheck.ReadSubTree)?.GetValue(WpfPointerValue, 0) ?? 0)) == 1;
                 }
-                catch (Exception e) when (e is SecurityException || e is IOException)
+                catch (Exception e) when (e is IOException)
                 {
                     // No permission to access registry or someone 
                     // changed the key type to REG_SZ/REG_EXPAND_SZ/REG_MULTI_SZ.
@@ -369,20 +340,11 @@ namespace System.Windows.Input
         /// <summary>
         /// Grab the defualts from the registry for the double tap thresholds.
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - Asserts read registry permission...
-        ///           - TreatAsSafe boundry is the constructor
-        ///           - called by constructor
-        ///</SecurityNote>
-        [SecurityCritical]
         protected void ReadSystemConfig()
         {
             object obj;
             RegistryKey stylusKey = null; // This object has finalizer to close the key.
             RegistryKey touchKey = null; // This object has finalizer to close the key.
-
-            // Acquire permissions to read the one key we care about from the registry
-            new RegistryPermission(RegistryPermissionAccess.Read, WispKeyAssert).Assert(); // BlessedAssert
 
             try
             {
@@ -414,8 +376,6 @@ namespace System.Windows.Input
             }
             finally
             {
-                CodeAccessPermission.RevertAssert();
-
                 if (stylusKey != null)
                 {
                     stylusKey.Close();
@@ -445,18 +405,47 @@ namespace System.Windows.Input
         internal abstract TabletDeviceCollection TabletDevices { get; }
 
         /// <summary>
+        /// Acquires and caches the TransformToDevice matrix from a specific HwndSource.
+        /// </summary>
+        /// <remarks>
+        /// The caching here is done at a per DPI level.  TransformToDevice only matters for a
+        /// specific DpiScale, so there is no need to spend space caching it per HwndSource.
+        /// </remarks>
+        /// <param name="source">The source of DpiScale and matrix transforms</param>
+        /// <returns>The TransformToDevice matrix corresponding to the DpiScale of the source</returns>
+        protected Matrix GetAndCacheTransformToDeviceMatrix(PresentationSource source)
+        {
+            var hwndSource = source as HwndSource;
+            Matrix toDevice = Matrix.Identity;
+
+            if (hwndSource?.CompositionTarget != null)
+            {
+                // If we have not yet seen this DPI, store the matrix for it.
+                if (!_transformToDeviceMatrices.ContainsKey(hwndSource.CompositionTarget.CurrentDpiScale))
+                {
+                    _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale] = hwndSource.CompositionTarget.TransformToDevice;
+                    Debug.Assert(_transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale].HasInverse);
+                }
+
+                toDevice = _transformToDeviceMatrices[hwndSource.CompositionTarget.CurrentDpiScale];
+            }
+
+            return toDevice;
+        }
+
+        /// <summary>
         /// Converts measure units to tablet device coordinates
         /// </summary>
         /// <param name="measurePoint"></param>
         /// <returns></returns>
-        internal abstract Point DeviceUnitsFromMeasureUnits(Point measurePoint);
+        internal abstract Point DeviceUnitsFromMeasureUnits(PresentationSource source, Point measurePoint);
 
         /// <summary>
         /// Converts device units to measure units
         /// </summary>
         /// <param name="measurePoint"></param>
         /// <returns></returns>
-        internal abstract Point MeasureUnitsFromDeviceUnits(Point measurePoint);
+        internal abstract Point MeasureUnitsFromDeviceUnits(PresentationSource source, Point measurePoint);
 
         /// <summary>
         /// Updates the stylus capture for the particular stylus device
@@ -507,7 +496,6 @@ namespace System.Windows.Input
         /// <param name="msg"></param>
         /// <param name="wParam"></param>
         /// <param name="lParam"></param>
-        [SecurityCritical, FriendAccessAllowed]
         internal abstract void HandleMessage(WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
         #endregion
@@ -529,12 +517,6 @@ namespace System.Windows.Input
         /// </summary>
         protected class StylusLogicShutDownListener : ShutDownListener
         {
-            /// <SecurityNote>
-            ///     Critical: accesses AppDomain.DomainUnload event
-            ///     TreatAsSafe: This code does not take any parameter or return state.
-            ///                  It simply attaches private callbacks.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             public StylusLogicShutDownListener(StylusLogic target, ShutDownEvents events) : base(target, events)
             {
             }
@@ -594,10 +576,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseInputReport">The raw mouse input to check</param>
         /// <returns>True if this is a promoted mouse event, false otherwise.</returns>
-        /// <SecurityNote>
-        ///     Critical - Accesses RawMouseInputReport.ExtraInformation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static bool IsPromotedMouseEvent(RawMouseInputReport mouseInputReport)
         {
             int mouseExtraInfo = NativeMethods.IntPtrToInt32(mouseInputReport.ExtraInformation);
@@ -609,10 +587,6 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseInputReport">THe input report</param>
         /// <returns>THe cursor id if promoted, 0 if pure mouse (by definition)</returns>
-        /// <SecurityNote>
-        ///     Critical - Accesses RawMouseInputReport.ExtraInformation
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static uint GetCursorIdFromMouseEvent(RawMouseInputReport mouseInputReport)
         {
             int mouseExtraInfo = NativeMethods.IntPtrToInt32(mouseInputReport.ExtraInformation);
@@ -621,12 +595,6 @@ namespace System.Windows.Input
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical: Access the security critical method - StylusLogic.CurrentStylusLogic.
-        ///                   Just calls security transparent routine ReevaluateStylusOver on StylusLogic.
-        ///                   Takes no critical data as input and doesn't return any.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void CurrentStylusLogicReevaluateStylusOver(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
             StylusLogic.CurrentStylusLogic.ReevaluateStylusOver(element, oldParent, isCoreParent);
@@ -634,12 +602,6 @@ namespace System.Windows.Input
 
         /// <summary>
         /// </summary>
-        /// <SecurityNote>
-        ///     SafeCritical: Access the security critical method StylusLogic.CurrentStylusLogic.
-        ///                   Just calls security transparent routine ReevaluateCapture on StylusLogic.
-        ///                   Takes no critical data as input and doesn't return any.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal static void CurrentStylusLogicReevaluateCapture(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
             StylusLogic.CurrentStylusLogic.ReevaluateCapture(element, oldParent, isCoreParent);
@@ -735,11 +697,6 @@ namespace System.Windows.Input
             return element.IsEnabled && element.IsVisible && element.IsHitTestVisible;
         }
 
-        /// <SecurityNote>
-        ///     SafeCritical: This code accesses critical data (PresentationSource)
-        ///                   Although it accesses critical data it does not modify or expose it, only compares against it.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected bool ValidateVisualForCapture(DependencyObject visual, StylusDeviceBase currentStylusDevice)
         {
             if (visual == null)

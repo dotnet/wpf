@@ -187,11 +187,6 @@
         <target state="translated">BitmapCacheBrush no admite Transform.</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseBackKey">
-        <source>Alt+Left;Backspace</source>
-        <target state="translated">Alt+Left;Backspace</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseBackKeyDisplayString">
         <source>Alt+Left;Backspace</source>
         <target state="translated">Alt+Left;Backspace</target>
@@ -200,11 +195,6 @@
       <trans-unit id="BrowseBackText">
         <source>Back</source>
         <target state="translated">Atrás</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseForwardKey">
-        <source>Alt+Right;Shift+Backspace</source>
-        <target state="translated">Alt+Right;Shift+Backspace</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseForwardKeyDisplayString">
@@ -217,11 +207,6 @@
         <target state="translated">Reenviar</target>
         <note />
       </trans-unit>
-      <trans-unit id="BrowseHomeKey">
-        <source>Alt+Home;BrowserHome</source>
-        <target state="translated">Alt+Home;BrowserHome</target>
-        <note />
-      </trans-unit>
       <trans-unit id="BrowseHomeKeyDisplayString">
         <source>Alt+Home;BrowserHome</source>
         <target state="translated">Alt+Home;BrowserHome</target>
@@ -230,11 +215,6 @@
       <trans-unit id="BrowseHomeText">
         <source>Home</source>
         <target state="translated">Inicio</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="BrowseStopKey">
-        <source>Alt+Esc;BrowserStop</source>
-        <target state="translated">Alt+Esc;ExploradorDetener</target>
         <note />
       </trans-unit>
       <trans-unit id="BrowseStopKeyDisplayString">
@@ -547,11 +527,6 @@
         <target state="translated">Se detectó una posible recursividad del constructor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ContextMenuKey">
-        <source>Shift+F10;Apps</source>
-        <target state="translated">Mayús+F10;Aplicaciones</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ContextMenuKeyDisplayString">
         <source>Shift+F10;Apps</source>
         <target state="translated">Mayús+F10;Aplicaciones</target>
@@ -570,11 +545,6 @@
       <trans-unit id="Converter_ConvertToNotSupported">
         <source>Cannot convert to type.</source>
         <target state="translated">No se puede convertir al tipo.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CopyKey">
-        <source>Ctrl+C;Ctrl+Insert</source>
-        <target state="translated">Ctrl+C;Ctrl+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="CopyKeyDisplayString">
@@ -640,11 +610,6 @@
       <trans-unit id="Cursor_UnsupportedFormat">
         <source>'{0}' has unsupported extension for cursor.</source>
         <target state="translated">'{0}' tiene una extensión no admitida para el cursor.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="CutKey">
-        <source>Ctrl+X;Shift+Delete</source>
-        <target state="translated">Ctrl+X;Shift+Delete</target>
         <note />
       </trans-unit>
       <trans-unit id="CutKeyDisplayString">
@@ -735,11 +700,6 @@
       <trans-unit id="DecreaseZoomText">
         <source>Decrease Zoom</source>
         <target state="translated">Reducir zoom</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="DeleteKey">
-        <source>Del</source>
-        <target state="translated">Supr</target>
         <note />
       </trans-unit>
       <trans-unit id="DeleteKeyDisplayString">
@@ -987,11 +947,6 @@
         <target state="translated">Los argumentos del evento no pueden ser nulos.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionDownKey">
-        <source>Shift+Down</source>
-        <target state="translated">Mayús+Abajo</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionDownKeyDisplayString">
         <source>Shift+Down</source>
         <target state="translated">Mayús+Abajo</target>
@@ -1000,11 +955,6 @@
       <trans-unit id="ExtendSelectionDownText">
         <source>Extend Selection Down</source>
         <target state="translated">Amplía la selección hacia abajo</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionLeftKey">
-        <source>Shift+Left</source>
-        <target state="translated">Mayús+Izquierda</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionLeftKeyDisplayString">
@@ -1017,11 +967,6 @@
         <target state="translated">Amplía la selección hacia la izquierda</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExtendSelectionRightKey">
-        <source>Shift+Right</source>
-        <target state="translated">Mayús+Derecha</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExtendSelectionRightKeyDisplayString">
         <source>Shift+Right</source>
         <target state="translated">Mayús+Derecha</target>
@@ -1030,11 +975,6 @@
       <trans-unit id="ExtendSelectionRightText">
         <source>Extend Selection Right</source>
         <target state="translated">Amplía la selección hacia la derecha</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ExtendSelectionUpKey">
-        <source>Shift+Up</source>
-        <target state="translated">Mayús+Arriba</target>
         <note />
       </trans-unit>
       <trans-unit id="ExtendSelectionUpKeyDisplayString">
@@ -1067,11 +1007,6 @@
         <target state="translated">No se puede agregar FamilyMap porque la propiedad Target no está configurada.</target>
         <note />
       </trans-unit>
-      <trans-unit id="FavoritesKey">
-        <source>Ctrl+I</source>
-        <target state="translated">Ctrl+K</target>
-        <note />
-      </trans-unit>
       <trans-unit id="FavoritesKeyDisplayString">
         <source>Ctrl+I</source>
         <target state="translated">Ctrl+K</target>
@@ -1095,11 +1030,6 @@
       <trans-unit id="FileNotFoundExceptionWithFileName">
         <source>Cannot find file '{0}'.</source>
         <target state="translated">No se encuentra el archivo '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="FindKey">
-        <source>Ctrl+F</source>
-        <target state="translated">Ctrl+F</target>
         <note />
       </trans-unit>
       <trans-unit id="FindKeyDisplayString">
@@ -1139,7 +1069,7 @@
       </trans-unit>
       <trans-unit id="Freezable_CloneInvalidType">
         <source>Clone of an instance of type '{0}' is null or not an instance of '{0}'.</source>
-        <target state="translated">La clonación de una instancia de tipo '{0}' es nula o no es una instancia de '{0}'.</target>
+        <target state="translated">El clon de una instancia de tipo "{0}" es nulo o no es una instancia de "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="Freezable_Reentrant">
@@ -1220,11 +1150,6 @@
       <trans-unit id="HandlerTypeIllegal">
         <source>Handler type is mismatched.</source>
         <target state="translated">Discrepancia de tipo de controlador.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="HelpKey">
-        <source>F1</source>
-        <target state="translated">F1</target>
         <note />
       </trans-unit>
       <trans-unit id="HelpKeyDisplayString">
@@ -1983,8 +1908,8 @@
         <note />
       </trans-unit>
       <trans-unit id="Invalid_IInputElement">
-        <source>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</source>
-        <target state="translated">'{0}' no es un tipo válido para IInputElement. Se esperaba UIElement o ContentElement.</target>
+        <source>'{0}' is not a valid type for IInputElement. UIElement, ContentElement or UIElement3D expected.</source>
+        <target state="translated">"{0}" no es un tipo válido para IInputElement. Se esperaba UIElement, ContentElement o UIElement3D.</target>
         <note />
       </trans-unit>
       <trans-unit id="Invalid_URI">
@@ -2317,11 +2242,6 @@
         <target state="translated">Discrepancia de RoutedEvent en RoutedEventArgs y EventRoute.</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveDownKey">
-        <source>Down</source>
-        <target state="translated">Abajo</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveDownKeyDisplayString">
         <source>Down</source>
         <target state="translated">Abajo</target>
@@ -2330,11 +2250,6 @@
       <trans-unit id="MoveDownText">
         <source>Move Down</source>
         <target state="translated">Bajar</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusBackKey">
-        <source>Ctrl+Left</source>
-        <target state="translated">Ctrl+Izquierda</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusBackKeyDisplayString">
@@ -2347,11 +2262,6 @@
         <target state="translated">Retroceder enfoque</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusDownKey">
-        <source>Ctrl+Down</source>
-        <target state="translated">Ctrl+Abajo</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusDownKeyDisplayString">
         <source>Ctrl+Down</source>
         <target state="translated">Ctrl+Abajo</target>
@@ -2360,11 +2270,6 @@
       <trans-unit id="MoveFocusDownText">
         <source>Move Focus Down</source>
         <target state="translated">Bajar enfoque</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusForwardKey">
-        <source>Ctrl+Right</source>
-        <target state="translated">Ctrl+Derecha</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusForwardKeyDisplayString">
@@ -2377,11 +2282,6 @@
         <target state="translated">Avanzar enfoque</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusPageDownKey">
-        <source>Ctrl+PageDown</source>
-        <target state="translated">Ctrl+AvPág</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusPageDownKeyDisplayString">
         <source>Ctrl+PageDown</source>
         <target state="translated">Ctrl+AvPág</target>
@@ -2390,11 +2290,6 @@
       <trans-unit id="MoveFocusPageDownText">
         <source>Move Focus Page Down</source>
         <target state="translated">Bajar enfoque una página</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveFocusPageUpKey">
-        <source>Ctrl+PageUp</source>
-        <target state="translated">Ctrl+RePág</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveFocusPageUpKeyDisplayString">
@@ -2407,11 +2302,6 @@
         <target state="translated">Subir enfoque una página</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveFocusUpKey">
-        <source>Ctrl+Up</source>
-        <target state="translated">Ctrl+Arriba</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveFocusUpKeyDisplayString">
         <source>Ctrl+Up</source>
         <target state="translated">Ctrl+Arriba</target>
@@ -2420,11 +2310,6 @@
       <trans-unit id="MoveFocusUpText">
         <source>Move Focus Up</source>
         <target state="translated">Subir enfoque</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveLeftKey">
-        <source>Left</source>
-        <target state="translated">Izquierda</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveLeftKeyDisplayString">
@@ -2437,11 +2322,6 @@
         <target state="translated">Mover a la izquierda</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveRightKey">
-        <source>Right</source>
-        <target state="translated">Derecha</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveRightKeyDisplayString">
         <source>Right</source>
         <target state="translated">Derecha</target>
@@ -2450,11 +2330,6 @@
       <trans-unit id="MoveRightText">
         <source>Move Right</source>
         <target state="translated">Mover a la derecha</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToEndKey">
-        <source>End</source>
-        <target state="translated">Finalización</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToEndKeyDisplayString">
@@ -2467,11 +2342,6 @@
         <target state="translated">Mover al final</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToHomeKey">
-        <source>Home</source>
-        <target state="translated">Inicio</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToHomeKeyDisplayString">
         <source>Home</source>
         <target state="translated">Inicio</target>
@@ -2480,11 +2350,6 @@
       <trans-unit id="MoveToHomeText">
         <source>Move To Home</source>
         <target state="translated">Mover al inicio</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveToPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">AvPág</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveToPageDownKeyDisplayString">
@@ -2497,11 +2362,6 @@
         <target state="translated">Bajar una página</target>
         <note />
       </trans-unit>
-      <trans-unit id="MoveToPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">RePág</target>
-        <note />
-      </trans-unit>
       <trans-unit id="MoveToPageUpKeyDisplayString">
         <source>PageUp</source>
         <target state="translated">RePág</target>
@@ -2510,11 +2370,6 @@
       <trans-unit id="MoveToPageUpText">
         <source>Move To Page Up</source>
         <target state="translated">Subir una página</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="MoveUpKey">
-        <source>Up</source>
-        <target state="translated">Arriba</target>
         <note />
       </trans-unit>
       <trans-unit id="MoveUpKeyDisplayString">
@@ -2535,11 +2390,6 @@
       <trans-unit id="NavigateJournalText">
         <source>Navigate Journal</source>
         <target state="translated">Navegar por el diario</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NewKey">
-        <source>Ctrl+N</source>
-        <target state="translated">Ctrl+U</target>
         <note />
       </trans-unit>
       <trans-unit id="NewKeyDisplayString">
@@ -2637,11 +2487,6 @@
         <target state="translated">El objeto ya se ha inicializado y no se puede inicializar de nuevo.</target>
         <note />
       </trans-unit>
-      <trans-unit id="OpenKey">
-        <source>Ctrl+O</source>
-        <target state="translated">Ctrl+A</target>
-        <note />
-      </trans-unit>
       <trans-unit id="OpenKeyDisplayString">
         <source>Ctrl+O</source>
         <target state="translated">Ctrl+A</target>
@@ -2677,29 +2522,9 @@
         <target state="translated">El número de página no puede ser negativo.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">El valor del parámetro no puede ser mayor que '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">El valor del parámetro no puede ser menor que '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">El valor del parámetro debe ser mayor que cero.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterValueCannotBeInfinity">
@@ -2710,16 +2535,6 @@
       <trans-unit id="ParameterValueCannotBeNaN">
         <source>The parameter value must be a number.</source>
         <target state="translated">El valor del parámetro debe ser un número.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">El valor del parámetro '{0}' no puede ser negativo.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">El valor del parámetro '{0}' debe ser mayor que cero.</target>
         <note />
       </trans-unit>
       <trans-unit id="Parser_BadForm">
@@ -2745,11 +2560,6 @@
       <trans-unit id="Parsers_IllegalToken_250_Chars">
         <source>Token is not valid because it is more than 250 characters.</source>
         <target state="translated">El símbolo (token) no es válido porque tiene más de 250 caracteres.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PasteKey">
-        <source>Ctrl+V;Shift+Insert</source>
-        <target state="translated">Ctrl+V;Shift+Insert</target>
         <note />
       </trans-unit>
       <trans-unit id="PasteKeyDisplayString">
@@ -2807,19 +2617,9 @@
         <target state="translated">Página anterior</target>
         <note />
       </trans-unit>
-      <trans-unit id="PrintKey">
-        <source>Ctrl+P</source>
-        <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
       <trans-unit id="PrintKeyDisplayString">
         <source>Ctrl+P</source>
         <target state="translated">Ctrl+P</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PrintPreviewKey">
-        <source>Ctrl+F2</source>
-        <target state="translated">Ctrl+F2</target>
         <note />
       </trans-unit>
       <trans-unit id="PrintPreviewKeyDisplayString">
@@ -2835,11 +2635,6 @@
       <trans-unit id="PrintText">
         <source>Print</source>
         <target state="translated">Imprimir</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="PropertiesKey">
-        <source>F4</source>
-        <target state="translated">F4</target>
         <note />
       </trans-unit>
       <trans-unit id="PropertiesKeyDisplayString">
@@ -2917,11 +2712,6 @@
         <target state="translated">El rectángulo no puede estar vacío.</target>
         <note />
       </trans-unit>
-      <trans-unit id="RedoKey">
-        <source>Ctrl+Y</source>
-        <target state="translated">Ctrl+Y</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RedoKeyDisplayString">
         <source>Ctrl+Y</source>
         <target state="translated">Ctrl+Y</target>
@@ -2942,11 +2732,6 @@
         <target state="translated">ADVERTENCIA. El árbol visual se cambió durante un evento de "{0}", lo cual no se admite en una aplicación de producción. Asegúrese de corregir este problema antes de enviar la aplicación.</target>
         <note />
       </trans-unit>
-      <trans-unit id="RefreshKey">
-        <source>F5</source>
-        <target state="translated">F5</target>
-        <note />
-      </trans-unit>
       <trans-unit id="RefreshKeyDisplayString">
         <source>F5</source>
         <target state="translated">F5</target>
@@ -2960,11 +2745,6 @@
       <trans-unit id="RelievePenaltyResourceFailure">
         <source>Text formatting engine cannot release penalty resource due to error: '{0}'.</source>
         <target state="translated">El motor de formato de texto no puede liberar el recurso de sanción debido al error '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ReplaceKey">
-        <source>Ctrl+H</source>
-        <target state="translated">Ctrl+H</target>
         <note />
       </trans-unit>
       <trans-unit id="ReplaceKeyDisplayString">
@@ -3022,11 +2802,6 @@
         <target state="translated">Guardar como</target>
         <note />
       </trans-unit>
-      <trans-unit id="SaveKey">
-        <source>Ctrl+S</source>
-        <target state="translated">Ctrl+G</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SaveKeyDisplayString">
         <source>Ctrl+S</source>
         <target state="translated">Ctrl+G</target>
@@ -3052,11 +2827,6 @@
         <target state="translated">Desplazar por línea</target>
         <note />
       </trans-unit>
-      <trans-unit id="ScrollPageDownKey">
-        <source>PageDown</source>
-        <target state="translated">AvPág</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ScrollPageDownKeyDisplayString">
         <source>PageDown</source>
         <target state="translated">AvPág</target>
@@ -3075,11 +2845,6 @@
       <trans-unit id="ScrollPageRightText">
         <source>Scroll Page Right</source>
         <target state="translated">Desplazar página a la derecha</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ScrollPageUpKey">
-        <source>PageUp</source>
-        <target state="translated">RePág</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollPageUpKeyDisplayString">
@@ -3122,11 +2887,6 @@
         <target state="translated">El valor SeekOrigin no es válido.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectAllKey">
-        <source>Ctrl+A</source>
-        <target state="translated">Ctrl+E</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectAllKeyDisplayString">
         <source>Ctrl+A</source>
         <target state="translated">Ctrl+E</target>
@@ -3135,11 +2895,6 @@
       <trans-unit id="SelectAllText">
         <source>Select All</source>
         <target state="translated">Seleccionar todo</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToEndKey">
-        <source>Shift+End</source>
-        <target state="translated">Mayús+Fin</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToEndKeyDisplayString">
@@ -3152,11 +2907,6 @@
         <target state="translated">Seleccionar hasta el final</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToHomeKey">
-        <source>Shift+Home</source>
-        <target state="translated">Mayús+Inicio</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToHomeKeyDisplayString">
         <source>Shift+Home</source>
         <target state="translated">Mayús+Inicio</target>
@@ -3167,11 +2917,6 @@
         <target state="translated">Seleccionar hasta el principio</target>
         <note />
       </trans-unit>
-      <trans-unit id="SelectToPageDownKey">
-        <source>Shift+PageDown</source>
-        <target state="translated">Mayús+AvPág</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SelectToPageDownKeyDisplayString">
         <source>Shift+PageDown</source>
         <target state="translated">Mayús+AvPág</target>
@@ -3180,11 +2925,6 @@
       <trans-unit id="SelectToPageDownText">
         <source>Select To PageDown</source>
         <target state="translated">Seleccionar hasta AvPág</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SelectToPageUpKey">
-        <source>Shift+PageUp</source>
-        <target state="translated">Mayús+RePág</target>
         <note />
       </trans-unit>
       <trans-unit id="SelectToPageUpKeyDisplayString">
@@ -3245,11 +2985,6 @@
       <trans-unit id="SpecificNumberCultureRequired">
         <source>The CultureInfo object used for number substitution must be a specific culture, not a neutral culture or InvariantCulture.</source>
         <target state="translated">El objeto CultureInfo usado para la sustitución de números debe ser una referencia cultural específica y no una referencia cultural neutra o InvariantCulture.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StopKey">
-        <source>Esc</source>
-        <target state="translated">Esc</target>
         <note />
       </trans-unit>
       <trans-unit id="StopKeyDisplayString">
@@ -3615,11 +3350,6 @@
       <trans-unit id="UnauthorizedAccessExceptionWithFileName">
         <source>Access denied to the path '{0}'.</source>
         <target state="translated">Acceso denegado a la ruta de acceso '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="UndoKey">
-        <source>Ctrl+Z</source>
-        <target state="translated">Ctrl+Z</target>
         <note />
       </trans-unit>
       <trans-unit id="UndoKeyDisplayString">

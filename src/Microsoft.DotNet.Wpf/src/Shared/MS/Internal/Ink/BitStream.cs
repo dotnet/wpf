@@ -11,7 +11,6 @@ using System.Windows;
 using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink
 {
@@ -66,7 +65,7 @@ namespace MS.Internal.Ink
         {
             if (bufferLengthInBits > (buffer.Length * Native.BitsPerByte))
             {
-                throw new ArgumentOutOfRangeException("bufferLengthInBits", SR.Get(SRID.InvalidBufferLength));
+                throw new ArgumentOutOfRangeException("bufferLengthInBits", SR.InvalidBufferLength);
             }
 
             _bufferLengthInBits = bufferLengthInBits;
@@ -80,7 +79,7 @@ namespace MS.Internal.Ink
             // we only support 1-64 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerLong || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
             long retVal = 0;
             while (countOfBits > 0)
@@ -109,7 +108,7 @@ namespace MS.Internal.Ink
             // we only support 1-16 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerShort || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             ushort retVal = 0;
@@ -137,7 +136,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerShort|| countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             ushort retVal = 0;
@@ -167,7 +166,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerInt || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             uint retVal = 0;
@@ -195,7 +194,7 @@ namespace MS.Internal.Ink
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerInt || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             uint retVal = 0;
@@ -240,18 +239,18 @@ namespace MS.Internal.Ink
             // if the end of the stream has been reached, then throw an exception
             if (EndOfStream)
             {
-                throw new System.IO.EndOfStreamException(SR.Get(SRID.EndOfStreamReached));
+                throw new System.IO.EndOfStreamException(SR.EndOfStreamReached);
             }
 
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
             if (countOfBits > Native.BitsPerByte || countOfBits <= 0)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
 
             if (countOfBits > _bufferLengthInBits)
             {
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsGreatThanRemainingBits));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsGreatThanRemainingBits);
             }
 
             _bufferLengthInBits -= (uint)countOfBits;
@@ -367,10 +366,7 @@ namespace MS.Internal.Ink
         /// <param name="bufferToWriteTo"></param>
         internal BitStreamWriter(List<byte> bufferToWriteTo)
         {
-            if (bufferToWriteTo == null)
-            {
-                throw new ArgumentNullException("bufferToWriteTo");
-            }
+            ArgumentNullException.ThrowIfNull(bufferToWriteTo);
             _targetBuffer = bufferToWriteTo;
         }
 
@@ -383,7 +379,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerInt)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
 
 
             // calculate the number of full bytes
@@ -422,7 +418,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerInt)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
 
             // calculate the number of full bytes
             //   Example: 10 bits would require 1 full byte
@@ -451,7 +447,7 @@ namespace MS.Internal.Ink
         {
             // validate that a subset of the bits in a single byte are being written
             if (countOfBits <= 0 || countOfBits > Native.BitsPerByte)
-                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.Get(SRID.CountOfBitsOutOfRange));
+                throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
 
             byte buffer;
                 // if there is remaining bits in the last byte in the stream

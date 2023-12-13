@@ -52,14 +52,14 @@ namespace System.Windows.Documents
                             if (!encoding.Equals(Encoding.Unicode.WebName, StringComparison.OrdinalIgnoreCase) &&
                                         !encoding.Equals(Encoding.UTF8.WebName, StringComparison.OrdinalIgnoreCase))
                             {
-                                throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderUnsupportedEncoding));
+                                throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedEncoding);
                             }
                         }
                     }
 
                     if (!(base.Encoding is UTF8Encoding) && !(base.Encoding is UnicodeEncoding))
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderUnsupportedEncoding));
+                        throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedEncoding);
                     }
 
                     _encodingChecked = true;
@@ -220,7 +220,7 @@ namespace System.Windows.Documents
                 {
                     if (!_schema.IsValidRootNamespaceUri(Reader.NamespaceURI))
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderUnsupportedRootNamespaceUri));
+                        throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedRootNamespaceUri);
                     }
                     _rootXMLNSChecked = true;
                 }
@@ -329,7 +329,7 @@ namespace System.Windows.Documents
 
             if (!_schemas.TryGetValue(mimeType, out schema))
             {
-                throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderUnsupportedMimeType));
+                throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedMimeType);
             }
 
             return schema;
@@ -441,15 +441,14 @@ namespace System.Windows.Documents
                 attrName.Equals("Fill", StringComparison.Ordinal) ||
                 attrName.Equals("Stroke", StringComparison.Ordinal))
             {
-                attrValue = attrValue.Trim();
-                if (attrValue.StartsWith(_contextColor, StringComparison.Ordinal))
+                ReadOnlySpan<char> attrValueSpan = attrValue.AsSpan().Trim();
+                if (attrValueSpan.StartsWith(_contextColor, StringComparison.Ordinal))
                 {
-                    attrValue = attrValue.Substring(_contextColor.Length);
-                    attrValue = attrValue.Trim();
-                    string[] tokens = attrValue.Split(new char[] { ' ' });
-                    if (tokens.GetLength(0) >= 1)
+                    attrValueSpan = attrValueSpan.Slice(_contextColor.Length).Trim();
+                    int spacePos = attrValueSpan.IndexOf(' ');
+                    if (spacePos >= 0)
                     {
-                        return new string[] { tokens[0] };
+                        return new string[] { attrValueSpan.Slice(0, spacePos).ToString() };
                     }
                 }
             }
@@ -575,12 +574,6 @@ namespace System.Windows.Documents
                     );
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses SecurityCriticalData which is a package from PreloadedPackages
-        /// SecurityTreatAsSafe: No package instance or package related objects being handed
-        ///                     out from this method
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override void ValidateRelationships(SecurityCriticalData<Package> package, Uri packageUri, Uri partUri, ContentType mimeType)
         {
             PackagePart part = package.Value.GetPart(partUri);
@@ -595,7 +588,7 @@ namespace System.Windows.Documents
                 count++;
                 if (count > 1)
                 {
-                    throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderMoreThanOnePrintTicketPart));
+                    throw new FileFormatException(SR.XpsValidatingLoaderMoreThanOnePrintTicketPart);
                 }
 
                 // Also check for existence and type
@@ -606,7 +599,7 @@ namespace System.Windows.Documents
 
                 if (!_printTicketContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                 {
-                    throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderPrintTicketHasIncorrectType));
+                    throw new FileFormatException(SR.XpsValidatingLoaderPrintTicketHasIncorrectType);
                 }
             }
 
@@ -617,7 +610,7 @@ namespace System.Windows.Documents
                 count++;
                 if (count > 1)
                 {
-                    throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderMoreThanOneThumbnailPart));
+                    throw new FileFormatException(SR.XpsValidatingLoaderMoreThanOneThumbnailPart);
                 }
 
                 // Also check for existence and type
@@ -629,7 +622,7 @@ namespace System.Windows.Documents
                 if (!_jpgContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                     !_pngContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                 {
-                    throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderThumbnailHasIncorrectType));
+                    throw new FileFormatException(SR.XpsValidatingLoaderThumbnailHasIncorrectType);
                 }
             }
 
@@ -649,7 +642,7 @@ namespace System.Windows.Documents
                     if (!_fontContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                             !_obfuscatedContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderRestrictedFontHasIncorrectType));
+                        throw new FileFormatException(SR.XpsValidatingLoaderRestrictedFontHasIncorrectType);
                     }
                 }
             }
@@ -665,7 +658,7 @@ namespace System.Windows.Documents
                     count++;
                     if (count > 1)
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderMoreThanOneDiscardControlInPackage));
+                        throw new FileFormatException(SR.XpsValidatingLoaderMoreThanOneDiscardControlInPackage);
                     }
 
                     // Also check for existence and type
@@ -676,7 +669,7 @@ namespace System.Windows.Documents
 
                     if (!_discardControlContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderDiscardControlHasIncorrectType));
+                        throw new FileFormatException(SR.XpsValidatingLoaderDiscardControlHasIncorrectType);
                     }
                 }
 
@@ -688,7 +681,7 @@ namespace System.Windows.Documents
                     count++;
                     if (count > 1)
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderMoreThanOneThumbnailInPackage));
+                        throw new FileFormatException(SR.XpsValidatingLoaderMoreThanOneThumbnailInPackage);
                     }
 
                     // Also check for existence and type
@@ -700,7 +693,7 @@ namespace System.Windows.Documents
                     if (!_jpgContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                         !_pngContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                     {
-                        throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderThumbnailHasIncorrectType));
+                        throw new FileFormatException(SR.XpsValidatingLoaderThumbnailHasIncorrectType);
                     }
                 }
             }
@@ -739,7 +732,7 @@ namespace System.Windows.Documents
         {
             if (attrName.Equals("Source", StringComparison.Ordinal))      // Cannot chain remote ResourceDictionary parts.
             {
-                throw new FileFormatException(SR.Get(SRID.XpsValidatingLoaderUnsupportedMimeType));
+                throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedMimeType);
             }
 
             return base.ExtractUriFromAttr(attrName, attrValue);

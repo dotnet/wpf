@@ -42,12 +42,12 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.Get(SRID.DataGrid_NullColumn));
+                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
 
             if (item.DataGridOwner != null)
             {
-                throw new ArgumentException(SR.Get(SRID.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
 
             if (DisplayIndexMapInitialized)
@@ -63,17 +63,17 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.Get(SRID.DataGrid_NullColumn));
+                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
             }
 
             if (index >= Count || index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Get(SRID.DataGrid_ColumnIndexOutOfRange, item.Header));
+                throw new ArgumentOutOfRangeException("index", SR.Format(SR.DataGrid_ColumnIndexOutOfRange, item.Header));
             }
 
             if (item.DataGridOwner != null && this[index] != item)
             {
-                throw new ArgumentException(SR.Get(SRID.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
             }
 
             if (DisplayIndexMapInitialized)
@@ -478,7 +478,7 @@ namespace System.Windows.Controls
 
             if (changingColumn != null && oldDisplayIndex >= columnCount)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", oldDisplayIndex, SR.Get(SRID.DataGrid_ColumnDisplayIndexOutOfRange, changingColumn.Header));
+                throw new ArgumentOutOfRangeException("displayIndex", oldDisplayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, changingColumn.Header));
             }
 
             // First loop:
@@ -500,7 +500,7 @@ namespace System.Windows.Controls
                 {
                     if (assignedDisplayIndexMap.ContainsKey(currentColumnDisplayIndex))
                     {
-                        throw new ArgumentException(SR.Get(SRID.DataGrid_DuplicateDisplayIndex));
+                        throw new ArgumentException(SR.DataGrid_DuplicateDisplayIndex);
                     }
 
                     assignedDisplayIndexMap.Add(currentColumnDisplayIndex, columnIndex);
@@ -721,7 +721,7 @@ namespace System.Windows.Controls
         {
             if (!IsDisplayIndexValid(column, displayIndex, isAdding))
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Get(SRID.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
+                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
             }
         }
 
@@ -886,7 +886,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (DoubleUtil.IsNaN(nonStarSpace))
+            if (double.IsNaN(nonStarSpace))
             {
                 return;
             }
@@ -900,7 +900,7 @@ namespace System.Windows.Controls
         private double ComputeStarColumnWidths(double availableStarSpace)
         {
             Debug.Assert(
-                !DoubleUtil.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
+                !double.IsNaN(availableStarSpace) && !Double.IsNegativeInfinity(availableStarSpace),
                 "availableStarSpace is not valid");
 
             List<DataGridColumn> unResolvedColumns = new List<DataGridColumn>();
@@ -1089,7 +1089,7 @@ namespace System.Windows.Controls
             foreach (DataGridColumn column in this)
             {
                 DataGridLength width = column.Width;
-                if (column.IsVisible && !DoubleUtil.IsNaN(width.DisplayValue))
+                if (column.IsVisible && !double.IsNaN(width.DisplayValue))
                 {
                     eligibleDisplayValue += width.DisplayValue;
                     totalFactors++;
@@ -1192,7 +1192,7 @@ namespace System.Windows.Controls
                 if (!width.IsStar)
                 {
                     double minWidth = column.MinWidth;
-                    double displayValue = DataGridHelper.CoerceToMinMax(DoubleUtil.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
+                    double displayValue = DataGridHelper.CoerceToMinMax(double.IsNaN(width.DesiredValue) ? minWidth : width.DesiredValue, minWidth, column.MaxWidth);
                     if (!DoubleUtil.AreClose(width.DisplayValue, displayValue))
                     {
                         column.SetWidthInternal(new DataGridLength(width.Value, width.UnitType, width.DesiredValue, displayValue));
@@ -1335,7 +1335,7 @@ namespace System.Windows.Controls
         {
             if (!ColumnWidthsComputationPending && HasVisibleStarColumns)
             {
-                if (DoubleUtil.GreaterThan(availableSpaceChange, 0.0))
+                if (DoubleUtil.GreaterThanZero(availableSpaceChange))
                 {
                     GiveAwayWidthToColumns(null, availableSpaceChange);
                 }
@@ -1381,7 +1381,7 @@ namespace System.Windows.Controls
             if (DoubleUtil.GreaterThan(width.DesiredValue, oldWidth.DisplayValue))
             {
                 double nonRetrievableSpace = TakeAwayWidthFromColumns(changedColumn, width.DesiredValue - oldWidth.DisplayValue, changedColumn != null);
-                if (DoubleUtil.GreaterThan(nonRetrievableSpace, 0.0))
+                if (DoubleUtil.GreaterThanZero(nonRetrievableSpace))
                 {
                     changedColumn.SetWidthInternal(new DataGridLength(
                         width.Value,
@@ -1516,7 +1516,7 @@ namespace System.Windows.Controls
 
             int resizingColumnIndex = resizingColumn.DisplayIndex;
 
-            if (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+            if (DoubleUtil.GreaterThanZero(horizontalChange))
             {
                 RecomputeColumnWidthsOnColumnPositiveResize(horizontalChange, resizingColumnIndex, retainAuto);
             }
@@ -1565,12 +1565,12 @@ namespace System.Windows.Controls
             double perStarWidth,
             bool retainAuto)
         {
-            while (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+            while (DoubleUtil.GreaterThanZero(horizontalChange))
             {
                 double minPerStarExcessRatio = Double.PositiveInfinity;
                 double rightStarFactors = GetStarFactorsForPositiveResize(resizingColumnIndex + 1, out minPerStarExcessRatio);
 
-                if (DoubleUtil.GreaterThan(rightStarFactors, 0.0))
+                if (DoubleUtil.GreaterThanZero(rightStarFactors))
                 {
                     horizontalChange = ReallocateStarValuesForPositiveResize(
                         resizingColumnIndex,
@@ -1580,7 +1580,7 @@ namespace System.Windows.Controls
                         perStarWidth,
                         retainAuto);
 
-                    if (DoubleUtil.AreClose(horizontalChange, 0.0))
+                    if (DoubleUtil.IsZero(horizontalChange))
                     {
                         break;
                     }
@@ -1686,7 +1686,7 @@ namespace System.Windows.Controls
             bool retainAuto,
             bool onlyShrinkToDesiredWidth)
         {
-            if (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+            if (DoubleUtil.GreaterThanZero(horizontalChange))
             {
                 double totalExcessWidth = 0.0;
                 bool iterationNeeded = true;
@@ -1702,7 +1702,7 @@ namespace System.Windows.Controls
                     double columnExcessWidth = onlyShrinkToDesiredWidth ? width.DisplayValue - Math.Max(width.DesiredValue, column.MinWidth) : width.DisplayValue - column.MinWidth;
 
                     if (!width.IsStar &&
-                        DoubleUtil.GreaterThan(columnExcessWidth, 0.0))
+                        DoubleUtil.GreaterThanZero(columnExcessWidth))
                     {
                         if (DoubleUtil.GreaterThanOrClose(totalExcessWidth + columnExcessWidth, horizontalChange))
                         {
@@ -1715,7 +1715,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (DoubleUtil.GreaterThan(totalExcessWidth, 0.0))
+                if (DoubleUtil.GreaterThanZero(totalExcessWidth))
                 {
                     DataGridColumn column = ColumnFromDisplayIndex(resizingColumnIndex);
                     SetResizedColumnWidth(column, totalExcessWidth, retainAuto);
@@ -1746,7 +1746,7 @@ namespace System.Windows.Controls
                 // increasing columns to the right which are less than the maximum size
                 horizontalChange = RecomputeNonStarColumnWidthsOnColumnNegativeResize(horizontalChange, resizingColumnIndex, retainAuto, true);
 
-                if (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+                if (DoubleUtil.GreaterThanZero(horizontalChange))
                 {
                     DataGridColumn resizingColumn = ColumnFromDisplayIndex(resizingColumnIndex);
                     if (!resizingColumn.Width.IsStar)
@@ -1771,7 +1771,7 @@ namespace System.Windows.Controls
             bool retainAuto,
             bool expandBeyondDesiredWidth)
         {
-            if (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+            if (DoubleUtil.GreaterThanZero(horizontalChange))
             {
                 double totalLagWidth = 0.0;
                 bool iterationNeeded = true;
@@ -1800,7 +1800,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (DoubleUtil.GreaterThan(totalLagWidth, 0.0))
+                if (DoubleUtil.GreaterThanZero(totalLagWidth))
                 {
                     DataGridColumn column = ColumnFromDisplayIndex(resizingColumnIndex);
                     SetResizedColumnWidth(column, -totalLagWidth, retainAuto);
@@ -1820,12 +1820,12 @@ namespace System.Windows.Controls
             double perStarWidth,
             bool retainAuto)
         {
-            while (DoubleUtil.GreaterThan(horizontalChange, 0.0))
+            while (DoubleUtil.GreaterThanZero(horizontalChange))
             {
                 double minPerStarLagRatio = Double.PositiveInfinity;
                 double rightStarFactors = GetStarFactorsForNegativeResize(resizingColumnIndex + 1, out minPerStarLagRatio);
 
-                if (DoubleUtil.GreaterThan(rightStarFactors, 0.0))
+                if (DoubleUtil.GreaterThanZero(rightStarFactors))
                 {
                     horizontalChange = ReallocateStarValuesForNegativeResize(
                         resizingColumnIndex,
@@ -1976,7 +1976,7 @@ namespace System.Windows.Controls
             giveAwayWidth = GiveAwayWidthToScrollViewerExcess(giveAwayWidth, /*includedInColumnsWidth*/ ignoredColumn != null);
             giveAwayWidth = GiveAwayWidthToNonStarColumns(ignoredColumn, giveAwayWidth);
 
-            if (DoubleUtil.GreaterThan(giveAwayWidth, 0.0) || recomputeStars)
+            if (DoubleUtil.GreaterThanZero(giveAwayWidth) || recomputeStars)
             {
                 double sumOfStarDisplayWidths = 0.0;
                 double sumOfStarMaxWidths = 0.0;
@@ -2019,7 +2019,7 @@ namespace System.Windows.Controls
         /// </summary>
         private double GiveAwayWidthToNonStarColumns(DataGridColumn ignoredColumn, double giveAwayWidth)
         {
-            while (DoubleUtil.GreaterThan(giveAwayWidth, 0.0))
+            while (DoubleUtil.GreaterThanZero(giveAwayWidth))
             {
                 int countOfParticipatingColumns = 0;
                 double minLagWidth = FindMinimumLaggingWidthOfNonStarColumns(
@@ -2196,7 +2196,7 @@ namespace System.Windows.Controls
             else
             {
                 double unusedSpace = totalAvailableWidth - usedSpace;
-                if (DoubleUtil.GreaterThan(unusedSpace, 0.0))
+                if (DoubleUtil.GreaterThanZero(unusedSpace))
                 {
                     takeAwayWidth = Math.Max(0.0, takeAwayWidth - unusedSpace);
                 }
@@ -2211,7 +2211,7 @@ namespace System.Windows.Controls
         private double TakeAwayWidthFromUnusedSpace(bool spaceAlreadyUtilized, double takeAwayWidth)
         {
             double totalAvailableWidth = DataGridOwner.GetViewportWidthForColumns();
-            if (DoubleUtil.GreaterThan(totalAvailableWidth, 0.0))
+            if (DoubleUtil.GreaterThanZero(totalAvailableWidth))
             {
                 return TakeAwayWidthFromUnusedSpace(spaceAlreadyUtilized, takeAwayWidth, totalAvailableWidth);
             }
@@ -2249,7 +2249,7 @@ namespace System.Windows.Controls
         /// </summary>
         private double TakeAwayWidthFromStarColumns(DataGridColumn ignoredColumn, double takeAwayWidth)
         {
-            if (DoubleUtil.GreaterThan(takeAwayWidth, 0.0))
+            if (DoubleUtil.GreaterThanZero(takeAwayWidth))
             {
                 double sumOfStarDisplayWidths = 0.0;
                 double sumOfStarMinWidths = 0.0;
@@ -2282,7 +2282,7 @@ namespace System.Windows.Controls
         /// </summary>
         private double TakeAwayWidthFromNonStarColumns(DataGridColumn ignoredColumn, double takeAwayWidth)
         {
-            while (DoubleUtil.GreaterThan(takeAwayWidth, 0.0))
+            while (DoubleUtil.GreaterThanZero(takeAwayWidth))
             {
                 int countOfParticipatingColumns = 0;
                 double minExcessWidth = FindMinimumExcessWidthOfNonStarColumns(

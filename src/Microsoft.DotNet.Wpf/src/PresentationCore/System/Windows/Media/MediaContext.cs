@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // Description:
 //      The MediaContext class controls the media layer.
@@ -33,7 +33,6 @@ using MS.Win32;
 using Microsoft.Win32.SafeHandles;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -146,56 +145,56 @@ namespace System.Windows.Media
         #region Compat support for rendering in a Non-interactive Window Station
 
         /// <summary>
-        /// General case: 
-        ///     True if our window station is interactive (WinSta0), otherwise false. 
-        ///     In addition to this, two compatibility switches are provided to opt-in 
+        /// General case:
+        ///     True if our window station is interactive (WinSta0), otherwise false.
+        ///     In addition to this, two compatibility switches are provided to opt-in
         ///     or opt-out of this behavior
-        ///     
+        ///
         /// Compatibility switches
-        ///     i. <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> 
+        ///     i. <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/>
         ///     ii. <see cref="MS.Internal.CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation"/>
-        /// 
+        ///
         /// How this will work:
         ///     Desktop/Interactive Window Stations:
-        ///         Rendering will be throttled back/stopped when no display devices are available. For e.g., when a TS 
+        ///         Rendering will be throttled back/stopped when no display devices are available. For e.g., when a TS
         ///         session is in WTSDisconnected state, the OS may not provide any display devices in response to our enumeration.
-        ///         If an application would like to continue rendering in the absence of display devices (accepting that 
-        ///         it can lead to a CPU spike), it can set <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/> 
+        ///         If an application would like to continue rendering in the absence of display devices (accepting that
+        ///         it can lead to a CPU spike), it can set <see cref=" MS.Internal.CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable"/>
         ///         to true.
         ///     Service/Non-interactive Window Stations
         ///         Rendering will continue by default, irrespective of the presence of display devices.Unless the WPF
-        ///         API's being used are shortlived (like rendering to a bitmap), it can lead to a CPU spike. 
-        ///         If an application running inside a service would like to receive the 'default' WPF behavior, 
+        ///         API's being used are shortlived (like rendering to a bitmap), it can lead to a CPU spike.
+        ///         If an application running inside a service would like to receive the 'default' WPF behavior,
         ///         i.e., no rendering in the absence of display devices, then it should set
         ///         <see cref="MS.Internal.CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation"/> to true
-        ///     In pseudocode, 
+        ///     In pseudocode,
         ///         IsNonInteractiveWindowStation = !Environment.UserInteractive
         ///         IF DisplayDevicesNotFound() THEN
-        ///             IF IsNonInteractiveWindowStation THEN 
+        ///             IF IsNonInteractiveWindowStation THEN
         ///                 // We are inside a SCM service
         ///                 // Default = True, AppContext switch can override it to False
         ///                 ShouldRender = !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation
-        ///             ELSE 
+        ///             ELSE
         ///                 // Desktop/interactive mode, including WTSDisconnected scenarios
         ///                 // Default = False, AppContext switch can override it to True
         ///                 ShouldRender = CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable
         ///             END IF
         ///         END IF
-        ///     
+        ///
         /// </summary>
         /// <remarks>
         /// i. <see cref=">Environment.UserInteractive"/> calls into Window Station related
-        /// Win32 API's to identify whether the current Window Station has WSF_VISIBLE 
-        /// flag set. 
-        /// 
+        /// Win32 API's to identify whether the current Window Station has WSF_VISIBLE
+        /// flag set.
+        ///
         /// ii. Field is internal to allow <see cref="HwndTarget"/> to consume its value
-        /// 
-        /// iii. This field is named to reflect the general use-case, namely to force rendering 
-        /// when inside a SCM service. 
+        ///
+        /// iii. This field is named to reflect the general use-case, namely to force rendering
+        /// when inside a SCM service.
         /// </remarks>
         internal static bool ShouldRenderEvenWhenNoDisplayDevicesAreAvailable { get; } =
-            !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...  
-                !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override 
+            !Environment.UserInteractive ? // IF DisplayDevicesNotAvailable && IsNonInteractiveWindowStation/IsService...
+                !CoreAppContextSwitches.ShouldNotRenderInNonInteractiveWindowStation :      // THEN render by default, allow ShouldNotRender AppContext override
                 CoreAppContextSwitches.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable;   // ELSE do not render by default, allow ShouldRender AppContext override
 
 
@@ -223,7 +222,7 @@ namespace System.Windows.Media
             _contextGuid = Guid.NewGuid();
 
             // Create a dictionary in which we manage the CompositionTargets.
-            _registeredICompositionTargets = new Dictionary<ICompositionTarget, object>();
+            _registeredICompositionTargets = new HashSet<ICompositionTarget>();
 
             _renderModeMessage = new DispatcherOperationCallback(InvalidateRenderMode);
 
@@ -278,13 +277,6 @@ namespace System.Windows.Media
         /// Called by a message processor to notify us that our asynchronous
         /// channel has outstanding messages that need to be pumped.
         /// </summary>
-        /// <securitynote>
-        /// Critical    - Calls a critical method: PeekNextMessage.
-        /// TreatAsSafe - Retrieving and processing a message from the back
-        ///               channel is safe -- the channel is owned by this
-        ///               media context.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void NotifySyncChannelMessage(DUCE.Channel channel)
         {
             // empty the channel messages.
@@ -315,13 +307,6 @@ namespace System.Windows.Media
         /// Called by a message processor to notify us that our asynchronous
         /// channel has outstanding messages that need to be pumped.
         /// </summary>
-        /// <securitynote>
-        /// Critical    - Calls a critical method: PeekNextMessage.
-        /// TreatAsSafe - Retrieving and processing a message from the back
-        ///               channel is safe -- the channel is owned by this
-        ///               media context.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void NotifyChannelMessage()
         {
             // Since a notification message may sit in the queue while we
@@ -367,7 +352,7 @@ namespace System.Windows.Media
             }
         }
 
-        // MediaSystem is per-AppDomain and so it uses this to ensure that InvalidateRenderMode() 
+        // MediaSystem is per-AppDomain and so it uses this to ensure that InvalidateRenderMode()
         // is called by the right thread.
         internal void PostInvalidateRenderMode()
         {
@@ -380,8 +365,8 @@ namespace System.Windows.Media
         private object InvalidateRenderMode(object dontCare)
         {
             Debug.Assert(CheckAccess());
-            
-            foreach (ICompositionTarget target in _registeredICompositionTargets.Keys)
+
+            foreach (ICompositionTarget target in _registeredICompositionTargets)
             {
                 HwndTarget hwndTarget = target as HwndTarget;
 
@@ -441,7 +426,7 @@ namespace System.Windows.Media
                 // It's never correct to not have an event handler hooked up in
                 // the case when an invalid shader is encountered.  Raise an
                 // exception directing the app to hook up an event handler.
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_NoBadShaderHandler));
+                throw new InvalidOperationException(SR.MediaContext_NoBadShaderHandler);
             }
         }
 
@@ -464,9 +449,9 @@ namespace System.Windows.Media
             case HRESULT.E_OUTOFMEMORY:
                 throw new System.OutOfMemoryException();
             case HRESULT.D3DERR_OUTOFVIDEOMEMORY:
-                throw new System.OutOfMemoryException(SR.Get(SRID.MediaContext_OutOfVideoMemory));
+                throw new System.OutOfMemoryException(SR.MediaContext_OutOfVideoMemory);
             default:
-                throw new System.InvalidOperationException(SR.Get(SRID.MediaContext_RenderThreadError));
+                throw new System.InvalidOperationException(SR.MediaContext_RenderThreadError);
             }
         }
 
@@ -532,7 +517,7 @@ namespace System.Windows.Media
             get;
             private set;
         }
-        
+
         /// <summary>
         /// Internal event which is raised when the Tier changes on this MediaContext.
         /// </summary>
@@ -542,12 +527,6 @@ namespace System.Windows.Media
         /// Asks the composition engine to retrieve the current hardware tier.
         /// This tier will be sent back via NotifyChannelMessage.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RequestTier(DUCE.Channel channel)
         {
             unsafe
@@ -1016,11 +995,10 @@ namespace System.Windows.Media
                     if (Channel != null)
                     {
                         // SyncFlush will Commit()
-                        if (CommittingBatch != null)
-                        {
-                            CommittingBatch(Channel, new EventArgs());
-                        }
+
+                        CommittingBatch?.Invoke(Channel, new EventArgs());
                         
+
                         Channel.SyncFlush();
                     }
                 }
@@ -1237,12 +1215,12 @@ namespace System.Windows.Media
         {
             _channelManager.CreateChannels();
 
-            // Notify renderer how it should behave when no valid displays are available, 
-            // or when this process is running in a non-interactive Window Station, or when 
+            // Notify renderer how it should behave when no valid displays are available,
+            // or when this process is running in a non-interactive Window Station, or when
             // an application has opted into behavior that requests WPF to continue rendering
             // even when no valid displays are detected.
-            // 
-            // Do this immediately after creating channels. 
+            //
+            // Do this immediately after creating channels.
             DUCE.NotifyPolicyChangeForNonInteractiveMode(
                     ShouldRenderEvenWhenNoDisplayDevicesAreAvailable,
                     Channel);
@@ -1298,11 +1276,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Start interlocked presentation mode and resquest
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnterInterlockedPresentation()
         {
             if (!InterlockIsEnabled)
@@ -1337,11 +1310,6 @@ namespace System.Windows.Media
         /// Leaves interlocked presentation mode and cleans up state so we can
         /// continue to present in non-interlocked mode.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void LeaveInterlockedPresentation()
         {
             bool interlockDisabled = (_interlockState == InterlockState.Disabled);
@@ -1456,14 +1424,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Disposes the MediaContext.
         /// </summary>
-        /// <securitynote>
-        /// Critical - Shuts down the queue item promoter, effectively disabling rendering
-        ///            when animation smoothing is turned on.
-        /// TreatAsSafe - At the time the media context object gets disposed, no rendering
-        ///               is supposed to be happening anymore, so it is safe to shut down
-        ///               the queue item promoter.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public virtual void Dispose()
         {
             Debug.Assert(CheckAccess());
@@ -1479,7 +1439,7 @@ namespace System.Windows.Media
 
                 // First make a copy of the dictionarys contents, because ICompositionTarget.Dispose modifies this collection.
                 ICompositionTarget[] registeredVTs = new ICompositionTarget[_registeredICompositionTargets.Count];
-                _registeredICompositionTargets.Keys.CopyTo(registeredVTs, 0);
+                _registeredICompositionTargets.CopyTo(registeredVTs, 0);
 
                 // Iterate through the ICompositionTargets and dispose them. Be careful, ICompositionTarget.Dispose
                 // removes the ICompositionTargets from the Dictionary. This is why we don't iterate the Dictionary directly.
@@ -1557,7 +1517,7 @@ namespace System.Windows.Media
                 iv.AddRefOnChannel(channelSet.Channel, channelSet.OutOfBandChannel);
             }
 
-            _registeredICompositionTargets.Add(iv, null); // We use the dictionary just as a set.  
+            _registeredICompositionTargets.Add(iv);
         }
 
         /// <summary>
@@ -1577,13 +1537,6 @@ namespace System.Windows.Media
         /// Removes the ICompositionTarget from this MediaContext.
         /// </summary>
         /// <param name="iv">ICompositionTarget to unregister.</param>
-        /// <securitynote>
-        /// Critical    - Calls a security critical method: SetNotificationWindow.
-        /// TreatAsSafe - It is ok for the MediaContext to call SetNotificationWindow on
-        ///               the channel because the MediaContext owns the channel. In addition
-        ///               no user data is passed along.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void UnregisterICompositionTargetInternal(ICompositionTarget iv)
         {
             Debug.Assert(iv != null);
@@ -1834,11 +1787,6 @@ namespace System.Windows.Media
         /// <summary>
         /// The ol' RenderQueueItem.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Since it calls to InputManager.UnsecureCurrent
-        ///     TreatAsSafe: Since it does not expose the InputManager
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void RenderMessageHandlerCore(
             object resizedCompositionTarget /* can be null if we are not resizing*/
             )
@@ -1872,7 +1820,7 @@ namespace System.Windows.Media
                     tickLoopCount++;
                     if (tickLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteTickLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteTickLoop);
                     }
 
                     _timeManager.Tick();
@@ -1899,7 +1847,7 @@ namespace System.Windows.Media
                         // (TimeManager gets its tick time from MediaContext's IClock implementation).
                         // In the case where we can't query QPC or aren't doing interlocked presents,
                         // this will be equal to the current time, which is a good enough approximation.
-                        Rendering(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
+                        Rendering?.Invoke(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
 
                         // call all render callbacks again in case the Rendering event affects layout
                         // this will enable layout effecting changes to get triggered this frame
@@ -1909,6 +1857,8 @@ namespace System.Windows.Media
                 while (_timeManager.IsDirty);
 
                 _timeManager.UnlockTickTime();
+
+                MediaSystem.PropagateDirtyRectangleSettings();
 
                 // Invalidate the input devices on the InputManager
                 InputManager.UnsecureCurrent.InvalidateInputDevices();
@@ -1971,7 +1921,7 @@ namespace System.Windows.Media
                 // Reset current operation so it can be re-queued by layout
                 // This is needed when exception happens in the midst of layout/TemplateExpansion
                 // and it unwinds from the stack. If we don't clean this field here, the subsequent
-                // PostRender won't queue new render operation and the window gets stuck. 
+                // PostRender won't queue new render operation and the window gets stuck.
                 if (gotException
                     && _currentRenderOp != null)
                 {
@@ -2009,7 +1959,7 @@ namespace System.Windows.Media
                     callbackLoopCount++;
                     if (callbackLoopCount > 153)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MediaContext_InfiniteLayoutLoop));
+                        throw new InvalidOperationException(SR.MediaContext_InfiniteLayoutLoop);
                     }
 
                     FrugalObjectList<InvokeOnRenderCallback> callbacks = _invokeOnRenderCallbacks;
@@ -2117,7 +2067,7 @@ namespace System.Windows.Media
                 // ----------------------------------------------------------------
                 // 1) Render each registered ICompositionTarget to finish up the batch.
 
-                foreach (ICompositionTarget registeredTarget in _registeredICompositionTargets.Keys)
+                foreach (ICompositionTarget registeredTarget in _registeredICompositionTargets)
                 {
                     DUCE.ChannelSet channelSet;
                     channelSet.Channel = _channelManager.Channel;
@@ -2233,10 +2183,7 @@ namespace System.Windows.Media
                     _lastCommitTime = currentTicks;
                 }
 
-                if (CommittingBatch != null)
-                {
-                    CommittingBatch(Channel, new EventArgs());
-                }
+                CommittingBatch?.Invoke(Channel, new EventArgs());
 
                 Channel.Commit();
 
@@ -2269,12 +2216,6 @@ namespace System.Windows.Media
         /// Asks the composition engine to notify us once the frame we are
         /// submitted has been presented to the screen.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RequestPresentedNotification(DUCE.Channel channel, long estimatedFrameTime)
         {
             Debug.Assert(InterlockIsEnabled,
@@ -2299,16 +2240,6 @@ namespace System.Windows.Media
         /// <remarks>
         /// Wait for the rendering loop to finish any pending instructions.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical    - Calls one of two critical methods: WaitForNextMessage
-        ///               or MilComposition_SyncFlush.
-        /// TreatAsSafe - Net effect is to wait until render completes. Waiting
-        ///               is safe because we only block the thread if we know
-        ///               we are waiting for a message. Flushing the channel is
-        ///               safe because we own the channel and we know there
-        ///               aren't unfinished batches at this point.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CompleteRender()
         {
             // for now just bail if we are not connected.
@@ -2330,11 +2261,9 @@ namespace System.Windows.Media
                         do
                         {
                             // WaitForNextMessage will Commit()
-                            if (CommittingBatch != null)
-                            {
-                                CommittingBatch(Channel, new EventArgs());
-                            }
+                            CommittingBatch?.Invoke(Channel, new EventArgs());
                             
+
                             Channel.WaitForNextMessage();
                             NotifyChannelMessage();
                         } while (_interlockState == InterlockState.WaitingForResponse);
@@ -2373,11 +2302,9 @@ namespace System.Windows.Media
                 else
                 {
                     // SyncFlush() will Commit()
-                    if (CommittingBatch != null)
-                    {
-                        CommittingBatch(Channel, new EventArgs());
-                    }
+                    CommittingBatch?.Invoke(Channel, new EventArgs());
                     
+
                     //
                     // Issue a sync flush, which will only return after
                     // the last frame is presented
@@ -2405,7 +2332,7 @@ namespace System.Windows.Media
         {
             if (!WriteAccessEnabled)
             {
-                throw new InvalidOperationException(SR.Get(SRID.MediaContext_APINotAllowed));
+                throw new InvalidOperationException(SR.MediaContext_APINotAllowed);
             }
         }
 
@@ -2672,12 +2599,6 @@ namespace System.Windows.Media
         /// Tells the composition engine that we want to receive asynchronous
         /// notifications on this channel.
         /// </summary>
-        /// <securitynote>
-        /// Critical        - Contains an unsafe code block.
-        /// TreatAsSafe     - Unsafe block just uses the sizeof operator.
-        ///                   Sending a message to a channel is safe.
-        /// </securitynote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RegisterForNotifications(DUCE.Channel channel)
         {
             DUCE.MILCMD_PARTITION_REGISTERFORNOTIFICATIONS registerCmd;
@@ -2799,7 +2720,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Set of ICompositionTargets that are currently registered with the MediaSystem;
         /// </summary>
-        private Dictionary<ICompositionTarget, object> _registeredICompositionTargets;
+        private HashSet<ICompositionTarget> _registeredICompositionTargets;
 
         /// <summary>
         /// This are the the permissions the Context has to access Visual APIs.

@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("75F207E5-08BF-413C-96B1-B82B4064176B"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMRadialGradientBrush : IXpsOMGradientBrush
     {
         IXpsOMRadialGradientBrush Clone();

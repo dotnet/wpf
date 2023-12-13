@@ -873,18 +873,13 @@ namespace System.Windows.Controls
         /// <summary>
         /// Attaches DocumentGrid to our document when it changes.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: set_DocumentLoaded is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to set_DocumentLoaded does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected override void OnDocumentChanged()
         {
             // Validate the new document type
             if (!(Document is FixedDocument) && !(Document is FixedDocumentSequence)
                 && !(Document == null))
             {
-                throw new NotSupportedException(SR.Get(SRID.DocumentViewerOnlySupportsFixedDocumentSequence));
+                throw new NotSupportedException(SR.DocumentViewerOnlySupportsFixedDocumentSequence);
             }
 
             //Call the base so that TextEditors are attached.
@@ -1482,11 +1477,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Set up our RoutedUICommand bindings
         /// </summary>
-        ///<SecurityNote>
-        /// Critical - creates a command binding.
-        /// TAS - registering our own internal commands is considered safe.
-        ///</SecurityNote>
-        [SecurityCritical , SecurityTreatAsSafe ]
         private static void CreateCommandBindings()
         {
             // Create our generic ExecutedRoutedEventHandler.
@@ -1498,7 +1488,7 @@ namespace System.Windows.Controls
             //
             // Command: ViewThumbnails
             //          Tells DocumentViewer to display thumbnails.
-            _viewThumbnailsCommand = new RoutedUICommand(SR.Get(SRID.DocumentViewerViewThumbnailsCommandText),
+            _viewThumbnailsCommand = new RoutedUICommand(SR.DocumentViewerViewThumbnailsCommandText,
                 "ViewThumbnailsCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1513,7 +1503,7 @@ namespace System.Windows.Controls
             // Command: FitToWidth
             //          Tells DocumentViewer to zoom to the document width.
             _fitToWidthCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToWidthCommandText),
+                SR.DocumentViewerViewFitToWidthCommandText,
                 "FitToWidthCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1528,7 +1518,7 @@ namespace System.Windows.Controls
             // Command: FitToHeight
             //          Tells DocumentViewer to zoom to the document height.
             _fitToHeightCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToHeightCommandText),
+                SR.DocumentViewerViewFitToHeightCommandText,
                 "FitToHeightCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1543,7 +1533,7 @@ namespace System.Windows.Controls
             // Command: MaxPagesAcross
             //          Sets the MaxPagesAcross to the value provided.
             _fitToMaxPagesAcrossCommand = new RoutedUICommand(
-                SR.Get(SRID.DocumentViewerViewFitToMaxPagesAcrossCommandText),
+                SR.DocumentViewerViewFitToMaxPagesAcrossCommandText,
                 "FitToMaxPagesAcrossCommand",
                 typeof(DocumentViewer),
                 null);
@@ -1742,15 +1732,9 @@ namespace System.Windows.Controls
 
         /// <summary>
         /// Central handler for QueryEnabled events fired by Commands directed at DocumentViewer.
-        /// <SecurityNote>
-        /// Critical - Sets the critical Handled property on the RoutedEventArgs
-        /// TreatAsSafe - We are marking the event as handled only for the Commands that
-        ///               DocumentViewer explicitly handles -- this cannot be used for spoofing.
-        /// </SecurityNote>
         /// </summary>
         /// <param name="target">The target of this Command, expected to be DocumentViewer</param>
         /// <param name="args">The event arguments for this event.</param>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void QueryEnabledHandler(object target, CanExecuteRoutedEventArgs args)
         {
             DocumentViewer dv = target as DocumentViewer;
@@ -1969,50 +1953,45 @@ namespace System.Windows.Controls
         private static void DoFitToMaxPagesAcross(DocumentViewer dv, object data)
         {
             // Check that args is valid
-            if (data != null)
+            ArgumentNullException.ThrowIfNull(data);
+
+            int columnValue = 0;
+            bool isValidArg = true;
+
+            // If data is an int, then cast
+            if (data is int)
             {
-                int columnValue = 0;
-                bool isValidArg = true;
-
-                // If data is an int, then cast
-                if (data is int)
-                {
-                    columnValue = (int)data;
-                }
-                // If args.Data is a string, then parse
-                else if (data is string)
-                {
-                    try
-                    {
-                        columnValue = System.Convert.ToInt32((string)data, CultureInfo.CurrentCulture);
-                    }
-                    // Catch only the expected parse exceptions
-                    catch (ArgumentNullException)
-                    {
-                        isValidArg = false;
-                    }
-                    catch (FormatException)
-                    {
-                        isValidArg = false;
-                    }
-                    catch (OverflowException)
-                    {
-                        isValidArg = false;
-                    }
-                }
-
-                // Argument wasn't a valid int, throw an exception.
-                if (!isValidArg)
-                {
-                    throw new ArgumentException(SR.Get(SRID.DocumentViewerArgumentMustBeInteger), "data");
-                }
-
-                dv.OnFitToMaxPagesAcrossCommand(columnValue);
+                columnValue = (int)data;
             }
-            else
+            // If args.Data is a string, then parse
+            else if (data is string)
             {
-                throw new ArgumentNullException("data");
+                try
+                {
+                    columnValue = System.Convert.ToInt32((string)data, CultureInfo.CurrentCulture);
+                }
+                // Catch only the expected parse exceptions
+                catch (ArgumentNullException)
+                {
+                    isValidArg = false;
+                }
+                catch (FormatException)
+                {
+                    isValidArg = false;
+                }
+                catch (OverflowException)
+                {
+                    isValidArg = false;
+                }
             }
+
+            // Argument wasn't a valid int, throw an exception.
+            if (!isValidArg)
+            {
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
+            }
+
+            dv.OnFitToMaxPagesAcrossCommand(columnValue);
         }
 
         /// <summary>
@@ -2025,31 +2004,26 @@ namespace System.Windows.Controls
         private static void DoZoom(DocumentViewer dv, object data)
         {
             // Check that args is valid
-            if (data != null)
-            {
-                // If a ZoomConverter doesn't exist, create one.
-                if (dv._zoomPercentageConverter == null)
-                {
-                    dv._zoomPercentageConverter = new ZoomPercentageConverter();
-                }
+            ArgumentNullException.ThrowIfNull(data);
 
-                // Use ZoomConverter to convert argument to zoom value.
-                // We use InvariantCulture because the Command arguments are typically
-                // defined in XAML or code, which is culture invariant.
-                object zoomValue = dv._zoomPercentageConverter.ConvertBack(data, typeof(double),
-                    null, CultureInfo.InvariantCulture);
-
-                // Argument wasn't a valid percent, throw an exception.
-                if (zoomValue == DependencyProperty.UnsetValue)
-                {
-                    throw new ArgumentException(SR.Get(SRID.DocumentViewerArgumentMustBePercentage), "data");
-                }
-                dv.Zoom = (double)zoomValue;
-            }
-            else
+            // If a ZoomConverter doesn't exist, create one.
+            if (dv._zoomPercentageConverter == null)
             {
-                throw new ArgumentNullException("data");
+                dv._zoomPercentageConverter = new ZoomPercentageConverter();
             }
+
+            // Use ZoomConverter to convert argument to zoom value.
+            // We use InvariantCulture because the Command arguments are typically
+            // defined in XAML or code, which is culture invariant.
+            object zoomValue = dv._zoomPercentageConverter.ConvertBack(data, typeof(double),
+                null, CultureInfo.InvariantCulture);
+
+            // Argument wasn't a valid percent, throw an exception.
+            if (zoomValue == DependencyProperty.UnsetValue)
+            {
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
+            }
+            dv.Zoom = (double)zoomValue;
         }
 
         #endregion Commands
@@ -2144,7 +2118,7 @@ namespace System.Windows.Controls
             // Throw an exception if it doesn't exist.
             if (contentHost == null)
             {
-                throw new NotSupportedException(SR.Get(SRID.DocumentViewerStyleMustIncludeContentHost));
+                throw new NotSupportedException(SR.DocumentViewerStyleMustIncludeContentHost);
             }
 
             _scrollViewer = contentHost;
@@ -2167,11 +2141,6 @@ namespace System.Windows.Controls
         /// <summary>
         /// Instantiates the Find Toolbar and adds it to our Visual tree where appropriate.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: FindToolBar..ctor is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to FindToolBar..ctor does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InstantiateFindToolBar()
         {
             //First, find the correct place to insert toolbar.
@@ -2210,11 +2179,6 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="sender">The object that sent this event</param>
         /// <param name="e">The Click Events associated with this event</param>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnFindInvoked(object sender, EventArgs e)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXFindBegin);
@@ -2245,8 +2209,8 @@ namespace System.Windows.Controls
 
                         // build our message string.
                         string messageString = _findToolbar.SearchUp ?
-                            SR.Get(SRID.DocumentViewerSearchUpCompleteLabel) :
-                            SR.Get(SRID.DocumentViewerSearchDownCompleteLabel);
+                            SR.DocumentViewerSearchUpCompleteLabel :
+                            SR.DocumentViewerSearchDownCompleteLabel;
 
                         messageString = String.Format(
                             CultureInfo.CurrentCulture,
@@ -2262,7 +2226,7 @@ namespace System.Windows.Controls
                         MS.Internal.PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
                             wnd,
                             messageString,
-                            SR.Get(SRID.DocumentViewerSearchCompleteTitle),
+                            SR.DocumentViewerSearchCompleteTitle,
                             MessageBoxButton.OK,
                             MessageBoxImage.Asterisk);
                     }
@@ -2278,11 +2242,6 @@ namespace System.Windows.Controls
         /// This is just a private convenience method for handling the Find command in a
         /// localized place.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: GoToTextBox is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to GoToTextBox does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void GoToFind()
         {
             if (_findToolbar != null)
@@ -2297,11 +2256,6 @@ namespace System.Windows.Controls
         /// shortcuts related to the Find Command.
         /// localized place.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: get_SearchUp is defined in a non-APTCA assembly.
-        /// TreatAsSafe: call to get_SearchUp does not entail any risk.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private KeyEventArgs ProcessFindKeys(KeyEventArgs e)
         {
             if (_findToolbar == null || Document == null)

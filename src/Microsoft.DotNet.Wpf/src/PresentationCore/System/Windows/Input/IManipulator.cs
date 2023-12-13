@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 
 namespace System.Windows.Input
@@ -51,15 +50,6 @@ namespace System.Windows.Input
         ///     Called when the Manipulation ends
         /// </summary>
         /// <param name="cancel">Flag indicating Cancel</param>
-        /// <SecurityNote>
-        ///     Critical: Calling this method would do mouse promotions.
-        ///     PublicOK: This method has a demand on it.
-        ///     Demand:   Technically the demand is not needed because the 
-        ///               user can already do this indirectly by canceling the
-        ///               manipulation. But the decision is to limit the scope
-        ///               of this raw method to full trust.
-        /// </SecurityNote>
-        [SecurityCritical, UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         void ManipulationEnded(bool cancel);
     }
 }

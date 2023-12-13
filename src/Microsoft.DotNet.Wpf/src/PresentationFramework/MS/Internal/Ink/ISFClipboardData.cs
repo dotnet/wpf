@@ -17,7 +17,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Security;
-using System.Security.Permissions;
 
 namespace MS.Internal.Ink
 {
@@ -63,10 +62,6 @@ namespace MS.Internal.Ink
         }
 
         // Copies the internal strokes to the IDataObject
-        /// <SecurityNote>
-        ///    Critical: This code asserts to set data on a data object
-        /// </SecurityNote>
-        [SecurityCritical]
         protected override void DoCopy(IDataObject dataObject)
         {
             // samgeo - Presharp issue
@@ -80,15 +75,7 @@ namespace MS.Internal.Ink
             MemoryStream stream = new MemoryStream();
             Strokes.Save(stream);
             stream.Position = 0;
-            (new UIPermission(UIPermissionClipboard.AllClipboard)).Assert();//BlessedAssert
-            try
-            {
-                dataObject.SetData(StrokeCollection.InkSerializedFormat, stream);
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            dataObject.SetData(StrokeCollection.InkSerializedFormat, stream);
 #pragma warning restore 6518
 #pragma warning restore 1634, 1691
         }

@@ -1,0 +1,543 @@
+<!-- [[Generic]] -->
+ 
+<!-- RibbonApplicationMenu -->
+
+<SolidColorBrush x:Key="RibbonApplicationMenuBorderBrushKey" Color="#FF114EAF" />
+
+<!-- Semi-transparent brushes which produce tints of the main BorderBrush color or the Ribbon colors. -->
+<LinearGradientBrush x:Key="RibbonApplicationMenuOverlayBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0" Color="#90FFFFFF" />
+    <GradientStop Offset="0.5" Color="#30FFFFFF" />
+    <GradientStop Offset="0.5" Color="Transparent" />
+    <GradientStop Offset="1" Color="#70FFFFFF" />
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="RibbonApplicationMenuOverlayBorderBrushKey" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0" Color="#60FFFFFF" />
+    <GradientStop Offset="0.5" Color="#20FFFFFF" />
+    <GradientStop Offset="0.5" Color="Transparent" />
+    <GradientStop Offset="1" Color="Transparent" />
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="RibbonApplicationMenuMouseOverBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0" Color="#A0FFFFFF" />
+    <GradientStop Offset="0.5" Color="#60FFFFFF" />
+    <GradientStop Offset="0.5" Color="Transparent" />
+    <GradientStop Offset="1" Color="#D0FFFFFF" />
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="RibbonApplicationMenuMouseOverBorderBrushKey" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0" Color="#90FFFFFF" />
+    <GradientStop Offset="0.5" Color="#20FFFFFF" />
+    <GradientStop Offset="0.5" Color="Transparent" />
+    <GradientStop Offset="1" Color="Transparent" />
+</LinearGradientBrush>
+
+<LinearGradientBrush x:Key="RibbonApplicationMenuFooterPaneOverlayBackgroundBrushKey" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Offset="0" Color="#A0FFFFFF" />
+    <GradientStop Offset="0.2" Color="#90FFFFFF" />
+    <GradientStop Offset="0.4" Color="#80FFFFFF" />
+    <GradientStop Offset="0.6" Color="#50FFFFFF" />
+    <GradientStop Offset="0.8" Color="Transparent" />
+    <GradientStop Offset="1" Color="#30FFFFFF" />
+</LinearGradientBrush>
+
+<RadialGradientBrush x:Key="RibbonApplicationMenuDownArrowBrushKey">
+    <GradientStop Offset="0" Color="LightGray" />
+    <GradientStop Offset="0.4" Color="White" />
+</RadialGradientBrush>
+
+<Geometry x:Key="ApplicationMenuDownArrowGeometryKey">M 0 0 L 2.25 3 L 4.5 0 Z</Geometry>
+
+<Style x:Key="RibbonApplicationMenuToggleButtonStyleKey" TargetType="{x:Type ribbon:RibbonToggleButton}">
+    <Setter Property="BorderBrush" Value="{StaticResource RibbonApplicationMenuBorderBrushKey}" />
+    <Setter Property="Background" Value="{StaticResource RibbonApplicationMenuBorderBrushKey}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Foreground" Value="{StaticResource RibbonApplicationMenuDownArrowBrushKey}" />
+    <Setter Property="ClickMode" Value="Press" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="FocusManager.IsFocusScope" Value="False" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource RibbonToolTipInitialShowDelayKey}" />
+    <Setter Property="ToolTipService.ShowDuration" Value="{StaticResource RibbonToolTipShowDurationKey}" />
+    <Setter Property="ToolTipService.BetweenShowDelay" Value="{StaticResource RibbonToolTipBetweenShowDelayKey}" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:RibbonToggleButton}">
+                <Grid Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"
+                      Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"
+                      SnapsToDevicePixels="True">
+                    <Border x:Name="OuterBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0,2,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" />
+                    <Border x:Name="MiddleBorder"
+                            BorderBrush="Transparent"
+                            Background="{StaticResource RibbonApplicationMenuOverlayBackgroundBrushKey}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0,2,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                        <Border x:Name="InnerBorder"
+                                BorderBrush="{StaticResource RibbonApplicationMenuOverlayBorderBrushKey}"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="0,2,0,0" />
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <Image IsHitTestVisible="False"
+                               Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ribbon:RibbonApplicationMenu}}, Path=SmallImageSource}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="16"
+                               Height="16"
+                               Margin="0,-0.5,0,0"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               RenderOptions.EdgeMode="Aliased" />
+                        <Path x:Name="DownArrow"
+                              Data="{StaticResource ApplicationMenuDownArrowGeometryKey}"
+                              Stroke="{StaticResource RibbonApplicationMenuOverlayBackgroundBrushKey}"
+                              StrokeThickness=".5"
+                              Fill="{TemplateBinding Foreground}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="3.5,0,0,0">
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                            </Path.RenderTransform>
+                        </Path>
+
+                    </StackPanel>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsKeyboardFocused" Value="True" />
+                            <Condition Property="IsChecked" Value="False" />                           
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}" />
+                        <Setter TargetName="MiddleBorder" Property="Background" Value="{StaticResource RibbonApplicationMenuMouseOverBackgroundBrushKey}" />
+                        <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{StaticResource RibbonApplicationMenuMouseOverBorderBrushKey}" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                            <Condition Property="IsChecked" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}" />
+                        <Setter TargetName="MiddleBorder" Property="Background" Value="{StaticResource RibbonApplicationMenuMouseOverBackgroundBrushKey}" />
+                        <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{StaticResource RibbonApplicationMenuMouseOverBorderBrushKey}" />
+                    </MultiTrigger>
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" />
+                        <Setter TargetName="OuterBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                        <Setter TargetName="OuterBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="MiddleBorder" Property="BorderBrush" Value="Transparent" />
+                        <Setter TargetName="MiddleBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="MiddleBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="InnerBorder" Property="BorderBrush" Value="Transparent" />
+                        <Setter TargetName="InnerBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="InnerBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="DownArrow" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                        <Setter TargetName="DownArrow" Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
+                    </DataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+<!--=================================================================
+            RibbonApplicationMenu
+    ==================================================================-->
+
+<Style x:Key="{x:Type ribbon:RibbonApplicationMenu}" TargetType="{x:Type ribbon:RibbonApplicationMenu}">
+    <Style.Resources>
+        <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type ribbon:RibbonSeparator}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonApplicationMenu}}, Path=Ribbon.BorderBrush}" />
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonApplicationMenu}}, Path=Ribbon.Background}" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ribbon:RibbonSeparator}">
+                        <Border x:Name="MainBorder"
+                            BorderThickness="0,1,0,1"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}">
+                            <Border x:Name="Overlay"
+                                Background="{StaticResource RibbonMenuItemOverlayBackgroundBrushKey}">
+                                <TextBlock x:Name="Text" 
+                                    Margin="2,1,2,1"
+                                    Text="{TemplateBinding Label}" />
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+#ifdef Net45
+                            <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                            <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                                <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+                                <Setter TargetName="Overlay" Property="Background" Value="Transparent" />
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                                <Setter TargetName="MainBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Label" Value="{x:Null}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ribbon:RibbonSeparator}">
+                                <Grid x:Name="Grid" Margin="1" SnapsToDevicePixels="True">
+                                    <Grid.ColumnDefinitions>
+                                        <!--Icon or check mark column-->
+                                        <ColumnDefinition Width="Auto"
+                                                          SharedSizeGroup="MenuItemIconColumnGroup" />
+                                        <!--Header column-->
+                                        <ColumnDefinition Width="*" 
+                                                          MinWidth="44"/>
+                                        <!--Submenu arrow column-->
+                                        <ColumnDefinition Width="22" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Line x:Name="Line"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          X1="0"
+                                          Y1="0"
+                                          X2="1"
+                                          Y2="0"
+                                          Stroke="{TemplateBinding BorderBrush}"
+                                          StrokeThickness="1"
+                                          Stretch="Fill" />
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+#ifdef Net45
+                                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                                        <Setter TargetName="Line" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                                        <Setter TargetName="Grid" Property="Margin"  Value="0" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Style.Resources>
+    <Setter Property="BorderBrush" Value="{StaticResource RibbonApplicationMenuBorderBrushKey}" />
+    <Setter Property="Background" Value="{StaticResource RibbonApplicationMenuBorderBrushKey}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Height" Value="23" />
+    <Setter Property="Width" Value="56" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ribbon:RibbonApplicationMenu}">
+                <Grid Focusable="False"
+                      x:Name="OuterGrid"
+                      SnapsToDevicePixels="True">
+                    <ribbon:RibbonToggleButton x:Name="PART_ToggleButton" 
+                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                               Background="{TemplateBinding Background}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"                                              
+                                               Style="{StaticResource RibbonApplicationMenuToggleButtonStyleKey}"
+                                               FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                                               Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"
+                                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"
+                                               ToolTipTitle="{TemplateBinding ToolTipTitle}"
+                                               ToolTipDescription="{TemplateBinding ToolTipDescription}"
+                                               ToolTipImageSource="{TemplateBinding ToolTipImageSource}"
+                                               ToolTipFooterTitle="{TemplateBinding ToolTipFooterTitle}"
+                                               ToolTipFooterDescription="{TemplateBinding ToolTipFooterDescription}"
+                                               ToolTipFooterImageSource="{TemplateBinding ToolTipFooterImageSource}"
+                                               SmallImageSource="{TemplateBinding SmallImageSource}"
+                                               IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen, Mode=TwoWay}" />
+                    <Border x:Name="CenterBorder" 
+                            Height="1"
+                            Margin="-1,-1,0,0"
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Top" />
+                    <Popup x:Name="PART_Popup"
+                           IsOpen="{Binding  RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen}"
+                           PlacementTarget="{Binding ElementName=CenterBorder}"
+                           AllowsTransparency="True"
+                           PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                           SnapsToDevicePixels="True">
+                        <classic:SystemDropShadowChrome x:Name="Shadow" Color="Transparent" controls:KeyTipService.IsKeyTipScope="True"
+#ifdef Net40
+                            RenderOptions.ClearTypeHint="Enabled"
+#endif
+                        >
+                            <Grid>
+                                <Border x:Name="PopupBorder"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonMenuButton}}, Path=Ribbon.BorderBrush}"
+                                        Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonMenuButton}}, Path=Ribbon.Background}"
+                                        BorderThickness="1"
+                                        CornerRadius="2">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="24" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Border x:Name="HeaderBorder"
+                                                BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonMenuButton}}, Path=Ribbon.BorderBrush}"
+                                                Background="Transparent"
+                                                BorderThickness="0,0,0,1"
+                                                CornerRadius="2,2,0,0" />
+                                        <Border x:Name="HeaderOverlayBorder"
+                                                BorderBrush="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}"
+                                                Background="{StaticResource RibbonApplicationMenuMouseOverBackgroundBrushKey}"
+                                                BorderThickness="0,0,0,1"
+                                                CornerRadius="2,2,0,0" />
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="2" />
+                                                <ColumnDefinition Width="300" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border x:Name="MainPaneBorder"
+                                                    Background="{StaticResource RibbonApplicationMenuBackgroundBrushKey}">
+                                                <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                    <ScrollViewer x:Name="PART_SubMenuScrollViewer"
+                                                                  Grid.Row="1"
+                                                                  CanContentScroll="True"
+                                                                  Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+#ifdef Net40
+                                                        <Grid RenderOptions.ClearTypeHint="Enabled">    
+                                                            <Canvas x:Name="BackgroundCanvas"
+                                                                    Height="0"
+                                                                    Width="0"
+                                                                    HorizontalAlignment="Left"
+                                                                    VerticalAlignment="Top">
+                                                                <Rectangle x:Name="OpaqueRect"
+                                                                    Height="{Binding ElementName=MainPaneBorder,Path=ActualHeight}"
+                                                                    Width="{Binding ElementName=MainPaneBorder,Path=ActualWidth}"
+                                                                    Fill="{Binding ElementName=MainPaneBorder,Path=Background}"
+                                                                    RadiusX="2"
+                                                                    RadiusY="2" />
+                                                                <Rectangle x:Name="OverlayRect"
+                                                                    Height="{Binding ElementName=MainPaneBorder,Path=ActualHeight}"
+                                                                    Width="{Binding ElementName=MainPaneBorder,Path=ActualWidth}"
+                                                                    Fill="{Binding ElementName=MainPaneBorder,Path=Background}"
+                                                                    RadiusX="2"
+                                                                    RadiusY="2" />
+                                                            </Canvas>
+#endif
+                                                            <ItemsPresenter x:Name="ItemsPresenter"
+                                                                    Grid.IsSharedSizeScope="True" />
+#ifdef Net40
+                                                        </Grid>
+#endif
+                                                    </ScrollViewer>
+                                                    <Border Name="ResizeControl"
+                                                            Grid.Row="2"
+                                                            Visibility="Collapsed"
+                                                            Background="{StaticResource ResizeGripperBackgroundBrush}" 
+                                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Ribbon.BorderBrush}"
+                                                            BorderThickness="0,1,0,0">
+                                                        <Thumb x:Name="PART_ResizeThumb"  
+                                                               Style="{StaticResource BottomRightCornerGripperStyle}"/>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                            <Border x:Name="PART_SubmenuPlaceholder"
+                                                    Height="{Binding ElementName=MainPaneBorder,Path=ActualHeight}"
+                                                    Grid.Column="2"
+                                                    Background="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}">
+                                                <ContentPresenter x:Name="PART_AuxiliaryPaneContentPresenter" 
+                                                                  ContentSource="AuxiliaryPaneContent"
+                                                                  ContentTemplate="{TemplateBinding AuxiliaryPaneContentTemplate}"
+                                                                  ContentTemplateSelector="{TemplateBinding AuxiliaryPaneContentTemplateSelector}" />
+                                            </Border>
+                                            <Border x:Name="VerticalBorder"
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Left"
+                                                    Background="White"
+                                                    Width="2"
+                                                    BorderThickness="1,0,0,0"
+                                                    BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonMenuButton}}, Path=Ribbon.BorderBrush}" />
+                                            <Border x:Name="VerticalOverlayBorder"
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Left"
+                                                    Background="Transparent"
+                                                    Width="2"
+                                                    BorderThickness="1,0,0,0"
+                                                    BorderBrush="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}" />
+                                        </Grid>
+
+                                        <Border x:Name="FooterBorder"
+                                                Grid.Row="2"
+                                                BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type ribbon:RibbonMenuButton}}, Path=Ribbon.BorderBrush}"
+                                                Background="Transparent"
+                                                BorderThickness="0,1,0,0"
+                                                CornerRadius="0,0,2,2">
+                                            <Border x:Name="FooterBackgroundOverlayBorder"
+                                                    BorderBrush="Transparent"
+                                                    Background="{StaticResource RibbonApplicationMenuFooterPaneOverlayBackgroundBrushKey}"
+                                                    CornerRadius="0,0,2,2">
+                                                <ContentPresenter x:Name="PART_FooterPaneContentPresenter" 
+                                                                  Margin="2"
+                                                                  MinHeight="12"
+                                                                  ContentSource="FooterPaneContent"
+                                                                  ContentTemplate="{TemplateBinding FooterPaneContentTemplate}"
+                                                                  ContentTemplateSelector="{TemplateBinding FooterPaneContentTemplateSelector}" />
+                                            </Border>
+                                        </Border>
+                                        <Border x:Name="FooterOverlayBorder"
+                                                VerticalAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
+                                                BorderBrush="{StaticResource RibbonButtonMouseOverInnerBorderBrushKey}"
+                                                Background="Transparent"
+                                                BorderThickness="0,1,0,0"
+                                                CornerRadius="0,0,2,2" />
+                                        </Grid>
+                                </Border>
+                                <Canvas>
+                                    <ribbon:RibbonToggleButton x:Name="PART_PopupToggleButton"
+                                                               AutomationProperties.Name="{Binding  RelativeSource={RelativeSource TemplatedParent}, Path=(AutomationProperties.Name)}"
+                                                               Canvas.Top="-24"
+                                                               Canvas.Left="3"
+                                                               IsChecked="{Binding  RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen}"
+                                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                                               Background="{TemplateBinding Background}"
+                                                               BorderThickness="{TemplateBinding BorderThickness}"                                              
+                                                               Style="{StaticResource RibbonApplicationMenuToggleButtonStyleKey}"
+                                                               Focusable="False"
+                                                               Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"
+                                                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}" />
+                                </Canvas>
+                            </Grid>
+                        </classic:SystemDropShadowChrome>
+                    </Popup>
+
+                </Grid>
+
+                <ControlTemplate.Triggers>
+#ifdef Net40
+                    <Trigger SourceName="PART_SubMenuScrollViewer"
+                             Property="ScrollViewer.CanContentScroll"
+                             Value="false">
+                        <Setter TargetName="OpaqueRect" 
+                                Property="Canvas.Top" 
+                                Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=VerticalOffset}" />
+                        <Setter TargetName="OpaqueRect" 
+                                Property="Canvas.Left" 
+                                Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=HorizontalOffset}" />
+                        <Setter TargetName="OverlayRect" 
+                                Property="Canvas.Top" 
+                                Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=VerticalOffset}" />
+                        <Setter TargetName="OverlayRect" 
+                                Property="Canvas.Left" 
+                                Value="{Binding ElementName=PART_SubMenuScrollViewer, Path=HorizontalOffset}" />
+                    </Trigger>
+#endif
+                    <Trigger Property="HasGallery" Value="True">
+                        <Setter TargetName="PART_SubMenuScrollViewer" Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                        <Setter TargetName="PART_SubMenuScrollViewer" Property="VerticalScrollBarVisibility" Value="Disabled" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="CanUserResizeHorizontally" Value="true"/>
+                            <Condition Property="CanUserResizeVertically" Value="true"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="ResizeControl" Property="Visibility" Value="Visible" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="CanUserResizeHorizontally" Value="false"/>
+                            <Condition Property="CanUserResizeVertically" Value="true"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="ResizeControl" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="PART_ResizeThumb" Property="Style" Value="{StaticResource VerticalGripperStyle}" />
+                    </MultiTrigger>
+                    <Trigger Property="IsDropDownPositionedAbove" Value="true">
+                        <Setter TargetName="ResizeControl" Property="Grid.Row" Value="0" />
+                        <Setter TargetName="ResizeControl" Property="BorderThickness" Value="0,0,0,1" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsDropDownPositionedAbove" Value="true" />
+                            <Condition Property="CanUserResizeHorizontally" Value="true"/>
+                            <Condition Property="CanUserResizeVertically" Value="true"/>
+                        </MultiTrigger.Conditions>
+                        <Setter TargetName="PART_ResizeThumb" Property="Style" Value="{StaticResource TopRightCornerGripperStyle}" />
+                    </MultiTrigger>
+                     <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow" Value="True">
+                        <Setter TargetName="Shadow" Property="Margin" Value="0,0,5,5" />
+                        <Setter TargetName="Shadow" Property="Color"  Value="{StaticResource RibbonShadowColorKey}" />
+                    </Trigger>
+
+                    <Trigger SourceName="PART_Popup" Property="Popup.IsOpen" Value="False">
+                        <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+                    </Trigger>
+                    
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+#ifdef Net40
+                        <Setter TargetName="BackgroundCanvas" Property="Visibility" Value="Collapsed" />
+#endif
+                        <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+                        <Setter TargetName="Shadow" Property="Color" Value="Transparent" />
+                        <Setter TargetName="OuterGrid" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="PopupBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="PopupBorder" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                        <Setter TargetName="PopupBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="HeaderBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="HeaderOverlayBorder" Property="BorderBrush" Value="Transparent" />
+                        <Setter TargetName="HeaderOverlayBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="HeaderOverlayBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="MainPaneBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="PART_SubmenuPlaceholder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="VerticalBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" />
+                        <Setter TargetName="VerticalBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="VerticalOverlayBorder" Property="BorderBrush" Value="Transparent" />
+                        <Setter TargetName="FooterBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="FooterBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="FooterOverlayBorder" Property="BorderBrush" Value="Transparent" />
+                        <Setter TargetName="FooterOverlayBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="FooterBackgroundOverlayBorder" Property="Background" Value="Transparent" />
+                        <Setter TargetName="FooterBackgroundOverlayBorder" Property="CornerRadius" Value="0" />
+                        <Setter TargetName="ResizeControl" Property="BorderBrush"  Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter TargetName="ResizeControl" Property="Background"  Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
+                    </DataTrigger>
+
+                 </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+       <Trigger Property="IsDropDownOpen" Value="True">
+            <Setter Property="ToolTipService.IsEnabled" Value="False" />
+        </Trigger>
+    </Style.Triggers>
+</Style>

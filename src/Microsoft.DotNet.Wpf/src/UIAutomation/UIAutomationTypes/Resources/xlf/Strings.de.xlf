@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en" target-language="de" original="../Strings.resx">
     <body>
@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeCustom">
         <source>custom</source>
-        <target state="translated">benutzerdefiniert</target>
+        <target state="translated">Benutzerdefiniert</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeDataGrid">
@@ -74,12 +74,12 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeHyperlink">
         <source>hyperlink</source>
-        <target state="translated">Link</target>
+        <target state="translated">hyperlink</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeImage">
         <source>image</source>
-        <target state="translated">Bild</target>
+        <target state="translated">image</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeListItem">
@@ -139,12 +139,12 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeSpinner">
         <source>spinner</source>
-        <target state="translated">Netz</target>
+        <target state="translated">Drehfeld</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeSplitButton">
         <source>split button</source>
-        <target state="translated">Trennschaltfläche</target>
+        <target state="translated">Unterteilte Schaltfläche</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeStatusBar">

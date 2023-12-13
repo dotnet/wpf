@@ -19,7 +19,6 @@ using System.Text;
 using System.Reflection;
 using System.Globalization;
 using System.ComponentModel;
-using System.Security.Permissions;
 using System.Security.Cryptography;
 
 using System.CodeDom;
@@ -51,7 +50,7 @@ namespace MS.Internal
         public string TargetPath
         {
             get { return _targetPath; }
-            set { _targetPath = value; }
+            set { _targetPath = value;}
         }
 
         /// <summary>
@@ -137,6 +136,9 @@ namespace MS.Internal
             set { _xamlDebuggingInformation = value; }
         }
 
+        ///<summary>Gets or sets the checksum algorithm used in code-behind.</summary>
+        public string ChecksumAlgorithm { get; set; }
+
         /// <summary>
         /// Get/Sets the TaskFileService which is used for abstracting simple
         /// files services provided by CLR and the HostObject (IVsMsBuildTaskFileManager)
@@ -154,6 +156,11 @@ namespace MS.Internal
         {
             set { _taskLogger = value; }
         }
+
+        /// <summary>
+        /// Support custom IntermediateOutputPath and BaseIntermediateOutputPath outside the project path
+        /// </summary>
+        internal bool SupportCustomOutputPaths { get; set; } = false;
 
         // If the xaml has local references, then it could have internal element & properties
         // but there is no way to determine this until MCPass2. Yet, GeneratedInternalTypeHelper,
@@ -218,8 +225,7 @@ namespace MS.Internal
             {
                 // Don't rely on next compilation to reset as that would unnecessarily delay
                 // garbage collection of this static data that cannot be reused by the next compilation.
-                // Also, the ReflectionHelper must be disposed now to release file locks on assemblies.
-                XamlTypeMapper.Clear();
+                // Also, the ReflectionHelper must be disposed now to release file locks on assemblies
                 KnownTypes.Clear();
                 ReflectionHelper.Dispose();
             }
@@ -227,90 +233,78 @@ namespace MS.Internal
 
         private void CompileCore(CompilationUnit cu)
         {
-            try
+            AssemblyName = cu.AssemblyName;
+            InitCompilerState();
+
+            DefaultNamespace = cu.DefaultNamespace;
+            _compilationUnitSourcePath = cu.SourcePath;
+
+            if (!IsLanguageSupported(cu.Language))
             {
-                AssemblyName = cu.AssemblyName;
-                InitCompilerState();
+                OnError(new Exception(SR.Format(SR.UnknownLanguage, cu.Language)));
+                return;
+            }
 
-                DefaultNamespace = cu.DefaultNamespace;
-                _compilationUnitSourcePath = cu.SourcePath;
+            if (!cu.Pass2)
+            {
+                EnsureLanguageSourceExtension();
+            }
 
-                if (!IsLanguageSupported(cu.Language))
+            if (cu.ApplicationFile.Path != null && cu.ApplicationFile.Path.Length > 0)
+            {
+                Initialize(cu.ApplicationFile);
+                ApplicationFile = SourceFileInfo.RelativeSourceFilePath;
+
+                if (ApplicationFile.Length > 0)
                 {
-                    OnError(new Exception(SR.Get(SRID.UnknownLanguage, cu.Language)));
-                    return;
-                }
+                    IsCompilingEntryPointClass = true;
+                    _Compile(cu.ApplicationFile.Path, cu.Pass2);
+                    IsCompilingEntryPointClass = false;
 
-                if (!cu.Pass2)
-                {
-                    EnsureLanguageSourceExtension();
-                }
-
-                if (cu.ApplicationFile.Path != null && cu.ApplicationFile.Path.Length > 0)
-                {
-                    Initialize(cu.ApplicationFile);
-                    ApplicationFile = SourceFileInfo.RelativeSourceFilePath;
-
-                    if (ApplicationFile.Length > 0)
-                    {
-                        IsCompilingEntryPointClass = true;
-                        _Compile(cu.ApplicationFile.Path, cu.Pass2);
-                        IsCompilingEntryPointClass = false;
-
-                        if (_pendingLocalFiles != null && _pendingLocalFiles.Count == 1)
-                        {
-                            Debug.Assert(!cu.Pass2);
-                            _localXamlApplication = (string)_pendingLocalFiles[0];
-                            _pendingLocalFiles.Clear();
-                        }
-                    }
-                }
-
-                if (cu.FileList != null)
-                {
-                    for (int i = 0; i < cu.FileList.Length; i++)
-                    {
-                        FileUnit sourceFile = cu.FileList[i];
-
-                        Initialize(sourceFile);
-                        if (SourceFileInfo.RelativeSourceFilePath.Length > 0)
-                        {
-                            _Compile(sourceFile.Path, cu.Pass2);
-                        }
-                    }
-
-                    if (_pendingLocalFiles != null && _pendingLocalFiles.Count > 0)
+                    if (_pendingLocalFiles != null && _pendingLocalFiles.Count == 1)
                     {
                         Debug.Assert(!cu.Pass2);
-                        _localXamlPages = (string[])_pendingLocalFiles.ToArray(typeof(string));
+                        _localXamlApplication = (string)_pendingLocalFiles[0];
                         _pendingLocalFiles.Clear();
                     }
                 }
+            }
 
-                if (!cu.Pass2 && ContentList != null && ContentList.Length > 0)
+            if (cu.FileList != null)
+            {
+                for (int i = 0; i < cu.FileList.Length; i++)
                 {
-                    GenerateLooseContentAttributes();
+                    FileUnit sourceFile = cu.FileList[i];
+
+                    Initialize(sourceFile);
+                    if (SourceFileInfo.RelativeSourceFilePath.Length > 0)
+                    {
+                        _Compile(sourceFile.Path, cu.Pass2);
+                    }
                 }
 
-                Debug.Assert(!cu.Pass2 || _pendingLocalFiles == null);
-                Debug.Assert(_pendingLocalFiles == null || _pendingLocalFiles.Count == 0);
-                _pendingLocalFiles = null;
-
-                if (cu.Pass2)
+                if (_pendingLocalFiles != null && _pendingLocalFiles.Count > 0)
                 {
-                    _localAssembly = null;
-                    _localXamlApplication = null;
-                    _localXamlPages = null;
+                    Debug.Assert(!cu.Pass2);
+                    _localXamlPages = (string[])_pendingLocalFiles.ToArray(typeof(string));
+                    _pendingLocalFiles.Clear();
                 }
             }
-            finally
-            {
 
-                if (s_hashAlgorithm != null)
-                {
-                    s_hashAlgorithm.Clear();
-                    s_hashAlgorithm = null;
-                }
+            if (!cu.Pass2 && ContentList != null && ContentList.Length > 0)
+            {
+                GenerateLooseContentAttributes();
+            }
+
+            Debug.Assert(!cu.Pass2 || _pendingLocalFiles == null);
+            Debug.Assert(_pendingLocalFiles == null || _pendingLocalFiles.Count == 0);
+            _pendingLocalFiles = null;
+
+            if (cu.Pass2)
+            {
+                _localAssembly = null;
+                _localXamlApplication = null;
+                _localXamlPages = null;
             }
         }
 
@@ -470,25 +464,25 @@ namespace MS.Internal
                 // Process the input file
                 if (sourceFile.Path == null || !SourceFileInfo.IsXamlFile)
                 {
-                    ThrowCompilerException(SRID.InvalidMarkupFile);
+                    ThrowCompilerException(nameof(SR.InvalidMarkupFile));
                 }
 
                 if (!TaskFileService.Exists(sourceFile.Path))
                 {
-                    ThrowCompilerException(SRID.FileNotFound, sourceFile.Path);
+                    ThrowCompilerException(nameof(SR.FileNotFound), sourceFile.Path);
                 }
 
                 // Prime the output directory
                 if (TargetPath.Length > 0)
                 {
-                    // check for ending '\'
-                    if (!TargetPath.EndsWith(ESCAPED_BACKSLASH, StringComparison.Ordinal))
+                    // check for ending Path.DirectorySeparatorChar
+                    if (!TargetPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                     {
-                        TargetPath += ESCAPED_BACKSLASH;
+                        TargetPath += Path.DirectorySeparatorChar;
                     }
                 }
 
-                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(ESCAPED_BACKSLASH, StringComparison.Ordinal);
+                int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
                 string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
 
                 // Create if not already exists
@@ -635,18 +629,15 @@ namespace MS.Internal
                     // } end namespace
                     CodeCompileUnit ccu = new CodeCompileUnit();
 
-                    // Use SHA1 if compat flag is set
-                    // generate pragma checksum data
-                    if (s_hashAlgorithm == null)
-                    {
-                        s_hashAlgorithm = SHA1.Create();
-                        s_hashGuid = s_hashSHA1Guid;
-                    }
+                    // generate pragma checksum data  
+                    Guid hashGuid = !string.IsNullOrEmpty(ChecksumAlgorithm) && ChecksumAlgorithm.Equals("SHA256", StringComparison.OrdinalIgnoreCase)
+                        ? s_hashSHA256Guid
+                        : s_hashSHA1Guid;
 
                     CodeChecksumPragma csPragma = new CodeChecksumPragma();
                     csPragma.FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML;
-                    csPragma.ChecksumAlgorithmId = s_hashGuid;
-                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, s_hashGuid);
+                    csPragma.ChecksumAlgorithmId = hashGuid;
+                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid);
                     ccu.StartDirectives.Add(csPragma);
 
                     if (cnsImports != _ccRoot.CodeNS)
@@ -712,8 +703,8 @@ namespace MS.Internal
 
                 if (sourceFileInfo.IsXamlFile)
                 {
-                    int fileExtIndex = file.Path.LastIndexOf(DOT, StringComparison.Ordinal);
-
+                    int fileExtIndex = file.Path.LastIndexOf(DOTCHAR);
+                    
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
             }
@@ -727,31 +718,31 @@ namespace MS.Internal
 
         static void ThrowCompilerException(string id)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value)
         {
-            string message = SR.Get(id, value);
+            string message = SR.Format(SR.GetResourceString(id), value);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value1, string value2)
         {
-            string message = SR.Get(id, value1, value2);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2);
             ThrowCompilerExceptionImpl(message);
         }
 
         internal static void ThrowCompilerException(string id, string value1, string value2, string value3)
         {
-            string message = SR.Get(id, value1, value2, value3);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3);
             ThrowCompilerExceptionImpl(message);
         }
 
         static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
         {
-            string message = SR.Get(id, value1, value2, value3, value4);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3, value4);
             ThrowCompilerExceptionImpl(message);
         }
 
@@ -763,6 +754,13 @@ namespace MS.Internal
 
         internal void OnError(Exception e)
         {
+            // Don't treat an AssemblyVersion parsing error as a XamlParseException.
+            // Throw it back to the task execution.
+            if(e is AssemblyVersionParseException)
+            {
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
+            }
+
             if (Error != null)
             {
                 XamlParseException xe = e as XamlParseException;
@@ -796,7 +794,7 @@ namespace MS.Internal
                     {
                         if (isProcessingCodeTag)
                         {
-                            ThrowCompilerException(SRID.DefnTagsCannotBeNested, DefinitionNSPrefix, LocalName, xmlReader.LocalName);
+                            ThrowCompilerException(nameof(SR.DefnTagsCannotBeNested), DefinitionNSPrefix, LocalName, xmlReader.LocalName);
                         }
 
                         switch (LocalName)
@@ -805,7 +803,7 @@ namespace MS.Internal
                                 isProcessingCodeTag = true;
                                 if (!IsCodeNeeded)
                                 {
-                                    ThrowCompilerException(SRID.MissingClassDefinitionForCodeTag,
+                                    ThrowCompilerException(nameof(SR.MissingClassDefinitionForCodeTag),
                                                            _ccRoot.ElementName,
                                                            DefinitionNSPrefix,
                                                            SourceFileInfo.RelativeSourceFilePath + XAML);
@@ -818,7 +816,7 @@ namespace MS.Internal
                                     if (!attributeNamespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI) ||
                                         !xmlReader.LocalName.Equals(XamlReaderHelper.DefinitionUid))
                                     {
-                                        ThrowCompilerException(SRID.AttributeNotAllowedOnCodeTag,
+                                        ThrowCompilerException(nameof(SR.AttributeNotAllowedOnCodeTag),
                                                                xmlReader.Name,
                                                                DefinitionNSPrefix,
                                                                CODETAG);
@@ -830,7 +828,7 @@ namespace MS.Internal
                                 break;
 
                             default:
-                                ThrowCompilerException(SRID.UnknownDefinitionTag, DefinitionNSPrefix, LocalName);
+                                ThrowCompilerException(nameof(SR.UnknownDefinitionTag), DefinitionNSPrefix, LocalName);
                                 break;
                         }
 
@@ -869,7 +867,7 @@ namespace MS.Internal
                         }
                         else
                         {
-                            ThrowCompilerException(SRID.IllegalCDataTextScoping, DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
+                            ThrowCompilerException(nameof(SR.IllegalCDataTextScoping), DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
                         }
 
                         break;
@@ -1355,7 +1353,7 @@ namespace MS.Internal
 
             if (asmMissing.Length > 0)
             {
-                string message = SR.Get(SRID.WinFXAssemblyMissing, asmMissing);
+                string message = SR.Format(SR.WinFXAssemblyMissing, asmMissing);
                 ApplicationException aeAssemblyMissing = new ApplicationException(message);
                 throw aeAssemblyMissing;
             }
@@ -1409,7 +1407,7 @@ namespace MS.Internal
         internal void ValidateFullSubClassName(ref string subClassFullName)
         {
             bool isValid = false;
-            int index = subClassFullName.LastIndexOf(DOT, StringComparison.Ordinal);
+            int index = subClassFullName.LastIndexOf(DOTCHAR);
 
             if (index > 0)
             {
@@ -1438,7 +1436,7 @@ namespace MS.Internal
             if (className.Length > 0)
             {
                 // Split the Namespace
-                int index = className.LastIndexOf(DOT, StringComparison.Ordinal);
+                int index = className.LastIndexOf(DOTCHAR);
 
                 if (index > 0)
                 {
@@ -1457,7 +1455,7 @@ namespace MS.Internal
         {
             if (typeArgs.Length == 0)
             {
-                ThrowCompilerException(SRID.UnknownGenericType,
+                ThrowCompilerException(nameof(SR.UnknownGenericType),
                                        DefinitionNSPrefix,
                                        typeArgs,
                                        typeName);
@@ -1466,7 +1464,7 @@ namespace MS.Internal
             StringBuilder sb = new StringBuilder(typeName, 20);
             sb.Append(GENERIC_DELIMITER);
 
-            _typeArgsList = typeArgs.Split(new Char[] { COMMA });
+            _typeArgsList = typeArgs.Split(COMMA);
 
             sb.Append(_typeArgsList.Length);
 
@@ -1526,7 +1524,7 @@ namespace MS.Internal
         {
             if (ns.Length > 0)
             {
-                string[] nsParts = ns.Split(new char[] { DOTCHAR });
+                string[] nsParts = ns.Split(DOTCHAR);
 
                 foreach (string nsPart in nsParts)
                 {
@@ -1534,7 +1532,7 @@ namespace MS.Internal
                     {
                         if (shouldThrow)
                         {
-                            ThrowCompilerException(SRID.InvalidDefaultCLRNamespace, nsPart, ns);
+                            ThrowCompilerException(nameof(SR.InvalidDefaultCLRNamespace), nsPart, ns);
                         }
                         else
                         {
@@ -1551,17 +1549,17 @@ namespace MS.Internal
         {
             if (!IsCodeNeeded)
             {
-                ThrowCompilerException(SRID.MissingClassDefinitionForEvent, _ccRoot.ElementName, DefinitionNSPrefix, eventName);
+                ThrowCompilerException(nameof(SR.MissingClassDefinitionForEvent), _ccRoot.ElementName, DefinitionNSPrefix, eventName);
             }
 
             string handler = handlerName.Trim();
             if (handler.Length == 0)
             {
-                ThrowCompilerException(SRID.EmptyEventStringNotAllowed, eventName, handlerName);
+                ThrowCompilerException(nameof(SR.EmptyEventStringNotAllowed), eventName, handlerName);
             }
             else if (!NameValidationHelper.IsValidIdentifierName(handler))
             {
-                ThrowCompilerException(SRID.InvalidEventHandlerName, eventName, handlerName);
+                ThrowCompilerException(nameof(SR.InvalidEventHandlerName), eventName, handlerName);
             }
         }
 
@@ -1569,19 +1567,64 @@ namespace MS.Internal
         {
             get
             {
-                string parentFolderPrefix = string.Empty;
-                if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                if (SupportCustomOutputPaths)
                 {
-                    string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
-                    relPath += SourceFileInfo.RelativeSourceFilePath;
-                    string[] dirs = relPath.Split(new Char[] { ESCAPED_BACKSLASH_CHAR });
-                    for (int i = 1; i < dirs.Length; i++)
-                    {
-                        parentFolderPrefix += PARENTFOLDER;
-                    }
-                }
+                    //  During code generation, ParentFolderPrefix returns the relative path from a .g.cs file to its markup file.
+                    //
+                    //      One example is generated #pragmas: #pragma checksum "..\..\..\..\Views\ExportNotificationView.xaml"  
+                    //
+                    //  The path information for a markup file is represented in SourceFileInfo: 
+                    //
+                    //      SourceFileInfo.OriginalFilePath: "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //      SourceFileInfo.TargetPath: "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\"
+                    //      SourceFileInfo.RelativeFilePath: "Views\\ExportNotificationView"
+                    //      SourceFileInfo.SourcePath = "c:\\greenshot\\src\\Greenshot.Addons\\"
+                    //
+                    //  The path of the generated code file associated with this markup file is:
+                    //
+                    //      "c:\greenshot\src\Greenshot.Addons\obj\Debug\net6.0-windows\Views\ExportNotificationView.g.cs"
+                    //
+                    //  The markup file path is in SourceFileInfo.OriginalFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
+                    //
+                    //  The relative path calculation must take in to account both the TargetPath and the RelativeFilePath:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\" [SourceFileInfo.TargetPath]      
+                    //      "Views\\ExportNotificationView" [SourceFileInfo.RelativeTargetPath]
+                    //
+                    //   TargetPath concatenated with the directory portion of the RelativeTargetPath is the location to the .g.cs file:
+                    //
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\Views"
+                    //      
+                    string pathOfRelativeSourceFilePath = System.IO.Path.GetDirectoryName(SourceFileInfo.RelativeSourceFilePath);
 
-                return parentFolderPrefix;
+                    // Return the parent folder of the target file with a trailing DirectorySeparatorChar.  
+                    // Return a relative path if possible.  Else, return an absolute path.
+                    #if NETFX 
+                    string path = PathInternal.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
+#else
+                    string path = Path.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath);
+#endif
+                    // Always return a path with a trailing DirectorySeparatorChar.  
+                    return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+                }
+                else
+                {
+                    string parentFolderPrefix = string.Empty;
+                    if (TargetPath.StartsWith(SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        string relPath = TargetPath.Substring(SourceFileInfo.SourcePath.Length);
+                        relPath += SourceFileInfo.RelativeSourceFilePath;
+                        string[] dirs = relPath.Split(Path.DirectorySeparatorChar);
+                        for (int i = 1; i < dirs.Length; i++)
+                        {
+                            parentFolderPrefix += PARENTFOLDER;
+                        }
+                    }
+
+                    return parentFolderPrefix;
+                } 
             }
         }
 
@@ -1601,7 +1644,7 @@ namespace MS.Internal
         {
             if (!IsCodeNeeded)
             {
-                ThrowCompilerException(SRID.MissingClassWithFieldModifier, DefinitionNSPrefix);
+                ThrowCompilerException(nameof(SR.MissingClassWithFieldModifier), DefinitionNSPrefix);
             }
 
             if (_private.Length == 0)
@@ -1630,7 +1673,7 @@ namespace MS.Internal
 
                 if (!converted)
                 {
-                    ThrowCompilerException(SRID.UnknownFieldModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                    ThrowCompilerException(nameof(SR.UnknownFieldModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
                 }
             }
 
@@ -1662,7 +1705,7 @@ namespace MS.Internal
             }
             else
             {
-                ThrowCompilerException(SRID.UnknownFieldModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                ThrowCompilerException(nameof(SR.UnknownFieldModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
             }
 
             return MemberAttributes.Assembly;
@@ -1695,7 +1738,7 @@ namespace MS.Internal
 
                     if (!converted)
                     {
-                        ThrowCompilerException(SRID.UnknownClassModifier, MarkupCompiler.DefinitionNSPrefix, modifier, _language);
+                        ThrowCompilerException(nameof(SR.UnknownClassModifier), MarkupCompiler.DefinitionNSPrefix, modifier, _language);
                     }
                 }
 
@@ -1871,7 +1914,7 @@ namespace MS.Internal
             FieldInfo fiEvent = miEvent.DeclaringType.GetField(eventName + EVENT, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             if (fiEvent == null || fiEvent.FieldType != KnownTypes.Types[(int)KnownElements.RoutedEvent])
             {
-                ThrowCompilerException(SRID.RoutedEventNotRegistered, miEvent.DeclaringType.FullName, eventName, eventHandler);
+                ThrowCompilerException(nameof(SR.RoutedEventNotRegistered), miEvent.DeclaringType.FullName, eventName, eventHandler);
             }
 
             CodeTypeReferenceExpression ctreEvent = new CodeTypeReferenceExpression(miEvent.DeclaringType.FullName);
@@ -1952,7 +1995,7 @@ namespace MS.Internal
             else
             {
                 string eventTargetName = eventTarget != null ? eventTarget.FullName : cc.LocalElementFullName;
-                ThrowCompilerException(SRID.UnknownEventAttribute, mei.eventName, mei.eventHandler, eventTargetName);
+                ThrowCompilerException(nameof(SR.UnknownEventAttribute), mei.eventName, mei.eventHandler, eventTargetName);
             }
 
             // When x:SubClass is used, event handlers can be specified in a code-behind file, under this sub class.
@@ -2156,7 +2199,7 @@ namespace MS.Internal
                             linePosition,
                             0,
                             0,
-                            SRID.NamedResDictItemWarning,
+                            nameof(SR.NamedResDictItemWarning),
                             ((CodeContext)_codeContexts.Peek()).ElementType.FullName,
                             name
                         );
@@ -2230,7 +2273,7 @@ namespace MS.Internal
 
                         if (error)
                         {
-                            ThrowCompilerException(SRID.InvalidTypeName,
+                            ThrowCompilerException(nameof(SR.InvalidTypeName),
                                                    MarkupCompiler.DefinitionNSPrefix,
                                                    typeArgs,
                                                    _typeArgsList[i].Trim(),
@@ -2267,7 +2310,7 @@ namespace MS.Internal
 
                     // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                     genericName = t.FullName;
-                    int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                    int bang = genericName.IndexOf(GENERIC_DELIMITER);
                     if (bang > 0)
                     {
                         genericName = genericName.Substring(0, bang);
@@ -2310,7 +2353,7 @@ namespace MS.Internal
 
                 // NOTE: Remove when CodeDom is fixed to understand mangled generic names.
                 string genericName = t.Namespace + DOT + t.Name;
-                int bang = genericName.IndexOf(GENERIC_DELIMITER, StringComparison.Ordinal);
+                int bang = genericName.IndexOf(GENERIC_DELIMITER);
                 if (bang > 0)
                 {
                     genericName = genericName.Substring(0, bang);
@@ -2333,7 +2376,7 @@ namespace MS.Internal
                         {
                             if (refType == null || !refType.IsGenericType || !refType.IsGenericTypeDefinition || typeArgsList == null)
                             {
-                                ThrowCompilerException(SRID.ContainingTagNotGeneric, eventName, ctrConstructedType.BaseType, refTypeFullName);
+                                ThrowCompilerException(nameof(SR.ContainingTagNotGeneric), eventName, ctrConstructedType.BaseType, refTypeFullName);
                             }
 
                             refTypeParams = refType.GetGenericArguments();
@@ -2363,7 +2406,7 @@ namespace MS.Internal
                         // no match!
                         if (ctrTypeArg == null)
                         {
-                            ThrowCompilerException(SRID.MatchingTypeArgsNotFoundInRefType,
+                            ThrowCompilerException(nameof(SR.MatchingTypeArgsNotFoundInRefType),
                                                    eventName,
                                                    ctrConstructedType.BaseType,
                                                    typeParam.FullName,
@@ -2462,12 +2505,12 @@ namespace MS.Internal
                     baseClassName = baseClassFullName.Substring(dotIndex + 1);
                     if (!IsValidClassName(baseClassName))
                     {
-                        ThrowCompilerException(SRID.InvalidBaseClassName, baseClassName);
+                        ThrowCompilerException(nameof(SR.InvalidBaseClassName), baseClassName);
                     }
                     string bns = baseClassFullName.Substring(0, dotIndex);
                     if (!IsValidCLRNamespace(bns, false))
                     {
-                        ThrowCompilerException(SRID.InvalidBaseClassNamespace, bns, baseClassName);
+                        ThrowCompilerException(nameof(SR.InvalidBaseClassNamespace), bns, baseClassName);
                     }
                 }
             }
@@ -2597,8 +2640,31 @@ namespace MS.Internal
 
             string uriPart = string.Empty;
 
-            string version = String.IsNullOrEmpty(AssemblyVersion) ? String.Empty : COMPONENT_DELIMITER + VER + AssemblyVersion;
-            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) ? String.Empty : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
+            // Attempt to parse out the AssemblyVersion if it exists.  This validates that we can either use an empty version string (wildcards exist)
+            // or we can utilize the passed in string (valid parse).
+            if (!VersionHelper.TryParseAssemblyVersion(AssemblyVersion, allowWildcard: true, version: out _, out bool hasWildcard)
+                && !string.IsNullOrWhiteSpace(AssemblyVersion))
+            {
+                throw new AssemblyVersionParseException(SR.Format(SR.InvalidAssemblyVersion, AssemblyVersion));
+            }
+
+            // In .NET Framework (non-SDK-style projects), the process to use a wildcard AssemblyVersion is to do the following:
+            //   - Modify the AssemblyVersionAttribute to a wildcard string (e.g. "1.2.*")
+            //   - Set Deterministic to false in the build
+            // During MarkupCompilation, the AssemblyVersion property would not be set and WPF would correctly generate a resource URI without a version.
+            // In .NET Core/5 (or .NET Framework SDK-style projects), the same process can be used if GenerateAssemblyVersionAttribute is set to false in 
+            // the build.  However, this isn't really the idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the 
+            // AssemblyVersion build property.  If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use 
+            // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have 
+            // when the developer sets a wildcard version string via AssemblyVersionAttribute and use an empty string.
+            string version = hasWildcard || String.IsNullOrEmpty(AssemblyVersion)
+                ? String.Empty 
+                : COMPONENT_DELIMITER + VER + AssemblyVersion;
+
+            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) 
+                ? String.Empty 
+                : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
+            
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 
             //
@@ -2910,22 +2976,22 @@ namespace MS.Internal
                 }
                 else if (subClassFullName.Length > 0)
                 {
-                    ThrowCompilerException(SRID.MissingClassWithSubClass, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassWithSubClass), DefinitionNSPrefix);
                 }
                 else if (modifier.Length > 0)
                 {
-                    ThrowCompilerException(SRID.MissingClassWithModifier, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassWithModifier), DefinitionNSPrefix);
                 }
                 else if (_typeArgsList != null)
                 {
                     string rootClassName = elementType != null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal)+1);
-                    ThrowCompilerException(SRID.MissingClassDefinitionForTypeArgs, rootClassName, DefinitionNSPrefix);
+                    ThrowCompilerException(nameof(SR.MissingClassDefinitionForTypeArgs), rootClassName, DefinitionNSPrefix);
                 }
 
                 // Don't allow subclassing further from markup-subclasses with content
                 if (elementType != null && KnownTypes.Types[(int)KnownElements.IComponentConnector].IsAssignableFrom(elementType))
                 {
-                    ThrowCompilerException(SRID.SubSubClassingNotAllowed, elementType.FullName);
+                    ThrowCompilerException(nameof(SR.SubSubClassingNotAllowed), elementType.FullName);
                 }
 
                 cc = GenerateSubClass(ref className, ref modifier, elementType, baseClassFullName);
@@ -3463,7 +3529,7 @@ namespace MS.Internal
         private const string            ANONYMOUS_ENTRYCLASS_PREFIX = "Generated";
         private const string            DEFINITION_PREFIX = "x";
         private const char              COMMA = ',';
-        private const string            GENERIC_DELIMITER = "`";
+        private const char              GENERIC_DELIMITER = '`';
         internal const char             DOTCHAR = '.';
         internal const string           DOT = ".";
         internal const string           CODETAG = "Code";
@@ -3516,16 +3582,11 @@ namespace MS.Internal
         private const string            VER = "V";
         private const string            COMPONENT = "component";
         private const char              COMPONENT_DELIMITER = ';';
-        private const string            ESCAPED_BACKSLASH = "\\";
-        private const char              ESCAPED_BACKSLASH_CHAR = '\\';
         private const string            FORWARDSLASH = "/";
         private const string            URISCHEME_PACK = "pack";
         private const string            PARENTFOLDER = @"..\";
 
         // For generating pragma checksum data
-        private static HashAlgorithm s_hashAlgorithm;
-        private static Guid s_hashGuid;
-
         private static readonly Guid s_hashSHA256Guid = new Guid(0x8829d00f, 0x11b8, 0x4213, 0x87, 0x8b, 0x77, 0x0e, 0x85, 0x97, 0xac, 0x16);
         private static readonly Guid s_hashSHA1Guid = new Guid(0xff1816ec, 0xaa5e, 0x4d10, 0x87, 0xf7, 0x6f, 0x49, 0x63, 0x83, 0x34, 0x60);
 

@@ -13,7 +13,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Documents;
-using System.Security.Permissions;
 using System.Collections;               // For ArrayList
 using System.Collections.Generic;
 using System.Collections.Specialized;   // HybridDictionary
@@ -81,12 +80,12 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
                 }
 
                 if (_text != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrameworkElementFactoryCannotAddText));
+                    throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
 
                 if ( value != null ) // We allow null up until Seal
@@ -97,7 +96,7 @@ namespace System.Windows
                         !typeof(Visual3D).IsAssignableFrom(value))
                     {
                         #pragma warning suppress 6506 // value is obviously not null
-                        throw new ArgumentException(SR.Get(SRID.MustBeFrameworkOr3DDerived, value.Name));
+                        throw new ArgumentException(SR.Format(SR.MustBeFrameworkOr3DDerived, value.Name));
                     }
                 }
 
@@ -126,18 +125,15 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
                 }
 
                 if (_firstChild != null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.FrameworkElementFactoryCannotAddText));
+                    throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
 
-                if ( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 _text = value;
             }
@@ -153,11 +149,11 @@ namespace System.Windows
             {
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
                 }
                 if (value == string.Empty)
                 {
-                    throw new ArgumentException(SR.Get(SRID.NameNotEmptyString));
+                    throw new ArgumentException(SR.NameNotEmptyString);
                 }
 
                 _childName = value;
@@ -173,22 +169,19 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (child == null)
-            {
-                throw new ArgumentNullException("child");
-            }
+            ArgumentNullException.ThrowIfNull(child);
 
             if (child._parent != null)
             {
-                throw new ArgumentException(SR.Get(SRID.FrameworkElementFactoryAlreadyParented));
+                throw new ArgumentException(SR.FrameworkElementFactoryAlreadyParented);
             }
 
             if (_text != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FrameworkElementFactoryCannotAddText));
+                throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
             }
 
             // Build tree of factories
@@ -215,26 +208,23 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             // Value needs to be valid for the DP, or Binding/MultiBinding/PriorityBinding.
             //  (They all have MarkupExtension, which we don't actually support, see above check.)
 
             if (!dp.IsValidValue(value) && !(value is MarkupExtension) && !(value is DeferredReference))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
             }
 
             // Styling the logical tree is not supported
             if (StyleHelper.IsStylingLogicalTree(dp, value))
             {
-                throw new NotSupportedException(SR.Get(SRID.ModifyingLogicalTreeViaStylesNotImplemented, value, "FrameworkElementFactory.SetValue"));
+                throw new NotSupportedException(SR.Format(SR.ModifyingLogicalTreeViaStylesNotImplemented, value, "FrameworkElementFactory.SetValue"));
             }
 
             #pragma warning suppress 6506 // dp.DefaultMetadata is never null
@@ -242,7 +232,7 @@ namespace System.Windows
             {
                 // Read-only properties will not be consulting FrameworkElementFactory for value.
                 //  Rather than silently do nothing, throw error.
-                throw new ArgumentException(SR.Get(SRID.ReadOnlyPropertyNotAllowed, dp.Name, GetType().Name));
+                throw new ArgumentException(SR.Format(SR.ReadOnlyPropertyNotAllowed, dp.Name, GetType().Name));
             }
 
             ResourceReferenceExpression resourceExpression = value as ResourceReferenceExpression;
@@ -297,13 +287,10 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             UpdatePropertyValueList( dp, PropertyValueType.Resource, name );
         }
@@ -325,22 +312,15 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
-
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (handler.GetType() != routedEvent.HandlerType)
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             if (_eventHandlersStore == null)
@@ -368,22 +348,15 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "FrameworkElementFactory"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "FrameworkElementFactory"));
             }
 
-            if (routedEvent == null)
-            {
-                throw new ArgumentNullException("routedEvent");
-            }
-
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(routedEvent);
+            ArgumentNullException.ThrowIfNull(handler);
 
             if (handler.GetType() != routedEvent.HandlerType)
             {
-                throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
+                throw new ArgumentException(SR.HandlerTypeIllegal);
             }
 
             if (_eventHandlersStore != null)
@@ -548,11 +521,12 @@ namespace System.Windows
             // Scan for record
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if (PropertyValues[i].ValueType == PropertyValueType.Set &&
-                    PropertyValues[i].Property == dp)
+                var propertyValue = PropertyValues[i];
+                if (propertyValue.ValueType == PropertyValueType.Set &&
+                    propertyValue.Property == dp)
                 {
                     // Found a Set record, return the value
-                    return PropertyValues[i].ValueInternal;
+                    return propertyValue.ValueInternal;
                 }
             }
 
@@ -578,7 +552,7 @@ namespace System.Windows
         {
             if (_type == null && _text == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NullTypeIllegal));
+                throw new InvalidOperationException(SR.NullTypeIllegal);
             }
 
             if (_firstChild != null)
@@ -587,7 +561,7 @@ namespace System.Windows
                 // children can be added to the logical tree
                 if (!typeof(IAddChild).IsAssignableFrom(_type))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMustImplementIAddChild, _type.Name));
+                    throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild, _type.Name));
                 }
             }
 
@@ -598,7 +572,7 @@ namespace System.Windows
                 // ChildName provided
                 if (!IsChildNameValid(_childName))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ChildNameNamePatternReserved, _childName));
+                    throw new InvalidOperationException(SR.Format(SR.ChildNameNamePatternReserved, _childName));
                 }
 
                 _childName = String.Intern(_childName);
@@ -684,7 +658,7 @@ namespace System.Windows
 
                 if (addChildParent == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMustImplementIAddChild,
+                    throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild,
                                                          parent.GetType().Name));
                 }
                 else
@@ -841,10 +815,11 @@ namespace System.Windows
 
                     for (int i = 0; i < PropertyValues.Count; i++)
                     {
-                        if (PropertyValues[i].ValueType == PropertyValueType.Set)
+                        var propertyValue = PropertyValues[i];
+                        if (propertyValue.ValueType == PropertyValueType.Set)
                         {
                             // Get the value out of the table.
-                            object o = PropertyValues[i].ValueInternal;
+                            object o = propertyValue.ValueInternal;
 
 
                             // If it's a freezable that can't be frozen, it's probably not sharable,
@@ -861,22 +836,19 @@ namespace System.Windows
                             if (me != null)
                             {
                                 ProvideValueServiceProvider serviceProvider = new ProvideValueServiceProvider();
-                                serviceProvider.SetData( treeNodeVisual3D, PropertyValues[i].Property );
+                                serviceProvider.SetData( treeNodeVisual3D, propertyValue.Property );
                                 o = me.ProvideValue( serviceProvider );
                             }
 
                             // Finally, set the value onto the object.
-                            treeNodeVisual3D.SetValue(PropertyValues[i].Property, o);
+                            treeNodeVisual3D.SetValue(propertyValue.Property, o);
 
                         }
-
                         else
                         {
                             // We don't support resource references, triggers, etc within the 3D content
-                            throw new NotSupportedException(SR.Get(SRID.Template3DValueOnly, PropertyValues[i].Property) );
-
+                            throw new NotSupportedException(SR.Format(SR.Template3DValueOnly, propertyValue.Property) );
                         }
-
                     }
                 }
 
@@ -941,7 +913,7 @@ namespace System.Windows
 
                 if (!(parent is IAddChild))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMustImplementIAddChild,
+                    throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild,
                                                          parent.GetType().Name));
                 }
 
@@ -959,7 +931,7 @@ namespace System.Windows
 
             if (!_sealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.FrameworkElementFactoryMustBeSealed));
+                throw new InvalidOperationException(SR.FrameworkElementFactoryMustBeSealed);
             }
 
             // Create the object.
@@ -987,7 +959,7 @@ namespace System.Windows
                 iAddChild = frameworkObject.DO as IAddChild;
                 if (iAddChild == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMustImplementIAddChild,
+                    throw new InvalidOperationException(SR.Format(SR.TypeMustImplementIAddChild,
                                                          frameworkObject.DO.GetType().Name));
                 }
             }
@@ -1147,7 +1119,7 @@ namespace System.Windows
                 IEnumerator childEnumerator = logicalParent.LogicalChildren;
                 if (childEnumerator != null && childEnumerator.MoveNext())
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.AlreadyHasLogicalChildren,
+                    throw new InvalidOperationException(SR.Format(SR.AlreadyHasLogicalChildren,
                                                           parent.GetType().Name));
                 }
             }
@@ -1155,7 +1127,7 @@ namespace System.Windows
             IAddChild  addChildParent = parent as IAddChild;
             if (addChildParent == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.CannotHookupFCERoot,
+                throw new InvalidOperationException(SR.Format(SR.CannotHookupFCERoot,
                                                           type.Name));
             }
             else
@@ -1219,7 +1191,7 @@ namespace System.Windows
                     // if desired source for Content doesn't exist, report an error
                     if (dpContent == null && o != DependencyProperty.UnsetValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.MissingContentSource, prefix, targetType));
+                        throw new InvalidOperationException(SR.Format(SR.MissingContentSource, prefix, targetType));
                     }
 
                     // auto-alias the Content property
@@ -1277,10 +1249,11 @@ namespace System.Windows
         {
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if (PropertyValues[i].Property == dp &&
-                    (PropertyValues[i].ValueType == PropertyValueType.Set ||
-                     PropertyValues[i].ValueType == PropertyValueType.Resource ||
-                     PropertyValues[i].ValueType == PropertyValueType.TemplateBinding))
+                var propertyValue = PropertyValues[i];
+                if (propertyValue.Property == dp &&
+                    (propertyValue.ValueType == PropertyValueType.Set ||
+                     propertyValue.ValueType == PropertyValueType.Resource ||
+                     propertyValue.ValueType == PropertyValueType.TemplateBinding))
                 {
                     return true;
                 }
@@ -1321,7 +1294,7 @@ namespace System.Windows
         private FrameworkElementFactory _nextSibling;
 
         // Instance-based synchronization
-        private object _synchronized = new object();
+        private readonly object _synchronized = new object();
     }
 }
 

@@ -137,7 +137,7 @@ namespace System.Windows.Controls.Primitives
                     contentSize.Height = _rowHeight * _numRows;
     
                     // If we don't have constraint or content wisth is smaller than constraint width then size to content
-                    if (double.IsInfinity(contentSize.Width) || DoubleUtil.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
+                    if (double.IsInfinity(contentSize.Width) || double.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
                         contentSize.Width = maxRowWidth;
                     else
                         contentSize.Width = constraint.Width;
@@ -235,7 +235,7 @@ namespace System.Windows.Controls.Primitives
             Dock tabAlignment = TabStripPlacement;
             bool isMultiRow = _numRows > 1;
             int activeRow = 0;
-            int[] solution = new int[0];
+            int[] solution = Array.Empty<int>();
             Vector childOffset = new Vector();
             double[] headerSize = GetHeadersSize();
 
@@ -435,7 +435,7 @@ namespace System.Windows.Controls.Primitives
 
             // If everithing fit in 1 row then exit (no separators needed)
             if (currentRowIndex == 0)
-                return new int[0];
+                return Array.Empty<int>();
 
             // Add the last row
             rowWidth[currentRowIndex] = currentRowWidth;

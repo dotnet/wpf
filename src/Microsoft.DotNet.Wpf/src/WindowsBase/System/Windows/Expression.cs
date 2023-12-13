@@ -11,7 +11,6 @@ namespace System.Windows
     /// <summary>
     ///     Modes for expressions
     /// </summary>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     internal enum ExpressionMode
     {
         /// <summary>
@@ -73,7 +72,6 @@ namespace System.Windows
     ///
     ///     An Expression can be set per-instance per-property via SetValue.
     /// </remarks>
-    //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
     [TypeConverter(typeof(ExpressionConverter))]
     public class Expression
     {
@@ -112,7 +110,7 @@ namespace System.Windows
                     break;
 
                 default:
-                    throw new ArgumentException(SR.Get(SRID.UnknownExpressionMode));
+                    throw new ArgumentException(SR.UnknownExpressionMode);
             }
         }
 
@@ -202,19 +200,15 @@ namespace System.Windows
         /// <param name="newSources">New sources</param>
         internal void ChangeSources(DependencyObject d, DependencyProperty dp, DependencySource[] newSources)
         {
-            if (d == null && !ForwardsInvalidations)
+            if (!ForwardsInvalidations)
             {
-                throw new ArgumentNullException("d");
-            }
-
-            if (dp == null && !ForwardsInvalidations)
-            {
-                throw new ArgumentNullException("dp");
+                ArgumentNullException.ThrowIfNull(d);
+                ArgumentNullException.ThrowIfNull(dp);
             }
 
             if (Shareable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ShareableExpressionsCannotChangeSources));
+                throw new InvalidOperationException(SR.ShareableExpressionsCannotChangeSources);
             }
 
             DependencyObject.ValidateSources(d, newSources, this);

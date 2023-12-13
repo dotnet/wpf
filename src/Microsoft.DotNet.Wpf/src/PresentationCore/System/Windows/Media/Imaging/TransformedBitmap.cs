@@ -16,7 +16,6 @@ using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
@@ -25,7 +24,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Imaging
 {
@@ -51,19 +49,16 @@ namespace System.Windows.Media.Imaging
         public TransformedBitmap(BitmapSource source, Transform newTransform)
             : base(true) // Use base class virtuals
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException("source");
-            }
+            ArgumentNullException.ThrowIfNull(source);
 
             if (newTransform == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Transform"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
             }
 
             if (!CheckTransform(newTransform))
             {
-                throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOrthogonal));
+                throw new InvalidOperationException(SR.Image_OnlyOrthogonal);
             }
 
             _bitmapInit.BeginInit();
@@ -89,11 +84,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Prepare the bitmap to accept initialize paramters.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - eventually accesses critical resources
-        /// PublicOK - All inputs verified
-        /// </SecurityNote>
-        [SecurityCritical ]
         public void EndInit()
         {
             WritePreamble();
@@ -182,10 +172,6 @@ namespace System.Windows.Media.Imaging
         ///
         /// Create the unmanaged resources
         ///
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// </SecurityNote>
-        [SecurityCritical]
         internal override void FinalizeCreation()
         {
             _bitmapInit.EnsureInitializedComplete();
@@ -308,7 +294,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
                 }
                 return false;
             }
@@ -318,7 +304,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_NoArgument, "Transform"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
                 }
                 return false;
             }
@@ -327,7 +313,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Image_OnlyOrthogonal));
+                    throw new InvalidOperationException(SR.Image_OnlyOrthogonal);
                 }
                 return false;
             }

@@ -49,10 +49,7 @@ namespace System.Windows.Documents
         public Paragraph(Inline inline)
             : base()
         {
-            if (inline == null)
-            {
-                throw new ArgumentNullException("inline");
-            }
+            ArgumentNullException.ThrowIfNull(inline);
 
             this.Inlines.Add(inline);
         }

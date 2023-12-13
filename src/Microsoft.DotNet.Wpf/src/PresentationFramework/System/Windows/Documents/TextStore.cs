@@ -16,6 +16,8 @@ using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using MS.Internal;
 using System.Windows.Controls;
 using System.Windows.Markup;        // for XmlLanguage
@@ -26,7 +28,6 @@ using System.Windows.Interop;
 using System.Windows.Documents;
 using MS.Internal.Documents;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
@@ -80,24 +81,19 @@ namespace System.Windows.Documents
         #region ITextStoreACP
 
         // See msdn's ITextStoreACP documentation for a full description.
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.ReleaseComObject which LinkDemands
-        ///     TreatAsSafe: Can only release an existing sink, and only if a vaild new one is passed in
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void AdviseSink(ref Guid riid, object obj, UnsafeNativeMethods.AdviseFlags flags)
         {
             UnsafeNativeMethods.ITextStoreACPSink sink;
 
             if (riid != UnsafeNativeMethods.IID_ITextStoreACPSink)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CONNECT_E_CANNOTCONNECT), unchecked((int)0x80040202));
+                throw new COMException(SR.TextStore_CONNECT_E_CANNOTCONNECT, unchecked((int)0x80040202));
             }
 
             sink = obj as UnsafeNativeMethods.ITextStoreACPSink;
             if (sink == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_E_NOINTERFACE), unchecked((int)0x80004002));
+                throw new COMException(SR.TextStore_E_NOINTERFACE, unchecked((int)0x80004002));
             }
 
             // It's legal to replace existing sink.
@@ -115,16 +111,11 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - as this satisfies the LinkDemand from Marshal.ReleaseComObject().
-        /// TreatAsSafe - as the worst that would happen is NullReference exception when _sink is accessed.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void UnadviseSink(object obj)
         {
             if (obj != _sink)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CONNECT_E_NOCONNECTION), unchecked((int)0x80040200));
+                throw new COMException(SR.TextStore_CONNECT_E_NOCONNECTION, unchecked((int)0x80040200));
             }
 
             Marshal.ReleaseComObject(_sink);
@@ -139,10 +130,27 @@ namespace System.Windows.Documents
         public void RequestLock(UnsafeNativeMethods.LockFlags flags, out int hrSession)
         {
             if (!HasSink)
-                throw new COMException(SR.Get(SRID.TextStore_NoSink));
+                throw new COMException(SR.TextStore_NoSink);
 
             if (flags == 0)
-                throw new COMException(SR.Get(SRID.TextStore_BadLockFlags));
+                throw new COMException(SR.TextStore_BadLockFlags);
+
+            bool isReplayingIMEChanges =  (_replayingIMEChangeReentrancyCount > 0);
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BRequestLock,
+                                            "f:", flags,
+                                            "lf:", _lockFlags,
+                                            "icr:", _replayingIMEChangeReentrancyCount,
+                                            "ric:", isReplayingIMEChanges,
+                                            "tcr:", _textChangeReentrencyCount,
+                                            "paf:", _pendingAsyncLockFlags);
+                if (_replayingIMEChangeReentrancyCount != 0)
+                {
+                    IMECompositionTracer.Mark(new System.Diagnostics.StackTrace(true));
+                }
+            }
 
             if (_lockFlags != 0)
             {
@@ -155,53 +163,141 @@ namespace System.Windows.Documents
                     ((flags & UnsafeNativeMethods.LockFlags.TS_LF_WRITE) == 0) ||
                     ((flags & UnsafeNativeMethods.LockFlags.TS_LF_SYNC) == UnsafeNativeMethods.LockFlags.TS_LF_SYNC))
                 {
-                    throw new COMException(SR.Get(SRID.TextStore_ReentrantRequestLock));
+                    throw new COMException(SR.TextStore_ReentrantRequestLock);
                 }
 
-                _pendingWriteReq = true;
-                hrSession = UnsafeNativeMethods.TS_S_ASYNC;
+                if (!isReplayingIMEChanges)
+                {
+                    _pendingWriteReq = true;
+                    hrSession = UnsafeNativeMethods.TS_S_ASYNC;
+                }
+                else
+                {
+                    // the outer request must also have been made while replaying
+                    // IME changes.  We can't grant the write-lock until the
+                    // replay is done.  So use the defer mechanism, rather than
+                    // the _pendingWriteReq;
+                    hrSession = DeferLockRequest(flags);
+                }
             }
             else
             {
-                if (_textChangeReentrencyCount == 0)
+                if (isReplayingIMEChanges)
+                {
+                    // [DDVSO 1249925] Lock requests that arrive while replaying
+                    // IME changes should be deferred. These don't happen because
+                    // of direct communication with Cicero, but rather because raising
+                    // a public event causes messages to be pumped and Cicero's
+                    // message hook sees a WM_KEY* message and tries to act on it.
+                    // (For example, a 3rd-party TextBox listens to the TextChanged
+                    // event and calls an unrelated COM component, causing COM to
+                    // pump messages.)
+                    //    Granting such a request has several possible outcomes,
+                    // most of them bad:
+                    // A) The TextStore is in an inconsistent state.  GrantLock
+                    //      calls VerifyTextStoreConsistency, which calls FailFast.
+                    // B) The TextStore is consistent, the OnLockGranted callback
+                    //      succeeds, but it changes the text.  This change doesn't
+                    //      appear in the outer replay's undo/redo list, so when
+                    //      the replay is complete (SetFinalDocumentState) the
+                    //      call to VerifyTextStoreConsistency calls FailFast.
+                    //      [This is particularly difficult to diagnose because
+                    //      by the time FailFast occurs, all traces of the inner
+                    //      lock request are gone.  The crash dump doesn't help.]
+                    // C) The OnLockGranted callback succeeds and doesn't change
+                    //      the text.  This has no known bad consequences.
+                    // Of course, we can't know in advance if a Write request is
+                    // going to change the text - we can't distinguish B and C.
+                    //    To avoid these problems, defer the request.  If the
+                    // request was synchronous we'll simply ignore it;  this may
+                    // lead to other problems (unknown at this time), but it's
+                    // better than FailFast.
+                    hrSession = DeferLockRequest(flags);
+
+                    #if NEVER
+                    // An alternative is to grant synchronous requests that are
+                    // known not to be of type A or B, namely read-only requests
+                    // made when consistency has been restored.  But these might
+                    // trigger a layout update, which the existing code warns
+                    // against.  Deciding against this for now, but here's the
+                    // code:
+                    if (   (flags == (UnsafeNativeMethods.LockFlags.TS_LF_READ
+                                    | UnsafeNativeMethods.LockFlags.TS_LF_SYNC)
+                        && (_netCharCount == this.TextContainer.IMECharCount))
+                    {
+                        hrSession = GrantLockWorker(flags);
+                    }
+                    else
+                    {
+                        hrSession = DeferLockRequest(flags);
+                    }
+                    #endif
+                }
+                else if (_textChangeReentrencyCount != 0)
+                {
+                    // Inside a OnTextChanged notification we don't want to allow
+                    // even read-only locks, because that might trigger a layout update.
+                   hrSession = DeferLockRequest(flags);
+                }
+                else
                 {
                     // We can grant a synchronous lock.
                     hrSession = GrantLockWorker(flags);
                 }
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.ERequestLock,
+                                            "hr:", hrSession.ToString("X"),
+                                            "lf:", _lockFlags,
+                                            "icr:", _replayingIMEChangeReentrancyCount,
+                                            "tcr:", _textChangeReentrencyCount,
+                                            "paf:", _pendingAsyncLockFlags);
+            }
+        }
+
+        private int DeferLockRequest(UnsafeNativeMethods.LockFlags flags)
+        {
+            int hrSession;
+
+            if ((flags & UnsafeNativeMethods.LockFlags.TS_LF_SYNC) == 0)
+            {
+                if (_pendingAsyncLockFlags == 0)
+                {
+                    // No pending lock item in the queue, post one.
+                    _pendingAsyncLockFlags = flags;
+                    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(GrantLockHandler), null);
+                }
+                else if (((flags & UnsafeNativeMethods.LockFlags.TS_LF_READWRITE) & _pendingAsyncLockFlags) !=
+                         (flags & UnsafeNativeMethods.LockFlags.TS_LF_READWRITE))
+                {
+                    // There's a pending item in the queue, but we need to bump up
+                    // the privilege from read-only to write.
+                    _pendingAsyncLockFlags = flags;
+                }
                 else
                 {
-                    // We can't grant a synchornous lock -- we're inside a OnTextChanged notification.
-                    // We don't want to allow even read-only locks, because that might
-                    // trigger a layout update.
-                    if ((flags & UnsafeNativeMethods.LockFlags.TS_LF_SYNC) == 0)
-                    {
-                        if (_pendingAsyncLockFlags == 0)
-                        {
-                            // No pending lock item in the queue, post one.
-                            _pendingAsyncLockFlags = flags;
-                            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(GrantLockHandler), null);
-                        }
-                        else if (((flags & UnsafeNativeMethods.LockFlags.TS_LF_READWRITE) & _pendingAsyncLockFlags) !=
-                                 (flags & UnsafeNativeMethods.LockFlags.TS_LF_READWRITE))
-                        {
-                            // There's a pending item in the queue, but we need to bump up
-                            // the privilege from read-only to write.
-                            _pendingAsyncLockFlags = flags;
-                        }
-                        else
-                        {
-                            // There's already a pending queue item of sufficient privilege --
-                            // nothing to do.
-                        }
-                        hrSession = UnsafeNativeMethods.TS_S_ASYNC;
-                    }
-                    else
-                    {
-                        // Caller insists on a sync lock -- give up.
-                        hrSession = UnsafeNativeMethods.TS_E_SYNCHRONOUS;
-                    }
+                    // There's already a pending queue item of sufficient privilege --
+                    // nothing to do.
                 }
+                hrSession = UnsafeNativeMethods.TS_S_ASYNC;
             }
+            else
+            {
+                // Caller insists on a sync lock -- give up.
+                hrSession = UnsafeNativeMethods.TS_E_SYNCHRONOUS;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.DeferRequest,
+                                            "f:", flags,
+                                            "paf:", _pendingAsyncLockFlags,
+                                            "hr:", hrSession.ToString("X"));
+            }
+
+            return hrSession;
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -220,6 +316,12 @@ namespace System.Windows.Documents
 
             // This textstore supports Regions.
             status.staticFlags = UnsafeNativeMethods.StaticStatusFlags.TS_SS_REGIONS;
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetStatus,
+                                            status.dynamicFlags);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -242,6 +344,13 @@ namespace System.Windows.Documents
                 selection[0].style.ase = (this.TextSelection.MovingPosition.CompareTo(this.TextSelection.Start) == 0) ? UnsafeNativeMethods.TsActiveSelEnd.TS_AE_START : UnsafeNativeMethods.TsActiveSelEnd.TS_AE_END;
                 selection[0].style.interimChar = _interimSelection;
                 fetched = 1;
+
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetSelection,
+                                            selection[0].start, selection[0].end,
+                                            selection[0].style.ase, selection[0].style.interimChar);
+                }
             }
         }
 
@@ -253,6 +362,13 @@ namespace System.Windows.Documents
 
             if (count == 1)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.SetSelection,
+                                            selection[0].start, selection[0].end,
+                                            selection[0].style.ase, selection[0].style.interimChar);
+                }
+
                 GetNormalizedRange(selection[0].start, selection[0].end, out start, out end);
 
                 if (selection[0].start == selection[0].end)
@@ -352,6 +468,14 @@ namespace System.Windows.Documents
             }
 
             nextIndex = navigator.CharOffset;
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetText,
+                                            "text:", startIndex, endIndex, cchReq, charsCopied, new String(text, 0, charsCopied),
+                                            "runs:", cRunInfoReq, cRunInfoRcv,
+                                            "next:", nextIndex);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -359,7 +483,13 @@ namespace System.Windows.Documents
         {
             if (this.IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BSetText,
+                                            "text:", startIndex, endIndex, cch, new String(text, 0, cch));
             }
 
             ITextPointer start;
@@ -374,7 +504,7 @@ namespace System.Windows.Documents
 
             if (start == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             if (start.CompareTo(end) > 0)
@@ -385,7 +515,7 @@ namespace System.Windows.Documents
             string filteredText = FilterCompositionString(new string(text), start.GetOffsetToPosition(end)); // does NOT filter MaxLength.
             if (filteredText == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             // Openes a composition undo unit for the composition undo.
@@ -412,13 +542,19 @@ namespace System.Windows.Documents
                 // Closes compsotion undo unit with commit to add the composition undo unit into the undo stack.
                 CloseTextParentUndoUnit(unit, undoCloseAction);
             }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.ESetText,
+                                            "change:", change.start, change.oldEnd, change.newEnd);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
         public void GetFormattedText(int startIndex, int endIndex, out object obj)
         {
             obj = null;
-            throw new COMException(SR.Get(SRID.TextStore_E_NOTIMPL), unchecked((int)0x80004001));
+            throw new COMException(SR.TextStore_E_NOTIMPL, unchecked((int)0x80004001));
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -450,7 +586,7 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        public void QueryInsertEmbedded(ref Guid guidService, int formatEtc, out bool insertable)
+        public void QueryInsertEmbedded(ref Guid guidService, IntPtr formatEtc, out bool insertable)
         {
 #if true
             //
@@ -479,14 +615,14 @@ namespace System.Windows.Documents
         {
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             // Disable embedded object temporarily.
 #if ENABLE_INK_EMBEDDING
             if (!TextSelection.HasConcreteTextContainer)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+                throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
             }
 
             TextContainer container;
@@ -499,17 +635,17 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObject), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
 
             container = (TextContainer)this.TextContainer;
 
             startPosition = container.CreatePointerAtOffset(startIndex, LogicalDirection.Backward);
             endPosition = container.CreatePointerAtOffset(endIndex, LogicalDirection.Forward);
-             
+
             InsertEmbeddedAtRange(startPosition, endPosition, data, out change);
 #else
-            throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+            throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
 #endif
         }
 
@@ -530,7 +666,13 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BInsertTextAtSelection,
+                                            flags, new String(text, 0, cch));
             }
 
             //
@@ -574,7 +716,7 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(new string(text), range.Start.GetOffsetToPosition(range.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
 
                     // We still need to call ApplyTypingHeuristics, even though
@@ -649,6 +791,12 @@ namespace System.Windows.Documents
                 startIndex = selectionStartIndex;
                 endIndex = endNavigator.CharOffset;
             }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EInsertTextAtSelection,
+                                            "change:", change.start, change.oldEnd, change.newEnd);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -663,7 +811,7 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
 #if ENABLE_INK_EMBEDDING
@@ -671,12 +819,12 @@ namespace System.Windows.Documents
 
             if (IsReadOnly)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_READONLY), UnsafeNativeMethods.TS_E_READONLY);
+                throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
 
             if (!TextSelection.HasConcreteTextContainer)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+                throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
             }
 
             // The object must have IOldDataObject internface.
@@ -684,7 +832,7 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObject), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
             }
 
             // Do the insert.
@@ -699,7 +847,7 @@ namespace System.Windows.Documents
                 endIndex = this.TextSelection.End.Offset;
             }
 #else
-            throw new COMException(SR.Get(SRID.TextStore_TS_E_FORMAT), UnsafeNativeMethods.TS_E_FORMAT);
+            throw new COMException(SR.TextStore_TS_E_FORMAT, UnsafeNativeMethods.TS_E_FORMAT);
 #endif
         }
 
@@ -744,7 +892,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         public void RequestAttrsTransitioningAtPosition(int position, int count, Guid[] filterAttributes, UnsafeNativeMethods.AttributeFlags flags)
         {
-            throw new COMException(SR.Get(SRID.TextStore_E_NOTIMPL), unchecked((int)0x80004001));
+            throw new COMException(SR.TextStore_E_NOTIMPL, unchecked((int)0x80004001));
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -788,14 +936,8 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        ///     SecurityCritical: This code causes an elevation by calling into ScreentoClient
-        ///     TreatAsSafe: Demand for unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void GetACPFromPoint(int viewCookie, ref UnsafeNativeMethods.POINT tsfPoint, UnsafeNativeMethods.GetPositionFromPointFlags flags, out int positionCP)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             PresentationSource source;
             IWin32Window win32Window;
@@ -810,7 +952,7 @@ namespace System.Windows.Documents
             compositionTarget = source.CompositionTarget;
 
             // Convert to client coordinates.
-            SafeNativeMethods.ScreenToClient(new HandleRef(null,win32Window.Handle), point);
+            SafeNativeMethods.ScreenToClient(new HandleRef(null, win32Window.Handle), ref point);
 
             // Convert to mil measure units.
             milPoint = new Point(point.x, point.y);
@@ -827,7 +969,7 @@ namespace System.Windows.Documents
             // Validate layout information on TextView
             if (!view.Validate(milPoint))
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             // Do the hittest.
@@ -835,7 +977,7 @@ namespace System.Windows.Documents
             if (position == null)
             {
                 // GXFPF_ROUND_NEAREST was clear and we didn't hit a char.
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_INVALIDPOINT), UnsafeNativeMethods.TS_E_INVALIDPOINT);
+                throw new COMException(SR.TextStore_TS_E_INVALIDPOINT, UnsafeNativeMethods.TS_E_INVALIDPOINT);
             }
 
             positionCP = position.CharOffset;
@@ -863,14 +1005,17 @@ namespace System.Windows.Documents
                 if (rectTest.Contains(milPoint))
                     positionCP--;
             }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetACPFromPoint,
+                                            "pt:", tsfPoint.x, tsfPoint.y,
+                                            "fl:", flags,
+                                            "cp:", positionCP);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - elevates to query visual information
-        /// TreatAsSafe - only exposes coordinates, which are safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         void UnsafeNativeMethods.ITextStoreACP.GetTextExt(int viewCookie, int startIndex, int endIndex, out UnsafeNativeMethods.RECT rect, out bool clipped)
         {
             PresentationSource source;
@@ -897,8 +1042,14 @@ namespace System.Windows.Documents
             // in practice.
             if (_hasTextChangedInUpdateLayout)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetTextExt,
+                                                "text changed - bail");
+                }
+
                 _netCharCount = this.TextContainer.IMECharCount;
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             rect = new UnsafeNativeMethods.RECT();
@@ -913,7 +1064,7 @@ namespace System.Windows.Documents
             if (!this.TextView.IsValid)
             {
                 // We can not get the visual. Return TS_R_NOLAYOUT to the caller.
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             if (startIndex == endIndex)
@@ -979,14 +1130,17 @@ namespace System.Windows.Documents
             transform.TryTransform(milPointBottomRight, out milPointBottomRight);
 
             rect = TransformRootRectToScreenCoordinates(milPointTopLeft, milPointBottomRight, win32Window, source);
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.GetTextExt,
+                                            startIndex, endIndex,
+                                            rect.left, rect.top, rect.right, rect.bottom,
+                                            clipped);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        ///     Critical: This code accceses PresentationSource to retrieve CompositionTarget
-        ///     TreatAsSafe: Both of the types are not exposed and the rect is ok to give out
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void GetScreenExt(int viewCookie, out UnsafeNativeMethods.RECT rect)
         {
             PresentationSource source;
@@ -1024,11 +1178,6 @@ namespace System.Windows.Documents
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - elevates and access protected information (hwnd and
-        ///            source), then hands it out (hwnd)!
-        /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITextStoreACP.GetWnd(int viewCookie, out IntPtr hwnd)
         {
             hwnd = IntPtr.Zero;
@@ -1046,10 +1195,6 @@ namespace System.Windows.Documents
         #region ITfThreadFocusSink
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - manipulates focus
-        /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITfThreadFocusSink.OnSetThreadFocus()
         {
             if (!IsTextEditorValid)
@@ -1080,15 +1225,6 @@ namespace System.Windows.Documents
         #region ITfContextOwnerCompositionSink
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code. This starts a text composition
-        /// and in doing so extracts the inputmanager which is a critical resource.
-        /// It gets this from the Inputmanager.UnsecureCurrent call.
-        /// TreatAsSafe - doesn't return critical information, all parameters are typesafe.
-        /// The location where the input manager is stored is critical and its
-        /// usage is tracked
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void OnStartComposition(UnsafeNativeMethods.ITfCompositionView view, out bool ok)
         {
             // Disallow multiple compositions.
@@ -1096,6 +1232,11 @@ namespace System.Windows.Documents
             {
                 ok = false;
                 return;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnStartComposition);
             }
 
             ITextPointer start;
@@ -1112,7 +1253,7 @@ namespace System.Windows.Documents
             int startOffsetBefore = start.Offset;
             int endOffsetBefore = end.Offset;
             _lastCompositionText = TextRangeBase.GetTextInternal(start, end);
-            
+
             if (_previousCompositionStartOffset != -1)
             {
                 startOffsetBefore = _previousCompositionStartOffset;
@@ -1125,11 +1266,11 @@ namespace System.Windows.Documents
                     TextElement startElement = (TextElement)((TextPointer)start).Parent;
                     TextElement endElement = (TextElement)((TextPointer)end).Parent;
                     TextElement commonAncestor = TextElement.GetCommonAncestor(startElement, endElement);
-                    
+
                     int originalIMECharCount = this.TextContainer.IMECharCount;
                     TextRange range = new TextRange(start, end);
                     string unmergedText = range.Text;
-                    
+
                     if (commonAncestor is Run)
                     {
                         // A single Run needs to be handled differently from the cases below since the
@@ -1152,7 +1293,7 @@ namespace System.Windows.Documents
                         // Force any merges now by replacing the content with a single
                         // Run, before we start caching character offsets.
 
-                        this.TextEditor.SetText(range, unmergedText, InputLanguageManager.Current.CurrentInputLanguage);                      
+                        this.TextEditor.SetText(range, unmergedText, InputLanguageManager.Current.CurrentInputLanguage);
                     }
                     // It is crucial that from the point of view of the IME the document
                     // has not changed.  That means the plain text of the content we just
@@ -1161,7 +1302,7 @@ namespace System.Windows.Documents
                     Invariant.Assert(originalIMECharCount == this.TextContainer.IMECharCount);
                 }
             }
-            
+
             // Add the composition message into the composition message list.
             // This composition message list will be handled all together after we release the lock.
             this.CompositionEventList.Add(new CompositionEventRecord(CompositionStage.StartComposition, startOffsetBefore, endOffsetBefore, _lastCompositionText));
@@ -1175,15 +1316,21 @@ namespace System.Windows.Documents
             BreakTypingSequence(end);
 
             ok = true;
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnStartComposition);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetRange)
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnUpdateComposition(UnsafeNativeMethods.ITfCompositionView view, UnsafeNativeMethods.ITfRange rangeNew)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnUpdateComposition);
+            }
+
             // If UiScope has a ToolTip and it is open, any keyboard/mouse activity should close the tooltip.
             this.TextEditor.CloseToolTip();
 
@@ -1228,7 +1375,7 @@ namespace System.Windows.Documents
                 CompositionEventRecord previousRecord = (this.CompositionEventList.Count == 0) ? null : this.CompositionEventList[this.CompositionEventList.Count - 1];
 
                 if (_lastCompositionText == null ||
-                    String.CompareOrdinal(compositionText, _lastCompositionText) != 0)
+                    !string.Equals(compositionText, _lastCompositionText, StringComparison.Ordinal))
                 {
                     // Add the new update event.
                     this.CompositionEventList.Add(record);
@@ -1241,15 +1388,21 @@ namespace System.Windows.Documents
 
             // Composition event is completed, so new composition undo unit will be opened.
             BreakTypingSequence(oldEnd);
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnUpdateComposition);
+            }
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetRange)
-        /// </SecurityNote>
-        [SecurityCritical]
         public void OnEndComposition(UnsafeNativeMethods.ITfCompositionView view)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnEndComposition);
+            }
+
             Invariant.Assert(_isComposing);
             Invariant.Assert(_previousCompositionStartOffset != -1);
 
@@ -1287,6 +1440,11 @@ namespace System.Windows.Documents
             }
 
             BreakTypingSequence(end);
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnEndComposition);
+            }
         }
 
         #endregion ITfContextOwnerCompositionSink
@@ -1300,10 +1458,6 @@ namespace System.Windows.Documents
         #region ITfTextEditSink
 
         // See msdn's ITextStoreACP documentation for a full description.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, exposes raw input
-        /// </SecurityNote>
-        [SecurityCritical]
         void UnsafeNativeMethods.ITfTextEditSink.OnEndEdit(UnsafeNativeMethods.ITfContext context, int ecReadOnly, UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             // Call text service's property OnEndEdit.
@@ -1325,12 +1479,6 @@ namespace System.Windows.Documents
 
         // Transitory Document has been updated.
         // This is the notification of the changes of the result string and the composition string.
-        /// <SecurityNote>
-        /// Critical - Calls critical method (StringFromITfRange), commits that range to the document
-        /// TreatAsSafe - all parameters are typesafe and are validated, elevated data (the string)
-        ///               is passed from one highly trusted entity to another.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void OnTransitoryExtensionUpdated(UnsafeNativeMethods.ITfContext context, int ecReadOnly, UnsafeNativeMethods.ITfRange rangeResult, UnsafeNativeMethods.ITfRange rangeComposition, out bool fDeleteResultRange)
         {
             fDeleteResultRange = true;
@@ -1372,7 +1520,7 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(result, TextSelection.Start.GetOffsetToPosition(TextSelection.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
                     }
 
                     this.TextEditor.SetText(TextSelection, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
@@ -1392,11 +1540,6 @@ namespace System.Windows.Documents
         #region ITfMouseTrackerACP
 
         // new mouse sink is registered.
-        /// <SecurityNote>
-        ///   Critical : Accepts critical arguments of type ITfRangeACP and ITfMouseSink
-        ///   Safe     : Performs no operations on critical types
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         public int AdviceMouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, out int dwCookie)
         {
             if (_mouseSinks == null)
@@ -1482,11 +1625,6 @@ namespace System.Windows.Documents
         #region Internal Methods
 
         // Called by the TextEditor when the document should go live.
-        /// <SecurityNote>
-        /// Critical - calls critical code (RegisterTextStore)
-        /// TreatAsSafe - adds this textstore to the list of textstores, a safe operation
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnAttach()
         {
             _netCharCount = this.TextContainer.IMECharCount;
@@ -1499,14 +1637,14 @@ namespace System.Windows.Documents
             this.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
 
             _textservicesproperty = new TextServicesProperty(this);
+
+            if (IMECompositionTracer.IsEnabled)
+            {
+                IMECompositionTracer.ConfigureTracing(this);
+            }
         }
 
         // Called by the TextEditor when the document should shut down.
-        /// <SecurityNote>
-        /// Critical - calls critical code (UnregisterTextStore)
-        /// TreatAsSafe - removes this textstore from the list of textstores, a safe operation
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnDetach(bool finalizer)
         {
             // TextEditor could be GCed before.
@@ -1522,10 +1660,6 @@ namespace System.Windows.Documents
         }
 
         // Called when our TextEditor.TextContainer gets keyboard focus.
-        /// <SecurityNote>
-        ///     Critical: This code calls into SetFocus which is critical since it elevates
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void OnGotFocus()
         {
             //Re-enable this assert once known conditions are clearer.
@@ -1555,17 +1689,22 @@ namespace System.Windows.Documents
 
         // Called when the layout of the rendered TextContainer changes.
         // Called explicitly by the TextEditor.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - notifies IME that the layout changed, this is a safe notification
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnLayoutUpdated()
         {
             if (HasSink)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnLayoutChange);
+                }
+
                 // Sink Method call will be marshalled to the dispatcher thread since Ciecro is STA.
                 _sink.OnLayoutChange(UnsafeNativeMethods.TsLayoutCode.TS_LC_CHANGE, _viewCookie);
+
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnLayoutChange);
+                }
             }
 
             if (_textservicesproperty != null)
@@ -1587,7 +1726,6 @@ namespace System.Windows.Documents
         /// Critical - calls unmanaged code (_sink)
         /// TreatAsSafe - notifies of selection change, no potential data leak, this is safe
         /// </summary>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnSelectionChanged()
         {
             if (_compositionEventState == CompositionEventState.RaisingEvents)
@@ -1606,17 +1744,22 @@ namespace System.Windows.Documents
             }
             else if (HasSink)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnSelectionChange);
+                }
+
                 // Sink Method call will be marshalled to the dispatcher thread since Ciecro is STA.
                 _sink.OnSelectionChange();
+
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnSelectionChange);
+                }
             }
         }
 
         // Query or do reconvert for the current selection.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - all input comes from trusted sources (DocumentManager)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool QueryRangeOrReconvertSelection(bool fDoReconvert)
         {
             // If there is a composition that covers the current selection,
@@ -1665,10 +1808,6 @@ namespace System.Windows.Documents
         }
 
         // Query or do reconvert for the current selection.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code and return critical ITfCandidateList
-        /// </SecurityNote>
-        [SecurityCritical]
         internal UnsafeNativeMethods.ITfCandidateList GetReconversionCandidateList()
         {
             bool fReconvertable = false;
@@ -1692,10 +1831,6 @@ namespace System.Windows.Documents
         }
 
         // Query or do reconvert for the current selection.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code and return ITfFnReconversion
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool GetFnReconv(ITextPointer textStart, ITextPointer textEnd, out UnsafeNativeMethods.ITfFnReconversion funcReconv, out UnsafeNativeMethods.ITfRange rangeNew)
         {
             UnsafeNativeMethods.ITfContext context;
@@ -1760,11 +1895,6 @@ namespace System.Windows.Documents
         }
 
         // Completes the current composition, if any.
-        /// <SecurityNote>
-        ///     Critical:Calls CompleteCurrentComposition which has a link demand
-        ///     TreatAsSafe: Exposes no data, calls trusted code.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void CompleteComposition()
         {
             if (_isComposing)
@@ -1804,6 +1934,7 @@ namespace System.Windows.Documents
                 _makeLayoutChangeOnGotFocus = true;
             }
         }
+
         /// <summary>
         /// Inserts composition text into the document.
         /// Raises public text, selection changed events.
@@ -1818,6 +1949,11 @@ namespace System.Windows.Documents
                 // (by hooking a TextInput event), then we don't know what to do,
                 // so do nothing.
                 return;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BUpdateCompositionText);
             }
 
             _handledByTextStoreListener = true;
@@ -1895,18 +2031,27 @@ namespace System.Windows.Documents
                 // Set a flag so we can detect app changes.
                 _compositionModifiedByEventListener = isMaxLengthExceeded;
 
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BSelectionChangeEvent);
+                }
+
                 // PUBLIC EVENT:
                 this.TextSelection.EndChange();
 
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.ESelectionChangeEvent);
+                }
+
                 CloseTextParentUndoUnit(compositionUndoUnit, undoCloseAction);
             }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EUpdateCompositionText);
+            }
         }
-        /// <SecurityNote>
-        /// Critical - calls SecurityCritical InputManager.Current and InputManager.UnsecureCurrent.
-        /// TreatAsSafe - It doesn't return critical information, all parameters are typesafe.
-        /// The location where the input manager is stored is critical and the usage is tracked.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static FrameworkTextComposition CreateComposition(TextEditor editor, object owner)
         {
             FrameworkTextComposition composition;
@@ -1966,12 +2111,8 @@ namespace System.Windows.Documents
         }
 
         // The pointer to ITfDocumentMgr.
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfDocumentMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
         {
-            [SecurityCritical]
             get
             {
                 if (_documentmanager == null)
@@ -1982,7 +2123,6 @@ namespace System.Windows.Documents
                 return _documentmanager.Value;
             }
 
-            [SecurityCritical]
             set { _documentmanager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr>(value); }
         }
 
@@ -2032,12 +2172,8 @@ namespace System.Windows.Documents
             set { _transitoryExtensionSinkCookie = value; }
         }
 
-        /// <SecurityNote>
-        /// Critical - get: It calls GetSourceWnd, which is Critical. Since it specifies/ that the caller is trusted, NO underlying demands will be performed.
-        /// </SecurityNote>
         internal IntPtr CriticalSourceWnd
         {
-            [SecurityCritical]
             get
             {
                 bool callerIsTrusted = true;
@@ -2058,13 +2194,6 @@ namespace System.Windows.Documents
         // Tree change listener.  We need to forward any tree change events
         // to TSF.  But we must never forward any events that occur while
         // TSF holds a document lock.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - notifies the IME of text change within range, only potential
-        ///               attack here would be to get the IME to update more UI than
-        ///               needed
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnTextContainerChange(object sender, TextContainerChangeEventArgs args)
         {
             if (args.IMECharCount > 0 && (args.TextChange == TextChangeType.ContentAdded || args.TextChange == TextChangeType.ContentRemoved))
@@ -2075,6 +2204,11 @@ namespace System.Windows.Documents
             if (_compositionEventState == CompositionEventState.RaisingEvents)
             {
                 return;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnTextContainerChange);
             }
 
             Invariant.Assert(sender == this.TextContainer);
@@ -2124,6 +2258,11 @@ namespace System.Windows.Documents
                     ValidateChange(change);
                     // We can't call VerifyTextStoreConsistency() yet because more changes may be pending.
 
+                    if (IsTracing)
+                    {
+                        IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnTextChange);
+                    }
+
                     // Eventually we may want to support TS_TC_CORRECTION flag.
                     // This would let IMEs know not to throw out metadata on autocorrects.  It's optional.
                     try
@@ -2135,11 +2274,21 @@ namespace System.Windows.Documents
                     {
                         _textChangeReentrencyCount--;
                     }
+
+                    if (IsTracing)
+                    {
+                        IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnTextChange);
+                    }
                 }
             }
             else if (_isInUpdateLayout)
             {
                 _hasTextChangedInUpdateLayout = true;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnTextContainerChange);
             }
         }
 
@@ -2147,6 +2296,11 @@ namespace System.Windows.Documents
         // this callback, which grants the pending lock.
         private object GrantLockHandler(object o)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BGrantLockHandler);
+            }
+
             // _textservicesHost or _sink may have been released (set null) if cicero already shut down
             // before we got this callback.  In which case, there's no one
             // to talk to.
@@ -2155,22 +2309,27 @@ namespace System.Windows.Documents
                 GrantLockWorker(_pendingAsyncLockFlags);
             }
             _pendingAsyncLockFlags = 0;
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EGrantLockHandler);
+            }
             return null;
         }
 
-        /// <SecurityNote>
-        ///  Critical : Accesses critical type ITextStoreACPSink
-        ///  Safe     : Does not perform critical operations on type or expose security sensitive information
-        /// </SecurityNote>
         private bool HasSink
         {
-            [SecuritySafeCritical]
             get { return _sink != null; }
         }
 
         // Makes an OnLockGranted callback to cicero.
         private int GrantLockWorker(UnsafeNativeMethods.LockFlags flags)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BGrantLockWorker, flags);
+            }
+
             int hrSession;
 
             TextEditor textEditor = this.TextEditor;
@@ -2267,16 +2426,16 @@ namespace System.Windows.Documents
                 }
             }
 
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EGrantLockWorker, hrSession.ToString("X"));
+            }
+
             return hrSession;
         }
 
         // Grant cicero a lock, and do any house keeping around it.
         // Note cicero won't get tree change events from within the scope of this method.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// TreatAsSafe - notifies the sink of a lock grant, no other data is transfered.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private int GrantLock()
         {
             int hr;
@@ -2286,7 +2445,17 @@ namespace System.Windows.Documents
 
             VerifyTextStoreConsistency();
 
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnLockGranted);
+            }
+
             hr = _sink.OnLockGranted(_lockFlags);
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EOnLockGranted);
+            }
 
             VerifyTextStoreConsistency();
 
@@ -2454,11 +2623,6 @@ namespace System.Windows.Documents
 
         // Returns objects useful for talking to the underlying HWND.
         // Throws TS_E_NOLAYOUT if they are not available.
-        /// <SecurityNote>
-        ///     Critical: This code calls into PresentationSource.FromVisual to retrieve Source
-        ///               The source is also handed out to the callers
-        /// </SecurityNote>
-        [SecurityCritical]
         private void GetVisualInfo(out PresentationSource source, out IWin32Window win32Window, out ITextView view)
         {
             source = PresentationSource.CriticalFromVisual(RenderScope);
@@ -2466,18 +2630,13 @@ namespace System.Windows.Documents
 
             if (win32Window == null)
             {
-                throw new COMException(SR.Get(SRID.TextStore_TS_E_NOLAYOUT), UnsafeNativeMethods.TS_E_NOLAYOUT);
+                throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
             view = this.TextView;
         }
 
         // Transforms mil measure unit points to screen pixels.
-        ///<SecurityNote>
-        ///     Critical - calls UnsafeNativeMethods.ClientToScreen and asserts to get HWND
-        ///     TreatAsSafe - safe to expose screen coordinates
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static UnsafeNativeMethods.RECT TransformRootRectToScreenCoordinates(Point milPointTopLeft, Point milPointBottomRight, IWin32Window win32Window, PresentationSource source)
         {
             UnsafeNativeMethods.RECT rect;
@@ -2492,19 +2651,11 @@ namespace System.Windows.Documents
             milPointBottomRight = compositionTarget.TransformToDevice.Transform(milPointBottomRight);
 
             IntPtr hwnd = IntPtr.Zero;
-            new UIPermission(UIPermissionWindow.AllWindows).Assert(); // BlessedAssert
-            try
-            {
-                hwnd = win32Window.Handle;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            hwnd = win32Window.Handle;
 
             // Transform to screen coords.
-            clientPoint = new NativeMethods.POINT();
-            UnsafeNativeMethods.ClientToScreen(new HandleRef(null, hwnd), /* ref by interop */ clientPoint);
+            clientPoint = default;
+            UnsafeNativeMethods.ClientToScreen(new HandleRef(null, hwnd), ref clientPoint);
 
             rect.left = (int)(clientPoint.x + milPointTopLeft.X);
             rect.right = (int)(clientPoint.x + milPointBottomRight.X);
@@ -2515,14 +2666,8 @@ namespace System.Windows.Documents
 
 #if ENABLE_INK_EMBEDDING
         // Insert InkInteropObject at the position.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code to access the OLE data object
-        /// TreatAsSafe - has demand for unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void InsertEmbeddedAtPosition(TextPointer position, IComDataObject data, out UnsafeNativeMethods.TS_TEXTCHANGE change)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             ITextContainer container;
             // Get enhanced metafile handle from IOleDataObject.
@@ -2539,7 +2684,7 @@ namespace System.Windows.Documents
 
             if (stgmedium.unionmember == IntPtr.Zero)
             {
-                throw new COMException(SR.Get(SRID.TextStore_BadObjectData), NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObjectData, NativeMethods.E_INVALIDARG);
             }
 
             IntPtr hbitmap = SystemDrawingHelper.ConvertMetafileToHBitmap(stgmedium.unionmember);
@@ -2635,11 +2780,6 @@ namespace System.Windows.Documents
         }
 
         // Prepare the app property values and store them into _preparedatribute.
-        /// <SecurityNote>
-        /// Critical - accesses presentationsource query visual information
-        /// TreatAsSafe - only exposes transformation information, which is safe
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void PrepareAttributes(InputScope inputScope, double fontSize, FontFamily fontFamily, XmlLanguage language, Visual visual, int count, Guid[] filterAttributes)
         {
             if (_preparedattributes == null)
@@ -2770,10 +2910,6 @@ namespace System.Windows.Documents
         }
 
         // retrieve the TextPositions from ITfRange.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         private void TextPositionsFromITfRange(UnsafeNativeMethods.ITfRange range, out ITextPointer start, out ITextPointer end)
         {
             UnsafeNativeMethods.ITfRangeACP rangeACP;
@@ -2794,11 +2930,6 @@ namespace System.Windows.Documents
 
         // Returns the start and end positions of the current composition, or
         // null if there is no current composition.
-        /// <SecurityNote>
-        /// Critical - calls critical methods.
-        /// TreatAsSafe - takes no input and reveals no sensitive information.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void GetCompositionPositions(out ITextPointer start, out ITextPointer end)
         {
             start = null;
@@ -2815,10 +2946,6 @@ namespace System.Windows.Documents
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code
-        /// </SecurityNote>
-        [SecurityCritical]
         private void GetCompositionPositions(UnsafeNativeMethods.ITfCompositionView view, out ITextPointer start, out ITextPointer end)
         {
             UnsafeNativeMethods.ITfRange range;
@@ -2831,10 +2958,6 @@ namespace System.Windows.Documents
         }
 
         // get the text from ITfRange.
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (GetExtent)
-        /// </SecurityNote>
-        [SecurityCritical]
         private static string StringFromITfRange(UnsafeNativeMethods.ITfRange range, int ecReadOnly)
         {
             // Transitory Document uses ther TextStore, which is ACP base.
@@ -2867,12 +2990,6 @@ namespace System.Windows.Documents
         //
         // The mouse event handler to generate MSIME message to IME listeners.
         //
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (IME listener) and simulates a mouse event
-        /// TreatAsSafe - only sends mouse event to IME listeners, only uses current state of
-        ///               text as input. Can't use this to spoof messages to non-IME contexts.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool InternalMouseEventHandler()
         {
             int btnState = 0;
@@ -3194,11 +3311,6 @@ namespace System.Windows.Documents
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical - if called from a trusted method (callerIsTrusted == true), calls CriticalFromVisual, which is Critical,
-        /// and then returns the information returned by that call.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr GetSourceWnd(bool callerIsTrusted)
         {
             IntPtr hwnd = IntPtr.Zero;
@@ -3217,15 +3329,7 @@ namespace System.Windows.Documents
 
                 if (win32Window != null)
                 {
-                    (new UIPermission(UIPermissionWindow.AllWindows)).Assert();//BlessedAssert
-                    try
-                    {
-                        hwnd = win32Window.Handle;
-                    }
-                    finally
-                    {
-                        UIPermission.RevertAssert();
-                    }
+                    hwnd = win32Window.Handle;
                 }
             }
             return hwnd;
@@ -3259,7 +3363,7 @@ namespace System.Windows.Documents
         {
             if (offset < 0 || offset > this.TextContainer.IMECharCount)
             {
-                throw new ArgumentException(SR.Get(SRID.TextStore_BadIMECharOffset, offset, this.TextContainer.IMECharCount));
+                throw new ArgumentException(SR.Format(SR.TextStore_BadIMECharOffset, offset, this.TextContainer.IMECharCount));
             }
         }
 
@@ -3353,7 +3457,7 @@ namespace System.Windows.Documents
             // If we have non-canonical format, give up.
             if (start == null || start.IsAtRowEnd || TextPointerBase.IsInBlockUIContainer(start))
             {
-                throw new COMException(SR.Get(SRID.TextStore_CompositionRejected), NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
             }
 
             startOut = start;
@@ -3430,10 +3534,22 @@ namespace System.Windows.Documents
                 return;
             }
 
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BHandleCompositionEvents);
+            }
+
             // Set a flag that informs the event listeners that they must hide
             // events from the IMEs.  We don't want the IMEs to know about
             // the view of the document we're about to present the application.
             _compositionEventState = CompositionEventState.RaisingEvents;
+
+            // increase the reentrancy count while replaying the IME's changes,
+            // to block or defer IME lock requests.  This is normally matched
+            // by decrease in SetFinalDocumentState, but make sure the decrease
+            // happens even if an exception bypasses the call to SetFinalDocumentState.
+            ++_replayingIMEChangeReentrancyCount;
+            int deltaReplayingIMEChangeReentrancyCount = -1;
 
             try
             {
@@ -3466,7 +3582,7 @@ namespace System.Windows.Documents
                 //
                 // Restore text composition with undo or redo
                 //
-
+                deltaReplayingIMEChangeReentrancyCount = 0;
                 SetFinalDocumentState(undoManager, imeChangeStack, undoManager.UndoCount - initialUndoCount, imeSelectionAnchorOffset, imeSelectionMovingOffset, appSelectionAnchorOffset, appSelectionMovingOffset);
             }
             finally
@@ -3476,6 +3592,14 @@ namespace System.Windows.Documents
 
                 // Reset the rasising composition events flag
                 _compositionEventState = CompositionEventState.NotRaisingEvents;
+
+                // release the IME reentrancy count, if not already done in SetFinalDocumentState
+                _replayingIMEChangeReentrancyCount += deltaReplayingIMEChangeReentrancyCount;
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EHandleCompositionEvents);
             }
         }
 
@@ -3510,13 +3634,13 @@ namespace System.Windows.Documents
         // state before the last IME edit.  We'll play back each IME edit
         // (StartComposition/UpdateComposition/EndComposition) now, raising
         // public events at each iteration.
-        /// <SecurityNote>
-        /// Critical - calls critical (TextCompositionManager) code.
-        /// TreatAsSafe - doesn't accept or return critical information.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void RaiseCompositionEvents(out int appSelectionAnchorOffset, out int appSelectionMovingOffset)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BRaiseCompositionEvents, CompositionEventList.Count);
+            }
+
             appSelectionAnchorOffset = -1;
             appSelectionMovingOffset = -1;
 
@@ -3544,8 +3668,18 @@ namespace System.Windows.Documents
                         undoManager.MinUndoStackCount = undoManager.UndoCount;
                         try
                         {
+                            if (IsTracing)
+                            {
+                                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BStartCompositionEvent);
+                            }
+
                             // PUBLIC event:
                             handled = TextCompositionManager.StartComposition(composition);
+
+                            if (IsTracing)
+                            {
+                                IMECompositionTracer.Trace(this, IMECompositionTraceOp.EStartCompositionEvent);
+                            }
                         }
                         finally
                         {
@@ -3575,15 +3709,35 @@ namespace System.Windows.Documents
                             {
                                 composition.SetResultPositions(start, end, record.Text);
 
+                                if (IsTracing)
+                                {
+                                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BCompleteCompositionEvent);
+                                }
+
                                 // PUBLIC event:
                                 handled = TextCompositionManager.CompleteComposition(composition);
+
+                                if (IsTracing)
+                                {
+                                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.ECompleteCompositionEvent);
+                                }
 
                                 _compositionModifiedByEventListener = true;// this will cause the for() loop to break;
                             }
                             else if (!record.IsShiftUpdate)
                             {
+                                if (IsTracing)
+                                {
+                                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BUpdateCompositionEvent);
+                                }
+
                                 // PUBLIC event:
                                 handled = TextCompositionManager.UpdateComposition(composition);
+
+                                if (IsTracing)
+                                {
+                                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.EUpdateCompositionEvent);
+                                }
                             }
                         }
                         finally
@@ -3601,8 +3755,19 @@ namespace System.Windows.Documents
                         try
                         {
                             _isEffectivelyNotComposing = true;
+
+                            if (IsTracing)
+                            {
+                                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BCompleteCompositionEvent);
+                            }
+
                             // PUBLIC event:
                             handled = TextCompositionManager.CompleteComposition(composition);
+
+                            if (IsTracing)
+                            {
+                                IMECompositionTracer.Trace(this, IMECompositionTraceOp.ECompleteCompositionEvent);
+                            }
                         }
                         finally
                         {
@@ -3661,6 +3826,11 @@ namespace System.Windows.Documents
                     break;
                 }
             }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.ERaiseCompositionEvents);
+            }
         }
 
         // Does this composition text breach the MaxLength constraint?
@@ -3713,7 +3883,16 @@ namespace System.Windows.Documents
         private void SetFinalDocumentState(UndoManager undoManager, Stack imeChangeStack, int appChangeCount,
             int imeSelectionAnchorOffset, int imeSelectionMovingOffset, int appSelectionAnchorOffset, int appSelectionMovingOffset)
         {
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.BSetFinalDocumentState);
+            }
+
             this.TextSelection.BeginChangeNoUndo();
+
+            // make sure this method decreases the IME reentrancy count,
+            // even if an exception bypasses the normal codepath
+            int deltaReplayingIMEChangeReentrancyCount = -1;
 
             try
             {
@@ -3735,6 +3914,10 @@ namespace System.Windows.Documents
 
                 // At this point the document should be exactly where the IME left it.
                 Invariant.Assert(_netCharCount == this.TextContainer.IMECharCount);
+
+                // we are done replaying IME changes, IME lock requests can be granted again
+                --_replayingIMEChangeReentrancyCount;
+                deltaReplayingIMEChangeReentrancyCount = 0;
 
                 if (textChanged)
                 {
@@ -3821,7 +4004,13 @@ namespace System.Windows.Documents
             }
             finally
             {
+                _replayingIMEChangeReentrancyCount += deltaReplayingIMEChangeReentrancyCount;
                 this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+            }
+
+            if (IsTracing)
+            {
+                IMECompositionTracer.Trace(this, IMECompositionTraceOp.ESetFinalDocumentState);
             }
         }
 
@@ -3830,6 +4019,11 @@ namespace System.Windows.Documents
         {
             if (count > 0)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BUndoQuietly, count);
+                }
+
                 UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
 
                 this.TextSelection.BeginChangeNoUndo();
@@ -3841,6 +4035,11 @@ namespace System.Windows.Documents
                 {
                     this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
                 }
+
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.EUndoQuietly);
+                }
             }
         }
 
@@ -3849,6 +4048,11 @@ namespace System.Windows.Documents
         {
             if (count > 0)
             {
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.BRedoQuietly, count);
+                }
+
                 UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
 
                 this.TextSelection.BeginChangeNoUndo();
@@ -3859,6 +4063,11 @@ namespace System.Windows.Documents
                 finally
                 {
                     this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                }
+
+                if (IsTracing)
+                {
+                    IMECompositionTracer.Trace(this, IMECompositionTraceOp.ERedoQuietly);
                 }
             }
         }
@@ -3968,6 +4177,12 @@ namespace System.Windows.Documents
             }
         }
 
+        private bool IsTracing
+        {
+            get { return _isTracing; }
+            set { _isTracing = value; }
+        }
+
         #endregion Private Properties
 
         //------------------------------------------------------
@@ -4055,10 +4270,6 @@ namespace System.Windows.Documents
         // This structure maps TS_ATTR (GUID) to AttributeStyle.
         private class MouseSink : IDisposable, IComparer
         {
-            /// <SecurityNote>
-            ///  Critical : Accepts critical arguments and sets critical fields
-            /// </SecurityNote>
-            [SecurityCritical]
             internal MouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, int cookie)
             {
                 _range = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP>(range);
@@ -4066,11 +4277,6 @@ namespace System.Windows.Documents
                 _cookie = cookie;
             }
 
-            /// <SecurityNote>
-            ///     Critical:      UnsafeNativeMethods.ITfRangeACP has methods with SuppressUnmanagedCodeSecurity.
-            ///     TreatAsSafe:   Only disposing objects.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public void Dispose()
             {
                 Invariant.Assert(!_locked);
@@ -4127,36 +4333,20 @@ namespace System.Windows.Documents
                 }
             }
 
-            /// <SecurityNote>
-            ///     Critical: UnsafeNativeMethods.ITfRangeACP has methods with SuppressUnmanagedCodeSecurity.
-            /// </SecurityNote>
             internal UnsafeNativeMethods.ITfRangeACP Range
             {
-                [SecurityCritical]
                 get {return _range.Value;}
             }
 
-            /// <SecurityNote>
-            ///     Critical: UnsafeNativeMethods.ITFMouseSink has methods with SuppressUnmanagedCodeSecurity.
-            /// </SecurityNote>
             internal UnsafeNativeMethods.ITfMouseSink Sink
             {
-                [SecurityCritical]
                 get {return _sink.Value;}
             }
 
             internal int Cookie {get{return _cookie;}}
 
-            /// <SecurityNote>
-            ///     Critical: UnsafeNativeMethods.ITfRangeACP has methods with SuppressUnmanagedCodeSecurity.
-            /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP> _range;
 
-            /// <SecurityNote>
-            ///     Critical: UnsafeNativeMethods.ITfMouseSink has methods with SuppressUnmanagedCodeSecurity.
-            /// </SecurityNote>
-            [SecurityCritical]
             private SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink> _sink;
 
             private int _cookie;
@@ -4350,10 +4540,6 @@ namespace System.Windows.Documents
         private TextServicesHost _textservicesHost;
 
         // A TSF sink used to notify TSF after selection, document, or layout changes.
-        /// <SecurityNote>
-        ///  Critical : Field for critical type ITextStoreACPSink
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.ITextStoreACPSink _sink;
 
         // true if TSF has a pending lock upgrade request.
@@ -4369,6 +4555,10 @@ namespace System.Windows.Documents
         // Counter set non-zero during OnTextChange callbacks.
         // Used to prevent reentrant locks.
         private int _textChangeReentrencyCount;
+
+        // Counter set non-zero while replaying IME changes.
+        // Used to prevent reentrant locks.
+        private int _replayingIMEChangeReentrancyCount;
 
         // true if we're in the middle of an ongoing composition.
         private bool _isComposing;
@@ -4399,10 +4589,6 @@ namespace System.Windows.Documents
         private const int _viewCookie = 0;
 
         // The TSF document object.  This is a native resource.
-        /// <SecurityNote>
-        ///     Critical: UnsafeNativeMethods.ITfDocumentMgr has methods with SuppressUnmanagedCodeSecurity.
-        /// </SecurityNote>
-        [SecurityCritical]
         private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _documentmanager;
 
         // The ITfThreadFocusSink cookie.
@@ -4485,7 +4671,616 @@ namespace System.Windows.Documents
         private bool _isInUpdateLayout;
         private bool _hasTextChangedInUpdateLayout;
 
+        // Set true when tracing this TextStore
+        private bool _isTracing;
+
         #endregion Private Fields
+
+        #region IMECompositionTracer
+
+        // NOTE The binary output is read by the CtfViewer tool (wpf\src\tools\CtfViewer).
+        // Any changes that affect the binary output should have corresponding
+        // changes in the tool.
+
+        // a "black box" (flight data recorder) for diagnosing IME composition bugs
+        private class IMECompositionTracer
+        {
+            #region static members
+
+            const int s_CtfFormatVersion = 1;   // Format of output file
+            const int s_MaxTraceRecords = 3000;    // max length of in-memory _traceList
+            const int s_MinTraceRecords = 500;     // keep this many records after flushing
+
+            static string _targetName;
+            static IMECompositionTracer()
+            {
+                _targetName = FrameworkCompatibilityPreferences.GetIMECompositionTraceTarget();
+                _flushDepth = 0;
+
+                string s = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
+                if (!String.IsNullOrEmpty(s))
+                {
+                    string[] a = s.Split(';');
+                    _fileName = a[0];
+
+                    if (a.Length > 1)
+                    {
+                        int flushDepth;
+                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
+                        {
+                            _flushDepth = flushDepth;
+                        }
+                    }
+                }
+
+                if (_targetName != null)
+                {
+                    Enable();
+                }
+            }
+
+            private static void Enable()
+            {
+                if (IsEnabled)
+                    return;
+
+                _isEnabled = true;
+
+                Application app = Application.Current;
+                if (app != null)
+                {
+                    app.Exit += OnApplicationExit;
+                    app.DispatcherUnhandledException += OnUnhandledException;
+                }
+            }
+
+            static bool _isEnabled;
+            internal static bool IsEnabled { get { return _isEnabled; } }
+
+            // for use from VS Immediate window
+            internal static bool SetTarget(object o)
+            {
+                FrameworkElement target = o as FrameworkElement;
+                if (target != null || o == null)
+                {
+                    lock (s_TargetToTraceListMap)
+                    {
+                        CloseAllTraceLists();
+
+                        if (target != null)
+                        {
+                            Enable();
+                            AddToMap(target);
+
+                            // Change the null info's generation, to start tracing
+                            // from scratch on the new target
+                            ++_nullInfo.Generation;
+                        }
+                    }
+                }
+                return (target == o);
+            }
+
+            static string _fileName;
+            static int _flushDepth;
+
+            // for use from VS Immediate window
+            internal static void Flush()
+            {
+                lock (s_TargetToTraceListMap)
+                {
+                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    {
+                        s_TargetToTraceListMap[i].Item2.Flush(-1);
+                    }
+                }
+            }
+
+            // for use from VS Immediate window
+            internal static void Mark(params object[] args)
+            {
+                IMECompositionTraceRecord record = new IMECompositionTraceRecord(IMECompositionTraceOp.Mark, BuildDetail(args));
+                lock (s_TargetToTraceListMap)
+                {
+                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    {
+                        s_TargetToTraceListMap[i].Item2.Add(record);
+                    }
+                }
+            }
+            private static IMECompositionTracingInfo _nullInfo = new IMECompositionTracingInfo(null, 0);
+
+            internal static void ConfigureTracing(TextStore textStore)
+            {
+                FrameworkElement uiScope = textStore.UiScope;
+                IMECompositionTracer tracer = null;
+                IMECompositionTracingInfo cti = _nullInfo;  // default - do nothing
+                IMECompositionTracingInfo oldcti = IMECompositionTracingInfoField.GetValue(uiScope);
+
+                // ignore (and replace) cti from older generation (created before most recent SetTarget)
+                if (oldcti != null && oldcti.Generation < _nullInfo.Generation)
+                {
+                    oldcti = null;
+                }
+
+                if (oldcti == null)
+                {
+                    TraceList traceList = TraceListForUiScope(uiScope);
+                    if (traceList != null)
+                    {
+                        tracer = new IMECompositionTracer(textStore, traceList);
+                    }
+
+                    if (tracer != null)
+                    {
+                        cti = new IMECompositionTracingInfo(tracer, _nullInfo.Generation);
+                    }
+
+                    // install the new cti
+                    IMECompositionTracingInfoField.SetValue(uiScope, cti);
+
+                    textStore.IsTracing = IsTracing(textStore);
+                }
+            }
+
+            internal static bool IsTracing(TextStore textStore)
+            {
+                IMECompositionTracingInfo cti = IMECompositionTracingInfoField.GetValue(textStore.UiScope);
+                return (cti != null && cti.IMECompositionTracer != null);
+            }
+
+            internal static void Trace(TextStore textStore, IMECompositionTraceOp op, params object[] args)
+            {
+                IMECompositionTracingInfo cti = IMECompositionTracingInfoField.GetValue(textStore.UiScope);
+                IMECompositionTracer tracer = cti.IMECompositionTracer;
+                Debug.Assert(tracer != null, "Trace called when not tracing");
+
+                if (ShouldIgnore(op, cti))
+                    return;
+
+                tracer.AddTrace(textStore, op, cti, args);
+            }
+
+            private static bool ShouldIgnore(IMECompositionTraceOp op, IMECompositionTracingInfo cti)
+            {
+                return (op == IMECompositionTraceOp.NoOp);
+            }
+
+            private static string DisplayType(object o)
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                bool needSeparator = false;
+                bool isWPFControl = false;
+                for (Type t = o.GetType(); !isWPFControl && t != null; t = t.BaseType)
+                {
+                    if (needSeparator)
+                    {
+                        sb.Append('/');
+                    }
+
+                    string name = t.ToString();
+                    isWPFControl = name.StartsWith("System.Windows.Controls.");
+                    if (isWPFControl)
+                    {
+                        name = name.Substring(24);  // 24 == length of "s.w.c."
+                    }
+
+                    sb.Append(name);
+                    needSeparator = true;
+                }
+
+                return sb.ToString();
+            }
+
+            private static string BuildDetail(object[] args)
+            {
+                int length = (args != null) ? args.Length : 0;
+                if (length == 0)
+                    return String.Empty;
+                else
+                    return String.Format(CultureInfo.InvariantCulture, s_format[length], args);
+            }
+
+            private static string[] s_format = new string[] {
+                "",
+                "{0}",
+                "{0} {1}",
+                "{0} {1} {2}",
+                "{0} {1} {2} {3}",
+                "{0} {1} {2} {3} {4} ",
+                "{0} {1} {2} {3} {4} {5}",
+                "{0} {1} {2} {3} {4} {5} {6}",
+                "{0} {1} {2} {3} {4} {5} {6} {7}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
+                "{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13}",
+            };
+
+            #endregion static members
+
+            #region instance members
+
+            private Stack<IMECompositionTraceOp> _opStack = new Stack<IMECompositionTraceOp>();
+            private TraceList _traceList;
+
+            private IMECompositionTracer(TextStore textStore, TraceList traceList)
+            {
+                // set up file output
+                _traceList = traceList;
+
+                // write identifying information to the file
+                IdentifyTrace(textStore);
+            }
+
+            // when app shuts down, flush pending info to the file
+            static void OnApplicationExit(object sender, ExitEventArgs e)
+            {
+                Application app = sender as Application;
+                if (app != null)
+                {
+                    app.Exit -= OnApplicationExit;   // avoid re-entrancy
+                }
+
+                CloseAllTraceLists();
+            }
+
+            // in case of unhandled exception, flush pending info to the file
+            static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+            {
+                Application app = sender as Application;
+                if (app != null)
+                {
+                    app.DispatcherUnhandledException -= OnUnhandledException;   // avoid re-entrancy
+                }
+
+                CloseAllTraceLists();
+            }
+
+            private void IdentifyTrace(TextStore textStore)
+            {
+                FrameworkElement uiScope = textStore.UiScope;
+
+                AddTrace(textStore, IMECompositionTraceOp.ID, _nullInfo, DisplayType(uiScope));
+            }
+
+            private void AddTrace(TextStore textStore, IMECompositionTraceOp op, IMECompositionTracingInfo cti, params object[] args)
+            {
+                // pop a E* op from the stack
+                if (IMECompositionTraceOp.FirstEndOp <= op && _opStack.Count > 0)
+                {
+                    _opStack.Pop();
+                }
+
+                // add the trace record
+                int charCount=0, imeCharCount=0;
+                CompositionEventState eventState=(CompositionEventState)(-1);
+                if (textStore != null)
+                {
+                    charCount = textStore._netCharCount;
+                    imeCharCount = textStore.TextContainer.IMECharCount;
+                    eventState = textStore._compositionEventState;
+                }
+
+                IMECompositionTraceRecord record = new IMECompositionTraceRecord(op, _opStack.Count, charCount, imeCharCount, eventState, BuildDetail(args));
+                _traceList.Add(record);
+
+                // push a B* op onto the stack
+                if (IMECompositionTraceOp.FirstBeginOp <= op && op < IMECompositionTraceOp.FirstEndOp)
+                {
+                    _opStack.Push(op);
+                }
+
+                if (_flushDepth < 0)
+                {
+                    _traceList.Flush(_flushDepth);      // force flush
+                }
+                else
+                {
+                    _traceList.Flush(_opStack.Count);   // flush when reaching depth 0
+                }
+            }
+
+            #endregion instance members
+
+            private static List<Tuple<WeakReference<FrameworkElement>,TraceList>> s_TargetToTraceListMap
+                = new List<Tuple<WeakReference<FrameworkElement>,TraceList>>();
+            private static int s_seqno;
+
+            static TraceList TraceListForUiScope(FrameworkElement target)
+            {
+                TraceList traceList = null;
+
+                lock (s_TargetToTraceListMap)
+                {
+                    // if target is already in the map, use its tracelist
+                    for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                    {
+                        WeakReference<FrameworkElement> wr = s_TargetToTraceListMap[i].Item1;
+                        FrameworkElement fe;
+                        if (wr.TryGetTarget(out fe) && fe == target)
+                        {
+                            traceList = s_TargetToTraceListMap[i].Item2;
+                            break;
+                        }
+                    }
+
+                    // otherwise, if target's name matches, add a new entry to the map
+                    if (traceList == null && target.Name == _targetName)
+                    {
+                        traceList = AddToMap(target);
+                    }
+                }
+
+                return traceList;
+            }
+
+            private static TraceList AddToMap(FrameworkElement target)
+            {
+                TraceList traceList = null;
+
+                lock (s_TargetToTraceListMap)
+                {
+                    PurgeMap();
+                    ++ s_seqno;
+
+                    // get a name for the trace file
+                    string filename = _fileName;
+                    if (String.IsNullOrEmpty(filename) || filename == "default")
+                    {
+                        filename = "IMECompositionTrace.ctf";
+                    }
+                    if (filename != "none" && s_seqno > 1)
+                    {
+                        int dotIndex = filename.LastIndexOf(".", StringComparison.Ordinal);
+                        if (dotIndex < 0) dotIndex = filename.Length;
+                        filename = $"{filename.AsSpan(0, dotIndex)}{s_seqno}{filename.AsSpan(dotIndex)}";
+                    }
+
+                    // create the TraceList
+                    traceList = new TraceList(filename);
+
+                    // add it to the map
+                    s_TargetToTraceListMap.Add(
+                        new Tuple<WeakReference<FrameworkElement>,TraceList>(
+                            new WeakReference<FrameworkElement>(target),
+                            traceList));
+                }
+
+                return traceList;
+            }
+
+            // Must be called under "lock (s_TargetToTraceListMap)"
+            static void CloseAllTraceLists()
+            {
+                for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
+                {
+                    TraceList traceList = s_TargetToTraceListMap[i].Item2;
+                    traceList.FlushAndClose();
+                }
+                s_TargetToTraceListMap.Clear();
+            }
+
+            // remove entries whose targets are no longer active (closing their output files)
+            // Must be called under "lock (s_TargetToTraceListMap)"
+            private static void PurgeMap()
+            {
+                for (int i=0; i<s_TargetToTraceListMap.Count; ++i)
+                {
+                    WeakReference<FrameworkElement> wr = s_TargetToTraceListMap[i].Item1;
+                    FrameworkElement unused;
+                    if (!wr.TryGetTarget(out unused))
+                    {
+                        TraceList traceList = s_TargetToTraceListMap[i].Item2;
+                        traceList.FlushAndClose();
+                        s_TargetToTraceListMap.RemoveAt(i);
+                        --i;
+                    }
+                }
+            }
+
+            #region TraceList
+
+            private class TraceList
+            {
+                private List<IMECompositionTraceRecord> _traceList = new List<IMECompositionTraceRecord>();
+                private BinaryWriter _writer;
+                private int _flushIndex=0;  // where last flush ended
+
+                internal TraceList(string filename)
+                {
+                    if (filename != "none")
+                    {
+                        _writer = new BinaryWriter(File.Open(filename, FileMode.Create));
+                        _writer.Write((int)s_CtfFormatVersion);
+                    }
+                }
+
+                internal void Add(IMECompositionTraceRecord record)
+                {
+                    _traceList.Add(record);
+                }
+
+                internal void Flush(int depth)
+                {
+                    if (_writer != null && depth <= _flushDepth)
+                    {
+                        for (; _flushIndex < _traceList.Count; ++_flushIndex)
+                        {
+                            _traceList[_flushIndex].Write(_writer);
+                        }
+
+                        _writer.Flush();
+
+                        // don't let _traceList exhaust memory
+                        if (_flushIndex > s_MaxTraceRecords)
+                        {
+                            // but keep recent history in memory, for live debugging
+                            int purgeCount = _flushIndex - s_MinTraceRecords;
+                            _traceList.RemoveRange(0, purgeCount);
+                            _flushIndex = _traceList.Count;
+                        }
+                    }
+                }
+
+                internal void FlushAndClose()
+                {
+                    if (_writer != null)
+                    {
+                        Flush(_flushDepth);
+                        _writer.Close();
+                        _writer = null;
+                    }
+                }
+
+                internal void FlushAndClear()
+                {
+                    if (_writer != null)
+                    {
+                        Flush(_flushDepth);
+                        _traceList.Clear();
+                        _flushIndex = 0;
+                    }
+                }
+            }
+
+             #endregion TraceList
+        }
+
+        #endregion IMECompositionTracer
+
+        #region IMECompositionTracingInfo
+
+        // dynamic data associated with a TextStore that's being traced
+        private class IMECompositionTracingInfo
+        {
+            internal IMECompositionTracer   IMECompositionTracer    { get; private set; }
+            internal int            Generation      { get; set; }
+
+            internal IMECompositionTracingInfo(IMECompositionTracer tracer, int generation)
+            {
+                IMECompositionTracer = tracer;
+                Generation = generation;
+            }
+        }
+
+        static readonly UncommonField<IMECompositionTracingInfo>
+            IMECompositionTracingInfoField = new UncommonField<IMECompositionTracingInfo>();
+
+        #endregion IMECompositionTracingInfo
+
+        #region IMECompositionTraceRecord and opcodes
+
+        private enum IMECompositionTraceOp: ushort
+        {
+            NoOp,
+            ID,
+            Mark,
+
+            GetStatus,
+            GetSelection,
+            SetSelection,
+            GetText,
+            GetACPFromPoint,
+            GetTextExt,
+            DeferRequest,
+
+            BRequestLock,
+            BSetText,
+            BInsertTextAtSelection,
+            BGrantLockHandler,
+            BGrantLockWorker,
+            BOnLockGranted,
+            BOnLayoutChange,
+            BOnSelectionChange,
+            BOnTextChange,
+            BOnTextContainerChange,
+            BOnStartComposition,
+            BOnUpdateComposition,
+            BOnEndComposition,
+            BUpdateCompositionText,
+            BHandleCompositionEvents,
+            BSetFinalDocumentState,
+            BUndoQuietly,
+            BRedoQuietly,
+            BRaiseCompositionEvents,
+            BSelectionChangeEvent,
+            BStartCompositionEvent,
+            BUpdateCompositionEvent,
+            BCompleteCompositionEvent,
+
+            ERequestLock,
+            ESetText,
+            EInsertTextAtSelection,
+            EGrantLockHandler,
+            EGrantLockWorker,
+            EOnLockGranted,
+            EOnLayoutChange,
+            EOnSelectionChange,
+            EOnTextChange,
+            EOnTextContainerChange,
+            EOnStartComposition,
+            EOnUpdateComposition,
+            EOnEndComposition,
+            EUpdateCompositionText,
+            EHandleCompositionEvents,
+            ESetFinalDocumentState,
+            EUndoQuietly,
+            ERedoQuietly,
+            ERaiseCompositionEvents,
+            ESelectionChangeEvent,
+            EStartCompositionEvent,
+            EUpdateCompositionEvent,
+            ECompleteCompositionEvent,
+
+            FirstBeginOp = BRequestLock,
+            FirstEndOp = ERequestLock,
+        }
+
+        private class IMECompositionTraceRecord
+        {
+            internal IMECompositionTraceRecord(IMECompositionTraceOp op,
+                int opDepth, int netCharCount, int imeCharCount, CompositionEventState eventState, string detail)
+            {
+                Op = op;
+                OpDepth = opDepth;
+                NetCharCount = netCharCount;
+                IMECharCount = imeCharCount;
+                EventState = eventState;
+                Detail = detail;
+            }
+
+            internal IMECompositionTraceRecord(IMECompositionTraceOp op, string detail)
+                : this(op, -1, 0, 0, (CompositionEventState)(-1), detail)
+            {}
+
+            internal IMECompositionTraceOp  Op          { get; private set; }
+            internal int                    OpDepth     { get; private set; }
+            internal int                    NetCharCount{ get; private set; }
+            internal int                    IMECharCount{ get; private set; }
+            internal CompositionEventState  EventState  { get; private set; }
+            internal string                 Detail      { get; set; }
+
+            public override string ToString()
+            {
+                return String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5}",
+                    OpDepth, NetCharCount, IMECharCount, Op, EventState, Detail);
+            }
+
+            internal void Write(BinaryWriter writer)
+            {
+                writer.Write((ushort)Op);
+                writer.Write(OpDepth);
+                writer.Write(NetCharCount);
+                writer.Write(IMECharCount);
+                writer.Write((byte)EventState);
+                writer.Write(Detail);
+            }
+        }
+
+        #endregion IMECompositionTraceRecord and opcodes
     }
 }
 

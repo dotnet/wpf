@@ -85,11 +85,6 @@ namespace System.Windows.Automation
         /// Request to set the value that this UI element is representing
         /// </summary>
         /// <param name="value">Value to set the UI to, as a double</param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetValue(double value)
         {
             // Test the Enabled state prior to the more general Read-Only state.            
@@ -103,7 +98,7 @@ namespace System.Windows.Automation
             object readOnly = _el.GetCurrentPropertyValue(IsReadOnlyProperty);
             if (readOnly is bool && (bool)readOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
             UiaCoreApi.RangeValuePattern_SetValue(_hPattern, value);
         }
@@ -241,11 +236,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             ///<summary>Value of a value control</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double Value
             {
                 get
@@ -276,11 +266,6 @@ namespace System.Windows.Automation
 
             ///<summary>Indicates that the value can only be read, not modified.
             ///returns True if the control is read-only</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsReadOnly
             {
                 get
@@ -290,11 +275,6 @@ namespace System.Windows.Automation
             }
 
             ///<summary>maximum value </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double Maximum
             {
                 get
@@ -324,11 +304,6 @@ namespace System.Windows.Automation
             }
 
             ///<summary>minimum value</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double Minimum
             {
                 get
@@ -362,11 +337,6 @@ namespace System.Windows.Automation
             /// Gets a value to be added to or subtracted from the Value property 
             /// when the element is moved a large distance.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double LargeChange
             {
                 get
@@ -399,11 +369,6 @@ namespace System.Windows.Automation
             /// Gets a value to be added to or subtracted from the Value property 
             /// when the element is moved a small distance.
             /// </summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public double SmallChange
             {
                 get

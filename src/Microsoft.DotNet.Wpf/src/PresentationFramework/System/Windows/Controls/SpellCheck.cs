@@ -69,10 +69,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetIsEnabled(TextBoxBase textBoxBase, bool value)
         {
-            if (textBoxBase == null)
-            {
-                throw new ArgumentNullException("textBoxBase");
-            }
+            ArgumentNullException.ThrowIfNull(textBoxBase);
 
             textBoxBase.SetValue(IsEnabledProperty, value);
         }
@@ -82,10 +79,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static bool GetIsEnabled(TextBoxBase textBoxBase)
         {
-            if (textBoxBase == null)
-            {
-                throw new ArgumentNullException("textBoxBase");
-            }
+            ArgumentNullException.ThrowIfNull(textBoxBase);
 
             return (bool)textBoxBase.GetValue(IsEnabledProperty);
         }
@@ -130,10 +124,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static void SetSpellingReform(TextBoxBase textBoxBase, SpellingReform value)
         {
-            if (textBoxBase == null)
-            {
-                throw new ArgumentNullException("textBoxBase");
-            }
+            ArgumentNullException.ThrowIfNull(textBoxBase);
 
             textBoxBase.SetValue(SpellingReformProperty, value);
         }
@@ -172,10 +163,7 @@ namespace System.Windows.Controls
         /// <returns></returns>
         public static IList GetCustomDictionaries(TextBoxBase textBoxBase)
         {
-            if (textBoxBase == null)
-            {
-                throw new ArgumentNullException("textBoxBase");
-            }
+            ArgumentNullException.ThrowIfNull(textBoxBase);
             return (IList)textBoxBase.GetValue(CustomDictionariesProperty);
         }
 

@@ -126,8 +126,7 @@ namespace MS.Internal.Data
         /// <exception cref="ArgumentNullException"> name is a null reference </exception>
         internal ElementObjectRef(string name)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            ArgumentNullException.ThrowIfNull(name);
 
             _name = name.Trim();
         }
@@ -143,8 +142,7 @@ namespace MS.Internal.Data
         /// <param name="args">See ObjectRefArgs </param>
         internal override object GetObject(DependencyObject d, ObjectRefArgs args)
         {
-            if (d == null)
-                throw new ArgumentNullException("d");
+            ArgumentNullException.ThrowIfNull(d);
 
             object o = null;
             if (args.ResolveNamesInTemplate)
@@ -157,7 +155,7 @@ namespace MS.Internal.Data
 
                     if (args.IsTracing)
                     {
-                        TraceData.Trace(TraceEventType.Warning,
+                        TraceData.TraceAndNotify(TraceEventType.Warning,
                                             TraceData.ElementNameQueryTemplate(
                                                 _name,
                                                 TraceData.Identify(d)));
@@ -203,7 +201,7 @@ namespace MS.Internal.Data
 
                 if (args.IsTracing)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.ElementNameQuery(
                                             _name,
                                             TraceData.Identify(fo.DO)));
@@ -321,8 +319,7 @@ namespace MS.Internal.Data
         /// <exception cref="ArgumentNullException"> relativeSource is a null reference </exception>
         internal RelativeObjectRef(RelativeSource relativeSource)
         {
-            if (relativeSource == null)
-                throw new ArgumentNullException("relativeSource");
+            ArgumentNullException.ThrowIfNull(relativeSource);
 
             _relativeSource = relativeSource;
         }
@@ -417,7 +414,7 @@ namespace MS.Internal.Data
 
             if (args.IsTracing)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                                     TraceData.RelativeSource(
                                         _relativeSource.Mode,
                                         TraceData.Identify(d)));
@@ -528,7 +525,7 @@ namespace MS.Internal.Data
             if (ic == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefPreviousNotInContext);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefPreviousNotInContext);
                 return null;
             }
 
@@ -550,7 +547,7 @@ namespace MS.Internal.Data
             {
                 d = null;
                 if ((j < 0) && TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefNoWrapperInChildren);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefNoWrapperInChildren);
             }
             return d;
         }
@@ -560,13 +557,13 @@ namespace MS.Internal.Data
             if (type == null)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefAncestorTypeNotSpecified);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefAncestorTypeNotSpecified);
                 return null;
             }
             if (level < 1)
             {
                 if (TraceData.IsEnabled)
-                    TraceData.Trace(TraceEventType.Error, TraceData.RefAncestorLevelInvalid);
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.RefAncestorLevelInvalid);
                 return null;
             }
 
@@ -578,7 +575,7 @@ namespace MS.Internal.Data
             {
                 if (isTracing)
                 {
-                    TraceData.Trace(TraceEventType.Warning,
+                    TraceData.TraceAndNotify(TraceEventType.Warning,
                                         TraceData.AncestorLookup(
                                             type.Name,
                                             TraceData.Identify(fo.DO)));

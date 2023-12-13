@@ -16,7 +16,6 @@
 
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using System.Windows;
 
@@ -112,17 +111,6 @@ namespace System.Diagnostics
 
         internal static event TraceRefreshEventHandler TraceRefresh;
 
-        /// <SecurityNote>
-        /// Critical:
-        ///  1) Asserts for UMC to set trace level.
-        ///
-        /// TreatAsSafe:
-        ///  1) The code path is only invoked when under a debugger
-        ///     if the caller can attach a debugger they already have
-        ///     unlimited access to the process.  Also the only inputs
-        ///     to the assert are simply a label for the name.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static TraceSource CreateTraceSource(string sourceName)
         {
             // Create the trace source.  Whether or not it will actually
@@ -138,17 +126,7 @@ namespace System.Diagnostics
                 &&
                 AvTrace.IsDebuggerAttached())
             {
-                // we need to assert as PT callers under a debugger can invoke this code path
-                // with out having the needed permission to peform this action
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-                try
-                {
-                    source.Switch.Level = SourceLevels.Warning;
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                source.Switch.Level = SourceLevels.Warning;
             }
 
             // returning source after reverting the assert to avoid

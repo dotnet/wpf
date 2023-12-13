@@ -62,12 +62,25 @@ namespace System.Xaml.MS.Impl
             return string.Equals(a, b, StringComparison.Ordinal);
         }
 
+        public static bool Eq(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+        {
+            return a.Equals(b, StringComparison.Ordinal);
+        }
+
         /// <summary>
         /// Standard String Index search operation.
         /// </summary>
         public static int IndexOf(string src, string chars)
         {
             return src.IndexOf(chars, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// Standard String Index search operation.
+        /// </summary>
+        public static int IndexOf(string src, char ch)
+        {
+            return src.IndexOf(ch, StringComparison.Ordinal);
         }
 
         public static bool EndsWith(string src, string target)

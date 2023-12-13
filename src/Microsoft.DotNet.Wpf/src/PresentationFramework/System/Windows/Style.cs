@@ -21,7 +21,6 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation; // For Storyboard support
 using System.Windows.Markup;
-using System.Security.Permissions;
 using System.IO;
 using MS.Utility;
 using MS.Internal;
@@ -176,20 +175,17 @@ namespace System.Windows
 
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Style"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
 
-                if( value == null )
-                {
-                    throw new ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
 
                 if (!typeof(FrameworkElement).IsAssignableFrom(value) &&
                     !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
                     !(DefaultTargetType == value))
                 {
                     #pragma warning suppress 6506 // value is obviously not null
-                    throw new ArgumentException(SR.Get(SRID.MustBeFrameworkDerived, value.Name));
+                    throw new ArgumentException(SR.Format(SR.MustBeFrameworkDerived, value.Name));
                 }
 
                 _targetType = value;
@@ -219,7 +215,7 @@ namespace System.Windows
 
                 if (_sealed)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Style"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
 
                 if( value == this )
@@ -227,7 +223,7 @@ namespace System.Windows
                     // Basing on self is not allowed.  This is a degenerate case
                     //  of circular reference chain, the full check for circular
                     //  reference is done in Seal().
-                    throw new ArgumentException(SR.Get(SRID.StyleCannotBeBasedOnSelf));
+                    throw new ArgumentException(SR.StyleCannotBeBasedOnSelf);
                 }
 
                 _basedOn = value;
@@ -325,7 +321,7 @@ namespace System.Windows
 
                 if( _sealed )
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotChangeAfterSealed, "Style"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Style"));
                 }
 
                 _resources = value;
@@ -345,7 +341,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        ///     Tries to find a Reosurce for the given resourceKey in the current
+        ///     Tries to find a Resource for the given resourceKey in the current
         ///     style's ResourceDictionary or the basedOn style's ResourceDictionary
         ///     in that order.
         /// </summary>
@@ -412,16 +408,13 @@ namespace System.Windows
             // Verify Context Access
             VerifyAccess();
 
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             SetterBase sb = value as SetterBase;
 
             if (sb == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(SetterBase)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(SetterBase)), "value");
             }
 
             Setters.Add(sb);
@@ -494,7 +487,7 @@ namespace System.Windows
             Type elementType = element.GetType();
             if(!TargetType.IsAssignableFrom(elementType))
             {
-                throw new InvalidOperationException(SR.Get(SRID.StyleTargetTypeMismatchWithElement,
+                throw new InvalidOperationException(SR.Format(SR.StyleTargetTypeMismatchWithElement,
                                                     this.TargetType.Name,
                                                     elementType.Name));
             }
@@ -518,7 +511,7 @@ namespace System.Windows
             //  can't be checked until Style is sealed.
             if (_targetType == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NullPropertyIllegal, "TargetType"));
+                throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "TargetType"));
             }
 
             if (_basedOn != null)
@@ -526,7 +519,7 @@ namespace System.Windows
                 if(DefaultTargetType != _basedOn.TargetType &&
                     !_basedOn.TargetType.IsAssignableFrom(_targetType))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.MustBaseOnStyleOfABaseType, _targetType.Name));
+                    throw new InvalidOperationException(SR.Format(SR.MustBaseOnStyleOfABaseType, _targetType.Name));
                 }
             }
 
@@ -614,8 +607,8 @@ namespace System.Windows
                 {
                     // Uh-oh.  We've seen this Style before.  This means
                     //  the BasedOn hierarchy contains a loop.
-                    throw new InvalidOperationException(SR.Get(
-                        SRID.StyleBasedOnHasLoop));
+                    throw new InvalidOperationException(SR.Format(
+                        SR.StyleBasedOnHasLoop));
 
                     // Debugging note: If we stop here, the basedOnHierarchy
                     //  object is still alive and we can browse through it to
@@ -667,7 +660,7 @@ namespace System.Windows
                     // Style Setters are not allowed to have a child target name - since there are no child nodes in a Style.
                     if( setter.TargetName != null )
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.SetterOnStyleNotAllowedToHaveTarget, setter.TargetName));
+                        throw new InvalidOperationException(SR.Format(SR.SetterOnStyleNotAllowedToHaveTarget, setter.TargetName));
                     }
 
                     if (style == this)
@@ -771,7 +764,7 @@ namespace System.Windows
                         // Check for trigger rules that act on container
                         if (propertyValue.ChildName != StyleHelper.SelfName)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.StyleTriggersCannotTargetTheTemplate));
+                            throw new InvalidOperationException(SR.StyleTriggersCannotTargetTheTemplate);
                         }
 
                         TriggerCondition[] conditions = propertyValue.Conditions;
@@ -779,7 +772,7 @@ namespace System.Windows
                         {
                             if( conditions[k].SourceName != StyleHelper.SelfName )
                             {
-                                throw new InvalidOperationException(SR.Get(SRID.TriggerOnStyleNotAllowedToHaveSource, conditions[k].SourceName));
+                                throw new InvalidOperationException(SR.Format(SR.TriggerOnStyleNotAllowedToHaveSource, conditions[k].SourceName));
                             }
                         }
 
@@ -825,7 +818,7 @@ namespace System.Windows
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.UnsupportedTriggerInStyle, trigger.GetType().Name));
+                            throw new InvalidOperationException(SR.Format(SR.UnsupportedTriggerInStyle, trigger.GetType().Name));
                         }
                     }
 
@@ -835,7 +828,7 @@ namespace System.Windows
                     {
                         if( eventTrigger.SourceName != null && eventTrigger.SourceName.Length > 0 )
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.EventTriggerOnStyleNotAllowedToHaveTarget, eventTrigger.SourceName));
+                            throw new InvalidOperationException(SR.Format(SR.EventTriggerOnStyleNotAllowedToHaveTarget, eventTrigger.SourceName));
                         }
 
                         StyleHelper.ProcessEventTrigger(eventTrigger,

@@ -26,7 +26,6 @@
 using System;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 
 namespace MS.Internal
@@ -81,12 +80,6 @@ namespace MS.Internal
         ///     If ExecutionContext.SuppressFlow had been previously called, 
         ///     then this method would return null; 
         /// </remarks>
-        /// <securitynote>
-        ///     Critical: 
-        ///         Calls <see cref="CulturePreservingExecutionContext.CulturePreservingExecutionContext"/> 
-        ///         which requires full trust for the immediate caller.
-        /// </securitynote>
-        [SecurityCritical]
         public static CulturePreservingExecutionContext Capture()
         {
             // ExecutionContext.SuppressFlow had been called - we expect
@@ -129,11 +122,6 @@ namespace MS.Internal
         /// <param name="state">
         ///     The object to pass to the callback method.
         /// </param>
-        /// <securitynote>
-        ///     Critical: 
-        ///         Calls <see cref="ExecutionContext.Run(ExecutionContext, ContextCallback, object)"/>
-        ///         which requires full trust for the immediate caller.
-        /// </securitynote>
         /// <remarks>
         /// BaseAppContextSwitches.DoNotUseCulturePreservingDispatcherOperations indicates whether 
         /// CulturePreservingExecutionContext should do extra work to preserve culture infos, or not. 
@@ -158,13 +146,9 @@ namespace MS.Internal
         ///   </runtime>
         /// />
         /// </remarks>
-        [SecurityCritical]
         public static void Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, object state)
         {
-            if (executionContext == null)
-            {
-                throw new ArgumentNullException(nameof(executionContext));
-            }
+            ArgumentNullException.ThrowIfNull(executionContext);
 
             if (callback == null) return; // Bail out early if callback is null
 
@@ -209,12 +193,6 @@ namespace MS.Internal
         ///     <see cref="Run(CulturePreservingExecutionContext, ContextCallback, object)"/>, and the corresponding state 
         ///     that is intended to be passed to the callback. 
         /// </param>
-        /// <securitynote>
-        ///     Critical:
-        ///         This is a logical exetnsion of <see cref="Run(CulturePreservingExecutionContext, ContextCallback, object)"/>
-        ///         method, and has the same security attributes as that method. 
-        /// </securitynote>
-        [SecurityCritical]
         private static void CallbackWrapper(object obj)
         {
             var cultureAndContext = obj as CultureAndContextManager;
@@ -238,11 +216,6 @@ namespace MS.Internal
 
         #region Constructors
 
-        /// <securitynote>
-        ///     Critical:
-        ///         Calls into <see cref="CallbackWrapper(object)"/> which is critical.
-        /// </securitynote>
-        [SecurityCritical]
         static CulturePreservingExecutionContext()
         {
             CallbackWrapperDelegate = new ContextCallback(CulturePreservingExecutionContext.CallbackWrapper);
@@ -276,11 +249,6 @@ namespace MS.Internal
         ///     class, which will indirectly release the resources held by the encapsulated <see cref="ExecutionContext"/>
         ///     instance.
         /// </summary>
-        /// <securitynote>
-        ///     Critical:
-        ///         This method calls Dispose(bool) which is marked SecurityCritical
-        /// </securitynote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
@@ -339,13 +307,6 @@ namespace MS.Internal
                 _uICulture = Thread.CurrentThread.CurrentUICulture;
             }
 
-            /// <securitynote>
-            ///     Critical: 
-            ///         Sets Thread.CurrentCulture and Thread.CurrentUICulture which require SecurityPermission Assert 
-            ///         for SecurityPermissionFlag.ControlThread
-            /// </securitynote>
-            [SecurityCritical]
-            [SecurityPermission(SecurityAction.Assert, ControlThread = true)]
             public void WriteCultureInfosToCurrentThread()
             {
                 Thread.CurrentThread.CurrentCulture = _culture;

@@ -42,15 +42,9 @@ namespace System.Windows
         public DataObjectSettingDataEventArgs(IDataObject dataObject, string format) //
             : base(System.Windows.DataObject.SettingDataEvent, /*isDragDrop:*/false)
         {
-            if (dataObject == null)
-            {
-                throw new ArgumentNullException("dataObject");
-            }
+            ArgumentNullException.ThrowIfNull(dataObject);
 
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             _dataObject = dataObject;
             _format = format;

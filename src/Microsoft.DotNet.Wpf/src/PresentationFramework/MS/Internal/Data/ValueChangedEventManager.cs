@@ -66,10 +66,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddListener(object source, IWeakEventListener listener, PropertyDescriptor pd)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateAddListener(source, listener, pd);
         }
@@ -79,10 +77,8 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveListener(object source, IWeakEventListener listener, PropertyDescriptor pd)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(listener);
 
             CurrentManager.PrivateRemoveListener(source, listener, pd);
         }
@@ -92,10 +88,9 @@ namespace MS.Internal.Data
         /// </summary>
         public static void AddHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
             if (handler.GetInvocationList().Length != 1)
-                throw new NotSupportedException(SR.Get(SRID.NoMulticastHandlers));
+                throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateAddHandler(source, handler, pd);
         }
@@ -105,10 +100,9 @@ namespace MS.Internal.Data
         /// </summary>
         public static void RemoveHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
             if (handler.GetInvocationList().Length != 1)
-                throw new NotSupportedException(SR.Get(SRID.NoMulticastHandlers));
+                throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateRemoveHandler(source, handler, pd);
         }

@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 //using System.Runtime.CompilerServices;
 using System.Windows.Automation;
@@ -34,7 +33,7 @@ namespace MS.Internal.AutomationProxies
             return !IsInvalid ? CloseThemeData(handle) == (IntPtr)NativeMethods.S_OK : true;
         }
 
-        [DllImport("UxTheme.dll", CharSet = CharSet.Auto)/*, SuppressUnmanagedCodeSecurity*/]
+        [DllImport("UxTheme.dll", CharSet = CharSet.Auto)/**/]
         private static extern IntPtr CloseThemeData(IntPtr handle);
     }
 }

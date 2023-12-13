@@ -65,8 +65,7 @@ using System.Collections;           // Hashtable
 using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
-using System.Security;              // [SecuritySafeCritical]
-using System.Security.Permissions;  // [ReflectionPermission]
+using System.Security;              // 
 using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList
@@ -229,8 +228,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedAddListener(object source, IWeakEventListener listener)
         {
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             AddListener(source, listener, null);
         }
@@ -240,8 +238,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedRemoveListener(object source, IWeakEventListener listener)
         {
-            if (listener == null)
-                throw new ArgumentNullException("listener");
+            ArgumentNullException.ThrowIfNull(listener);
 
             RemoveListener(source, listener, null);
         }
@@ -251,8 +248,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedAddHandler(object source, Delegate handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             AddListener(source, null, handler);
         }
@@ -262,8 +258,7 @@ namespace System.Windows
         /// </summary>
         protected void ProtectedRemoveHandler(object source, Delegate handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             RemoveListener(source, null, handler);
         }
@@ -805,8 +800,8 @@ namespace System.Windows
                             if (!handled)
                             {
                                 Invariant.Assert(handled,
-                                            SR.Get(SRID.ListenerDidNotHandleEvent),
-                                            SR.Get(SRID.ListenerDidNotHandleEventDetail, iwel.GetType(), managerType));
+                                            SR.ListenerDidNotHandleEvent,
+                                            SR.Format(SR.ListenerDidNotHandleEventDetail, iwel.GetType(), managerType));
                             }
                         }
                     }

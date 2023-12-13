@@ -64,7 +64,7 @@
       </trans-unit>
       <trans-unit id="ArgumentRequired">
         <source>One of the following arguments must be non-null: '{0}'.</source>
-        <target state="translated">Jeden z następujących parametrów nie może być równy null: „{0}”.</target>
+        <target state="translated">Jeden z następujących argumentów nie może być równy null: „{0}”.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArrayAddNotImplemented">
@@ -394,7 +394,7 @@
       </trans-unit>
       <trans-unit id="DuplicateXmlnsCompatAcrossAssemblies">
         <source>There are conflicting XmlnsCompatibleWithAttributes in assemblies '{0}' and '{1}' for OldNamespace '{2}'. Change the attributes to have the same NewNamespace, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
-        <target state="translated">W zestawach „{0}” i „{1}” dla właściwości OldNamespace „{2}” występują kolidujące atrybuty XmlnsCompatibleWithAttributes. Ustaw dla tych atrybutów tę samą wartość właściwości NewNamespace lub przekaż zbiór niekolidujących ze sobą zestawów odwołań w konstruktorze XamlSchemaContext.</target>
+        <target state="translated">W zestawach „{0}” i „{1}” dla właściwości OldNamespace „{2}” występują będące w konflikcie atrybuty XmlnsCompatibleWithAttributes. Ustaw dla tych atrybutów tę samą wartość właściwości NewNamespace lub przekaż zbiór niebędących ze sobą w konflikcie zestawów odwołań w konstruktorze XamlSchemaContext.</target>
         <note />
       </trans-unit>
       <trans-unit id="Enum_Invalid">
@@ -988,8 +988,8 @@
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeCannotRoundtrip">
-        <source>Unable to read objects of the type �{0}� because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
-        <target state="translated">Nie można odczytać obiektów typu �{0}�, ponieważ są one niedostępne dla konstruktorów. Aby zezwolić na używanie tego typu w kodzie XAML, dodaj konstruktora domyślnego, użyj atrybutu ConstructorArgumentAttribute lub dostarcz obiekt InstanceDescriptor.</target>
+        <source>Unable to read objects of the type '{0}' because there are no accessible constructors. To allow this type to be used in XAML, add a default constructor, use ConstructorArgumentAttribute, or provide an InstanceDescriptor.</source>
+        <target state="translated">Nie można odczytać obiektów typu „{0}”, ponieważ nie istnieją dostępne konstruktory. Aby zezwolić na używanie tego typu w kodzie XAML, dodaj konstruktor domyślny, użyj atrybutu ConstructorArgumentAttribute lub dostarcz obiekt InstanceDescriptor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectReaderTypeIsNested">
@@ -1052,11 +1052,6 @@
         <target state="translated">Strumień węzłów XAML: brak metody EndMember dla elementu {0}.{1} przed metodą StartMember „{2}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Element właściwości „{0}” nie jest zawarty w elemencie obiektu.</target>
@@ -1110,11 +1105,6 @@
       <trans-unit id="ProvideValueCycle">
         <source>Cannot call MarkupExtension.ProvideValue because of a cyclical dependency. Properties inside a MarkupExtension cannot reference objects that reference the result of the MarkupExtension. The affected MarkupExtensions are:</source>
         <target state="translated">Nie można wywołać metody MarkupExtension.ProvideValue z powodu zależności cyklicznej. Właściwości wewnątrz obiektu MarkupExtension nie mogą odwoływać się do obiektów, które odwołują się do wyniku obiektu MarkupExtension. Chodzi o następujące obiekty MarkupExtension:</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Nazwa typu „{0}” nie ma oczekiwanego formatu „nazwaKlasy, zestaw”.</target>
         <note />
       </trans-unit>
       <trans-unit id="QuoteCharactersOutOfPlace">
@@ -1399,7 +1389,7 @@
       </trans-unit>
       <trans-unit id="UnresolvedNamespace">
         <source>XAML namespace '{0}' is not resolved.</source>
-        <target state="translated">Przestrzeń nazw  XAML „{0}” nie została rozpoznana.</target>
+        <target state="translated">Przestrzeń nazw XAML „{0}” nie została rozpoznana.</target>
         <note />
       </trans-unit>
       <trans-unit id="UriNotFound">
@@ -1459,7 +1449,7 @@
       </trans-unit>
       <trans-unit id="XCRCompatCycle">
         <source>There is a cycle of XML compatibility definitions, such that namespace '{0}' overrides itself. This could be due to inconsistent XmlnsCompatibilityAttributes in different assemblies. Please change the definitions to eliminate this cycle, or pass a non-conflicting set of Reference Assemblies in the XamlSchemaContext constructor.</source>
-        <target state="translated">Występuje cykl definicji zgodności z językiem XML powodujący, że przestrzeń nazw {0} przesłania siebie. Przyczyną mogą być niezgodne atrybuty XmlnsCompatibilityAttributes w różnych zestawach. Zmień definicję w celu wyeliminowania tego cyklu lub przekaż zbiór niekolidujących ze sobą zestawów odwołań w konstruktorze XamlSchemaContext.</target>
+        <target state="translated">Występuje cykl definicji zgodności z językiem XML powodujący, że przestrzeń nazw {0} przesłania siebie. Przyczyną mogą być niezgodne atrybuty XmlnsCompatibilityAttributes w różnych zestawach. Zmień definicję w celu wyeliminowania tego cyklu lub przekaż zbiór niebędących ze sobą w konflikcie zestawów odwołań w konstruktorze XamlSchemaContext.</target>
         <note />
       </trans-unit>
       <trans-unit id="XCRDuplicatePreserve">

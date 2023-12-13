@@ -11,7 +11,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusWisp;
@@ -19,7 +18,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -49,10 +47,7 @@ namespace System.Windows.Input
         /// <param name="impl">The base of the internal hierarchy</param>
         internal StylusDevice(StylusDeviceBase impl)
         {
-            if (impl == null)
-            {
-                throw new ArgumentNullException(nameof(impl));
-            }
+            ArgumentNullException.ThrowIfNull(impl);
 
             StylusDeviceImpl = impl;
         }
@@ -90,16 +85,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical - accesses critical data ( _inputSource)
-        ///     PublicOK - there is a demand.
-        ///                   this is safe as: 
-        ///                       there is a demand for the UI permissions in the code
-        /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical]
-            [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
             get
             {
                 return StylusDeviceImpl.ActiveSource;
@@ -155,15 +142,6 @@ namespace System.Windows.Input
         ///     to the current state (typically due to layout changes without Stylus changes).  
         ///     Has the same behavior as MouseDevice.Synchronize().
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - accesses SecurityCritical Data _inputSource.Value and _stylusLogic.
-        ///              - calls SecurityCritical code HwndSource.CriticalHandle, 
-        ///                StylusLogic.GetStylusPenContextForHwnd and 
-        ///                StylusLogic.InputManagerProcessInputEventsArgs (which can be used to spoof input).
-        ///     PublicOK: This code does take any inputs or outputs nor is this operation risky (no
-        ///               random Stylus input can be spoofed using this API).
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Synchronize()
         {
             StylusDeviceImpl.Synchronize();
@@ -247,11 +225,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Calculates the position of the stylus relative to a particular element.
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical - accesses critical data _inputSource.Value
-        ///     PublicOK - we do the elevation of _inputSource to get RootVisual.
-        ///</SecurityNote>
-        [SecurityCritical]
         public Point GetPosition(IInputElement relativeTo)
         {
             VerifyAccess();
@@ -309,13 +282,8 @@ namespace System.Windows.Input
             get { return StylusDeviceImpl.DoubleTapDeltaY; }
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls SecurityCritical method StylusLogic.CurrentlStylusLogic.
-        /// TreatAsSafe: Takes no input and returns safe data (double tap info - time delta for double tap).
-        /// </SecurityNote>
         internal int DoubleTapDeltaTime
         {
-            [SecuritySafeCritical]
             get { return StylusDeviceImpl.DoubleTapDeltaTime; }
         }
 
@@ -353,13 +321,6 @@ namespace System.Windows.Input
         ///     This is the hook where the Input system (via the MouseDevice) can call back into
         ///     the Stylus system when we are processing Stylus events instead of Mouse events
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical:   References SecurityCriticalData _stylusLogic.
-        /// TreatAsSafe: Takes no securityCriticalInput and returns safe data (MouseButtonState).
-        ///                Called by MouseDevice for StylusDevice promoted mouse events to query
-        ///                the mouse button state that should be reported.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal MouseButtonState GetMouseButtonState(MouseButton mouseButton, MouseDevice mouseDevice)
         {
             return StylusDeviceImpl.GetMouseButtonState(mouseButton, mouseDevice);

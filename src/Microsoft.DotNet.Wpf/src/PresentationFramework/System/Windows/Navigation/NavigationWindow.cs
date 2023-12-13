@@ -71,9 +71,7 @@ namespace System.Windows.Navigation
             get { return (bool) GetValue(SandboxExternalContentProperty); }
             set
             {
-                // This feature is disabled in partial trust due to a P3P violation
                 bool fSandBox = (bool)value;
-                SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
                 SetValue(SandboxExternalContentProperty, fSandBox);
             }
         }
@@ -87,9 +85,7 @@ namespace System.Windows.Navigation
         {
             NavigationWindow window = (NavigationWindow)d;
 
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)e.NewValue;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             if (fSandBox && !(bool)e.OldValue)
             {
                 window.NavigationService.Refresh();
@@ -99,9 +95,7 @@ namespace System.Windows.Navigation
 
         private static object CoerceSandBoxExternalContentValue(DependencyObject d, object value)
         {
-            // This feature is disabled in partial trust due to a P3P violation
             bool fSandBox = (bool)value;
-            SecurityHelper.ThrowExceptionIfSettingTrueInPartialTrust(ref fSandBox);
             return fSandBox;
         }
 
@@ -224,11 +218,6 @@ namespace System.Windows.Navigation
             this.Initialize();
         }
 
-        /// <SecurityNote>
-        ///     The only scenarios where we're currently going to enable creation of Windows is with RootBrowserWindow.
-        ///	    Do not call it outside the scope of the RBW scenario
-        /// </SecurityNote>
-        [SecurityCritical]
         internal NavigationWindow(bool inRbw): base(inRbw)
         {
             this.Initialize();
@@ -433,13 +422,6 @@ namespace System.Windows.Navigation
         /// The plan is to have a property on Window to turn it on and off. EnsureVisual and the ID will be removed when we do that.
         /// This is tracked in task #12401
         /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code acceses Handle
-        ///     PublicOK: The call to SetWindowThemeAttribute will throw a demand.
-        ///     In the RBW case if WCP_SYSTEM_THEMES_ENABLED is true this call is a NO OP
-        ///     else it will demand
-        /// </SecurityNote>
-        [SecurityCritical]
         public override void OnApplyTemplate()
         {
             VerifyContextAndObjectState( );
@@ -873,7 +855,7 @@ namespace System.Windows.Navigation
         /// </summary>
         protected override void AddChild(object value)
         {
-            throw new InvalidOperationException(SR.Get(SRID.NoAddChild));
+            throw new InvalidOperationException(SR.NoAddChild);
         }
 
         /// <summary>

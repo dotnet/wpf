@@ -195,7 +195,7 @@ namespace MS.Internal.Ink
                 //
                 // it takes at least 3 points to create a lasso
                 //
-                return new StrokeIntersection[0];
+                return Array.Empty<StrokeIntersection>();
             }
 
             //
@@ -308,7 +308,7 @@ namespace MS.Internal.Ink
                 }
                 else
                 {
-                    return new StrokeIntersection[0];
+                    return Array.Empty<StrokeIntersection>();
                 }
             }
 
@@ -537,7 +537,7 @@ namespace MS.Internal.Ink
         private List<Point>             _points;
         private Rect                    _bounds                 = Rect.Empty;
         private bool                    _incrementalLassoDirty  = false;
-        private static readonly double  MinDistance             = 1.0;
+        private const double MinDistance = 1.0;
 
         #endregion
 

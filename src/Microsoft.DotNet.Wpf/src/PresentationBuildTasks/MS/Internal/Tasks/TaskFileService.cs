@@ -125,7 +125,7 @@ namespace MS.Internal
 
             if (String.IsNullOrEmpty(srcFile))
             {
-                throw new ArgumentNullException("srcFile");
+                throw new ArgumentNullException(nameof(srcFile));
             }
 
             if (HostFileManager != null)
@@ -217,7 +217,7 @@ namespace MS.Internal
 
             if (String.IsNullOrEmpty(srcFile))
             {
-                throw new ArgumentNullException("srcFile");
+                throw new ArgumentNullException(nameof(srcFile));
             }
 
             if (IsFileInHostManager(srcFile))
@@ -243,7 +243,7 @@ namespace MS.Internal
 
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (HostFileManager != null)
@@ -265,7 +265,7 @@ namespace MS.Internal
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (IsFileInHostManager(fileName))
@@ -287,12 +287,12 @@ namespace MS.Internal
         {
             if (String.IsNullOrEmpty(destinationFile))
             {
-                throw new ArgumentNullException("destinationFile");
+                throw new ArgumentNullException(nameof(destinationFile));
             }
 
             if (contentArray == null)
             {
-                throw new ArgumentNullException("contentArray");
+                throw new ArgumentNullException(nameof(contentArray));
             }
 
             UTF8Encoding utf8Encoding = new UTF8Encoding();
@@ -331,12 +331,12 @@ namespace MS.Internal
         {
             if (String.IsNullOrEmpty(destinationFileBaseName))
             {
-                throw new ArgumentNullException("destinationFileBaseName");
+                throw new ArgumentNullException(nameof(destinationFileBaseName));
             }
 
             if (contentArray == null)
             {
-                throw new ArgumentNullException("contentArray");
+                throw new ArgumentNullException(nameof(contentArray));
             }
 
             string buildFile = destinationFileBaseName + generatedExtension + languageSourceExtension;

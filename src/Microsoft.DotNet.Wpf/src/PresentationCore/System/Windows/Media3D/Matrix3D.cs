@@ -33,7 +33,6 @@ using System.Windows.Markup;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -664,7 +663,7 @@ namespace System.Windows.Media.Media3D
         {
             if (!InvertCore())
             {
-                throw new InvalidOperationException(SR.Get(SRID.Matrix3D_NotInvertible, null));
+                throw new InvalidOperationException(SR.Format(SR.Matrix3D_NotInvertible, null));
             }
         }
 

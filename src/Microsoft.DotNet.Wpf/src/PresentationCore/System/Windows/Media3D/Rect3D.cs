@@ -21,7 +21,6 @@ using System.Reflection;
 using System.ComponentModel.Design.Serialization;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.Media3D
 {
@@ -77,7 +76,7 @@ namespace System.Windows.Media.Media3D
         {
             if (sizeX < 0 || sizeY < 0 || sizeZ < 0)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
             }
 
             _x = x;
@@ -111,7 +110,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="vector">Vector extending the rectangle from the location.</param>
         internal Rect3D(Point3D point, Vector3D vector): this(point, point+vector)
         {
-}
+        }
 
         #endregion Constructors
 
@@ -162,7 +161,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
 
                 _x = value._x;
@@ -193,7 +192,7 @@ namespace System.Windows.Media.Media3D
                 {
                     if (IsEmpty)
                     {
-                        throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                        throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                     }
 
                     _sizeX = value._x;
@@ -216,12 +215,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
 
                 _sizeX = value;
@@ -241,12 +240,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
                 
                 _sizeY = value;
@@ -266,12 +265,12 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
                 
                 if (value < 0)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Size3D_DimensionCannotBeNegative));
+                    throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
 
                 _sizeZ = value;
@@ -291,7 +290,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
 
                 _x = value;
@@ -311,7 +310,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
 
                 _y = value;
@@ -331,7 +330,7 @@ namespace System.Windows.Media.Media3D
             {
                 if (IsEmpty)
                 {
-                    throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotModifyEmptyRect));
+                    throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
 
                 _z = value;
@@ -540,7 +539,7 @@ namespace System.Windows.Media.Media3D
         {
             if (IsEmpty)
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.Rect3D_CannotCallMethod));
+                throw new System.InvalidOperationException(SR.Rect3D_CannotCallMethod);
             }
             
             _x += offsetX;

@@ -19,7 +19,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Text;

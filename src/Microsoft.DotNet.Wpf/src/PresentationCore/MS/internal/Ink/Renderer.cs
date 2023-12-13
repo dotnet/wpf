@@ -46,10 +46,7 @@ namespace System.Windows.Ink
             {
                 Debug.Assert(renderer != null);
 
-                if (stroke == null)
-                {
-                    throw new System.ArgumentNullException("stroke");
-                }
+                ArgumentNullException.ThrowIfNull(stroke);
 
                 _stroke = stroke;
                 _renderer = renderer;
@@ -232,10 +229,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                if (value == null)
-                {
-                    throw new System.ArgumentNullException("value");
-                }
+                ArgumentNullException.ThrowIfNull(value);
                 if (value == _strokes)
                 {
                     return;
@@ -288,14 +282,8 @@ namespace System.Windows.Ink
         internal void AttachIncrementalRendering(Visual visual, DrawingAttributes drawingAttributes)
         {
             // Check the input parameters
-            if (visual == null)
-            {
-                throw new System.ArgumentNullException("visual");
-            }
-            if (drawingAttributes == null)
-            {
-                throw new System.ArgumentNullException("drawingAttributes");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
+            ArgumentNullException.ThrowIfNull(drawingAttributes);
 
             //harden against eaten exceptions
             bool exceptionRaised = false;
@@ -308,7 +296,7 @@ namespace System.Windows.Ink
                     if (visual == alreadyAttachedVisual)
                     {
                         exceptionRaised = true;
-                        throw new System.InvalidOperationException(SR.Get(SRID.CannotAttachVisualTwice));
+                        throw new System.InvalidOperationException(SR.CannotAttachVisualTwice);
                     }
                 }
             }
@@ -339,15 +327,12 @@ namespace System.Windows.Ink
         /// <param name="visual">the visual to detach</param>
         internal void DetachIncrementalRendering(Visual visual)
         {
-            if (visual == null)
-            {
-                throw new System.ArgumentNullException("visual");
-            }
+            ArgumentNullException.ThrowIfNull(visual);
 
             // Remove the visual in the list of attached via AttachIncrementalRendering
             if ((_attachedVisuals == null) || (_attachedVisuals.Remove(visual) == false))
             {
-                throw new System.InvalidOperationException(SR.Get(SRID.VisualCannotBeDetached));
+                throw new System.InvalidOperationException(SR.VisualCannotBeDetached);
             }
 
             // Detach it from the tree
@@ -458,7 +443,7 @@ namespace System.Windows.Ink
                 // Verify that it's not a dupe
                 if (_visuals.ContainsKey(stroke))
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.DuplicateStrokeAdded));
+                    throw new System.ArgumentException(SR.DuplicateStrokeAdded);
                 }
 
                 // Create a visual for the new stroke and add it to the dictionary
@@ -486,7 +471,7 @@ namespace System.Windows.Ink
                 }
                 else
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.UnknownStroke3));
+                    throw new System.ArgumentException(SR.UnknownStroke3);
                 }
             }
         }
@@ -503,7 +488,7 @@ namespace System.Windows.Ink
             Stroke stroke = (Stroke)sender;
             if (_visuals.TryGetValue(stroke, out visual) == false)
             {
-                throw new System.ArgumentException(SR.Get(SRID.UnknownStroke1));
+                throw new System.ArgumentException(SR.UnknownStroke1);
             }
 
             // The original value of IsHighligher and Color are cached in StrokeVisual.
@@ -722,7 +707,7 @@ namespace System.Windows.Ink
         // List of visuals attached via AttachIncrementalRendering
         private List<Visual> _attachedVisuals = null;
 
-        // Whhen true, will render in high contrast mode
+        // When true, will render in high contrast mode
         private bool _highContrast;
         private Color _highContrastColor = Colors.White;
 

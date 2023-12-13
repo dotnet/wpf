@@ -1292,11 +1292,6 @@
         <target state="translated">L'objet de référence spécifié est en conflit avec la référence prédéfinie spécifique au package.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Le paramètre doit être supérieur ou égal à zéro.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeBetween">
         <source>The parameter value must be between '{0}' and '{1}'.</source>
         <target state="translated">La valeur du paramètre doit être comprise entre '{0}' et '{1}'.</target>
@@ -1415,11 +1410,6 @@
       <trans-unit id="PublishLicenseStreamHeaderTooLong">
         <source>Variable-length header in publish license stream is {0} bytes, which exceeds the maximum length of {1} bytes.</source>
         <target state="translated">L'en-tête de longueur variable du flux de licence de publication est de {0} octets, ce qui dépasse la longueur maximale fixée à {1} octets.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="QualifiedNameHasWrongFormat">
-        <source>'{0}' type name does not have the expected format 'className, assembly'.</source>
-        <target state="translated">Le nom de type '{0}' n'a pas le format attendu 'className, assembly'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ReachOutOfRange">
@@ -2099,7 +2089,7 @@
       </trans-unit>
       <trans-unit id="SignatureOriginNotFound">
         <source>Relationship was found to the signature origin but the part is missing. Package signature structures are corrupted.</source>
-        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature du package sont endommagées.</target>
+        <target state="translated">Une relation a été trouvée avec l'origine de la signature, mais le composant est manquant. Les structures de signature de package sont endommagées.</target>
         <note />
       </trans-unit>
       <trans-unit id="SignaturePackageObjectTagMustBeUnique">

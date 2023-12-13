@@ -10,7 +10,6 @@
 //
 
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Globalization;
 using System.Windows.Threading;
@@ -191,11 +190,6 @@ namespace System.Windows.Input
         /// <summary>
         ///    This creates ITfInputProcessorProfile object and advice sink.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code (initializing input)
-        /// TreatAsSafe - ok to call any number of times
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void EnsureInputProcessorProfile()
         {
             // _ipp has been initialzied. Don't do this again.

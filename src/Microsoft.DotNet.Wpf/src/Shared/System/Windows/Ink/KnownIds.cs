@@ -296,7 +296,6 @@ namespace System.Windows.Ink
         internal static string ConvertToString (Guid id)
         {
 
-            // Assert Reflection permissions shouldn't be required since we are only accessing public members
             if (null == PublicMemberInfo)
             {
                 PublicMemberInfo = typeof(KnownIds).FindMembers(System.Reflection.MemberTypes.Field,
@@ -315,7 +314,7 @@ namespace System.Windows.Ink
                                 System.Reflection.BindingFlags.Instance |
                                 System.Reflection.BindingFlags.Public |
                                 System.Reflection.BindingFlags.Default,
-                                null, null, new object[]{},
+                                null, null, Array.Empty<object>(),
                                 System.Globalization.CultureInfo.InvariantCulture) )
                 {
                     return info.Name;

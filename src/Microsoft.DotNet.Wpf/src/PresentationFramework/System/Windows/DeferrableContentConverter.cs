@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Collections;
@@ -44,17 +44,14 @@ namespace System.Windows
         {
             if (value != null)
             {
-                if (context == null)
-                {
-                    throw new ArgumentNullException("context");
-                }
+                ArgumentNullException.ThrowIfNull(context);
 
                 XamlSchemaContext xamlSchemaContext =
                     RequireService<IXamlSchemaContextProvider>(context).SchemaContext;
                 Baml2006SchemaContext schemaContext = xamlSchemaContext as Baml2006SchemaContext;
                 if (schemaContext == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ExpectedBamlSchemaContext));
+                    throw new InvalidOperationException(SR.ExpectedBamlSchemaContext);
                 }
 
                 IXamlObjectWriterFactory objectWriterFactory =
@@ -67,7 +64,7 @@ namespace System.Windows
                 ResourceDictionary dictionary = ipvt.TargetObject as ResourceDictionary;
                 if (dictionary == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ExpectedResourceDictionaryTarget));
+                    throw new InvalidOperationException(SR.ExpectedResourceDictionaryTarget);
                 }
 
                 Stream stream = value as Stream;
@@ -81,7 +78,7 @@ namespace System.Windows
                 }
                 if (stream == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ExpectedBinaryContent));
+                    throw new InvalidOperationException(SR.ExpectedBinaryContent);
                 }
 
                 // we shouldn't pass around the service provider
@@ -98,7 +95,7 @@ namespace System.Windows
             T result = provider.GetService(typeof(T)) as T;
             if (result == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DeferringLoaderNoContext, typeof(DeferrableContentConverter).Name, typeof(T).Name));
+                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, typeof(DeferrableContentConverter).Name, typeof(T).Name));
             }
             return result;
         }

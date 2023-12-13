@@ -108,13 +108,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOCUSBORDERWIDTH
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the size of the dotted rectangle around a selected obj
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusBorderWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -144,13 +139,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOCUSBORDERHEIGHT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the size of the dotted rectangle around a selected obj
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusBorderHeight
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -180,14 +170,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETHIGHCONTRAST -> HCF_HIGHCONTRASTON
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        ///  PublicOK - considered ok to expose since the method doesn't take user input and only
-        ///                returns a boolean value which indicates the current high contrast mode.
-        /// </SecurityNote>
         public static bool HighContrast
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -218,14 +202,9 @@ namespace System.Windows
         /// <summary>
         /// Maps to SPI_GETMOUSEVANISH.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical -- calling UnsafeNativeMethods
-        ///  PublicOK - considered ok to expose.
-        /// </SecurityNote>
         // If this becomes public, it will need a matching ResourceKey.
         internal static bool MouseVanish
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -314,13 +293,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETDROPSHADOW
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool DropShadow
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -347,14 +321,9 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFLATMENU
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool FlatMenu
         {
 
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -381,13 +350,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETWORKAREA
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  TreatAsSafe - Okay to expose info to internet callers.
-        /// </SecurityNote>
         internal static NativeMethods.RECT WorkAreaInternal
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -493,13 +457,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETICONMETRICS
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  TreatAsSafe - Okay to expose info to internet callers.
-        ///</SecurityNote>
         internal static NativeMethods.ICONMETRICS IconMetrics
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -617,14 +576,8 @@ namespace System.Windows
         ///     Maps to SPI_GETKEYBOARDCUES
         /// </summary>
         ///
-        /// <SecurityNote>
-        /// Demanding unmanaged code permission because calling an unsafe native method.
-        ///  SecurityCritical because it calls an unsafe native method.  PublicOK because is demanding unmanaged code perm.
-        /// PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool KeyboardCues
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -651,13 +604,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDDELAY
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting keyboard repeat delay
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static int KeyboardDelay
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -684,13 +632,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDPREF
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool KeyboardPreference
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -717,13 +660,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETKEYBOARDSPEED
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting keyboard repeat-speed
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static int KeyboardSpeed
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -750,13 +688,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSNAPTODEFBUTTON
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool SnapToDefaultButton
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -783,13 +716,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETWHEELSCROLLLINES
         /// </summary>
-        /// <SecurityNote>
-        ///     Get is PublicOK -- Determined safe: Geting the number of lines to scroll when the mouse wheel is rotated. \
-        ///     Get is Critical -- Calling unsafe native methods.
-        /// </SecurityNote>
         public static int WheelScrollLines
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -824,13 +752,8 @@ namespace System.Windows
             }
         }
 
-        /// <SecurityNote>
-        ///    TreatAsSafe -- Determined safe: getting time mouse pointer has to stay in the hover rectangle for TrackMouseEvent to generate a WM_MOUSEHOVER message.
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         internal static int MouseHoverTimeMilliseconds
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -857,13 +780,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMOUSEHOVERHEIGHT.
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: gettingthe height, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MouseHoverHeight
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -894,13 +812,8 @@ namespace System.Windows
         ///     Maps to SPI_GETMOUSEHOVERWIDTH.
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting the width, in pixels, of the rectangle within which the mouse pointer has to stay for TrackMouseEvent to generate a WM_MOUSEHOVER message
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MouseHoverWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1083,14 +996,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUDROPALIGNMENT
         /// </summary>
-        /// <SecurityNote>
-        /// Demanding unmanaged code permission because calling an unsafe native method.
-        /// Critical - get: it calls an unsafe native method
-        /// PublicOK - get: it's safe to expose a menu drop alignment of a system.
-        /// </SecurityNote>
         public static bool MenuDropAlignment
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1116,13 +1023,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUFADE
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - because it calls an unsafe native method
-        /// PublicOK - ok to return menu fade data
-        /// </SecurityNote>
         public static bool MenuFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1149,14 +1051,9 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUSHOWDELAY
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls a method that perfoms an elevation.
-        ///     PublicOK - considered ok to expose in partial trust.
-        /// </SecurityNote>
         public static int MenuShowDelay
         {
 
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1255,15 +1152,10 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCOMBOBOXANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
 
         public static bool ComboBoxAnimation
         {
 
-            [SecurityCritical ]
             get
             {
 
@@ -1291,13 +1183,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCLIENTAREAANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK: This information is ok to give out
-        /// </SecurityNote>
         public static bool ClientAreaAnimation
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -1332,13 +1219,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCURSORSHADOW
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool CursorShadow
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1365,13 +1247,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETGRADIENTCAPTIONS
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool GradientCaptions
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1398,13 +1275,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETHOTTRACKING
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool HotTracking
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1431,13 +1303,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETLISTBOXSMOOTHSCROLLING
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool ListBoxSmoothScrolling
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1487,13 +1354,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETMENUANIMATION
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls SystemParametersInfo
-        ///     PublicOK - net information returned is whether menu-animation is enabled. Considered safe.
-        /// </SecurityNote>
         public static bool MenuAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1520,13 +1382,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSELECTIONFADE
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool SelectionFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1553,13 +1410,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETSTYLUSHOTTRACKING
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool StylusHotTracking
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1603,13 +1455,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETTOOLTIPANIMATION
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static bool ToolTipAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1636,13 +1483,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETTOOLTIPFADE
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static bool ToolTipFade
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1669,13 +1511,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETUIEFFECTS
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool UIEffects
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1950,13 +1787,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETANIMATION
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static bool MinimizeAnimation
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -1986,13 +1818,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETBORDER
         /// </summary>
-        ///<SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        ///</SecurityNote>
         public static int Border
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2019,13 +1846,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETCARETWIDTH
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK -- Determined safe: getting width of caret
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CaretWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2036,6 +1858,9 @@ namespace System.Windows
 
                         int caretWidth = 0;
 
+#if NEVER
+                        // this code would work if the OS treated SPI_GETCARETWIDTH
+                        // like all the other metrics, scaling it to the primary monitor's DPI
                         if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETCARETWIDTH, 0, ref caretWidth, 0))
                         {
                             _caretWidth = ConvertPixel(caretWidth);
@@ -2045,6 +1870,24 @@ namespace System.Windows
                             _cacheValid[(int)CacheSlot.CaretWidth] = false;
                             throw new Win32Exception();
                         }
+#else
+                        // the OS doesn't scale SPI_GETCARETWIDTH to the primary monitor's DPI,
+                        // so we should not apply the ConvertPixel adjustment.
+                        // Call SPI in "unaware" mode;  this ensures we won't break
+                        // if the OS decides to "fix" their anomalous behavior.
+                        using (DpiUtil.WithDpiAwarenessContext(MS.Utility.DpiAwarenessContextValue.Unaware))
+                        {
+                            if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETCARETWIDTH, 0, ref caretWidth, 0))
+                            {
+                                _caretWidth = (double)caretWidth;
+                            }
+                            else
+                            {
+                                _cacheValid[(int)CacheSlot.CaretWidth] = false;
+                                throw new Win32Exception();
+                            }
+                        }
+#endif
                     }
                 }
 
@@ -2055,13 +1898,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETDRAGFULLWINDOWS
         /// </summary>
-        /// <SecurityNote>
-        ///  SecurityCritical because it calls an unsafe native method.
-        ///  PublicOK - Okay to expose info to internet callers.
-        /// </SecurityNote>
         public static bool DragFullWindows
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2088,14 +1926,9 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETFOREGROUNDFLASHCOUNT
         /// </summary>
-        /// <SecurityNote>
-        ///     Get is PublicOK -- Getting # of times taskbar button will flash when rejecting a forecground switch request.
-        ///     Get is Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
 
         public static int ForegroundFlashCount
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2122,13 +1955,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SPI_GETNONCLIENTMETRICS
         /// </summary>
-        /// <SecurityNote>
-        ///      SecurityCritical because it calls an unsafe native method.
-        ///      SecurityTreatAsSafe as we think this would be ok to expose publically - and this is ok for consumption in partial trust.
-        /// </SecurityNote>
         internal static NativeMethods.NONCLIENTMETRICS NonClientMetrics
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 lock (_cacheValid)
@@ -2471,13 +2299,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThinHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2497,13 +2320,8 @@ namespace System.Windows
         ///     Maps to SM_CYBORDER
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThinVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2522,13 +2340,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXCURSOR
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CursorWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2547,13 +2360,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYCURSOR
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double CursorHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2572,13 +2380,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXEDGE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThickHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2597,13 +2400,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYEDGE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ThickVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2622,13 +2420,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical - calls into native code (GetSystemMetrics)
-        ///    PublicOK - Safe data to expose
-        /// </SecurityNote>
         public static double MinimumHorizontalDragDistance
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2647,13 +2440,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYDRAG
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical - calls into native code (GetSystemMetrics)
-        ///    PublicOK - Safe data to expose
-        /// </SecurityNote>
         public static double MinimumVerticalDragDistance
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -2672,13 +2460,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXFIXEDFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FixedFrameHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2697,13 +2480,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYFIXEDFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FixedFrameVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2722,13 +2500,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXFOCUSBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2747,13 +2520,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYFOCUSBORDER
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FocusVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2776,16 +2544,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FullPrimaryScreenWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.FullPrimaryScreenWidth])
@@ -2805,16 +2567,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double FullPrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.FullPrimaryScreenHeight])
@@ -2831,13 +2587,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXHSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2856,13 +2607,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYHSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2881,13 +2627,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXHTHUMB
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double HorizontalScrollBarThumbWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2906,13 +2647,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2931,13 +2667,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2956,13 +2687,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXICONSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconGridWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -2981,13 +2707,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYICONSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double IconGridHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3009,16 +2730,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximizedPrimaryScreenWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximizedPrimaryScreenWidth])
@@ -3038,16 +2753,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximizedPrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximizedPrimaryScreenHeight])
@@ -3067,16 +2776,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximumWindowTrackWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximumWindowTrackWidth])
@@ -3096,16 +2799,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MaximumWindowTrackHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MaximumWindowTrackHeight])
@@ -3122,13 +2819,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMENUCHECK
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuCheckmarkWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3147,13 +2839,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMENUCHECK
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuCheckmarkHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3172,13 +2859,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMENUSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3197,13 +2879,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMENUSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3225,16 +2902,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowWidth])
@@ -3254,16 +2925,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowHeight])
@@ -3283,16 +2948,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK -- There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedWindowWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimizedWindowWidth])
@@ -3312,16 +2971,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedWindowHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimizedWindowHeight])
@@ -3338,13 +2991,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMINSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedGridWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3363,13 +3011,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMINSPACING
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimizedGridHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3391,16 +3034,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exist a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowTrackWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowTrackWidth])
@@ -3420,16 +3057,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MinimumWindowTrackHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MinimumWindowTrackHeight])
@@ -3446,13 +3077,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --  This is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double PrimaryScreenWidth
         {
-            [SecurityCritical ]
             get
             {
                 lock (_cacheValid)
@@ -3471,13 +3097,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSCREEN
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --This is safe to expose
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double PrimaryScreenHeight
         {
-            [SecurityCritical]
             get
             {
 
@@ -3500,16 +3121,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionButtonWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.WindowCaptionButtonWidth])
@@ -3526,13 +3141,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3552,13 +3162,8 @@ namespace System.Windows
         ///     Maps to SM_CXSIZEFRAME
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ResizeFrameHorizontalBorderHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3577,13 +3182,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSIZEFRAME
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double ResizeFrameVerticalBorderWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3602,13 +3202,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSMICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallIconWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3627,13 +3222,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSMICON
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallIconHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3652,13 +3242,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSMSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallWindowCaptionButtonWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3677,13 +3262,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYSMSIZE
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double SmallWindowCaptionButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3705,16 +3285,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenWidth
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenWidth])
@@ -3734,16 +3308,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenHeight])
@@ -3761,13 +3329,8 @@ namespace System.Windows
         ///     Maps to SM_CXVSCROLL
         /// </summary>
         ///
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarWidth
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3786,13 +3349,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYVSCROLL
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarButtonHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3814,16 +3372,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double WindowCaptionHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.WindowCaptionHeight])
@@ -3844,16 +3396,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double KanjiWindowHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.KanjiWindowHeight])
@@ -3873,16 +3419,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double MenuBarHeight
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.MenuBarHeight])
@@ -3899,13 +3439,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYVTHUMB
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VerticalScrollBarThumbHeight
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -3927,16 +3462,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand in this code.
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsImmEnabled
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsImmEnabled])
@@ -3957,16 +3486,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMediaCenter
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsMediaCenter])
@@ -3983,13 +3506,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MENUDROPALIGNMENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMenuDropRightAligned
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4011,16 +3529,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --There exists a demand
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMiddleEastEnabled
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsMiddleEastEnabled])
@@ -4037,13 +3549,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MOUSEPRESENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMousePresent
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4062,13 +3569,8 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MOUSEWHEELPRESENT
         /// </summary>
-        /// <SecurityNote>
-        ///    PublicOK --System Metrics are deemed safe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsMouseWheelPresent
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -4090,16 +3592,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Deemed as unsafe
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsPenWindows
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsPenWindows])
@@ -4119,16 +3615,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsRemotelyControlled
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsRemotelyControlled])
@@ -4148,16 +3638,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demand Unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsRemoteSession
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsRemoteSession])
@@ -4177,16 +3661,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demand Unmanaged Code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool ShowSounds
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.ShowSounds])
@@ -4206,16 +3684,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsSlowMachine
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsSlowMachine])
@@ -4235,16 +3707,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool SwapButtons
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.SwapButtons])
@@ -4264,16 +3730,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK -- Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static bool IsTabletPC
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.IsTabletPC])
@@ -4293,16 +3753,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenLeft
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenLeft])
@@ -4322,16 +3776,10 @@ namespace System.Windows
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        ///    PublicOK --Demands unmanaged code
-        ///    Security Critical -- Calling UnsafeNativeMethods
-        /// </SecurityNote>
         public static double VirtualScreenTop
         {
-            [SecurityCritical]
             get
             {
-                SecurityHelper.DemandUnmanagedCode();
                 lock (_cacheValid)
                 {
                     while (!_cacheValid[(int)CacheSlot.VirtualScreenTop])
@@ -5515,13 +4963,8 @@ namespace System.Windows
         /// <summary>
         ///     Indicates current Power Status
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this code elevates.
-        /// PublicOK - as we think this is ok to expose.
-        ///</SecurityNote>
         public static PowerLineStatus PowerLineStatus
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6063,12 +5506,8 @@ namespace System.Windows
         ///     It turns out there may be some lag between someone asking this
         ///     and the window getting updated.  It's not too expensive, just always do the check
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static bool IsGlassEnabled
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6087,14 +5526,10 @@ namespace System.Windows
         /// <summary>
         ///     The current Windows system theme's name.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeName
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6126,14 +5561,10 @@ namespace System.Windows
         /// <summary>
         ///     The current Windows system theme's color.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
         public static string UxThemeColor
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6167,12 +5598,8 @@ namespace System.Windows
         ///     It instead is a logical size that we're approximating based on the current theme.
         ///     There aren't any known variations based on theme color.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static CornerRadius WindowCornerRadius
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6229,12 +5656,8 @@ namespace System.Windows
         /// <summary>
         ///     Color representing the DWM glass for windows in the Aero theme.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Color WindowGlassColor
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6259,12 +5682,8 @@ namespace System.Windows
         /// <summary>
         ///     Brush representing the DWM glass for windows in the Aero theme.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Brush WindowGlassBrush
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6287,12 +5706,8 @@ namespace System.Windows
         /// <summary>
         ///     Standard thickness of the resize border of a window.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Thickness WindowResizeBorderThickness
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6316,12 +5731,8 @@ namespace System.Windows
         /// <summary>
         ///     Standard thickness of the non-client frame around a window.
         /// </summary>
-        /// <SecurityNote>
-        ///  Critical as this code does an elevation.
-        /// </SecurityNote>
         public static Thickness WindowNonClientFrameThickness
         {
-            [SecurityCritical]
             get
             {
                 lock (_cacheValid)
@@ -6351,13 +5762,8 @@ namespace System.Windows
             }
         }
 
-        ///<SecurityNote>
-        ///  Critical as this accesses Native methods.
-        ///  TreatAsSafe - it would be ok to expose this information - DPI in partial trust
-        ///</SecurityNote>
         internal static int DpiX
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_setDpiX)

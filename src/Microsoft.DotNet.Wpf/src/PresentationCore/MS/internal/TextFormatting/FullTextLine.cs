@@ -23,7 +23,6 @@ using MS.Internal;
 using MS.Internal.Shaping;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -155,13 +154,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Disposing LS unmanaged memory for text line
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls LoFinalizeLine, LoDestroyLine and _ploline.Value which
-            ///            are all critical functions.
-            /// Safe - as this does not take any pointer parameters that it passes directly to
-            ///        the Critical functions.  _ploline.Value is critical for set.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void DisposeInternal(bool finalizing)
             {
                 if (_ploline.Value != System.IntPtr.Zero)
@@ -177,11 +169,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Empty private constructor
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls the constructor for  SecurityCriticalDataForSet.
-            /// Safe - as this just initializes it with the default value.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private FullTextLine(TextFormattingMode textFormattingMode, bool justify, double pixelsPerDip) : base(pixelsPerDip)
             {
                 _textFormattingMode = textFormattingMode;
@@ -206,14 +193,6 @@ namespace MS.Internal.TextFormatting
             /// <param name="paragraphWidth">paragraph width</param>
             /// <param name="lineFlags">line formatting control flags</param>
             /// <param name="collapsingSymbol">line end collapsing symbol</param>
-            /// <SecurityNote>
-            /// Critical - as this calls the setter for _ploline.Value which is type SecurityCriticalDataForSet.
-            ///            _ploc is critical for set as it's required to properly match the LS context used to
-            ///            format the line during display time.
-            /// Safe - as this doesn't get set to a random parameter passed in but rather to a value returned
-            ///        by a safe function TextFormatterContext.CreateLine().
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void FormatLine(
                 FullTextState           fullText,
                 int                     cpFirst,
@@ -340,7 +319,7 @@ namespace MS.Internal.TextFormatting
                     else
                     {
                         // throw with LS error codes
-                        TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CreateLineFailure, lserr), lserr);
+                        TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CreateLineFailure, lserr), lserr);
                     }
                 }
 
@@ -567,14 +546,11 @@ namespace MS.Internal.TextFormatting
                 InvertAxes          inversion
                 )
             {
-                if (drawingContext == null)
-                {
-                    throw new ArgumentNullException("drawingContext");
-                }
+                ArgumentNullException.ThrowIfNull(drawingContext);
 
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 MatrixTransform antiInversion = TextFormatterImp.CreateAntiInversionTransform(
@@ -608,12 +584,6 @@ namespace MS.Internal.TextFormatting
             /// <param name="drawingContext">drawing surface</param>
             /// <param name="origin">offset to the line origin</param>
             /// <param name="antiInversion">anti-inversion transform applied on the surface</param>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoDisplayLine.
-            /// Safe - as this doesn't take any pointer parameters that are passed to
-            ///        LoDisplayLine directly for writing.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void DrawTextLine(
                 DrawingContext      drawingContext,
                 Point               origin,
@@ -668,7 +638,7 @@ namespace MS.Internal.TextFormatting
                         else
                         {
                             // throw with LS error codes
-                            TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.CreateLineFailure, lserr), lserr);
+                            TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.CreateLineFailure, lserr), lserr);
                         }
                     }
 
@@ -741,7 +711,7 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 if (    !HasOverflowed
@@ -855,7 +825,7 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 if (_collapsedRange == null)
@@ -879,7 +849,7 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 return CharacterHitFromDistance(ParagraphUToLSLineU(TextFormatterImp.RealToIdeal(distance)));
@@ -1012,7 +982,7 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _metrics._cchLength);
@@ -1172,7 +1142,7 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _metrics._cchLength);
@@ -1265,7 +1235,7 @@ namespace MS.Internal.TextFormatting
 
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 TextFormatterImp.VerifyCaretCharacterHit(characterHit, _cpFirst, _metrics._cchLength);
@@ -1525,15 +1495,12 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
-                if(textLength == 0)
-                {
-                    throw new ArgumentOutOfRangeException("textLength", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-                }
+                ArgumentOutOfRangeException.ThrowIfZero(textLength);
 
-                if(textLength < 0)
+                if (textLength < 0)
                 {
                     firstTextSourceCharacterIndex += textLength;
                     textLength = -textLength;
@@ -2097,16 +2064,16 @@ namespace MS.Internal.TextFormatting
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 if (_plsrunVector == null)
                 {
                     // return empty textspan when the line doesn't contain text runs.
-                    return new TextSpan<TextRun>[0];
+                    return Array.Empty<TextSpan<TextRun>>();
                 }
 
-                IList<TextSpan<TextRun>> lsrunList = new List<TextSpan<TextRun>>(2);
+                List<TextSpan<TextRun>> lsrunList = new List<TextSpan<TextRun>>(2);
 
                 TextRun lastTextRun = null;
                 int cchAcc = 0;
@@ -2153,17 +2120,11 @@ namespace MS.Internal.TextFormatting
             /// in the line. Through IndexedGlyphRun client can obtain glyph information of
             /// a text source character.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls the Critical function UnsafeNativeMethods.LoEnumLine.
-            /// Safe - as the IntPtr passed in is of type SecurityCriticalDataForSet which means
-            ///        it is tracked to make sure it can't be set to a random value.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public override IEnumerable<IndexedGlyphRun> GetIndexedGlyphRuns()
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 IEnumerable<IndexedGlyphRun> result = null;
@@ -2208,7 +2169,7 @@ namespace MS.Internal.TextFormatting
                         else
                         {
                             // throw with LS error codes
-                            TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.EnumLineFailure, lserr), lserr);
+                            TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.EnumLineFailure, lserr), lserr);
                         }
                     }
                 }
@@ -2223,17 +2184,11 @@ namespace MS.Internal.TextFormatting
             /// value back to TextFormatter as an input argument to TextFormatter.FormatLine when
             /// formatting the next line within the same paragraph.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls TextMetrics.GetTextLineBreak.
-            /// Safe - as it does not take parameter that being passed to the critical method or
-            ///        return sensitive data from the critical method.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public override TextLineBreak GetTextLineBreak()
             {
                 if ((_statusFlags & StatusFlags.IsDisposed) != 0)
                 {
-                    throw new ObjectDisposedException(SR.Get(SRID.TextLineHasBeenDisposed));
+                    throw new ObjectDisposedException(SR.TextLineHasBeenDisposed);
                 }
 
                 if ((_statusFlags & StatusFlags.HasCollapsed) != 0)
@@ -2490,12 +2445,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Wrapper to LoQueryLinePointPcp
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoQueryLinePointPcp.
-            /// Safe - as this doesn't take any parameters that are passed to
-            ///        LoQueryLineCpPpoint directly for writing.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void QueryLinePointPcp(
                 Point               ptQuery,
                 LsQSubInfo[]        subLineInfo,
@@ -2525,7 +2474,7 @@ namespace MS.Internal.TextFormatting
 
                 if(lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.QueryLineFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.QueryLineFailure, lserr), lserr);
                 }
 
                 if (lsTextCell.lscpEndCell < lsTextCell.lscpStartCell)
@@ -2549,12 +2498,6 @@ namespace MS.Internal.TextFormatting
             /// <summary>
             /// Wrapper to LoQueryLineCpPpoint
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - as this calls Critical function LoQueryLineCpPpoint.
-            /// Safe - as this doesn't take any parameters that are passed to
-            ///        LoQueryLineCpPpoint directly for writing.
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private void QueryLineCpPpoint(
                 int                 lscpQuery,
                 LsQSubInfo[]        subLineInfo,
@@ -2588,7 +2531,7 @@ namespace MS.Internal.TextFormatting
 
                 if(lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.QueryLineFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.QueryLineFailure, lserr), lserr);
                 }
 
                 if (lsTextCell.lscpEndCell < lsTextCell.lscpStartCell)

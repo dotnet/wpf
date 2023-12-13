@@ -9,7 +9,6 @@ namespace MS.Internal
     using System;
     using System.Diagnostics;
     using System.Security;
-    using System.Security.Permissions;
     using System.Threading;
     using System.IO;
     using MS.Internal.WindowsBase;
@@ -36,7 +35,7 @@ namespace MS.Internal
         {
             if (Thread.CurrentThread.GetApartmentState() != requiredState)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Verify_ApartmentState, requiredState));
+                throw new InvalidOperationException(SR.Format(SR.Verify_ApartmentState, requiredState));
             }
         }
 
@@ -53,11 +52,11 @@ namespace MS.Internal
             // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
             if (value == null)
             {
-                throw new ArgumentNullException(name, SR.Get(SRID.Verify_NeitherNullNorEmpty));
+                throw new ArgumentNullException(name, SR.Verify_NeitherNullNorEmpty);
             }
             if (value == "")
             {
-                throw new ArgumentException(SR.Get(SRID.Verify_NeitherNullNorEmpty), name);
+                throw new ArgumentException(SR.Verify_NeitherNullNorEmpty, name);
             }
         }
 
@@ -101,12 +100,12 @@ namespace MS.Internal
                 // Two nulls are considered equal, regardless of type semantics.
                 if (actual == null || actual.Equals(notExpected))
                 {
-                    throw new ArgumentException(SR.Get(SRID.Verify_AreNotEqual, notExpected), parameterName);
+                    throw new ArgumentException(SR.Format(SR.Verify_AreNotEqual, notExpected), parameterName);
                 }
             }
             else if (notExpected.Equals(actual))
             {
-                throw new ArgumentException(SR.Get(SRID.Verify_AreNotEqual, notExpected), parameterName);
+                throw new ArgumentException(SR.Format(SR.Verify_AreNotEqual, notExpected), parameterName);
             }
         }
 
@@ -122,7 +121,7 @@ namespace MS.Internal
 
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException(SR.Get(SRID.Verify_FileExists, filePath), parameterName);
+                throw new ArgumentException(SR.Format(SR.Verify_FileExists, filePath), parameterName);
             }
         }
     }

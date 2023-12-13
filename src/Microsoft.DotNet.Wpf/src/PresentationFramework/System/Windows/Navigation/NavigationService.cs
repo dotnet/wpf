@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Cache;
@@ -124,7 +123,7 @@ namespace System.Windows.Navigation
 
                 //Throw an exception if IUriContext is not implemented, any element can raise this event since it is public.
                 if (uc == null)
-                    throw new Exception(SR.Get(SRID.MustImplementIUriContext, typeof(IUriContext)));
+                    throw new Exception(SR.Format(SR.MustImplementIUriContext, typeof(IUriContext)));
 
                 bpu = BindUriHelper.GetUriToNavigate(dobj, uc.BaseUri, e.Uri);
             }
@@ -205,28 +204,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-#if NETFX
-                if (Application.InBrowserHostedApp())
-                {
-                    LaunchResult launched = LaunchResult.NotLaunched;
-
-                    if (SecurityHelper.AreStringTypesEqual(bpu.Scheme, BaseUriHelper.PackAppBaseUri.Scheme))
-                    {
-                        bpu = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(bpu);
-                    }
-
-                    launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, bpu, target, true /*IsTopLevelContainer*/);
-
-                    if (launched == LaunchResult.NotLaunched)
-                    {
-                        throw new System.Exception(SR.Get(SRID.FailToNavigateUsingHyperlinkTarget));
-                    }
-                }
-                else
-#endif
-                {
-                    throw new System.ArgumentException(SR.Get(SRID.HyperLinkTargetNotFound));
-                }
+                throw new System.ArgumentException(SR.HyperLinkTargetNotFound);
             }
         }
 
@@ -451,35 +429,6 @@ namespace System.Windows.Navigation
             return _journalScope;
         }
 
-        private bool IsParentedByBrowserWindow()
-        {
-            // We want to update browser related state only if
-            //
-            // 1.  There's no window associated with this NavigationService (meaning that this NavigationService)
-            //     was created by Application) and if we're hosted in the Browser i.e BCBS is not null
-            //
-            //       or
-            //
-            // 2.  The window associated with this NavigationService is a RootBrowserWindow (meaning that we're
-            //     hosted in the browser and RBW is navigated
-            //       and
-            //     we are not in a Frame with its own Journal.
-            //
-#if NETFX
-            if (this.Application != null &&
-                this.Application.CheckAccess())
-            {
-                if ((JournalScope != null && JournalScope.NavigatorHost is RootBrowserWindow) ||
-                    (JournalScope == null &&
-                    this.Application.BrowserCallbackServices != null))
-                {
-                    return true;
-                }
-            }
-#endif
-            return false;
-        }
-
         bool IsConsistent(NavigateInfo navInfo)
         {
             return navInfo == null
@@ -523,76 +472,6 @@ namespace System.Windows.Navigation
             return true;
         }
 
-#if NETFX
-        /// <summary>
-        /// When it is top level navigation away from loose XAML (not the intial navigation to the loose xaml,
-        /// nor a refresh), we want to delegate to the browser right away. There is no need to go through our
-        /// navigation process, because no matter what content type (xaml, html...) it is trying to navigate to,
-        /// we always let the browser handle it when it is top-level navigation from inside XamlViewer.
-        ///
-        /// V3 SP1 Optimization:
-        /// We can avoid the cost of recycling the host process when:
-        ///     1) The new content is from the same site-of-origin. This way there is no danger of cross-domain
-        ///         attacks made possible by poor cleanup. See SecurityNote below.
-        ///     2) We can update the address bar with the new URL, or there is no address bar, which is when
-        ///         XamlViewer is hosted in an HTML frame.
-        /// </summary>
-        /// <remarks>
-        /// This function may return false and we still end up delegating to the browser. This will be the
-        /// case when the top-level navigation is to something other than XAML. GetObjectFromResponse()
-        /// handles this case.
-        /// </remarks>
-        /// <SecurityNote>
-        /// There is no check for same site-of-origin here. A call to SecurityHelper.CallerHasWebPermission(
-        /// resolvedUri) could be added, but that would create an additional, redundant code path in
-        /// navigation. Here's what happens when the new URI is outside the site-of-origin:
-        ///     - For `http://, CreateWebRequest() gets a SecurityException and delegates to the browser.
-        ///     - For file://, HandleGetResponse() gets a SecurityException from
-        ///         (File)WebRequest.EndGetResponse() and similarly delegates to the browser.
-        /// </SecurityNote>
-        private bool ShouldDelegateXamlViewerNavigationToBrowser(NavigateInfo navigateInfo, Uri resolvedUri)
-        {
-            bool shouldDelegate = false;
-            if (BrowserInteropHelper.IsViewer)
-            {
-                Invariant.Assert(resolvedUri != null && resolvedUri.IsAbsoluteUri);
-                shouldDelegate = !BrowserInteropHelper.IsInitialViewerNavigation &&
-                    (navigateInfo == null || navigateInfo.NavigationMode != NavigationMode.Refresh) &&
-                    IsTopLevelContainer &&
-                    // except when we can update the address bar or we are in a frame:
-                    !(!BrowserInteropHelper.IsAvalonTopLevel || HasTravelLogIntegration);
-            }
-            return shouldDelegate;
-        }
-        
-
-        /// <SecurityNote>
-        /// Critical: Calls IBCS.UpdateAddressBar(), which can be used for URL spoofing.
-        /// Safe: The browser's address bar is updated only when XamlViewer navigates to another loose XAML
-        ///     file, with the URL of that file. (Also when doing fragment navigation within a document.)
-        ///     To prevent spoofing of _currentSource with a URL outside the site of origin, a web permission
-        ///     Demand is made. (It's okay for a site to show one page while the address bar is pointing to
-        ///     another from the same site. This is equivalent to using a frame that occupies the entire
-        ///     content area...)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        void UpdateAddressBarForLooseXaml()
-        {
-            if (BrowserInteropHelper.IsViewer && !BrowserInteropHelper.IsInitialViewerNavigation &&
-                IsTopLevelContainer)
-            {
-                Uri source = _currentSource;
-                if (PackUriHelper.IsPackUri(source))
-                {
-                    source = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(source);
-                }
-                Invariant.Assert(_navigatorHost != null && _navigatorHost == Application.MainWindow &&
-                    source.IsAbsoluteUri && !PackUriHelper.IsPackUri(source));
-                SecurityHelper.DemandWebPermission(source);
-                this.Application.BrowserCallbackServices.UpdateAddressBar(source.ToString());
-            }
-        }
-#endif
 
         #endregion Private Methods
 
@@ -690,7 +569,7 @@ namespace System.Windows.Navigation
             // _navStatus or _navigateQueueItem are not checked here, because they are set only after
             // raising the Navigating event, while an event handler might cause journal ownership to change.
             if (_journalScope != null && _journalScope.Journal.HasUncommittedNavigation)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CantChangeJournalOwnership));
+                throw new InvalidOperationException(SR.InvalidOperation_CantChangeJournalOwnership);
 
             _journalScope = null;
 
@@ -726,7 +605,7 @@ namespace System.Windows.Navigation
         {
             // This can happen when a Frame is navigated to the page containing it (object navigation).
             if (ncChild == this)
-                throw new Exception(SR.Get(SRID.LoopDetected, _currentCleanSource));
+                throw new Exception(SR.Format(SR.LoopDetected, _currentCleanSource));
 
             Invariant.Assert(ncChild.ParentNavigationService == null);
             Invariant.Assert(ncChild.JournalScope == null || ncChild.IsJournalLevelContainer,
@@ -1150,22 +1029,6 @@ namespace System.Windows.Navigation
 
             Debug.Assert(_navigateQueueItem == null);
 
-#if NETFX
-            // Workaround for the reentrance problem from browser (bug 128689).
-            // Call into browser before we update journal. If there is another navigation waiting, e.g,
-            // user starts a new navigation using the browser back/forward button, it will
-            // re-enter with this call. We can detect whether a new navigation has started by checking
-            // _navigateQueueItem. The goal is to check for reentrance before we update journal. It should
-            // be safe to cancel the current navigation at this point (before any journal changes).
-            if (HasTravelLogIntegration)
-            {
-                DispatchPendingCallFromBrowser();
-                if (_navigateQueueItem != null)
-                {
-                    return false;
-                }
-            }
-#endif
 
             if (navInfo == null)
             {
@@ -1176,8 +1039,6 @@ namespace System.Windows.Navigation
                 UpdateJournal(navInfo.NavigationMode, JournalReason.NewContentNavigation, navInfo.JournalEntry);
             }
 
-            // Check for reentrance again before we proceed. UpdateJournal calls CallUpdateTravelLog which calls
-            // into browser that can cause a new navigation to reenter.
             // Future: 
             // The journal entry of the new page that is navigated to might be lost because the navigation is
             // cancelled after the current page being added to jounral. E.g, The journal looks like:
@@ -1216,19 +1077,6 @@ namespace System.Windows.Navigation
 
             return true;
         }
-
-#if NETFX
-        // Allow new navigations from browser to re-enter with this call.
-        ///<SecurityNote>
-        /// Critical - calls back to browser to get the browser top.
-        /// TreatAsSafe - this value isn't returned or stored.
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        private void DispatchPendingCallFromBrowser()
-        {
-            BrowserInteropHelper.HostBrowser.GetTop();
-        }
-#endif
 
         /// <summary>
         ///     Called when style is actually applied.
@@ -1282,7 +1130,7 @@ namespace System.Windows.Navigation
             // If an invalid root element is passed to Navigation Service, throw exception here.
             if (IsValidRootElement(bp) == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.WrongNavigateRootElement, bp.ToString()));
+                throw new InvalidOperationException(SR.Format(SR.WrongNavigateRootElement, bp.ToString()));
             }
 
             /*TODO: Uncomment after new loader design is implemented or sync bind reentrancy is resolved
@@ -1484,10 +1332,7 @@ namespace System.Windows.Navigation
         /// <returns></returns>
         public static NavigationService GetNavigationService(DependencyObject dependencyObject)
         {
-            if (dependencyObject == null)
-            {
-                throw new ArgumentNullException("dependencyObject");
-            }
+            ArgumentNullException.ThrowIfNull(dependencyObject);
 
             return dependencyObject.GetValue(NavigationServiceProperty) as NavigationService;
         }
@@ -1594,7 +1439,7 @@ namespace System.Windows.Navigation
                 return;
             }
             if (_bp == null)
-                throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_AddBackEntryNoContent));
+                throw new InvalidOperationException(SR.InvalidOperation_AddBackEntryNoContent);
 
             _customContentStateToSave = state;
             JournalEntry je = UpdateJournal(NavigationMode.New, JournalReason.AddBackEntry, null);
@@ -1611,7 +1456,7 @@ namespace System.Windows.Navigation
             {
                 RemoveBackEntry();
                 throw new InvalidOperationException(
-                    SR.Get(SRID.InvalidOperation_MustImplementIPCCSOrHandleNavigating,
+                    SR.Format(SR.InvalidOperation_MustImplementIPCCSOrHandleNavigating,
                             _bp != null ? _bp.GetType().ToString() : "null"));
             }
         }
@@ -1771,24 +1616,8 @@ namespace System.Windows.Navigation
                 return true;
             }
 
-#if NETFX
-            if (ShouldDelegateXamlViewerNavigationToBrowser(navInfo, resolvedSource))
-            {
-                try
-                {
-                    DelegateToBrowser(newRequest is PackWebRequest, resolvedSource);
-                }
-                finally
-                {
-                    ResetPendingNavigationState(NavigationStatus.Idle);
-                }
-            }
-            else
-#endif
-            {
-                // Post the navigate Dispatcher operation
-                _navigateQueueItem.PostNavigation();
-            }
+            // Post the navigate Dispatcher operation
+            _navigateQueueItem.PostNavigation();
 
             return true;
         }
@@ -1838,7 +1667,7 @@ namespace System.Windows.Navigation
                 // This won't detect the case when no Return event handler was attached, but then
                 // we don't run the risk of overwriting the ReturnEventSaver.
                 if (pf != null && (pf._Resume || pf._Saver != null))
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidOperation_CannotReenterPageFunction));
+                    throw new InvalidOperationException(SR.InvalidOperation_CannotReenterPageFunction);
             }
 
             Uri source = navigateInfo == null ? null : navigateInfo.Source;
@@ -1919,7 +1748,7 @@ namespace System.Windows.Navigation
         public void GoForward()
         {
             if (JournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoForwardEntry));
+                throw new InvalidOperationException(SR.NoForwardEntry);
             JournalScope.GoForward();
         }
 
@@ -1933,7 +1762,7 @@ namespace System.Windows.Navigation
         public void GoBack()
         {
             if (JournalScope == null)
-                throw new InvalidOperationException(SR.Get(SRID.NoBackEntry));
+                throw new InvalidOperationException(SR.NoBackEntry);
             JournalScope.GoBack();
         }
 
@@ -2428,21 +2257,9 @@ namespace System.Windows.Navigation
             }
         }
 
-        /// <SecurityNote>
-        /// Critical because it sets BrowserInterop.IsInitialViewerNavigation
-        /// Safe because IsInitialViewerNavigation is set to false and this method completes a navigation.
-        ///     Any further navigation will not be considered "initial".
-        ///
-        /// Consider: Do we really need IsInitialViewerNavigation to be Critical? No security decision is done
-        /// based on that.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
-#if NETFX
-            UpdateAddressBarForLooseXaml();
-#endif
             BrowserInteropHelper.IsInitialViewerNavigation = false;
 
             NavigateInfo navInfo = navState as NavigateInfo;
@@ -2870,7 +2687,7 @@ namespace System.Windows.Navigation
                     if (response == null)
                     {
                         Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
-                        throw new Exception(SR.Get(SRID.GetResponseFailed, requestUri.ToString()));
+                        throw new Exception(SR.Format(SR.GetResponseFailed, requestUri.ToString()));
                     }
 
                     // Have to use source instead of _request.RequestUri because the work around we put in
@@ -2978,29 +2795,9 @@ namespace System.Windows.Navigation
                 if (launched == LaunchResult.NotLaunched)
                     throw;
             }
-            catch (SecurityException e)
+            catch (SecurityException)
             {
-                LaunchResult launched = LaunchResult.NotLaunched;
-
-                // the scenario this code is enabling is navigation to Uri's outside of the app
-                // for top-level.
-                // So for example at an express app at domain http://www.example.com
-                // click on a hyperlink to http://www.msn.com
-                // We will get a security exception on the attempt to access msn.
-                // So we delegate back to the top-level browser.
-                //
-                // IMPORTANT: Creating a WebRequest for a file:// URI doesn't fail here if the URI is outside
-                // the site of origin. Instead, WebRequest.EndGetResponse() will throw SecurityException.
-                // There is a similar case for such URIs there.
-                // Callers of this method should not assume that the application has access to the given URI.
-
-                if (e.PermissionType == typeof(System.Net.WebPermission))
-                {
-                    launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, resolvedDestinationUri, IsTopLevelContainer);
-                }
-
-                if (launched == LaunchResult.NotLaunched)
-                    throw;
+                throw;
             }
 
             bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
@@ -3081,23 +2878,9 @@ namespace System.Windows.Navigation
                 {
                     response = WpfWebRequestHelper.EndGetResponse(_request, ar);
                 }
-                catch (WebException we)
+                catch
                 {
-                    // this codepath enables top-level navigation to UNC content. Unlike HttpWebRequest, FileWebRequest throws on EndGetResponse()
-                    LaunchResult launched = LaunchResult.NotLaunched;
-                    SecurityException se = we.GetBaseException() as SecurityException;
-
-                    // delegate to the browser only if 1) navigating to UNC and 2) reason for which we couldn't get the stream is no grants
-                    if (_request.RequestUri.IsUnc && _request.RequestUri.IsFile && se != null && se.PermissionType == typeof(FileIOPermission))
-                    {
-                        launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, _request.RequestUri, IsTopLevelContainer);
-                    }
-
-                    if (launched == LaunchResult.NotLaunched)
-                        throw;
-
-                    // we successfully delegated navigation to the browser; return
-                    return;
+                    throw;
                 }
 
                 // response object will be closed at approrpiate time when it is not used anymore later.
@@ -3122,13 +2905,6 @@ namespace System.Windows.Navigation
             }
         }
 
-        private bool CanUseTopLevelBrowserForHTMLRendering()
-        {
-            return (IsTopLevelContainer
-                       && IsParentedByBrowserWindow()
-                      );
-        }
-
         // Create Object from the return of WebResponse stream
         private void GetObjectFromResponse(WebRequest request, WebResponse response, Uri destinationUri, Object navState)
         {
@@ -3144,7 +2920,7 @@ namespace System.Windows.Navigation
                 {
                     Uri requestUri = BindUriHelper.GetUriRelativeToPackAppBase(_request.RequestUri);
 
-                    throw new Exception(SR.Get(SRID.GetStreamFailed, requestUri.ToString()));
+                    throw new Exception(SR.Format(SR.GetStreamFailed, requestUri.ToString()));
                 }
 
                 long contentLength = response.ContentLength;
@@ -3153,11 +2929,6 @@ namespace System.Windows.Navigation
                 NavigateInfo navigateInfo = navState as NavigateInfo;
 
                 bool sandBoxContent = SandboxExternalContent && (! BaseUriHelper.IsPackApplicationUri(destinationUri)) && MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(contentType);
-                // this code path is disabled in partial trust because it currently violates P3P
-                if (sandBoxContent == true && !SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    sandBoxContent = false;
-                }
 
                 // BindStream overrides Read() and calls icc.OnNavigationProgress every 1k byte read
                 BindStream bindStream = new BindStream(s, contentLength, cleanSource, (IContentContainer)this, Dispatcher.CurrentDispatcher);
@@ -3166,14 +2937,12 @@ namespace System.Windows.Navigation
                 _webResponse = response;
                 _asyncObjectConverter = null;
 
-#if NETFX
-                Invariant.Assert(!ShouldDelegateXamlViewerNavigationToBrowser(navigateInfo, destinationUri),
-                                "TopLevel navigation away from loose xaml is already delageted to browser. It should never reach here.");
-#endif
 
-                // CanUseTopLevelBrowserForHTMLRendering() will be true for TopLevel navigation away from browser hosted app. If that is the case
+                // canUseTopLevelBrowserForHTMLRendering will be true for TopLevel navigation away from browser hosted app. If that is the case
                 // o will be null.
-                Object o = MimeObjectFactory.GetObjectAndCloseStream(bindStream, contentType, destinationUri, CanUseTopLevelBrowserForHTMLRendering(), sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter);
+                // We don't support browser hosting since .NET Core 3.0, so therefore canUseTopLevelBrowserForHTMLRendering = false
+                bool canUseTopLevelBrowserForHTMLRendering = false;
+                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
 
                 if (o != null)
                 {
@@ -3205,7 +2974,7 @@ namespace System.Windows.Navigation
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
                         if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.FailedToConvertResource));
+                            throw new InvalidOperationException(SR.FailedToConvertResource);
                         }
 
                         DelegateToBrowser(response is PackWebResponse, destinationUri);
@@ -3333,16 +3102,11 @@ namespace System.Windows.Navigation
         /// <exception cref="System.InvalidOperationException">
         /// Can't journal by URI without a URI.
         /// </exception>
-        /// <SecurityNote>
-        /// Critical:  accesses the browsercallback services (via Journal)
-        /// TreatAsSafe:  only uses bcs to update the journal with already valid content.
-        /// </SecurityNote>
         /// <remarks> _bp is still the previous content (before the new navigation). It can be null.
         /// destinationJournalEntry can be null.
         /// No journal entry is created for certain types of Content or when there is no
         /// NavigationWindow [which is where the Journal is].
         /// </remarks>
-        [SecurityCritical, SecurityTreatAsSafe]
         private JournalEntry UpdateJournal(
             NavigationMode navigationMode, JournalReason journalReason, JournalEntry destinationJournalEntry)
         {
@@ -3403,10 +3167,6 @@ namespace System.Windows.Navigation
 
             journalScope.Journal.UpdateCurrentEntry(journalEntry);
 
-            if (journalEntry.IsNavigable())
-            {
-                CallUpdateTravelLog(navigationMode == NavigationMode.New);
-            }
 
             if (navigationMode == NavigationMode.New)
             {
@@ -3426,6 +3186,7 @@ namespace System.Windows.Navigation
         /// Makes the appropriate kind of journal entry for the current Content and its state.
         /// For certain types of content, no journal entry is created (null is returned).
         /// </summary>
+#pragma warning disable SYSLIB0050
         internal JournalEntry MakeJournalEntry(JournalReason journalReason)
         {
             if (_bp == null)
@@ -3531,7 +3292,7 @@ namespace System.Windows.Navigation
                 Type type = ccs.GetType();
                 if (!type.IsSerializable)
                 {
-                    throw new SystemException(SR.Get(SRID.CustomContentStateMustBeSerializable, type));
+                    throw new SystemException(SR.Format(SR.CustomContentStateMustBeSerializable, type));
                 }
                 journalEntry.CustomContentState = ccs;
             }
@@ -3610,7 +3371,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            name = SR.Get(SRID.Untitled);
+                            name = SR.Untitled;
                         }
                     }
                 }
@@ -3624,7 +3385,7 @@ namespace System.Windows.Navigation
 
             return journalEntry;
         }
-
+#pragma warning restore SYSLIB0050
         /// <summary>
         /// Called by ApplicationProxyInternal when a XAML Browser Application is about to be shut down
         /// and the entire journal needs to be serialized.
@@ -3638,31 +3399,6 @@ namespace System.Windows.Navigation
             FireNavigating(null, null, null, null); // sets _customContentStateToSave
         }
 
-        /// <SecurityNote>
-        /// Critical - elevates permissions to call UpdateTravellog by calling a SUC'ed PInvoke
-        /// TreatAsSafe - we're callling to update the travellog.
-        ///                      information passed back is whether we're a top-level container, and whether to add a new entry.
-        ///
-        ///                      Net effect is creation of a new journal entry. Considered safe as the information stored in the journal is derived from what's been navigated to.
-        ///                      We could have the same effect via programmatically allowing a navigate OR calling NavigationWindow.GoBack().
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        internal void CallUpdateTravelLog(bool addNewEntry)
-        {
-#if NETFX
-            // Not explicitly checking IsSerializable here because we will be called back
-            // immediately via SaveHistory which will throw the serialization exception which
-            // will give us the same effect and without the overhead of an explicit
-            // GetType + type.IsSerializable check. But if the subclass has data members
-            // that are not serializable we will still throw an exception inspite of
-            // IsSerializable == true for the subclass.
-
-            if (HasTravelLogIntegration)
-            {
-                this.Application.BrowserCallbackServices.UpdateTravelLog(addNewEntry);
-            }
-#endif
-        }
 
         /// <summary>
         /// Returns the current Application
@@ -3748,23 +3484,6 @@ namespace System.Windows.Navigation
                 return _finishHandler;
             }
         }
-
-#if NETFX
-        /// <SecurityNote>
-        /// Critical: Uses ApplicationProxyInternal.Current, which is Critical.
-        /// Safe: Only ApplicationProxyInternal.HasTravelLogIntegration is accessed, which is okay to give out.
-        /// </SecurityNote>
-        private bool HasTravelLogIntegration
-        {
-            [SecurityCritical, SecurityTreatAsSafe]
-            get
-            {
-                return IsParentedByBrowserWindow() &&
-                    ApplicationProxyInternal.Current.RootBrowserWindow.HasTravelLogIntegration;
-                return false;
-            }
-        }
-#endif
 
         private bool IsTopLevelContainer
         {
@@ -3919,7 +3638,9 @@ namespace System.Windows.Navigation
             _parentNavigationService = null;
             _webBrowser = null;
         }
-
+        
+        // This is set when the navigationservice is loaded from unsafe xps doc. 
+        internal bool IsUnsafe { get; set; }
         #region Private Functions
 
         /// <summary>
@@ -4016,7 +3737,7 @@ namespace System.Windows.Navigation
 
             if (JournalScope == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.WindowAlreadyClosed));
+                throw new InvalidOperationException(SR.WindowAlreadyClosed);
             }
 
             Journal journal = JournalScope.Journal;
@@ -4218,7 +3939,7 @@ namespace System.Windows.Navigation
                 // We shouldn't be navigating to a PageFunction that's UiLess at this stage.
                 // By now it should have started another navigation it was delegating to a child PF.
                 if (parentEntry.EntryType == JournalEntryType.UiLess)
-                    throw new InvalidOperationException(SR.Get(SRID.UiLessPageFunctionNotCallingOnReturn));
+                    throw new InvalidOperationException(SR.UiLessPageFunctionNotCallingOnReturn);
 
                 NavigateInfo navInfo = finishingChildPageFunction.RemoveFromJournal ?
                     new NavigateInfo(parentEntry.Source, NavigationMode.Back, parentEntry) :

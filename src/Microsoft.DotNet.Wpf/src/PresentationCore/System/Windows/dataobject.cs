@@ -26,7 +26,6 @@ namespace System.Windows
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Security;
-    using System.Security.Permissions;
     using System.Windows.Interop;
     using System.Windows.Media.Imaging;
     using System.Text;
@@ -34,7 +33,6 @@ namespace System.Windows
     using MS.Internal.PresentationCore;                        // SecurityHelper
 
     using SR=MS.Internal.PresentationCore.SR;
-    using SRID=MS.Internal.PresentationCore.SRID;
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 // PreSharp uses message numbers that the C# compiler doesn't know about.
@@ -59,32 +57,17 @@ namespace System.Windows
         /// Initializes a new instance of the dataobject
         /// class, which can store arbitrary data.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code creates a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public DataObject()
         {
-            SecurityHelper.DemandAllClipboardPermission();
             _innerData = new DataStore();
         }
 
         /// <summary>
         /// Initializes a new instance of the  class, containing the specified data.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code creates a data object which is blocked in partial trust
-        ///    PublicOk - demands appropriate permission
-        /// </SecurityNote>
-        [SecurityCritical]
         public DataObject(object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             IDataObject dataObject = data as IDataObject;
 
@@ -112,28 +95,16 @@ namespace System.Windows
         /// Initializes a new instance of the class, containing the specified data and its
         /// associated format.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code creates a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public DataObject(string format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new DataStore();
             SetData(format, data);
@@ -143,22 +114,10 @@ namespace System.Windows
         /// Initializes a new instance of the class, containing the specified data and its
         /// associated format.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code creates a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public DataObject(Type format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(format);
+            ArgumentNullException.ThrowIfNull(data);
             _innerData = new DataStore();
             SetData(format.FullName, data);
         }
@@ -167,28 +126,16 @@ namespace System.Windows
         /// Initializes a new instance of the class, containing the specified data and its
         /// associated format.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code creates a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public DataObject(string format, object data, bool autoConvert)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new DataStore();
             SetData(format, data, autoConvert);
@@ -199,10 +146,7 @@ namespace System.Windows
         /// </summary>
         internal DataObject(System.Windows.IDataObject data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = data;
         }
@@ -212,10 +156,7 @@ namespace System.Windows
         /// </summary>
         internal DataObject(IComDataObject data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData = new OleConverter(data);
         }
@@ -237,14 +178,11 @@ namespace System.Windows
         /// </summary>
         public object GetData(string format, bool autoConvert)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return _innerData.GetData(format, autoConvert);
@@ -256,14 +194,11 @@ namespace System.Windows
         /// </summary>
         public object GetData(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetData(format, true);
@@ -275,10 +210,7 @@ namespace System.Windows
         /// </summary>
         public object GetData(Type format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
             return GetData(format.FullName);
         }
 
@@ -290,10 +222,7 @@ namespace System.Windows
         public bool GetDataPresent(Type format)
         {
             bool dataPresent;
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
             dataPresent = GetDataPresent(format.FullName);
             return dataPresent;
         }
@@ -307,14 +236,11 @@ namespace System.Windows
         {
             bool dataPresent;
 
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
@@ -328,14 +254,11 @@ namespace System.Windows
         /// </summary>
         public bool GetDataPresent(string format)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
             return GetDataPresent(format, true);
@@ -366,18 +289,9 @@ namespace System.Windows
         /// Stores the specified data in
         /// this instance, using the class of the data for the format.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code sets a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetData(object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
             _innerData.SetData(data);
         }
 
@@ -385,28 +299,16 @@ namespace System.Windows
         /// Stores the specified data and its associated format in this
         /// instance.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code sets a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetData(string format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData.SetData(format, data);
         }
@@ -415,22 +317,10 @@ namespace System.Windows
         /// Stores the specified data and
         /// its associated class type in this instance.
         /// </summary>
-        /// <SecurityNote>
-        ///    Critical: This code sets a data object which is blocked in partial trust
-        ///    PublicOK:There is a demand on this call
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetData(Type format, object data)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(format);
+            ArgumentNullException.ThrowIfNull(data);
 
             _innerData.SetData(format, data);
         }
@@ -441,28 +331,19 @@ namespace System.Windows
         /// to specify whether the
         /// data can be converted to another format.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
-        /// </remarks>
-        /// <SecurityNote>
-        ///     Critical: This code calls into CriticalSetData
-        ///     PublicOK: It filters for formats that we allow
-        /// </SecurityNote>
-        [SecurityCritical]
+        [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
-            SecurityHelper.DemandAllClipboardPermission();
-            if (format == null)
-            {
-                throw new ArgumentNullException("format");
-            }
+            ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_EmptyFormatNotAllowed));
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            CriticalSetData(format, data, autoConvert);
+            ArgumentNullException.ThrowIfNull(data);
+
+            _innerData.SetData(format, data, autoConvert);
         }
 
 
@@ -581,10 +462,7 @@ namespace System.Windows
         /// </summary>
         public void SetAudio(byte[] audioBytes)
         {
-            if (audioBytes == null)
-            {
-                throw new ArgumentNullException("audioBytes");
-            }
+            ArgumentNullException.ThrowIfNull(audioBytes);
 
             SetAudio(new MemoryStream(audioBytes));
         }
@@ -594,10 +472,7 @@ namespace System.Windows
         /// </summary>
         public void SetAudio(Stream audioStream)
         {
-            if (audioStream == null)
-            {
-                throw new ArgumentNullException("audioStream");
-            }
+            ArgumentNullException.ThrowIfNull(audioStream);
 
             SetData(DataFormats.WaveAudio, audioStream, /*autoConvert*/false);
         }
@@ -607,14 +482,11 @@ namespace System.Windows
         /// </summary>
         public void SetFileDropList(StringCollection fileDropList)
         {
-            if (fileDropList == null)
-            {
-                throw new ArgumentNullException("fileDropList");
-            }
+            ArgumentNullException.ThrowIfNull(fileDropList);
 
             if (fileDropList.Count == 0)
             {
-                throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListIsEmpty, fileDropList));
+                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
             }
 
             foreach (string fileDrop in fileDropList)
@@ -625,7 +497,7 @@ namespace System.Windows
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException(SR.Get(SRID.DataObject_FileDropListHasInvalidFileDropPath, e));
+                    throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, e));
                 }
             }
 
@@ -642,10 +514,7 @@ namespace System.Windows
         /// </summary>
         public void SetImage(BitmapSource image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException("image");
-            }
+            ArgumentNullException.ThrowIfNull(image);
 
             SetData(DataFormats.Bitmap, image, /*audoConvert*/true);
         }
@@ -655,10 +524,7 @@ namespace System.Windows
         /// </summary>
         public void SetText(string textData)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             SetText(textData, TextDataFormat.UnicodeText);
         }
@@ -668,10 +534,7 @@ namespace System.Windows
         /// </summary>
         public void SetText(string textData, TextDataFormat format)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             if (!DataFormats.IsValidTextDataFormat(format))
             {
@@ -689,10 +552,6 @@ namespace System.Windows
         /// <param name="pAdvSink"></param>
         /// <param name="pdwConnection"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         int IComDataObject.DAdvise(ref FORMATETC pFormatetc, ADVF advf, IAdviseSink pAdvSink, out int pdwConnection)
         {
             if (_innerData is OleConverter)
@@ -706,10 +565,6 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         void IComDataObject.DUnadvise(int dwConnection)
         {
             if (_innerData is OleConverter)
@@ -725,10 +580,6 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         int IComDataObject.EnumDAdvise(out IEnumSTATDATA enumAdvise)
         {
             if (_innerData is OleConverter)
@@ -742,10 +593,6 @@ namespace System.Windows
         // <summary>
         // Part of IComDataObject, used to interop with OLE.
         // </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         IEnumFORMATETC IComDataObject.EnumFormatEtc(DATADIR dwDirection)
         {
             if (_innerData is OleConverter)
@@ -758,17 +605,13 @@ namespace System.Windows
             }
             else
             {
-                throw new ExternalException(SR.Get(SRID.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
+                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
             }
         }
 
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         int IComDataObject.GetCanonicalFormatEtc(ref FORMATETC pformatetcIn, out FORMATETC pformatetcOut)
         {
             pformatetcOut = new FORMATETC();
@@ -791,10 +634,6 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - directly access unmanaged memory
-        /// </SecurityNote>
-        [SecurityCritical]
         void IComDataObject.GetData(ref FORMATETC formatetc, out STGMEDIUM medium)
         {
             if (_innerData is OleConverter)
@@ -829,29 +668,21 @@ namespace System.Windows
                 }
                 else if ( ( formatetc.tymed & TYMED.TYMED_ISTREAM ) != 0 )
                 {
-                    // Checking for the unmanaged code permission.
-                    if ( SecurityHelper.CheckUnmanagedCodePermission() )
-                    {
-                        medium.tymed = TYMED.TYMED_ISTREAM;
+                    medium.tymed = TYMED.TYMED_ISTREAM;
 
-                        IStream istream = null;
-                        hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
-                        if ( NativeMethods.Succeeded(hr) )
+                    IStream istream = null;
+                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
+                    if ( NativeMethods.Succeeded(hr) )
+                    {
+                        medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
+                        Marshal.ReleaseComObject(istream);
+
+                        hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+
+                        if ( NativeMethods.Failed(hr) )
                         {
-                            medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
-                            Marshal.ReleaseComObject(istream);
-
-                            hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
-
-                            if ( NativeMethods.Failed(hr) )
-                            {
-                                Marshal.Release(medium.unionmember);
-                            }
+                            Marshal.Release(medium.unionmember);
                         }
-                    }
-                    else
-                    {
-                        hr = NativeMethods.E_FAIL;
                     }
                 }
                 else
@@ -873,10 +704,6 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged structures
-        /// </SecurityNote>
-        [SecurityCritical]
         void IComDataObject.GetDataHere(ref FORMATETC formatetc, ref STGMEDIUM medium)
         {
             // This method is spec'd to accepted only limited number of tymed
@@ -899,10 +726,6 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// </SecurityNote>
-        [SecurityCritical]
         int IComDataObject.QueryGetData(ref FORMATETC formatetc)
         {
             if (_innerData is OleConverter)
@@ -941,14 +764,8 @@ namespace System.Windows
         /// <summary>
         /// Part of IComDataObject, used to interop with OLE.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into native code to pass through native call
-        /// PublicOK: This call has a demand blocking it
-        /// </SecurityNote>
-        [SecurityCritical]
         void IComDataObject.SetData(ref FORMATETC pFormatetcIn, ref STGMEDIUM pmedium, bool fRelease)
         {
-            SecurityHelper.DemandAllClipboardPermission();
             if (_innerData is OleConverter)
             {
                 ((OleConverter)_innerData).OleDataObject.SetData(ref pFormatetcIn, ref pmedium, fRelease);
@@ -1010,7 +827,7 @@ namespace System.Windows
         /// <param name="handler">
         /// An event handler for a DataObject.Pasting event.
         /// It is called when ah editor already made a decision
-        /// what format (from available on the Cliipboard)
+        /// what format (from available on the Clipboard)
         /// to apply to selection. With this handler an application
         /// has a chance to inspect a content of DataObject extracted
         /// from the Clipboard and decide what format to use instead.
@@ -1160,10 +977,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalAlloc() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32GlobalAlloc(int flags, IntPtr bytes)
         {
             IntPtr win32Pointer = UnsafeNativeMethods.GlobalAlloc(flags, bytes);
@@ -1179,10 +992,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.CreateStreamOnHGlobal() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static int Win32CreateStreamOnHGlobal(IntPtr hGlobal, bool fDeleteOnRelease, ref IStream istream)
         {
             int hr = UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream);
@@ -1197,10 +1006,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalFree() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Win32GlobalFree(HandleRef handle)
         {
             IntPtr win32Pointer = UnsafeNativeMethods.GlobalFree(handle);
@@ -1214,10 +1019,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalReAlloc() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32GlobalReAlloc(HandleRef handle, IntPtr bytes, int flags)
         {
             IntPtr win32Pointer = UnsafeNativeMethods.GlobalReAlloc(handle, bytes, flags);
@@ -1233,10 +1034,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalLock() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32GlobalLock(HandleRef handle)
         {
             IntPtr win32Pointer = UnsafeNativeMethods.GlobalLock(handle);
@@ -1252,10 +1049,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalUnlock() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Win32GlobalUnlock(HandleRef handle)
         {
             bool win32Return = UnsafeNativeMethods.GlobalUnlock(handle);
@@ -1269,10 +1062,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GlobalSize() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32GlobalSize(HandleRef handle)
         {
             IntPtr win32Pointer = UnsafeNativeMethods.GlobalSize(handle);
@@ -1289,10 +1078,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 SafeNativeMethods.SelectObject() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  This code returns a pointer to a windows GDI object
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32SelectObject(HandleRef handleDC, IntPtr handleObject)
         {
             IntPtr handleOldObject = UnsafeNativeMethods.SelectObject(handleDC, handleObject);
@@ -1307,24 +1092,14 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 SafeNativeMethods.DeleteObject() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code calls into DeleteObject which is critical
-        ///     TreatAsSafe: There is a demand in this code
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static void Win32DeleteObject(HandleRef handleDC)
         {
-            SecurityHelper.DemandUnmanagedCode();
             UnsafeNativeMethods.DeleteObject(handleDC);
         }
 
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.GetDC() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32GetDC(HandleRef handleDC)
         {
             IntPtr newDC = UnsafeNativeMethods.GetDC(handleDC);
@@ -1344,10 +1119,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 SafeNativeMethods.CreateCompatibleBitmap() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - pinvokes into native code with data supplied by the caller.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static IntPtr Win32CreateCompatibleBitmap(HandleRef handleDC, int width, int height)
         {
             IntPtr bitmap = UnsafeNativeMethods.CreateCompatibleBitmap(handleDC, width, height);
@@ -1365,10 +1136,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.ReleaseDC() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - pinvokes into native code with data supplied by the caller.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void Win32ReleaseDC(HandleRef handleHWND, HandleRef handleDC)
         {
             UnsafeNativeMethods.ReleaseDC(handleHWND, handleDC);
@@ -1377,10 +1144,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.BitBlt() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Writes to unmanaged memory
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void Win32BitBlt(HandleRef handledestination, int width, int height, HandleRef handleSource, int operationCode)
         {
             bool win32Return = UnsafeNativeMethods.BitBlt(handledestination, 0, 0, width, height, handleSource, 0, 0, operationCode);
@@ -1393,10 +1156,6 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.WideCharToMultiByte() with Win32 error checking.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - writes directly to unmanaged memory.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[] bytes, int byteCount)
         {
             int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, 0 /*flags*/, wideString, wideChars, bytes, byteCount, IntPtr.Zero, IntPtr.Zero);
@@ -1412,12 +1171,6 @@ namespace System.Windows
         /// <summary>
         /// Returns all the "synonyms" for the specified format.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - Makes security decision based on unmanaged code permission check.
-        /// TreatAsSafe - Exposes no critical data. Never returns DataFormats.StringFormat
-        ///               without unmanaged code permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static string[] GetMappedFormats(string format)
         {
             // 
@@ -1431,25 +1184,13 @@ namespace System.Windows
                 || IsFormatEqual(format, DataFormats.StringFormat))
             {
                 string[] arrayFormats;
-                // we do this to block copy of the string synonym in partial trust because that
-                // requires elevations. This is more of a resource issue than anything else at this point.
-                // We might consider doing this in V2.
-                // Also we want to avoid making the serialization code non transparent.
-                if (SecurityHelper.CheckUnmanagedCodePermission())
-                {
-                    arrayFormats = new string[] {
-                                        DataFormats.Text,
-                                        DataFormats.UnicodeText,
-                                        DataFormats.StringFormat,
-                                        };
-                }
-                else
-                {
-                    arrayFormats = new string[] {
-                                        DataFormats.Text,
-                                        DataFormats.UnicodeText,
-                                        };
-                }
+
+                arrayFormats = new string[] {
+                                    DataFormats.Text,
+                                    DataFormats.UnicodeText,
+                                    DataFormats.StringFormat,
+                                    };
+
                 return arrayFormats;
             }
 
@@ -1502,31 +1243,11 @@ namespace System.Windows
         #region Private Methods
 
 
-        /// <param name="format"></param>
-        /// <param name="data"></param>
-        /// <param name="autoConvert"></param>
-        /// <SecurityNote>
-        ///     Critical: This code circumvents the checks on SetData and can be used to set xaml content on clipboard
-        /// </SecurityNote>
-        [SecurityCritical]
-        [FriendAccessAllowed]
-        internal void CriticalSetData(string format, Object data, bool autoConvert)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-            _innerData.SetData(format, data, autoConvert);
-        }
 
         /// <summary>
         /// Behaves like IComDataObject.GetData and IComDataObject.GetDataHere,
         /// except we make no restrictions TYMED values.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged structures
-        /// </SecurityNote>
-        [SecurityCritical]
         private int OleGetDataUnrestricted(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
         {
             if (_innerData is OleConverter)
@@ -1580,14 +1301,8 @@ namespace System.Windows
             return false;
         }
 
-        ///<SecurityNote>
-        ///  TreatAsSafe: This API could be public in terms of security as it demands for unmanaged code
-        ///  Critical: Does an elevation via a call to unsafe native methods
-        ///</SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private IntPtr GetCompatibleBitmap(object data)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             IntPtr hBitmap;
             IntPtr hBitmapNew;
@@ -1657,10 +1372,6 @@ namespace System.Windows
         /// <summary>
         /// Get the enhanced metafile handle from the metafile data object.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical:  This code returns a handle to an unmanaged object
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr GetEnhancedMetafileHandle(String format, object data)
         {
             IntPtr hEnhancedMetafile;
@@ -1706,11 +1417,6 @@ namespace System.Windows
         /// Populates Ole datastructes from a WinForms dataObject. This is the core
         /// of WinForms to OLE conversion.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical methods (saving objects to streams, etc.),
-        ///            deals with unmanaged structures, etc.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetDataIntoOleStructs(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
         {
             int hr;
@@ -1760,11 +1466,6 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_HGLOBAL.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical methods (saving objects to streams, etc.),
-        ///            deals with unmanaged structures, etc.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetDataIntoOleStructsByTypeMedimHGlobal(string format, object data, ref STGMEDIUM medium, bool doNotReallocate)
         {
             int hr;
@@ -1837,12 +1538,14 @@ namespace System.Windows
                 // since we directly support TYMED.TYMED_ENHMF.
                 hr = DV_E_TYMED;
             }
+#pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
                 || (data != null && data.GetType().IsSerializable))
             {
                 hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
+#pragma warning restore SYSLIB0050
             else
             {
                 // Couldn't find the proper data for the current TYMED_HGLOBAL
@@ -1860,11 +1563,6 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ISTREAM.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical methods (saving objects to streams, etc.),
-        ///            deals with unmanaged structures, etc.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
         {
             IStream istream = (IStream)( Marshal.GetObjectForIUnknown(medium.unionmember) );
@@ -1911,11 +1609,6 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_GDI.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical methods (getting the compatible bitmap),
-        ///            deals with unmanaged structures, etc.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetDataIntoOleStructsByTypeMediumGDI(string format, object data, ref STGMEDIUM medium)
         {
             int hr;
@@ -1950,10 +1643,6 @@ namespace System.Windows
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ENHMF.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - deals with unmanaged structures, etc.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
         {
             IntPtr hMetafile;
@@ -1983,11 +1672,7 @@ namespace System.Windows
 
             return hr;
         }
-
-        /// <SecurityNote>
-        /// Critical - writes to arbitrary handle (memory)
-        /// </SecurityNote>
-        [SecurityCritical]
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
         private int SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             Stream stream;
@@ -2002,19 +1687,18 @@ namespace System.Windows
 
                     formatter = new BinaryFormatter();
 
+                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                     formatter.Serialize(stream, data);
+                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
         }
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 
         /// <summary>
         /// Saves stream out to handle.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - direct unmanaged memory access
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveStreamToHandle(IntPtr handle, Stream stream, bool doNotReallocate)
         {
             IntPtr size;
@@ -2055,10 +1739,6 @@ namespace System.Windows
         /// <summary>
         /// Save the System.Drawing.Bitmap or BitmapSource data to handle as BitmapSource.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - writes to arbitrary handle (memory)
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveSystemBitmapSourceToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             BitmapSource bitmapSource;
@@ -2097,10 +1777,6 @@ namespace System.Windows
         /// <summary>
         /// Save the System.Drawing.Bitmap or BitmapSource data to handle as System.Drawing.Bitmap.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - writes to arbitrary handle (memory)
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveSystemDrawingBitmapToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             object systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
@@ -2113,10 +1789,6 @@ namespace System.Windows
         /// <summary>
         /// Saves a list of files out to the handle in HDROP format.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access unmanaged memory directly (write)
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveFileListToHandle(IntPtr handle, string[] files, bool doNotReallocate)
         {
             IntPtr currentPtr;
@@ -2187,7 +1859,10 @@ namespace System.Windows
                     currentPtr = (IntPtr)((long)currentPtr + (files[i].Length * 2));
 
                     // Terminate the each of file string.
-                    Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                    unsafe
+                    {
+                        *(char*)currentPtr = '\0';
+                    }
 
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
@@ -2196,7 +1871,10 @@ namespace System.Windows
 #pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
-                Marshal.Copy(new char[] { '\0' }, 0, currentPtr, 1);
+                unsafe
+                {
+                    *(char*)currentPtr = '\0';
+                }
             }
             finally
             {
@@ -2210,10 +1888,6 @@ namespace System.Windows
         /// Save string to handle. If unicode is set to true
         /// then the string is saved as unicode, else it is saves as DBCS.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - writes directly to unmanaged memory
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveStringToHandle(IntPtr handle, string str, bool unicode, bool doNotReallocate)
         {
             if (handle == IntPtr.Zero)
@@ -2252,7 +1926,10 @@ namespace System.Windows
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
                     // any of the memory that existed before the call.
-                    Marshal.Copy(new char[] { '\0' }, 0, (IntPtr)((ulong)ptr + (ulong)chars.Length * 2), 1);
+                    unsafe
+                    {
+                        *(char*)(IntPtr)((ulong)ptr + (ulong)chars.Length * 2) = '\0';
+                    }
                 }
                 finally
                 {
@@ -2317,10 +1994,6 @@ namespace System.Windows
         /// Save string to handle as UTF8 encoding.
         /// Html and Xaml data format will be save as UTF8 encoding.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - directly writes to unmanaged memory
-        /// </SecurityNote>
-        [SecurityCritical]
         private int SaveStringToHandleAsUtf8(IntPtr handle, string str, bool doNotReallocate)
         {
             IntPtr pointerUtf8;
@@ -2407,37 +2080,22 @@ namespace System.Windows
         /// true if the data is likely to be serializated
         /// through CLR serialization
         /// </returns>
+#pragma warning disable SYSLIB0050
         private static bool IsFormatAndDataSerializable(string format, object data)
         {
             return
-                (IsFormatNotSupportedInPartialTrust(format))
-                 &&
-                 (IsFormatEqual(format, DataFormats.Serializable)
+                 IsFormatEqual(format, DataFormats.Serializable)
                   || data is ISerializable
-                  || (data != null && data.GetType().IsSerializable));
+                  || (data != null && data.GetType().IsSerializable);
         }
+#pragma warning restore SYSLIB0050
 
-        /// <summary>
-        ///     This code is used to determine whether any of the formats in the list here are supported in partial trust.
-        ///     By adding an entry here we are letting consumers set and get data for this format in partial trust.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        private static bool IsFormatNotSupportedInPartialTrust(string format)
-        {
-            return (!IsFormatEqual(format, DataFormats.Text)
-                    && !IsFormatEqual(format, DataFormats.OemText)
-                    && !IsFormatEqual(format, DataFormats.UnicodeText)
-                    && !IsFormatEqual(format, DataFormats.CommaSeparatedValue)
-                    && !IsFormatEqual(format, DataFormats.Xaml)
-                    && !IsFormatEqual(format, DataFormats.ApplicationTrust));
-        }
         /// <summary>
         /// Return true if the format string are equal(Case-senstive).
         /// </summary>
         private static bool IsFormatEqual(string format1, string format2)
         {
-            return (String.CompareOrdinal(format1, format2) == 0);
+            return (string.Equals(format1, format2, StringComparison.Ordinal));
         }
 
         /// <summary>
@@ -2456,10 +2114,6 @@ namespace System.Windows
         /// If doNotReallocate is false, this method will always realloc the original
         /// handle to fit minimumByteCount tightly.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - access the unmanaged memory directly
-        /// </SecurityNote>
-        [SecurityCritical]
         private int EnsureMemoryCapacity(ref IntPtr handle, Int32 minimumByteCount, bool doNotReallocate)
         {
             int hr = NativeMethods.S_OK;
@@ -2496,11 +2150,6 @@ namespace System.Windows
         /// Bitmap data will be converted if the data mismatch with the format in case of
         /// autoConvert is "true", but return null if autoConvert is "false".
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - call the critical code(BitmapEncoder.Save)which calls unmanaged code.
-        /// TreatAsSafe - Demands unmanaged code permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static object EnsureBitmapDataFromFormat(string format, bool autoConvert, object data)
         {
             object bitmapData = data;
@@ -2510,7 +2159,6 @@ namespace System.Windows
                 // Data is BitmapSource, but have the mismatched System.Drawing.Bitmap format
                 if (autoConvert)
                 {
-                    SecurityHelper.DemandUnmanagedCode();
 
                     // Convert data from BitmapSource to SystemDrawingBitmap
                     bitmapData = SystemDrawingHelper.GetBitmap(data);
@@ -2817,14 +2465,8 @@ namespace System.Windows
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - access protected resource (clipboard data)
-            /// TreatAsSafe - demands appropriate permission
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             public string[] GetFormats(bool autoConvert)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 IEnumFORMATETC enumFORMATETC;
                 ArrayList formats;
@@ -2916,16 +2558,10 @@ namespace System.Windows
             /// <summary>
             /// Returns the data Object we are wrapping
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical : Returns critical COM interface
-            ///     Safe     : Demands unmanaged code permission
-            /// </SecurityNote>
             public IComDataObject OleDataObject
             {
-                [SecuritySafeCritical]
                 get
                 {
-                    SecurityHelper.DemandUnmanagedCode();
                     return _innerData;
                 }
             }
@@ -2952,15 +2588,8 @@ namespace System.Windows
 
             #region Private Methods
 
-            /// <SecurityNote>
-            /// Critical - reads from a protected resource (clipboard), calls
-            ///            critical code (reading from unmanaged memory)
-            /// TreatAsSafe - Demands the all clipboard permission
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private Object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 Object baseVar;
                 Object original;
@@ -3008,15 +2637,8 @@ namespace System.Windows
                 }
             }
 
-            /// <SecurityNote>
-            /// Critical - Calls GetDataPresentInner which is critical because it talks to the
-            ///            native OLE object.
-            /// TreatAsSafe - we demand the all clipboard permission
-            /// </SecurityNote>
-            [SecurityCritical, SecurityTreatAsSafe]
             private bool GetDataPresent(string format, bool autoConvert, DVASPECT aspect, int index)
             {
-                SecurityHelper.DemandAllClipboardPermission();
 
                 bool baseVar;
 
@@ -3049,16 +2671,12 @@ namespace System.Windows
             {
                 // If we want to support setting data into an OLE data Object,
                 // the code should be here.
-                throw new InvalidOperationException(SR.Get(SRID.DataObject_CannotSetDataOnAFozenOLEDataDbject));
+                throw new InvalidOperationException(SR.DataObject_CannotSetDataOnAFozenOLEDataDbject);
             }
 
             /// <summary>
             /// Uses IStream and retrieves the specified format from the bound IComDataObject.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - access unmanaged memory directly, reads critical resource (clipboard)
-            /// </SecurityNote>
-            [SecurityCritical]
             private Object GetDataFromOleIStream(string format, DVASPECT aspect, int index)
             {
                 FORMATETC formatetc;
@@ -3129,10 +2747,6 @@ namespace System.Windows
             /// <summary>
             /// Retrieves the specified data type from the specified hglobal.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - reads data from the clipboard
-            /// </SecurityNote>
-            [SecurityCritical]
             private object GetDataFromHGLOBAL(string format, IntPtr hglobal)
             {
                 object data;
@@ -3167,30 +2781,47 @@ namespace System.Windows
                     }
                     else if (IsFormatEqual(format, DataFormats.FileDrop))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = (object)ReadFileListFromHandle(hglobal);
                     }
                     else if (IsFormatEqual(format, DataFormats.FileName))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = new string[] { ReadStringFromHandle(hglobal, false) };
                     }
                     else if (IsFormatEqual(format, DataFormats.FileNameW))
                     {
-                        SecurityHelper.DemandFilePathDiscoveryWriteRead();
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
                     }
                     else if (IsFormatEqual(format, typeof(BitmapSource).FullName))
                     {
                         data = ReadBitmapSourceFromHandle(hglobal);
                     }
-                    //  Restrict deserialization to only primitives 
-                    // and strings here to prevent potentially malicious objects from
+                    // Limit deserialization to DataFormats that correspond to primitives, which are:
+                    //
+                    // DataFormats.CommaSeparatedValue
+                    // DataFormats.FileDrop
+                    // DataFormats.Html
+                    // DataFormats.OemText
+                    // DataFormats.PenData
+                    // DataFormats.Rtf
+                    // DataFormats.Serializable
+                    // DataFormats.Text
+                    // DataFormats.UnicodeText
+                    // DataFormats.WaveAudio
+                    // DataFormats.Xaml
+                    // DataFormats.XamlPackage 
+                    // DataFormats.StringFormat *
+                    // 
+                    // * Out of these, we will disallow deserialization of 
+                    // DataFormats.StringFormat to prevent potentially malicious objects from
                     // being deserialized as part of a "text" copy-paste or drag-drop.
+                    // TypeRestrictingSerializationBinder will throw when it encounters 
+                    // anything other than strings and primitives - this ensures that we will
+                    // continue successfully deserializing basic strings while rejecting other 
+                    // data types that advertise themselves as DataFormats.StringFormat.
+                    // 
                     // The rest of the following formats are pre-defined in the OS, 
-                    // they are not managed objects so we shouldn't try to deserialize them as such,
-                    // allow primitives in a best effort for compat, but restrict other types.
-                    else if (!Clipboard.UseLegacyDangerousClipboardDeserializationMode())
+                    // they are not managed objects - an so we will not attempt to deserialize them. 
+                    else
                     {
                         bool restrictDeserialization =
                           (IsFormatEqual(format, DataFormats.StringFormat) ||
@@ -3209,11 +2840,7 @@ namespace System.Windows
 
                         data = ReadObjectFromHandle(hglobal, restrictDeserialization);
                     }
-                    else
-                    {
-                        data = ReadObjectFromHandle(hglobal, restrictDeserialization: false);
-                    }
-}
+                }
 
                 return data;
             }
@@ -3221,10 +2848,6 @@ namespace System.Windows
             /// <summary>
             /// Uses HGLOBALs and retrieves the specified format from the bound IComDataObject.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - reads direclty from arbitrary unmanaged memory
-            /// </SecurityNote>
-            [SecurityCritical]
             private object GetDataFromOleHGLOBAL(string format, DVASPECT aspect, int index)
             {
                 FORMATETC formatetc;
@@ -3265,10 +2888,6 @@ namespace System.Windows
             /// other sources that IStream and HGLOBAL... this is really just a place
             /// to put the "special" formats like BITMAP, ENHMF, etc.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code to access the OLE data object
-            /// </SecurityNote>
-            [SecurityCritical]
             private Object GetDataFromOleOther(string format, DVASPECT aspect, int index)
             {
                 FORMATETC formatetc;
@@ -3334,10 +2953,6 @@ namespace System.Windows
             /// Extracts a managed Object from the innerData of the specified
             /// format. This is the base of the OLE to managed conversion.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - calls critical code (reading from unmanaged memory)
-            /// </SecurityNote>
-            [SecurityCritical]
             private Object GetDataFromBoundOleDataObject(string format, DVASPECT aspect, int index)
             {
                 Object data;
@@ -3360,10 +2975,6 @@ namespace System.Windows
             /// <summary>
             /// Creates an Stream from the data stored in handle.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - access unmanaged memory directly
-            /// </SecurityNote>
-            [SecurityCritical]
             private Stream ReadByteStreamFromHandle(IntPtr handle, out bool isSerializedObject)
             {
                 IntPtr ptr;
@@ -3422,10 +3033,7 @@ namespace System.Windows
             /// Creates a new instance of the Object that has been persisted into the
             /// handle.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - directly reads from unmanaged memory
-            /// </SecurityNote>
-            [SecurityCritical]
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             private Object ReadObjectFromHandle(IntPtr handle, bool restrictDeserialization)
             {
                 object value;
@@ -3447,7 +3055,9 @@ namespace System.Windows
                     }
                     try
                     {
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         value = formatter.Deserialize(stream);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }
                     catch (RestrictedTypeDeserializationException)
                     {
@@ -3461,15 +3071,11 @@ namespace System.Windows
 
                 return value;
             }
-
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
             /// <summary>
             /// Creates a new instance of BitmapSource that has been saved to the
             /// handle as the memory stream of BitmapSource.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - directly reads from unmanaged memory
-            /// </SecurityNote>
-            [SecurityCritical]
             private BitmapSource ReadBitmapSourceFromHandle(IntPtr handle)
             {
                 Stream bitmapStream;
@@ -3494,10 +3100,6 @@ namespace System.Windows
             /// Parses the HDROP format and returns a list of strings using
             /// the DragQueryFile function.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - pinvokes into native code with data supplied by the caller.
-            /// </SecurityNote>
-            [SecurityCritical]
             private string[] ReadFileListFromHandle(IntPtr hdrop)
             {
                 string[] files;
@@ -3529,10 +3131,6 @@ namespace System.Windows
             /// unicode is set to true, then the string is assume to be unicode,
             /// else DBCS (ASCI) is assumed.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - directly access unmanaged memory
-            /// </SecurityNote>
-            [SecurityCritical]
             private unsafe string ReadStringFromHandle(IntPtr handle, bool unicode)
             {
                 string stringData;
@@ -3563,10 +3161,6 @@ namespace System.Windows
             /// <summary>
             /// Creates a string from the data stored in handle as UTF8.
             /// </summary>
-            /// <SecurityNote>
-            /// Critical - reads unmanaged memory directly
-            /// </SecurityNote>
-            [SecurityCritical]
             private unsafe string ReadStringFromHandleUtf8(IntPtr handle)
             {
                 string stringData = null;
@@ -3615,10 +3209,6 @@ namespace System.Windows
                 return stringData;
             }
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code to access the OLE data object
-            /// </SecurityNote>
-            [SecurityCritical]
             private bool GetDataPresentInner(string format, DVASPECT aspect, int index)
             {
                 FORMATETC formatetc;
@@ -3639,66 +3229,20 @@ namespace System.Windows
                 return (hr == NativeMethods.S_OK);
             }
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code to access the OLE data object
-            /// </SecurityNote>
-            [SecurityCritical]
             private int QueryGetDataInner(ref FORMATETC formatetc)
             {
-                int hr;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-
-                try
-                {
-                    hr = _innerData.QueryGetData(ref formatetc);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
-
-                return hr;
+                return _innerData.QueryGetData(ref formatetc);
             }
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code to access the OLE data object
-            /// </SecurityNote>
-            [SecurityCritical]
             private void GetDataInner(ref FORMATETC formatetc, out STGMEDIUM medium)
             {
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-                try
-                {
-                        _innerData.GetData(ref formatetc, out medium);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
+                _innerData.GetData(ref formatetc, out medium);
             }
 
-            /// <SecurityNote>
-            /// Critical - calls unmanaged code to access the OLE data object
-            /// </SecurityNote>
-            [SecurityCritical]
             private IEnumFORMATETC EnumFormatEtcInner(DATADIR dwDirection)
             {
-                IEnumFORMATETC enumFORMATETC;
-
-                new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert
-
-                try
-                {
-                    enumFORMATETC = _innerData.EnumFormatEtc(dwDirection);
-                }
-                finally
-                {
-                    SecurityPermission.RevertAssert();
-                }
-
-                return enumFORMATETC;
-}
+                return _innerData.EnumFormatEtc(dwDirection);
+            }
 
             /// <summary>
             ///     Get the bitmap from the handle of bitmap(Hbitmap).
@@ -3739,7 +3283,7 @@ namespace System.Windows
             /// </summary>
             private class RestrictedTypeDeserializationException : Exception
             {
-}
+            }
         }
 
         #endregion OleConverter Class
@@ -3864,12 +3408,7 @@ namespace System.Windows
                                 {
                                     if (DataObject.IsFormatAndDataSerializable(cur[mappedFormatIndex], entries[dataStoreIndex].Data))
                                     {
-                                        // We only call CallerHasSerializationPermission once per method call
-                                        // to avoid the perf hit, and debugging nightmare of m*n exceptions
-                                        // getting thrown on copy
-                                        //
-                                        if (serializationCheckFailedForThisFunction
-                                            || !SecurityHelper.CallerHasSerializationPermission())
+                                        if (serializationCheckFailedForThisFunction)
                                         {
                                             serializationCheckFailedForThisFunction = true;
                                             anySerializationFailure = true;
@@ -3884,23 +3423,7 @@ namespace System.Windows
                         }
                         else
                         {
-                            bool anySerializationFailure = serializationCheckFailedForThisFunction;
-                            for (int dataStoreIndex = 0;
-                                !anySerializationFailure
-                                  &&
-                                dataStoreIndex < entries.Length;
-                                dataStoreIndex++)
-                            {
-                                if (DataObject.IsFormatAndDataSerializable(baseVar[baseFormatIndex], entries[dataStoreIndex].Data))
-                                {
-                                    if (!SecurityHelper.CallerHasSerializationPermission())
-                                    {
-                                        serializationCheckFailedForThisFunction = true;
-                                        anySerializationFailure = true;
-                                    }
-                                }
-                            }
-                            if (!anySerializationFailure)
+                             if (!serializationCheckFailedForThisFunction)
                             {
                                 formats.Add(baseVar[baseFormatIndex]);
                             }

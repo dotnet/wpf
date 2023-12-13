@@ -15,24 +15,14 @@ using MS.Win32;
 
 namespace MS.Internal.Controls
 {
-    //[System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, Name = "FullTrust")]
-    //[System.Security.Permissions.PermissionSetAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Name = "FullTrust")]
     internal class ConnectionPointCookie
     {
-        /// <SecurityNote>
-        ///  Critical : Field for critical type UnsafeNativeMethods.IConnectionPoint
-        /// </SecurityNote>
-        [SecurityCritical]
         private UnsafeNativeMethods.IConnectionPoint connectionPoint;
         private int cookie;
 
         
         /// Creates a connection point to of the given interface type.
         /// which will call on a managed code sink that implements that interface.
-        ///<SecurityNote> 
-        ///     Critical - calls critical methods. IConnectionPointContainer.FindConnectionPoint etc. 
-        ///</SecurityNote> 
-        [ SecurityCritical ] 
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
         {
             Exception ex = null;
@@ -60,13 +50,13 @@ namespace MS.Internal.Controls
 
                 if (connectionPoint == null)
                 {
-                    ex = new ArgumentException(SR.Get(SRID.AxNoEventInterface, eventInterface.Name));
+                    ex = new ArgumentException(SR.Format(SR.AxNoEventInterface, eventInterface.Name));
                 }
                 // IsComObject(sink): this is the case of a managed sink object wrapped in IDispatchSTAForwarder -
                 // see WebBrowser.CreateSink().
                 else if (sink == null || !eventInterface.IsInstanceOfType(sink) && !Marshal.IsComObject(sink))
                 {
-                    ex = new InvalidCastException(SR.Get(SRID.AxNoSinkImplementation, eventInterface.Name));
+                    ex = new InvalidCastException(SR.Format(SR.AxNoSinkImplementation, eventInterface.Name));
                 }
                 else
                 {
@@ -76,13 +66,13 @@ namespace MS.Internal.Controls
                         cookie = 0;
                         Marshal.FinalReleaseComObject(connectionPoint);
                         connectionPoint = null;
-                        ex = new InvalidOperationException(SR.Get(SRID.AxNoSinkAdvise, eventInterface.Name, hr));
+                        ex = new InvalidOperationException(SR.Format(SR.AxNoSinkAdvise, eventInterface.Name, hr));
                     }
                 }
             }
             else
             {
-                ex = new InvalidCastException(SR.Get(SRID.AxNoConnectionPointContainer));
+                ex = new InvalidCastException(SR.AxNoConnectionPointContainer);
             }
 
 
@@ -95,7 +85,7 @@ namespace MS.Internal.Controls
 
                 if (ex == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.AxNoConnectionPoint, eventInterface.Name));
+                    throw new ArgumentException(SR.Format(SR.AxNoConnectionPoint, eventInterface.Name));
                 }
                 else
                 {
@@ -112,12 +102,6 @@ namespace MS.Internal.Controls
         /// Disconnect the current connection point.  If the object is not connected,
         /// this method will do nothing.
         /// </summary>
-        ///<SecurityNote> 
-        ///     Critical - calls critical methods. 
-        ///     Potentially unsafe. For example, disconnecting the event sink breaks the site-locking 
-        ///     feature of the WebBrowser control.
-        ///</SecurityNote> 
-        [SecurityCritical]         
         internal void Disconnect()
         {
             if (connectionPoint != null && cookie != 0)
@@ -159,11 +143,6 @@ namespace MS.Internal.Controls
 
 #pragma warning restore 6500
 
-        /// <SecurityNote>
-        /// Critical: calls the critical Disconnect().
-        /// TAS: When the object is being finalized, there isn't much left to protect.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~ConnectionPointCookie()
         {
             Disconnect();

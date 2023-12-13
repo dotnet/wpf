@@ -12,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
-using System.Security.Permissions;
 using System.Windows.Threading;
 using System.Windows;
 using MS.Internal; //TextServicesInterop

@@ -18,7 +18,6 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.ComponentModel;
 using MS.Win32;
 
@@ -62,20 +61,20 @@ namespace MS.Internal.Automation
             }
             catch(System.IO.FileNotFoundException)
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.Assembly0NotFound,assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.Assembly0NotFound,assemblyName));
             } 
             
             string typeName = assemblyName.Name + ".UIAutomationClientSideProviders";
             Type t = a.GetType( typeName );
             if( t == null )
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.CouldNotFindType0InAssembly1, typeName, assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindType0InAssembly1, typeName, assemblyName));
             }
 
             FieldInfo fi = t.GetField("ClientSideProviderDescriptionTable", BindingFlags.Static | BindingFlags.Public);
             if (fi == null || fi.FieldType !=  typeof(ClientSideProviderDescription[]))
             {
-                throw new ProxyAssemblyNotLoadedException(SR.Get(SRID.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
+                throw new ProxyAssemblyNotLoadedException(SR.Format(SR.CouldNotFindRegisterMethodOnType0InAssembly1, typeName, assemblyName));
             }
 
             ClientSideProviderDescription[] table = fi.GetValue(null) as ClientSideProviderDescription[];
@@ -735,7 +734,7 @@ namespace MS.Internal.Automation
                         {
                             if( pi.ImageName != null || pi.Flags != 0 )
                             {
-                                throw new ArgumentException(SR.Get(SRID.NonclientClassnameCannotBeUsedWithFlagsOrImagename));
+                                throw new ArgumentException(SR.NonclientClassnameCannotBeUsedWithFlagsOrImagename);
                             }
 
                             _pseudoProxies[j] = pi.ClientSideProviderFactoryCallback;
@@ -829,7 +828,7 @@ namespace MS.Internal.Automation
             FallbackHandlers,
         }
         
-        private static object _lockObj = new object();
+        private static readonly object _lockObj = new object();
 
         // contains ClientSideProviderDescription structs or an Arraylist of ClientSideProviderDescription structs
         private static Hashtable _classHandlers = new Hashtable(22, 1.0f);

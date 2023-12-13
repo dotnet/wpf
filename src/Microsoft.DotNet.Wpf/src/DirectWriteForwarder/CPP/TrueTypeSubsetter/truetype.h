@@ -19,7 +19,6 @@ typedef System::UInt16  ushort;
 public ref class TrueTypeSubsetter abstract sealed
 {
 internal:
-    [System::Security::SecurityCritical]
     static array<System::Byte> ^ ComputeSubset(void * fontData, int fileSize, System::Uri ^ sourceUri, int directoryOffset, array<System::UInt16> ^ glyphArray);
 };
 

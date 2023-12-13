@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Collections.ObjectModel;
 using MS.Internal.Security.RightsManagement; 
@@ -33,18 +32,6 @@ namespace System.Security.RightsManagement
     /// Initialization, and as a result provides Encryption/Decryption services, and exposes list of Bound Grants, which are rights 
     /// that have been given by the publisher to the user, and were properly validated (expiration checks, secure environment, and so on)
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class CryptoProvider : IDisposable
     {
         //------------------------------------------------------
@@ -66,7 +53,6 @@ namespace System.Security.RightsManagement
         /// </summary>        
         public void Dispose()
         {
-            SecurityHelper.DemandRightsManagementPermission();            
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -84,16 +70,12 @@ namespace System.Security.RightsManagement
         /// </summary> 
         public byte[] Encrypt(byte[] clearText)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             CheckDisposed();
-            
-            if (clearText == null)
-            {
-                throw new ArgumentNullException("clearText");
-            }
+
+            ArgumentNullException.ThrowIfNull(clearText);
 
             // validation of the proper size of the clearText is done by the unmanaged libraries 
-            
+
             if (!CanEncrypt)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.EncryptionNotPermitted);
@@ -144,16 +126,12 @@ namespace System.Security.RightsManagement
         /// </summary>    
         public byte[] Decrypt(byte[] cryptoText)
         {
-            SecurityHelper.DemandRightsManagementPermission();
             CheckDisposed();
-        
-            if (cryptoText == null)
-            {
-                throw new ArgumentNullException("cryptoText");
-            }
+
+            ArgumentNullException.ThrowIfNull(cryptoText);
 
             // validation of the proper size of the cryptoText is done by the unmanaged libraries 
-            
+
             if (!CanDecrypt)
             {
                 throw new RightsManagementException(RightsManagementFailureCode.RightNotGranted);
@@ -257,7 +235,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
                 CheckDisposed();
             
                 if (_blockSize ==0)
@@ -276,7 +253,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
                 CheckDisposed();
             
                 // convention is to return 1 for stream ciphers
@@ -297,7 +273,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
                 CheckDisposed();
 
                 if (_boundGrantReadOnlyCollection == null)
@@ -331,7 +306,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
                 CheckDisposed();
 
                 return (!EncryptorHandle.IsInvalid);
@@ -347,7 +321,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
                 CheckDisposed();
 
                 return (!DecryptorHandle.IsInvalid);
@@ -417,7 +390,7 @@ namespace System.Security.RightsManagement
         private void CheckDisposed()
         {
             if (_disposed)
-                throw new ObjectDisposedException(null, SR.Get(SRID.CryptoProviderDisposed));
+                throw new ObjectDisposedException(null, SR.CryptoProviderDisposed);
         }
 
 

@@ -16,15 +16,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _textAnalyzer = gcnew NativeIUnknownWrapper<IDWriteTextAnalyzer>(textAnalyzer);
     }
 
-    /// <SecurityNote>
-    /// Critical    - Calls critical AnalyzeExtendedAndItemize overload
-    /// </SecurityNote>
-    [SecurityCritical]
     IList<Span^>^ TextAnalyzer::Itemize(
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
         CultureInfo^                     culture,
-        Factory^                         factory,
+        IDWriteFactory*                  pDWriteFactory,
         bool                             isRightToLeftParagraph,
         CultureInfo^                     numberCulture,
         bool                             ignoreUserOverride,
@@ -45,7 +41,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             // We obtain an AddRef factory so as not to worry about having to call GC::KeepAlive(factory)
             // which puts unnecessary maintenance cost on this code.
-            IDWriteFactory* pDWriteFactory = factory->DWriteFactoryAddRef;
+            pDWriteFactory->AddRef();
             HRESULT hr = S_OK;
             try
             {
@@ -118,14 +114,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
     }
 
-    /// <SecurityNote>
-    /// Critical    - Asserts unmanaged code permission to new and delete native buffer.
-    ///             - This method calls into security critical TextItemizer->Itemize() but
-    ///               the pointer passed to Itemize() is constructed internally so the call 
-    ///               to TextItemizer->Itemize() is safe.
-    /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     IList<Span^>^ TextAnalyzer::AnalyzeExtendedAndItemize(
         TextItemizer^ textItemizer, 
         __in_ecount(length) const WCHAR *text, 
@@ -149,10 +137,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    /// <SecurityNote>
-    /// Critical    - Receives pointers, arrays and their bounds as input.
-    /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::AnalyzeExtendedCharactersAndDigits(
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
@@ -238,10 +222,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         textItemizer->SetIsDigit(isDigitRangeStart, isDigitRangeEnd - isDigitRangeStart, previousIsDigitValue);
     }
 
-    /// <SecurityNote>
-    /// Critical    - Receives pointers, arrays and their bounds as input.
-    /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::GetBlankGlyphsForControlCharacters(
         __in_ecount(textLength)     const WCHAR*     pTextString,
         UINT32                                       textLength,
@@ -296,27 +276,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-// Warning 4714 (__forceinline function not inlined)
-// is expected here because TextAnalyzer::GetGlyphs is marked with [SecurityCritical]
-// and tries to inline HRESULT_FROM_WIN32.
-// inlining is prevented when the caller or the callee
-// are marked with any security attribute (critical, safecritical, treatassafecritical).
-// This is over conservative and misses inlining opportunities occasionaly,
-// but currently there is no way of determining accurately the transparency level of a function
-// in the native compiler since there are no public APIs provided by CLR at the moment.
-// Replicating CLR transparency rules on the native side is not ideal either.
-// The solution chosen is to allow inlining only when there is clear evidence
-// for the caller and the callee to be transparent.
-#pragma warning (push)
-#pragma warning (disable : 4714)
-
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission 
-    ///                 To new and delete native buffers.
-    ///                 To perform unsafe reinterpret_casts
-    /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphs(
         __in_ecount(textLength) const WCHAR*         textString,
         UINT32                                       textLength,
@@ -499,12 +458,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-#pragma warning (pop)
-
-    /// <SecurityNote>
-    /// Critical    - Receives pointers, arrays and their bounds as input.
-    /// </SecurityNote>
-    [SecurityCritical]
     void TextAnalyzer::GetGlyphPlacementsForControlCharacters(
         __in_ecount(textLength) const WCHAR* pTextString,
         UINT32 textLength,
@@ -585,13 +538,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission 
-    ///                 To allocate and delete temporary native buffers
-    ///                 To perform unsafe reinterpret_casts
-    /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphPlacements(
         __in_ecount(textLength) const WCHAR*                         textString,
         __in_ecount(textLength) UINT16 const*                        clusterMap,
@@ -661,7 +607,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             {
                 String^ localeName = cultureInfo->IetfLanguageTag;
                 pin_ptr<const WCHAR> pLocaleName = Native::Util::GetPtrToStringChars(localeName);
-                DWRITE_MATRIX transform = Factory::GetIdentityTransform();
+                DWRITE_MATRIX transform = InternalFactory::GetIdentityTransform();
 
                 if (features != nullptr)
                 {
@@ -843,14 +789,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     }
 
 
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permission 
-    ///            To allocate and delete temporary native buffers
-    ///            To perform unsafe reinterpret_casts
-    ///            To call Marshal.Copy
-    /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     void TextAnalyzer::GetGlyphsAndTheirPlacements(
         __in_ecount(textLength) const WCHAR* textString,
         UINT32 textLength,
@@ -968,11 +906,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    /// <SecurityNote>
-    /// Critical - Calls security critical itemProps->ScriptAnalysis.
-    /// Safe     - Does not expose the pointer returned from itemProps->ScriptAnalysis.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) DWRITE_SCRIPT_SHAPES TextAnalyzer::GetScriptShapes(ItemProps^ itemProps)
     {
         return ((DWRITE_SCRIPT_ANALYSIS*)(itemProps->ScriptAnalysis))->shapes;

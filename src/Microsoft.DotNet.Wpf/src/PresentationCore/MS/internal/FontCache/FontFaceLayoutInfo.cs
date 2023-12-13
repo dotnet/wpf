@@ -16,7 +16,6 @@ using System.Security;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
@@ -66,10 +65,6 @@ namespace MS.Internal.FontCache
         #region Constructors
 
 
-        /// <SecurityNote>
-        /// Critical -  Calls into the critical CreateOpenTypeLayoutCache.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal FontFaceLayoutInfo(Text.TextInterface.Font font)
         {
             _fontTechnologyInitialized = false;
@@ -107,13 +102,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This calls into critical DesignUnitsPerEm.
-        /// TreatAsSafe: This data is safe to expose.
-        /// </SecurityNote>
         internal ushort DesignEmHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _font.Metrics.DesignUnitsPerEm;
@@ -136,13 +126,8 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Analyzes os/2 fsType value and construct FontEmbeddingRight enum value from it.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This code writes critical information into FontFaceLayoutInfo.
-        ///     TreatAsSafe: It does this only using font data and not user defined parameters.
-        /// </SecurityNote>
         internal FontEmbeddingRight EmbeddingRights
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (!_embeddingRightsInitialized)
@@ -253,12 +238,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calls critical method ComputeTypographyAvailabilities
-        /// </SecurityNote>
         internal TypographyAvailabilities TypographyAvailabilities
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (!_typographyAvailabilitiesInitialized)
@@ -270,13 +251,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This calls into critical GlyphCount.
-        /// TreatAsSafe: This data is safe to expose.
-        /// </SecurityNote>
         internal ushort GlyphCount
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 ushort glyphCount;
@@ -295,10 +271,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calls critical method TryGetFontTable, returns critical info.
-        /// </SecurityNote>
-        [SecurityCritical]
         private byte[] GetFontTable(Text.TextInterface.OpenTypeTableTag openTypeTableTag)
         {
             byte[] table;
@@ -321,10 +293,6 @@ namespace MS.Internal.FontCache
 
         // OpenType support
         
-        /// <SecurityNote>
-        /// Critical - calls critical method GetFontTable
-        /// </SecurityNote>
-        [SecurityCritical]
         internal byte[] Gsub()
         {
             if (!_gsubInitialized)
@@ -335,10 +303,6 @@ namespace MS.Internal.FontCache
             return _gsub;
         }
         
-        /// <SecurityNote>
-        /// Critical - calls critical method GetFontTable
-        /// </SecurityNote>
-        [SecurityCritical]
         internal byte[] Gpos()
         {
             if (!_gposInitialized)
@@ -349,10 +313,6 @@ namespace MS.Internal.FontCache
             return _gpos;
         }
 
-        /// <SecurityNote>
-        /// Critical - calls critical method GetFontTable
-        /// </SecurityNote>
-        [SecurityCritical]
         internal byte[] Gdef()
         {
             if (!_gdefInitialized)
@@ -363,10 +323,6 @@ namespace MS.Internal.FontCache
             return _gdef;
         }
 
-        /// <SecurityNote>
-        ///     Critical: Calls unsafe code
-        /// </SecurityNote>
-        [SecurityCritical]
         internal byte[] GetTableCache(OpenTypeTags tableTag)
         {
             switch (tableTag)
@@ -411,11 +367,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This calls into critical Type.
-        /// TreatAsSafe: Does not expose any critical data.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ComputeFontTechnology()
         {
             MS.Internal.Text.TextInterface.FontFace fontFace = _font.GetFontFace();
@@ -447,11 +398,6 @@ namespace MS.Internal.FontCache
         /// in the TypographyAvailabilities enum. TypographyAvailabilities enum is
         /// used to determind whether fast path can be used to format the input.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls critical code (OpenType layout table access)
-        /// Also uses pointers
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void ComputeTypographyAvailabilities()
         {
             int glyphBitsLength = (GlyphCount + 31) >> 5;
@@ -681,11 +627,6 @@ namespace MS.Internal.FontCache
                 throw new NotSupportedException();
             }
 
-            /// <SecurityNote>
-            /// Critical: This calls into critical HasCharacter.
-            /// TreatAsSafe: This data is safe to expose.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public bool ContainsKey(int key)
             {
                 return _font.HasCharacter(checked((uint)key));
@@ -704,12 +645,6 @@ namespace MS.Internal.FontCache
                 throw new NotSupportedException();
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code calls into an unsafe block and calls critical GetArrayOfGlyphIndices.
-            ///     TreatAsSafe: Creates its own known-sized buffers to pass into critical code and
-            ///                   does not modify or return any critical data.
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public bool TryGetValue(int key, out ushort value)
             {
                 ushort localValue;
@@ -735,10 +670,6 @@ namespace MS.Internal.FontCache
                 return (value != 0);
             }
 
-            /// <SecurityNote>
-            ///     Critical: This code calls critical GetArrayOfGlyphIndices.
-            /// </SecurityNote>
-            [SecurityCritical]
             internal unsafe void TryGetValues(uint *pKeys, uint characterCount, ushort *pIndices)
             {
                 MS.Internal.Text.TextInterface.FontFace fontFace = _font.GetFontFace();
@@ -796,14 +727,11 @@ namespace MS.Internal.FontCache
 
             public void CopyTo(KeyValuePair<int, ushort>[] array, int arrayIndex)
             {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("array");
-                }
+                ArgumentNullException.ThrowIfNull(array);
 
                 if (array.Rank != 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                    throw new ArgumentException(SR.Collection_BadRank);
                 }
 
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
@@ -924,10 +852,6 @@ namespace MS.Internal.FontCache
     /// </remarks>
     internal sealed class GsubGposTables : IOpenTypeFont
     {
-        /// <SecurityNote>
-        ///   Critical:    Gsub() and Gpos() return pointers
-        ///  </SecurityNote>
-        [SecurityCritical]
         internal GsubGposTables(FontFaceLayoutInfo layout)
         {
             _layout = layout;
@@ -968,10 +892,6 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Returns cache for layout table. If cache not found, return null Checked pointer
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:    Calls critical code
-        ///  </SecurityNote>
-        [SecurityCritical]
         public byte[] GetTableCache(OpenTypeTags tableTag)
         {
             return _layout.GetTableCache(tableTag);
@@ -980,10 +900,6 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Allocate space for layout table cache.
         /// </summary>
-        /// <SecurityNote>
-        ///   Critical:    Calls critical code
-        ///  </SecurityNote>
-        [SecurityCritical]
         public byte[] AllocateTableCache(OpenTypeTags tableTag, int size)
         {
             return _layout.AllocateTableCache(tableTag, size);

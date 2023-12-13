@@ -1,0 +1,668 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Aero2.NormalColor, Luna.NormalColor,Luna.Homestead,Luna.Metallic, AeroLite.NormalColor, Classic, Royale.NormalColor]] -->
+
+    <!--=================================================================
+        NavigationWindow
+    ==================================================================-->
+
+
+    <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter"/>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationButtonFillEnabled"
+                         StartPoint="0.5,0.0"
+                         EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                <GradientStop Color="#CCD4E9" Offset="0.1"/>
+                <GradientStop Color="#4881D2" Offset="0.47"/>
+                <GradientStop Color="#001A5A" Offset="0.47"/>
+                <GradientStop Color="#007BD6" Offset="0.70"/>
+                <GradientStop Color="#54DAFF" Offset="0.85"/>
+                <GradientStop Color="#86FFFF" Offset="0.95"/>
+                <GradientStop Color="#FFFFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationButtonFillHover"
+                         StartPoint="0.5,0.0"
+                         EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                <GradientStop Color="#DFEDF9" Offset="0.1"/>
+                <GradientStop Color="#3086E1" Offset="0.47"/>
+                <GradientStop Color="#003B91" Offset="0.47"/>
+                <GradientStop Color="#1793EF" Offset="0.70"/>
+                <GradientStop Color="#5AD4FF" Offset="0.85"/>
+                <GradientStop Color="#BDFFFF" Offset="0.95"/>
+                <GradientStop Color="#FFFFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationButtonFillPressed"
+                         StartPoint="0.5,0.0"
+                         EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#C0D2F5" Offset="0.0"/>
+                <GradientStop Color="#5E7A9C" Offset="0.47"/>
+                <GradientStop Color="#00062D" Offset="0.47"/>
+                <GradientStop Color="#005F9F" Offset="0.70"/>
+                <GradientStop Color="#1FA4E2" Offset="0.85"/>
+                <GradientStop Color="#61DAFF" Offset="0.95"/>
+                <GradientStop Color="#48CFFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationButtonFillDisabled"
+                         StartPoint="0.5,0.0"
+                         EndPoint="0.5,1.0">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0"/>
+                <GradientStop Color="#EBEEF5" Offset="0.5"/>
+                <GradientStop Color="#D8DDEB" Offset="0.5"/>
+                <GradientStop Color="#DFE2F0" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationButtonStrokeEnabled"
+                         StartPoint="0,0" 
+                         EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#6C90C4" Offset="0"/>
+                <GradientStop Color="#315BB4" Offset="0.5"/>
+                <GradientStop Color="#002091" Offset="0.5"/>
+                <GradientStop Color="#08377C" Offset="1"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationArrowStrokeEnabled"
+                         StartPoint="0,0" 
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#8AB1FB" Offset="0"/>
+            <GradientStop Color="#002874" Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationArrowFill"
+                         StartPoint="0,0" 
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#FFFFFF" Offset="0.5"/>
+                <GradientStop Color="#EEEEEE" Offset="0.5"/>
+                <GradientStop Color="#B0B0B0" Offset="1"/>
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowDownArrowFill"
+                         StartPoint="0,0" 
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#33B5DA" Offset="0"/>
+                <GradientStop Color="#335799" Offset="1"/>
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="NavigationWindowNavigationChromeBackground"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStop Color="#FFFFFF" Offset="0"/>
+            <GradientStop Color="#E3E8F4" Offset="0.5"/>
+            <GradientStop Color="#CFD7EB" Offset="0.5"/>
+            <GradientStop Color="#E9ECFA" Offset="1.0"/>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="CurrentEntryBackground" 
+                     Color="{StaticResource {x:Static SystemColors.HighlightColorKey}}"
+                     Opacity="0.25"/>
+
+    <!-- Navigation Window back/fwd button Drop Down style-->
+    <Style x:Key="NavigationWindowNavigationButtonJournalEntryStyle"
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="OverridesDefaultStyle" 
+                Value="true"/>
+        <Setter Property="Header"
+                Value="{Binding Path=(JournalEntry.Name)}"/>
+        <Setter Property="Command"
+                Value="NavigationCommands.NavigateJournal"/>
+        <!-- The CommandTarget is the containing NavigationWindow or Frame. It is important to target it
+            directly, to avoid the command routing's dependence on the focused element. Menu is a FocusScope. -->
+        <Setter Property="CommandTarget"
+                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Menu}}, Path=TemplatedParent}"/>
+        <Setter Property="CommandParameter"
+                Value="{Binding RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="JournalEntryUnifiedViewConverter.JournalEntryPosition"
+                Value="{Binding (JournalEntryUnifiedViewConverter.JournalEntryPosition)}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Grid Name="Panel"
+                          Background="Transparent"
+                          SnapsToDevicePixels="true">
+                        <Path Name="Glyph"
+                              SnapsToDevicePixels="false"
+                              Margin="7,5"
+                              Width="10"
+                              Height="10"
+                              HorizontalAlignment="Left"
+                              StrokeStartLineCap="Triangle"
+                              StrokeEndLineCap="Triangle"
+                              StrokeThickness="2"
+                              Stroke="{TemplateBinding Foreground}"/>
+                        <ContentPresenter ContentSource="Header"
+                                          Margin="24,5,21,5"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="JournalEntryUnifiedViewConverter.JournalEntryPosition"
+                                 Value="Current">
+                            <Setter TargetName="Panel"
+                                    Property="Background"
+                                    Value="{StaticResource CurrentEntryBackground}"/>
+                            <Setter TargetName="Glyph"
+                                    Property="Data"
+                                    Value="M 0,5 L 2.5,8 L 7,3 "/>
+                            <Setter TargetName="Glyph"
+                                    Property="FlowDirection"
+                                    Value="LeftToRight"/>
+                            <Setter TargetName="Glyph"
+                                    Property="StrokeLineJoin"
+                                    Value="Miter"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted"
+                                 Value="true">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <Setter TargetName="Panel"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="MenuItem.IsHighlighted"
+                                           Value="true"/>
+                                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition"
+                                           Value="Forward"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Glyph"
+                                    Property="Stroke"
+                                    Value="White"/>
+                            <Setter TargetName="Glyph"
+                                    Property="Data"
+                                    Value="M 1,5 L 7,5 M 5,1 L 9,5 L 5,9"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="MenuItem.IsHighlighted"
+                                           Value="true"/>
+                                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition"
+                                           Value="Back"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Glyph"
+                                    Property="Stroke"
+                                    Value="White"/>
+                            <Setter TargetName="Glyph"
+                                    Property="Data"
+                                    Value="M 9,5 L 3,5 M 5,1 L 1,5 L 5,9"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NavigationWindowMenuItem" 
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="OverridesDefaultStyle" 
+                Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Grid>
+                        <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="true"
+                                   Placement="Bottom"
+                                   VerticalOffset="2"
+                                   IsOpen="{Binding Path=(MenuItem.IsSubmenuOpen),RelativeSource={RelativeSource TemplatedParent}}"
+                                   Focusable="false"
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                            <theme:SystemDropShadowChrome Name="Shdw"
+                                                          Color="Transparent">
+                                <Border Name="SubMenuBorder"
+                                        Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+
+                                    <ScrollViewer Name="SubMenuScrollViewer"
+                                                  Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                                      <Grid RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Rectangle
+                                                Name="OpaqueRect"
+                                                Height="{Binding ElementName=SubMenuBorder,Path=ActualHeight}" 
+                                                Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}" 
+                                                Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
+                                        </Canvas>
+                                        <ItemsPresenter Name="ItemsPresenter" Margin="2"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                      </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </theme:SystemDropShadowChrome>
+                        </Popup>
+                        
+                        <Grid x:Name="Panel" 
+                              Width="26" 
+                              Background="Transparent"
+                              HorizontalAlignment="Right" >
+   
+                            <Border SnapsToDevicePixels="True" 
+                                    Visibility="Hidden" 
+                                    Name="HighlightBorder" 
+                                    BorderThickness="1,1,1,1" 
+                                    BorderBrush="#B0B5BACE" 
+                                    CornerRadius="2" >
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                                         EndPoint="0,1" >
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Color="#20DDDDDD" Offset="0" />
+                                            <GradientStop Color="#80FFFFFF" Offset="1" />
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border BorderBrush="#A0FFFFFF" CornerRadius="1.5" BorderThickness="1" />
+                            </Border>
+
+                            <Path x:Name="Arrow"
+                                  SnapsToDevicePixels="false"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Center"
+                                  Margin="{TemplateBinding Padding}"
+                                  Fill="{StaticResource NavigationWindowDownArrowFill}"
+                                  Stroke="White"
+                                  StrokeThickness="1"
+                                  StrokeLineJoin="Round"
+                                  Data="M 0 0 L 4.5 5 L 9 0 Z"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="true">
+                            <Setter TargetName="HighlightBorder" 
+                                    Property="Visibility" 
+                                    Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Arrow" 
+                                    Property="Fill" 
+                                    Value="#A5AABE"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup"
+                                 Property="Popup.HasDropShadow"
+                                 Value="true">
+                            <Setter TargetName="Shdw"
+                                    Property="Margin"
+                                    Value="0,0,5,5"/>
+                            <Setter TargetName="Shdw"
+                                    Property="SnapsToDevicePixels"
+                                    Value="true"/>
+                            <Setter TargetName="Shdw"
+                                    Property="Color"
+                                    Value="#71000000"/>
+                        </Trigger>
+                        <Trigger SourceName="SubMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll"
+                                 Value="false" >
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Top" 
+                                    Value="{Binding ElementName=SubMenuScrollViewer, Path=VerticalOffset}" />
+                            <Setter TargetName="OpaqueRect" 
+                                    Property="Canvas.Left" 
+                                    Value="{Binding ElementName=SubMenuScrollViewer, Path=HorizontalOffset}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NavigationWindowMenu"
+           TargetType="{x:Type Menu}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <DockPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="OverridesDefaultStyle" 
+                Value="true"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="None"/>
+        <Setter Property="IsMainMenu" 
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Navigation Window Back Button Style -->
+    <Style x:Key="NavigationWindowBackButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="OverridesDefaultStyle" 
+                Value="true"/>
+        <Setter Property="Command" 
+                Value="NavigationCommands.BrowseBack"/>
+        <Setter Property="Focusable" 
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Width="24" 
+                          Height="24"
+                          Background="Transparent">
+                        <!-- Circle -->
+                        <Ellipse Name="Circle"
+                                 StrokeThickness="1"
+                                 Fill="{StaticResource NavigationWindowNavigationButtonFillEnabled}"
+                                 Stroke="{StaticResource NavigationWindowNavigationButtonStrokeEnabled}" />
+
+                        <!-- Arrow -->
+                        <Path Name="Arrow" 
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Center" 
+                              StrokeThickness="0.75"
+                              Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
+                              Stroke="{StaticResource NavigationWindowNavigationArrowStrokeEnabled}"
+                              Fill="{StaticResource NavigationWindowNavigationArrowFill}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Fill"
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillDisabled}"
+                                    TargetName="Circle"/>
+                            <Setter Property="Stroke"
+                                    Value="#B5BACE"
+                                    TargetName="Circle"/>
+                            <Setter Property="Stroke"
+                                    Value="#B0B5BACE"
+                                    TargetName="Arrow"/>
+                            <Setter Property="Fill"
+                                    Value="#D0FFFFFF"
+                                    TargetName="Arrow"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" 
+                                 Value="true">
+                            <Setter Property="Fill" 
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillHover}"
+                                    TargetName="Circle"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" 
+                                 Value="true">
+                            <Setter Property="Fill"
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillPressed}"
+                                    TargetName="Circle"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <!-- Navigation Window Forward Button Style -->
+    <Style x:Key="NavigationWindowForwardButtonStyle"
+           TargetType="{x:Type Button}">
+        <!-- We will need to find out the size of button and menu height from system resources -->
+        <!-- Opened work item #22122 to track this-->
+        <Setter Property="OverridesDefaultStyle" 
+                Value="true"/>
+        <Setter Property="Command" 
+                Value="NavigationCommands.BrowseForward"/>
+        <Setter Property="Focusable" 
+                Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Width="24" 
+                          Height="24"
+                          Background="Transparent">
+                        <!-- Circle -->
+                        <Ellipse Name="Circle"
+                                 Grid.Column="0"      
+                                 StrokeThickness="1"
+                                 Fill="{StaticResource NavigationWindowNavigationButtonFillEnabled}"
+                                 Stroke="{StaticResource NavigationWindowNavigationButtonStrokeEnabled}" />
+
+                        <!-- Arrow -->
+                        <Path Name="Arrow" 
+                              Grid.Column="0"      
+                              VerticalAlignment="Center" 
+                              HorizontalAlignment="Center" 
+                              StrokeThickness="0.75"
+                              Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
+                              Stroke="{StaticResource NavigationWindowNavigationArrowStrokeEnabled}"
+                              Fill="{StaticResource NavigationWindowNavigationArrowFill}"
+                              RenderTransformOrigin="0.5,0">
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleX="-1" />
+                            </Path.RenderTransform>
+                        </Path>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" 
+                                 Value="false">
+                            <Setter Property="Fill"
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillDisabled}"
+                                    TargetName="Circle"/>
+                            <Setter Property="Stroke"
+                                    Value="#B5BACE"
+                                    TargetName="Circle"/>
+                            <Setter Property="Stroke"
+                                    Value="#B0B5BACE"
+                                    TargetName="Arrow"/>
+                            <Setter Property="Fill"
+                                    Value="#D0FFFFFF"
+                                    TargetName="Arrow"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" 
+                                 Value="true">
+                            <Setter Property="Fill" 
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillHover}"
+                                    TargetName="Circle"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" 
+                                 Value="true">
+                            <Setter Property="Fill"
+                                    Value="{StaticResource NavigationWindowNavigationButtonFillPressed}"
+                                    TargetName="Circle"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <ControlTemplate x:Key="NavigationWindowTemplateKey"
+                     TargetType="{x:Type NavigationWindow}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <DockPanel>
+                <Grid Name="NavChrome"
+                      Background="{StaticResource NavigationWindowNavigationChromeBackground}"
+                      DockPanel.Dock="Top"
+                      Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="29"/>
+                        <ColumnDefinition Width="26"/>
+                        <ColumnDefinition Width="17"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Menu -->
+                    <Menu Name="NavMenu"
+                          Grid.ColumnSpan="3"
+                          Height="23"
+                          Margin="1,0,0,1"
+                          VerticalAlignment="Center" 
+                          Style="{StaticResource NavigationWindowMenu}">
+
+                        <MenuItem Padding="0,2,5,0"
+                                  Style="{StaticResource NavigationWindowMenuItem}"
+                                  ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}"
+                                  IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+                            <MenuItem.ItemsSource>
+                                <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
+                                                 Path="(NavigationWindow.BackStack)" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}" 
+                                                 Path="(NavigationWindow.ForwardStack)" />
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </MenuItem.ItemsSource>
+                        </MenuItem>
+                    </Menu>
+
+                    <Path Grid.Column="0" 
+                          SnapsToDevicePixels="false"
+                          IsHitTestVisible="false"
+                          Margin="2,0,0,0"
+                          Grid.ColumnSpan="3"
+                          StrokeThickness="1" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center" 
+                          Data="M22.5767,21.035 Q27,19.37 31.424,21.035 A12.5,12.5,0,0,0,53.5,13 A12.5,12.5,0,0,0,37.765,0.926 Q27,4.93 16.235,0.926 A12.5,12.5,0,0,0,0.5,13 A12.5,12.5,0,0,0,22.5767,21.035 z">
+                        <Path.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="#A0C2CCE7" Offset="0"/>
+                                        <GradientStop Color="#60FFFFFF" Offset="1"/>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Path.Fill>
+
+                        <Path.Stroke>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="#FFB7C2E3" Offset="0.2"/>
+                                        <GradientStop Color="#A0FFFFFF" Offset="0.9"/>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Path.Stroke>
+                    </Path>
+
+                    <Button Style="{StaticResource NavigationWindowBackButtonStyle}"
+                            Margin="3,0,2,0" 
+                            Grid.Column="0"/>
+                    
+
+                    <Button Style="{StaticResource NavigationWindowForwardButtonStyle}"
+                            Margin="2,0,0,0" 
+                            Grid.Column="1"/>
+                </Grid>
+                <Grid>
+                    <AdornerDecorator>                    
+                        <ContentPresenter Name="PART_NavWinCP" 
+                                          ClipToBounds="true"/>
+                                          
+                    </AdornerDecorator>
+
+
+                    <ResizeGrip x:Name="WindowResizeGrip"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Visibility="Collapsed"
+                                IsTabStop="false"/>
+                </Grid>
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="ShowsNavigationUI" Value="False">
+                <Setter TargetName="NavChrome" Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+
+            <MultiTrigger>
+                <!-- There may be perf implications b/c of the following conditions.  We may cause
+                        an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                        is set to CanResizeWithGrip -->
+                <MultiTrigger.Conditions>
+                    <Condition Property="Window.ResizeMode"
+                               Value="CanResizeWithGrip"/>
+                    <Condition Property="Window.WindowState"
+                               Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="WindowResizeGrip"
+                        Property="Visibility"
+                        Value="Visible"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NavigationWindow.CanGoForward"
+                               Value="false"/>
+                    <Condition Property="NavigationWindow.CanGoBack"
+                               Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="NavMenu"
+                        Property="IsEnabled"
+                        Value="false"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="{x:Type NavigationWindow}"
+           TargetType="{x:Type NavigationWindow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Template"
+                Value="{StaticResource NavigationWindowTemplateKey}"/>
+    </Style>
+
+
+

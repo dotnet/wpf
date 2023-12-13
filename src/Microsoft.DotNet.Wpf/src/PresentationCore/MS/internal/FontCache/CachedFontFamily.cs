@@ -23,7 +23,6 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
@@ -44,36 +43,18 @@ namespace MS.Internal.FontCache
     {
         private FamilyCollection                _familyCollection;
 
-        /// <SecurityNote>
-        /// Critical: This holds reference to a pointer which is not ok to expose
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe FamilyCollection.CachedFamily * _family;
 
-        /// <SecurityNote>
-        /// Critical: Determines value of CheckedPointer.Size, which is used for bounds checking.
-        /// </SecurityNote>
-        [SecurityCritical]
         private int _sizeInBytes;
 
-        /// <SecurityNote>
-        /// Critical: This stores a pointer and the class is unsafe because it manipulates the pointer; the sizeInBytes
-        ///           parameter is critical because it is used for bounds checking (via CheckedPointer)
-        /// </SecurityNote>
-        [SecurityCritical]
         public unsafe CachedFontFamily(FamilyCollection familyCollection, FamilyCollection.CachedFamily*  family, int sizeInBytes)
         {
             _familyCollection = familyCollection;
             _family = family;
             _sizeInBytes = sizeInBytes;
         }
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public bool IsNull
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -82,13 +63,8 @@ namespace MS.Internal.FontCache
                 }
             }
         }
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public bool IsPhysical
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -98,13 +74,8 @@ namespace MS.Internal.FontCache
             }
         }
         
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public bool IsComposite
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -114,13 +85,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public string OrdinalName
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -130,12 +96,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer and returns a pointer to a structure
-        /// </SecurityNote>
         public unsafe FamilyCollection.CachedPhysicalFamily* PhysicalFamily
         {
-            [SecurityCritical]
             get
             {
                 Invariant.Assert(IsPhysical);
@@ -143,12 +105,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer and returns a pointer to a structure
-        /// </SecurityNote>
         public unsafe FamilyCollection.CachedCompositeFamily* CompositeFamily
         {
-            [SecurityCritical]
             get
             {
                 Invariant.Assert(IsComposite);
@@ -156,14 +114,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical:     Accesses critical fields and constructs a CheckedPointer which is a critical operation.
-        /// TreatAsSafe:  The fields used to construct the CheckedPointer are marked critical and CheckedPointer
-        ///               itself is safe to expose.
-        /// </SecurityNote>
         public CheckedPointer CheckedPointer
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -181,13 +133,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public int NumberOfFaces
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -197,13 +144,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public double Baseline
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -213,13 +155,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public double LineSpacing
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -229,13 +166,8 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: This acccesses a pointer
-        /// TreatAsSafe: This information is ok to expose
-        /// </SecurityNote>
         public IDictionary<XmlLanguage, string> Names
         {
-            [SecurityCritical,SecurityTreatAsSafe]
             get
             {
                 unsafe
@@ -275,11 +207,6 @@ namespace MS.Internal.FontCache
 
             #region IEnumerator<CachedFontFace> Members
 
-            /// <SecurityNote>
-            /// Critical: This acccesses a pointer
-            /// TreatAsSafe: This funtions moves to the next 
-            /// </SecurityNote>
-            [SecurityCritical,SecurityTreatAsSafe]
             public bool MoveNext()
             {
                 ++_currentFace;
@@ -289,13 +216,8 @@ namespace MS.Internal.FontCache
                 return false;
             }
 
-            /// <SecurityNote>
-            /// Critical: This acccesses a pointer
-            /// TreatAsSafe: This information is ok to expose
-            /// </SecurityNote>
             CachedFontFace IEnumerator<CachedFontFace>.Current
             {
-            [SecurityCritical,SecurityTreatAsSafe]
                 get
                 {
                     return _family.FamilyCollection.GetCachedFace(_family, _currentFace);

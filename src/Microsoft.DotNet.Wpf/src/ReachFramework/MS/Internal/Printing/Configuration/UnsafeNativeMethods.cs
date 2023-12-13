@@ -10,13 +10,11 @@ All rights reserved.
 namespace MS.Internal.Printing.Configuration
 {
     using System;
-    using System.Drawing.Printing;
     using System.Printing;
     using System.Runtime.ConstrainedExecution;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using Microsoft.Internal;
     using MS.Internal.ReachFramework;
@@ -29,11 +27,6 @@ namespace MS.Internal.Printing.Configuration
     /// Internal proxy class that makes P/Invoke calls into the unmanaged stub provider prntvpt.dll.
     /// </summary>
     /// <remarks>all input parameters to NativeMethods functions are from trusted source</remarks>
-    ///<SecurityNote>
-    /// Critical    - Win32 Print API calls which enables printing and print queue/server management
-    ///</SecurityNote>
-    [SuppressUnmanagedCodeSecurityAttribute]
-    [SecurityCritical(SecurityCriticalScope.Everything)]
     internal static class UnsafeNativeMethods
     {
         #region Public Methods
@@ -50,11 +43,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable
-        ///               Devmode  manipulation in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTOpenProviderEx(
             string deviceName,
             int maxVersion,
@@ -86,13 +74,8 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         /// <param name="handle">device handle proxy has been bound to</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables Devmode manipulation in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///             - shouldn't be called in Partial Trust
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTCloseProvider", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+  
         public static extern uint PTCloseProviderImpl(IntPtr handle);
 
         /// <summary>
@@ -106,11 +89,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable
-        ///               Device capabilities manipulation in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTGetPrintCapabilities(
             SafePTProviderHandle handle,
             IStream printTicket,
@@ -141,11 +119,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable enable Print Ticket
-        ///               manipulation in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTMergeAndValidatePrintTicket(
             SafePTProviderHandle handle,
             IStream baseTicket,
@@ -183,11 +156,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable conversion of a devmode to a PrintTicket
-        ///               manipulation in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTConvertDevModeToPrintTicket(
             SafePTProviderHandle handle,
             uint dmSize,
@@ -225,11 +193,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to enable the conversion
-        ///               of a PrintTicket to devmode in Intranet Zone
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTConvertPrintTicketToDevMode(
             SafePTProviderHandle handle,
             IStream printTicket,
@@ -265,11 +228,6 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="PrintingNotSupportedException">
         /// Printing components are not installed on the client
         /// </exception>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to release native resources
-        /// TreatAsSafe - this method demands DefaultPrinting to run
-        ///</SecurityNote>
-        [SecurityCritical]
         public static uint PTReleaseMemory(HandleRef devMode)
         {
             try
@@ -287,10 +245,6 @@ namespace MS.Internal.Printing.Configuration
         /// This affects the type of struct returned in the pDefault memeber (e.g it's DEVMODE may be DEVMODEA or DEVMODEW)
         /// To reduce potential for bugs we will only pinvoke to the unicode version
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; interacts with the printer in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Winspool, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern bool OpenPrinterW(string pPrinterName, out SafeWinSpoolPrinterHandle printer, HandleRef pDefault);
 
@@ -299,10 +253,6 @@ namespace MS.Internal.Printing.Configuration
         /// The CharSet affects the type of struct returned in the pDefault member (e.g it's DEVMODE may be DEVMODEA or DEVMODEW)
         /// To reduce potential for bugs we will only pinvoke to the unicode version
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Enables access to printer information in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Winspool, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern bool GetPrinterW(SafeWinSpoolPrinterHandle printer, uint dwLevel, SafeMemoryHandle pPrinter, uint dwBuf, ref uint dwNeeded);
 
@@ -311,10 +261,6 @@ namespace MS.Internal.Printing.Configuration
         /// This affects the type of data returned in the pDevMode and pOutput members (e.g pDevMode DEVMODE may be DEVMODEA or DEVMODEW)
         /// To reduce potential for bugs we will only pinvoke to the unicode version
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Gets printer information in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Winspool, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern uint DeviceCapabilitiesW(string pDevice, string pPort, DeviceCapability fwCapabilities, SafeMemoryHandle pOutput, SafeMemoryHandle pDevMode);
 
@@ -323,10 +269,6 @@ namespace MS.Internal.Printing.Configuration
         /// This affects the type of data returned in the devModeOutput member (e.g devModeOutput DEVMODE may be DEVMODEA or DEVMODEW)
         /// To reduce potential for bugs we will only pinvoke to the unicode version
         /// </remarks>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Gets printer information in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Winspool, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern int DocumentPropertiesW(
             HandleRef hWnd, 
@@ -336,49 +278,24 @@ namespace MS.Internal.Printing.Configuration
             SafeMemoryHandle devModeInput,
             DocumentPropertiesFlags mode);
 
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Interacts with printer in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Winspool, ExactSpelling = true, SetLastError = true)]
         public static extern bool ClosePrinter(IntPtr hPrinter);
 
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Enables acces to with device information (possibly a printer) in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Gdi32, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr CreateICW(string lpszDriver, string lpszDevice, string lpszOutput, SafeMemoryHandle devmodePtr);
 
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Gets device (possibly a printer) information in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Gdi32, ExactSpelling = true, SetLastError = true)]
         public static extern int GetDeviceCaps(HandleRef hdc, DeviceCap capability);
 
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Interacts with device (possibly a printer) in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(ExternDll.Gdi32, ExactSpelling = true, SetLastError = true)]
         public static extern bool DeleteDC(HandleRef hdc);
 
-        ///<SecurityNote>
-        /// Critical    - SUC applied; 
-        ///</SecurityNote>
         [DllImport(ExternDll.User32, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern int LoadStringW(SafeModuleHandle hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
 
-        /// <SecurityNote>
-        /// Critical    - SUC applied; 
-        /// </SecurityNote>        
         [DllImport(ExternDll.Kernel32, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
         public static extern SafeModuleHandle LoadLibraryExW(string lpFileName, IntPtr hFile, LoadLibraryExFlags dwFlags);
 
-        /// <SecurityNote>
-        /// Critical    - SUC applied; 
-        /// </SecurityNote>        
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, SetLastError = true)]
         public static extern bool FreeLibrary(IntPtr hModule);
 
@@ -389,11 +306,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="fDeleteOnRelease">Delete the allocated memory when the stream is released</param>
         /// <param name="ppstm">Created Stream</param>
         /// <returns>HRESULT</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; Creates an IStream that could read from\write to arbitrary memory locations
-        ///             - callers must pass IntPtr.Zero to hGlobal to and true to fDeleteOnRelease 
-        ///               to constrain reads and writes to memory allocated and managed by the IStream 
-        ///</SecurityNote>
         [DllImport(DllImport.Ole32, EntryPoint = "CreateStreamOnHGlobal", CharSet = CharSet.Unicode, ExactSpelling = true)]
         public static extern uint CreateStreamOnHGlobal(SafeMemoryHandle hGlobal, bool fDeleteOnRelease, out IStream ppstm);
 
@@ -410,10 +322,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="handle">device handle proxy is bound to</param>
         /// <param name="usedVersion">schema version proxy will use</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables Devmode manipulation in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTOpenProviderEx", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern uint PTOpenProviderExImpl(
             [MarshalAs(UnmanagedType.LPWStr)] string deviceName,
@@ -430,11 +338,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="printCapabilities">Stream that XML PrintCapabilities will be written to</param>
         /// <param name="errorMsg">error message if the operation failed</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables Device capabilities manipulation in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///             - shouldn't be called in Partial Trust
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTGetPrintCapabilities", CharSet = CharSet.Unicode)]
         private static extern uint PTGetPrintCapabilitiesImpl(
             SafePTProviderHandle handle,
@@ -452,11 +355,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="resultTicket">Stream the validated XML PrintTicket it written to</param>
         /// <param name="errorMsg">error message if the operation failed</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables Print Ticket manipulation in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///             - shouldn't be called in Partial Trust
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTMergeAndValidatePrintTicket", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern uint PTMergeAndValidatePrintTicketImpl(
             SafePTProviderHandle handle,
@@ -475,11 +373,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="scope">scope that the result PrintTicket will be limited to</param>
         /// <param name="printTicket">Stream that the converted XML PrintTicket will be written to</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables conversion of a devmode to a PrintTicket in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///             - shouldn't be called in Partial Trust
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTConvertDevModeToPrintTicket", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern uint PTConvertDevModeToPrintTicketImpl(
             SafePTProviderHandle handle,
@@ -500,11 +393,6 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="dmSize">size of devMode buffer in bytes</param>
         /// <param name="errorMsg">error message if the operation failed</param>
         /// <returns>HRESULT code</returns>
-        ///<SecurityNote>
-        /// Critical    - SUC applied; enables conversion of a PrintTicket to devmode in Intranet Zone
-        ///             - callers must demand DefaultPrinting
-        ///             - shouldn't be called in Partial Trust
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTConvertPrintTicketToDevMode", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern uint PTConvertPrintTicketToDevModeImpl(
             SafePTProviderHandle handle,
@@ -520,10 +408,6 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         /// <param name="pBuffer">A pointer to a buffer allocated during a call to a print ticket API.</param>
         /// <returns>If the operation succeeds, the return value is S_OK, otherwise the HRESULT contains an error code</returns>
-        ///<SecurityNote>
-        /// Critical    - calls into code with SUC applied to release native resources
-        ///             - callers must demand DefaultPrinting
-        ///</SecurityNote>
         [DllImport(DllImport.PrntvPt, EntryPoint = "PTReleaseMemory", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern uint PTReleaseMemoryImpl(HandleRef devMode);
 

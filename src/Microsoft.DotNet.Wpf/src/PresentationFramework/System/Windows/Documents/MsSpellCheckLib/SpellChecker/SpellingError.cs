@@ -72,17 +72,9 @@ namespace System.Windows.Documents.MsSpellCheckLib
             /// Copies simple fields from ISpellingError, and populates suggestions
             /// when CorrectiveAction == GetSuggestions.
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - calls into COM
-            ///     Safe - does not expose any unmanaged resoruces to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             internal SpellingError(ISpellingError error, SpellChecker spellChecker, string text, bool shouldSuppressCOMExceptions = true, bool shouldReleaseCOMObject = true)
             {
-                if (error == null)
-                {
-                    throw new ArgumentNullException(nameof(error));
-                }
+                ArgumentNullException.ThrowIfNull(error);
 
                 StartIndex = error.StartIndex;
                 Length = error.Length;
@@ -95,11 +87,6 @@ namespace System.Windows.Documents.MsSpellCheckLib
             /// <summary>
             /// Populates suggestions when CorrectiveAction == GetSuggestions
             /// </summary>
-            /// <SecurityNote>
-            ///     Critical - calls into COM
-            ///     Safe - Does not expose any unmanaged resources to the caller
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             private void PopulateSuggestions(ISpellingError error, SpellChecker spellChecker, string text, bool shouldSuppressCOMExceptions, bool shouldReleaseCOMObject)
             {
                 try

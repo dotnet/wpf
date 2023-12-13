@@ -24,7 +24,6 @@ using MS.Internal.TextFormatting;
 using MS.Internal.FontFace;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691
 //Allow suppression of Presharp warnings
@@ -220,11 +219,9 @@ namespace System.Windows.Media
         private void InitFormattedText(string textToFormat, CultureInfo culture, FlowDirection flowDirection, Typeface typeface,
             double emSize, Brush foreground, NumberSubstitution numberSubstitution, TextFormattingMode textFormattingMode, double pixelsPerDip)
         {
-            if (textToFormat == null)
-                throw new ArgumentNullException("textToFormat");
+            ArgumentNullException.ThrowIfNull(textToFormat);
 
-            if (typeface == null)
-                throw new ArgumentNullException("typeface");
+            ArgumentNullException.ThrowIfNull(typeface);
 
             ValidateCulture(culture);
             ValidateFlowDirection(flowDirection, "flowDirection");
@@ -288,20 +285,16 @@ namespace System.Windows.Media
 
         private static void ValidateCulture(CultureInfo culture)
         {
-            if (culture == null)
-                throw new ArgumentNullException("culture");
+            ArgumentNullException.ThrowIfNull(culture);
         }
 
         private static void ValidateFontSize(double emSize)
         {
-            if (emSize <= 0)
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(emSize);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(emSize, MaxFontEmSize);
 
-            if (emSize > MaxFontEmSize)
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterCannotBeGreaterThan, MaxFontEmSize));
-
-            if (DoubleUtil.IsNaN(emSize))
-                throw new ArgumentOutOfRangeException("emSize", SR.Get(SRID.ParameterValueCannotBeNaN));
+            if (double.IsNaN(emSize))
+                throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);
         }
 
         private static void ValidateFlowDirection(FlowDirection flowDirection, string parameterName)
@@ -396,8 +389,7 @@ namespace System.Windows.Media
         /// <param name="count">The number of characters the change should be applied to.</param>
         public void SetFontFamily(string fontFamily, int startIndex, int count)
         {
-            if (fontFamily == null)
-                throw new ArgumentNullException("fontFamily");
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             SetFontFamily(new FontFamily(fontFamily), startIndex, count);
         }
@@ -419,8 +411,7 @@ namespace System.Windows.Media
         /// <param name="count">The number of characters the change should be applied to.</param>
         public void SetFontFamily(FontFamily fontFamily, int startIndex, int count)
         {
-            if (fontFamily == null)
-                throw new ArgumentNullException("fontFamily");
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             int limit = ValidateRange(startIndex, count);
             for (int i = startIndex; i < limit;)
@@ -1282,8 +1273,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 _defaultParaProps.SetLineHeight(value);
                 InvalidateMetrics();
@@ -1306,8 +1296,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
                 _maxTextWidth = value;
                 InvalidateMetrics();
             }
@@ -1357,10 +1346,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
-                if (DoubleUtil.IsNaN(value))
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                if (double.IsNaN(value))
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();
@@ -1382,8 +1371,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
                 _maxLineCount = value;
                 InvalidateMetrics();
             }

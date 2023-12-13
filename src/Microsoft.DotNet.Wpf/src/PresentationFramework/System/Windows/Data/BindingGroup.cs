@@ -466,9 +466,9 @@ namespace System.Windows.Data
             }
 
             if (value == Binding.DoNothing)
-                throw new ValueUnavailableException(SR.Get(SRID.BindingGroup_NoEntry, item, propertyName));
+                throw new ValueUnavailableException(SR.Format(SR.BindingGroup_NoEntry, item, propertyName));
             else
-                throw new ValueUnavailableException(SR.Get(SRID.BindingGroup_ValueUnavailable, item, propertyName));
+                throw new ValueUnavailableException(SR.Format(SR.BindingGroup_ValueUnavailable, item, propertyName));
         }
 
         /// <summary>
@@ -581,7 +581,7 @@ namespace System.Windows.Data
                 TraceData.IsEnabled)
             {
                 string name = (property != null) ? property.Name : "(null)";
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.BindingGroupWrongProperty(name, context.GetType().FullName));
             }
 
@@ -615,7 +615,7 @@ namespace System.Windows.Data
             // is amiss.
             if (_hasMultipleInheritanceContexts && property != ItemsControl.ItemBindingGroupProperty && TraceData.IsEnabled)
             {
-                TraceData.Trace(TraceEventType.Warning,
+                TraceData.TraceAndNotify(TraceEventType.Warning,
                         TraceData.BindingGroupMultipleInheritance);
             }
         }
@@ -1997,10 +1997,7 @@ namespace System.Windows.Data
             /// </summary>
             protected override void InsertItem(int index, BindingExpressionBase item)
             {
-                if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+                ArgumentNullException.ThrowIfNull(item);
 
                 base.InsertItem(index, item);
             }
@@ -2011,10 +2008,7 @@ namespace System.Windows.Data
             /// </summary>
             protected override void SetItem(int index, BindingExpressionBase item)
             {
-                if (item == null)
-                {
-                    throw new ArgumentNullException("item");
-                }
+                ArgumentNullException.ThrowIfNull(item);
 
                 base.SetItem(index, item);
             }

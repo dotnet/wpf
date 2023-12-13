@@ -24,7 +24,6 @@ using MS.Internal.Shaping;
 using MS.Internal.TextFormatting;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -94,11 +93,6 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Construct a run for text content from unsafe character string
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: This manipulates unsafe pointers and calls into the critical CharacterBufferReference ctor.
-        /// PublicOK: The caller needs unmanaged code permission in order to pass unsafe pointers to us.
-        /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public unsafe TextCharacters(
             char*                       unsafeCharacterString,
@@ -121,16 +115,9 @@ namespace System.Windows.Media.TextFormatting
             int                         length,
             TextRunProperties           textRunProperties
             )
-        {        
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
-
-            if (textRunProperties == null)
-            {
-                throw new ArgumentNullException("textRunProperties");
-            }
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
+            ArgumentNullException.ThrowIfNull(textRunProperties);
 
             if (textRunProperties.Typeface == null)
             {
@@ -142,10 +129,7 @@ namespace System.Windows.Media.TextFormatting
                 throw new ArgumentNullException("textRunProperties.CultureInfo");
             }
 
-            if (textRunProperties.FontRenderingEmSize <= 0)
-            {
-                throw new ArgumentOutOfRangeException("textRunProperties.FontRenderingEmSize", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRunProperties.FontRenderingEmSize, "textRunProperties.FontRenderingEmSize");
 
             _characterBufferReference = characterBufferReference;
             _length = length;

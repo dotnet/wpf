@@ -19,13 +19,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _factory                        = factory;
     }
 
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permissions to call Marshal.* However the call to Marshal is safe
-    ///            because it is called with trusted inputs.
-    /// </SecurityNote>
     [ComVisible(true)]
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     HRESULT FontFileEnumerator::MoveNext(
                                         __out bool% hasCurrentFile
                                         )
@@ -52,7 +46,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             return E_INVALIDARG;
         }
 
-        return Factory::CreateFontFile(
+        return InternalFactory::CreateFontFile(
                                       _factory,
                                       _fontFileLoader,
                                       _fontSourceCollectionEnumerator->Current->Uri,

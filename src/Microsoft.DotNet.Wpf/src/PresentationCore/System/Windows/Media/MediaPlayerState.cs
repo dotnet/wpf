@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Security;
-using System.Security.Permissions;
 using System.Diagnostics;
 using System.ComponentModel;
 using MS.Internal;
@@ -27,7 +26,6 @@ using System.Security.AccessControl;//for semaphore access permissions
 using System.Net;
 using Microsoft.Win32;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 //
@@ -104,12 +102,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Finalizer to remove the event handler from AppDomain.ProcessExit
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Helper.ProcessExitHandler is SecurityCritical as it accesses native
-        ///               resources
-        ///     TreatAsSafe: This doesn't actually call ProcessExitHandler, just detaches it
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~MediaPlayerState()
         {
             if (_helper != null)
@@ -125,13 +117,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal IsBuffering
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This calls into unmanaged code and also acceses _nativemedia
-        ///     TreatAsSafe: This information about whether buffering is on is safe to expose
-        /// </SecurityNote>
         internal bool IsBuffering
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -144,14 +131,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal CanPause
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical because it acceses _nativemedia and calls into unmanaged code
-        ///     TreatAsSafe: This is safe to expose since giving out information about
-        ///     whether media can be paused is safe
-        /// </SecurityNote>
         internal bool CanPause
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -164,14 +145,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal DownloadProgress
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning download progress is safe
-        /// </SecurityNote>
         internal double DownloadProgress
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -184,14 +159,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal BufferingProgress
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning buffering progress is safe
-        /// </SecurityNote>
         internal double BufferingProgress
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -204,14 +173,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns the Height
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning natural video height is safe
-        /// </SecurityNote>
         internal Int32 NaturalVideoHeight
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -226,14 +189,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns the Width
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning natural video width is safe
-        /// </SecurityNote>
         internal Int32 NaturalVideoWidth
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -248,14 +205,8 @@ namespace System.Windows.Media
         /// <summary>
         /// If media has audio content
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning whether media has audio is safe
-        /// </SecurityNote>
         internal bool HasAudio
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -270,14 +221,8 @@ namespace System.Windows.Media
         /// <summary>
         /// If the media has video content
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning whether media has video is safe
-        /// </SecurityNote>
         internal bool HasVideo
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -306,27 +251,20 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal Get Volume
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is critical because it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning volume ratio is safe and so also is setting it
-        /// </SecurityNote>
         internal double Volume
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
 
                 return _volume;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
                 if (Double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
+                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
                 }
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
@@ -363,26 +301,20 @@ namespace System.Windows.Media
         /// <summary>
         /// Internal Get Balance
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This is accesses the native media.
-        ///     TreatAsSafe: This is safe because the act of adjusting the balance is a safe one.
-        /// </SecurityNote>
         internal double Balance
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
 
                 return _balance;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
                 if (Double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
+                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
                 }
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
@@ -411,19 +343,13 @@ namespace System.Windows.Media
         /// <summary>
         /// Whether or not scrubbing is enabled
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This accesses the native media.
-        ///     TreatAsSafe: This is safe because it's safe to adjust whether or not scrubbing is enabled
-        /// </SecurityNote>
         internal bool ScrubbingEnabled
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
                 return _scrubbingEnabled;
             }
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
@@ -479,14 +405,8 @@ namespace System.Windows.Media
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This is critical it calls into unmanged code and accesses _nativeMedia
-        ///     TreatAsSafe: This is safe because the critical resource is not exposed and
-        ///     returning natural duration is safe
-        /// </SecurityNote>
         internal Duration NaturalDuration
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 VerifyAPI();
@@ -815,11 +735,6 @@ namespace System.Windows.Media
         /// Closes the underlying media. This de-allocates all of the native resources in
         /// the media. The mediaplayer can be opened again by calling the Open method.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
-        ///     TreatAsSafe: Intrinsically safe to close media.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         void
         Close()
@@ -843,11 +758,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Sends a command to play the given media.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
-        ///     TreatAsSafe: Media Command merely binds resource to native player.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal
         void
         SendCommandMedia(
@@ -877,11 +787,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Sends a request to the media player to reserve a UI frame for notification.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: This calls into unmanaged code and also acceses _nativemedia.
-        ///     TreatAsSafe: Asking for a frame update is inherently safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         NeedUIFrameUpdate()
@@ -898,15 +803,8 @@ namespace System.Windows.Media
         /// <summary>
         /// Create the unmanaged media resources
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls unmanaged code, access pointer parameters. It instantiates
-        ///            windows media player
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CreateMedia(MediaPlayer mediaPlayer)
         {
-            CheckMediaDisabledFlags();
-
             SafeMILHandle unmanagedProxy = null;
             MediaEventsHelper.CreateMediaEventsHelper(mediaPlayer, out _mediaEventsHelper, out unmanagedProxy);
             try
@@ -916,7 +814,7 @@ namespace System.Windows.Media
                     HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
                             myFactory.FactoryPtr,
                             unmanagedProxy,
-                            SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.AllAudio, MediaPermissionVideo.AllVideo, MediaPermissionImage.NoImage),
+                            true,
                             out _nativeMedia
                             ));
                 }
@@ -938,15 +836,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Open Media
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia), access local file system
-        /// and also stores the path to base directory in a local variable. It also asserts
-        /// to allow FileIO to local directory. It calls GetBaseDirectory, that returns sensitive information.
-        /// TreatAsSafe: This path is sent to the unmanaged layer to be opened. Also it demands
-        /// fileio for absolute paths and web permissions for files on a server. It only lets you access
-        /// files in current directory and does not expose the location of current directory
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void OpenMedia(Uri source)
         {
             string toOpen = null;
@@ -960,55 +849,18 @@ namespace System.Windows.Media
                 catch (InvalidOperationException)
                 {
                     source = null;
-                    _mediaEventsHelper.RaiseMediaFailed(new System.NotSupportedException(SR.Get(SRID.Media_PackURIsAreNotSupported, null)));
+                    _mediaEventsHelper.RaiseMediaFailed(new System.NotSupportedException(SR.Format(SR.Media_PackURIsAreNotSupported, null)));
                 }
             }
 
             // Setting a null source effectively disconects the MediaElement.
             if (source != null)
             {
-                // keep whether we asserted permissions or not
-                bool elevated = false;
-
                 // get the base directory of the application; never expose this
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
-
                 // this extracts the URI to open
                 Uri uriToOpen = ResolveUri(source, appBase);
-
-                // access is allowed in the following cases (only 1 & 2 require elevation):
-                // 1) to any HTTPS media if app is NOT coming from HTTPS
-                // 2) to URI in the current directory of the fusion cache
-                // 3) to site of origin media
-                if (SecurityHelper.AreStringTypesEqual(uriToOpen.Scheme, Uri.UriSchemeHttps))
-                {
-                    // target is HTTPS. Then, elevate ONLY if we are NOT coming from HTTPS (=XDomain HTTPS app to HTTPS media disallowed)
-                    Uri appDeploymentUri = SecurityHelper.ExtractUriForClickOnceDeployedApp();
-                    if (!SecurityHelper.AreStringTypesEqual(appDeploymentUri.Scheme, Uri.UriSchemeHttps))
-                    {
-                        new WebPermission(NetworkAccess.Connect, BindUriHelper.UriToString(uriToOpen)).Assert();
-                        elevated = true;
-                    }
-                }
-                else
-                {
-                    // elevate to allow access to media in the app's directory in the fusion cache.
-                    new FileIOPermission(FileIOPermissionAccess.Read, appBase.LocalPath).Assert();// BlessedAssert
-                    elevated = true;
-                }
-
-                // demand permissions. if demands succeds, it means we are in one of the cases above.
-                try
-                {
-                    toOpen  = DemandPermissions(uriToOpen);
-                }
-                finally
-                {
-                    if (elevated)
-                    {
-                        CodeAccessPermission.RevertAssert();
-                    }
-                }
+                toOpen  = DemandPermissions(uriToOpen);
             }
             else
             {
@@ -1020,29 +872,6 @@ namespace System.Windows.Media
             HRESULT.Check(MILMedia.Open(_nativeMedia, toOpen));
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code elevates to read registry
-        ///     TreatAsSafe: Detecting whether media is disabled is a safe operation
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
-        private void CheckMediaDisabledFlags()
-        {
-            if (SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.MediaAudioOrVideoDisable))
-            {
-                // in case the registry key is '1' then demand
-                //Demand media permission here for Video or Audio
-                // Issue: 1232606 need to fix once clr has the media permissions
-                SecurityHelper.DemandMediaPermission(MediaPermissionAudio.AllAudio,
-                                                     MediaPermissionVideo.AllVideo,
-                                                     MediaPermissionImage.NoImage);
-            }
-        }
-
-        /// <SecurityNote>
-        ///     Critical: This code returns the base directory of the app as a URI
-        ///     IT constructs a Uri based on relative and absolute URI
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private Uri ResolveUri(Uri uri, Uri appBase)
         {
             if (uri.IsAbsoluteUri)
@@ -1057,12 +886,6 @@ namespace System.Windows.Media
 
         // returns the exact string on which we demanded permissions
 
-        /// <SecurityNote>
-        ///     Critical: This code is used to safeguard against various forms of attacks
-        ///     to restrict access to loose file passed as relative path in the application
-        ///     base direcory
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private string DemandPermissions(Uri absoluteUri)
         {
             Debug.Assert(absoluteUri.IsAbsoluteUri);
@@ -1074,52 +897,8 @@ namespace System.Windows.Media
                 // go here only for files and not for UNC
                 if (absoluteUri.IsFile)
                 {
-                    // Please note this pattern is unique and NEEDS TO EXIST , it prevents
-                    // access to any folder but the one where the app is running from.
-                    // PLEASE DO NOT REMOVE THIS DEMAND AND THE ASSERT IN THE CALLING CODE
                     toOpen = absoluteUri.LocalPath;
-                    (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
                 }
-            }
-            else //Any other zone
-            {
-                // UNC path pointing to a file (We filter for `http://intranet)
-                if (absoluteUri.IsFile && absoluteUri.IsUnc)
-                {
-                    // perform checks for UNC content
-                    SecurityHelper.EnforceUncContentAccessRules(absoluteUri);
-
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                 MediaPermissionVideo.SafeVideo,
-                                                                 MediaPermissionImage.NoImage))
-                    {
-                        // if he does not then we demand web permission to allow access only to site of origin
-                        (new FileIOPermission(FileIOPermissionAccess.Read, toOpen)).Demand();
-                    }
-}
-                else // Any other path
-                {
-                    // In this case we first check to see if the consumer has media permissions for
-                    // safe media (Site of Origin + Cross domain).
-                    if (absoluteUri.Scheme != Uri.UriSchemeHttps)
-                    {
-                        //accessing non https content from an https app is disallowed
-                        SecurityHelper.BlockCrossDomainForHttpsApps(absoluteUri);
-                        if (!SecurityHelper.CallerHasMediaPermission(MediaPermissionAudio.SafeAudio,
-                                                                     MediaPermissionVideo.SafeVideo,
-                                                                     MediaPermissionImage.NoImage))
-                        {
-                            // if he does not then we demand web permission to allow access only to site of origin
-                            (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
-                        }
-                    }
-                    else// This is the case where target content is HTTPS
-                    {
-                        (new WebPermission(NetworkAccess.Connect, toOpen)).Demand();
-                    }
-}
             }
 
             return toOpen;
@@ -1128,11 +907,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Seek to specified position (in 100 nanosecond ticks)
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia)
-        /// TreatAsSafe - critical resource isn't modified or handed out
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetPosition(TimeSpan value)
         {
             VerifyAPI();
@@ -1143,11 +917,6 @@ namespace System.Windows.Media
         /// <summary>
         /// get the current position (in 100 nanosecond ticks)
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia)
-        /// TreatAsSafe - critical resource isn't modified or handed out
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private TimeSpan GetPosition()
         {
             VerifyAPI();
@@ -1157,20 +926,15 @@ namespace System.Windows.Media
             return TimeSpan.FromTicks(position);
         }
 
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia)
-        /// TreatAsSafe - critical resource isn't modified or handed out
-        /// </SecurityNote>
         private double PrivateSpeedRatio
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             set
             {
                 VerifyAPI();
 
                 if (Double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParameterValueCannotBeNaN), "value");
+                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
                 }
 
                 HRESULT.Check(MILMedia.SetRate(_nativeMedia, value));
@@ -1221,11 +985,6 @@ namespace System.Windows.Media
         /// are being called from the correct thread. This method should
         /// be the first thing called from any internal method.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia)
-        /// TreatAsSafe - critical resource isn't modified or handed out
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void VerifyAPI()
         {
             //
@@ -1241,7 +1000,7 @@ namespace System.Windows.Media
 
             if (_nativeMedia == null || _nativeMedia.IsInvalid)
             {
-                throw new System.NotSupportedException(SR.Get(SRID.Image_BadVersion));
+                throw new System.NotSupportedException(SR.Image_BadVersion);
             }
         }
 
@@ -1255,18 +1014,13 @@ namespace System.Windows.Media
         {
             if (Clock != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.Media_NotAllowedWhileTimingEngineInControl));
+                throw new InvalidOperationException(SR.Media_NotAllowedWhileTimingEngineInControl);
             }
         }
 
         /// <summary>
         /// SendMediaPlayerCommand
         /// </summary>              SecurityNote
-        /// <SecurityNote>
-        /// Critical - access critical resource (_nativeMedia)
-        /// TreatAsSafe - critical resource is treated like any other image.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private
         void
         SendMediaPlayerCommand(
@@ -1364,10 +1118,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Unamanaged Media object
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - this is a pointer to an unmanaged object that methods are called directly on
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeMediaHandle _nativeMedia;
 
         private MediaEventsHelper _mediaEventsHelper;
@@ -1407,17 +1157,8 @@ namespace System.Windows.Media
         /// </summary>
         private class Helper
         {
-            /// <SecurityNote>
-            /// Critical - this is a weak reference to a pointer to an unmanaged object
-            /// on which methods are called directly
-            /// </SecurityNote>
-            [SecurityCritical]
             private WeakReference _nativeMedia;
 
-            /// <SecurityNote>
-            /// Accesses weak reference to pointer
-            /// </SecurityNote>
-            [SecurityCritical]
             internal
             Helper(
                 SafeMediaHandle nativeMedia
@@ -1426,10 +1167,6 @@ namespace System.Windows.Media
                 _nativeMedia = new WeakReference(nativeMedia);
             }
 
-            /// <SecurityNote>
-            /// Accesses weak reference to pointer, calls unmanaged code
-            /// </SecurityNote>
-            [SecurityCritical]
             internal
             void
             ProcessExitHandler(

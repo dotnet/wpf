@@ -17,7 +17,6 @@ namespace System.Windows.Documents.Serialization
     using System.Reflection;
     using System.Windows;
     using System.Security;
-    using System.Security.Permissions;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.Win32;
     using MS.Internal.PresentationFramework;
@@ -62,39 +61,27 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Critical : Creates untrusted object via reflection
-        ///  Safe     : Demands DemandPlugInSerializerPermissions
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         public static SerializerDescriptor CreateFromFactoryInstance(
             ISerializerFactory  factoryInstance
             )
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
-            if (factoryInstance == null)
-            {
-                throw new ArgumentNullException("factoryInstance");
-            }
+            ArgumentNullException.ThrowIfNull(factoryInstance);
             if (factoryInstance.DisplayName == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderDisplayNameNull));
+                throw new ArgumentException(SR.SerializerProviderDisplayNameNull);
             }
             if (factoryInstance.ManufacturerName == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderManufacturerNameNull));
+                throw new ArgumentException(SR.SerializerProviderManufacturerNameNull);
             }
             if (factoryInstance.ManufacturerWebsite == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderManufacturerWebsiteNull));
+                throw new ArgumentException(SR.SerializerProviderManufacturerWebsiteNull);
             }
             if (factoryInstance.DefaultFileExtension == null)
             {
-                throw new ArgumentException(SR.Get(SRID.SerializerProviderDefaultFileExtensionNull));
+                throw new ArgumentException(SR.SerializerProviderDefaultFileExtensionNull);
             }
 
             SerializerDescriptor sd = new SerializerDescriptor();
@@ -126,16 +113,9 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Safe     : The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Critical : Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         [SuppressMessage("Microsoft.Security", "CA2001:AvoidCallingProblematicMethods")]
         internal ISerializerFactory CreateSerializerFactory()
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             string assemblyPath = AssemblyPath;
 
@@ -173,17 +153,8 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
-        ///<SecurityNote>
-        ///  Critical : Creates untrusted object via reflection
-        ///  Safe     : Demands DemandPlugInSerializerPermissions
-        ///  The DemandPlugInSerializerPermissions() ensures that this method only works in full trust.
-        ///  Full trust is required, so that partial trust applications do not load or use potentially
-        ///  unsafe serializer plug ins
-        ///</SecurityNote> 
-        [SecuritySafeCritical]
         internal static SerializerDescriptor CreateFromRegistry(RegistryKey plugIns, string keyName)
         {
-            SecurityHelper.DemandPlugInSerializerPermissions();
 
             SerializerDescriptor sd = new SerializerDescriptor();
 
@@ -228,7 +199,11 @@ namespace System.Windows.Documents.Serialization
 
             if (sd != null)
             {
+                // This will be noted in the release notes as an unsupported API until 4479 is fixed.
+                // https://github.com/dotnet/wpf/issues/4479 
+                #pragma warning disable SYSLIB0018 // 'Assembly.ReflectionOnlyLoadFrom(string)' is obsolete: 'ReflectionOnly loading is not su pported and throws PlatformNotSupportedException.'
                 Assembly plugIn = Assembly.ReflectionOnlyLoadFrom(sd._assemblyPath);
+                #pragma warning restore SYSLIB0018 // 'Assembly.ReflectionOnlyLoadFrom(string)' is obsolete: 'ReflectionOnly loading is not supported and throws PlatformNotSupportedException.'
                 if (typeof(System.Windows.Controls.Button).Assembly.GetName().Version == sd._winFXVersion &&
                         plugIn != null &&
                         plugIn.GetName().Version == sd._assemblyVersion)

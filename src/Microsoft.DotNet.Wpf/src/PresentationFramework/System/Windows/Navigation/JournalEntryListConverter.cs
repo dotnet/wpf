@@ -91,10 +91,7 @@ namespace System.Windows.Navigation
         /// </summary>
         public static JournalEntryPosition GetJournalEntryPosition(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return ((JournalEntryPosition)element.GetValue(JournalEntryPositionProperty));
         }
@@ -104,10 +101,7 @@ namespace System.Windows.Navigation
         /// </summary>
         public static void SetJournalEntryPosition(DependencyObject element, JournalEntryPosition position)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(JournalEntryPositionProperty, position);
         }
@@ -173,7 +167,7 @@ namespace System.Windows.Navigation
                 }
 
                 DependencyObject current = new DependencyObject();
-                current.SetValue(JournalEntry.NameProperty, SR.Get(SRID.NavWindowMenuCurrentPage));
+                current.SetValue(JournalEntry.NameProperty, SR.NavWindowMenuCurrentPage);
 
                 // "Current Page"
                 _items.Add(current);

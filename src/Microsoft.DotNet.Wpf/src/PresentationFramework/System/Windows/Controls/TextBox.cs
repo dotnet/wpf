@@ -127,13 +127,10 @@ namespace System.Windows.Controls
         ///</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             // TextBox only accepts plain text, via IAddChild.AddText.
-            throw new InvalidOperationException(SR.Get(SRID.TextBoxInvalidChild, value.ToString()));
+            throw new InvalidOperationException(SR.Format(SR.TextBoxInvalidChild, value.ToString()));
         }
 
         ///<summary>
@@ -144,10 +141,7 @@ namespace System.Windows.Controls
         ///</param>
         void IAddChild.AddText(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
+            ArgumentNullException.ThrowIfNull(text);
 
             this.TextContainer.End.InsertTextInRun(text);
         }
@@ -157,15 +151,8 @@ namespace System.Windows.Controls
         /// </summary>
         public void Select(int start, int length)
         {
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start", SR.Get(SRID.ParameterCannotBeNegative));
-            }
-
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             // Identify new position for selection Start
             int maxStart = TextContainer.SymbolCount;
@@ -831,10 +818,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 // Identify new position for selection end
                 int maxLength = TextSelectionInternal.Start.GetOffsetToPosition(TextContainer.End);
@@ -875,10 +859,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("value", SR.Get(SRID.ParameterCannotBeNegative));
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 // Store current length of the selection
                 int selectionLength = TextSelectionInternal.Start.GetOffsetToPosition(TextSelectionInternal.End);
@@ -1077,7 +1058,7 @@ namespace System.Windows.Controls
         {
             if (MinLines > 1 && MaxLines < MinLines)
             {
-                throw new Exception(SR.Get(SRID.TextBoxMinMaxLinesMismatch));
+                throw new Exception(SR.TextBoxMinMaxLinesMismatch);
             }
 
             Size size = base.MeasureOverride(constraint);

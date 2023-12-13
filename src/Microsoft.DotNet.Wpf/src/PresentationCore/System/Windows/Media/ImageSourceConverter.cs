@@ -8,7 +8,6 @@
 using System;
 using System.IO;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -22,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using MMCF = System.IO.Packaging;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Media.Imaging;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -70,7 +68,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is ImageSource))
                     {
-                        throw new ArgumentException(SR.Get(SRID.General_Expected_Type, "ImageSource"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
                     }
 
                     #pragma warning suppress 6506 // context is obviously not null
@@ -99,11 +97,6 @@ namespace System.Windows.Media
         /// <param name="context"> The ITypeDescriptorContext for this call. </param>
         /// <param name="culture"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The object to convert to an instance of ImageSource. </param>
-        /// <SecurityNote>
-        ///     Critical: Code eventually calls into unsafe code
-        ///     TreatAsASafe: Inputs are verified
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             try
@@ -224,7 +217,7 @@ namespace System.Windows.Media
                         #pragma warning disable 6506
                         if (!instance.CanSerializeToString())
                         {
-                            throw new NotSupportedException(SR.Get(SRID.Converter_ConvertToNotSupported));
+                            throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
                         #pragma warning restore 6506
                     }
@@ -240,10 +233,6 @@ namespace System.Windows.Media
 
         /// Try to get a bitmap out of a byte array.  This is an ole format that Access uses.
         /// this fails very quickly so we can try this first without a big perf hit.
-        /// <SecurityNote>
-        /// Critical - does unmanaged memory manipulation
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe Stream GetBitmapStream(byte[] rawData)
         {
             Debug.Assert(rawData != null, "rawData is null.");
@@ -271,7 +260,7 @@ namespace System.Windows.Media
                 //
                 // http://support.microsoft.com/default.aspx?scid=KB;EN-US;Q175261
                 //
-                OBJECTHEADER pHeader = (OBJECTHEADER)Marshal.PtrToStructure(addr, typeof(OBJECTHEADER));
+                OBJECTHEADER pHeader = Marshal.PtrToStructure<OBJECTHEADER>(addr);
 
                 //
                 // "PBrush" should be the 6 chars after position 12 as well.

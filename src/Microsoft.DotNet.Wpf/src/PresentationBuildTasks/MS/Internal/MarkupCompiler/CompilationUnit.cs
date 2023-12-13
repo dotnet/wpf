@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Security.Permissions;
 
 namespace MS.Internal
 {
@@ -124,7 +123,7 @@ namespace MS.Internal
         }
         
         /// <summary>
-        /// The line number at which the compile Error occured
+        /// The line number at which the compile Error occurred
         /// </summary>
         public int LineNumber
         {
@@ -132,7 +131,7 @@ namespace MS.Internal
         }
         
         /// <summary>
-        /// The character position in the line at which the compile Error occured
+        /// The character position in the line at which the compile Error occurred
         /// </summary>
         public int LinePosition
         {
@@ -140,7 +139,7 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// The xaml file in which the compile Error occured
+        /// The xaml file in which the compile Error occurred
         /// </summary>
         public string FileName
         {

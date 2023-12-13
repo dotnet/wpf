@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿
+
 
 namespace Standard
 {
@@ -453,16 +453,8 @@ namespace Standard
         uint GetCount();
         PKEY GetAt(uint iProp);
         
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
-        [SecurityCritical]
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
         
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
-        [SecurityCritical]
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
         
         void Commit();
@@ -657,10 +649,6 @@ namespace Standard
         // Ensures any cached information in this item is up to date, or returns __HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) if the item does not exist.
         void Update(IBindCtx pbc);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
         PROPVARIANT GetProperty(IntPtr key);
 
         Guid GetCLSID(IntPtr key);

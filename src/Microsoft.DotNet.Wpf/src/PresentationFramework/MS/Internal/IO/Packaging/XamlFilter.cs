@@ -96,20 +96,6 @@ namespace MS.Internal.IO.Packaging
 
     #region Internal Constructors
 
-        /// <summary>
-        /// The class constructor initializes trace and event logging.
-        /// </summary>
-        static XamlFilter()
-        {
-#if TRACE
-#if NETFX
-            EventLog xamlFilterEventLog = new EventLog();
-            xamlFilterEventLog.Log = "Application";
-            xamlFilterEventLog.Source = "XAML filter";
-            Trace.Listeners.Add(new EventLogTraceListener(xamlFilterEventLog));
-#endif
-#endif
-        }
 
         /// <summary>
         /// Constructor. Does initialization.
@@ -237,7 +223,7 @@ namespace MS.Internal.IO.Packaging
             // If client code forgot to load the stream, throw appropriate exception.
             if (_xamlReader == null)
             {
-                throw new COMException(SR.Get(SRID.FilterGetChunkNoStream), (int)FilterErrorCode.FILTER_E_ACCESS);
+                throw new COMException(SR.FilterGetChunkNoStream, (int)FilterErrorCode.FILTER_E_ACCESS);
             }
 
             // If at end of chunks, report the condition.
@@ -708,7 +694,7 @@ namespace MS.Internal.IO.Packaging
                 return null;
             }
 
-            if (String.CompareOrdinal(elementFullName.BaseName, _glyphRunName) == 0)
+            if (string.Equals(elementFullName.BaseName, _glyphRunName, StringComparison.Ordinal))
             {
                 // Ignore glyph runs during flow pass over a FixedPage.
                 if (_filterState == FilterState.FindNextFlowUnit)
@@ -722,7 +708,7 @@ namespace MS.Internal.IO.Packaging
                 }
             }
 
-            if (String.CompareOrdinal(elementFullName.BaseName, _fixedPageName) == 0)
+            if (string.Equals(elementFullName.BaseName, _fixedPageName, StringComparison.Ordinal))
             {
                 // Ignore FixedPage element (i.e. root element) during flow pass over a fixed page.
                 if (_filterState == FilterState.FindNextFlowUnit)
@@ -737,7 +723,7 @@ namespace MS.Internal.IO.Packaging
                 }
             }
 
-            if (String.CompareOrdinal(elementFullName.BaseName, _pageContentName) == 0)
+            if (string.Equals(elementFullName.BaseName, _pageContentName, StringComparison.Ordinal))
             {
                 // If the element has a Source attribute, any inlined content should be ignored.
                 string sourceUri = _xamlReader.GetAttribute(_pageContentSourceAttribute);
@@ -791,13 +777,13 @@ namespace MS.Internal.IO.Packaging
         private IndexingContentUnit ProcessFixedPage()
         {
             // Reader is positioned on the start-tag for a FixedPage element.
-            Debug.Assert(String.CompareOrdinal(_xamlReader.LocalName, _fixedPageName) == 0);
+            Debug.Assert(string.Equals(_xamlReader.LocalName, _fixedPageName, StringComparison.Ordinal));
 
             // A FixedPage nested in a FixedPage is invalid.
             // XmlException gets handled inside this class (see GetChunk).
             if (_filterState == FilterState.FindNextFlowUnit)
             {
-                throw new XmlException(SR.Get(SRID.XamlFilterNestedFixedPage));
+                throw new XmlException(SR.XamlFilterNestedFixedPage);
             }
 
             // Create a DOM for the current FixedPage.

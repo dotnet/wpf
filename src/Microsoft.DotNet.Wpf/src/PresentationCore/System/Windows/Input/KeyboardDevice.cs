@@ -5,7 +5,6 @@
 using System;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -15,7 +14,6 @@ using MS.Win32; // VK translation.
 using System.Windows.Automation.Peers;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -27,11 +25,6 @@ namespace System.Windows.Input
     /// </summary>
     public abstract class KeyboardDevice : InputDevice
     {
-        /// <SecurityNote>
-        ///     Critical: This code creates critical data(_tsfManager,_textcompositionManager) and stores critical data (inputManager)
-        ///     TreatAsSafe: Although it creates critical data there are demand on the critical data and the constructor is safe
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected KeyboardDevice(InputManager inputManager)
         {
             _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -94,20 +87,10 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
-        ///<SecurityNote>
-        /// Critical - accesses critical data ( _activeSource)
-        /// PublicOK - there is a demand.
-        ///</SecurityNote>
-
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical  ]
             get
             {
-                SecurityHelper.DemandUnrestrictedUIPermission();
 
                 //VerifyAccess();
                 if (_activeSource != null)
@@ -121,7 +104,7 @@ namespace System.Windows.Input
 
         /// <summary>
         ///     The default mode for restoring focus.
-        /// <summary>
+        /// </summary>
         public RestoreFocusMode DefaultRestoreFocusMode {get; set;}
 
         /// <summary>
@@ -150,24 +133,18 @@ namespace System.Windows.Input
         /// <param name="element">
         ///     The element to focus the keyboard on.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical: This code accesses _activeSource.Value.
-        ///     PublicOK: Moving focus within an app is safe and this does not expose
-        ///               the critical data.
-        /// </SecurityNote>
-        [SecurityCritical]
         public IInputElement Focus(IInputElement element)
         {
             DependencyObject oFocus = null;
             bool forceToNullIfFailed = false;
 
-            // Validate that if elt is either a UIElement or a ContentElement.
+            // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
             if(element != null)
             {
                 if(!InputElement.IsValid(element))
                 {
                     #pragma warning suppress 6506 // element is obviously not null
-                    throw new InvalidOperationException(SR.Get(SRID.Invalid_IInputElement, element.GetType()));
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, element.GetType()));
                 }
 
                 oFocus = (DependencyObject) element;
@@ -184,13 +161,6 @@ namespace System.Windows.Input
 
             return (IInputElement) _focus;
         }
-        /// <SecurityNote>
-        ///     Critical: This code calls into PresentationSource. which is not safe to expose.
-        ///     Additonally it retrieves the keyboard input provider
-        ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
-        ///     the critical data.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void Focus(DependencyObject focus, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             // Make sure that the element is valid for receiving focus.
@@ -311,39 +281,23 @@ namespace System.Windows.Input
             return GetKeyStatesFromSystem(key);
         }
 
-        /// <SecurityNote>
-        ///     Critical:This entity is not safe to give out
-        /// </SecurityNote>
         internal TextServicesManager TextServicesManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
-               SecurityHelper.DemandUnrestrictedUIPermission();
                return _TsfManager.Value;
            }
         }
 
 
-       /// <SecurityNote>
-       ///     Critical:This entity is not safe to give out
-       /// </SecurityNote>
        internal TextCompositionManager TextCompositionManager
         {
-           [SecurityCritical,SecurityTreatAsSafe]
            get
            {
-               SecurityHelper.DemandUnrestrictedUIPermission();
                return _textcompositionManager.Value;
            }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (inputManager) and
-        ///               causes a change of focus.
-        ///     TreatAsSafe:This code is safe to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void TryChangeFocus(DependencyObject newFocus, IKeyboardInputProvider keyboardInputProvider, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             bool changeFocus = true;
@@ -448,12 +402,6 @@ namespace System.Windows.Input
                 }
             }
         }
-        /// <SecurityNote>
-        ///     Critical: This code accesses critical data (inputManager,_TsfManager,_inputManager) and
-        ///               is not OK to expose
-        ///     TreatAsSafe: This changes focus within an app
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private void ChangeFocus(DependencyObject focus, int timestamp)
         {
             DependencyObject o = null;
@@ -471,45 +419,53 @@ namespace System.Windows.Input
                     if(oldFocus != null)
                     {
                         o = oldFocus;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged -= _isVisibleChangedEventHandler;
-                            ((UIElement)o).FocusableChanged -= _focusableChangedEventHandler;
+                            uie.IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            uie.IsVisibleChanged -= _isVisibleChangedEventHandler;
+                            uie.FocusableChanged -= _focusableChangedEventHandler;
                         }
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            ce.IsEnabledChanged -= _isEnabledChangedEventHandler;
                             // NOTE: there is no IsVisible property for ContentElements.
-                            ((ContentElement)o).FocusableChanged -= _focusableChangedEventHandler;
+                            ce.FocusableChanged -= _focusableChangedEventHandler;
+                        }
+                        else if (o is UIElement3D uie3D)
+                        {
+                            uie3D.IsEnabledChanged -= _isEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged -= _isVisibleChangedEventHandler;
+                            uie3D.FocusableChanged -= _focusableChangedEventHandler;
                         }
                         else
                         {
-                            ((UIElement3D)o).IsEnabledChanged -= _isEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged -= _isVisibleChangedEventHandler;
-                            ((UIElement3D)o).FocusableChanged -= _focusableChangedEventHandler;
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                     if(_focus != null)
                     {
                         o = _focus;
-                        if (InputElement.IsUIElement(o))
+                        if (o is UIElement uie)
                         {
-                            ((UIElement)o).IsEnabledChanged += _isEnabledChangedEventHandler;
-                            ((UIElement)o).IsVisibleChanged += _isVisibleChangedEventHandler;
-                            ((UIElement)o).FocusableChanged += _focusableChangedEventHandler;
+                            uie.IsEnabledChanged += _isEnabledChangedEventHandler;
+                            uie.IsVisibleChanged += _isVisibleChangedEventHandler;
+                            uie.FocusableChanged += _focusableChangedEventHandler;
                         }                        
-                        else if (InputElement.IsContentElement(o))
+                        else if (o is ContentElement ce)
                         {
-                            ((ContentElement)o).IsEnabledChanged += _isEnabledChangedEventHandler;
+                            ce.IsEnabledChanged += _isEnabledChangedEventHandler;
                             // NOTE: there is no IsVisible property for ContentElements.
-                            ((ContentElement)o).FocusableChanged += _focusableChangedEventHandler;
+                            ce.FocusableChanged += _focusableChangedEventHandler;
+                        }
+                        else if (o is UIElement3D uie3D)
+                        {
+                            uie3D.IsEnabledChanged += _isEnabledChangedEventHandler;
+                            uie3D.IsVisibleChanged += _isVisibleChangedEventHandler;
+                            uie3D.FocusableChanged += _focusableChangedEventHandler;
                         }
                         else
                         {
-                            ((UIElement3D)o).IsEnabledChanged += _isEnabledChangedEventHandler;
-                            ((UIElement3D)o).IsVisibleChanged += _isVisibleChangedEventHandler;
-                            ((UIElement3D)o).FocusableChanged += _focusableChangedEventHandler;
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
                         }
                     }
                 }
@@ -564,7 +520,7 @@ namespace System.Windows.Input
                 // The preferred input methods should be applied after Cicero TIP gots SetFocus callback.
                 InputMethod.Current.GotKeyboardFocus(_focus);
 
-                //Could be also built-in into IsKeyboardFocused_Changed static on UIElement and ContentElement
+                //Could be also built-in into IsKeyboardFocused_Changed static on UIElement, ContentElement and UIElement3D.
                 //However the Automation likes to go immediately back on us so it would be better be last one...
                 AutomationPeer.RaiseFocusChangedEventHelper((IInputElement)_focus);
             }
@@ -647,12 +603,6 @@ namespace System.Windows.Input
         ///         - still visible
         ///         - still in the tree
         /// </remarks>
-        ///<SecurityNote>
-        ///     Critical:    accesses critical data ( _activeSource)
-        ///     TreatAsSafe: Moving focus within an app is safe and this does not expose
-        ///                  the critical data.
-        ///</SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private object ReevaluateFocusCallback(object arg)
         {
             _reevaluateFocusOperation = null;
@@ -742,10 +692,6 @@ namespace System.Windows.Input
             return null;
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -756,12 +702,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code can be used for input spoofing,
-        ///               It also stores critical data InputSource
-        ///               accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
@@ -885,12 +825,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - calls critical functions PushInput, KeyEventArgs.UnsafeInputSource
-        ///                and KeyEventArgs ctor.
-        ///                accesses e.StagingItem.Input
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // PreviewKeyDown --> KeyDown
@@ -1066,10 +1000,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses the StagingInput
-        /// </SecurityNote>
-        [SecurityCritical]
         private RawKeyboardInputReport ExtractRawKeyboardInputReport(NotifyInputEventArgs e, RoutedEvent Event)
         {
             RawKeyboardInputReport keyboardInput = null;
@@ -1123,13 +1053,8 @@ namespace System.Windows.Input
             return wasDisconnected;
         }
 
-        /// <SecurityNote>
-        ///     Critical: accesses critical data (_inputSource)
-        ///     TreatAsSafe: doesn't expose critical data, just returns true/false.
-        /// </SecurityNote>
         internal bool IsActive
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 return _activeSource != null && _activeSource.Value != null;
@@ -1184,17 +1109,9 @@ namespace System.Windows.Input
             private readonly bool _isExtended;
         }
 
-        /// <SecurityNote>
-        ///     This data is risky to give out since it is got under an elevation
-        ///     and can be used for risky operations
-        /// </SecurityNote>
         // TextCompositionManager handles KeyDown -> Unicode conversion.
         private SecurityCriticalData<TextCompositionManager> _textcompositionManager;
         // TextServicesManager handles KeyDown -> IME composition conversion.
-        /// <SecurityNote>
-        ///     This data is risky to give out since it is got under an elevation
-        ///     and can be used for risky operations
-        /// </SecurityNote>
         private SecurityCriticalDataClass<TextServicesManager> _TsfManager;
 }
 }

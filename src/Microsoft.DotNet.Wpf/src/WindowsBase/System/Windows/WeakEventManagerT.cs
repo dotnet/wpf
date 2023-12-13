@@ -28,7 +28,7 @@ namespace System.Windows
             _eventInfo = typeof(TEventSource).GetEvent(_eventName);
 
             if (_eventInfo == null)
-                throw new ArgumentException(SR.Get(SRID.EventNotFound, typeof(TEventSource).FullName, eventName));
+                throw new ArgumentException(SR.Format(SR.EventNotFound, typeof(TEventSource).FullName, eventName));
 
             _handler = Delegate.CreateDelegate(_eventInfo.EventHandlerType, this, DeliverEventMethodInfo);
         }
@@ -46,8 +46,7 @@ namespace System.Windows
         /// </summary>
         public static void AddHandler(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager(eventName).ProtectedAddHandler(source, handler);
         }
@@ -57,8 +56,7 @@ namespace System.Windows
         /// </summary>
         public static void RemoveHandler(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
         {
-            if (handler == null)
-                throw new ArgumentNullException("handler");
+            ArgumentNullException.ThrowIfNull(handler);
 
             CurrentManager(eventName).ProtectedRemoveHandler(source, handler);
         }

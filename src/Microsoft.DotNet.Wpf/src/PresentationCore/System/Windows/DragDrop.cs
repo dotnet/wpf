@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using System.Windows.Input;
@@ -26,7 +25,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows
@@ -375,30 +373,13 @@ namespace System.Windows
         /// Requires UnmanagedCode permission.  
         /// If caller does not have this permission, the dragdrop will not occur.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleDoDragDrop), but this is OK since we won't
-        ///            allow the initiate DragDrop operation without the unmanaged code permission.
-        ///            Demand the unmanaged code permission to block initiating DragDrop both 
-        ///            intranet and internet zone.
-        /// PublicOK - It's disabled in partial trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public static DragDropEffects DoDragDrop(DependencyObject dragSource, object data, DragDropEffects allowedEffects)
         {
             DataObject dataObject;
 
-            // Demand the unmanaged code permission to initiate DragDrop operation.
-            SecurityHelper.DemandUnmanagedCode();
+            ArgumentNullException.ThrowIfNull(dragSource);
 
-            if (dragSource == null)
-            {
-                throw new ArgumentNullException("dragSource");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
+            ArgumentNullException.ThrowIfNull(data);
 
             RoutedEventArgs args = new RoutedEventArgs(DragDropStartedEvent, dragSource);
             
@@ -417,7 +398,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             dataObject = data as DataObject;
@@ -448,7 +429,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
             }
 
             return ret;
@@ -470,17 +451,9 @@ namespace System.Windows
         /// <param name="windowHandle">
         /// The window handle to be drop target .
         /// </param>
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleRegisterDragDrop), and potentially deals with unmanged code..
-        ///
-        /// TreatAsSafe - RegisterDropTarget check the unmanged code permission. 
-        ///               Demmand the unmanaged code permission to block the register drop target
-        ///               both intranet and internet zone.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RegisterDropTarget(IntPtr windowHandle)
         {
-            if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
+            if (windowHandle != IntPtr.Zero)
             {
                 // Create OleDragSource and call Ole DoDragDrop for starting DragDrop.
                 OleDropTarget oleDropTarget = new OleDropTarget(windowHandle);
@@ -499,16 +472,9 @@ namespace System.Windows
         /// <param name="windowHandle">
         /// The window handle that can accept drop.
         /// </param>        
-        /// <SecurityNote>
-        /// Critical - calls critical code (OleRevokeDragDrop).We do not want this called excessively
-        /// TreatAsSafe - RevokeDropTarget check the unmanged code permission.
-        ///               Demmand the unmanaged code permission to block the revoke drop target
-        ///               both intranet and internet zone.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RevokeDropTarget(IntPtr windowHandle)
         {
-            if (SecurityHelper.CheckUnmanagedCodePermission() && windowHandle != IntPtr.Zero)
+            if (windowHandle != IntPtr.Zero)
             {
                 // Call OLE RevokeDragDrop to revoke the droppable target window.
                 OleServicesContext.CurrentOleServicesContext.OleRevokeDragDrop(
@@ -599,7 +565,6 @@ namespace System.Windows
         /// <param name="allowedEffects">
         /// The allowed effects that is one of the DragDropEffects values.
         /// </param>
-        [SecurityCritical]
         private static DragDropEffects OleDoDragDrop(DependencyObject dragSource, DataObject dataObject, DragDropEffects allowedEffects)
         {
             int[] dwEffect;
@@ -727,7 +692,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Raise QueryContinueDrag event for Tunel and Bubble.
+        /// Raise QueryContinueDrag event for Tunnel and Bubble.
         /// </summary>
         private void RaiseQueryContinueDragEvent(QueryContinueDragEventArgs args)
         {
@@ -749,7 +714,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set QueryContinueDrag(Bubble).
@@ -772,7 +737,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -806,7 +771,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Set GiveFeedback event ID(Bubble).
@@ -829,7 +794,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 
@@ -850,9 +815,9 @@ namespace System.Windows
         ///     Hence if any two mouse buttons are pressed at any point of time,
         ///     then we cancel the drapdrop. Also if no mouse buttons are pressed at
         ///     any point of time, then we complete the drop. If an application intends
-        ///     to privide multi-button press dragging (like dragging by pressing 
+        ///     to provide multi-button press dragging (like dragging by pressing 
         ///     both left and right buttons of mouse) applications will have
-        ///     to handle (Preview)QueryContiueDragEvent to the allow 
+        ///     to handle (Preview)QueryContinueDragEvent to the allow 
         ///     such valid combinations explicitly.
         /// </remarks>
         private void OnDefaultQueryContinueDrag(QueryContinueDragEventArgs e)
@@ -975,7 +940,7 @@ namespace System.Windows
 
             if (target != null)
             {
-                // Create DragEvent agrument and then raise DragEnter event for Tunnel or Buuble event.
+                // Create DragEvent argument and then raise DragEnter event for Tunnel or Bubble event.
                 RaiseDragEvent(
                     DragDrop.DragEnterEvent,
                     dragDropKeyStates,
@@ -1158,7 +1123,7 @@ namespace System.Windows
         #region Private Methods
 
         /// <summary>
-        /// Raise Drag(Enter/Over/Leave/Drop) events to the taret.
+        /// Raise Drag(Enter/Over/Leave/Drop) events to the target.
         /// </summary>
         private void RaiseDragEvent(RoutedEvent dragEvent, int dragDropKeyStates, ref int effects, DependencyObject target, Point targetPoint)
         {
@@ -1167,7 +1132,7 @@ namespace System.Windows
             Invariant.Assert(_dataObject != null);
             Invariant.Assert(target != null);
 
-            // Create DragEvent argement to raise DragEnter events to the target.
+            // Create DragEvent argument to raise DragEnter events to the target.
             dragEventArgs = new DragEventArgs(
                 _dataObject,
                 (DragDropKeyStates)dragDropKeyStates,
@@ -1208,7 +1173,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
             }
 
             // Raise the bubble DragEvent event if the preview DragEvent isn't handled.
@@ -1232,7 +1197,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ScopeMustBeUIElementOrContent), "scope");
+                    throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "scope");
                 }
             }
 

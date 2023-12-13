@@ -18,7 +18,6 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -208,7 +207,9 @@ namespace System.Windows.Controls.Primitives
                         "CommandParameter",
                         typeof(object),
                         typeof(ButtonBase),
-                        new FrameworkPropertyMetadata((object) null));
+                        new FrameworkPropertyMetadata(
+                            (object)null,
+                            new PropertyChangedCallback(OnCommandParameterChanged)));
 
         /// <summary>
         ///     The DependencyProperty for Target property
@@ -360,6 +361,12 @@ namespace System.Windows.Controls.Primitives
             {
                 SetValue(CommandParameterProperty, value);
             }
+        }
+
+        private static void OnCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ButtonBase b = (ButtonBase)d;
+            b.UpdateCanExecute();
         }
 
         /// <summary>
@@ -742,11 +749,6 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - calling critical InputManager.Current
-        /// Safe - InputManager.Current is not exposed and used temporary to determine the mouse state
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool GetMouseLeftButtonReleased()
         {
             return InputManager.Current.PrimaryMouseDevice.LeftButton == MouseButtonState.Released;

@@ -1,0 +1,22 @@
+Compat issues with assembly ReachFramework:
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintCommitAttributesException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintingCanceledException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintingNotSupportedException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintJobException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintQueueException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintServerException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Printing.PrintSystemException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsPackagingException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Xps.XpsSerializationException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.XpsResourceStream System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.XpsResourceStream System.Windows.Xps.Serialization.PackageSerializationManager.AcquireResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Xml.XmlWriter System.Windows.Xps.Serialization.PackageSerializationManager.AcquireXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.AddRelationshipToCurrentPage(System.Uri, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.String System.Windows.Xps.Serialization.PackageSerializationManager.GetXmlNSForType(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Serialization.BasePackagingPolicy System.Windows.Xps.Serialization.PackageSerializationManager.PackagingPolicy.get()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseResourceStream(System.Type, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal void System.Windows.Xps.Serialization.PackageSerializationManager.ReleaseXmlWriter(System.Type)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'internal System.Windows.Xps.Packaging.XpsResourcePolicy System.Windows.Xps.Serialization.PackageSerializationManager.ResourcePolicy.get()' does not exist in the implementation but it does exist in the contract.
+Total Issues: 20

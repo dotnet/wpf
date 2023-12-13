@@ -12,7 +12,6 @@ using System.Collections.Generic;
 
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
@@ -25,11 +24,8 @@ namespace System.Windows.Automation.Peers
         ///
         public UIElement3DAutomationPeer(UIElement3D owner)
         {
-            if(owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
-            
+            ArgumentNullException.ThrowIfNull(owner);
+
             _owner = owner;
         }
 
@@ -55,21 +51,15 @@ namespace System.Windows.Automation.Peers
         ///</summary>
         public static AutomationPeer CreatePeerForElement(UIElement3D element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             return element.CreateAutomationPeer();
         }
 
         ///
         public static AutomationPeer FromElement(UIElement3D element)
         {
-            if(element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return element.GetAutomationPeer();
         }
@@ -187,12 +177,6 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        /// <SecurityNote>
-        ///     Critical    - Calls PresentationSource.CriticalFromVisual to get the source for this visual
-        ///     TreatAsSafe - The returned PresenationSource object is not exposed and is only used for converting
-        ///                   co-ordinates to screen space.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool ComputeBoundingRectangle(out Rect rect)
         {
             rect = Rect.Empty;
@@ -324,6 +308,12 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
+        override protected bool IsDialogCore()
+        {
+            return AutomationProperties.GetIsDialog(_owner);
+        }
+
+        ///
         override protected bool IsPasswordCore()
         {
             return false;
@@ -392,6 +382,15 @@ namespace System.Windows.Automation.Peers
             return AutomationProperties.GetSizeOfSet(_owner);
         }
 
+        /// <summary>
+        /// Provides a value for UIAutomation's HeadingLevel property
+        /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
+        /// </summary>
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        {
+            return AutomationProperties.GetHeadingLevel(_owner);
+        }
+
         //
         // M E T H O D S
         //
@@ -416,7 +415,7 @@ namespace System.Windows.Automation.Peers
         override protected void SetFocusCore() 
         { 
             if (!_owner.Focus())
-                throw new InvalidOperationException(SR.Get(SRID.SetFocusFailed));
+                throw new InvalidOperationException(SR.SetFocusFailed);
         }
 
         ///

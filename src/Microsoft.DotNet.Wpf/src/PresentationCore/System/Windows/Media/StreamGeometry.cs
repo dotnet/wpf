@@ -27,11 +27,9 @@ using System.Windows.Markup;
 using System.Windows.Converters;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -78,11 +76,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry is empty
         /// </summary>
-        ///<SecurityNote>
-        /// Critical as this has an unsafe block.
-        /// PublicOK - This method reads from a buffer.
-        ///</SecurityNote>
-        [SecurityCritical]
         public override bool IsEmpty()
         {
             ReadPreamble();
@@ -108,11 +101,6 @@ namespace System.Windows.Media
         /// AreBoundsValid Property - returns true if the bounds are valid, false otherwise.
         /// If true, the bounds are stored in the bounds param.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private bool AreBoundsValid(ref MilRectD bounds)
         {
             if (IsEmpty())
@@ -142,11 +130,6 @@ namespace System.Windows.Media
         /// <summary>
         /// CacheBounds - store the calculated bounds in the data stream.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void CacheBounds(ref MilRectD bounds)
         {
             unsafe
@@ -165,11 +148,6 @@ namespace System.Windows.Media
         /// <summary>
         /// SetDirty - indicate that the cached bounds on this Geometry are not valid.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void SetDirty()
         {
             if (!IsEmpty())
@@ -226,11 +204,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     PublicOK: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical]
         public override bool MayHaveCurves()
         {
             // IsEmpty() calls ReadPreamble()
@@ -255,11 +228,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool HasHollows()
         {
             // IsEmpty() calls ReadPreamble()
@@ -282,11 +250,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Returns true if this geometry may have curved segments
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        ///     TreatAsSafe: Access a local byte[] as a pointer.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal bool HasGaps()
         {
             // IsEmpty() calls ReadPreamble()
@@ -418,22 +381,12 @@ namespace System.Windows.Media
 
         #region DUCE
 
-        /// <SecurityNote>
-        ///     Critical: Manipulates unsafe code
-        /// </SecurityNote>
-        [SecurityCritical]
         private unsafe int GetFigureSize(byte* pbPathData)
         {
             MIL_PATHGEOMETRY* pPathGeometryData = (MIL_PATHGEOMETRY*)pbPathData;
             return pPathGeometryData == null ? 0 : (int)pPathGeometryData->Size;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-        ///     Channels are safe to call into and do not go cross domain and cross process
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
         {
             // If we're told we can skip the channel check, then we must be on channel

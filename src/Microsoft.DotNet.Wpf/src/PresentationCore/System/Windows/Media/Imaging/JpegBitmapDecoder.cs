@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Security;
-using System.Security.Permissions;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
@@ -42,11 +41,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapUri">Uri to decode</param>
         /// <param name="createOptions">Bitmap Create Options</param>
         /// <param name="cacheOption">Bitmap Caching Option</param>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// PublicOK - inputs verified or safe
-        /// </SecurityNote>
-        [SecurityCritical ]
         public JpegBitmapDecoder(
             Uri bitmapUri,
             BitmapCreateOptions createOptions,
@@ -61,11 +55,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="bitmapStream">Stream to decode</param>
         /// <param name="createOptions">Bitmap Create Options</param>
         /// <param name="cacheOption">Bitmap Caching Option</param>
-        /// <SecurityNote>
-        /// Critical - access critical resource
-        /// PublicOK - inputs verified or safe
-        /// </SecurityNote>
-        [SecurityCritical ]
         public JpegBitmapDecoder(
             Stream bitmapStream,
             BitmapCreateOptions createOptions,
@@ -77,11 +66,6 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Internal Constructor
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Uses a SafeFileHandle, which is a SecurityCritical type (in v4).
-        ///     Calls SecurityCritical base class constructor.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal JpegBitmapDecoder(
             SafeMILHandle decoderHandle,
             BitmapDecoder decoder,

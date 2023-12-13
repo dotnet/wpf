@@ -16,17 +16,14 @@
 #define MemNoErr 0
 #define MemErr -1 
 
-[System::Security::SecurityCritical]
 int16 Mem_Init(void);
 /* Initialize memory manager internal structures */ 
 /* return MemNoErr if successful */
 
-[System::Security::SecurityCritical]
 void Mem_End(void);  
 /* free all memory previously allocated and free memory structure */
 
 
-[System::Security::SecurityCritical]
 void * Mem_Alloc(size_t); 
 /* void *Mem_Alloc(size)
   * allocate a size bytes of memory   
@@ -35,11 +32,9 @@ void * Mem_Alloc(size_t);
   *  Pointer to a block of data  
   */
 
-[System::Security::SecurityCritical]
 void Mem_Free(void *);
 /* free up a block of data */
 
-[System::Security::SecurityCritical]
 void * Mem_ReAlloc(void *, CONST size_t);
 /* void *Mem_ReAlloc( pOldPtr, newSize)
  * reallocate and copy data
@@ -51,7 +46,6 @@ void * Mem_ReAlloc(void *, CONST size_t);
  * RETURN VALUE
  *  Pointer to a block of data 
  */
-[System::Security::SecurityCritical]
  void *Mem_ReAllocDelta(void * pOldPtr, CONST size_t Delta);
 /* void *Mem_ReAllocDelta( pOldPtr, Delta)
  * reallocate and copy data

@@ -133,17 +133,9 @@ namespace System.Windows.Controls
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The VirtualizationCacheLength to convert. </param>
         /// <param name="destinationType">The type to which to convert the VirtualizationCacheLength instance. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for VirtualizationCacheLength, not an arbitrary class
-        ///</SecurityNote>
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             if (value != null
                 && value is VirtualizationCacheLength)
@@ -185,16 +177,8 @@ namespace System.Windows.Controls
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
-            // Initial capacity [64] is an estimate based on a sum of:
-            // 24 = 2x double (twelve digits is generous for the range of values likely)
-            //  2 = 2x separator characters
-            // Is 26 really a good number??? 
-            StringBuilder sb = new StringBuilder(26);
-
-            sb.Append(cacheLength.CacheBeforeViewport.ToString(cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(cacheLength.CacheAfterViewport.ToString(cultureInfo));
-            return sb.ToString();
+            return string.Create(cultureInfo, stackalloc char[128],
+                $"{cacheLength.CacheBeforeViewport}{listSeparator}{cacheLength.CacheAfterViewport}");
         }
         /// <summary>
         /// Parses a VirtualizationCacheLength from a string given the CultureInfo.
@@ -233,7 +217,7 @@ namespace System.Windows.Controls
                     return new VirtualizationCacheLength(lengths[0], lengths[1]);
             }
 
-            throw new FormatException(SR.Get(SRID.InvalidStringVirtualizationCacheLength, s));
+            throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
         }
 
     #endregion

@@ -156,10 +156,7 @@ namespace System.Windows.Controls
         /// <param name="value">The property value to set</param>
         public static void SetIsLocked(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsLockedProperty, value);
         }
 
@@ -170,10 +167,7 @@ namespace System.Windows.Controls
         /// <returns>The property's value.</returns>
         public static bool GetIsLocked(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsLockedProperty);
         }
 
@@ -279,15 +273,12 @@ namespace System.Windows.Controls
         /// <ExternalAPI/>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             ToolBar toolBar = value as ToolBar;
             if (toolBar == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
             }
 
             ToolBars.Add(toolBar);
@@ -490,7 +481,7 @@ namespace System.Windows.Controls
         {
             if (_toolBarsCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Get(SRID.Visual_ArgumentOutOfRange));
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _toolBarsCollection[index];
         }

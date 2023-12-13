@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -25,10 +25,7 @@ namespace System.Windows.Automation.Peers
         public DataGridRowAutomationPeer(DataGridRow owner)
             : base(owner)
         {
-            if (owner == null)
-            {
-                throw new ArgumentNullException("owner");
-            }
+            ArgumentNullException.ThrowIfNull(owner);
         }
 
         #endregion

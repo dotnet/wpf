@@ -21,8 +21,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
     [Guid("C9BD7CD4-E16A-4BF8-8C84-C950AF7A3061"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMRemoteDictionaryResource : IXpsOMResource
     {
         IXpsOMDictionary GetDictionary();

@@ -189,22 +189,12 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Collection of all row headers for this table</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public AutomationElement[] GetRowHeaders()
             {
                 return (AutomationElement[])_el.GetPatternPropertyValue(RowHeadersProperty, _useCache);
             }
 
             /// <summary>Collection of all column headers for this table</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public AutomationElement[] GetColumnHeaders()
             {
                 return (AutomationElement[])_el.GetPatternPropertyValue(ColumnHeadersProperty, _useCache);
@@ -213,11 +203,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// number of rows in the grid
             /// </summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int RowCount
             {
                 get
@@ -229,11 +214,6 @@ namespace System.Windows.Automation
             /// <summary>
             /// number of columns in the grid
             /// </summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public int ColumnCount
             {
                 get
@@ -243,11 +223,6 @@ namespace System.Windows.Automation
             }
 
             /// <summary>Indicates if the data is best presented by row or column</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public RowOrColumnMajor RowOrColumnMajor
             {
                 get

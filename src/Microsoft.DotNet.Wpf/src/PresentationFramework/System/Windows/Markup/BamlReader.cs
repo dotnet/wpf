@@ -155,10 +155,6 @@ namespace System.Windows.Markup
     /// <summary>
     /// Reads BAML from a Stream and exposes an XmlReader-liker interface for BAML
     /// </summary>
-    // <SecurityNote>
-    // This code should always be transparent.  Meaning you should never add
-    // SecurityCritical to this section of the code.
-    // </SecurityNote>
     internal class BamlReader
     {
         #region Constructor
@@ -326,7 +322,7 @@ namespace System.Windows.Markup
             if (_readState == ReadState.EndOfFile ||
                 _readState == ReadState.Closed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlReaderClosed));
+                throw new InvalidOperationException(SR.BamlReaderClosed);
             }
 
             ReadNextRecord();
@@ -396,7 +392,7 @@ namespace System.Windows.Markup
                 {
                     _name = info.Name;
                     _localName = info.LocalName;
-                    int index = info.Name.LastIndexOf(".", StringComparison.Ordinal);
+                    int index = info.Name.LastIndexOf('.');
                     if (index > 0)
                     {
                         _ownerTypeName = info.Name.Substring(0, index);
@@ -443,7 +439,7 @@ namespace System.Windows.Markup
                     _connectionId = 0;
                     _prefix = string.Empty;
                     _name = cpInfo.Name;
-                    int index = cpInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+                    int index = cpInfo.Name.LastIndexOf('.');
                     if (index > 0)
                     {
                         _ownerTypeName = cpInfo.Name.Substring(0, index);
@@ -667,7 +663,7 @@ namespace System.Windows.Markup
 
                     default:
                         // Can't have any other type of record at this point.
-                        throw new InvalidOperationException(SR.Get(SRID.ParserUnknownBaml,
+                        throw new InvalidOperationException(SR.Format(SR.ParserUnknownBaml,
                                          ((int)_currentBamlRecord.RecordType).ToString(CultureInfo.CurrentCulture)));
                 }
             }
@@ -998,7 +994,7 @@ namespace System.Windows.Markup
 
                 if (attrInfo.OwnerType == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlReaderNoOwnerType, attrInfo.Name, AssemblyName));
+                    throw new InvalidOperationException(SR.Format(SR.BamlReaderNoOwnerType, attrInfo.Name, AssemblyName));
                 }
                 if (attrInfo.DP == null)
                 {
@@ -1034,7 +1030,7 @@ namespace System.Windows.Markup
 
                     if (attrInfo.PropInfo == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.ParserCantGetDPOrPi, info.Name));
+                        throw new InvalidOperationException(SR.Format(SR.ParserCantGetDPOrPi, info.Name));
                     }
                 }
             }
@@ -1309,7 +1305,7 @@ namespace System.Windows.Markup
                         }
                         BamlTypeInfoRecord typeInfo = MapTable.GetTypeInfoFromId(typeKeyRecord.TypeId);
                         string typeName = typeInfo.TypeFullName;
-                        typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                        typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                         string assemblyName;
                         string prefix;
                         string xmlNamespace;
@@ -1429,7 +1425,7 @@ namespace System.Windows.Markup
             // a x:Key attribute.
             BamlTypeInfoRecord typeInfo = MapTable.GetTypeInfoFromId(keyStartRecord.TypeId);
             string markupString = typeInfo.TypeFullName;
-            markupString = markupString.Substring(markupString.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            markupString = markupString.Substring(markupString.LastIndexOf('.') + 1);
             string assemblyName;
             string prefix;
             string xmlNamespace;
@@ -1556,7 +1552,7 @@ namespace System.Windows.Markup
                         BamlElementStartRecord elementStartRecord = _currentBamlRecord as BamlElementStartRecord;
                         BamlTypeInfoRecord elementTypeInfo = MapTable.GetTypeInfoFromId(elementStartRecord.TypeId);
                         string typename = elementTypeInfo.TypeFullName;
-                        typename = typename.Substring(typename.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                        typename = typename.Substring(typename.LastIndexOf('.') + 1);
                         GetAssemblyAndPrefixAndXmlns(elementTypeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
@@ -1677,7 +1673,7 @@ namespace System.Windows.Markup
 
                     default:
                         // Can't have any other type of record at this point.
-                        throw new InvalidOperationException(SR.Get(SRID.ParserUnknownBaml,
+                        throw new InvalidOperationException(SR.Format(SR.ParserUnknownBaml,
                                          ((int)_currentBamlRecord.RecordType).ToString(CultureInfo.CurrentCulture)));
                 }
             }
@@ -1793,7 +1789,7 @@ namespace System.Windows.Markup
 
         private void ReadRoutedEventRecord()
         {
-            throw new InvalidOperationException(SR.Get(SRID.ParserBamlEvent, string.Empty));
+            throw new InvalidOperationException(SR.Format(SR.ParserBamlEvent, string.Empty));
         }
 
         /***************************************************************************\
@@ -1807,7 +1803,7 @@ namespace System.Windows.Markup
 
         private void ReadClrEventRecord()
         {
-            throw new InvalidOperationException(SR.Get(SRID.ParserBamlEvent, string.Empty));
+            throw new InvalidOperationException(SR.Format(SR.ParserBamlEvent, string.Empty));
         }
 
         /***************************************************************************\
@@ -1849,7 +1845,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.DocumentStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                     nodeInfo.RecordType.ToString(),
                                                     "DocumentEnd"));
             }
@@ -1887,7 +1883,7 @@ namespace System.Windows.Markup
                                                                   piMappingRecord.AssemblyId);
             if (assemblyInfo == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ParserMapPIMissingAssembly));
+                throw new InvalidOperationException(SR.ParserMapPIMissingAssembly);
             }
 
             // If this mapping has not already been set up, then set it now
@@ -1912,15 +1908,7 @@ namespace System.Windows.Markup
             _clrNamespace = piMappingRecord.ClrNamespace;
             _assemblyName = assemblyInfo.AssemblyFullName;
 
-            StringBuilder valueBuilder = new StringBuilder(100);
-            valueBuilder.Append("XmlNamespace=\"");
-            valueBuilder.Append(_xmlNamespace);
-            valueBuilder.Append("\" ClrNamespace=\"");
-            valueBuilder.Append(_clrNamespace);
-            valueBuilder.Append("\" Assembly=\"");
-            valueBuilder.Append(_assemblyName);
-            valueBuilder.Append("\"");
-            _value = valueBuilder.ToString();
+            _value = string.Create(null, stackalloc char[100], $"XmlNamespace=\"{_xmlNamespace}\" ClrNamespace=\"{_clrNamespace}\" Assembly=\"{_assemblyName}\"");
         }
 
         /***************************************************************************\
@@ -1968,7 +1956,7 @@ namespace System.Windows.Markup
 
             NodeTypeInternal = BamlNodeType.StartElement;
             _name = typeInfo.TypeFullName;
-            _localName = _name.Substring(_name.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            _localName = _name.Substring(_name.LastIndexOf('.') + 1);
             _ownerTypeName = string.Empty;
             _clrNamespace = typeInfo.ClrNamespace;
             GetAssemblyAndPrefixAndXmlns(typeInfo, out _assemblyName, out _prefix, out _xmlNamespace);
@@ -2040,7 +2028,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ElementStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                  _currentBamlRecord.RecordType.ToString(),
                                                  BamlRecordType.ElementEnd.ToString()));
             }
@@ -2085,7 +2073,7 @@ namespace System.Windows.Markup
             // Set instance variables to node info extracted from record.
             NodeTypeInternal = BamlNodeType.StartComplexProperty;
             _localName = nodeInfo.LocalName;
-            int index = nodeInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+            int index = nodeInfo.Name.LastIndexOf('.');
             if (index > 0)
             {
                 _ownerTypeName = nodeInfo.Name.Substring(0, index);
@@ -2147,7 +2135,7 @@ namespace System.Windows.Markup
 
             if (_currentBamlRecord.RecordType != expectedType)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                           _currentBamlRecord.RecordType.ToString(),
                                           expectedType.ToString()));
             }
@@ -2156,7 +2144,7 @@ namespace System.Windows.Markup
             NodeTypeInternal = BamlNodeType.EndComplexProperty;
             _name = nodeInfo.Name;
             _localName = nodeInfo.LocalName;
-            int index = nodeInfo.Name.LastIndexOf(".", StringComparison.Ordinal);
+            int index = nodeInfo.Name.LastIndexOf('.');
             if (index > 0)
             {
                 _ownerTypeName = nodeInfo.Name.Substring(0, index);
@@ -2255,7 +2243,7 @@ namespace System.Windows.Markup
             BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ConstructorParametersStart)
             {
-                throw new InvalidOperationException(SR.Get(SRID.BamlScopeError,
+                throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
                                                  _currentBamlRecord.RecordType.ToString(),
                                                  BamlRecordType.ConstructorParametersEnd.ToString()));
             }
@@ -2394,7 +2382,7 @@ namespace System.Windows.Markup
 
                 if (dp == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
                 else
                 {
@@ -2413,7 +2401,7 @@ namespace System.Windows.Markup
                 string valueAssemblyName;
                 GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
                 typeName = valueTypeInfo.TypeFullName;
-                typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                 propName = attrInfo.Name;
             }
 
@@ -2474,7 +2462,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.BamlBadExtensionValue));
+                    throw new InvalidOperationException(SR.BamlBadExtensionValue);
                 }
 
                 object prefixObject = _prefixDictionary[XamlReaderHelper.DefaultNamespaceURI];
@@ -2488,7 +2476,7 @@ namespace System.Windows.Markup
                 string valueAssemblyName;
                 GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
                 typeName = valueTypeInfo.TypeFullName;
-                typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
                 propName = attrInfo.Name;
             }
 
@@ -2602,7 +2590,7 @@ namespace System.Windows.Markup
             string valueAssemblyName;
             GetAssemblyAndPrefixAndXmlns(valueTypeInfo, out valueAssemblyName, out valuePrefix, out valueXmlNamespace);
             string typeName = valueTypeInfo.TypeFullName;
-            typeName = typeName.Substring(typeName.LastIndexOf(".", StringComparison.Ordinal) + 1);
+            typeName = typeName.Substring(typeName.LastIndexOf('.') + 1);
             if (valuePrefix == string.Empty)
             {
                 valueString += typeName;
@@ -2881,10 +2869,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlNodeInfo
         {
             // Create an empty property info record
@@ -2984,10 +2968,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlPropertyInfo : BamlNodeInfo
         {
             // Create an empty property info record
@@ -3015,10 +2995,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         internal class BamlContentPropertyInfo : BamlNodeInfo
         {
             // this doesn't need any different fields it just needs to be
@@ -3034,10 +3010,6 @@ namespace System.Windows.Markup
         *
         \***************************************************************************/
 
-        // <SecurityNote>
-        // This code should always be transparent.  Meaning you should never add
-        // SecurityCritical to this section of the code.
-        // </SecurityNote>
         [DebuggerDisplay("{_offset}")]
         internal class BamlKeyInfo : BamlPropertyInfo
         {

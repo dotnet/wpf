@@ -1,0 +1,6 @@
+Compat issues with assembly UIAutomationTypes:
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ElementNotAvailableException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ElementNotEnabledException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.NoClickablePointException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Automation.ProxyAssemblyNotLoadedException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
+Total Issues: 4

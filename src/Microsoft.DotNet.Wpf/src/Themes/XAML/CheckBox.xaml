@@ -1,0 +1,499 @@
+<!--=================================================================
+Licensed to the .NET Foundation under one or more agreements.
+The .NET Foundation licenses this file to you under the MIT license.
+See the LICENSE file in the project root for more information.
+==================================================================-->
+
+<!-- [[Aero.NormalColor, Classic, Luna.Homestead, Luna.Metallic, Luna.NormalColor, Royale.NormalColor]] -->
+
+    <Style x:Key="CheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EmptyCheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ClassicCheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="13,0,0,0"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ClassicEmptyCheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               StrokeThickness="1"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               SnapsToDevicePixels="true"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[Aero.NormalColor]] -->
+
+    <!--=================================================================
+        CheckBox
+    ==================================================================-->
+    <!-- These are common between CheckBox and RadioButton -->
+    <SolidColorBrush x:Key="CheckBoxFillNormal"
+                     Color="#F4F4F4"/>
+    <SolidColorBrush x:Key="CheckBoxStroke"
+                     Color="#8E8F8F"/>
+    <Style x:Key="{x:Type CheckBox}"
+           TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource EmptyCheckRadioFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent" 
+                                     SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <theme:BulletChrome Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                                RenderPressed="{TemplateBinding IsPressed}"
+                                                IsChecked="{TemplateBinding IsChecked}"/>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent"
+                                 Value="true">
+                            <Setter Property="FocusVisualStyle"
+                                    Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding"
+                                    Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+<!-- [[Classic]] -->
+
+    <!--=================================================================
+        CheckBox
+    ==================================================================-->
+    <Style x:Key="{x:Type CheckBox}"
+           TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource CheckRadioFocusVisual}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush"
+                Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="2"/>
+        <Setter Property="Padding"
+                Value="2,0,0,0"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource EmptyCheckRadioFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent"
+                                     SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <!-- Draw Checkmark border and tick mark -->
+                            <theme:ClassicBorderDecorator x:Name="CheckMark"
+                                                          BorderStyle="Sunken"
+                                                          Background="{TemplateBinding Background}"
+                                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                                          BorderBrush="{TemplateBinding BorderBrush}">
+                                <Path x:Name="CheckMarkPath"
+                                      Margin="1,1,1,1"
+                                      Width="7"
+                                      Height="7"
+                                      FlowDirection="LeftToRight"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Data="M 0 2.0 L 0 4.8 L 2.5 7.4 L 7.1 2.8 L 7.1 0 L 2.5 4.6 Z"/>
+                            </theme:ClassicBorderDecorator>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="false">
+                            <Setter TargetName="CheckMarkPath"
+                                    Property="Visibility"
+                                    Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked"
+                                 Value="{x:Null}">
+                            <Setter TargetName="CheckMark"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+                            <Setter TargetName="CheckMarkPath"
+                                    Property="Fill"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="CheckMark"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="CheckMark"
+                                    Property="Background"
+                                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter TargetName="CheckMarkPath"
+                                    Property="Fill"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <!-- DDVSO:431603
+                               Scope these changes to high contrast but override values for enabled controls. -->
+                          <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Control}}}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                          </MultiDataTrigger.Conditions>
+                          <!-- DDVSO:431603
+                               Scope these changes to high contrast but override values for disabled controls. -->
+                          <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrush}}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource ClassicCheckRadioFocusVisual}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource ClassicEmptyCheckRadioFocusVisual}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                            <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioHighContrastFocusVisual}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx471CompatibleAccessibilityFeatures)}" Value="false"/>
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={x:Static RelativeSource.Self}}" Value="true"/>
+                            <Condition Binding="{Binding Path=HasContent, RelativeSource={x:Static RelativeSource.Self}}" Value="false"/>
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckRadioHighContrastFocusVisual}" />
+                       </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+<!-- [[AeroLite.NormalColor]] -->
+
+    <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF3C7FB1" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF3C7FB1" />
+
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="checkBoxBorder" 
+                            Margin="1" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                            <Grid x:Name="markGrid">
+                                <Path x:Name="optionMark" Data="M 1,3 C1,3 1,6 1,6 1,6 4,9 4,9 4,9 9,3 9,3 9,3 9,0 9,0 9,0 4,6 4,6 4,6 1,3 1,3 z" Stretch="Uniform" Margin="2,1,1,1" Opacity="0" Fill="{TemplateBinding TextElement.Foreground}" />
+                                <Rectangle x:Name="indeterminateMark" Margin="2" Opacity="0" Fill="{TemplateBinding TextElement.Foreground}" />
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" 
+                            RecognizesAccessKey="True" 
+                            Grid.Column="1" 
+                            Margin="{TemplateBinding Padding}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            Focusable="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource OptionMark.MouseOver.Background}" TargetName="checkBoxBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource OptionMark.MouseOver.Border}" TargetName="checkBoxBorder" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" TargetName="optionMark" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.56" TargetName="templateRoot" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" Value="1" TargetName="optionMark" />
+                            <Setter Property="Opacity" Value="0" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" Value="0" TargetName="optionMark" />
+                            <Setter Property="Opacity" Value="0.56" TargetName="indeterminateMark" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+<!-- [[Aero2.NormalColor]] -->
+
+    <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
+    <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
+    <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
+    <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
+    <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
+    <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC" />
+    <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070" />    
+
+
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="checkBoxBorder" 
+                            Margin="1" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                            <Grid x:Name="markGrid">
+                                <Path x:Name="optionMark" Opacity="0" Stretch="None" Margin="1" Fill="{StaticResource OptionMark.Static.Glyph}" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "/>
+                                <Rectangle x:Name="indeterminateMark" Margin="2" Opacity="0" Fill="{StaticResource OptionMark.Static.Glyph}" />
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" 
+                            RecognizesAccessKey="True" 
+                            Grid.Column="1" 
+                            Margin="{TemplateBinding Padding}" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            Focusable="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource OptionMark.MouseOver.Background}" TargetName="checkBoxBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource OptionMark.MouseOver.Border}" TargetName="checkBoxBorder" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" TargetName="optionMark" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{StaticResource OptionMark.Disabled.Background}" TargetName="checkBoxBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Disabled.Border}" TargetName="checkBoxBorder" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.Disabled.Glyph}" TargetName="optionMark" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.Disabled.Glyph}" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="{StaticResource OptionMark.Pressed.Background}" TargetName="checkBoxBorder" />
+                            <Setter Property="BorderBrush" Value="{StaticResource OptionMark.Pressed.Border}" TargetName="checkBoxBorder" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.Pressed.Glyph}" TargetName="optionMark" />
+                            <Setter Property="Fill" Value="{StaticResource OptionMark.Pressed.Glyph}" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" Value="1" TargetName="optionMark" />
+                            <Setter Property="Opacity" Value="0" TargetName="indeterminateMark" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" Value="0" TargetName="optionMark" />
+                            <Setter Property="Opacity" Value="1" TargetName="indeterminateMark" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+
+<!-- [[Luna.HomeStead, Luna.NormalColor, Luna.Metallic, Royale.NormalColor]] -->
+
+
+    <!--=================================================================
+            CheckBox
+        ==================================================================-->
+    <!-- These are common between CheckBox and RadioButton -->
+    <LinearGradientBrush x:Key="CheckRadioFillNormal">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FFD2D4D2"
+                          Offset="0"/>
+            <GradientStop Color="#FFFFFFFF"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CheckRadioStrokeNormal">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FF004C94"
+                          Offset="0"/>
+            <GradientStop Color="#FF003C74"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="{x:Type CheckBox}"
+           TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background"
+                Value="{StaticResource CheckRadioFillNormal}"/>
+        <Setter Property="BorderBrush"
+                Value="{StaticResource CheckRadioStrokeNormal}"/>
+        <Setter Property="BorderThickness"
+                Value="1"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource EmptyCheckRadioFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent"
+                                     SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <theme:BulletChrome Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                IsChecked="{TemplateBinding IsChecked}"
+                                                RenderMouseOver="{TemplateBinding IsMouseOver}"
+                                                RenderPressed="{TemplateBinding IsPressed}"/>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent"
+                                 Value="true">
+                            <Setter Property="FocusVisualStyle"
+                                    Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding"
+                                    Value="2,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+

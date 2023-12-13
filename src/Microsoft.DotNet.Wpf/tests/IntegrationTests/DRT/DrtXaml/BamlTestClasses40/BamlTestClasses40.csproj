@@ -1,0 +1,139 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>BamlTestClasses40</AssemblyName>
+    <RootNamespace>BamlTestClasses40</RootNamespace>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+
+    <!-- 
+      Properties needed for local markup-compilation
+    -->
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+
+    <!--
+      There is no @(ApplicationDefinition), so provide a 
+      static Main() instead
+    --> 
+    <GenerateProgramFile>true</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Include="BamlBindingPath.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BracketCharacterAttribute.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeferContMEPV.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResDeferredDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResForwardRef2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResInsert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceResOverwrite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TempDPSetOrder1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfObfus1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XmlSpace3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <None Remove="@(Page)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NetCoreReference Include="mscorlib" />
+    <NetCoreReference Include="netstandard" />
+    <NetCoreReference Include="System.Diagnostics.Debug" />
+    <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Runtime.Extensions" />
+    <NetCoreReference Include="System.Runtime.InteropServices" />
+    <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Linq" />
+    <NetCoreReference Include="System.ObjectModel" />
+    <NetCoreReference Include="System.ComponentModel" />
+    <NetCoreReference Include="System.ComponentModel.Primitives" />
+    <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Generic" />
+    <NetCoreReference Include="System.Collections.NonGeneric" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
+    <NetCoreReference Include="System.Reflection.Primitives" />
+    <NetCoreReference Include="System.Text.Encoding.Extensions" />
+    <NetCoreReference Include="System.Threading" />
+    <NetCoreReference Include="System.Threading.Thread" />
+    <NetCoreReference Include="System.Threading.Tasks" />
+    <NetCoreReference Include="System.Xml.ReaderWriter" />
+    <NetCoreReference Include="Microsoft.Win32.Primitives" />
+    <NetCoreReference Include="System.AppContext" />
+    <NetCoreReference Include="System.Collections.Immutable" />
+    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
+    <NetCoreReference Include="System.Console" />
+    <NetCoreReference Include="System.Diagnostics.Process" />
+    <NetCoreReference Include="System.Diagnostics.TextWriterTraceListener" />
+    <NetCoreReference Include="System.Diagnostics.TraceSource" />
+    <NetCoreReference Include="System.Diagnostics.Tracing" />
+    <NetCoreReference Include="System.Dynamic.Runtime" />
+    <NetCoreReference Include="System.Globalization" />
+    <NetCoreReference Include="System.Globalization.Calendars" />
+    <NetCoreReference Include="System.IO" />
+    <NetCoreReference Include="System.IO.Compression" />
+    <NetCoreReference Include="System.IO.Compression.ZipFile" />
+    <NetCoreReference Include="System.IO.FileSystem" />
+    <NetCoreReference Include="System.IO.FileSystem.Primitives" />
+    <NetCoreReference Include="System.Linq.Expressions" />
+    <NetCoreReference Include="System.Net.Http" />
+    <NetCoreReference Include="System.Net.Primitives" />
+    <NetCoreReference Include="System.Net.Sockets" />
+    <NetCoreReference Include="System.Reflection" />
+    <NetCoreReference Include="System.Reflection.Extensions" />
+    <NetCoreReference Include="System.Reflection.Metadata" />
+    <NetCoreReference Include="System.Reflection.TypeExtensions" />
+    <NetCoreReference Include="System.Runtime.Handles" />
+    <NetCoreReference Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <NetCoreReference Include="System.Runtime.Loader" />
+    <NetCoreReference Include="System.Runtime.Numerics" />
+    <NetCoreReference Include="System.Runtime.Serialization.Json" />
+    <NetCoreReference Include="System.Runtime.Serialization.Primitives" />
+    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
+    <NetCoreReference Include="System.Security.Cryptography.Encoding" />
+    <NetCoreReference Include="System.Security.Cryptography.Primitives" />
+    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
+    <NetCoreReference Include="System.Text.Encoding" />
+    <NetCoreReference Include="System.Text.RegularExpressions" />
+    <NetCoreReference Include="System.Threading.Timer" />
+    <NetCoreReference Include="System.Xml.XDocument" />
+    <NetCoreReference Include="System.Xml.XmlDocument" />
+    <NetCoreReference Include="System.Xml.XPath" />
+  </ItemGroup>
+</Project>

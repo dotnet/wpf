@@ -431,14 +431,11 @@ namespace System.Windows.Controls
         // Throw if column is null or already existed in a GVCC
         private void ValidateColumnForInsert(GridViewColumn column)
         {
-            if (column == null)
-            {
-                throw new ArgumentNullException("column");
-            }
+            ArgumentNullException.ThrowIfNull(column);
 
             if (column.ActualIndex >= 0)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ListView_NotAllowShareColumnToTwoColumnCollection));
+                throw new InvalidOperationException(SR.ListView_NotAllowShareColumnToTwoColumnCollection);
             }
         }
 
@@ -446,7 +443,7 @@ namespace System.Windows.Controls
         {
             if (IsImmutable)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ListView_GridViewColumnCollectionIsReadOnly));
+                throw new InvalidOperationException(SR.ListView_GridViewColumnCollectionIsReadOnly);
             }
 
             // Although CheckReentrancy() is called in base class, we still need to call it here again,

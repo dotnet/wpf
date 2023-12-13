@@ -25,7 +25,6 @@ using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 using FontFamily = System.Windows.Media.FontFamily;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Shaping
 {
@@ -74,11 +73,6 @@ namespace MS.Internal.Shaping
         /// Construct a composite font family with a single target family name
         /// after the first font family in the target family is known
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - as this accesses _firstFontFamily which is marked critical.
-        /// Safe - as this doesn't expose it.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal CompositeFontFamily(
             string          friendlyName,
             IFontFamily     firstFontFamily

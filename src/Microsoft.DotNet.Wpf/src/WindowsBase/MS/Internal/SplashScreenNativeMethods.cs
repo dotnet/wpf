@@ -15,7 +15,6 @@ namespace MS.Win32
 {
     internal sealed partial class UnsafeNativeMethods
     {
-        [SecurityCritical(SecurityCriticalScope.Everything), SuppressUnmanagedCodeSecurity]
         internal class WIC
         {
             #region Constants
@@ -129,13 +128,6 @@ namespace MS.Win32
 
         internal class HRESULT
         {
-            /// <SecurityNote>
-            /// Critical: This calls into Marshal.ThrowExceptionForHR which has a link demand
-            /// Safe:  Throwing an exception is deemed as a safe operation (throwing exceptions is allowed in Partial Trust). 
-            ///        We ensure the call to ThrowExceptionForHR is safe since we pass an IntPtr that has a value of -1 so that 
-            ///        ThrowExceptionForHR ignores IErrorInfo of the current thread, which could reveal critical information otherwise.
-            /// </SecurityNote>
-            [SecuritySafeCritical]
             public static void Check(int hr)
             {
                 if (hr >= 0)

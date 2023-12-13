@@ -62,14 +62,11 @@ namespace System.Windows.Documents
         {
             NormalizeRange(thisRange);
 
-            if (textPointer == null)
-            {
-                throw new ArgumentNullException("textPointer");
-            }
+            ArgumentNullException.ThrowIfNull(textPointer);
 
             if (textPointer.TextContainer != thisRange.Start.TextContainer)
             {
-                throw new ArgumentException(SR.Get(SRID.NotInAssociatedTree), "textPointer");
+                throw new ArgumentException(SR.NotInAssociatedTree, "textPointer");
             }
 
             // Correct position normalization on range boundary so that
@@ -189,10 +186,7 @@ namespace System.Windows.Documents
         /// </param>
         internal static void SelectWord(ITextRange thisRange, ITextPointer position)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             // Move position to character boundary (also respect atomics)
             // Shouldn't we do this on lower level - inside of TextPointer.GetWordRange ?
@@ -242,10 +236,7 @@ namespace System.Windows.Documents
         /// </param>
         internal static void SelectParagraph(ITextRange thisRange, ITextPointer position)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             ITextPointer start;
             ITextPointer end;
@@ -1294,10 +1285,7 @@ namespace System.Windows.Documents
         {
             NormalizeRange(thisRange);
 
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             ITextPointer explicitInsertPosition = null;
 
@@ -1488,8 +1476,7 @@ namespace System.Windows.Documents
             bool canSave = (
                 dataFormat == DataFormats.Text ||
                 dataFormat == DataFormats.Xaml ||
-                (SecurityHelper.CheckUnmanagedCodePermission() && (
-                    dataFormat == DataFormats.XamlPackage ||
+                ((dataFormat == DataFormats.XamlPackage ||
                     dataFormat == DataFormats.Rtf)));
 
             return canSave;
@@ -1502,8 +1489,7 @@ namespace System.Windows.Documents
             bool canLoad = (
                 dataFormat == DataFormats.Text ||
                 dataFormat == DataFormats.Xaml ||
-                (SecurityHelper.CheckUnmanagedCodePermission() && (
-                    dataFormat == DataFormats.XamlPackage ||
+                ((dataFormat == DataFormats.XamlPackage ||
                     dataFormat == DataFormats.Rtf)));
 
             return canLoad;
@@ -1511,14 +1497,8 @@ namespace System.Windows.Documents
 
         internal static void Save(ITextRange thisRange, Stream stream, string dataFormat, bool preserveTextElements)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            if (dataFormat == null)
-            {
-                throw new ArgumentNullException("dataFormat");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
+            ArgumentNullException.ThrowIfNull(dataFormat);
 
             NormalizeRange(thisRange);
 
@@ -1538,13 +1518,13 @@ namespace System.Windows.Documents
                 TextRangeSerialization.WriteXaml(xamlXmlWriter, thisRange, /*useFlowDocumentAsRoot:*/false, /*wpfPayload:*/null, preserveTextElements);
                 xamlXmlWriter.Flush();
             }
-            else if (dataFormat == DataFormats.XamlPackage && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.XamlPackage)
             {
                 // Non-null stream here means unconditional request to create a WPF package for the range
                 // independently whether there are images in it or not.
                 WpfPayload.SaveRange(thisRange, ref stream, /*useFlowDocumentAsRoot:*/false, preserveTextElements);
             }
-            else if (dataFormat == DataFormats.Rtf && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.Rtf)
             {
                 Stream wpfPayloadMemory = null;
                 // Passing null as a wpfPayloadStream we allow to not create wpf package
@@ -1559,20 +1539,14 @@ namespace System.Windows.Documents
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Get(SRID.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
             }
         }
 
         internal static void Load(TextRange thisRange, Stream stream, string dataFormat)
         {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            if (dataFormat == null)
-            {
-                throw new ArgumentNullException("dataFormat");
-            }
+            ArgumentNullException.ThrowIfNull(stream);
+            ArgumentNullException.ThrowIfNull(dataFormat);
 
             NormalizeRange(thisRange);
 
@@ -1594,16 +1568,16 @@ namespace System.Windows.Documents
                 string xamlText = xamlStreamReader.ReadToEnd();
                 thisRange.Xml = xamlText;
             }
-            else if (dataFormat == DataFormats.XamlPackage && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.XamlPackage)
             {
                 object element = WpfPayload.LoadElement(stream);
                 if (!(element is Section) && !(element is Span))
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 thisRange.SetXmlVirtual((TextElement)element);
             }
-            else if (dataFormat == DataFormats.Rtf && SecurityHelper.CheckUnmanagedCodePermission())
+            else if (dataFormat == DataFormats.Rtf)
             {
                 // Need to use streams instead of intrermediate strings
                 StreamReader rtfStreamReader = new StreamReader(stream);
@@ -1611,19 +1585,19 @@ namespace System.Windows.Documents
                 MemoryStream memoryStream = TextEditorCopyPaste.ConvertRtfToXaml(rtfText);
                 if (memoryStream == null)
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 TextElement textElement = WpfPayload.LoadElement(memoryStream) as TextElement;
                 if (!(textElement is Section) && !(textElement is Span))
                 {
-                    throw new ArgumentException(SR.Get(SRID.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 thisRange.SetXmlVirtual(textElement);
             }
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Get(SRID.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
             }
         }
 

@@ -67,7 +67,7 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
             // Retrieve position from line array.
@@ -91,12 +91,9 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             return _owner.GetRectangleFromTextPosition(position);
@@ -113,16 +110,10 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (startPosition == null)
-            {
-                throw new ArgumentNullException("startPosition");
-            }
-            if (endPosition == null)
-            {
-                throw new ArgumentNullException("endPosition");
-            }
+            ArgumentNullException.ThrowIfNull(startPosition);
+            ArgumentNullException.ThrowIfNull(endPosition);
             ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
             ValidationHelper.VerifyDirection(startPosition.LogicalDirection, "startPosition.LogicalDirection");
             ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
@@ -144,12 +135,9 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             // TextBlock element does not support columns, hence suggestedX does not change
@@ -187,7 +175,7 @@ namespace MS.Internal.Documents
             {
                 positionOut = position;
             }
-            else if (!DoubleUtil.IsNaN(suggestedX))
+            else if (!double.IsNaN(suggestedX))
             {
                 positionOut = lines[lineIndex].GetTextPositionFromDistance(suggestedX);
             }
@@ -208,7 +196,7 @@ namespace MS.Internal.Documents
             // Verify valid layout, position and direction
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
@@ -227,7 +215,7 @@ namespace MS.Internal.Documents
             // Verify valid layout, position and direction
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
@@ -250,7 +238,7 @@ namespace MS.Internal.Documents
             // Verify valid layout, position and direction
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
@@ -276,12 +264,9 @@ namespace MS.Internal.Documents
             // Verify that layout information is valid. Cannot continue if not valid.
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
 
             lines = Lines;
@@ -300,14 +285,11 @@ namespace MS.Internal.Documents
         internal override bool Contains(ITextPointer position)
         {
             // Verify that layout information is valid. Cannot continue if not valid.
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
             ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!IsValid)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextViewInvalidLayout));
+                throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
             // TextParagraphView has a single view that covers all its contents,

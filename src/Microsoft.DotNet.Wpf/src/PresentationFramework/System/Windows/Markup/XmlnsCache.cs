@@ -12,10 +12,10 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using MS.Internal;
 using MS.Utility;
@@ -94,7 +94,7 @@ namespace System.Windows.Markup
             List<Assembly> interestingAssemblies = new List<Assembly>();
 
             // Load all the assemblies into a list.
-            foreach(string assemblyName in _assemblyPathTable.Keys)
+            foreach(string assemblyName in _assemblyPathTable.Keys.OfType<string>().OrderBy(s => s, StringComparer.Ordinal))
             {
                 bool hasCacheInfo = true;
                 Assembly assy;
@@ -172,7 +172,7 @@ namespace System.Windows.Markup
                         // try to get the mapping from those assemblies.
                         //
 
-                        string[] asmNameList = _uriToAssemblyNameTable[xmlns] as string[];
+                        string[] asmNameList = (string[])_uriToAssemblyNameTable[xmlns];
 
                         Assembly[] asmList = new Assembly[asmNameList.Length];
                         for (int i = 0; i < asmNameList.Length; i++)
@@ -228,7 +228,7 @@ namespace System.Windows.Markup
                 // get the Constructor info
                 CustomAttributeData data = allAttributes[i];
                 ConstructorInfo cinfo = data.Constructor;
-                if(0 == String.CompareOrdinal(cinfo.ReflectedType.FullName, fullClrName))
+                if(string.Equals(cinfo.ReflectedType.FullName, fullClrName, StringComparison.Ordinal))
                 {
                     foundAttributes.Add(allAttributes[i]);
                 }
@@ -252,7 +252,7 @@ namespace System.Windows.Markup
                 else if (i == 1)
                     clrns = tca.Value as String;
                 else
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, "XmlnsDefinitionAttribute"));
+                    throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, "XmlnsDefinitionAttribute"));
             }
         }
 
@@ -272,7 +272,7 @@ namespace System.Windows.Markup
                 else if (i == 1)
                     newXmlns = tca.Value as String;
                 else
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, "XmlnsCompatibleWithAttribute"));
+                    throw new ArgumentException(SR.Format(SR.ParserAttributeArgsHigh, "XmlnsCompatibleWithAttribute"));
             }
         }
 
@@ -318,16 +318,16 @@ namespace System.Windows.Markup
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
 
                     if (!_cacheTable.Contains(xmlns))
                     {
                         _cacheTable[xmlns] = new List<ClrNamespaceAssemblyPair>();
                     }
-                    pairList = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
+                    pairList = (List<ClrNamespaceAssemblyPair>)_cacheTable[xmlns];
                     pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
                 }
             }
@@ -357,12 +357,12 @@ namespace System.Windows.Markup
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (String.IsNullOrEmpty(xmlns) || String.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
 
-                    if (0 == String.CompareOrdinal(xmlnsRequested, xmlns))
+                    if (string.Equals(xmlnsRequested, xmlns, StringComparison.Ordinal))
                     {
                         pairList.Add(new ClrNamespaceAssemblyPair(clrns, assemblyName));
                     }
@@ -394,13 +394,13 @@ namespace System.Windows.Markup
 
                     if (String.IsNullOrEmpty(oldXmlns) || String.IsNullOrEmpty(newXmlns))
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, "XmlnsCompatibleWithAttribute"));
+                        throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsCompatibleWithAttribute"));
                     }
 
                     if (_compatTable.ContainsKey(oldXmlns) &&
                         _compatTable[oldXmlns] != newXmlns)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.ParserCompatDuplicate, oldXmlns,
+                        throw new InvalidOperationException(SR.Format(SR.ParserCompatDuplicate, oldXmlns,
                                                                    _compatTable[oldXmlns]));
                     }
                     _compatTable[oldXmlns] = newXmlns;

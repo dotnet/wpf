@@ -21,7 +21,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows
 {    
@@ -79,12 +78,12 @@ namespace System.Windows
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
             
             FontStyle fontStyle = new FontStyle();
             if (!FontStyles.FontStyleStringToKnownStyle(s, ci, ref fontStyle))
-                throw new FormatException(SR.Get(SRID.Parsers_IllegalToken));
+                throw new FormatException(SR.Parsers_IllegalToken);
 
             return fontStyle;
         }
@@ -101,11 +100,6 @@ namespace System.Windows
         /// <param name="value">value to convert from</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>converted value</returns>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for FontStyle, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType != null && value is FontStyle)

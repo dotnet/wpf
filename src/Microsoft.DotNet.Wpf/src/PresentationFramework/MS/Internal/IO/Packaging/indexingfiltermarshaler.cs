@@ -50,10 +50,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="managedFilter">IManagedFilter implementation</param>
         internal IndexingFilterMarshaler(IManagedFilter managedFilter)
         {
-            if (managedFilter == null)
-            {
-                throw new ArgumentNullException("managedFilter");
-            }
+            ArgumentNullException.ThrowIfNull(managedFilter);
 
             _implementation = managedFilter;
         }
@@ -97,13 +94,6 @@ namespace MS.Internal.IO.Packaging
         /// <param name="s">string to convert</param>
         /// <param name="bufCharacterCount">maximum number of characters to convert</param>
         /// <param name="p">pointer to write to</param>
-        /// <SecurityNote>
-        /// This method, if exposed to partially trusted callers, can lead to arbitrary memory writing. 
-        /// Critical    - This code could be used to attempt to build a string from arbitrary data.
-        ///   This code is not intended to be used from PT code.
-        ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void MarshalStringToPtr(string s, ref uint bufCharacterCount, IntPtr p)
         {
             // bufCharacterCount is never supposed to be zero at this level.
@@ -112,7 +102,7 @@ namespace MS.Internal.IO.Packaging
             // ensure the interface rules are followed
             // string must also be null terminated so we restrict the length to buf size - 1
             if ((uint)(s.Length) > bufCharacterCount - 1)
-                throw new InvalidOperationException(SR.Get(SRID.FilterGetTextBufferOverflow));
+                throw new InvalidOperationException(SR.FilterGetTextBufferOverflow);
 
             // Return the number of characters written, including the terminating null.
             bufCharacterCount = (UInt32)s.Length + 1;
@@ -129,10 +119,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="propSpec"></param>
         /// <param name="native"></param>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.StringToCoTaskMemUni which LinkDemands, and writes string into unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal static void MarshalPropSpec(ManagedPropSpec propSpec, ref PROPSPEC native)
         {
             native.propType = (uint)propSpec.PropType;
@@ -157,10 +143,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="fullPropSpec"></param>
         /// <param name="native"></param>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalPropSpec which is Critical.  Returns a pointer to unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal static void MarshalFullPropSpec(ManagedFullPropSpec fullPropSpec, ref FULLPROPSPEC native)
         {
             native.guid = fullPropSpec.Guid;
@@ -171,10 +153,6 @@ namespace MS.Internal.IO.Packaging
         /// GetChunk
         /// </summary>
         /// <returns>An interop STAT_CHUNK from a ManagedChunk</returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalFullPropSpec which is Critical.  Returns a pointer to unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal static STAT_CHUNK MarshalChunk(ManagedChunk chunk)
         {
             STAT_CHUNK native = new STAT_CHUNK();
@@ -201,10 +179,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="obj">Object to marshal, should be DateTime or String</param>
         /// <returns>newly allocated PROPVARIANT structure</returns>
-        ///<SecurityNote>
-        ///     Critical: calls Marshal.StringToCoTaskMemAnsi which LinkDemands, and writes string into unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal static IntPtr MarshalPropVariant(Object obj)
         {
             IntPtr pszVal = IntPtr.Zero;
@@ -233,13 +207,14 @@ namespace MS.Internal.IO.Packaging
                 else
                 {
                     throw new InvalidOperationException(
-                        SR.Get(SRID.FilterGetValueMustBeStringOrDateTime));
+                        SR.FilterGetValueMustBeStringOrDateTime);
                 }
 
                 // allocate an unmanaged PROPVARIANT to return
                 pNative = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(PROPVARIANT)));
-                // Per MSDN, AllocCoTaskMem never returns null. One can't be too careful, though.
-                Invariant.Assert(pNative != null);
+
+                // Per MSDN, AllocCoTaskMem never returns null: check for IntPtr.Zero instead.
+                Invariant.Assert(pNative != IntPtr.Zero);
 
                 // marshal the managed PROPVARIANT into the unmanaged block and return it
                 Marshal.StructureToPtr(v, pNative, false);
@@ -285,10 +260,6 @@ namespace MS.Internal.IO.Packaging
         /// GetChunk
         /// </summary>
         /// <returns>the next chunk</returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalChunk which is Critical.  Returns a pointer to unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         public STAT_CHUNK GetChunk()
         {
             // Get the managed chunk
@@ -301,7 +272,7 @@ namespace MS.Internal.IO.Packaging
                 if (ThrowOnEndOfChunks)
                 {
                     // Throw exception.
-                    throw new COMException(SR.Get(SRID.FilterEndOfChunks),
+                    throw new COMException(SR.FilterEndOfChunks,
                         (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
                 }
 
@@ -321,12 +292,6 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="bufCharacterCount">Buffer size in Unicode characters (not bytes)</param>
         /// <param name="pBuffer">Pre-allocated buffer for us to write into.  String must be null-terminated.</param>
-        /// <SecurityNote>
-        /// Critical    - Invokes the critical method MarshalStringToPtr, which could be used to attempt to build a string from arbitrary data.
-        ///   This code is not intended to be called from PT code.
-        ///   Not designed to be accessible from public surface at all. Invoked (indirectly) by unmanaged client code.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void GetText(ref uint bufCharacterCount, IntPtr pBuffer)
         {
             // NOTE: bufCharacterCount and pBuffer are already validated by XpsFilter.
@@ -342,10 +307,6 @@ namespace MS.Internal.IO.Packaging
         /// GetValue
         /// </summary>
         /// <returns>newly allocated PROPVARIANT structure</returns>
-        ///<SecurityNote>
-        ///     Critical: calls MarshalPropVariant which is Critical.  Returns a pointer to unmanaged memory.
-        ///</SecurityNote> 
-        [SecurityCritical]
         public IntPtr GetValue()
         {
             return MarshalPropVariant(_implementation.GetValue());
@@ -362,7 +323,7 @@ namespace MS.Internal.IO.Packaging
         public IntPtr BindRegion(FILTERREGION origPos, ref Guid riid)
         {
             // The following exception maps to E_NOTIMPL.
-            throw new NotImplementedException(SR.Get(SRID.FilterBindRegionNotImplemented));
+            throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
         #endregion IFilter implementation
 

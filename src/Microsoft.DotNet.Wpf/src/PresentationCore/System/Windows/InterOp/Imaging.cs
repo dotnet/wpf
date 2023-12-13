@@ -7,7 +7,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using System.Diagnostics;
 using System.Windows;
@@ -33,18 +32,12 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe public static BitmapSource CreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
             Int32Rect sourceRect,
             BitmapSizeOptions sizeOptions)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             return CriticalCreateBitmapSourceFromHBitmap(bitmap, palette, sourceRect, sizeOptions, WICBitmapAlphaChannelOption.WICBitmapUseAlpha);
         }
@@ -57,10 +50,6 @@ namespace System.Windows.Interop
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
         /// <param name="alphaOptions"></param>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe internal static BitmapSource CriticalCreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
@@ -85,17 +74,11 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical ]
         unsafe public static BitmapSource CreateBitmapSourceFromHIcon(
             IntPtr icon,
             Int32Rect sourceRect,
             BitmapSizeOptions sizeOptions)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             if (icon == IntPtr.Zero)
             {
@@ -117,11 +100,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - calls critical code, access unmanaged resources
-        /// PublicOK - demands unmanaged code permission
-        /// </SecurityNote>
-        [SecurityCritical ]
         unsafe public static BitmapSource CreateBitmapSourceFromMemorySection(
             IntPtr section,
             int pixelWidth,
@@ -130,7 +108,6 @@ namespace System.Windows.Interop
             int stride,
             int offset)
         {
-            SecurityHelper.DemandUnmanagedCode();
 
             if (section == IntPtr.Zero)
             {

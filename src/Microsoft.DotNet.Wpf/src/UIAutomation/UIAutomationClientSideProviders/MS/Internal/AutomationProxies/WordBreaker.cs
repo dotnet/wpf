@@ -158,7 +158,7 @@ namespace MS.Internal.AutomationProxies
                 TextSymbolType.Character;
         }
 
-        public int GetText(LogicalDirection direction, int maxLength, TextPosition limit, char[] chars, int startIndex)
+        public int GetText(LogicalDirection direction, int maxLength, TextPosition limit, Span<char> chars, int startIndex)
         {
             // simplifying assumptions based on usage by word breaker.
             Debug.Assert(direction == LogicalDirection.Forward);
@@ -246,7 +246,6 @@ namespace MS.Internal.AutomationProxies
     // EXCEPT IT HAS BEEN CHANGED FROM PUBLIC TO INTERNAL. DO NOT MODIFY THIS CLASS. INSTEAD,
     // REPORT BUGS TO NLG AND GET A FIXED VERSION FROM THEM.
 
-    //[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey = "0x0024000004800000940000000602000000240000525341310004000001000100E713FA199CCB2F5F080CE4F53957C284185C5CE59BC72A4D4B18C96CBA724E2CD745D07A454C5C6FE6A407825573E0431BD5923193CB28712B5EE5BE0F012A1F17F4A354B885F5968894AD5441FB92366B485EA9E4BFB93561A51E37778ACCE78E5F50006A2EAFE1D1CFF7DABEAC7354D96C8CFEEC72618478289E947560E0D4")]
     internal class WordBreaker
     {
         #region Constants
@@ -729,11 +728,11 @@ namespace MS.Internal.AutomationProxies
             StringBuilder output = new StringBuilder();
             TextNavigator navigator = begin.CreateNavigator();
             TextSymbolType type;
-            char[] buffer = new char[1];
+            Span<char> buffer = stackalloc char[1];
             char ch;
 
             if (begin.TextContainer != end.TextContainer)
-                throw new ArgumentException(SR.Get(SRID.BeginEndTextContainerMismatch));
+                throw new ArgumentException(SR.BeginEndTextContainerMismatch);
 
             navigator.MoveToPosition(begin);
             type = navigator.GetSymbolType(LogicalDirection.Forward);
@@ -756,7 +755,7 @@ namespace MS.Internal.AutomationProxies
                     case TextSymbolType.ElementEnd:
                         if (IsBreakingSymbol(navigator, LogicalDirection.Forward))
                         {
-                            output.Append(" ");
+                            output.Append(' ');
                         }
                         break;
                 }

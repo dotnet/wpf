@@ -208,12 +208,12 @@ namespace System.Windows.Markup
             if (assemblyPath == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyPath);
+                ThrowException(nameof(SR.ParserBadAssemblyPath));
             }
             if (assemblyName == string.Empty)
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserBadAssemblyName);
+                ThrowException(nameof(SR.ParserBadAssemblyName));
             }
 
             string asmName = assemblyName.ToUpper(CultureInfo.InvariantCulture);
@@ -229,7 +229,11 @@ namespace System.Windows.Markup
             // so they can be loaded again.   The is the Dev build/load/build/load
             // Designer scenario.  (Don't mess with GACed assemblies)
             Assembly assem = ReflectionHelper.GetAlreadyLoadedAssembly(asmName);
-            if (assem != null && !assem.GlobalAssemblyCache)
+            if (assem != null
+#if NETFX
+                 && !assem.GlobalAssemblyCache
+#endif
+                )
             {
                 ReflectionHelper.ResetCacheForAssembly(asmName);
                 // No way to reset SchemaContext at assembly granularity, so just reset the whole context
@@ -401,7 +405,7 @@ namespace System.Windows.Markup
 #if  PBTCOMPILER
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
-        {          
+        {
             if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -468,7 +472,7 @@ namespace System.Windows.Markup
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(SRID.ParserOwnerEventMustBePublic, owner.FullName );
+                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
             }
 
             RoutedEvent Event = GetDependencyObject(true,owner,xmlNamespace,
@@ -527,7 +531,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    string message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
+                    string message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType.FullName);
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
             }
@@ -608,13 +612,13 @@ namespace System.Windows.Markup
                         // <SomeElement SomeProp="SomeText"/> and there's no TypeConverter
                         //  to handle converting "SomeText" into an instance of something
                         //  that can be set into SomeProp.
-                        message = SR.Get(SRID.ParserDefaultConverterProperty, propType.FullName, propName, value);
+                        message = SR.Format(SR.ParserDefaultConverterProperty, propType.FullName, propName, value);
                     }
                     else
                     {
                         // <SomeElement>SomeText</SomeElement> and there's no TypeConverter
                         //  associated with the type SomeElement
-                        message = SR.Get(SRID.ParserDefaultConverterElement, propType.FullName, value);
+                        message = SR.Format(SR.ParserDefaultConverterElement, propType.FullName, value);
                     }
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
@@ -653,7 +657,7 @@ namespace System.Windows.Markup
                 //
                 // propName is 'Fill' in this case.
 
-                message = SR.Get(SRID.ParserCannotConvertPropertyValueString, value, propName, propType);
+                message = SR.Format(SR.ParserCannotConvertPropertyValueString, value, propName, propType);
             }
             else
             {
@@ -666,7 +670,7 @@ namespace System.Windows.Markup
                 // There is no associated propName available in this case, so we
                 //  give a different error message.
 
-                message = SR.Get(SRID.ParserCannotConvertInitializationText, value, propType );
+                message = SR.Format(SR.ParserCannotConvertInitializationText, value, propType );
             }
             return message;
         }
@@ -696,14 +700,14 @@ namespace System.Windows.Markup
 
             if (value == string.Empty)
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
 
             if (MarkupExtensionParser.LooksLikeAMarkupExtension(value))
             {
-                string message = SR.Get(SRID.ParserBadUidOrNameME, value);
+                string message = SR.Format(SR.ParserBadUidOrNameME, value);
                 message += " ";
-                message += SR.Get(SRID.ParserLineAndOffset,
+                message += SR.Format(SR.ParserLineAndOffset,
                             lineNumber.ToString(CultureInfo.CurrentCulture),
                             linePosition.ToString(CultureInfo.CurrentCulture));
 
@@ -714,7 +718,7 @@ namespace System.Windows.Markup
 
             if (!NameValidationHelper.IsValidIdentifierName(value))
             {
-                ThrowException(SRID.ParserBadName, value);
+                ThrowException(nameof(SR.ParserBadName), value);
             }
         }
 
@@ -747,7 +751,7 @@ namespace System.Windows.Markup
                         }
                         else if (Char.IsDigit(attribValue[i]))
                         {
-                            ThrowException(SRID.ParserNoDigitEnums, propName, attribValue);
+                            ThrowException(nameof(SR.ParserNoDigitEnums), propName, attribValue);
                         }
                         else
                         {
@@ -1193,9 +1197,9 @@ namespace System.Windows.Markup
         private bool IsInternalTypeAllowedInFullTrust(Type type)
         {
             bool isAllowed = false;
-            // If caller has Full Trust and the type is internal, then allow them to participate
+            // If the type is internal, then allow them to participate
             // in deciding if that internal type should be accessible.
-            if (ReflectionHelper.IsInternalType(type) && MS.Internal.SecurityHelper.IsFullTrustCaller())
+            if (ReflectionHelper.IsInternalType(type))
             {
                 isAllowed = AllowInternalType(type);
             }
@@ -1306,7 +1310,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, false))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", objectType.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", objectType.Name + "." + localName, "Add Handler method");
                                     }
 #endif
                                 }
@@ -1329,7 +1333,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, objectType.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, objectType.Name + "." + localName);
                                     }
 
 #if PBTCOMPILER
@@ -1340,7 +1344,7 @@ namespace System.Windows.Markup
                                         // check to make sure that the public type is accessible\allowed.
                                         if (!IsAllowedEvent(ei, false))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
                                         }
                                     }
                                     else
@@ -1352,7 +1356,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1388,7 +1392,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, false))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", objectType.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", objectType.Name + "." + localName, "Set method");
                             }
 #endif
 
@@ -1399,13 +1403,13 @@ namespace System.Windows.Markup
 
                                 // If we've found a property info, then the owner had better
                                 // be the same type as or a subclass of the objectType, or
-                                // they are in different inheritance hierarchies.  
+                                // they are in different inheritance hierarchies.
                                 if (memberInfo != null)
                                 {
                                     if (owner != null &&
                                         !objectType.IsAssignableFrom(owner))
                                     {
-                                        ThrowException(SRID.ParserAttachedPropInheritError,
+                                        ThrowException(nameof(SR.ParserAttachedPropInheritError),
                                                        String.Format(CultureInfo.CurrentCulture, "{0}.{1}", objectType.Name, localName),
                                                        owner.Name);
                                     }
@@ -1465,7 +1469,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, true))
                                     {
-                                        ThrowException(SRID.ParserCantSetAttribute, "bubbling event", owner.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", owner.Name + "." + localName, "Add Handler method");
                                     }
 #endif
                                 }
@@ -1486,7 +1490,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(SRID.ParserEventDelegateTypeNotAccessible, ei.EventHandlerType.FullName, owner.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, owner.Name + "." + localName);
                                     }
 
 #if PBTCOMPILER
@@ -1498,7 +1502,7 @@ namespace System.Windows.Markup
                                         // since that would have all ready been done in the caller of this fucntion.
                                         if (!IsAllowedEvent(ei, true))
                                         {
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
                                         }
                                     }
                                     else
@@ -1510,7 +1514,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(SRID.ParserCantSetAttribute, "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1546,7 +1550,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, true))
                             {
-                                ThrowException(SRID.ParserCantSetAttribute, "attached property", owner.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", owner.Name + "." + localName, "Set method");
                             }
 #endif
 
@@ -1786,7 +1790,7 @@ namespace System.Windows.Markup
                     GetTypeOnly(xmlNamespace, globalClassName);
                 if (typeAndSerializer == null || typeAndSerializer.ObjectType == null)
                 {
-                    ThrowException(SRID.ParserNoType, globalClassName);
+                    ThrowException(nameof(SR.ParserNoType), globalClassName);
                 }
                 ownerType = typeAndSerializer.ObjectType;
             }
@@ -1872,7 +1876,7 @@ namespace System.Windows.Markup
                             //  was no name specified at all.  (null or empty string.)
                             // The latter case may get a special meaning in the future,
                             //  but for now they're all errors.
-                            ThrowException(SRID.ParserXmlLangPropertyValueInvalid);
+                            ThrowException(nameof(SR.ParserXmlLangPropertyValueInvalid));
                         }
                     }
                 }
@@ -2275,7 +2279,7 @@ namespace System.Windows.Markup
                 }
                 if (targetType == null)
                 {
-                    ThrowException(SRID.ParserNoType, typeName);
+                    ThrowException(nameof(SR.ParserNoType), typeName);
                 }
             }
             else if (!isTypeExpected && prefix.Length == 0)
@@ -2288,7 +2292,7 @@ namespace System.Windows.Markup
             else
             {
                 // A type was expected but we didn't find one. So throw.
-                ThrowException(SRID.ParserBadMemberReference, valueParam);
+                ThrowException(nameof(SR.ParserBadMemberReference), valueParam);
             }
 
 
@@ -2308,7 +2312,7 @@ namespace System.Windows.Markup
                 if (targetType == null)
                 {
                     // if there was also no default target type then throw.
-                    ThrowException(SRID.ParserBadMemberReference, memberValue);
+                    ThrowException(nameof(SR.ParserBadMemberReference), memberValue);
                 }
             }
 
@@ -2355,14 +2359,14 @@ namespace System.Windows.Markup
 
                     if (!isAllowed)
                     {
-                        ThrowException(SRID.ParserStaticMemberNotAllowed, memberName, targetType.Name);
+                        ThrowException(nameof(SR.ParserStaticMemberNotAllowed), memberName, targetType.Name);
                     }
                 }
             }
 #endif
             if (mi == null)
             {
-                ThrowException(SRID.ParserInvalidStaticMember, memberName, targetType.Name);
+                ThrowException(nameof(SR.ParserInvalidStaticMember), memberName, targetType.Name);
             }
 
             return mi;
@@ -2479,7 +2483,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
         private static bool IsFriendAssembly(Assembly assembly)
         {
-            // WinFx assemblies can never be friends of compiled assemblies, so just bail out.
+            // WinFX assemblies can never be friends of compiled assemblies, so just bail out.
             if (assembly == XamlTypeMapper.AssemblyPF ||
                 assembly == XamlTypeMapper.AssemblyPC ||
                 assembly == XamlTypeMapper.AssemblyWB)
@@ -2559,7 +2563,7 @@ namespace System.Windows.Markup
                                 if (!IsInternalTypeAllowedInFullTrust(objectType))
 #endif
                                 {
-                                    ThrowException(SRID.ParserPublicType, objectType.Name);
+                                    ThrowException(nameof(SR.ParserPublicType), objectType.Name);
                                 }
                             }
                             // Create new data structure to store information for the current type
@@ -2748,7 +2752,7 @@ namespace System.Windows.Markup
 
             return ithType;
         }
-        
+
         private static InternalTypeHelper GetInternalTypeHelperFromAssembly(ParserContext pc)
         {
             InternalTypeHelper ith = null;
@@ -2760,53 +2764,20 @@ namespace System.Windows.Markup
             return ith;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create instances of
-        /// allowed\accessible internal types. If permission is granted, the parser will directly
-        /// use reflection to create the internal instance. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt creating the internal
-        /// instance using the user app's security context.
-        /// </SecurityNote>
         internal static object CreateInternalInstance(ParserContext pc, Type type)
         {
-            object instance = null;
-            // if caller has member access reflection permission, use reflection directly
-            if (SecurityHelper.CallerHasMemberAccessReflectionPermission())
-            {
-                instance = Activator.CreateInstance(type,
-                                                    BindingFlags.Public |
-                                                    BindingFlags.NonPublic |
-                                                    BindingFlags.Instance |
-                                                    BindingFlags.CreateInstance,
-                                                    null,
-                                                    null,
-                                                    TypeConverterHelper.InvariantEnglishUS);
-            }
-            else
-            {
-                // else this must be an accessible internal type in PT --- call the generated InternalTypeHelper
-                // in the caller's secuirty context.
-
-                // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current
-                // stream being read was created from. So even if the internal type were not legitimate, the call
-                // to create it via ith.CreateInstance would fail in PT.
-                InternalTypeHelper ith = XamlTypeMapper.GetInternalTypeHelperFromAssembly(pc);
-                if (ith != null)
-                {
-                    instance = ith.CreateInstance(type, TypeConverterHelper.InvariantEnglishUS);
-                }
-            }
+            object instance = Activator.CreateInstance(type,
+                                                BindingFlags.Public |
+                                                BindingFlags.NonPublic |
+                                                BindingFlags.Instance |
+                                                BindingFlags.CreateInstance,
+                                                null,
+                                                null,
+                                                TypeConverterHelper.InvariantEnglishUS);
 
             return instance;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to get an allowed\accessible
-        /// internal property value on an allowed\accessible type. If permission is granted, the parser
-        /// will directly use reflection to get the property value. If not, it will call a method on a
-        /// generated class in the user's code context in order to attempt getting the internal property
-        /// value using the user app's security context.
-        /// </SecurityNote>
         internal static object GetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target)
         {
             object propValue = null;
@@ -2816,36 +2787,12 @@ namespace System.Windows.Markup
 
             if (isAllowedProperty)
             {
-                // if public getter on internal type or caller has member access permission, use reflection directly
-                if (isPublicProperty || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    propValue = pi.GetValue(target, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
-                }
-                else
-                {
-                    // else this must be an internal property getter on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current stream
-                    // being read was created from. So even if the internal property were not legitimate, the call
-                    // to access it via ith.GetPropertyValue would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        propValue = ith.GetPropertyValue(pi, target, TypeConverterHelper.InvariantEnglishUS);
-                    }
-                }
+                propValue = pi.GetValue(target, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
             }
 
             return propValue;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to set an allowed\accessible internal
-        /// property value on an allowed\accessible type. If permission is granted, the parser will directly use
-        /// reflection to set the property value. If not, it will call a method on a generated class in the user's
-        /// code context in order to attempt setting the internal property value using the user app's security context.
-        /// </SecurityNote>
         internal static bool SetInternalPropertyValue(ParserContext pc, object rootElement, PropertyInfo pi, object target, object value)
         {
             bool isPublicProperty = false;
@@ -2854,38 +2801,13 @@ namespace System.Windows.Markup
 
             if (isAllowedProperty)
             {
-                // if public setter on internal type or caller has member access permission, use reflection directly
-                if (isPublicProperty || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    pi.SetValue(target, value, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
-                    return true;
-                }
-                else
-                {
-                    // else this must be an internal property setter on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current stream
-                    // being read was created from. So even if the internal property were not legitimate, the call
-                    // to set it via ith.SetPropertyValue would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        ith.SetPropertyValue(pi, target, value, TypeConverterHelper.InvariantEnglishUS);
-                        return true;
-                    }
-                }
+                pi.SetValue(target, value, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
+                return true;
             }
 
             return false;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to create an accessible delegate for a
-        /// non public event handler method. If permission is granted, the parser will directly use reflection
-        /// to create the delegate. If not, it will call a method on a generated class in the user's code context
-        /// in order to attempt creating the delegate using the user app's security context.
-        /// </SecurityNote>
         internal static Delegate CreateDelegate(ParserContext pc, Type delegateType, object target, string handler)
         {
             Delegate d = null;
@@ -2893,36 +2815,12 @@ namespace System.Windows.Markup
 
             if (isAllowedDelegateType)
             {
-                if (SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    d = Delegate.CreateDelegate(delegateType, target, handler);
-                }
-                else
-                {
-                    // target is always the root generated element. Check to see if it is in the
-                    // same assembly as the one from which the currently processed stream was created,
-                    // as an added precaution.
-                    if (target.GetType().Assembly == pc.StreamCreatedAssembly)
-                    {
-                        InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                        if (ith != null)
-                        {
-                            d = ith.CreateDelegate(delegateType, target, handler);
-                        }
-                    }
-                }
+                 d = Delegate.CreateDelegate(delegateType, target, handler);
             }
 
             return d;
         }
 
-        /// <SecurityNote>
-        /// This function needs to demand reflection permission in order to add a delegate handler for an
-        /// allowed\accessible internal event on an allowed\accessible type. If permission is granted, the
-        /// parser will directly use reflection to add the event handler delegate. If not, it will call a
-        /// method on a generated class in the user's code context in order to attempt adding the internal
-        /// event handler delegate using the user app's security context.
-        /// </SecurityNote>
         internal static bool AddInternalEventHandler(ParserContext pc, object rootElement, EventInfo eventInfo, object target, Delegate handler)
         {
             bool isPublicEvent = false;
@@ -2931,27 +2829,8 @@ namespace System.Windows.Markup
 
             if (isAllowedEvent)
             {
-                // if public event on internal type or caller has member access permission, use reflection directly
-                if (isPublicEvent || SecurityHelper.CallerHasMemberAccessReflectionPermission())
-                {
-                    eventInfo.AddEventHandler(target, handler);
-                    return true;
-                }
-                else
-                {
-                    // else this must be an internal event on an accessible internal or public type --- call
-                    // the generated helper in caller's secuirty context.
-
-                    // In this case pc.StreamCreatedAssembly is guaranteed to be the assembly from which the current
-                    // stream being read was created from. So even if the internal event ere not legitimate, the call
-                    // to add a handler to it via ith.AddEventHandler would fail in PT.
-                    InternalTypeHelper ith = GetInternalTypeHelperFromAssembly(pc);
-                    if (ith != null)
-                    {
-                        ith.AddEventHandler(eventInfo, target, handler);
-                        return true;
-                    }
-                }
+                eventInfo.AddEventHandler(target, handler);
+                return true;
             }
 
             return false;
@@ -2989,7 +2868,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
             }
             else
@@ -2998,7 +2877,7 @@ namespace System.Windows.Markup
                 xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -3008,7 +2887,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
             // Optimize for SystemMetric types that are very frequently used.
-            if (string.CompareOrdinal(xmlns, XamlReaderHelper.DefaultNamespaceURI) == 0)
+            if (string.Equals(xmlns, XamlReaderHelper.DefaultNamespaceURI, StringComparison.Ordinal))
             {
                 switch (typeString)
                 {
@@ -3041,7 +2920,7 @@ namespace System.Windows.Markup
                     _lineNumber = context != null ? context.LineNumber : 0;
                     _linePosition = context != null ? context.LinePosition : 0;
 
-                    ThrowException(SRID.ParserResourceKeyType, typeString);
+                    ThrowException(nameof(SR.ParserResourceKeyType), typeString);
                 }
             }
 
@@ -3067,7 +2946,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[string.Empty];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, string.Empty);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), string.Empty);
                 }
                 else
                 {
@@ -3080,7 +2959,7 @@ namespace System.Windows.Markup
                 string xmlns = context.XmlnsDictionary[prefix];
                 if (xmlns == null)
                 {
-                    ThrowException(SRID.ParserUndeclaredNS, prefix);
+                    ThrowException(nameof(SR.ParserUndeclaredNS), prefix);
                 }
                 else
                 {
@@ -3171,7 +3050,7 @@ namespace System.Windows.Markup
             string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
             if (namespaceURI == null)
             {
-                parserContext.XamlTypeMapper.ThrowException(SRID.ParserPrefixNSProperty, nsPrefix, nameString);
+                parserContext.XamlTypeMapper.ThrowException(nameof(SR.ParserPrefixNSProperty), nsPrefix, nameString);
             }
 
             return namespaceURI;
@@ -3633,7 +3512,7 @@ namespace System.Windows.Markup
 
             if (null == typeConverter)
             {
-                ThrowException(SRID.ParserNoTypeConv, type.Name);
+                ThrowException(nameof(SR.ParserNoTypeConv), type.Name);
             }
 
             return typeConverter;
@@ -3911,22 +3790,22 @@ namespace System.Windows.Markup
 
         private void ThrowException(string id)
         {
-            ThrowExceptionWithLine(SR.Get(id), null);
+            ThrowExceptionWithLine(SR.GetResourceString(id), null);
         }
 
         internal void ThrowException(string id, string parameter)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2), null);
         }
 
         private void ThrowException(string id, string parameter1, string parameter2, string parameter3)
         {
-            ThrowExceptionWithLine(SR.Get(id, parameter1, parameter2, parameter3), null);
+            ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3), null);
         }
 
 
@@ -4588,7 +4467,3 @@ namespace System.Windows.Markup
     }
 #endregion XmlParserDefaults Class
 }
-
-
-
-

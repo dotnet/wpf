@@ -63,10 +63,7 @@ namespace System.Windows.Annotations
         public AnnotationResource(string name)
             : this()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException("name");
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             _name = name;
             _id = Guid.NewGuid();
@@ -83,7 +80,7 @@ namespace System.Windows.Annotations
         public AnnotationResource(Guid id)
         {
             if (Guid.Empty.Equals(id))
-                throw new ArgumentException(SR.Get(SRID.InvalidGuid), "id");
+                throw new ArgumentException(SR.InvalidGuid, "id");
 
             // Guid is a struct and cannot be null
             _id = id;
@@ -117,10 +114,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">writer is null</exception>
         public void WriteXml(XmlWriter writer)
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(writer);
 
             if (String.IsNullOrEmpty(writer.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace)))
             {
@@ -172,10 +166,7 @@ namespace System.Windows.Annotations
         /// <exception cref="ArgumentNullException">reader is null</exception>        
         public void ReadXml(XmlReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("reader");
-            }
+            ArgumentNullException.ThrowIfNull(reader);
 
             XmlDocument doc = new XmlDocument();
 
@@ -206,7 +197,7 @@ namespace System.Windows.Annotations
                     {
                         // The resource must contain a non-XmlElement child such as plain
                         // text which is not part of the schema.
-                        throw new XmlException(SR.Get(SRID.InvalidXmlContent, AnnotationXmlConstants.Elements.Resource));
+                        throw new XmlException(SR.Format(SR.InvalidXmlContent, AnnotationXmlConstants.Elements.Resource));
                     }
                 }
             }
@@ -471,14 +462,14 @@ namespace System.Windows.Annotations
 
                     default:
                         if (!Annotation.IsNamespaceDeclaration(reader))
-                            throw new XmlException(SR.Get(SRID.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Resource));
+                            throw new XmlException(SR.Format(SR.UnexpectedAttribute, reader.LocalName, AnnotationXmlConstants.Elements.Resource));
                         break;
                 }
             }
 
             if (Guid.Empty.Equals(tempId))
             {
-                throw new XmlException(SR.Get(SRID.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Resource));
+                throw new XmlException(SR.Format(SR.RequiredAttributeMissing, AnnotationXmlConstants.Attributes.Id, AnnotationXmlConstants.Elements.Resource));
             }
 
             _id = tempId;

@@ -14,7 +14,6 @@
 //---------------------------------------------------------------------------
 
 using System;
-using System.Security.Permissions;
 using System.IO;
 
 namespace MS.Internal

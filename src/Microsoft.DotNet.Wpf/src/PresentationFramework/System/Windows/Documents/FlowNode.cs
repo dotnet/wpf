@@ -109,15 +109,12 @@ namespace System.Windows.Documents
         /// <returns>-1, 0, 1</returns>
         public int CompareTo(object o)
         {
-            if (o == null)
-            {
-                throw new ArgumentNullException("o");
-            }
+            ArgumentNullException.ThrowIfNull(o);
 
             FlowNode fp = o as FlowNode;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Get(SRID.UnexpectedParameterType, o.GetType(), typeof(FlowNode)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowNode)), "o");
             }
 
             if (Object.ReferenceEquals(this, fp))

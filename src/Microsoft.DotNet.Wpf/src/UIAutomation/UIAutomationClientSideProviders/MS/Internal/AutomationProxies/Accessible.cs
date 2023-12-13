@@ -549,7 +549,7 @@ namespace MS.Internal.AutomationProxies
                         throw;
                     }
 
-                    throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                    throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
                 }
             }
         }
@@ -754,21 +754,7 @@ namespace MS.Internal.AutomationProxies
             object scan = null;
             try
             {
-                try
-                {
-                    scan = _acc.accHitTest(x, y);
-                }
-                catch (System.Security.SecurityException)
-                {
-                    // Workaround for Partial Trust Winforms issue - they sometimes return
-                    // a security error - use workaround to get a new IAccessible for the same
-                    // object, and retry...
-                    IAccessible accNew = WashPartialTrustWinformsAccessible(_acc);
-                    if (accNew == null)
-                        throw;
-                    _acc = accNew;
-                    scan = _acc.accHitTest(x, y);
-                }
+                scan = _acc.accHitTest(x, y);
             }
             catch (Exception e)
             {
@@ -1126,19 +1112,7 @@ namespace MS.Internal.AutomationProxies
                 object test = null;
                 try
                 {
-                    try
-                    {
-                        test = parent.get_accChild((int)obj);
-                    }
-                    catch (System.Security.SecurityException)
-                    {
-                        // Workaround for Partial Trust Winforms issue - they sometimes return
-                        // a security error - use workaround to get a new IAccessible for the same
-                        // object, and retry...
-                        IAccessible accNew = WashPartialTrustWinformsAccessible(parent);
-                        if (accNew != null)
-                            test = accNew.get_accChild((int)obj);
-                    }
+                    test = parent.get_accChild((int)obj);
                 }
                 catch (Exception e)
                 {
@@ -1181,7 +1155,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     throw;
                 }
-                throw new InvalidOperationException(SR.Get(SRID.OperationCannotBePerformed), e);
+                throw new InvalidOperationException(SR.OperationCannotBePerformed, e);
             }
         }
 
@@ -1411,7 +1385,7 @@ namespace MS.Internal.AutomationProxies
                         // One or more arguments were invalid. This error occurs when the caller attempts to identify
                         // a child object using an identifier that the server does not recognize. This error also results
                         // when a client attempts to identify a child object within an object that has no children.
-                        throw new ArgumentException(SR.Get(SRID.InvalidParameter));
+                        throw new ArgumentException(SR.InvalidParameter);
 
                     case NativeMethods.E_ACCESSDENIED:
                         // This is returned when you call get_accValue to get the value of a password control.
@@ -1438,11 +1412,6 @@ namespace MS.Internal.AutomationProxies
             {
                 // This control/window mostly has went away or is in the process of shutting down.
                 throw new ElementNotAvailableException(e);
-            }
-            else if (e is System.Security.SecurityException)
-            {
-                // winforms in partial trust returns these
-                return true;
             }
             else
             {
@@ -1472,19 +1441,8 @@ namespace MS.Internal.AutomationProxies
             NativeMethods.Win32Rect ownLoc = GetLocation(old, NativeMethods.CHILD_SELF);
             AccessibleRole ownRole = GetRole(old, NativeMethods.CHILD_SELF);
 
-            IAccessible accParent;
-            try
-            {
-                accParent = (IAccessible)old.accParent;
-            }
-            catch(System.Security.SecurityException)
-            {
-                // In some cases, usually with events, we get an IAccessible where we also
-                // get the security exception when calling accParent - in that case, just
-                // bail - hope that using the original IAccessible with idChild values works
-                // for getting properties.
-                return null;
-            }
+            IAccessible accParent = (IAccessible)old.accParent;
+           
 
             int childCount;
             object[] rawChildren = Accessible.GetAccessibleChildren(accParent, out childCount);

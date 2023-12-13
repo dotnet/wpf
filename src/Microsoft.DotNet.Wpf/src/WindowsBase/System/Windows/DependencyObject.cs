@@ -9,7 +9,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization; // For CultureInfo.InvariantCulture
 using System.Reflection;
-using System.Security.Permissions; // For LinkDemand
 
 using System.Windows.Threading;
 
@@ -172,10 +171,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             // Call Forwarded
             return GetValueEntry(
@@ -337,7 +333,7 @@ namespace System.Windows
 
                     if (!dp.IsValidValue(value))
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                     }
 
                     // Make sure the entryIndex is in sync after
@@ -390,7 +386,7 @@ namespace System.Windows
 
                 if (!dp.IsValidValue(value))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                 }
 
                 // Make sure the entryIndex is in sync after
@@ -600,21 +596,16 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyProperty dp)
         {
-            if ( dp != null )
+            ArgumentNullException.ThrowIfNull(dp);
+
+            if (!dp.ReadOnly)
             {
-                if ( !dp.ReadOnly )
-                {
-                    // Get type-specific metadata for this property
-                    return dp.GetMetadata(DependencyObjectType);
-                }
-                else
-                {
-                    throw new InvalidOperationException(SR.Get(SRID.ReadOnlyChangeNotAllowed, dp.Name));
-                }
+                // Get type-specific metadata for this property
+                return dp.GetMetadata(DependencyObjectType);
             }
             else
             {
-                throw new ArgumentNullException("dp");
+                throw new InvalidOperationException(SR.Format(SR.ReadOnlyChangeNotAllowed, dp.Name));
             }
         }
 
@@ -624,20 +615,15 @@ namespace System.Windows
         /// </summary>
         private PropertyMetadata SetupPropertyChange(DependencyPropertyKey key, out DependencyProperty dp)
         {
-            if ( key != null )
-            {
-                dp = key.DependencyProperty;
-                Debug.Assert(dp != null);
+            ArgumentNullException.ThrowIfNull(key);
 
-                dp.VerifyReadOnlyKey(key);
+            dp = key.DependencyProperty;
+            Debug.Assert(dp != null);
 
-                // Get type-specific metadata for this property
-                return dp.GetMetadata(DependencyObjectType);
-            }
-            else
-            {
-                throw new ArgumentNullException("key");
-            }
+            dp.VerifyReadOnlyKey(key);
+
+            // Get type-specific metadata for this property
+            return dp.GetMetadata(DependencyObjectType);
         }
 
         /// <summary>
@@ -656,7 +642,7 @@ namespace System.Windows
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.SetOnReadOnlyObjectNotAllowed, this));
+                throw new InvalidOperationException(SR.Format(SR.SetOnReadOnlyObjectNotAllowed, this));
             }
 
             Expression newExpr = null;
@@ -695,7 +681,7 @@ namespace System.Windows
                         // Make sure Expression is "attachable"
                         if (!newExpr.Attachable)
                         {
-                            throw new ArgumentException(SR.Get(SRID.SharingNonSharableExpression));
+                            throw new ArgumentException(SR.SharingNonSharableExpression);
                         }
 
                         // Check dispatchers of all Sources
@@ -712,7 +698,7 @@ namespace System.Windows
                             if (!isValidValue)
                             {
                                 // it's not a valid value & it's not an expression, so throw
-                                throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                             }
                         }
                     }
@@ -993,7 +979,7 @@ namespace System.Windows
         {
             if (IsSealed)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ClearOnReadOnlyObjectNotAllowed, this));
+                throw new InvalidOperationException(SR.Format(SR.ClearOnReadOnlyObjectNotAllowed, this));
             }
 
             // Get old value
@@ -1072,7 +1058,7 @@ namespace System.Windows
 
                 if (!entryIndex.Found || (d._effectiveValues[entryIndex.Index].LocalValue != expr))
                 {
-                    throw new ArgumentException(SR.Get(SRID.SourceChangeExpressionMismatch));
+                    throw new ArgumentException(SR.SourceChangeExpressionMismatch);
                 }
             }
 
@@ -1216,10 +1202,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown);
             newEntry.IsCoercedWithCurrentValue = preserveCurrentValue;
@@ -1252,12 +1235,9 @@ namespace System.Windows
                 bool                coerceWithCurrentValue,
                 OperationType       operationType)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
-#region EventTracing
+            #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
             bool isDynamicTracing = EventTrace.IsEnabled(EventTrace.Flags.performance, EventTrace.Level.verbose); // This was under "normal"
             if (isDynamicTracing)
@@ -1279,7 +1259,7 @@ namespace System.Windows
 #endif
 
 
-#endregion EventTracing
+            #endregion EventTracing
 
 #if NESTED_OPERATIONS_CHECK
             // Are we invalidating out of control?
@@ -1737,7 +1717,7 @@ namespace System.Windows
                 {
                     // well... unless it's the control's "current value"
                     if (!(coerceWithCurrentValue && coercedValue is DeferredReference))
-                        throw new ArgumentException(SR.Get(SRID.InvalidPropertyValue, coercedValue, dp.Name));
+                        throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, coercedValue, dp.Name));
                 }
 
                 // Set the coerced value here. All other values would
@@ -1826,7 +1806,7 @@ namespace System.Windows
                     }
 #endif
 #endregion EventTracing
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidPropertyValue, value, dp.Name));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                 }
             }
             else
@@ -2068,7 +2048,7 @@ namespace System.Windows
 
             if( e.Property == null )
             {
-                throw new ArgumentException(SR.Get(SRID.ReferenceIsNull, "e.Property"), "e");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
             }
 
             if (e.IsAValueChange || e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)
@@ -2102,10 +2082,7 @@ namespace System.Windows
         internal BaseValueSourceInternal GetValueSource(DependencyProperty dp, PropertyMetadata metadata,
                 out bool hasModifiers, out bool isExpression, out bool isAnimated, out bool isCoerced, out bool isCurrent)
         {
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 
@@ -2181,10 +2158,7 @@ namespace System.Windows
             //
             this.VerifyAccess();
 
-            if (dp == null)
-            {
-                throw new ArgumentNullException("dp");
-            }
+            ArgumentNullException.ThrowIfNull(dp);
 
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 
@@ -2492,7 +2466,7 @@ namespace System.Windows
                     Dispatcher sourceDispatcher = newSources[i].DependencyObject.Dispatcher;
                     if (sourceDispatcher != dispatcher && !(expr.SupportsUnboundSources && sourceDispatcher == null))
                     {
-                        throw new ArgumentException(SR.Get(SRID.SourcesMustBeInSameThread));
+                        throw new ArgumentException(SR.SourcesMustBeInSameThread);
                     }
                 }
             }
@@ -3190,7 +3164,7 @@ namespace System.Windows
 
             if (CanModifyEffectiveValues == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationInvalidated));
+                throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
 
             uint effectiveValuesCount = EffectiveValuesCount;
@@ -3235,7 +3209,7 @@ namespace System.Windows
 
             if (CanModifyEffectiveValues == false)
             {
-                throw new InvalidOperationException(SR.Get(SRID.LocalValueEnumerationInvalidated));
+                throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
 
             uint effectiveValuesCount = EffectiveValuesCount;

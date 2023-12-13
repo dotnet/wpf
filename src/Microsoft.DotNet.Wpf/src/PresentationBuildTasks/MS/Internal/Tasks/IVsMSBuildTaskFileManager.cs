@@ -36,17 +36,12 @@ namespace MS.Internal
     {
         // Returns the contents of the specified file based on whats in-memory else what's
         // on disk if not in-memory.
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         string GetFileContents([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
  
         // <summary>
         // Returns the live punkDocData object for the file if it is registered in the RDT,
         // else returns NULL.
         // </summary>
-        ///<SecurityNote> 
-        ///     Critical - call is SUC'ed
-        ///</SecurityNote> 
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [return:MarshalAs(UnmanagedType.IUnknown)]
         object GetFileDocData([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
 
@@ -55,7 +50,6 @@ namespace MS.Internal
         // time of the last edit as reported via IVsLastChangeTimeProvider::GetLastChangeTime
         // on the open document. If the file is not open, then the last change time of the file
         // on disk is returned.
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         //System.Runtime.InteropServices.ComTypes.FILETIME GetFileLastChangeTime([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
         long GetFileLastChangeTime([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
 
@@ -68,25 +62,21 @@ namespace MS.Internal
         // intellisense purposes then the file contents are only put into memory
         // and the disk is not modified. The in-memory TextBuffer is always marked
         // as clean so the user will not be prompted to save the generated file.
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void PutGeneratedFileContents([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename, [In, MarshalAs(UnmanagedType.LPWStr)] string strFileContents);
 
 
         // IsRealBuildOperation -- returns TRUE if this is a real Build operation else
         // if this is a design-time only generation for intellisense purposes it returns
         // FALSE.
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [return:MarshalAs(UnmanagedType.Bool)]
         bool IsRealBuildOperation();
 
 
         // Delete -- deletes a file on disk and removes it from the RDT
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         void Delete([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
 
 
         // Exists -- determines whether or not a file exists in the RDT or on disk
-        [SecurityCritical, SuppressUnmanagedCodeSecurity]
         [return:MarshalAs(UnmanagedType.Bool)]
         bool Exists([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename, [In, MarshalAs(UnmanagedType.Bool)] bool fOnlyCheckOnDisk);
     }

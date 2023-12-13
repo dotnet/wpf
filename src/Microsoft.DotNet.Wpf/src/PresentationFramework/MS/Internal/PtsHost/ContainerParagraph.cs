@@ -459,13 +459,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaFinite
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsFormatSubtrackFinite.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatParaFinite(
             ContainerParaClient paraClient,     // IN:
             IntPtr pbrkrecIn,                   // IN:  break record---use if !IntPtr.Zero
@@ -635,13 +628,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // FormatParaBottomless
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical function PTS.FsFormatSubtrackBottomless.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void FormatParaBottomless(
             ContainerParaClient paraClient,     // IN:
             int iArea,                          // IN:  column-span area index
@@ -772,13 +758,6 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // UpdateBottomlessPara
         //-------------------------------------------------------------------
-        /// <SecurityNote>
-        /// Critical, because:
-        ///     a) calls Critical functon PTS.FsUpdateBottomlessSubtrack.
-        ///     b) calls Critical function PTS.FsTransformRectangle
-        ///     c) calls Critical function PTS.FsTransformBbox
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void UpdateBottomlessPara(
             IntPtr pfspara,                     // IN:  pointer to the para data
             ContainerParaClient paraClient,     // IN:
@@ -1060,7 +1039,7 @@ namespace MS.Internal.PtsHost
                     {
                         if(!(Element is TextElement) || ((TextElement)Element).ContentStart != textPointer)
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.TextSchema_TextIsNotAllowedInThisContext, Element.GetType().Name));
+                            throw new InvalidOperationException(SR.Format(SR.TextSchema_TextIsNotAllowedInThisContext, Element.GetType().Name));
                         }
                     }
 

@@ -15,11 +15,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.FontCache;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 
 namespace MS.Internal.TextFormatting
@@ -132,7 +130,6 @@ namespace MS.Internal.TextFormatting
         /// the paragraph to the beginning of text and is kept in a private property [this._paragraphToText].
         /// 
         /// </remarks>
-        [SecurityCritical] 
         internal unsafe void Compute(
             FullTextState           fullText,
             int                     firstCharIndex,
@@ -301,10 +298,6 @@ namespace MS.Internal.TextFormatting
         /// finalizable, which therefore unnecessarily put additional pressure to GC since each
         /// finalizable object wakes finalizer thread and requires double GC collections.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - as this calls LoAcquireBreakRecord
-        /// </SecurityNote>
-        [SecurityCritical]
         internal TextLineBreak GetTextLineBreak(IntPtr ploline)
         {
             IntPtr pbreakrec = IntPtr.Zero;
@@ -315,7 +308,7 @@ namespace MS.Internal.TextFormatting
 
                 if (lserr != LsErr.None)
                 {
-                    TextFormatterContext.ThrowExceptionFromLsError(SR.Get(SRID.AcquireBreakRecordFailure, lserr), lserr);
+                    TextFormatterContext.ThrowExceptionFromLsError(SR.Format(SR.AcquireBreakRecordFailure, lserr), lserr);
                 }
             }
 

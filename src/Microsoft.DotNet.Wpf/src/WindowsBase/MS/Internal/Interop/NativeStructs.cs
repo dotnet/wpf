@@ -27,20 +27,11 @@ namespace MS.Internal.Interop
     using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
     using IStream = System.Runtime.InteropServices.ComTypes.IStream;
 
-    /// <SecurityNote>
-    /// This class is not safe to use in partial trust.
-    /// Critical: This class is a wrapper for a native structure that manages its own resources.
-    /// </SecurityNote>
-    [SecurityCritical]
     [StructLayout(LayoutKind.Explicit)]
     internal class PROPVARIANT : IDisposable
     {
         private static class NativeMethods
         {
-            /// <SecurityNote>
-            /// Critical: Suppresses unmanaged code security.
-            /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport(MS.Win32.ExternDll.Ole32)]
             internal static extern int PropVariantClear(PROPVARIANT pvar);
         }
@@ -56,23 +47,14 @@ namespace MS.Internal.Interop
         [FieldOffset(8)]
         private short boolVal;
 
-        /// <SecurityNote>
-        /// <SecurityNote>
         /// Critical: This class is tagged Critical
         /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
         public VarEnum VarType
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get { return (VarEnum)vt; }
         }
 
         // Right now only using this for strings.  If for some reason we get something else return null.
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public string GetValue()
         {
             if (vt == (ushort)VarEnum.VT_LPWSTR)
@@ -83,11 +65,6 @@ namespace MS.Internal.Interop
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetValue(bool f)
         {
             Clear();
@@ -95,11 +72,6 @@ namespace MS.Internal.Interop
             boolVal = (short)(f ? -1 : 0);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void SetValue(string val)
         {
             Clear();
@@ -107,11 +79,6 @@ namespace MS.Internal.Interop
             pointerVal = Marshal.StringToCoTaskMemUni(val);
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical PropVariantClear
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Clear()
         {
             NativeMethods.PropVariantClear(this);
@@ -119,32 +86,17 @@ namespace MS.Internal.Interop
 
         #region IDisposable Pattern
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         ~PROPVARIANT()
         {
             Dispose(false);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void Dispose(bool disposing)
         {
             Clear();

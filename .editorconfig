@@ -1,7 +1,6 @@
 # editorconfig.org
 
-# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
-
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos.
 # top-most EditorConfig file
 root = true
 
@@ -9,6 +8,7 @@ root = true
 # A newline ending every file
 # Use 4 spaces as indentation
 [*]
+trim_trailing_whitespace = true
 insert_final_newline = true
 indent_style = space
 indent_size = 4
@@ -68,7 +68,7 @@ dotnet_naming_symbols.static_fields.applicable_kinds   = field
 dotnet_naming_symbols.static_fields.required_modifiers = static
 
 dotnet_naming_style.static_prefix_style.required_prefix = s_
-dotnet_naming_style.static_prefix_style.capitalization = camel_case 
+dotnet_naming_style.static_prefix_style.capitalization = camel_case
 
 # internal and private fields should be _camelCase
 dotnet_naming_rule.camel_case_for_private_internal_fields.severity = suggestion
@@ -79,7 +79,7 @@ dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
 dotnet_naming_symbols.private_internal_fields.applicable_accessibilities = private, internal
 
 dotnet_naming_style.camel_case_underscore_style.required_prefix = _
-dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case 
+dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
 # Code style defaults
 dotnet_sort_system_directives_first = true
@@ -138,6 +138,10 @@ csharp_space_between_square_brackets = false
 [*.{cpp,h,in}]
 curly_bracket_next_line = true
 indent_brace_style = Allman
+
+# Visual Studio Solution files
+[*.sln]
+end_of_line = lf
 
 # Xml project files
 [*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]

@@ -19,10 +19,8 @@ using System.ComponentModel;
 using System.Windows.Markup;    // for XmlLanguage
 using MS.Internal.FontFace;
 using System.Security;
-using System.Security.Permissions;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -286,7 +284,7 @@ namespace System.Windows.Media
         private void VerifyChangeable()
         {
             if (_readOnly)
-                throw new NotSupportedException(SR.Get(SRID.General_ObjectIsReadOnly));
+                throw new NotSupportedException(SR.General_ObjectIsReadOnly);
         }
 
         string IDeviceFont.Name
@@ -300,10 +298,6 @@ namespace System.Windows.Media
         }
 
 
-        /// <SecurityNote>
-        /// Critical - As it uses raw pointers.
-        /// </SecurityNote>
-        [SecurityCritical]
         unsafe void IDeviceFont.GetAdvanceWidths(
             char*   characterString,
             int     characterLength,

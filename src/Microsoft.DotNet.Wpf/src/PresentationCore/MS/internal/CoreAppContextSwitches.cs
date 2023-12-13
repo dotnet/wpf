@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 
 using System;
@@ -337,25 +337,64 @@ namespace MS.Internal
 
         #endregion
 
-        #region EnableLegacyDangerousClipboardDeserializationMode
+        #region DisableDirtyRectangles
 
-        internal const string EnableLegacyDangerousClipboardDeserializationModeSwitchName = "Switch.System.Windows.EnableLegacyDangerousClipboardDeserializationMode";
-        private static int _enableLegacyDangerousClipboardDeserializationMode;
-        public static bool EnableLegacyDangerousClipboardDeserializationMode
+        internal const string DisableDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.DisableDirtyRectangles";
+        private static int _DisableDirtyRectangles;
+        public static bool DisableDirtyRectangles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 /// <summary>
-                /// Malicious managed objects could be placed in the clipboard lying about its format, 
-                /// to fix this OleConverter now restricts object deserialization in some cases.
-                /// When this switch is enabled behavior falls back to deserializing without restriction.
+                /// Due to a limitation of D3D's implementation of
+                /// dirty-rectangle processing, images occasionally render incorrectly.
+                /// An app can disable dirty-rectangle processing by setting this switch to true.
+                /// This will cause more work for the GPU, but the results will be better.
                 /// </summary>
-                return LocalAppContext.GetCachedSwitchValue(EnableLegacyDangerousClipboardDeserializationModeSwitchName, ref _enableLegacyDangerousClipboardDeserializationMode);
+                if (EnableDynamicDirtyRectangles)
+                {
+                    bool disableDirtyRectangles;
+                    AppContext.TryGetSwitch(DisableDirtyRectanglesSwitchName, out disableDirtyRectangles);
+                    return disableDirtyRectangles;
+                }
+
+                return LocalAppContext.GetCachedSwitchValue(DisableDirtyRectanglesSwitchName, ref _DisableDirtyRectangles);
+            }
+        }
+
+        internal const string EnableDynamicDirtyRectanglesSwitchName = "Switch.System.Windows.Media.MediaContext.EnableDynamicDirtyRectangles";
+        private static int _EnableDynamicDirtyRectangles;
+        public static bool EnableDynamicDirtyRectangles
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                /// <summary>
+                /// Setting this switch to true causes the DisableDirtyRectangles
+                /// switch to be re-evaluated before each render.
+                /// </summary>
+                return LocalAppContext.GetCachedSwitchValue(EnableDynamicDirtyRectanglesSwitchName, ref _EnableDynamicDirtyRectangles);
             }
         }
 
         #endregion
+
+        #region EnableHardwareAccelerationInRdp
+
+        internal const string EnableHardwareAccelerationInRdpSwitchName = "Switch.System.Windows.Media.EnableHardwareAccelerationInRdp";
+        private static int _enableHardwareAccelerationInRdp;
+        public static bool EnableHardwareAccelerationInRdp
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(EnableHardwareAccelerationInRdpSwitchName, ref _enableHardwareAccelerationInRdp);
+            }
+        }
+
+        #endregion
+
     }
 #pragma warning restore 436
 }

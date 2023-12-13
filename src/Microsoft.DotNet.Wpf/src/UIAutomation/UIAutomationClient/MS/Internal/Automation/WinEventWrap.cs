@@ -102,12 +102,6 @@ namespace MS.Internal.Automation
         }
 
         // install WinEvent hook and start getting the callback.
-        /// <SecurityNote>
-        /// Critical - as this calls SetWinEventHook which has a SUC on it and also calls
-        ///            the setter for _hHook.
-        /// Safe - as this does not allow an arbitrary method to be set up as a hook and
-        ///        also doesn't allow an aribtrary value to be set on _hHook.Value.
-        /// </SecurityNote>
         internal void StartListening()
         {
             _fBusy = true;

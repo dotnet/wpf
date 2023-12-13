@@ -22,25 +22,12 @@ using MS.Internal.Security.RightsManagement;
 using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
 using MS.Internal;
 using MS.Internal.WindowsBase;
-using System.Security.Permissions;
 
 namespace System.Security.RightsManagement 
 {
     /// <summary>
     /// This class represent a client session, which used in activation, binding  and other function calls.
     /// </summary>
-    /// <SecurityNote>
-    ///     Critical:    This class expose access to methods that eventually do one or more of the the following
-    ///             1. call into unmanaged code 
-    ///             2. affects state/data that will eventually cross over unmanaged code boundary
-    ///             3. Return some RM related information which is considered private 
-    ///
-    ///     TreatAsSafe: This attrbiute automatically applied to all public entry points. All the public entry points have
-    ///     Demands for RightsManagementPermission at entry to counter the possible attacks that do 
-    ///     not lead to the unamanged code directly(which is protected by another Demand there) but rather leave 
-    ///     some status/data behind which eventually might cross the unamanaged boundary. 
-    /// </SecurityNote>
-    [SecurityCritical(SecurityCriticalScope.Everything)]    
     public class SecureEnvironment : IDisposable
     {
         /// <summary>
@@ -53,7 +40,6 @@ namespace System.Security.RightsManagement
         public static SecureEnvironment Create(string applicationManifest,
                                                ContentUser user)
         {
-            SecurityHelper.DemandRightsManagementPermission();
     
             return CriticalCreate(applicationManifest, user);
         }
@@ -76,7 +62,6 @@ namespace System.Security.RightsManagement
                                                                                         AuthenticationType authentication, 
                                                                                         UserActivationMode userActivationMode)
         {
-            SecurityHelper.DemandRightsManagementPermission();
 
             return CriticalCreate(applicationManifest, 
                                             authentication,
@@ -89,18 +74,14 @@ namespace System.Security.RightsManagement
         /// </summary>
         public static bool IsUserActivated(ContentUser user)
         {
-            SecurityHelper.DemandRightsManagementPermission();
-        
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identified users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.Get(SRID.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed));
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
             
             using (ClientSession userClientSession = new ClientSession(user))
@@ -115,18 +96,14 @@ namespace System.Security.RightsManagement
         /// </summary>
         public static void RemoveActivatedUser(ContentUser user)
         {
-            SecurityHelper.DemandRightsManagementPermission();
-            
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
+
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.Get(SRID.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed));
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
 
             // Generic client session to enumerate user certificates 
@@ -159,7 +136,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         static public  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
         {
-            SecurityHelper.DemandRightsManagementPermission();
             
             //build user with the default authentication type and a default name 
             // neither name not authentication type is important in this case 
@@ -208,7 +184,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public void Dispose()
         {              
-            SecurityHelper.DemandRightsManagementPermission();        
             
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -221,7 +196,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 CheckDisposed();
                 return _user;
@@ -235,7 +209,6 @@ namespace System.Security.RightsManagement
         {
             get
             {
-                SecurityHelper.DemandRightsManagementPermission();
             
                 CheckDisposed();
                 return _applicationManifest;
@@ -277,15 +250,8 @@ namespace System.Security.RightsManagement
         /// </summary>
         private static SecureEnvironment CriticalCreate(string applicationManifest, ContentUser user)
         {
-            if (applicationManifest == null)
-            {
-                throw new ArgumentNullException("applicationManifest");
-            }
-
-            if (user == null)
-            {
-                throw new  ArgumentNullException("user");
-            }
+            ArgumentNullException.ThrowIfNull(applicationManifest);
+            ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
@@ -319,10 +285,7 @@ namespace System.Security.RightsManagement
             AuthenticationType authentication,
             UserActivationMode userActivationMode)
         {
-            if (applicationManifest == null)
-            {
-                throw new ArgumentNullException("applicationManifest");
-            }
+            ArgumentNullException.ThrowIfNull(applicationManifest);
 
             if ((authentication != AuthenticationType.Windows) && 
                  (authentication != AuthenticationType.Passport))

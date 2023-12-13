@@ -18,7 +18,6 @@ namespace MS.Internal.Documents
     using System.Runtime.InteropServices;
     using System.Security;
     using MS.Internal.Documents;
-    using System.Security.Permissions;
     using MS.Win32;
     using System.Windows.Interop;
 
@@ -34,11 +33,6 @@ namespace MS.Internal.Documents
         #region Class Internal Methods
 
         // Registers the event handler for DocumentGrid.
-        /// <SecurityNote>
-        ///     Critical: This code hooks up a call back to context menu opening event which has the ability to spoof copy 
-        ///     TreatAsSafe: This code does not expose the callback and does not drive any input into it
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static void RegisterClassHandler()
         {
             EventManager.RegisterClassHandler(typeof(DocumentGrid), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpening));
@@ -59,10 +53,6 @@ namespace MS.Internal.Documents
         /// Callback for FrameworkElement.ContextMenuOpeningEvent, when fired from DocumentViewer.  This is
         /// here to catch the event when it is fired by the keyboard rather than the mouse.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - forwards user-initiated information to OnContextMenuOpening, which is also SecurityCritical
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnDocumentViewerContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             if (e.CursorLeft == KeyboardInvokedSentinel)
@@ -78,11 +68,6 @@ namespace MS.Internal.Documents
         // Callback for FrameworkElement.ContextMenuOpeningEvent.
         // If the control is using the default ContextMenu, we initialize it
         // here.
-        /// <SecurityNote>
-        /// Critical - accepts a parameter which may be used to set the userInitiated 
-        ///             bit on a command, which is used for security purposes later. 
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             DocumentGrid documentGrid = sender as DocumentGrid;
@@ -161,23 +146,8 @@ namespace MS.Internal.Documents
         {
             // Initialize the context menu.
             // Creates a new instance.
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated 
-            ///             bit on a command, which is used for security purposes later. 
-            ///             Although there is a demand here to prevent non userinitiated
-            ///             code paths to be blocked this function is not TreatAsSafe because
-            ///             we want to track any new callers to this call
-            /// </SecurityNote>
-            [SecurityCritical]
             internal void AddMenuItems(DocumentGrid dg, bool userInitiated)
             {
-                // create a special menu item for paste which only works for user initiated copy
-                // within the confines of partial trust this cannot be done programmatically
-                if (userInitiated == false)
-                {
-                    SecurityHelper.DemandAllClipboardPermission();
-                }
-
                 this.Name = "ViewerContextMenu";
 
                 SetMenuProperties(new EditorMenuItem(), dg, ApplicationCommands.Copy); // Copy will be marked as user initiated
@@ -191,29 +161,29 @@ namespace MS.Internal.Documents
                     new MenuItem(),
                     dg,
                     NavigationCommands.PreviousPage,
-                    SR.Get(SRID.DocumentApplicationContextMenuPreviousPageHeader),
-                    SR.Get(SRID.DocumentApplicationContextMenuPreviousPageInputGesture));
+                    SR.DocumentApplicationContextMenuPreviousPageHeader,
+                    SR.DocumentApplicationContextMenuPreviousPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.NextPage,
-                    SR.Get(SRID.DocumentApplicationContextMenuNextPageHeader),
-                    SR.Get(SRID.DocumentApplicationContextMenuNextPageInputGesture));
+                    SR.DocumentApplicationContextMenuNextPageHeader,
+                    SR.DocumentApplicationContextMenuNextPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.FirstPage,
                     null, //menu header
-                    SR.Get(SRID.DocumentApplicationContextMenuFirstPageInputGesture));
+                    SR.DocumentApplicationContextMenuFirstPageInputGesture);
 
                 SetMenuProperties(
                     new MenuItem(),
                     dg,
                     NavigationCommands.LastPage,
                     null, //menu header
-                    SR.Get(SRID.DocumentApplicationContextMenuLastPageInputGesture));
+                    SR.DocumentApplicationContextMenuLastPageInputGesture);
 
                 AddSeparator();
 
@@ -261,11 +231,6 @@ namespace MS.Internal.Documents
         {
             internal EditorMenuItem() : base() { }
 
-            /// <SecurityNote>
-            /// Critical - accepts a parameter which may be used to set the userInitiated 
-            ///             bit on a command, which is used for security purposes later. 
-            /// </SecurityNote>
-            [SecurityCritical]
             internal override void OnClickCore(bool userInitiated)
             {
                 OnClickImpl(userInitiated);

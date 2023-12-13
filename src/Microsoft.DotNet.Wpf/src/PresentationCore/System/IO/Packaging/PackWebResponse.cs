@@ -23,7 +23,6 @@ using System.Globalization;             // for CultureInfo
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using MS.Internal.IO.Packaging;              // for ResponseStream
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Navigation;
 using MS.Utility;
 using MS.Internal;
@@ -46,12 +45,6 @@ namespace System.IO.Packaging
         //
         //------------------------------------------------------
 
-        /// <SecurityNote>
-        /// Critical as the BooleanSwitch has a LinkDemand
-        /// TreatAsSafe as this is just a diag switch, Debug-only and internal-only, no input data
-        ///   is passed to BooleanSwitch, and the overall operation is considered safe.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static PackWebResponse()
         {
 #if DEBUG
@@ -67,21 +60,13 @@ namespace System.IO.Packaging
         /// <param name="innerUri">inner uri</param>
         /// <param name="partName">part name in the container - null if uri is to entire container only</param>
         /// <remarks>intended for use only by PackWebRequest</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) assigns Critical member _webRequest and calls BeginGetResponse() on it.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal PackWebResponse(Uri uri, Uri innerUri, Uri partName, WebRequest innerRequest)
         {
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
-            if (innerUri == null)
-                throw new ArgumentNullException("innerUri");
+            ArgumentNullException.ThrowIfNull(innerUri);
 
-            if (innerRequest == null)
-                throw new ArgumentNullException("innerRequest");
+            ArgumentNullException.ThrowIfNull(innerRequest);
 
             _lockObject = new Object();     // required for synchronization
 
@@ -90,7 +75,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse - Creating response ");
 #endif
             _innerUri = innerUri;
@@ -113,7 +98,7 @@ namespace System.IO.Packaging
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse() starting timeout timer " + innerRequest.Timeout + " ms");
 #endif
                 _timeoutTimer = new Timer(new TimerCallback(TimeoutCallback), null, innerRequest.Timeout, Timeout.Infinite);
@@ -123,7 +108,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse() BeginGetResponse()");
 #endif
 
@@ -145,23 +130,19 @@ namespace System.IO.Packaging
         {
             _lockObject = new Object();     // required for synchronization
 
-            if (uri == null)
-                throw new ArgumentNullException("uri");
+            ArgumentNullException.ThrowIfNull(uri);
 
-            if (innerUri == null)
-                throw new ArgumentNullException("innerUri");
+            ArgumentNullException.ThrowIfNull(innerUri);
 
-            if (partName == null)
-                throw new ArgumentNullException("partName");
+            ArgumentNullException.ThrowIfNull(partName);
 
-            if (cacheEntry == null)
-                throw new ArgumentNullException("cacheEntry");
+            ArgumentNullException.ThrowIfNull(cacheEntry);
 
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse - Creating response from Package Cache");
 #endif
             _uri = uri;
@@ -186,13 +167,6 @@ namespace System.IO.Packaging
         /// Retrieves a stream for reading bytes from the requested resource
         /// </summary>
         /// <returns>stream</returns>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Passes Critical member _webRequest to NetStream constructor
-        /// Safe
-        ///  1) Providing _webRequest to NetStream is safe because NetStream treats _webRequest as Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public override Stream GetResponseStream()
         {
             CheckDisposed();
@@ -207,7 +181,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse - GetResponseStream()");
 #endif
             // create and return only a single stream for multiple calls
@@ -229,7 +203,7 @@ namespace System.IO.Packaging
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                Environment.CurrentManagedThreadId + ": " +
                                 "PackWebResponse - GetResponseStream() - stream length not available - disabling progressive download");
                 }
 #endif
@@ -266,10 +240,11 @@ namespace System.IO.Packaging
                     // open container on netStream
                     Package c = Package.Open(_responseStream);
                     if (!c.PartExists(_partName))
-                        throw new WebException(SR.Get(SRID.WebResponsePartNotFound));
+                        throw new WebException(SR.WebResponsePartNotFound);
 
                     PackagePart p = c.GetPart(_partName);
-                    Stream s = p.GetStream(FileMode.Open, FileAccess.Read);
+
+                    Stream s = p.GetSeekableStream(FileMode.Open, FileAccess.Read);
 
                     _mimeType = new MS.Internal.ContentType(p.ContentType);      // save this for use in ContentType property - may still be null
                     _fullStreamLength = s.Length;   // just this stream
@@ -473,13 +448,6 @@ namespace System.IO.Packaging
         /// AbortResponse - called only from Close()
         /// </summary>
         /// <remarks>assumes caller has locked the syncObject and that we are not disposed</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) accesses Critical _webRequest
-        /// Safe
-        ///  1) Not modifying WebRequest.Proxy member which is what is really Critical
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void AbortResponse()
         {
 // Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
@@ -527,7 +495,7 @@ namespace System.IO.Packaging
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                Environment.CurrentManagedThreadId + ": " +
                                 "PackWebResponse.Close()");
 #endif
                     // prevent async callback from accessing these resources while we are disposing them
@@ -547,7 +515,7 @@ namespace System.IO.Packaging
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                            System.Diagnostics.Trace.TraceInformation(
                                    DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                   System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                   Environment.CurrentManagedThreadId + ": " +
                                    "PackWebResponse.Close() - close stream");
 #endif
                                 _responseStream.Close();
@@ -560,7 +528,7 @@ namespace System.IO.Packaging
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
                                     DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                    Environment.CurrentManagedThreadId + ": " +
                                     "PackWebResponse.Close() - close response");
 #endif
                                 // always call Dispose to satisfy FxCop
@@ -586,7 +554,7 @@ namespace System.IO.Packaging
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
                                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                        Environment.CurrentManagedThreadId + ": " +
                                         "PackWebResponse.Close() - exiting");
 #endif
                         }
@@ -645,7 +613,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "CachedResponse - Getting response stream");
 #endif
                     // only one copy
@@ -662,7 +630,7 @@ namespace System.IO.Packaging
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
                                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                        Environment.CurrentManagedThreadId + ": " +
                                         "CachedResponse - Getting part " + _parent._partName);
 #endif
                             // open the requested stream
@@ -671,10 +639,10 @@ namespace System.IO.Packaging
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
                                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                        Environment.CurrentManagedThreadId + ": " +
                                         "CachedResponse - Getting part stream ");
 #endif
-                            Stream s = p.GetStream(FileMode.Open, FileAccess.Read);
+                            Stream s = p.GetSeekableStream(FileMode.Open, FileAccess.Read);
 
                             // Unless package is thread-safe, wrap the returned stream so that
                             // package access is serialized
@@ -689,7 +657,7 @@ namespace System.IO.Packaging
                             if (PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation(
                                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                        Environment.CurrentManagedThreadId + ": " +
                                         "CachedResponse - Getting part contenttype");
 #endif
                             _parent._mimeType = new MS.Internal.ContentType(p.ContentType);
@@ -702,7 +670,7 @@ namespace System.IO.Packaging
                                 if (PackWebRequestFactory._traceSwitch.Enabled)
                                     System.Diagnostics.Trace.TraceInformation(
                                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                            System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                            Environment.CurrentManagedThreadId + ": " +
                                             "CachedResponse - Length is available from stream");
 #endif
                                 _parent._fullStreamLength = s.Length;
@@ -713,7 +681,7 @@ namespace System.IO.Packaging
                                 if (PackWebRequestFactory._traceSwitch.Enabled)
                                     System.Diagnostics.Trace.TraceInformation(
                                             DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                            System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                            Environment.CurrentManagedThreadId + ": " +
                                             "CachedResponse - Length is not available from stream" + _parent._partName);
                             }
 #endif
@@ -799,11 +767,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="ar">async result</param>
         /// <remarks>static method not necessary</remarks>
-        /// <SecurityNote>
-        /// Critical
-        ///  1) calls EndGetResponse() on Critical member _webRequest
-        /// </SecurityNote>
-        [SecurityCritical]
         private void ResponseCallback(IAsyncResult ar)
         {
             lock (_lockObject)   // prevent race condition accessing _timeoutTimer, _disposed, _responseAvailable
@@ -821,7 +784,7 @@ namespace System.IO.Packaging
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
                                     DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                    Environment.CurrentManagedThreadId + ": " +
                                     "PackWebResponse.ResponseCallBack()");
 #endif
                         // Dispose/Close waits on _responseAvailable so we know that these are available
@@ -843,7 +806,7 @@ namespace System.IO.Packaging
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceError(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                Environment.CurrentManagedThreadId + ": " +
                                 "PackWebResponse.ResponseCallBack() exception");
 #endif
                     // inform other thread of error condition
@@ -858,7 +821,7 @@ namespace System.IO.Packaging
                     if (PackWebRequestFactory._traceSwitch.Enabled)
                         System.Diagnostics.Trace.TraceInformation(
                                 DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                Environment.CurrentManagedThreadId + ": " +
                                 "PackWebResponse.ResponseCallBack() - signal response available");
     #endif
 
@@ -887,7 +850,7 @@ namespace System.IO.Packaging
             if (PackWebRequestFactory._traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
                         DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                        Environment.CurrentManagedThreadId + ": " +
                         "PackWebResponse.WaitForResponse()");
 #endif
             // wait for the response callback
@@ -898,7 +861,7 @@ namespace System.IO.Packaging
             if (_responseError)
             {
                 if (_responseException == null)
-                    throw new WebException(SR.Get(SRID.WebResponseFailure));
+                    throw new WebException(SR.WebResponseFailure);
                 else
                     throw _responseException;   // throw literal exception if there is one
             }
@@ -929,14 +892,14 @@ namespace System.IO.Packaging
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceError(
                                     DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                    Environment.CurrentManagedThreadId + ": " +
                                     "PackWebResponse.TimerCallback() timeout - throwing exception");
 #endif
                         // caller is still blocked so need to throw to indicate timeout
                         // create exception to be thrown on client thread, then unblock the caller
                         // thread will be discovered and re-thrown in WaitForResponse() method
                         _responseError = true;
-                        _responseException = new WebException(SR.Get(SRID.WebRequestTimeout, null), WebExceptionStatus.Timeout);
+                        _responseException = new WebException(SR.Format(SR.WebRequestTimeout, null), WebExceptionStatus.Timeout);
                     }
 #if DEBUG
                     else
@@ -944,7 +907,7 @@ namespace System.IO.Packaging
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
                                     DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                    System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
+                                    Environment.CurrentManagedThreadId + ": " +
                                     "PackWebResponse.TimerCallback() no timeout - ignoring callback");
                     }
 #endif
@@ -978,11 +941,6 @@ namespace System.IO.Packaging
         private Uri             _partName;              // path to stream
         private bool            _disposed;              // closed?
 
-        /// <SecurityNote>
-        /// Critical
-        ///  1) Proxy member is Critical because we use it under Unrestricted assert
-        /// </SecurityNote>
-        [SecurityCritical]                              // only WebRequest.Proxy member is Critical
         private WebRequest      _webRequest;            // the real web request
 
         private WebResponse     _fullResponse;          // the real web response

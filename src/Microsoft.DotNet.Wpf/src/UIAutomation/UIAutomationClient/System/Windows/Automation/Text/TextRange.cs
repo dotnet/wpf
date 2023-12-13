@@ -15,7 +15,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
@@ -178,19 +177,19 @@ namespace System.Windows.Automation.Text
         /// <returns>A subrange with the specified attribute, or null if no such subrange exists.</returns>
         public TextPatternRange FindAttribute(AutomationTextAttribute attribute, object value, bool backward)
         {
-            Misc.ValidateArgumentNonNull(attribute, "attribute");
-            Misc.ValidateArgumentNonNull(value, "value"); // no text attributes can have null as a valid value
+            ArgumentNullException.ThrowIfNull(attribute);
+            ArgumentNullException.ThrowIfNull(value); // no text attributes can have null as a valid value
 
             // Check that attribute value is of expected type...
             AutomationAttributeInfo ai;
             if(!Schema.GetAttributeInfo(attribute, out ai))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedAttribute));
+                throw new ArgumentException(SR.UnsupportedAttribute);
             }
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Get(SRID.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,
@@ -220,9 +219,9 @@ namespace System.Windows.Automation.Text
             // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
             // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-            Misc.ValidateArgumentNonNull(text, "text");
+            ArgumentNullException.ThrowIfNull(text);
 #pragma warning suppress 6507
-            Misc.ValidateArgument(text.Length != 0, SRID.TextMustNotBeNullOrEmpty);
+            Misc.ValidateArgument(text.Length != 0, nameof(SR.TextMustNotBeNullOrEmpty));
 
             SafeTextRangeHandle hResultTextRange = UiaCoreApi.TextRange_FindText(_hTextRange, text, backward, ignoreCase);
             return Wrap(hResultTextRange, _pattern);
@@ -236,12 +235,12 @@ namespace System.Windows.Automation.Text
         /// If the attribute's value varies over the range then the value is TextPattern.MixedAttributeValue</returns>
         public object GetAttributeValue(AutomationTextAttribute attribute)
         {
-            Misc.ValidateArgumentNonNull(attribute, "attribute");
+            ArgumentNullException.ThrowIfNull(attribute);
 
             AutomationAttributeInfo ai;
             if(!Schema.GetAttributeInfo(attribute, out ai))
             {
-                throw new ArgumentException(SR.Get(SRID.UnsupportedAttribute));
+                throw new ArgumentException(SR.UnsupportedAttribute);
             }
 
             object obj = UiaCoreApi.TextRange_GetAttributeValue(_hTextRange, attribute.Id);

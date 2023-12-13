@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 // Description:  
 //      InternalDispatchObject facilitates implementing a COM dispinterface using a non-public 
 //      corresponding managed interface definition (of type ComInterfaceType.InterfaceIsIDispatch). 
@@ -49,10 +49,6 @@ using System.Globalization;
 
 namespace MS.Internal.Interop
 {
-/// <SecurityNote>
-/// InternalDispatchObject-derived objects are potentially unsafe to expose to untrusted code.
-/// The IDispInterface implementation members should be treated as publicly accessible.
-/// </SecurityNote>
 internal abstract class InternalDispatchObject<IDispInterface> : IReflect
 {
     /// <summary>
@@ -60,10 +56,6 @@ internal abstract class InternalDispatchObject<IDispInterface> : IReflect
     /// </summary>
     private Dictionary<int, MethodInfo> _dispId2MethodMap;
 
-    /// <SecurityNote>
-    /// Critical - to help ensure whoever creates an instance of this class doesn't expose it.
-    /// </SecurityNote>
-    [SecurityCritical]
     protected InternalDispatchObject()
     {
         // Populate _dispId2MethodMap with the MethodInfos for the interface, keyed by DISPID.
@@ -122,11 +114,6 @@ internal abstract class InternalDispatchObject<IDispInterface> : IReflect
         throw new NotImplementedException();
     }
 
-    /// <SecurityNote>
-    /// Critical: Performs Reflection against a non-public type.
-    /// NOT PublicOK! This method is intrinsically unsafe. Because it can be called via the public IReflect,
-    ///     instances of this class should not be exposed to untrusted code. (Full explanation above.)
-    /// </SecurityNote>
     object IReflect.InvokeMember(string name, BindingFlags invokeAttr, Binder binder, object target, object[] args, ParameterModifier[] modifiers, System.Globalization.CultureInfo culture, string[] namedParameters)
     {
         // We never expect to get a real method name here--see the explanation in GetMethods().

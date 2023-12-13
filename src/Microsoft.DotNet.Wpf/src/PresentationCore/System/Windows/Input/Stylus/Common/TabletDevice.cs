@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using System.Windows.Media;
@@ -35,10 +34,7 @@ namespace System.Windows.Input
 
         internal TabletDevice(TabletDeviceBase impl)
         {
-            if (impl == null)
-            {
-                throw new ArgumentNullException(nameof(impl));
-            }
+            ArgumentNullException.ThrowIfNull(impl);
 
             TabletDeviceImpl = impl;
         }
@@ -65,16 +61,8 @@ namespace System.Windows.Input
         /// <remarks>
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical - accesses critical data (InputSource on StylusDevice)
-        /// PublicOK - there is a demand.
-        ///               this is safe as: 
-        ///                     there is a demand for the UI permissions in the code
-        /// </SecurityNote>
         public override PresentationSource ActiveSource
         {
-            [SecurityCritical]
-            [UIPermission(SecurityAction.Demand, Window = UIPermissionWindow.AllWindows)]
             get
             {
                 VerifyAccess();

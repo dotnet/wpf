@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -82,10 +81,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal byte[] CompressPacketData(int[] input, byte compression)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
 
             List<byte> compressedData = new List<byte>();
             //leave room at the beginning of 
@@ -163,18 +159,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal uint DecompressPacketData(byte[] input, int[] outputBuffer)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
             if (input.Length < 2)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Input buffer passed was shorter than expected"));
             }
-            if (outputBuffer == null)
-            {
-                throw new ArgumentNullException("outputBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(outputBuffer);
             if (outputBuffer.Length == 0)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("output buffer length was zero"));
@@ -329,10 +319,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         internal byte[] DecompressPropertyData(byte[] input)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ArgumentNullException.ThrowIfNull(input);
             if (input.Length < 2)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("input.Length must be at least 2"));
@@ -463,12 +450,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Static members defined in Penimc code
         /// </summary>
-        internal static readonly byte NoCompression = 0x00;
-        internal static readonly byte DefaultCompression = 0xC0;
-        internal static readonly byte IndexedHuffman = 0x80;
-        internal static readonly byte LempelZiv = 0x80;
-        internal static readonly byte DefaultBAACount = 8;
-        internal static readonly byte MaxBAACount = 10;
+        internal const byte NoCompression = 0x00;
+        internal const byte DefaultCompression = 0xC0;
+        internal const byte IndexedHuffman = 0x80;
+        internal const byte LempelZiv = 0x80;
+        internal const byte DefaultBAACount = 8;
+        internal const byte MaxBAACount = 10;
 
 
         private static readonly double[] DefaultFirstSquareRoot = { 1, 1, 1, 4, 9, 16, 36, 49};

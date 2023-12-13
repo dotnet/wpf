@@ -1,0 +1,64 @@
+﻿<!-- [[Generic]] -->
+
+    <!--=================================================================
+            KeyTipControl
+        =================================================================-->
+
+<Style x:Key="{x:Type controls:KeyTipControl}" TargetType="{x:Type controls:KeyTipControl}">
+    <Setter Property="Background" Value="{StaticResource RibbonBackgroundBrushKey}"/>
+    <Setter Property="BorderBrush" Value="{StaticResource RibbonBorderBrushKey}" />
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Padding" Value="3,0"/>
+    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}" />
+    <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
+    <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+    <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
+    <Setter Property="MinWidth" Value="20"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type controls:KeyTipControl}">
+                <Border Name="OuterBorder" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="1">
+                    <Border Name="InnerBorder"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{StaticResource RibbonToolTipBackgroundBrushKey}">
+                        <TextBlock Text="{TemplateBinding Text}" HorizontalAlignment="Center"/>
+                    </Border>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="TextElement.Foreground" Value="{StaticResource RibbonDisabledForegroundBrushKey}" TargetName="OuterBorder"/>
+                    </Trigger>
+#ifdef Net45
+                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                    <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" TargetName="OuterBorder"/>
+                        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" TargetName="OuterBorder"/>
+                        <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.InfoTextBrushKey}}" TargetName="OuterBorder"/>
+                        <Setter Property="Background" Value="Transparent" TargetName="InnerBorder"/>
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+#ifdef Net45
+                            <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True"/>
+#else
+                            <Condition Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
+#endif
+                            <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" TargetName="OuterBorder"/>
+                    </MultiDataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+
+

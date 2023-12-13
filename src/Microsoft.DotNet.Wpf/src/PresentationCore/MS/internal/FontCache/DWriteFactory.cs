@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//
+//
 //
 // Description: The DWriteFactory class represents a shared DWrite factory 
 //              object.
@@ -11,7 +11,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
@@ -22,12 +21,6 @@ namespace MS.Internal.FontCache
 {
     internal static class DWriteFactory
     {
-        /// <SecurityNote>
-        /// Critical - Access security critical Factory.Create method.
-        /// Safe     - The parameters passed to Factory.Create are internal 
-        ///            types created by this method.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         static DWriteFactory()
         {
             _factory = Text.TextInterface.Factory.Create(
@@ -35,28 +28,20 @@ namespace MS.Internal.FontCache
                 new FontSourceCollectionFactory(),
                 new FontSourceFactory());
 
-            Text.TextInterface.LocalizedErrorMsgs.EnumeratorNotStarted = SR.Get(SRID.Enumerator_NotStarted);
-            Text.TextInterface.LocalizedErrorMsgs.EnumeratorReachedEnd = SR.Get(SRID.Enumerator_ReachedEnd);
+            Text.TextInterface.LocalizedErrorMsgs.EnumeratorNotStarted = SR.Enumerator_NotStarted;
+            Text.TextInterface.LocalizedErrorMsgs.EnumeratorReachedEnd = SR.Enumerator_ReachedEnd;
         }
 
-        /// <SecurityNote>
-        /// Critical - Exposes security critical _factory member.
-        /// </SecurityNote>
         internal static Text.TextInterface.Factory Instance
         {
-            [SecurityCritical]
             get
             {
                 return _factory;
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - provides access to the system fonts collection which exposes the windows fonts.
-        /// </SecurityNote>
         internal static Text.TextInterface.FontCollection SystemFontCollection
         {
-            [SecurityCritical]
             get
             {
                 if (_systemFontCollection == null)
@@ -73,12 +58,6 @@ namespace MS.Internal.FontCache
             }
         }
 
-        /// <SecurityNote>
-        /// Critical - Access security critical WindowsFontsUriObject object.
-        ///          - The caller of this method should own the verification of 
-        ///            the access permissions to the given Uri.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Text.TextInterface.FontCollection GetFontCollectionFromFileOrFolder(Uri fontCollectionUri, bool isFolder)
         {
             if (Text.TextInterface.Factory.IsLocalUri(fontCollectionUri))
@@ -95,7 +74,7 @@ namespace MS.Internal.FontCache
                 }
 
                 // If the directory specifed is the windows fonts directory then no need to reenumerate system fonts.
-                if (String.Compare(((localPath.Length > 0 && localPath[localPath.Length - 1] != Path.DirectorySeparatorChar) ? localPath + Path.DirectorySeparatorChar : localPath), Util.WindowsFontsUriObject.LocalPath, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals((localPath.Length > 0 && localPath[localPath.Length - 1] != Path.DirectorySeparatorChar) ? localPath + Path.DirectorySeparatorChar : localPath, Util.WindowsFontsUriObject.LocalPath, StringComparison.OrdinalIgnoreCase))
                 {
                     return SystemFontCollection;
                 }
@@ -118,32 +97,16 @@ namespace MS.Internal.FontCache
             return DWriteFactory.Instance.GetFontCollection(fontCollectionUri);            
         }
 
-        /// <SecurityNote>
-        /// Critical - calls security critical GetFontCollectionFromFileOrFolder.
-        ///          - The caller of this method should own the verification of 
-        ///            the access permissions to the given Uri.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Text.TextInterface.FontCollection GetFontCollectionFromFolder(Uri fontCollectionUri)
         {
             return GetFontCollectionFromFileOrFolder(fontCollectionUri, true);
         }
 
-        /// <SecurityNote>
-        /// Critical - calls security critical GetFontCollectionFromFileOrFolder.
-        ///          - The caller of this method should own the verification of 
-        ///            the access permissions to the given Uri.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static Text.TextInterface.FontCollection GetFontCollectionFromFile(Uri fontCollectionUri)
         {
             return GetFontCollectionFromFileOrFolder(fontCollectionUri, false);
         }
 
-        /// <SecurityNote>
-        /// Critical - This is the DWrite factory that can be used to get everything about fonts.
-        /// </SecurityNote>
-        [SecurityCritical]
         private static Text.TextInterface.Factory _factory;
         private static Text.TextInterface.FontCollection _systemFontCollection = null;
         private static object _systemFontCollectionLock = new object();

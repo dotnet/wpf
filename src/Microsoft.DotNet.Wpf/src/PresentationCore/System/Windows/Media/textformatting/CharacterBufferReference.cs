@@ -16,9 +16,7 @@ using System;
 using System.Diagnostics;
 using MS.Internal;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -69,11 +67,6 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="unsafeCharacterString">pointer to character string</param>
         /// <param name="characterLength">character length of unsafe string</param>
-        /// <SecurityNote>
-        /// Critical: This manipulates unsafe pointers and calls into the critical UnsafeStringCharacterBuffer ctor.
-        /// PublicOK: The caller needs unmanaged code permission in order to pass unsafe pointers to us.
-        /// </SecurityNote>
-        [SecurityCritical]
         [CLSCompliant(false)]
         public unsafe CharacterBufferReference(
             char*       unsafeCharacterString,
@@ -91,18 +84,12 @@ namespace System.Windows.Media.TextFormatting
             int                 offsetToFirstChar
             )
         {
-            if (offsetToFirstChar < 0)
-            {
-                throw new ArgumentOutOfRangeException("offsetToFirstChar", SR.Get(SRID.ParameterCannotBeNegative));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offsetToFirstChar);
 
             // maximum offset is one less than CharacterBuffer.Count, except that zero is always a valid offset
             // even in the case of an empty or null character buffer
             int maxOffset = (charBuffer == null) ? 0 : Math.Max(0, charBuffer.Count - 1);
-            if (offsetToFirstChar > maxOffset)
-            {
-                throw new ArgumentOutOfRangeException("offsetToFirstChar", SR.Get(SRID.ParameterCannotBeGreaterThan, maxOffset));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offsetToFirstChar, maxOffset);
 
             _charBuffer = charBuffer;
             _offsetToFirstChar = offsetToFirstChar;

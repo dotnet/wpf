@@ -4,7 +4,6 @@
 
 using System;
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal;
 using MS.Win32;
 using System.Windows;
@@ -27,7 +26,7 @@ namespace System.Windows.Input
         ///     The mode in which the input is being provided.
         /// </param>
         /// <param name="timestamp">
-        ///     The time when the input occured.
+        ///     The time when the input occurred.
         /// </param>
         /// <param name="action">
         ///     The action being reported.
@@ -35,11 +34,6 @@ namespace System.Windows.Input
         /// <param name="targets">
         ///     The targets being reported.
         /// </param>
-        /// <SecurityNote>
-        ///     Critical:This handles critical data in the form of PresentationSource
-        ///     TreatAsSafe:The data has demands on the property when someone tries to access it.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public RawUIStateInputReport(
             PresentationSource inputSource,
             InputMode mode,

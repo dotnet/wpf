@@ -29,7 +29,7 @@ namespace MS.Internal
 
         protected override string GetLocalizedString(string value)
         {
-            string s = SR.Get(value);
+            string s = SR.GetResourceString(value);
             if (s != null)
             {
                 return s;

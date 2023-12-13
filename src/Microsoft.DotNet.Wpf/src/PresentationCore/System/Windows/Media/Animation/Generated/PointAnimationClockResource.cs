@@ -111,12 +111,6 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <param name="handle"> The DUCE.ResourceHandle for this resource on this channel. </param>
         /// <param name="channel"> The channel on which to update the render-thread resource. </param>
-        /// <SecurityNote>
-        ///     Critical: This code calls into an unsafe code block
-        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-        ///     Channels can handle bad pointers and will not affect other appdomains or processes
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         protected override void UpdateResource(
             DUCE.ResourceHandle handle,
             DUCE.Channel channel)

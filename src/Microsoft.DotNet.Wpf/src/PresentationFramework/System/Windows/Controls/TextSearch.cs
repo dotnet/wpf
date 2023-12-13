@@ -46,10 +46,7 @@ namespace System.Windows.Controls
         /// <param name="itemsControl"></param>
         private TextSearch(ItemsControl itemsControl)
         {
-            if (itemsControl == null)
-            {
-                throw new ArgumentNullException("itemsControl");
-            }
+            ArgumentNullException.ThrowIfNull(itemsControl);
 
             _attachedTo = itemsControl;
 
@@ -91,10 +88,7 @@ namespace System.Windows.Controls
         /// <param name="path"></param>
         public static void SetTextPath(DependencyObject element, string path)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextPathProperty, path);
         }
@@ -107,10 +101,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetTextPath(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (string)element.GetValue(TextPathProperty);
         }
@@ -129,10 +120,7 @@ namespace System.Windows.Controls
         /// <param name="text"></param>
         public static void SetText(DependencyObject element, string text)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextProperty, text);
         }
@@ -145,10 +133,7 @@ namespace System.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
         public static string GetText(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (string)element.GetValue(TextProperty);
         }
@@ -335,15 +320,17 @@ namespace System.Windows.Controls
                 // mostly compression or expansion is not involved. So start with length of newText
                 int i = newText.Length;
                 int j = i + 1;
-                
+
+                CompareInfo compareInfo = (cultureInfo ?? CultureInfo.CurrentCulture).CompareInfo;
+                CompareOptions options = ignoreCase ? CompareOptions.IgnoreCase : CompareOptions.None;
                 do
                 {
-                    string temp;
+                    ReadOnlySpan<char> temp;
 
                     if (i >= 1)
                     {
-                        temp = matchedText.Substring(0, i);
-                        if (String.Compare(newText, temp, ignoreCase, cultureInfo) == 0)
+                        temp = matchedText.AsSpan(0, i);
+                        if (compareInfo.Compare(newText, temp, options) == 0)
                         {
                             matchedPrefixLength = i;
                             textExcludingPrefixLength = matchedText.Length - i;
@@ -352,8 +339,8 @@ namespace System.Windows.Controls
                     }
                     if (j <= matchedText.Length)
                     {
-                        temp = matchedText.Substring(0, j);
-                        if (String.Compare(newText, temp, ignoreCase, cultureInfo) == 0)
+                        temp = matchedText.AsSpan(0, j);
+                        if (compareInfo.Compare(newText, temp, options) == 0)
                         {
                             matchedPrefixLength = j;
                             textExcludingPrefixLength = matchedText.Length - j;
@@ -768,10 +755,7 @@ namespace System.Windows.Controls
 
         internal static string GetPrimaryText(FrameworkElement element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             string text = (string)element.GetValue(TextProperty);
 

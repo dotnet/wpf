@@ -47,7 +47,7 @@ namespace System.Windows.Media
             byte [] devmode = jtc.ConvertJobTicketToDevMode(jobTicket.XmlStream, BaseDevModeType.UserDefault);
 
             _pDevmode = Marshal.AllocHGlobal(devmode.Length);
-            
+
             Marshal.Copy(devmode, 0, _pDevmode, devmode.Length);
 
             jtc.Dispose();
@@ -121,13 +121,13 @@ namespace System.Windows.Media
                 return _pDevmode;
             }
         }
-        
+
         IntPtr          _pDevmode;
     }
 
     #endregion
 
-    // Override GetResourceSystem such that resource can be embedded in PrintSystemEDocmentJob
+    // Override GetResourceSystem such that resource can be embedded in PrintSystemEDocumentJob
     internal class ContainerFixedXamlDesigner : FixedXamlDesigner
     {
         private PrintSystemEDocumentJob _eDocJob;
@@ -183,9 +183,9 @@ namespace System.Windows.Media
         {
             if( queue == null )
             {
-               throw new ArgumentNullException("queue"); 
+               throw new ArgumentNullException("queue");
             }
-            
+
             // enter batching for printing
             MediaContext.CurrentMediaContext.ChannelSyncMode = true;
 
@@ -209,7 +209,7 @@ namespace System.Windows.Media
                 this.StartDoc(jobName);
 
                 int pageNo = 0;
-                
+
                 Visual visual = getPage(this);
 
                 while (!_cancel && (visual != null))
@@ -218,9 +218,9 @@ namespace System.Windows.Media
 
                     this.Render(visual, uri);
                     this.EndPage();
-                    
+
                     pageNo++;
-                    
+
                     visual = getPage(this);
                 }
 
@@ -230,7 +230,7 @@ namespace System.Windows.Media
             {
                 // restore normal batching
                 MediaContext.CurrentMediaContext.ChannelSyncMode = false;
-                
+
                 _stream = null;
                 _writer = null;
 
@@ -255,7 +255,7 @@ namespace System.Windows.Media
                 _cancel = value;
             }
         }
-        
+
         /// <summary>
         /// JobTicket property
         /// </summary>
@@ -331,9 +331,9 @@ namespace System.Windows.Media
         /// delegate GetPageCallback
         /// </summary>
         public delegate Visual GetPageCallback(PrintContext printContext);
-        
+
         #region Private methods
-        
+
         /// <summary>
         /// StartDoc
         /// </summary>
@@ -349,7 +349,7 @@ namespace System.Windows.Media
                     PrintSystemJobInfo jobinfo = _queue.AddJob(typeof(PrintSystemEDocumentJob));
 
                     _eDocJob = jobinfo.JobData as PrintSystemEDocumentJob;
-                                            
+
                     _eDocJob.Name = jobName;
                     _eDocJob.Commit();
 
@@ -492,7 +492,7 @@ namespace System.Windows.Media
         {
             if (val <= 0)
             {
-                throw new ArgumentOutOfRangeException(name, SR.Get(SRID.ParameterMustBeGreaterThanZero));
+                throw new ArgumentOutOfRangeException(name, SR.ParameterMustBeGreaterThanZero);
             }
         }
 
@@ -521,7 +521,7 @@ namespace System.Windows.Media
 
             AssertPositive(sizeX, "PageCanvasSizeCap.CanvasSizeX");
             AssertPositive(sizeY, "PageCanvasSizeCap.CanvasSizeY");
-            
+
             if (IsPremium())
             {
                 VisualTreeFlattener.SaveAsXml(visual, _writer, new ContainerFixedXamlDesigner(_eDocJob, uri));
@@ -536,7 +536,7 @@ namespace System.Windows.Media
         private bool         _cancel;
         private PrintQueue   _queue;
         private JobTicket    _jobTicket;
-        
+
         // Member variables used for premium print job
         private Stream                   _stream;
         private System.Xml.XmlTextWriter _writer;

@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 
 using MS.Internal.PresentationCore;
 using MS.Win32;
@@ -42,34 +41,12 @@ namespace MS.Internal.AppModel
     [FriendAccessAllowed]
     internal class CustomCredentialPolicy : ICredentialPolicy
     {
-        /// <SecurityNote>
-        /// Critical - Accesses critical members
-        /// PublicOK - Nothing is exposed, and nothing depends on user input. We're just creating objects for use later.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static CustomCredentialPolicy()
         {
             _lockObj = new object();
             _initialized = false;
         }
 
-        /// <SecurityNote>
-        /// Critical - Access critical member _environmentPermissionSet
-        /// PublicOK - Nothing is exposed, and nothing depends on user input. We're just creating objects for use later.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        public CustomCredentialPolicy()
-        {
-            _environmentPermissionSet = new PermissionSet(null);
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERDOMAIN"));
-            _environmentPermissionSet.AddPermission(new EnvironmentPermission(EnvironmentPermissionAccess.Read, "USERNAME"));
-        }
-
-        /// <SecurityNote>
-        /// Critical    - Asserts for permission to set the credential policy.
-        /// TreatAsSafe - Nothing is exposed. This method is safe to call at any time.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static internal void EnsureCustomCredentialPolicy()
         {
             if (!_initialized)
@@ -78,23 +55,18 @@ namespace MS.Internal.AppModel
                 {
                     if (!_initialized)
                     {
-                        new SecurityPermission(SecurityPermissionFlag.ControlPolicy).Assert();  // BlessedAssert: 
-                        try
+                        // We should allow an application to set its own credential policy, if it has permssion to.
+                        // We do not want to overwrite the application's setting. 
+                        // Check whether it is already set before setting it. 
+                        // The default of this property is null. It demands ControlPolicy permission to be set.
+
+#pragma warning disable SYSLIB0009
+                        if (AuthenticationManager.CredentialPolicy == null)
                         {
-                            // We should allow an application to set its own credential policy, if it has permssion to.
-                            // We do not want to overwrite the application's setting. 
-                            // Check whether it is already set before setting it. 
-                            // The default of this property is null. It demands ControlPolicy permission to be set.
-                            if (AuthenticationManager.CredentialPolicy == null)
-                            {
-                                AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
-                            }
-                            _initialized = true;
+                            AuthenticationManager.CredentialPolicy = new CustomCredentialPolicy();
                         }
-                        finally
-                        {
-                            CodeAccessPermission.RevertAssert();
-                        }
+#pragma warning restore SYSLIB0009
+                        _initialized = true;
                     }
                 }
             }
@@ -102,27 +74,18 @@ namespace MS.Internal.AppModel
 
         #region ICredentialPolicy Members
 
-        /// <SecurityNote>
-        /// Critical    - Calls SecurityCritical method IsDefaultCredentials.
-        /// TreatAsSafe - This is called by the framework to determine if credentials should be sent
-        ///               in response to the server sending a 401. The challengUri and request are
-        ///               coming from the app; the credential and authenticationModule are coming
-        ///               from the framework. The only ouput is whether or not credentials should
-        ///               be sent, which is not critical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public bool ShouldSendCredential(Uri challengeUri, WebRequest request, NetworkCredential credential, IAuthenticationModule authenticationModule)
         {
             switch (MapUrlToZone(challengeUri))
             {
                 // Always send credentials (including default credentials) to these zones
-                case SecurityZone.Intranet:
-                case SecurityZone.Trusted:
-                case SecurityZone.MyComputer:
+                case NativeMethods.URLZONE_INTRANET:
+                case NativeMethods.URLZONE_TRUSTED:
+                case NativeMethods.URLZONE_LOCAL_MACHINE:
                     return true;
                 // Don't send default credentials to any of these zones
-                case SecurityZone.Internet:
-                case SecurityZone.Untrusted:
+                case NativeMethods.URLZONE_INTERNET:
+                case NativeMethods.URLZONE_UNTRUSTED:
                 default:
                     return !IsDefaultCredentials(credential);
             }
@@ -130,61 +93,20 @@ namespace MS.Internal.AppModel
 
         #endregion
 
-        /// <SecurityNote>
-        /// Critical - Asserts for permission to examine the user name and password. They are 
-        ///            only checked to see if they are non-null, and not exposed, but the 
-        ///            fact that default credential are being used and are available might
-        ///            something we would not want revealed, which is why it is not TAS.
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool IsDefaultCredentials(NetworkCredential credential)
         {
-            _environmentPermissionSet.Assert();  // BlessedAssert: 
-            try
-            {
-                return credential == CredentialCache.DefaultCredentials;
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
-            }
+            return credential == CredentialCache.DefaultCredentials;
         }
 
-        /// <SecurityNote>
-        /// Critical    - Call critical method MapUrlToZone.
-        /// TreatAsSafe - Returns the zone of the uri, which is not critical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
-        internal static SecurityZone MapUrlToZone(Uri uri)
+        internal static int MapUrlToZone(Uri uri)
         {
             EnsureSecurityManager();
 
             int targetZone;
             _securityManager.MapUrlToZone(BindUriHelper.UriToString(uri), out targetZone, 0);
-
-            // The enum is directly mappable, but taking no chances...
-            switch (targetZone)
-            {
-                case NativeMethods.URLZONE_LOCAL_MACHINE:
-                    return SecurityZone.MyComputer;
-                case NativeMethods.URLZONE_INTERNET:
-                    return SecurityZone.Internet;
-                case NativeMethods.URLZONE_INTRANET:
-                    return SecurityZone.Intranet;
-                case NativeMethods.URLZONE_TRUSTED:
-                    return SecurityZone.Trusted;
-                case NativeMethods.URLZONE_UNTRUSTED:
-                    return SecurityZone.Untrusted;
-            }
-
-            return SecurityZone.NoZone;
+            return targetZone;
         }
 
-        /// <SecurityNote>
-        /// Critical    - Accesses critical member _securityManager and calls the SUC'd MapUrlToZone.
-        /// TreatAsSafe - Doesn't expose anything, doesn't take user input, safe to call at any time.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void EnsureSecurityManager()
         {
             // IMPORTANT: See comments in header r.e. IInternetSecurityManager
@@ -206,19 +128,10 @@ namespace MS.Internal.AppModel
         {
         }
 
-        ///<SecurityNote> 
-        /// Critical - requires an elevation to create. 
-        ///</SecurityNote> 
-        [SecurityCritical]
         private static UnsafeNativeMethods.IInternetSecurityManager _securityManager;
 
-        [SecurityCritical]
         private static object _lockObj;
 
-        [SecurityCritical]
         private static bool _initialized;
-
-        [SecurityCritical]
-        PermissionSet _environmentPermissionSet;
     }
 }

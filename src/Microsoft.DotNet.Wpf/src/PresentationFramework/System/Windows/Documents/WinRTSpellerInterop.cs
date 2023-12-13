@@ -23,7 +23,6 @@ namespace System.Windows.Documents
     using System.Runtime.InteropServices;
     using System.Runtime.CompilerServices;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Windows;
@@ -44,24 +43,8 @@ namespace System.Windows.Documents
         /// <exception cref="NotSupportedException">
         /// The OS platform is supportable, but spellchecking services are currently unavailable
         /// </exception>
-        /// <SecurityNote>
-        /// Critical:
-        ///     Asserts permissions
-        /// Safe:
-        ///     Takes no input, does not give the caller access to any
-        ///     Critical resources directly.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal WinRTSpellerInterop()
         {
-            // When the CLR consumes an unmanaged COM object, it invokes
-            // System.ComponentModel.LicenseManager.LicenseInteropHelper.GetCurrentContextInfo
-            // which in turn calls Assembly.GetName. Assembly.GetName requires FileIOPermission for
-            // access to the path of the assembly.
-            FileIOPermission fiop = new FileIOPermission(PermissionState.None);
-            fiop.AllLocalFiles = FileIOPermissionAccess.PathDiscovery;
-            fiop.Assert();
-
             try
             {
                 SpellCheckerFactory.Create(shouldSuppressCOMExceptions: false);
@@ -72,10 +55,6 @@ namespace System.Windows.Documents
             {
                 Dispose();
                 throw new PlatformNotSupportedException(string.Empty, ex);
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert();
             }
 
             _spellCheckers = new Dictionary<CultureInfo, Tuple<WordsSegmenter, SpellChecker>>();
@@ -137,7 +116,7 @@ namespace System.Windows.Documents
         {
             if (_isDisposed)
             {
-                throw new ObjectDisposedException(SR.Get(SRID.TextEditorSpellerInteropHasBeenDisposed));
+                throw new ObjectDisposedException(SR.TextEditorSpellerInteropHasBeenDisposed);
             }
 
             try
@@ -227,13 +206,6 @@ namespace System.Windows.Documents
         /// Unloads a given custom dictionary
         /// </summary>
         /// <param name="token"></param>
-        /// <SecurityNote>
-        /// Critical -
-        ///     Demands FileIOPermission
-        /// Safe -
-        ///     Does not expose any Critical resources to the caller.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override void UnloadDictionary(object token)
         {
             if (_isDisposed) return;
@@ -242,19 +214,12 @@ namespace System.Windows.Documents
             string ietfLanguageTag = data.Item1;
             string filePath = data.Item2;
 
-            try
+            using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
             {
-                new FileIOPermission(FileIOPermissionAccess.AllAccess, filePath).Demand();
-                using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
-                {
-                    SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
-                }
+                SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
+            }
 
-                FileHelper.DeleteTemporaryFile(filePath);
-            }
-            catch(SecurityException)
-            {
-            }
+            FileHelper.DeleteTemporaryFile(filePath);
         }
 
         /// <summary>
@@ -274,15 +239,6 @@ namespace System.Windows.Documents
         /// <param name="trustedFolder"></param>
         /// <param name="dictionaryLoadedCallback"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        /// Critical -
-        ///     Asserts FileIOPermission
-        /// Safe -
-        ///     Does not expose any Critical resources to the caller.
-        ///     The return value from LoadDictionaryImpl is Safe (it is
-        ///     a managed Tuple[T1, T2]
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal override object LoadDictionary(Uri item, string trustedFolder)
         {
             if (_isDisposed)
@@ -290,16 +246,7 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            // Assert neccessary security to load trusted files.
-            new FileIOPermission(FileIOPermissionAccess.Read, trustedFolder).Assert();
-            try
-            {
-                return LoadDictionaryImpl(item.LocalPath);
-            }
-            finally
-            {
-                FileIOPermission.RevertAssert();
-            }
+            return LoadDictionaryImpl(item.LocalPath);
         }
 
         /// <summary>
@@ -480,13 +427,6 @@ namespace System.Windows.Documents
         ///     At the end of this method, we guarantee that <paramref name="lexiconFilePath"/>
         ///     can be reclaimed (i.e., potentially deleted) by the caller.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical -
-        ///     Demands and Asserts permissions
-        /// Safe -
-        ///     Does not expose any Critical resources to the caller.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private Tuple<string, string> LoadDictionaryImpl(string lexiconFilePath)
         {
             if (_isDisposed)
@@ -494,18 +434,9 @@ namespace System.Windows.Documents
                 return new Tuple<string, string>(null, null);
             }
 
-            try
-            {
-                new FileIOPermission(FileIOPermissionAccess.Read, lexiconFilePath).Demand();
-            }
-            catch (SecurityException se)
-            {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), se);
-            }
-
             if (!File.Exists(lexiconFilePath))
             {
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath));
+                throw new ArgumentException(SR.Format(SR.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath));
             }
 
             bool fileCopied = false;
@@ -553,7 +484,7 @@ namespace System.Windows.Documents
 
                 return new Tuple<string, string>(ietfLanguageTag, lexiconPrivateCopyPath);
             }
-            catch (Exception e) when ((e is SecurityException) || (e is ArgumentException) || !fileCopied)
+            catch (Exception e) when ((e is ArgumentException) || !fileCopied)
             {
                 // IUserDictionariesRegistrar.RegisterUserDictionary can
                 // throw ArgumentException on failure. Cleanup the temp file if
@@ -563,7 +494,7 @@ namespace System.Windows.Documents
                     FileHelper.DeleteTemporaryFile(lexiconPrivateCopyPath);
                 }
 
-                throw new ArgumentException(SR.Get(SRID.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
+                throw new ArgumentException(SR.Format(SR.CustomDictionaryFailedToLoadDictionaryUri, lexiconFilePath), e);
             }
         }
 
@@ -581,14 +512,7 @@ namespace System.Windows.Documents
         ///     respectively, we ensure that ClearDictionaries is always called in the UI
         ///     thread by invoking it with help from the cached <see cref="Dispatcher"/>
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical -
-        ///     Demands FileIOPermission
-        /// Safe -
-        ///     Does not expose any Critical resources to the caller
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        [SecuritySafeCritical]
         private void ClearDictionaries(bool disposing = false)
         {
             if (_isDisposed)
@@ -605,8 +529,6 @@ namespace System.Windows.Documents
                     foreach (string filePath in items.Value)
                         try
                         {
-                            new FileIOPermission(FileIOPermissionAccess.AllAccess, filePath).Demand();
-
                             using (new SpellerCOMActionTraceLogger(this, SpellerCOMActionTraceLogger.Actions.UnregisterUserDictionary))
                             {
                                 SpellCheckerFactory.UnregisterUserDictionary(filePath, ietfLanguageTag);
@@ -691,15 +613,8 @@ namespace System.Windows.Documents
         /// <see cref = "// See http://www.unicode.org/faq/utf_bom.html" />
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        /// <SecurityNote>
-        /// Critical -
-        ///     Demands FileIOPermission permissions
-        /// </SecurityNote>
-        [SecurityCritical]
         private static void CopyToUnicodeFile(string sourcePath, FileStream targetStream)
         {
-            new FileIOPermission(FileIOPermissionAccess.Read, sourcePath).Demand();
-
             bool utf16LEEncoding = false;
             using (FileStream sourceStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read))
             {
@@ -737,14 +652,6 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <SecurityNote>
-        /// Critical:
-        ///     Calls ClearDictionaries which is Critical
-        /// Safe:
-        ///     Called by transparent methods, and does not expose any
-        ///     critical resources (COM objects) to callers.
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void ProcessUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var disposing = false;
@@ -945,14 +852,25 @@ namespace System.Windows.Documents
 
         #endregion Private Fields
 
-        #region Private Types
+        #region Internal Types
 
-        private struct TextRange: SpellerInteropBase.ITextRange
+        internal readonly struct TextRange: SpellerInteropBase.ITextRange
         {
             public TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
             {
                 _length = (int)textSegment.Length;
                 _start = (int)textSegment.StartPosition;
+            }
+
+            public TextRange(int start, int length)
+            {
+                _start = start;
+                _length = length;
+            }
+
+            public TextRange(ITextRange textRange) : 
+                this(textRange.Start, textRange.Length)
+            {
             }
 
             public static explicit operator TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
@@ -979,16 +897,18 @@ namespace System.Windows.Documents
         }
 
         [DebuggerDisplay("SubSegments.Count = {SubSegments.Count} TextRange = {TextRange.Start},{TextRange.Length}")]
-        private class SpellerSegment: ISpellerSegment
+        internal class SpellerSegment: ISpellerSegment
         {
             #region Constructor
 
-            public SpellerSegment(WordSegment segment, SpellChecker spellChecker, WinRTSpellerInterop owner)
+            public SpellerSegment(string sourceString, ITextRange textRange, SpellChecker spellChecker, WinRTSpellerInterop owner)
             {
-                _segment = segment;
                 _spellChecker = spellChecker;
                 _suggestions = null;
-                _owner = owner;
+                Owner = owner;
+
+                SourceString = sourceString;
+                TextRange = textRange;
             }
 
             static SpellerSegment()
@@ -1013,9 +933,9 @@ namespace System.Windows.Documents
 
                 List<SpellChecker.SpellingError> spellingErrors = null;
 
-                using (new SpellerCOMActionTraceLogger(_owner, SpellerCOMActionTraceLogger.Actions.ComprehensiveCheck))
+                using (new SpellerCOMActionTraceLogger(Owner, SpellerCOMActionTraceLogger.Actions.ComprehensiveCheck))
                 {
-                    spellingErrors = _spellChecker.ComprehensiveCheck(_segment.Text);
+                    spellingErrors = Text != null ? _spellChecker.ComprehensiveCheck(Text) : null;
                 }
 
                 if (spellingErrors == null)
@@ -1041,6 +961,16 @@ namespace System.Windows.Documents
             #region SpellerInteropBase.ISpellerSegment
 
             /// <summary>
+            /// <inheritdoc/>
+            /// </summary>
+            public string SourceString { get; }
+
+            /// <summary>
+            /// <inheritdoc/>
+            /// </summary>
+            public string Text => SourceString?.Substring(TextRange.Start, TextRange.Length);
+
+            /// <summary>
             /// Returns a read-only list of sub-segments of this segment
             /// WinRT word-segmenter doesn't really support sub-segments,
             ///   so we always return an empty list
@@ -1053,13 +983,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            public ITextRange TextRange
-            {
-                get
-                {
-                    return new TextRange(_segment.SourceTextSegment);
-                }
-            }
+            public ITextRange TextRange { get; }
 
             public IReadOnlyList<string> Suggestions
             {
@@ -1087,6 +1011,13 @@ namespace System.Windows.Documents
                 }
             }
 
+            /// <remarks>
+            /// This field is used only to support TraceLogging telemetry
+            /// logged using <see cref="SpellerCOMActionTraceLogger"/>. It
+            /// has no other functional use.
+            /// </remarks>
+            internal WinRTSpellerInterop Owner { get; }
+
             public void EnumSubSegments(EnumTextSegmentsCallback segmentCallback, object data)
             {
                 bool result = true;
@@ -1101,7 +1032,6 @@ namespace System.Windows.Documents
 
             #region Private Fields
 
-            private WordSegment _segment;
 
             SpellChecker _spellChecker;
             private IReadOnlyList<string> _suggestions;
@@ -1109,15 +1039,12 @@ namespace System.Windows.Documents
 
             private static readonly IReadOnlyList<ISpellerSegment> _empty;
 
-            /// <remarks>
-            /// This field is used only to support TraceLogging telemetry
-            /// logged using <see cref="SpellerCOMActionTraceLogger"/>. It
-            /// has no other functional use.
-            /// </remarks>
-            private WinRTSpellerInterop _owner;
-
             #endregion Private Fields
         }
+
+        #endregion Internal Types
+
+        #region Private Types
 
         [DebuggerDisplay("Sentence = {_sentence}")]
         private class SpellerSentence: ISpellerSentence
@@ -1139,14 +1066,7 @@ namespace System.Windows.Documents
                 {
                     if (_segments == null)
                     {
-                        List<SpellerSegment> segments = new List<SpellerSegment>();
-
-                        foreach (var wordSegment in _wordBreaker.GetTokens(_sentence))
-                        {
-                            segments.Add(new SpellerSegment(wordSegment, _spellChecker, _owner));
-                        }
-
-                        _segments = segments.AsReadOnly();
+                        _segments = _wordBreaker.ComprehensiveGetTokens(_sentence, _spellChecker, _owner);
                     }
 
                     return _segments;

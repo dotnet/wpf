@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using System.Security.Permissions;
 using System.Windows.Media.Effects;
 
 using System.Collections;
@@ -19,7 +18,6 @@ using MS.Internal.Media;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {
@@ -38,10 +36,7 @@ namespace System.Windows.Media
     {
         private static void CheckVisualReferenceArgument(DependencyObject reference)
         {
-            if (reference == null)
-            {
-                throw new ArgumentNullException("reference");
-            }
+            ArgumentNullException.ThrowIfNull(reference);
         }
 
         /// <summary>
@@ -237,14 +232,8 @@ namespace System.Windows.Media
         // of the given type
         internal static bool IsAncestorOf(DependencyObject ancestor, DependencyObject descendant, Type stopType)
         {
-            if (ancestor == null)
-            {
-                throw new ArgumentNullException("ancestor");
-            }
-            if (descendant == null)
-            {
-                throw new ArgumentNullException("descendant");
-            }
+            ArgumentNullException.ThrowIfNull(ancestor);
+            ArgumentNullException.ThrowIfNull(descendant);
 
             VisualTreeUtils.EnsureVisual(ancestor);
             VisualTreeUtils.EnsureVisual(descendant);
@@ -255,14 +244,11 @@ namespace System.Windows.Media
 
             while ((current != null) && (current != ancestor) && !stopType.IsInstanceOfType(current))
             {
-                Visual visual;
-                Visual3D visual3D;
-
-                if ((visual = current as Visual) != null)
+                if (current is Visual visual)
                 {
                     current = visual.InternalVisualParent;
                 }
-                else if ((visual3D = current as Visual3D) != null)
+                else if (current is Visual3D visual3D)
                 {
                     current = visual3D.InternalVisualParent;
                 }
@@ -510,7 +496,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="visual"></param>
         /// <param name="dc"></param>
-        //CASRemoval:[StrongNameIdentityPermission(SecurityAction.LinkDemand, PublicKey=Microsoft.Internal.BuildInfo.WCP_PUBLIC_KEY_STRING)]
         static public void Walk(Visual visual, DrawingContext dc)
         {
             VisualTreeFlattener flattener = new VisualTreeFlattener(dc);

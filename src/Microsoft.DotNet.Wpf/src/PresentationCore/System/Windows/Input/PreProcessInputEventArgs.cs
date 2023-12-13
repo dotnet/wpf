@@ -4,7 +4,6 @@
 
 
 using System;
-using System.Security.Permissions;
 using System.Security; 
 
 namespace System.Windows.Input 
@@ -26,10 +25,6 @@ namespace System.Windows.Input
         // Only we can make these.  Note that we cache and reuse instances.
         internal PreProcessInputEventArgs() {}
 
-        ///<SecurityNote> 
-        ///     Critical calls ProcessInputEventArgs.Reset ( critical as it handles InputManager)
-        ///</SecurityNote> 
-        [SecurityCritical]
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _canceled = false;

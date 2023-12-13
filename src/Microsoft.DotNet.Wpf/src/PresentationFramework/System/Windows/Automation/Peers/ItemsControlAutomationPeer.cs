@@ -169,7 +169,7 @@ namespace System.Windows.Automation.Peers
                         // Ignore such children. 
                         if (dataItem == DependencyProperty.UnsetValue)
                         {
-                            dataItem = null;
+                            continue;
                         }
                     }
                     else
@@ -199,7 +199,7 @@ namespace System.Windows.Automation.Peers
 
                     // protection from indistinguishable items - for example, 2 strings with same value
                     // this scenario does not work in ItemsControl however is not checked for.
-                    if (_dataChildren[dataItem] == null)
+                    if (peer != null && _dataChildren[dataItem] == null)
                     {
                         children.Add(peer);
                         _dataChildren[dataItem] = peer;
@@ -254,7 +254,7 @@ namespace System.Windows.Automation.Peers
             {
                 if (!IsPropertySupportedByControlForFindItem(propertyId))
                 {
-                    throw new ArgumentException(SR.Get(SRID.PropertyNotSupported));
+                    throw new ArgumentException(SR.PropertyNotSupported);
                 }
             }
 
@@ -281,7 +281,7 @@ namespace System.Windows.Automation.Peers
                 {
                     if (startAfterItem.Item == null)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.InavalidStartItem));
+                        throw new InvalidOperationException(SR.InavalidStartItem);
                     }
 
                     // To find the index of the item in items collection which occurs
@@ -380,14 +380,8 @@ namespace System.Windows.Automation.Peers
         /// It returns the ItemAutomationPeer if it exist corresponding to the item otherwise it creates
         /// one and does add the Handle and parent info by calling TrySetParentInfo.
         /// </summary>
-        /// <SecurityNote>
-        /// Security Critical - Calls a Security Critical operation TrySetParentInfo which adds parent peer and provides
-        ///                     security critical Hwnd value for this peer created asynchronously.
-        /// SecurityTreatAsSafe - It's being called from this object which is real parent for the item peer.
-        /// </SecurityNote>
         /// <param name="item"></param>
         /// <returns></returns>
-        [SecurityCritical, SecurityTreatAsSafe]
         protected virtual internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];

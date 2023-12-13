@@ -259,10 +259,7 @@ namespace System.Windows.Documents
         /// </remarks>
         internal TextPointer(TextPointer textPointer)
         {
-            if (textPointer == null)
-            {
-                throw new ArgumentNullException("textPointer");
-            }
+            ArgumentNullException.ThrowIfNull(textPointer);
 
             InitializeOffset(textPointer, 0, textPointer.GetGravityInternal());
         }
@@ -270,10 +267,7 @@ namespace System.Windows.Documents
         // Creates a new TextPointer instance.
         internal TextPointer(TextPointer position, int offset)
         {
-            if (position == null)
-            {
-                throw new ArgumentNullException("position");
-            }
+            ArgumentNullException.ThrowIfNull(position);
 
             InitializeOffset(position, offset, position.GetGravityInternal());
         }
@@ -298,7 +292,7 @@ namespace System.Windows.Documents
 
             if (offset < 1 || offset > textContainer.InternalSymbolCount - 1)
             {
-                throw new ArgumentException(SR.Get(SRID.BadDistance));
+                throw new ArgumentException(SR.BadDistance);
             }
 
             textContainer.GetNodeAndEdgeAtOffset(offset, out node, out edge);
@@ -440,10 +434,7 @@ namespace System.Windows.Documents
         /// </example>
         public bool IsInSameDocument(TextPointer textPosition)
         {
-            if (textPosition == null)
-            {
-                throw new ArgumentNullException("textPosition");
-            }
+            ArgumentNullException.ThrowIfNull(textPosition);
 
             _tree.EmptyDeadPositionList();
 
@@ -1283,10 +1274,7 @@ namespace System.Windows.Documents
         /// </remarks>
         public void InsertTextInRun(string textData)
         {
-            if (textData == null)
-            {
-                throw new ArgumentNullException("textData");
-            }
+            ArgumentNullException.ThrowIfNull(textData);
 
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
@@ -1406,7 +1394,7 @@ namespace System.Windows.Documents
 
             if (textElement.Parent != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextPointer_CannotInsertTextElementBecauseItBelongsToAnotherTree));
+                throw new InvalidOperationException(SR.TextPointer_CannotInsertTextElementBecauseItBelongsToAnotherTree);
             }
             textElement.RepositionWithContent(this);
         }
@@ -1437,7 +1425,7 @@ namespace System.Windows.Documents
                 Type containerType = this.TextContainer.Parent.GetType();
                 if (!TextSchema.IsValidChildOfContainer(containerType, typeof(Paragraph)))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.TextSchema_IllegalElement, "Paragraph", containerType));
+                    throw new InvalidOperationException(SR.Format(SR.TextSchema_IllegalElement, "Paragraph", containerType));
                 }
             }
 
@@ -1446,7 +1434,7 @@ namespace System.Windows.Documents
             if (ancestor != null)
             {
                 // Cannot split a hyperlink element!
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_CannotSplitElement, ancestor.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.TextSchema_CannotSplitElement, ancestor.GetType().Name));
             }
 
             TextPointer position;
@@ -1764,25 +1752,22 @@ namespace System.Windows.Documents
             int skipCount;
             int finalCount;
 
-            if (textBuffer == null)
-            {
-                throw new ArgumentNullException("textBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(textBuffer);
             if (startIndex < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.NegativeValue, "startIndex"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, "startIndex"));
             }
             if (startIndex > textBuffer.Length)
             {
-                throw new ArgumentException(SR.Get(SRID.StartIndexExceedsBufferSize, startIndex, textBuffer.Length));
+                throw new ArgumentException(SR.Format(SR.StartIndexExceedsBufferSize, startIndex, textBuffer.Length));
             }
             if (count < 0)
             {
-                throw new ArgumentException(SR.Get(SRID.NegativeValue, "count"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
             }
             if (count > textBuffer.Length - startIndex)
             {
-                throw new ArgumentException(SR.Get(SRID.MaxLengthExceedsBufferSize, count, textBuffer.Length, startIndex));
+                throw new ArgumentException(SR.Format(SR.MaxLengthExceedsBufferSize, count, textBuffer.Length, startIndex));
             }
             Invariant.Assert(textNode != null, "textNode is expected to be non-null");
 
@@ -2156,10 +2141,7 @@ namespace System.Windows.Documents
         /// </exception>
         internal void InsertUIElement(UIElement uiElement)
         {
-            if (uiElement == null)
-            {
-                throw new ArgumentNullException("uiElement");
-            }
+            ArgumentNullException.ThrowIfNull(uiElement);
 
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
@@ -2168,7 +2150,7 @@ namespace System.Windows.Documents
 
             if (!((TextElement)this.Parent).IsEmpty) // the parent may be InlineUIContainer or BlockUIContainer
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextSchema_UIElementNotAllowedInThisPosition));
+                throw new InvalidOperationException(SR.TextSchema_UIElementNotAllowedInThisPosition);
             }
 
             _tree.BeginChange();
@@ -2520,10 +2502,7 @@ namespace System.Windows.Documents
             DependencyObject parent;
             object val;
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             _tree.EmptyDeadPositionList();
 
@@ -2547,10 +2526,7 @@ namespace System.Windows.Documents
         {
             TextElement element;
 
-            if (formattingProperty == null)
-            {
-                throw new ArgumentNullException("formattingProperty");
-            }
+            ArgumentNullException.ThrowIfNull(formattingProperty);
 
             _tree.EmptyDeadPositionList();
 
@@ -2559,7 +2535,7 @@ namespace System.Windows.Documents
             element = this.Parent as TextElement;
             if (element == null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.NoScopingElement, "This TextPointer"));
+                throw new InvalidOperationException(SR.Format(SR.NoScopingElement, "This TextPointer"));
             }
 
             return element.ReadLocalValue(formattingProperty);
@@ -2667,7 +2643,7 @@ namespace System.Windows.Documents
                     return;
                 }
 
-                throw new InvalidOperationException(SR.Get(SRID.NoScopingElement, "This TextNavigator"));
+                throw new InvalidOperationException(SR.Format(SR.NoScopingElement, "This TextNavigator"));
             }
 
             MoveToNode(_tree, elementNode, edge);
@@ -3575,7 +3551,7 @@ namespace System.Windows.Documents
                 if (position.Parent == null)
                 {
                     // We should try to fix up the schema by adding elements instead of throwing here.
-                    throw new InvalidOperationException(SR.Get(SRID.TextSchema_CannotInsertContentInThisPosition));
+                    throw new InvalidOperationException(SR.TextSchema_CannotInsertContentInThisPosition);
                 }
 
                 // Ensure text content.
@@ -3932,7 +3908,7 @@ namespace System.Windows.Documents
                 offset = position.GetSymbolOffset() + distance;
                 if (offset < 1 || offset > position.TextContainer.InternalSymbolCount - 1)
                 {
-                    throw new ArgumentException(SR.Get(SRID.BadDistance));
+                    throw new ArgumentException(SR.BadDistance);
                 }
 
                 position.TextContainer.GetNodeAndEdgeAtOffset(offset, out node, out edge);
@@ -3978,7 +3954,7 @@ namespace System.Windows.Documents
         {
             if (this.IsFrozen)
             {
-                throw new InvalidOperationException(SR.Get(SRID.TextPositionIsFrozen));
+                throw new InvalidOperationException(SR.TextPositionIsFrozen);
             }
         }
 

@@ -6,7 +6,6 @@
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -39,15 +38,6 @@ namespace System.Windows.Input.StylusPointer
 
         #region Manipulation
 
-        /// <SecurityNote>
-        ///     Critical:  Calls base OnManipulationEnded
-        ///     Demand:   Technically the demand is not needed because the
-        ///               user can already do this indirectly by canceling the
-        ///               manipulation. But the decision is to limit the scope
-        ///               of this raw method to full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
-        [UIPermissionAttribute(SecurityAction.LinkDemand, Unrestricted = true)]
         protected override void OnManipulationEnded(bool cancel)
         {
             base.OnManipulationEnded(cancel);
@@ -84,11 +74,6 @@ namespace System.Windows.Input.StylusPointer
         /// <param name="stylusPoint">The point for which the width or height is being calculated</param>
         /// <param name="isWidth">True if this should calculate width, false for height</param>
         /// <returns>The width or height of the stylus poing</returns>
-        /// <SecurityNote>
-        ///     Critical:  Accesses ActiveSource
-        ///     Safe:      The height or width of the bounding rect is not critical
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         protected override double GetStylusPointWidthOrHeight(StylusPoint stylusPoint, bool isWidth)
         {
             double pixelsPerInch = DpiUtil.DefaultPixelsPerInch;

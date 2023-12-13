@@ -1,0 +1,32 @@
+;
+; Licensed to the .NET Foundation under one or more agreements.
+; The .NET Foundation licenses this file to you under the MIT license.
+; See the LICENSE file in the project root for more information.
+;
+LIBRARY WPFX
+
+EXPORTS
+    help
+    dumpcaptures
+    dumplastcapture
+    listcaptures
+    annot
+    cmd
+    lcb
+    basemodule
+    reinit
+    verbose
+    dumptable
+    resource
+
+;--------------------------------------------------------------------
+;
+; these are the extension service functions provided for the debugger
+;
+;--------------------------------------------------------------------
+
+    DebugExtensionSetClient
+    DebugExtensionInitialize
+    DebugExtensionNotify
+    DebugExtensionUninitialize
+

@@ -62,22 +62,19 @@ namespace System.Windows.Controls
         protected override void ValidateTemplatedParent(FrameworkElement templatedParent)
         {
             // Must have a non-null feTemplatedParent
-            if (templatedParent == null)
-            {
-                throw new ArgumentNullException("templatedParent");
-            }
+            ArgumentNullException.ThrowIfNull(templatedParent);
 
             // The target type of a ControlTemplate must match the 
             // type of the Control that it is being applied to
             if (_targetType != null && !_targetType.IsInstanceOfType(templatedParent))
             {
-                throw new ArgumentException(SR.Get(SRID.TemplateTargetTypeMismatch, _targetType.Name, templatedParent.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TemplateTargetTypeMismatch, _targetType.Name, templatedParent.GetType().Name));
             }
 
             // One cannot use a ControlTemplate to template a Control that isn't associated with it
             if (templatedParent.TemplateInternal != this)
             {
-                throw new ArgumentException(SR.Get(SRID.MustNotTemplateUnassociatedControl));
+                throw new ArgumentException(SR.MustNotTemplateUnassociatedControl);
             }
         }
         #endregion PublicMethods
@@ -142,7 +139,7 @@ namespace System.Windows.Controls
                 !typeof(Page).IsAssignableFrom(targetType) &&
                 !typeof(PageFunctionBase).IsAssignableFrom(targetType))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidControlTemplateTargetType, targetType.Name));
+                throw new ArgumentException(SR.Format(SR.InvalidControlTemplateTargetType, targetType.Name));
             }
         }
         

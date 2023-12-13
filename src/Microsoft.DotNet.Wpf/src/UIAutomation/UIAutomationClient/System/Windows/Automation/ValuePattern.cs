@@ -70,15 +70,10 @@ namespace System.Windows.Automation
         /// Request to set the value that this UI element is representing
         /// </summary>
         /// <param name="value">Value to set the UI to, the provider is responsible for converting from a string into the appropriate data type</param>
-        /// 
-        /// <outside_see conditional="false">
-        /// This API does not work inside the secure execution environment.
-        /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-        /// </outside_see>
         public void SetValue( string value )
         {
-            Misc.ValidateArgumentNonNull(value, "value");
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             // Test the Enabled state prior to the more general Read-Only state.            
             object enabled = _el.GetCurrentPropertyValue(AutomationElementIdentifiers.IsEnabledProperty);
             if (enabled is bool && !(bool)enabled)
@@ -90,7 +85,7 @@ namespace System.Windows.Automation
             object readOnly = _el.GetCurrentPropertyValue(IsReadOnlyProperty);
             if (readOnly is bool && (bool)readOnly)
             {
-                throw new InvalidOperationException(SR.Get(SRID.ValueReadonly));
+                throw new InvalidOperationException(SR.ValueReadonly);
             }
 
             UiaCoreApi.ValuePattern_SetValue(_hPattern,  value);
@@ -231,11 +226,6 @@ namespace System.Windows.Automation
             #region Public Properties
 
             ///<summary>Value of a value control, as a a string.</summary>
-            /// 
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public string Value
             {
                 get
@@ -251,11 +241,6 @@ namespace System.Windows.Automation
 
             ///<summary>Indicates that the value can only be read, not modified.
             ///returns True if the control is read-only</summary>
-            ///
-            /// <outside_see conditional="false">
-            /// This API does not work inside the secure execution environment.
-            /// <exception cref="System.Security.Permissions.SecurityPermission"/>
-            /// </outside_see>
             public bool IsReadOnly
             {
                 get

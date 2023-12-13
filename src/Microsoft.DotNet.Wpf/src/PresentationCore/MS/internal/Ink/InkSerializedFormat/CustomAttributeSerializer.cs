@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-﻿//#define OLD_ISF
+//#define OLD_ISF
 
 using MS.Utility;
 using System;
@@ -20,7 +20,6 @@ using System.Windows.Ink;
 using System.Windows.Media;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -305,7 +304,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
                 default:
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.InvalidEpInIsf));
+                    throw new InvalidOperationException(SR.InvalidEpInIsf);
                 }
             }
 #pragma warning restore 6518
@@ -315,17 +314,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Encodes a custom attribute to the ISF stream
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - Calls the critical method Compressor.CompressPropertyData
-        ///             to compress the attribute data
-        ///
-        ///     This directly called by ExtendedPropertySerializer.EncodeAsISF
-        ///                             DrawingAttributeSerializer.PersistStylusTip
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Encodes a custom attribute to the ISF stream
@@ -416,16 +404,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="guid">Guid of property</param>
         /// <param name="data">Data of property</param>
         /// <returns>Length of buffer read</returns>
-        /// <SecurityNote>
-        ///     Critical - calls the Compressor.DecompressPropertyData critical method
-        ///
-        ///     Called directly by  DrawingAttributeSerializer.DecodeAsISF
-        ///                         StrokeCollectionSerializer.DecodeRawISF
-        ///                         StrokeSerializer.DecodeISFIntoStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.DecodeRawISF
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Loads a single ExtendedProperty from the stream and add that to the list. Tag may be passed as in
@@ -447,7 +425,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             if (0 == cbSize)
             {
-                throw new InvalidOperationException(SR.Get(SRID.EmptyDataToLoad));
+                throw new InvalidOperationException(SR.EmptyDataToLoad);
             }
 
             if (0 == tag) // no tag is passed, it must be embedded in the data
@@ -456,7 +434,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cb = SerializationHelper.Decode(stream, out uiTag);
                 tag = (KnownTagCache.KnownTagIndex)uiTag;
                 if (cb > cbTotal)
-                    throw new ArgumentException(SR.Get(SRID.InvalidSizeSpecified), "cbSize");
+                    throw new ArgumentException(SR.InvalidSizeSpecified, "cbSize");
 
                 cbTotal -= cb;
                 cbRead += cb;
@@ -473,7 +451,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint size = GuidList.GetDataSizeIfKnownGuid(guid);
 
             if (size > cbTotal)
-                throw new ArgumentException(SR.Get(SRID.InvalidSizeSpecified), "cbSize");
+                throw new ArgumentException(SR.InvalidSizeSpecified, "cbSize");
 
             // if the size is 0
             if (0 == size)
@@ -722,7 +700,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         }
                     default:
                         {
-                            throw new InvalidOperationException(SR.Get(SRID.InvalidEpInIsf));
+                            throw new InvalidOperationException(SR.InvalidEpInIsf);
                         }
                 }
             }
@@ -741,18 +719,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="compressionAlgorithm"></param>
         /// <param name="fTag"></param>
         /// <returns></returns>
-        /// <SecurityNote>
-        ///     Critical - Calls the crtical method ExtendedPropertySerializer.EncodeAsISF (different overload)
-        ///
-        ///     This directly called by ExtendedPropertySerializer.EncodeAsISF (different overload)
-        ///                         and StrokeCollectionSerializer.EncodeISF
-        ///                         and DrawingAttributeSerializer.PersistExtendedProperties
-        ///                         and StrokeSerializer.EncodeStroke
-        ///
-        ///     TreatAsSafe boundary is StrokeCollectionSerializer.EncodeISF
-        ///     
-        /// </SecurityNote>
-        [SecurityCritical]
 #else
         /// <summary>
         /// Saves all elements in this list in the stream passed with the tags being generated based on the GuidList
@@ -821,14 +787,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
         {
             if (id == Guid.Empty)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidGuid));
+                throw new ArgumentException(SR.InvalidGuid);
             }
 
             if (id == KnownIds.Color)
             {
                 if (!(value is System.Windows.Media.Color))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(System.Windows.Media.Color)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(System.Windows.Media.Color)), "value");
                 }
             }
                 // int attributes
@@ -836,7 +802,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if (!(value.GetType() == typeof(int)))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(int)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(int)), "value");
                 }
             }
             else if (id == KnownIds.DrawingFlags)
@@ -844,7 +810,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // ignore validation of flags
                 if (value.GetType() != typeof(DrawingFlags))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(DrawingFlags)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(DrawingFlags)), "value");
                 }
             }
             else if (id == KnownIds.StylusTip)
@@ -855,11 +821,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 if ( !fStylusTipType && !fIntType )
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType1, typeof(StylusTip), typeof(int)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(StylusTip), typeof(int)), "value");
                 }
                 else if ( !StylusTipHelper.IsDefined((StylusTip)value) )
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueOfType, value, typeof(StylusTip)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueOfType, value, typeof(StylusTip)), "value");
                 }
             }
             else if (id == KnownIds.StylusTipTransform)
@@ -870,22 +836,22 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 Type t = value.GetType();
                 if ( t != typeof(String) && t != typeof(Matrix) )
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType1, typeof(String), typeof(Matrix)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(String), typeof(Matrix)), "value");
                 }
                 else if ( t == typeof(Matrix) )
                 {
                     Matrix matrix = (Matrix)value;
                     if ( !matrix.HasInverse )
                     {
-                        throw new ArgumentException(SR.Get(SRID.MatrixNotInvertible), "value");
+                        throw new ArgumentException(SR.MatrixNotInvertible, "value");
                     }
                     if ( MatrixHelper.ContainsNaN(matrix))
                     {
-                        throw new ArgumentException(SR.Get(SRID.InvalidMatrixContainsNaN), "value");
+                        throw new ArgumentException(SR.InvalidMatrixContainsNaN, "value");
                     }
                     if ( MatrixHelper.ContainsInfinity(matrix))
                     {
-                        throw new ArgumentException(SR.Get(SRID.InvalidMatrixContainsInfinity), "value");
+                        throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "value");
                     }
 }
             }
@@ -893,14 +859,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if ( value.GetType() != typeof(bool))
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(bool)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(bool)), "value");
                 }
             }
             else if ( id == KnownIds.StylusHeight || id == KnownIds.StylusWidth )
             {
                 if ( value.GetType() != typeof(double) )
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(double)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(double)), "value");
                 }
 
                 double dVal = (double)value;
@@ -909,14 +875,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 {
                     if ( Double.IsNaN(dVal) || dVal < DrawingAttributes.MinHeight || dVal > DrawingAttributes.MaxHeight)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.Get(SRID.InvalidDrawingAttributesHeight));
+                        throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesHeight);
                     }
                 }
                 else
                 {
                     if (Double.IsNaN(dVal) ||  dVal < DrawingAttributes.MinWidth || dVal > DrawingAttributes.MaxWidth)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.Get(SRID.InvalidDrawingAttributesWidth));
+                        throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesWidth);
                     }
                 }
             }
@@ -924,7 +890,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if ( value.GetType() != typeof(byte) )
                 {
-                    throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(byte)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte)), "value");
                 }
 
                 double dVal = (double)value;
@@ -937,7 +903,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //      then it doesn't include embedded type information (it's always a byte array)
                     if ( value.GetType() != typeof(byte[]) )
                     {
-                        throw new ArgumentException(SR.Get(SRID.InvalidValueType, typeof(byte[])), "value");
+                        throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte[])), "value");
                     }
                 }
                 else
@@ -997,12 +963,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                     catch (ArgumentException ex)
                                     {
                                         //catches bad char & char[]
-                                        throw new ArgumentException(SR.Get(SRID.InvalidDataInISF), ex);
+                                        throw new ArgumentException(SR.InvalidDataInISF, ex);
                                     }
                                     catch (OverflowException ex)
                                     {
                                         //catches bad DateTime
-                                        throw new ArgumentException(SR.Get(SRID.InvalidDataInISF), ex);
+                                        throw new ArgumentException(SR.InvalidDataInISF, ex);
                                     }
                                 }
                             }

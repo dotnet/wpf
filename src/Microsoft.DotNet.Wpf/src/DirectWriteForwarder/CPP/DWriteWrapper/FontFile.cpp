@@ -5,20 +5,12 @@
 #include "FontFile.h"
 #include "DWriteTypeConverter.h"
 
-using namespace System::Security::Permissions;
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     /// <summary>
     /// static ctor to initialize the GUID of IDWriteLocalFontFileLoader interface.
     /// </summary>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permissions.
-    ///          - Assigns security critical _guidForIDWriteLocalFontFileLoader
-    /// Safe     - The data used to initialize _guidForIDWriteLocalFontFileLoader is const.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     static FontFile::FontFile()
     {
         System::Guid guid = System::Guid("b2d9f3ec-c9fe-4a11-a2ec-d86208f7c0a2");
@@ -27,22 +19,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _guidForIDWriteLocalFontFileLoader = gcnew NativePointerWrapper<_GUID>(pGuidForIDWriteLocalFontFileLoader);                
     }
 
-    /// <SecurityNote>
-    /// Critical - Receives a native pointer and stores it internally.
-    ///            This whole object is wrapped around the passed in pointer
-    ///            So this ctor assumes safety of the passed in pointer.
-    /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     FontFile::FontFile(IDWriteFontFile* fontFile)
     {
         _fontFile = gcnew NativeIUnknownWrapper<IDWriteFontFile>(fontFile);
     }
 
-    /// <SecurityNote>
-    /// Critical - Manipulates security critical member _fontFile.
-    /// Safe     - Just releases the interface.
-    /// </SecurityNote>
-    //[SecuritySafeCritical]
     __declspec(noinline) FontFile::~FontFile()
     {
         if (_fontFile != nullptr)
@@ -52,11 +33,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         }
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _fontFile pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool FontFile::Analyze(
                           [System::Runtime::InteropServices::Out] DWRITE_FONT_FILE_TYPE%  fontFileType,
                           [System::Runtime::InteropServices::Out] DWRITE_FONT_FACE_TYPE%  fontFaceType,
@@ -91,23 +67,11 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// OBJECT IS KEPT ALIVE BY THE GC OR ELSE YOU ARE RISKING THE POINTER GETTING RELEASED BEFORE YOU'D 
     /// WANT TO.
     ///
-    /// <SecurityNote>
-    /// Critical - Exposes critical member _fontFile.
-    /// </SecurityNote>
-    [SecurityCritical]
     IDWriteFontFile* FontFile::DWriteFontFileNoAddRef::get()
     {
         return _fontFile->Value;
     }
 
-    /// <SecurityNote>
-    /// Critical    - Asserts unmanaged code permission to new and delete a native WCHAR buffer
-    ///               But this is ok since the buffer is created at a safe size and not exposed.
-    ///             - Exposes Font File path which can expose the windows folder location 
-    ///               to partial trust apps.
-    /// </SecurityNote>
-    [SecurityCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     System::String^ FontFile::GetUriPath()
     {
         void* fontFileReferenceKey;
@@ -174,12 +138,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     /// is created to be marked with proper security attributes because when
     /// the call to Release() was made inside GetUriPath() it was causing Jitting.
     /// </summary>
-    /// <SecurityNote>
-    /// Critical - Asserts unmanaged code permissions.
-    /// Safe     - This function does not perform dangerous operations.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
-    [SecurityPermission(SecurityAction::Assert, UnmanagedCode=true)]
     __declspec(noinline) void FontFile::ReleaseInterface(IDWriteLocalFontFileLoader** ppInterface)
     {
         if (ppInterface && *ppInterface)

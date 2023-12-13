@@ -12,13 +12,6 @@ namespace System.Windows.Threading
     /// </summary>
     public class DispatcherFrame : DispatcherObject
     {
-        /// <SecurityNote>
-        ///     Critical: This code exists to ensure that the static variables initialized
-        ///     do not cause security violations.The reason this comes into existance is because
-        ///     of the call to RegisterWindowMessage
-        ///     TreatAsSafe:This is safe to call
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         static DispatcherFrame()
         {
         }
@@ -55,12 +48,6 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Indicates that this dispatcher frame should exit.
         /// </summary>
-        /// <SecurityNote>
-        ///     Critical - calls a critical method - postThreadMessage. 
-        ///     PublicOK - all we're doing is posting a current message to our thread. 
-        ///                net effect is the dispatcher "wakes up"
-        ///                and uses the continue flag ( which may have just changed). 
-        /// </SecurityNote> 
         public bool Continue
         {
             get
@@ -89,7 +76,6 @@ namespace System.Windows.Threading
                 return shouldContinue;
             }
 
-            [SecurityCritical] 
             set
             {
                 // This method is free-threaded.

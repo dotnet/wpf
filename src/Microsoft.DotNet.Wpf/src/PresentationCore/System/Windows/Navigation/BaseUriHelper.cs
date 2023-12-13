@@ -51,15 +51,6 @@ namespace System.Windows.Navigation
         private const string _packageApplicationBaseUriEscaped = "application:///";
         private const string _packageSiteOfOriginBaseUriEscaped = "siteoforigin:///";
 
-        /// <SecurityNote>
-        /// Critical: because it sets critical data.
-        ///         Adds SiteOfOriginContainer to PreloadedPackages.
-        /// TreatAsSafe: because it is the static ctor, and the data doesn't go anywhere.
-        ///         SiteOfOriginContainer is a well-known package and allowed to be added
-        ///         to PreloadedPackages. Also, the package is not going to be handed out
-        ///         from this API surface and as such will be protected
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static BaseUriHelper()
         {
             _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
@@ -93,12 +84,6 @@ namespace System.Windows.Navigation
         /// <remarks>
         ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: as it access the BaseUri, which is critcal
-        /// PublicOK: calls GetBaseUriCore that does a demand
-        /// Not available from the Internet zone
-        /// </SecurityNote>
-        [SecurityCritical]
         public static Uri GetBaseUri(DependencyObject element)
         {
             Uri baseUri = GetBaseUriCore(element);
@@ -210,7 +195,7 @@ namespace System.Windows.Navigation
                 assembly = ResourceAssembly;
 
                 // The partName returned from GetAssemblyNameAndPart should be escaped.
-                Debug.Assert(String.Compare(partName, uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped), StringComparison.OrdinalIgnoreCase) == 0);
+                Debug.Assert(string.Equals(partName, uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped), StringComparison.OrdinalIgnoreCase));
             }
             else
             {
@@ -300,13 +285,13 @@ namespace System.Windows.Navigation
 
             if (fHasComponent)
             {
-                string[] assemblyInfo = firstSegment.Split(new char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = firstSegment.Split(COMPONENT_DELIMITER);
 
                 int count = assemblyInfo.Length;
 
                 if ((count > 4) || (count < 2))
                 {
-                    throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                    throw new UriFormatException(SR.WrongFirstSegment);
                 }
 
                 //
@@ -327,7 +312,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                     else
@@ -338,7 +323,7 @@ namespace System.Windows.Navigation
                         }
                         else
                         {
-                            throw new UriFormatException(SR.Get(SRID.WrongFirstSegment));
+                            throw new UriFormatException(SR.WrongFirstSegment);
                         }
                     }
                 } // end of for loop
@@ -351,7 +336,7 @@ namespace System.Windows.Navigation
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
             {
-                string[] assemblyInfo = component.Split(new Char[] { COMPONENT_DELIMITER });
+                string[] assemblyInfo = component.Split(COMPONENT_DELIMITER);
                 // Check whether the assembly name is the same as the EntryAssembly.
                 int count = assemblyInfo.Length;
                 if ((count >= 2) && (count <= 4))
@@ -362,7 +347,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (String.Compare(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase) == 0);
+                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
                     }
                     else
                     {
@@ -385,7 +370,7 @@ namespace System.Windows.Navigation
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
             {                
                 Uri packageUri = PackUriHelper.GetPackageUri(sUri);
-                if (String.Compare(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase))
                 {
                     return (new Uri(sUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped))).MakeRelativeUri(sUri);
                 }
@@ -407,7 +392,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-               throw new InvalidOperationException(SR.Get(SRID.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
+               throw new InvalidOperationException(SR.Format(SR.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
             }
         }
 
@@ -427,9 +412,6 @@ namespace System.Windows.Navigation
             return uri;
         }
 
-        /// <SecurityNote>
-        /// Critical: as it sets the baseUri
-        /// </SecurityNote>
         static internal Uri BaseUri
         {
             [FriendAccessAllowed]
@@ -438,7 +420,6 @@ namespace System.Windows.Navigation
                 return _baseUri.Value;
             }
             [FriendAccessAllowed]
-            [SecurityCritical]
             set
             {
                 // This setter should only be called from Framework through
@@ -564,28 +545,18 @@ namespace System.Windows.Navigation
         /// <remarks>
         ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
         /// </remarks>
-        /// <SecurityNote>
-        /// Critical: as it access the BaseUri, which is critcal
-        /// TreatAsSafe: since it demands File read write and path dicovery  permission.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal static Uri GetBaseUriCore(DependencyObject element)
         {
             Uri baseUri = null;
             DependencyObject doCurrent;
 
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
-            try
-            {
-                //
-                // Search the tree to find the closest parent which implements
-                // IUriContext or have set value for BaseUri property.
-                //
-                doCurrent = element;
+            //
+            // Search the tree to find the closest parent which implements
+            // IUriContext or have set value for BaseUri property.
+            //
+            doCurrent = element;
 
                 while (doCurrent != null)
                 {
@@ -649,18 +620,6 @@ namespace System.Windows.Navigation
                         }
                     }
                 }
-            }
-            finally
-            {
-                //
-                // Putting the permission demand in finally block can prevent from exposing a bogus
-                // and dangerous uri to the code in upper frame.
-                //
-                if (baseUri != null)
-                {
-                    SecurityHelper.DemandUriDiscoveryPermission(baseUri);
-                }
-            }
 
             return baseUri;
         }
@@ -681,8 +640,7 @@ namespace System.Windows.Navigation
                 byte[] keyToken = new byte[byteCount];
                 for (int i = 0; i < byteCount; i++)
                 {
-                    string byteString = assemblyKey.Substring(i * 2, 2);
-                    keyToken[i] = byte.Parse(byteString, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    keyToken[i] = byte.Parse(assemblyKey.AsSpan(i * 2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 }
 
                 return keyToken;

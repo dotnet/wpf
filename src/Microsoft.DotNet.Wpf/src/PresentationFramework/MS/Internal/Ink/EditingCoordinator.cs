@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows;
@@ -51,10 +50,7 @@ namespace MS.Internal.Ink
         /// <param name="inkCanvas">InkCanvas instance</param>
         internal EditingCoordinator(InkCanvas inkCanvas)
         {
-            if (inkCanvas == null)
-            {
-                throw new ArgumentNullException("inkCanvas");
-            }
+            ArgumentNullException.ThrowIfNull(inkCanvas);
 
             _inkCanvas = inkCanvas;
 
@@ -86,10 +82,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="dynamicBehavior"></param>
         /// <param name="inputDevice"></param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical methods AddStylusPoints and InitializeCapture
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void ActivateDynamicBehavior(EditingBehavior dynamicBehavior, InputDevice inputDevice)
         {
             // Only SelectionEditor should be enable to initiate dynamic behavior
@@ -697,18 +689,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// <SecurityNote>
-        ///     Critical: 
-        ///             Calls SecurityCritcal method: InitializeCapture and AddStylusPoints
-        ///             Eventually calls SecurityCritical method InkCanvas.RaiseGestureOrStrokeCollected
-        /// 
-        ///     TreatAsSafe: This method is called by the input system, from security transparent
-        ///                 code, so it can not be marked critical.  We check the eventArgs.UserInitiated
-        ///                 to verify that the input was user initiated and pass this flag to 
-        ///                 InkCanvas.RaiseGestureOrStrokeCollected and use it to decide if we should
-        ///                 perform gesture recognition
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void OnInkCanvasDeviceDown(object sender, InputEventArgs args)
         {
             MouseButtonEventArgs mouseButtonEventArgs = args as MouseButtonEventArgs;
@@ -797,18 +777,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// <SecurityNote>
-        ///     Critical: 
-        ///             Calls SecurityCritcal method: 
-        ///             Eventually calls SecurityCritical method InkCanvas.RaiseGestureOrStrokeCollected
-        /// 
-        ///     TreatAsSafe: This method is called by the input system, from security transparent
-        ///                 code, so it can not be marked critical.  We check the eventArgs.UserInitiated
-        ///                 to verify that the input was user initiated and pass this flag to 
-        ///                 InkCanvas.RaiseGestureOrStrokeCollected and use it to decide if we should
-        ///                 perform gesture recognition
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnInkCanvasDeviceMove<TEventArgs>(object sender, TEventArgs args)
             where TEventArgs : InputEventArgs
         {
@@ -969,10 +937,6 @@ namespace MS.Internal.Ink
         /// <param name="stylusEditingBehavior"></param>
         /// <param name="userInitiated"></param>
         /// <param name="resetDynamicRenderer"></param>
-        /// <SecurityNote>
-        ///     Critical: Returns critical data from the inputDevice, StylusPointCollection.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void InitializeCapture(InputDevice inputDevice, IStylusEditing stylusEditingBehavior, bool userInitiated, bool resetDynamicRenderer)
         {
             Debug.Assert(inputDevice != null, "A null device is passed in.");

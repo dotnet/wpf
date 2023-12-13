@@ -43,22 +43,16 @@ namespace System.Windows
         /// <summary>
         /// Converts to an InstanceDescriptor
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for TemplateBindingExtension, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor))
             {
-                if(value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 
                 if(templateBinding == null)
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "TemplateBindingExtension"), "value");
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), "value");
 
                 return new InstanceDescriptor(typeof(TemplateBindingExtension).GetConstructor(new Type[] { typeof(DependencyProperty) }),
                     new object[] { templateBinding.Property });

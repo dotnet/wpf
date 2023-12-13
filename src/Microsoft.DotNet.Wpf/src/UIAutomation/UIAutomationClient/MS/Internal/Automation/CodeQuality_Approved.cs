@@ -289,7 +289,7 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.Condition.TrueCondition")]
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.Condition.FalseCondition")]
 [module: SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Scope = "member", Target = "System.Windows.Automation.TextPattern.TextChangedEvent")]
-// Reviewed by WinFx team and this case is OK
+// Reviewed by WinFX team and this case is OK
 [module: SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Scope = "type", Target = "System.Windows.Automation.Text.FlowDirections")]
 // Reviewed by atgarch and these enums are OK
 [module: SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames", Scope = "type", Target = "System.Windows.Automation.TreeScope")]
@@ -409,7 +409,6 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Scope="member", Target="System.Windows.Input.KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key):System.Int32")]
 
 //don't need assembly-level critical on this assembly
-[module: SuppressMessage("Microsoft.SecurityCritical", "Test002:SecurityCriticalMembersMustExistInCriticalTypesAndAssemblies")]
 
 //Related to ST and SR class:
 [module: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="System.Windows.SR.Get(System.String,System.Object[]):System.String")]

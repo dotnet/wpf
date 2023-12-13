@@ -8,7 +8,6 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.Permissions;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
@@ -16,37 +15,20 @@ using MS.Win32;
 using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Interop
 {
     internal sealed class HwndKeyboardInputProvider : DispatcherObject, IKeyboardInputProvider, IDisposable
     {
-        /// <SecurityNote>
-        ///     Accesses and store critical data. This class is also critical (_site and _source)
-        /// </SecurityNote>
-        [SecurityCritical]
         internal HwndKeyboardInputProvider(HwndSource source)
         {
-            (new UIPermission(PermissionState.Unrestricted)).Assert();
-            try //Blessed assert for InputManager.Current.RegisterInputProvider
-            {
-                _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-            }
-            finally
-            {
-                UIPermission.RevertAssert();
-            }
+            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
+
             _source = new SecurityCriticalDataClass<HwndSource>(source);
         }
 
 
 
-        /// <SecurityNote>
-        ///     Critical:This class accesses critical data, _site.
-        ///     TreatAsSafe: This class does not expose the critical data
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         public void Dispose()
         {
             if(_site != null)
@@ -64,12 +46,6 @@ namespace System.Windows.Interop
                 Keyboard.Focus(null); // internally we will set the focus to the root.
             }
         }
-        /// <SecurityNote>
-        ///     Critical: As this accesses critical data HwndSource
-        ///     TreatAsSafe:Information about whether a given input provider services
-        ///     a visual is safe to expose. This method does not expose the critical data either.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert( null != _source );
@@ -83,13 +59,6 @@ namespace System.Windows.Interop
             _partialActive = false;
         }
 
-        /// <SecurityNote>
-        ///     SecurityCritical: This code calls a variety of critical native
-        ///     methods related to keyboard focus and window styles.  None of
-        ///     this information is returned, but focus can be changed which
-        ///     impacts the functioning of a great deal of native code.
-        /// </SecurityNote>
-        [SecurityCritical]
         bool IKeyboardInputProvider.AcquireFocus(bool checkOnly)
         {
             bool result = false;
@@ -125,38 +94,29 @@ namespace System.Windows.Interop
                     // In either case, the window must be enabled.
                     if(SafeNativeMethods.IsWindowEnabled(thisWindow))
                     {
-                        if (SecurityHelper.AppDomainGrantedUnrestrictedUIPermission)
-                        {
-                            // In fully-trusted AppDomains, the only hard requirement
-                            // is that Win32 keyboard focus be on some window owned
-                            // by a thread that is attached to our Win32 queue.  This
-                            // presumes that the thread's message pump will cooperate
-                            // by calling ComponentDispatcher.RaiseThreadMessage.
-                            // If so, WPF will be able to route the keyboard events to the
-                            // element with WPF keyboard focus, regardless of which
-                            // window has Win32 keyboard focus.
-                            //
-                            // Menus/ComboBoxes use this feature.
-                            //
-                            // Dev11 is moving more towards cross-process designer
-                            // support.  They make sure to call AttachThreadInput so
-                            // the the two threads share the same Win32 queue.  In
-                            // addition, they repost the keyboard messages to the
-                            // main UI process/thread for handling.
-                            //
-                            // We rely on the behavior of GetFocus to only return a
-                            // window handle for windows attached to the calling
-                            // thread's queue.
-                            //
-                            result = focus != IntPtr.Zero;
-                        }
-                        else
-                        {
-                            // In partially-trusted AppDomains, we do not want to expose input
-                            // intended for other native windows, or for WPF windows in other
-                            // AppDomains.
-                            result = IsOurWindow(focus);
-                        }
+
+                        // In fully-trusted AppDomains, the only hard requirement
+                        // is that Win32 keyboard focus be on some window owned
+                        // by a thread that is attached to our Win32 queue.  This
+                        // presumes that the thread's message pump will cooperate
+                        // by calling ComponentDispatcher.RaiseThreadMessage.
+                        // If so, WPF will be able to route the keyboard events to the
+                        // element with WPF keyboard focus, regardless of which
+                        // window has Win32 keyboard focus.
+                        //
+                        // Menus/ComboBoxes use this feature.
+                        //
+                        // Dev11 is moving more towards cross-process designer
+                        // support.  They make sure to call AttachThreadInput so
+                        // the the two threads share the same Win32 queue.  In
+                        // addition, they repost the keyboard messages to the
+                        // main UI process/thread for handling.
+                        //
+                        // We rely on the behavior of GetFocus to only return a
+                        // window handle for windows attached to the calling
+                        // thread's queue.
+                        //
+                        result = focus != IntPtr.Zero;
                     }
                 }
                 else
@@ -205,15 +165,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical:
-        ///     This code is critical since it handles all keyboard messages
-        ///     and could be used to spoof input.
-        ///     For HANDLED_KEYDOWN_STILL_GENERATES_CHARS we also cause the
-        ///     Dispatcher to defer processing the queue until after any
-        ///     currently pending messages.
-        /// </SecurityNote>
-        [SecurityCritical]
         internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             IntPtr result = IntPtr.Zero ;
@@ -459,10 +410,6 @@ namespace System.Windows.Interop
             return result;
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code is critical since it reports input to WPF.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void OnSetFocus(IntPtr hwnd)
         {
             // Normally we get WM_SETFOCUS only when _active is false.
@@ -574,10 +521,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical:This can be used to spoof input
-        /// </SecurityNote>
-        [SecurityCritical]
         internal void ProcessKeyAction(ref MSG msg, ref bool handled)
         {
             // Remember the last message
@@ -609,10 +552,6 @@ namespace System.Windows.Interop
             }
         }
 
-        ///<SecurityNote>
-        /// Critical - calls a critical method _source.Value.
-        ///</SecurityNote>
-        [SecurityCritical ]
         internal void ProcessTextInputAction(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             char charcode = (char)wParam;
@@ -738,12 +677,7 @@ namespace System.Windows.Interop
         ///<remarks>
         ///     Marked as FriendAccessAllowed so HwndHost in PresentationFramework can call it
         ///</remarks>
-        ///<SecurityNote>
-        ///     Critical: It calls an UnsafeNativeMethod (GetKeyState).
-        ///     TreatAsSafe: It's safe to return whether shift, control or alt keys are being pressed or not.
-        ///</SecurityNote>
         [FriendAccessAllowed]
-        [SecurityCritical,SecurityTreatAsSafe]
         internal static ModifierKeys GetSystemModifierKeys()
         {
             ModifierKeys modifierKeys = ModifierKeys.None;
@@ -775,14 +709,9 @@ namespace System.Windows.Interop
                 return RawKeyboardActions.KeyDown;
             if(  msg == WindowMessage.WM_KEYUP || msg == WindowMessage.WM_SYSKEYUP )
                 return RawKeyboardActions.KeyUp;
-            throw new ArgumentException(SR.Get(SRID.OnlyAcceptsKeyMessages));
+            throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code causes this window to loose focus not ok to expose
-        ///               It also calls into a critical code path.
-        /// </SecurityNote>
-        [SecurityCritical]
         private void PossiblyDeactivate(IntPtr hwndFocus)
         {
             Debug.Assert( null != _source );
@@ -814,11 +743,6 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical: This code does not store any critical data, it accesses PresentationSource
-        ///     TreatAsSafe: This information is safe to expose
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         private bool IsOurWindow(IntPtr hwnd)
         {
             bool isOurWindow = false;
@@ -859,10 +783,6 @@ namespace System.Windows.Interop
 
         // return the immediate child (if any) of hwndRoot that governs the
         // given hwnd.  If hwnd is not a descendant of hwndRoot, return 0.
-        /// <SecurityNote>
-        ///     Critical:This method calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr GetImmediateChildFor(IntPtr hwnd, IntPtr hwndRoot)
         {
             while (hwnd != IntPtr.Zero)
@@ -889,11 +809,6 @@ namespace System.Windows.Interop
             return IntPtr.Zero;
         }
 
-        /// <SecurityNote>
-        ///     Critical:This code can cause input simulation and hence is critical.
-        ///     The current code path is only hit under RootBrowserWindow scenario for now.
-        /// </SecurityNote>
-        [SecurityCritical]
         private bool ReportInput(
             IntPtr hwnd,
             InputMode mode,
@@ -957,19 +872,9 @@ namespace System.Windows.Interop
         }
 
         private int  _msgTime;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical. This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<HwndSource> _source;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical.This data is not ok to expose.
-        /// </SecurityNote>
         private SecurityCriticalDataClass<InputProviderSite> _site;
         private IInputElement _restoreFocus;
-        /// <SecurityNote>
-        /// This is got under an elevation and is hence critical.This data is not ok to expose.
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _restoreFocusWindow;
         private bool _active;
         private bool _partialActive;

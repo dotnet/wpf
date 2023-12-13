@@ -34,9 +34,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -248,10 +246,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -376,10 +371,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -391,7 +383,7 @@ namespace System.Windows.Media
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -406,7 +398,7 @@ namespace System.Windows.Media
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -475,14 +467,11 @@ namespace System.Windows.Media
 
         private int Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is int))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "int"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "int"));
             }
 
             return (int) value;
@@ -724,7 +713,7 @@ namespace System.Windows.Media
 
                 if (i != _collection.Count-1)
                 {
-                    str.Append(" ");
+                    str.Append(' ');
                 }
             }
 
@@ -809,7 +798,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
-}
+            }
 
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
@@ -837,7 +826,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -855,7 +844,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -889,12 +878,12 @@ namespace System.Windows.Media
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }
@@ -947,45 +936,40 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            ICollection<int> icollectionOfT = collection as ICollection<int>;
+
+            if (icollectionOfT != null)
             {
-                ICollection<int> icollectionOfT = collection as ICollection<int>;
-
-                if (icollectionOfT != null)
-                {
-                    _collection = new FrugalStructList<int>(icollectionOfT);
-                }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<int>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<int>();
-
-                        foreach (int item in collection)
-                        {
-                            _collection.Add(item);
-                        }
-}
-                }
-
-
-
-
-
-
-
-                WritePostscript();
+                _collection = new FrugalStructList<int>(icollectionOfT);
             }
             else
             {
-                throw new ArgumentNullException("collection");
+                ICollection icollection = collection as ICollection;
+
+                if (icollection != null) // an IC but not and IC<T>
+                {
+                    _collection = new FrugalStructList<int>(icollection);
+                }
+                else // not a IC or IC<T> so fall back to the slower Add
+                {
+                    _collection = new FrugalStructList<int>();
+
+                    foreach (int item in collection)
+                    {
+                        _collection.Add(item);
+                    }
+                }
             }
+
+
+
+
+
+
+
+            WritePostscript();
         }
 
         #endregion Constructors

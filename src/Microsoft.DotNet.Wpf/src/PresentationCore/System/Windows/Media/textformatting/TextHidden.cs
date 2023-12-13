@@ -17,7 +17,6 @@ using System.Collections;
 using System.Windows;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -39,10 +38,7 @@ namespace System.Windows.Media.TextFormatting
             int     length
             )
         {
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.Get(SRID.ParameterMustBeGreaterThanZero));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

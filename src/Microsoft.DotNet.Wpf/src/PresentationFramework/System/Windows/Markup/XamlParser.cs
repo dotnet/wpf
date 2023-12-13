@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
-using System.Security.Permissions;
 using MS.Utility;
 using System.Runtime.InteropServices;
 using MS.Internal;
@@ -70,7 +69,7 @@ namespace System.Windows.Markup
     internal class XamlParser
     {
 #if PBTCOMPILER
-    #region Constructors
+        #region Constructors
 
         /// <summary>
         /// Constructor that takes a stream and creates an XmlCompatibilityReader on it.
@@ -97,7 +96,7 @@ namespace System.Windows.Markup
             // entity expansion technique. In System.Xml V2.0, in order to provide protection against DTD DoS attacks there
             // is the capability of turning off DTD parsing through the use of the ProhibitDtd property.
 
-#pragma warning disable 0618 
+#pragma warning disable 0618
             // CS0618: A class member was marked with the Obsolete attribute, such that a warning 
             // will be issued when the class member is referenced. 
             textReader.ProhibitDtd = true;
@@ -124,9 +123,9 @@ namespace System.Windows.Markup
         {
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-    #region PublicMethods
+        #region PublicMethods
 
 
         /// <summary>
@@ -204,6 +203,13 @@ namespace System.Windows.Markup
                 }
                 else
                 {
+                    // Don't treat an AssemblyVersion parsing error as a XamlParseException.
+                    // Throw it back to the task execution.
+                    if(e is AssemblyVersionParseException)
+                    {
+                        throw;
+                    }
+
                     if (e is XamlParseException)
                     {
                         throw;
@@ -235,7 +241,7 @@ namespace System.Windows.Markup
                             lineNumber = xamlNode.LineNumber;
                             linePosition = xamlNode.LinePosition;
                         }
-                        newMessage = e.Message + " " + SR.Get(SRID.ParserLineAndOffset,
+                        newMessage = e.Message + " " + SR.Format(SR.ParserLineAndOffset,
                                                   lineNumber.ToString(CultureInfo.CurrentCulture),
                                                   linePosition.ToString(CultureInfo.CurrentCulture));
                     }
@@ -532,9 +538,9 @@ namespace System.Windows.Markup
 
        }
 
-#endregion // PublicMethods
+        #endregion // PublicMethods
 
-    #region Virtuals
+        #region Virtuals
 
         /// <summary>
         /// Called when parsing begins
@@ -575,7 +581,7 @@ namespace System.Windows.Markup
         public virtual void WriteUnknownTagStart(XamlUnknownTagStartNode xamlUnknownTagStartNode)
         {
             // The default action for unknown tags is throw an exception.
-            ThrowException(SRID.ParserUnknownTag ,
+            ThrowException(nameof(SR.ParserUnknownTag),
                         xamlUnknownTagStartNode.Value,
                         xamlUnknownTagStartNode.XmlNamespace,
                         xamlUnknownTagStartNode.LineNumber,
@@ -590,7 +596,7 @@ namespace System.Windows.Markup
             // The default action for unknown tags is throw an exception.  This should never
             // get here unless there is a coding error, since it would first hit
             // WriteUnknownTagStart
-            ThrowException(SRID.ParserUnknownTag ,
+            ThrowException(nameof(SR.ParserUnknownTag),
                         "???",
                         xamlUnknownTagEndNode.LineNumber,
                         xamlUnknownTagEndNode.LinePosition);
@@ -675,7 +681,7 @@ namespace System.Windows.Markup
         public virtual void WriteUnknownAttribute(XamlUnknownAttributeNode xamlUnknownAttributeNode)
         {
             // The default action for unknown attributes is throw an exception.
-            ThrowException(SRID.ParserUnknownAttribute ,
+            ThrowException(nameof(SR.ParserUnknownAttribute),
                         xamlUnknownAttributeNode.Name,
                         xamlUnknownAttributeNode.XmlNamespace,
                         xamlUnknownAttributeNode.LineNumber,
@@ -726,7 +732,7 @@ namespace System.Windows.Markup
             {
                 if (xamlPropertyNode.ValueElementType == null)
                 {
-                    ThrowException(SRID.ParserNoType,
+                    ThrowException(nameof(SR.ParserNoType),
                                    xamlPropertyNode.ValueTypeFullName,
                                    xamlPropertyNode.LineNumber,
                                    xamlPropertyNode.LinePosition);
@@ -780,7 +786,7 @@ namespace System.Windows.Markup
             // parsing scenario and should throw.
             if (xamlPIMappingNode.AssemblyName.Length == 0)
             {
-                ThrowException(SRID.ParserMapPIMissingKey, xamlPIMappingNode.LineNumber, xamlPIMappingNode.LinePosition);
+                ThrowException(nameof(SR.ParserMapPIMissingKey), xamlPIMappingNode.LineNumber, xamlPIMappingNode.LinePosition);
             }
 
             if (BamlRecordWriter != null)
@@ -800,7 +806,7 @@ namespace System.Windows.Markup
 
             if (null == ParserHooks)
             {
-                ThrowException(SRID.ParserNoEvents,
+                ThrowException(nameof(SR.ParserNoEvents),
                     xamlClrEventNode.LineNumber,
                     xamlClrEventNode.LinePosition);
             }
@@ -901,7 +907,7 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteDefTag(XamlDefTagNode xamlDefTagNode)
         {
-            ThrowException(SRID.ParserDefTag,
+            ThrowException(nameof(SR.ParserDefTag),
                         xamlDefTagNode.Value,
                         xamlDefTagNode.LineNumber,
                         xamlDefTagNode.LinePosition);
@@ -935,7 +941,7 @@ namespace System.Windows.Markup
                    {
                        if (xamlDefAttributeNode.Value == "Async")
                        {
-                           ThrowException(SRID.ParserNoBamlAsync, "Async",
+                           ThrowException(nameof(SR.ParserNoBamlAsync), "Async",
                                       xamlDefAttributeNode.LineNumber,
                                       xamlDefAttributeNode.LinePosition);
                        }
@@ -944,7 +950,7 @@ namespace System.Windows.Markup
 
                case XamlReaderHelper.DefinitionAsyncRecords:
                     // Update the AsyncRecords and don't store this as a def attribute
-                       ThrowException(SRID.ParserNoBamlAsync, xamlDefAttributeNode.Name,
+                       ThrowException(nameof(SR.ParserNoBamlAsync), xamlDefAttributeNode.Name,
                                       xamlDefAttributeNode.LineNumber,
                                       xamlDefAttributeNode.LinePosition);
                    break;
@@ -962,9 +968,9 @@ namespace System.Windows.Markup
                     //Error if x:Uid or x:Name are markup extensions
                     if (MarkupExtensionParser.LooksLikeAMarkupExtension(attributeValue))
                     {
-                        string message = SR.Get(SRID.ParserBadUidOrNameME, attributeValue);
+                        string message = SR.Format(SR.ParserBadUidOrNameME, attributeValue);
                         message += " ";
-                        message += SR.Get(SRID.ParserLineAndOffset,
+                        message += SR.Format(SR.ParserLineAndOffset,
                                     xamlDefAttributeNode.LineNumber.ToString(CultureInfo.CurrentCulture),
                                     xamlDefAttributeNode.LinePosition.ToString(CultureInfo.CurrentCulture));
 
@@ -989,7 +995,7 @@ namespace System.Windows.Markup
 
                 default:
                     string errorID;
-                        errorID = SRID.ParserUnknownDefAttribute;
+                        errorID = nameof(SR.ParserUnknownDefAttribute);
                         ThrowException(errorID,
                                    xamlDefAttributeNode.Name,
                                    xamlDefAttributeNode.LineNumber,
@@ -1100,7 +1106,7 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Virtuals
+        #endregion Virtuals
 
 
         /// <summary>
@@ -1138,7 +1144,7 @@ namespace System.Windows.Markup
                     }
                     else
                     {
-                        ThrowException(SRID.ParserBadSyncMode,
+                        ThrowException(nameof(SR.ParserBadSyncMode),
                                xamlDefAttributeNode.LineNumber,
                                xamlDefAttributeNode.LinePosition );
                     }
@@ -1157,7 +1163,7 @@ namespace System.Windows.Markup
             WriteDefAttribute(xamlDefAttributeNode);
         }
 
-    #region Methods
+        #region Methods
 
         // virtuals to override the default implementation. used by the compiler
         // for internal virtuals review why not public as the others?
@@ -1273,9 +1279,9 @@ namespace System.Windows.Markup
                     TokenReader.IsXmlDataIsland();
             }
         }
-#endregion Methods
+        #endregion Methods
 
-    #region Properties
+        #region Properties
 
         /// <summary>
         /// TokenReader that is being used.
@@ -1381,9 +1387,9 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Properties
+        #endregion Properties
 
-    #region Data
+        #region Data
 
 
 
@@ -1408,47 +1414,47 @@ namespace System.Windows.Markup
             XamlReaderHelper.DefaultNamespaceURI,
             XamlReaderHelper.DefinitionMetroNamespaceURI
         };
-    #endregion Data
+        #endregion Data
 
 #endif
 
         // helper method called to throw an exception.
         internal static void ThrowException(string id, int lineNumber, int linePosition)
         {
-            string message = SR.Get(id);
+            string message = SR.GetResourceString(id);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
         // helper method called to throw an exception.
         internal static void ThrowException(string id, string value, int lineNumber, int linePosition)
         {
-            string message = SR.Get(id, value);
+            string message = SR.Format(SR.GetResourceString(id), value);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
         // helper method called to throw an exception.
         internal static void ThrowException(string id, string value1, string value2, int lineNumber, int linePosition)
         {
-            string message = SR.Get(id, value1, value2);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
         internal static void ThrowException(string id, string value1, string value2, string value3, int lineNumber, int linePosition)
         {
-            string message = SR.Get(id, value1, value2, value3);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
         internal static void ThrowException(string id, string value1, string value2, string value3, string value4, int lineNumber, int linePosition)
         {
-            string message = SR.Get(id, value1, value2, value3, value4);
+            string message = SR.Format(SR.GetResourceString(id), value1, value2, value3, value4);
             ThrowExceptionWithLine(message, lineNumber, linePosition);
         }
 
         private static void ThrowExceptionWithLine(string message, int lineNumber, int linePosition)
         {
             message += " ";
-            message += SR.Get(SRID.ParserLineAndOffset,
+            message += SR.Format(SR.ParserLineAndOffset,
                                     lineNumber.ToString(CultureInfo.CurrentCulture),
                                     linePosition.ToString(CultureInfo.CurrentCulture));
 

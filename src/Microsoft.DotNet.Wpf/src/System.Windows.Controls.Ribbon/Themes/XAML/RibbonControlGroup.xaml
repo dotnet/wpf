@@ -1,0 +1,42 @@
+<!-- [[Generic]] -->
+
+    <!--=================================================================
+            RibbonControlGroup
+        ==================================================================-->
+
+    <Style x:Key="{x:Type ribbon:RibbonControlGroup}" TargetType="{x:Type ribbon:RibbonControlGroup}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Ribbon.BorderBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource RibbonToolTipInitialShowDelayKey}" />
+        <Setter Property="ToolTipService.ShowDuration" Value="{StaticResource RibbonToolTipShowDurationKey}" />
+        <Setter Property="ToolTipService.BetweenShowDelay" Value="{StaticResource RibbonToolTipBetweenShowDelayKey}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ribbon:RibbonControlGroup}">
+                    <Border x:Name="MainBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1,1,0,1"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="True">
+                        <ItemsPresenter />
+                    </Border>
+                    
+                    <ControlTemplate.Triggers>
+                        <!-- HighContrast -->
+
+#ifdef Net45
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+#else
+                        <DataTrigger Binding="{Binding Path=HighContrast, Source={x:Static windows:SystemParameters2.Current}}" Value="True">
+#endif
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" />
+                            <Setter TargetName="MainBorder" Property="CornerRadius" Value="0" />
+                        </DataTrigger>
+                        
+                    </ControlTemplate.Triggers>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

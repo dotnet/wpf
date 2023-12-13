@@ -43,7 +43,6 @@ struct cmapoffsetrecordkeeper      /* housekeeping structure */
 };
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 InitCmapOffsetArray(PCMAPOFFSETRECORDKEEPER pKeeper, 
                                   uint16 usRecordCount)
 {
@@ -55,7 +54,6 @@ PRIVATE int16 InitCmapOffsetArray(PCMAPOFFSETRECORDKEEPER pKeeper,
     return NO_ERROR;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void FreeCmapOffsetArray(PCMAPOFFSETRECORDKEEPER pKeeper)
 {
     Mem_Free(pKeeper->pCmapOffsetArray);
@@ -64,7 +62,6 @@ PRIVATE void FreeCmapOffsetArray(PCMAPOFFSETRECORDKEEPER pKeeper)
     pKeeper->usNextArrayIndex = 0;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 RecordCmapOffset(PCMAPOFFSETRECORDKEEPER pKeeper, 
                                 uint32 ulOldCmapOffset,
                                 uint32 ulNewCmapOffset)
@@ -79,7 +76,6 @@ PRIVATE int16 RecordCmapOffset(PCMAPOFFSETRECORDKEEPER pKeeper,
 }
 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint32 LookupCmapOffset(PCMAPOFFSETRECORDKEEPER pKeeper, 
                                 uint32 ulOldCmapOffset)
 {
@@ -104,7 +100,6 @@ typedef struct {  /* used to sort and keep track of new offsets */
 /* Must sort subtables by offset, so that their data blocks may be moved in order */
 /* output of this function is the IndexOffset array */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE void SortCmapSubByOffset(CMAP_TABLELOC *pCmapTableLoc, uint16 usSubTableCount, IndexOffset *pIndexArray)
 {
 uint16 i, j, k;
@@ -136,7 +131,6 @@ uint16 i, j, k;
 /* lcp change long word pad between subtables to short word pad. Caused tables */
 /* to grow unnecessarily */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 CompressCmapSubTables(TTFACC_FILEBUFFERINFO * pOutputBufferInfo,  /* ttfacc info */
                     CMAP_TABLELOC *pCmapTableLoc, /* array of CmapSubTable locators */
                     uint16 usSubTableCount, /* count of that array */
@@ -224,7 +218,6 @@ uint16 usPadBytes;
     return errCode;
 }
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE uint16 GetCmapSubtableCount( TTFACC_FILEBUFFERINFO * pInputBufferInfo,
 uint32 ulCmapOffset)
 {
@@ -241,7 +234,6 @@ uint16 usBytesRead;
    /* this routine modifies the apple cmap table so that characters 
       referencing deleted glyphs are mapped to the missing character. */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 ModMacStandardCmap( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, uint32 ulOffset, uint8 *puchKeepGlyphList, uint16 usGlyphCount )
 {
 uint16 i;
@@ -267,7 +259,6 @@ int16 errCode;
    referencing deleted glphs are mapped to the missing character. It will also shorten
    the table if possible. */ 
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 PRIVATE int16 ModMacTrimmedCmap( TTFACC_FILEBUFFERINFO * pOutputBufferInfo, 
                                uint32 ulOffset, 
                                uint8 *puchKeepGlyphList, 
@@ -349,7 +340,6 @@ uint32 ulOutGlyphOffset;  /* to point to a glyph value to write */
 /* if the resulting CMAP table will be larger than the original, then    */
 /* the cmap will be restored the original                                */
 /* ------------------------------------------------------------------- */
-[System::Security::SecurityCritical]
 int16 ModCmap(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo,
                 TTFACC_FILEBUFFERINFO * pOutputBufferInfo,
                 uint8 *puchKeepGlyphList, /* glyphs to keep - boolean */

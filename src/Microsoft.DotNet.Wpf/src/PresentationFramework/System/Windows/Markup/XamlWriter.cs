@@ -19,8 +19,6 @@ using System.Windows.Threading;
 
 using MS.Utility;
 using System.Security;
-using System.Security.Permissions;
-using System.Security.Policy;
 using System.Text;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -48,25 +46,13 @@ namespace System.Windows.Markup
         /// <returns>
         ///     XAML string representing object instance
         /// </returns>
-        /// <SecurityNote>
-        ///     Critcal: We only allow Serialization in partial trust.  Although we would throw an exception later anyways,
-        ///     we throw one here so we know where to expect the exception.  (BUG: 1466639)
-        ///     Safe: Demands unmanaged code permissions
-        /// </SecurityNote>
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static string Save(object obj)
         {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
 
             // Create TextWriter
             StringBuilder sb = new StringBuilder();
@@ -95,29 +81,14 @@ namespace System.Windows.Markup
         /// <param name="writer">
         ///     Text Writer
         /// </param>
-        /// <SecurityNote>
-        ///     Critcal: We only allow Serialization in full trust.  Although we would throw an exception later anyways,
-        ///     we throw one here so we know where to expect the exception.  (BUG: 1466639)
-        ///     Safe: Demands unmanaged code permissions
-        /// </SecurityNote>
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, TextWriter writer)
         {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-            if (writer == null)
-            {
-                throw new ArgumentNullException("writer");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(writer);
 
             // Create XmlTextWriter
             XmlTextWriter xmlWriter = new XmlTextWriter(writer);
@@ -135,29 +106,14 @@ namespace System.Windows.Markup
         /// <param name="stream">
         ///     Stream
         /// </param>
-        /// <SecurityNote>
-        ///     Critcal: We only allow Serialization in full trust.  Although we would throw an exception later anyways,
-        ///     we throw one here so we know where to expect the exception.  (BUG: 1466639)
-        ///     Safe: Demands unmanaged code permissions
-        /// </SecurityNote>
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, Stream stream)
         {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(stream);
 
             // Create XmlTextWriter
             XmlTextWriter xmlWriter = new XmlTextWriter(stream, null);
@@ -177,29 +133,14 @@ namespace System.Windows.Markup
         /// <param name="xmlWriter">
         ///     XmlWriter
         /// </param>
-        /// <SecurityNote>
-        ///     Critcal: We only allow Serialization in full trust.  Although we would throw an exception later anyways,
-        ///     we throw one here so we know where to expect the exception.  (BUG: 1466639)
-        ///     Safe: Demands unmanaged code permissions
-        /// </SecurityNote>
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, XmlWriter xmlWriter)
         {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-            if (xmlWriter == null)
-            {
-                throw new ArgumentNullException("xmlWriter");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(xmlWriter);
 
             try
             {
@@ -222,29 +163,14 @@ namespace System.Windows.Markup
         /// <param name="manager">
         ///     Serialization Manager
         /// </param>
-        /// <SecurityNote>
-        ///     Critcal: We only allow Serialization in full trust.  Although we would throw an exception later anyways,
-        ///     we throw one here so we know where to expect the exception.  (BUG: 1466639)
-        ///     Safe: Demands unmanaged code permissions
-        /// </SecurityNote>
         /// <remarks>
         ///     This API requires unmanaged code permission 
         /// </remarks>
-        [SecuritySafeCritical]
         public static void Save(object obj, XamlDesignerSerializationManager manager)
         {
-            // Must be in full trust
-            SecurityHelper.DemandUnmanagedCode();
-            
             // Validate input arguments
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager");
-            }
+            ArgumentNullException.ThrowIfNull(obj);
+            ArgumentNullException.ThrowIfNull(manager);
 
             MarkupWriter.SaveAsXml(manager.XmlWriter, obj, manager);
         }

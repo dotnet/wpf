@@ -11,7 +11,6 @@
 
 using System;
 using System.Globalization;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -107,10 +106,7 @@ namespace System.Windows.Media
             FontFamily      fallbackFontFamily
             )
         {
-            if(fontFamily == null)
-            {
-                throw new ArgumentNullException("fontFamily");
-            }
+            ArgumentNullException.ThrowIfNull(fontFamily);
 
             _fontFamily = fontFamily;
             _style = style;

@@ -4,7 +4,6 @@
 
 using System.Diagnostics;
 using System.Reflection;
-using System.Security.Permissions;
 using System.Security;
 using System;
 using MS.Internal; 
@@ -16,7 +15,8 @@ namespace MS.Internal
 
     internal class MediaTrace : IDisposable
     {
-        public static MediaTrace NodeFlag = new MediaTrace("Node Flags"); public static MediaTrace NodeOp = new MediaTrace("Node Operations");
+        public static MediaTrace NodeFlag = new MediaTrace("Node Flags");
+        public static MediaTrace NodeOp = new MediaTrace("Node Operations");
         public static MediaTrace NodeCreation = new MediaTrace("Node creation");
         public static MediaTrace DrawingContextOp = new MediaTrace("Drawing Context Op");
         public static MediaTrace ContainerOp = new MediaTrace("Drawing Visual Operations Operations");
@@ -45,18 +45,6 @@ namespace MS.Internal
         // If you want to enable trace tags without recompiling. This is a good place to put a break point
         // during start-up.
 
-        ///<SecurityNote> 
-        ///     Critical - Elevates to register debug listeners. 
-        ///                Getting the listeners property demands unmanaged code permission. 
-        ///
-        ///     TreatAsSafe ( in debug) - in debug code - it is ok for code to call this. 
-        ///                               if this function does get enabled in retail code - we will demand. ( and this won't be TAS). 
-        ///</SecurityNote> 
-        [SecurityCritical
-#if DEBUG        
-        ,SecurityTreatAsSafe
-#endif        
-        ]
         static MediaTrace()
         {
             // NodeFlag.Enable();
@@ -77,39 +65,17 @@ namespace MS.Internal
             // QueueItems.Enable();
             Statistics.Enable();
 
-#if !DEBUG
-            // if somehow this code gets enabled in retail. Do a demand. 
-            //
-            SecurityHelper.DemandUnmanagedCode(); 
-#endif
-
 #if DEBUG
-            //
-            // We are asserting on startup path. Very bad from a perf perspective.  
-            // However considered ok for now as this is just done in debug code. 
-            // 
-            new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert(); // BlessedAssert: 
-            try
-            {
-                System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            }
-            finally
-            {
-                CodeAccessPermission.RevertAssert(); 
-            }
+
+            System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 #endif            
         }
     
         public MediaTrace(string switchName)
         {
-            _switch = new BooleanSwitch(switchName, "[" + SafeSecurityHelper.GetAssemblyPartialName(Assembly.GetCallingAssembly()) + "]");
+            _switch = new BooleanSwitch(switchName, "[PresentationCore]");
         }
 
-        ///<SecurityNote>
-        ///     Critical: sets BooleanSwitch.Enabled which LinkDemands
-        ///     TreatAsSafe: ok to enable tracing
-        ///</SecurityNote> 
-        [SecurityCritical, SecurityTreatAsSafe]
         public MediaTrace(string switchName, bool initialState) : this(switchName)
         {
             _switch.Enabled = initialState;
@@ -173,23 +139,11 @@ namespace MS.Internal
             GC.SuppressFinalize(this);
         }
         
-        /// <SecurityNote>
-        ///   Critical: This code calls into Enabled which is link demand protected
-        ///   TreatAsSafe: This code is ok to call since it enables trace which
-        ///                 is safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Enable()
         {
             _switch.Enabled = true;
         }
     
-        /// <SecurityNote>
-        ///   Critical: This code calls into Enabled which is link demand protected
-        ///   TreatAsSafe: This code is ok to call since it  disables trace which
-        ///                 is safe.
-        /// </SecurityNote>
-        [SecurityCritical,SecurityTreatAsSafe]
         public void Disable()
         {
             _switch.Enabled = false;

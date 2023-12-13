@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,12 +14,6 @@ using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
 {
-    /// <SecurityNote>
-    /// This class is extensible; various members which could be used for visibility evaluation--
-    /// IsReadPublic, IsWritePublic, DeclaringType--get their data either from virtual methods or
-    /// from constructor arguments.
-    /// For security-critical data, always check the underlying CLR member.
-    /// </SecurityNote>
     public class XamlMember : IEquatable<XamlMember>
     {
         // Initialized in constructor
@@ -36,10 +30,6 @@ namespace System.Xaml
         /// <summary>
         /// Lazy init: NullableReference.IsSet is null when not initialized
         /// </summary>
-        /// <SecurityNote>
-        /// Critical: Ensuring idempotence for consistency with UnderlyingGetter/Setter
-        /// </SecurityNote>
-        [SecurityCritical]
         private NullableReference<MemberInfo> _underlyingMember;
 
         public XamlMember(string name, XamlType declaringType, bool isAttachable)
@@ -60,21 +50,10 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(PropertyInfo propertyInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (propertyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(propertyInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(propertyInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = propertyInfo.Name;
             _declaringType = schemaContext.GetXamlType(propertyInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -94,21 +73,10 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(EventInfo eventInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (eventInfo == null)
-            {
-                throw new ArgumentNullException(nameof(eventInfo));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(eventInfo);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             _name = eventInfo.Name;
             _declaringType = schemaContext.GetXamlType(eventInfo.DeclaringType);
             _memberType = MemberType.Instance;
@@ -130,22 +98,14 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(schemaContext);
             MethodInfo accessor = getter ?? setter;
             if (accessor == null)
             {
-                throw new ArgumentNullException(SR.Get(SRID.GetterOrSetterRequired), (Exception)null);
+                throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
@@ -171,22 +131,11 @@ namespace System.Xaml
         {
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Constructor is single-threaded, so idempotence is assured
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         internal XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker, MemberReflector reflector)
         {
-            if (adder == null)
-            {
-                throw new ArgumentNullException(nameof(adder));
-            }
-            if (schemaContext == null)
-            {
-                throw new ArgumentNullException(nameof(schemaContext));
-            }
+            ArgumentNullException.ThrowIfNull(adder);
+            ArgumentNullException.ThrowIfNull(schemaContext);
             ValidateSetter(adder, "adder");
 
             _name = attachableEventName ?? throw new ArgumentNullException(nameof(attachableEventName));
@@ -340,13 +289,8 @@ namespace System.Xaml
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Ensures idempotence via NullableReference.SetIfNull, which uses CompareExchange
-        /// </SecurityNote>
         public MemberInfo UnderlyingMember
         {
-            [SecuritySafeCritical]
             get
             {
                 if (!_underlyingMember.IsSet)
@@ -358,13 +302,8 @@ namespace System.Xaml
         }
 
         /// <summary>Accesses _underlyingMember without initializing it</summary>
-        /// <SecurityNote>
-        /// Critical: Accesses critical field _underlyingMember
-        /// Safe: Doesn't modify field. Field is value type so caller cannot modify it.
-        /// </SecurityNote>
         internal NullableReference<MemberInfo> UnderlyingMemberInternal
         {
-            [SecuritySafeCritical]
             get { return _underlyingMember; }
         }
 
@@ -863,7 +802,7 @@ namespace System.Xaml
             }
             if ((method.GetParameters().Length != 1) || (method.ReturnType == typeof(void)))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectGetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectGetterParamNum, argumentName);
             }
         }
 
@@ -871,7 +810,7 @@ namespace System.Xaml
         {
             if ((method != null) && (method.GetParameters().Length != 2))
             {
-                throw new ArgumentException(SR.Get(SRID.IncorrectSetterParamNum), argumentName);
+                throw new ArgumentException(SR.IncorrectSetterParamNum, argumentName);
             }
         }
 

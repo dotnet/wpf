@@ -15,7 +15,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -52,7 +51,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Build the result string
-            return SR.Get(SRID.KeyAlt) + "+" + s[iPosShortCut + 1];
+            return SR.KeyAlt + "+" + s[iPosShortCut + 1];
         }
 
         // Extend an existing RunTimeID by one element
@@ -986,7 +985,6 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
         internal static int MsgWaitForMultipleObjects(SafeWaitHandle handle, bool waitAll, int milliseconds, int wakeMask)
         {
             int terminationEvent, lastWin32Error;
@@ -997,7 +995,6 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
-                RuntimeHelpers.PrepareConstrainedRegions();
                 bool fRelease = false;
                 try
                 {
@@ -1142,7 +1139,7 @@ namespace MS.Internal.AutomationProxies
             {
                 sb.Append(" (");
                 sb.Append(sbFlag);
-                sb.Append(")");
+                sb.Append(')');
             }
             sb.AppendFormat("\n\r\thwndActive = 0x{0:x8}", gui.hwndActive.ToInt32());
             sb.AppendFormat("\n\r\thwndFocus = 0x{0:x8}", gui.hwndFocus.ToInt32());

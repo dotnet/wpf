@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal.WindowsBase;
 using System;
 using System.Diagnostics;
@@ -32,7 +29,7 @@ namespace System.Windows
         /// This id is used by .NET to report a fatal error.
         /// </summary>
         const int EventId = 1023;
-        
+
         /// <summary>
         /// This source is used by .NET to report events.
         /// </summary>
@@ -41,6 +38,11 @@ namespace System.Windows
         #endregion
 
         #region Fields
+
+        /// <summary>
+        /// Guards against multiple definitions of default switch values.
+        /// </summary>
+        static int s_DefaultsSet = 0;
 
         /// <summary>
         /// Guards against multiple verifications of the switch values.
@@ -159,6 +161,53 @@ namespace System.Windows
 
         #region Switch Functions
 
+        /// <summary>
+        /// Sets the defaults for all accessibility AppContext switches.
+        /// </summary>
+        /// <remarks>
+        /// Only call this method from within AppContextDefaultValues.PopulateDefaultValuesPartial.
+        /// This ensures defaults are set only under the lock from AppContextDefaultValues.
+        /// </remarks>
+        /// <param name="platformIdentifier"></param>
+        /// <param name="targetFrameworkVersion"></param>
+        internal static void SetSwitchDefaults(string platformIdentifier, int targetFrameworkVersion)
+        {
+            switch (platformIdentifier)
+            {
+
+                case ".NETFramework":
+                    if (Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
+                    {
+                        if (targetFrameworkVersion <= 40700)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
+                        }
+
+                        if (targetFrameworkVersion <= 40701)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
+                        }
+
+                        if (targetFrameworkVersion <= 40702)
+                        {
+                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
+                            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
+                            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
+                        }
+                    }
+                    break;
+
+                case ".NETCoreApp":
+                    {
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
+                        LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
+                    }
+                    break;
+            }
+        }
 
         /// <summary>
         /// Verifies that the appropriate switch combinations are set.
@@ -200,7 +249,7 @@ namespace System.Windows
                 {
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
-                    DispatchOnError(dispatcher, SR.Get(SRID.CombinationOfAccessibilitySwitchesNotSupported));
+                    DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);
                 }
 
                 VerifyDependencies(dispatcher);
@@ -215,11 +264,11 @@ namespace System.Windows
         {
             if (!UseLegacyToolTipDisplay && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, UseLegacyToolTipDisplaySwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
             if (!ItemsControlDoesNotSupportAutomation && UseNetFx472CompatibleAccessibilityFeatures)
             {
-                DispatchOnError(dispatcher, String.Format(SR.Get(SRID.AccessibilitySwitchDependencyNotSatisfied), ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
         }
 
@@ -239,7 +288,6 @@ namespace System.Windows
         /// Critical:   Calls Process.GetProcess
         /// Safe:       Does not accept or expose any critical data
         /// </SecurityNotes>
-        [SecuritySafeCritical]
         private static void WriteEventAndThrow(string message)
         {
             var exception = new NotSupportedException(message);

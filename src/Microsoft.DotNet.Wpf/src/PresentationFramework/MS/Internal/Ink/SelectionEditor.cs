@@ -15,7 +15,6 @@ using MS.Internal;
 using MS.Internal.Controls;
 using System;
 using System.Security;
-using System.Security.Permissions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -154,13 +153,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical method EditingCoordinator.ActivateDynamicBehavior
-        /// 
-        ///     TreatAsSafe: Doesn't handle critical data.  Also, this method is called by 
-        ///         SecurityTransparent code in the input system and can not be marked SecurityCritical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnAdornerMouseButtonDownEvent(object sender, MouseButtonEventArgs args)
         {
             // If the ButtonDown is raised by RightMouse, we should just bail out.
@@ -197,13 +189,6 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// <SecurityNote>
-        ///     Critical: Calls critical method EditingCoordinator.ActivateDynamicBehavior
-        /// 
-        ///     TreatAsSafe: Doesn't handle critical data.  Also, this method is called by 
-        ///         SecurityTransparent code in the input system and can not be marked SecurityCritical.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private void OnAdornerMouseMoveEvent(object sender, MouseEventArgs args)
         {
             Point pointOnSelectionAdorner = args.GetPosition(InkCanvas.SelectionAdorner);

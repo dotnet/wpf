@@ -1681,44 +1681,17 @@ namespace System.Windows.Controls
                 eraseMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
-            // Copy and Paste menu items (and their separator) are removed if
-            // we don't have Clipboard permissions.
-            bool hasClipboardPermission = SecurityHelper.CallerHasAllClipboardPermission();
-
             // Set the target for the Copy/Paste commands to our inner control
             MenuItem copyMenuItem = GetCopyMenuItem();
             if (copyMenuItem != null)
             {
-                if (hasClipboardPermission)
-                {
-                    copyMenuItem.CommandTarget = Content.InnerControl;
-                }
-                else
-                {
-                    copyMenuItem.Visibility = Visibility.Collapsed;
-                }
+                copyMenuItem.CommandTarget = Content.InnerControl;
             }
 
             MenuItem pasteMenuItem = GetPasteMenuItem();
             if (pasteMenuItem != null)
             {
-                if (hasClipboardPermission)
-                {
-                    pasteMenuItem.CommandTarget = Content.InnerControl;
-                }
-                else
-                {
-                    pasteMenuItem.Visibility = Visibility.Collapsed;
-                }
-            }
-
-            Separator clipboardSeparator = GetClipboardSeparator();
-            if (clipboardSeparator != null)
-            {
-                if (!hasClipboardPermission)
-                {
-                    clipboardSeparator.Visibility = Visibility.Collapsed;
-                }
+                pasteMenuItem.CommandTarget = Content.InnerControl;
             }
         }
 
@@ -1751,7 +1724,7 @@ namespace System.Windows.Controls
 
                 if (content == null || content.Type != StickyNoteType.Ink)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.CannotProcessInkCommand));
+                    throw new InvalidOperationException(SR.CannotProcessInkCommand);
                 }
 
                 // Set the StickyNoteControl's ink editing mode to the command's parameter
@@ -1813,7 +1786,7 @@ namespace System.Windows.Controls
             // Make sure the foreground is type of SolidColorBrush.
             if ( foreground == null )
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidInkForeground));
+                throw new ArgumentException(SR.InvalidInkForeground);
             }
 
             da.StylusTip = StylusTip.Ellipse;

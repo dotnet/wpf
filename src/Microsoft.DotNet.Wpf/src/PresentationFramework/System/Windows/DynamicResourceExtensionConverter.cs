@@ -40,22 +40,16 @@ namespace System.Windows
         /// <summary>
         /// Converts to an instance descriptor
         /// </summary>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for DynamicResourceExtension, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(InstanceDescriptor))
             {
-                if(value == null)
-                    throw new ArgumentNullException("value");
+                ArgumentNullException.ThrowIfNull(value);
 
                 DynamicResourceExtension dynamicResource = value as DynamicResourceExtension;
 
                 if (dynamicResource == null)
-                    throw new ArgumentException(SR.Get(SRID.MustBeOfType, "value", "DynamicResourceExtension"), "value"); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "DynamicResourceExtension"), "value"); 
 
                 return new InstanceDescriptor(typeof(DynamicResourceExtension).GetConstructor(new Type[] { typeof(object) }), 
                     new object[] { dynamicResource.ResourceKey } );

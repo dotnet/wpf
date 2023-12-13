@@ -258,10 +258,6 @@ namespace System.Windows.Documents
         }
 
 
-        ///<SecurityNote>
-       /// Critical as it access the base uri through GetUriToNavigate
-       ///</SecurityNote>
-       [SecurityCritical]
         private Uri _ResolveUri()
         {
             Uri uriToNavigate = this.Source;
@@ -274,11 +270,6 @@ namespace System.Windows.Documents
 
 
         // sync load a document
-       ///<SecurityNote>
-       /// Critical as it access the base uri through _resolveUri
-       /// TreatAsSafe since it does not disclose this
-       ///</SecurityNote>
-       [SecurityCritical, SecurityTreatAsSafe]
         private FixedDocument _LoadDocument()
         {
             FixedDocument idp = null;
@@ -291,7 +282,7 @@ namespace System.Windows.Documents
                 docStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad, out mimeType);
                 if (docStream == null)
                 {
-                    throw new ApplicationException(SR.Get(SRID.DocumentReferenceNotFound));
+                    throw new ApplicationException(SR.DocumentReferenceNotFound);
                 }
 
                 ParserContext pc = new ParserContext();
@@ -309,7 +300,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    throw new ApplicationException(SR.Get(SRID.DocumentReferenceUnsupportedMimeType));
+                    throw new ApplicationException(SR.DocumentReferenceUnsupportedMimeType);
                 }
                 idp.DocumentReference = this;
             }

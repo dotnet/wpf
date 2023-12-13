@@ -1023,17 +1023,13 @@
   <data name="FailToNavigateUsingHyperlinkTarget" xml:space="preserve">
     <value>Failed to navigate using the Hyperlink target.</value>
   </data>
-  <data name="FileDialogBufferTooSmall" xml:space="preserve">
-    <value>Too many files selected. Select fewer files and try again.</value>
-  </data>
   <data name="FileDialogCreatePrompt" xml:space="preserve">
-    <value>'{0}' does not exist.\r\nDo you want to create it?</value>
+    <value>'{0}' does not exist.
+Do you want to create it?</value>
   </data>
   <data name="FileDialogFileNotFound" xml:space="preserve">
-    <value>'{0}' does not exist.\r\nVerify that the file name is correct.</value>
-  </data>
-  <data name="FileDialogInvalidFileName" xml:space="preserve">
-    <value>'{0}' is not a valid file name.</value>
+    <value>'{0}' does not exist.
+Verify that the file name is correct.</value>
   </data>
   <data name="FileDialogInvalidFilter" xml:space="preserve">
     <value>Provided filter string is not valid. Filter string should contain a description of the filter, followed by a vertical bar and the filter pattern. Must also separate multiple filter description and pattern pairs by a vertical bar. Must separate multiple extensions in a filter pattern with a semicolon. Example: \"Image files (*.bmp, *.jpg)|*.bmp;*.jpg|All files (*.*)|*.*\"</value>
@@ -1042,10 +1038,8 @@
     <value>Filter index is not valid.</value>
   </data>
   <data name="FileDialogOverwritePrompt" xml:space="preserve">
-    <value>'{0}' already exists.\r\nDo you want to replace it?</value>
-  </data>
-  <data name="FileDialogSubClassFailure" xml:space="preserve">
-    <value>Cannot subclass a file dialog because sufficient memory is not available.</value>
+    <value>'{0}' already exists.
+Do you want to replace it?</value>
   </data>
   <data name="FileNameMustNotBeNull" xml:space="preserve">
     <value>Cannot access file because file name is null or empty.</value>
@@ -1174,7 +1168,7 @@
     <value>At index {0}:  Generator's item '{1}' is different from actual item '{2}'.</value>
   </data>
   <data name="Generator_MoreErrors" xml:space="preserve">
-    <value>   (... {0} more instances ...)</value>
+    <value>(... {0} more instances ...)</value>
   </data>
   <data name="Generator_Readme0" xml:space="preserve">
     <value>Information for developers (use Text Visualizer to read this):</value>
@@ -1361,9 +1355,6 @@
   </data>
   <data name="InDifferentTextContainers" xml:space="preserve">
     <value>'{0}' and '{1}' TextPointers are not in the same document.</value>
-  </data>
-  <data name="InkCanvasDeselectKey" xml:space="preserve">
-    <value>Esc</value>
   </data>
   <data name="InkCanvasDeselectKeyDisplayString" xml:space="preserve">
     <value>Esc</value>
@@ -1596,80 +1587,53 @@
   <data name="JumpList_CantNestBeginInitCalls" xml:space="preserve">
     <value>Cannot nest calls to BeginInit nor call it after modifying the JumpList.</value>
   </data>
-  <data name="KeyAlignCenter" xml:space="preserve">
-    <value>Ctrl+E</value>
-  </data>
   <data name="KeyAlignCenterDisplayString" xml:space="preserve">
     <value>Ctrl+E</value>
-  </data>
-  <data name="KeyAlignJustify" xml:space="preserve">
-    <value>Ctrl+J</value>
   </data>
   <data name="KeyAlignJustifyDisplayString" xml:space="preserve">
     <value>Ctrl+J</value>
   </data>
-  <data name="KeyAlignLeft" xml:space="preserve">
-    <value>Ctrl+L</value>
-  </data>
   <data name="KeyAlignLeftDisplayString" xml:space="preserve">
     <value>Ctrl+L</value>
   </data>
-  <data name="KeyAlignRight" xml:space="preserve">
-    <value>Ctrl+R</value>
-  </data>
   <data name="KeyAlignRightDisplayString" xml:space="preserve">
     <value>Ctrl+R</value>
-  </data>
-  <data name="KeyAltUndo" xml:space="preserve">
-    <value>Alt+Backspace</value>
   </data>
   <data name="KeyAltUndoDisplayString" xml:space="preserve">
     <value>Alt+Backspace</value>
   </data>
   <data name="KeyApplyBackground" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyBackgroundDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="KeyApplyDoubleSpace" xml:space="preserve">
-    <value>Ctrl+2</value>
+    <value/>
   </data>
   <data name="KeyApplyDoubleSpaceDisplayString" xml:space="preserve">
     <value>Ctrl+2</value>
   </data>
   <data name="KeyApplyFontFamily" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyFontFamilyDisplayString" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyFontSize" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyFontSizeDisplayString" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyForeground" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyApplyForegroundDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="KeyApplyOneAndAHalfSpace" xml:space="preserve">
-    <value>Ctrl+5</value>
+    <value/>
   </data>
   <data name="KeyApplyOneAndAHalfSpaceDisplayString" xml:space="preserve">
     <value>Ctrl+5</value>
   </data>
-  <data name="KeyApplySingleSpace" xml:space="preserve">
-    <value>Ctrl+1</value>
-  </data>
   <data name="KeyApplySingleSpaceDisplayString" xml:space="preserve">
     <value>Ctrl+1</value>
-  </data>
-  <data name="KeyBackspace" xml:space="preserve">
-    <value>Backspace</value>
   </data>
   <data name="KeyBackspaceDisplayString" xml:space="preserve">
     <value>Backspace</value>
@@ -1677,53 +1641,29 @@
   <data name="KeyCollectionHasInvalidKey" xml:space="preserve">
     <value>The key collection includes entry that is not valid. It must be an IBamlDictionaryKey.</value>
   </data>
-  <data name="KeyCopy" xml:space="preserve">
-    <value>Ctrl+C</value>
-  </data>
   <data name="KeyCopyDisplayString" xml:space="preserve">
     <value>Ctrl+C</value>
-  </data>
-  <data name="KeyCopyFormat" xml:space="preserve">
-    <value>Ctrl+Shift+C</value>
   </data>
   <data name="KeyCopyFormatDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+C</value>
   </data>
   <data name="KeyCorrectionList" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyCorrectionListDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="KeyCtrlInsert" xml:space="preserve">
-    <value>Ctrl+Insert</value>
+    <value/>
   </data>
   <data name="KeyCtrlInsertDisplayString" xml:space="preserve">
     <value>Ctrl+Insert</value>
   </data>
-  <data name="KeyCut" xml:space="preserve">
-    <value>Ctrl+X</value>
-  </data>
   <data name="KeyCutDisplayString" xml:space="preserve">
     <value>Ctrl+X</value>
-  </data>
-  <data name="KeyDecreaseFontSize" xml:space="preserve">
-    <value>Ctrl+OemOpenBrackets</value>
   </data>
   <data name="KeyDecreaseFontSizeDisplayString" xml:space="preserve">
     <value>Ctrl+OemOpenBrackets</value>
   </data>
-  <data name="KeyDecreaseIndentation" xml:space="preserve">
-    <value>Ctrl+Shift+T</value>
-  </data>
   <data name="KeyDecreaseIndentationDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+T</value>
-  </data>
-  <data name="KeyDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="KeyDeleteColumns" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+D</value>
   </data>
   <data name="KeyDeleteColumnsDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+D</value>
@@ -1731,428 +1671,221 @@
   <data name="KeyDeleteDisplayString" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="KeyDeleteNextWord" xml:space="preserve">
-    <value>Ctrl+Delete</value>
-  </data>
   <data name="KeyDeleteNextWordDisplayString" xml:space="preserve">
     <value>Ctrl+Delete</value>
-  </data>
-  <data name="KeyDeletePreviousWord" xml:space="preserve">
-    <value>Ctrl+Backspace</value>
   </data>
   <data name="KeyDeletePreviousWordDisplayString" xml:space="preserve">
     <value>Ctrl+Backspace</value>
   </data>
   <data name="KeyDeleteRows" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyDeleteRowsDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="KeyEnterLineBreak" xml:space="preserve">
-    <value>Shift+Enter</value>
+    <value/>
   </data>
   <data name="KeyEnterLineBreakDisplayString" xml:space="preserve">
     <value>Shift+Enter</value>
   </data>
-  <data name="KeyEnterParagraphBreak" xml:space="preserve">
-    <value>Enter</value>
-  </data>
   <data name="KeyEnterParagraphBreakDisplayString" xml:space="preserve">
     <value>Enter</value>
-  </data>
-  <data name="KeyIncreaseFontSize" xml:space="preserve">
-    <value>Ctrl+OemCloseBrackets</value>
   </data>
   <data name="KeyIncreaseFontSizeDisplayString" xml:space="preserve">
     <value>Ctrl+OemCloseBrackets</value>
   </data>
-  <data name="KeyIncreaseIndentation" xml:space="preserve">
-    <value>Ctrl+T</value>
-  </data>
   <data name="KeyIncreaseIndentationDisplayString" xml:space="preserve">
     <value>Ctrl+T</value>
-  </data>
-  <data name="KeyInsertColumns" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+C</value>
   </data>
   <data name="KeyInsertColumnsDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+C</value>
   </data>
-  <data name="KeyInsertRows" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+R</value>
-  </data>
   <data name="KeyInsertRowsDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+R</value>
-  </data>
-  <data name="KeyInsertTable" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+T</value>
   </data>
   <data name="KeyInsertTableDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+T</value>
   </data>
-  <data name="KeyMergeCells" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+M</value>
-  </data>
   <data name="KeyMergeCellsDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+M</value>
-  </data>
-  <data name="KeyMoveDownByLine" xml:space="preserve">
-    <value>Down</value>
   </data>
   <data name="KeyMoveDownByLineDisplayString" xml:space="preserve">
     <value>Down</value>
   </data>
-  <data name="KeyMoveDownByPage" xml:space="preserve">
-    <value>PageDown</value>
-  </data>
   <data name="KeyMoveDownByPageDisplayString" xml:space="preserve">
     <value>PageDown</value>
-  </data>
-  <data name="KeyMoveDownByParagraph" xml:space="preserve">
-    <value>Ctrl+Down</value>
   </data>
   <data name="KeyMoveDownByParagraphDisplayString" xml:space="preserve">
     <value>Ctrl+Down</value>
   </data>
-  <data name="KeyMoveLeftByCharacter" xml:space="preserve">
-    <value>Left</value>
-  </data>
   <data name="KeyMoveLeftByCharacterDisplayString" xml:space="preserve">
     <value>Left</value>
-  </data>
-  <data name="KeyMoveLeftByWord" xml:space="preserve">
-    <value>Ctrl+Left</value>
   </data>
   <data name="KeyMoveLeftByWordDisplayString" xml:space="preserve">
     <value>Ctrl+Left</value>
   </data>
-  <data name="KeyMoveRightByCharacter" xml:space="preserve">
-    <value>Right</value>
-  </data>
   <data name="KeyMoveRightByCharacterDisplayString" xml:space="preserve">
     <value>Right</value>
-  </data>
-  <data name="KeyMoveRightByWord" xml:space="preserve">
-    <value>Ctrl+Right</value>
   </data>
   <data name="KeyMoveRightByWordDisplayString" xml:space="preserve">
     <value>Ctrl+Right</value>
   </data>
-  <data name="KeyMoveToColumnEnd" xml:space="preserve">
-    <value>Alt+PageDown</value>
-  </data>
   <data name="KeyMoveToColumnEndDisplayString" xml:space="preserve">
     <value>Alt+PageDown</value>
-  </data>
-  <data name="KeyMoveToColumnStart" xml:space="preserve">
-    <value>Alt+PageUp</value>
   </data>
   <data name="KeyMoveToColumnStartDisplayString" xml:space="preserve">
     <value>Alt+PageUp</value>
   </data>
-  <data name="KeyMoveToDocumentEnd" xml:space="preserve">
-    <value>Ctrl+End</value>
-  </data>
   <data name="KeyMoveToDocumentEndDisplayString" xml:space="preserve">
     <value>Ctrl+End</value>
-  </data>
-  <data name="KeyMoveToDocumentStart" xml:space="preserve">
-    <value>Ctrl+Home</value>
   </data>
   <data name="KeyMoveToDocumentStartDisplayString" xml:space="preserve">
     <value>Ctrl+Home</value>
   </data>
-  <data name="KeyMoveToLineEnd" xml:space="preserve">
-    <value>End</value>
-  </data>
   <data name="KeyMoveToLineEndDisplayString" xml:space="preserve">
     <value>End</value>
-  </data>
-  <data name="KeyMoveToLineStart" xml:space="preserve">
-    <value>Home</value>
   </data>
   <data name="KeyMoveToLineStartDisplayString" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="KeyMoveToWindowBottom" xml:space="preserve">
-    <value>Alt+Ctrl+PageDown</value>
-  </data>
   <data name="KeyMoveToWindowBottomDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+PageDown</value>
-  </data>
-  <data name="KeyMoveToWindowTop" xml:space="preserve">
-    <value>Alt+Ctrl+PageUp</value>
   </data>
   <data name="KeyMoveToWindowTopDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+PageUp</value>
   </data>
-  <data name="KeyMoveUpByLine" xml:space="preserve">
-    <value>Up</value>
-  </data>
   <data name="KeyMoveUpByLineDisplayString" xml:space="preserve">
     <value>Up</value>
-  </data>
-  <data name="KeyMoveUpByPage" xml:space="preserve">
-    <value>PageUp</value>
   </data>
   <data name="KeyMoveUpByPageDisplayString" xml:space="preserve">
     <value>PageUp</value>
   </data>
-  <data name="KeyMoveUpByParagraph" xml:space="preserve">
-    <value>Ctrl+Up</value>
-  </data>
   <data name="KeyMoveUpByParagraphDisplayString" xml:space="preserve">
     <value>Ctrl+Up</value>
-  </data>
-  <data name="KeyPasteFormat" xml:space="preserve">
-    <value>Ctrl+Shift+V</value>
   </data>
   <data name="KeyPasteFormatDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+V</value>
   </data>
-  <data name="KeyRedo" xml:space="preserve">
-    <value>Ctrl+Y</value>
-  </data>
   <data name="KeyRedoDisplayString" xml:space="preserve">
     <value>Ctrl+Y</value>
-  </data>
-  <data name="KeyRemoveListMarkers" xml:space="preserve">
-    <value>Ctrl+Shift+R</value>
   </data>
   <data name="KeyRemoveListMarkersDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+R</value>
   </data>
-  <data name="KeyResetFormat" xml:space="preserve">
-    <value>Ctrl+Space</value>
-  </data>
   <data name="KeyResetFormatDisplayString" xml:space="preserve">
     <value>Ctrl+Space</value>
-  </data>
-  <data name="KeySelectAll" xml:space="preserve">
-    <value>Ctrl+A</value>
   </data>
   <data name="KeySelectAllDisplayString" xml:space="preserve">
     <value>Ctrl+A</value>
   </data>
-  <data name="KeySelectDownByLine" xml:space="preserve">
-    <value>Shift+Down</value>
-  </data>
   <data name="KeySelectDownByLineDisplayString" xml:space="preserve">
     <value>Shift+Down</value>
-  </data>
-  <data name="KeySelectDownByPage" xml:space="preserve">
-    <value>Shift+PageDown</value>
   </data>
   <data name="KeySelectDownByPageDisplayString" xml:space="preserve">
     <value>Shift+PageDown</value>
   </data>
-  <data name="KeySelectDownByParagraph" xml:space="preserve">
-    <value>Ctrl+Shift+Down</value>
-  </data>
   <data name="KeySelectDownByParagraphDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+Down</value>
-  </data>
-  <data name="KeySelectLeftByCharacter" xml:space="preserve">
-    <value>Shift+Left</value>
   </data>
   <data name="KeySelectLeftByCharacterDisplayString" xml:space="preserve">
     <value>Shift+Left</value>
   </data>
-  <data name="KeySelectLeftByWord" xml:space="preserve">
-    <value>Ctrl+Shift+Left</value>
-  </data>
   <data name="KeySelectLeftByWordDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+Left</value>
-  </data>
-  <data name="KeySelectRightByCharacter" xml:space="preserve">
-    <value>Shift+Right</value>
   </data>
   <data name="KeySelectRightByCharacterDisplayString" xml:space="preserve">
     <value>Shift+Right</value>
   </data>
-  <data name="KeySelectRightByWord" xml:space="preserve">
-    <value>Ctrl+Shift+Right</value>
-  </data>
   <data name="KeySelectRightByWordDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+Right</value>
-  </data>
-  <data name="KeySelectToColumnEnd" xml:space="preserve">
-    <value>Alt+Shift+PageDown</value>
   </data>
   <data name="KeySelectToColumnEndDisplayString" xml:space="preserve">
     <value>Alt+Shift+PageDown</value>
   </data>
-  <data name="KeySelectToColumnStart" xml:space="preserve">
-    <value>Alt+Shift+PageUp</value>
-  </data>
   <data name="KeySelectToColumnStartDisplayString" xml:space="preserve">
     <value>Alt+Shift+PageUp</value>
-  </data>
-  <data name="KeySelectToDocumentEnd" xml:space="preserve">
-    <value>Ctrl+Shift+End</value>
   </data>
   <data name="KeySelectToDocumentEndDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+End</value>
   </data>
-  <data name="KeySelectToDocumentStart" xml:space="preserve">
-    <value>Ctrl+Shift+Home</value>
-  </data>
   <data name="KeySelectToDocumentStartDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+Home</value>
-  </data>
-  <data name="KeySelectToLineEnd" xml:space="preserve">
-    <value>Shift+End</value>
   </data>
   <data name="KeySelectToLineEndDisplayString" xml:space="preserve">
     <value>Shift+End</value>
   </data>
-  <data name="KeySelectToLineStart" xml:space="preserve">
-    <value>Shift+Home</value>
-  </data>
   <data name="KeySelectToLineStartDisplayString" xml:space="preserve">
     <value>Shift+Home</value>
-  </data>
-  <data name="KeySelectToWindowBottom" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+PageDown</value>
   </data>
   <data name="KeySelectToWindowBottomDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+PageDown</value>
   </data>
-  <data name="KeySelectToWindowTop" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+PageUp</value>
-  </data>
   <data name="KeySelectToWindowTopDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+PageUp</value>
-  </data>
-  <data name="KeySelectUpByLine" xml:space="preserve">
-    <value>Shift+Up</value>
   </data>
   <data name="KeySelectUpByLineDisplayString" xml:space="preserve">
     <value>Shift+Up</value>
   </data>
-  <data name="KeySelectUpByPage" xml:space="preserve">
-    <value>Shift+PageUp</value>
-  </data>
   <data name="KeySelectUpByPageDisplayString" xml:space="preserve">
     <value>Shift+PageUp</value>
-  </data>
-  <data name="KeySelectUpByParagraph" xml:space="preserve">
-    <value>Ctrl+Shift+Up</value>
   </data>
   <data name="KeySelectUpByParagraphDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+Up</value>
   </data>
-  <data name="KeyShiftBackspace" xml:space="preserve">
-    <value>Shift+Backspace</value>
-  </data>
   <data name="KeyShiftBackspaceDisplayString" xml:space="preserve">
     <value>Shift+Backspace</value>
-  </data>
-  <data name="KeyShiftDelete" xml:space="preserve">
-    <value>Shift+Delete</value>
   </data>
   <data name="KeyShiftDeleteDisplayString" xml:space="preserve">
     <value>Shift+Delete</value>
   </data>
-  <data name="KeyShiftInsert" xml:space="preserve">
-    <value>Shift+Insert</value>
-  </data>
   <data name="KeyShiftInsertDisplayString" xml:space="preserve">
     <value>Shift+Insert</value>
-  </data>
-  <data name="KeyShiftSpace" xml:space="preserve">
-    <value>Shift+Space</value>
   </data>
   <data name="KeyShiftSpaceDisplayString" xml:space="preserve">
     <value>Shift+Space</value>
   </data>
-  <data name="KeySpace" xml:space="preserve">
-    <value>Space</value>
-  </data>
   <data name="KeySpaceDisplayString" xml:space="preserve">
     <value>Space</value>
-  </data>
-  <data name="KeySplitCell" xml:space="preserve">
-    <value>Alt+Ctrl+Shift+S</value>
   </data>
   <data name="KeySplitCellDisplayString" xml:space="preserve">
     <value>Alt+Ctrl+Shift+S</value>
   </data>
-  <data name="KeySwitchViewingMode" xml:space="preserve">
-    <value>Ctrl+M</value>
-  </data>
   <data name="KeySwitchViewingModeDisplayString" xml:space="preserve">
     <value>Ctrl+M</value>
-  </data>
-  <data name="KeyTabBackward" xml:space="preserve">
-    <value>Shift+Tab</value>
   </data>
   <data name="KeyTabBackwardDisplayString" xml:space="preserve">
     <value>Shift+Tab</value>
   </data>
-  <data name="KeyTabForward" xml:space="preserve">
-    <value>Tab</value>
-  </data>
   <data name="KeyTabForwardDisplayString" xml:space="preserve">
     <value>Tab</value>
-  </data>
-  <data name="KeyToggleBold" xml:space="preserve">
-    <value>Ctrl+B</value>
   </data>
   <data name="KeyToggleBoldDisplayString" xml:space="preserve">
     <value>Ctrl+B</value>
   </data>
-  <data name="KeyToggleBullets" xml:space="preserve">
-    <value>Ctrl+Shift+L</value>
-  </data>
   <data name="KeyToggleBulletsDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+L</value>
-  </data>
-  <data name="KeyToggleInsert" xml:space="preserve">
-    <value>Insert</value>
   </data>
   <data name="KeyToggleInsertDisplayString" xml:space="preserve">
     <value>Insert</value>
   </data>
-  <data name="KeyToggleItalic" xml:space="preserve">
-    <value>Ctrl+I</value>
-  </data>
   <data name="KeyToggleItalicDisplayString" xml:space="preserve">
     <value>Ctrl+I</value>
-  </data>
-  <data name="KeyToggleNumbering" xml:space="preserve">
-    <value>Ctrl+Shift+N</value>
   </data>
   <data name="KeyToggleNumberingDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+N</value>
   </data>
   <data name="KeyToggleSpellCheck" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="KeyToggleSpellCheckDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="KeyToggleSubscript" xml:space="preserve">
-    <value>Ctrl+OemPlus</value>
+    <value/>
   </data>
   <data name="KeyToggleSubscriptDisplayString" xml:space="preserve">
     <value>Ctrl+OemPlus</value>
   </data>
-  <data name="KeyToggleSuperscript" xml:space="preserve">
-    <value>Ctrl+Shift+OemPlus</value>
-  </data>
   <data name="KeyToggleSuperscriptDisplayString" xml:space="preserve">
     <value>Ctrl+Shift+OemPlus</value>
   </data>
-  <data name="KeyToggleUnderline" xml:space="preserve">
-    <value>Ctrl+U</value>
-  </data>
   <data name="KeyToggleUnderlineDisplayString" xml:space="preserve">
     <value>Ctrl+U</value>
-  </data>
-  <data name="KeyUndo" xml:space="preserve">
-    <value>Ctrl+Z</value>
   </data>
   <data name="KeyUndoDisplayString" xml:space="preserve">
     <value>Ctrl+Z</value>
@@ -2168,9 +1901,6 @@
   </data>
   <data name="ListBoxInvalidAnchorItem" xml:space="preserve">
     <value>AnchorItem '{0}' does not have a realized container and hence is invalid.</value>
-  </data>
-  <data name="ListBoxSelectAllKey" xml:space="preserve">
-    <value>Ctrl+A</value>
   </data>
   <data name="ListBoxSelectAllKeyDisplayString" xml:space="preserve">
     <value>Ctrl+A</value>
@@ -3558,9 +3288,6 @@
   <data name="StyleValueOfExpressionNotSupported" xml:space="preserve">
     <value>Expression type is not a valid Style value.</value>
   </data>
-  <data name="SwitchViewingMode" xml:space="preserve">
-    <value>_Switch ViewingMode</value>
-  </data>
   <data name="SystemResourceForTypeIsNotStyle" xml:space="preserve">
     <value>System resource for type '{0}' is not a Style object.</value>
   </data>
@@ -4203,9 +3930,6 @@
   <data name="XpsValidatingLoaderUriNotInSamePackage" xml:space="preserve">
     <value>URI in the XPS document points outside the Package.</value>
   </data>
-  <data name="ZoomPercentageConverterStringFormat" xml:space="preserve">
-    <value>{0:0.##}%</value>
-  </data>
   <data name="Animation_ChildMustBeKeyFrame" xml:space="preserve">
     <value>A child of KeyFrameAnimation in XAML must be a KeyFrame of a compatible type.</value>
   </data>
@@ -4277,9 +4001,6 @@
   </data>
   <data name="InvalidPermissionType" xml:space="preserve">
     <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
   </data>
   <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
     <value>Cannot set SandboxExternalContent to true in partial trust.</value>

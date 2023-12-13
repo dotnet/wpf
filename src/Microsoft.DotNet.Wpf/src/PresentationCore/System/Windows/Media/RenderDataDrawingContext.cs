@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
@@ -17,7 +16,7 @@ using MS.Internal;
 using System.Security;
 
 //------------------------------------------------------------------------------
-// This section lists various things that we could improve on the DrawingContxt
+// This section lists various things that we could improve on the DrawingContext
 // class.
 //
 // - Remove the isAnimated flag from being propagated everywhere. Rather mark

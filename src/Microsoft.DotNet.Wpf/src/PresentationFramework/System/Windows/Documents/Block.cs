@@ -102,10 +102,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetIsHyphenationEnabled(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(IsHyphenationEnabledProperty, value);
         }
@@ -116,10 +113,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static bool GetIsHyphenationEnabled(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (bool)element.GetValue(IsHyphenationEnabledProperty);
         }
@@ -240,10 +234,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetTextAlignment(DependencyObject element, TextAlignment value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(TextAlignmentProperty, value);
         }
@@ -254,10 +245,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static TextAlignment GetTextAlignment(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (TextAlignment)element.GetValue(TextAlignmentProperty);
         }
@@ -307,10 +295,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetLineHeight(DependencyObject element, double value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(LineHeightProperty, value);
         }
@@ -322,10 +307,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public static double GetLineHeight(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (double)element.GetValue(LineHeightProperty);
         }
@@ -359,10 +341,7 @@ namespace System.Windows.Documents
         /// <param name="value">The property value to set</param>
         public static void SetLineStackingStrategy(DependencyObject element, LineStackingStrategy value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             element.SetValue(LineStackingStrategyProperty, value);
         }
@@ -373,10 +352,7 @@ namespace System.Windows.Documents
         /// <param name="element">The element from which to read the attached property.</param>
         public static LineStackingStrategy GetLineStackingStrategy(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
 
             return (LineStackingStrategy)element.GetValue(LineStackingStrategyProperty);
         }

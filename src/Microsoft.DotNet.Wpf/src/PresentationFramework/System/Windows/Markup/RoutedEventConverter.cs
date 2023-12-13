@@ -140,18 +140,10 @@ namespace System.Windows.Markup
                                          object value,
                                          Type destinationType)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-            else if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
-            else
-            {
-                throw GetConvertToException(value, destinationType);
-            }
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            throw GetConvertToException(value, destinationType);
         }
 
         // This routine is copied from TemplateBamlRecordReader.  This functionality
@@ -174,7 +166,7 @@ namespace System.Windows.Markup
             string namespaceURI = parserContext.XmlnsDictionary[nsPrefix];
             if (namespaceURI == null)
             {
-                throw new ArgumentException(SR.Get(SRID.ParserPrefixNSProperty, nsPrefix, nameString));
+                throw new ArgumentException(SR.Format(SR.ParserPrefixNSProperty, nsPrefix, nameString));
             }
 
             return namespaceURI;

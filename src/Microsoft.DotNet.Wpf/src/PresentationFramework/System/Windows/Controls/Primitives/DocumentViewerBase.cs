@@ -16,7 +16,6 @@
 using System.Collections;               // IEnumerator
 using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
-using System.Security.Permissions;      // SecurityPermission
 using System.Windows.Annotations;       // AnnotationService
 using System.Windows.Automation;        // AutomationPattern
 using System.Windows.Automation.Peers;  // AutomationPeer
@@ -337,10 +336,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="element">The element from which to read the attached property.</param>
         public static bool GetIsMasterPage(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsMasterPageProperty);
         }
 
@@ -351,10 +347,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="value">The property value to set</param>
         public static void SetIsMasterPage(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsMasterPageProperty, value);
         }
 
@@ -506,10 +499,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="pageNumber"></param>
         protected virtual void OnBringIntoView(DependencyObject element, Rect rect, int pageNumber)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             OnGoToPageCommand(pageNumber);
         }
 
@@ -894,7 +884,7 @@ namespace System.Windows.Controls.Primitives
             // At least one DocumentPageView is required.
             if (pageViews == null)
             {
-                throw new ArgumentException(SR.Get(SRID.DocumentViewerPageViewsCollectionEmpty));
+                throw new ArgumentException(SR.DocumentViewerPageViewsCollectionEmpty);
             }
 
             // Expecting only one DocumentPageView with IsMasterPage property set to true.
@@ -904,7 +894,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (hasMasterPage)
                     {
-                        throw new ArgumentException(SR.Get(SRID.DocumentViewerOneMasterPage));
+                        throw new ArgumentException(SR.DocumentViewerOneMasterPage);
                     }
                     hasMasterPage = true;
                 }
@@ -1740,20 +1730,17 @@ namespace System.Windows.Controls.Primitives
         /// <remarks>DocumentViewerBase only supports a single child of type IDocumentPaginatorSource.</remarks>
         void IAddChild.AddChild(Object value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
             // Check if Content has already been set.
             if (this.Document != null)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DocumentViewerCanHaveOnlyOneChild));
+                throw new InvalidOperationException(SR.DocumentViewerCanHaveOnlyOneChild);
             }
             // Only IDocumentPaginatorSource is a valid content.
             IDocumentPaginatorSource document = value as IDocumentPaginatorSource;
             if (document == null)
             {
-                throw new ArgumentException(SR.Get(SRID.DocumentViewerChildMustImplementIDocumentPaginatorSource), "value");
+                throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, "value");
             }
             this.Document = document;
         }
@@ -1785,10 +1772,7 @@ namespace System.Windows.Controls.Primitives
         object IServiceProvider.GetService(Type serviceType)
         {
             object service = null;
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException("serviceType");
-            }
+            ArgumentNullException.ThrowIfNull(serviceType);
 
             // Following services are available:
             // (1) TextView - wrapper for TextViews exposed by PageViews.

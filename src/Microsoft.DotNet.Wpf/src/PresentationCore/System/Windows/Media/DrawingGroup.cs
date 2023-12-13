@@ -14,7 +14,6 @@ using System.Windows.Threading;
 
 using MS.Win32;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -34,7 +33,6 @@ using System.ComponentModel.Design.Serialization;
 using System.ComponentModel;
 
 using SR = MS.Internal.PresentationCore.SR;
-using SRID = MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {    
@@ -146,12 +144,12 @@ namespace System.Windows.Media
                 
                 if (children == null)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DrawingGroup_CannotAppendToNullCollection));                                
+                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToNullCollection);                                
                 }
                
                 if (children.IsFrozen)
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DrawingGroup_CannotAppendToFrozenCollection));                                                  
+                    throw new InvalidOperationException(SR.DrawingGroup_CannotAppendToFrozenCollection);                                                  
                 }
 
                 // Append the new collection to our current Children.
@@ -316,7 +314,7 @@ namespace System.Windows.Media
             // Throw an exception if we are already opened
             if (_open)
             {
-                throw new InvalidOperationException(SR.Get(SRID.DrawingGroup_AlreadyOpen));                                
+                throw new InvalidOperationException(SR.DrawingGroup_AlreadyOpen);                                
             }
             
             _open = true;

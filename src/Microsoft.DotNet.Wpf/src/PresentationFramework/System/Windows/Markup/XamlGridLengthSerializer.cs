@@ -71,11 +71,8 @@ namespace System.Windows.Markup
             BinaryWriter   writer,           // Writer into the baml stream
             string         stringValue)      // String to convert
         {
-            if (writer == null)
-            {
-                throw new ArgumentNullException( "writer" );
-            }
-            
+            ArgumentNullException.ThrowIfNull(writer);
+
             GridUnitType gridUnitType;
             double   value;
             FromString(stringValue, TypeConverterHelper.InvariantEnglishUS,
@@ -145,11 +142,8 @@ namespace System.Windows.Markup
         public override object ConvertCustomBinaryToObject(
             BinaryReader reader)
         {
-            if (reader == null)
-            {
-                throw new ArgumentNullException( "reader" );
-            }
-            
+            ArgumentNullException.ThrowIfNull(reader);
+
             GridUnitType unitType;
             double unitValue;
             byte unitAndFlags = reader.ReadByte();
@@ -259,8 +253,8 @@ namespace System.Windows.Markup
                 Debug.Assert(   unit == GridUnitType.Pixel 
                             ||  DoubleUtil.AreClose(unitFactor, 1.0)    );
 
-                string valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
         }
 

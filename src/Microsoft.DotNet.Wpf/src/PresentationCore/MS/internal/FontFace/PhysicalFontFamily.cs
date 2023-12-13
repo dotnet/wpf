@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
@@ -98,13 +97,8 @@ namespace MS.Internal.FontFace
         /// Indexer that indexes the underlying family name table via CultureInfo
         /// </summary>
         /// <value></value>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - FamilyNames are safe to expose.
-        /// </SecurityNote>
         IDictionary<XmlLanguage,string> IFontFamily.Names
         {
-            [SecurityCritical, SecurityTreatAsSafe]
             get
             {
                 if (_familyNames == null)
@@ -123,14 +117,6 @@ namespace MS.Internal.FontFace
         /// <param name="weight">font weight</param>
         /// <param name="stretch">font stretch</param>
         /// <returns>matching font face</returns>
-        /// <SecurityNote>
-        /// Critical - as this returns GlyphTypeface created from internal constructor
-        ///            which exposes windows font information.
-        /// Safe - as this doesn't allow you to create a GlyphTypeface object for a specific
-        ///        font and thus won't allow you to figure what fonts might be installed on
-        ///        the machine.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal GlyphTypeface GetGlyphTypeface(
             FontStyle       style,
             FontWeight      weight,
@@ -156,14 +142,6 @@ namespace MS.Internal.FontFace
         /// <param name="advance">number of characters with valid glyph mapped</param>
         /// <param name="nextValid">offset to the character mapping to a valid glyph</param>
         /// <returns>matching typeface</returns>
-        /// <SecurityNote>
-        /// Critical - as this returns GlyphTypeface created from internal constructor
-        ///            which exposes windows font information.
-        /// Safe - as this doesn't allow you to create a GlyphTypeface object for a specific
-        ///        font and thus won't allow you to figure what fonts might be installed on
-        ///        the machine.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal GlyphTypeface MapGlyphTypeface(
             FontStyle               style,
             FontWeight              weight,
@@ -241,10 +219,6 @@ namespace MS.Internal.FontFace
         /// </summary>
         private struct MatchingFace
         {
-            /// <SecurityNote>
-            /// Critical - calls into critical Text.TextInterface.Font properties
-            /// </SecurityNote>
-            [SecurityCritical]
             internal MatchingFace(Text.TextInterface.Font face)
             {
                 _face = face;
@@ -317,7 +291,8 @@ namespace MS.Internal.FontFace
             // If the run starts with combining marks, we will not be able to find base characters for them
             // within the run. These combining marks will be mapped to their best fonts as normal characters.
             //
-            bool hasBaseChar = false;
+            const int NOBASE = -1; // null char is a valid base
+            int baseChar = NOBASE;
 
             // Determine how many characters we can advance, i.e., find the first invalid character.
             for (; advance < unicodeString.Length; advance += sizeofChar)
@@ -333,12 +308,16 @@ namespace MS.Internal.FontFace
 
                 if (!Classification.IsCombining(originalChar))
                 {
-                    hasBaseChar = true;
+                    baseChar = originalChar;
                 }
-                else if (hasBaseChar)
+                else if (baseChar != NOBASE)
                 {
-                    // continue to advance for combining mark with base char
-                    continue;
+                    // continue to advance for combining mark with base char (can be precomposed by shaping engine)
+                    // except if it is a different script (#6801)
+                    if (Classification.GetScript(baseChar) == Classification.GetScript(originalChar))
+                    {
+                        continue;
+                    }
                 }
 
                 int ch = digitMap[originalChar];
@@ -391,7 +370,7 @@ namespace MS.Internal.FontFace
                     // The same goes for joiner. Note that "hasBaseChar" here indicates if there is an invalid base
                     // char in front.
                     if (Classification.IsJoiner(ch)
-                       || (hasBaseChar && Classification.IsCombining(ch))
+                       || (baseChar != NOBASE && Classification.IsCombining(ch) && Classification.GetScript(ch) == Classification.GetScript(baseChar))
                        )
                        continue;
 
@@ -416,11 +395,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Distance from character cell top to English baseline relative to em size.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - Metrics are safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         double IFontFamily.Baseline(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)
@@ -455,11 +429,6 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Recommended baseline-to-baseline distance for text in this font
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - calls into critical Text.TextInterface.FontFamily property
-        /// TreatAsSafe - Metrics are safe to expose.
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         double IFontFamily.LineSpacing(double emSize, double toReal, double pixelsPerDip, TextFormattingMode textFormattingMode)
         {
             if (textFormattingMode == TextFormattingMode.Ideal)

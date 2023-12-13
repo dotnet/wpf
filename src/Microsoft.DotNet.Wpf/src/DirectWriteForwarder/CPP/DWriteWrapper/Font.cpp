@@ -15,12 +15,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         Flags_IsSymbolFontValue             = 0x0004,
     };
 
-    /// <SecurityNote>
-    /// Critical - Receives a native pointer and stores it internally.
-    ///            This whole object is wrapped around the passed in pointer
-    ///            So this ctor assumes safety of the passed in pointer.
-    /// </SecurityNote>
-    //[SecurityCritical] – tagged in header file
     Font::Font(
       IDWriteFont* font
       )
@@ -152,21 +146,12 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return fontFace;
     }
 
-    /// <SecurityNote>
-    /// Critical - Exposes the critical member _font.
-    /// </SecurityNote>
-    [SecurityCritical]
     System::IntPtr Font::DWriteFontAddRef::get()
     {
         _font->Value->AddRef();
         return (System::IntPtr)_font->Value;
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontFamily^ Font::Family::get()
     {
         IDWriteFontFamily* dwriteFontFamily;
@@ -178,11 +163,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return gcnew FontFamily(dwriteFontFamily);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontWeight Font::Weight::get()
     {
         DWRITE_FONT_WEIGHT dwriteFontWeight = _font->Value->GetWeight();
@@ -190,11 +170,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return DWriteTypeConverter::Convert(dwriteFontWeight);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontStretch Font::Stretch::get()
     {
         DWRITE_FONT_STRETCH dwriteFontStretch = _font->Value->GetStretch();
@@ -202,11 +177,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return DWriteTypeConverter::Convert(dwriteFontStretch);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontStyle Font::Style::get()
     {
         DWRITE_FONT_STYLE dwriteFontStyle = _font->Value->GetStyle();
@@ -214,11 +184,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return DWriteTypeConverter::Convert(dwriteFontStyle);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool Font::IsSymbolFont::get()
     {
         if ((_flags & Flags_IsSymbolFontInitialized) != Flags_IsSymbolFontInitialized)
@@ -234,12 +199,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return ((_flags & Flags_IsSymbolFontValue) == Flags_IsSymbolFontValue);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer and calls 
-    ///            Security Critical LocalizedStrings ctor.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) LocalizedStrings^ Font::FaceNames::get()
     {
         IDWriteLocalizedStrings* dwriteLocalizedStrings;
@@ -251,11 +210,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return gcnew LocalizedStrings(dwriteLocalizedStrings);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool Font::GetInformationalStrings(
                                                                               InformationalStringID informationalStringID,
                                       [System::Runtime::InteropServices::Out] LocalizedStrings^%    informationalStrings
@@ -274,11 +228,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return (!!exists);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontSimulations Font::SimulationFlags::get()
     {
         DWRITE_FONT_SIMULATIONS dwriteFontSimulations = _font->Value->GetSimulations();
@@ -286,11 +235,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return DWriteTypeConverter::Convert(dwriteFontSimulations);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontMetrics^ Font::Metrics::get()
     {
         if (_fontMetrics == nullptr)
@@ -305,11 +249,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return _fontMetrics;
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) bool Font::HasCharacter(
                            UINT32 unicodeValue
                            )
@@ -324,12 +263,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return (!!exists);
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer and calls
-    ///            security critical FontFace ctor.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontFace^ Font::CreateFontFace()
     {
         IDWriteFontFace* dwriteFontFace;
@@ -367,18 +300,13 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         return _version;
     }
 
-    /// <SecurityNote>
-    /// Critical - Uses security critical _font pointer.
-    /// Safe     - It does not expose the pointer it uses.
-    /// </SecurityNote>
-    [SecuritySafeCritical]
     __declspec(noinline) FontMetrics^ Font::DisplayMetrics(FLOAT emSize, FLOAT pixelsPerDip)
     {
         DWRITE_FONT_METRICS fontMetrics;
         IDWriteFontFace* fontFace = NULL;
         HRESULT hr = _font->Value->CreateFontFace(&fontFace);
         ConvertHresultToException(hr, "FontMetrics^ Font::DisplayMetrics");
-        DWRITE_MATRIX transform = Factory::GetIdentityTransform();
+        DWRITE_MATRIX transform = InternalFactory::GetIdentityTransform();
         hr = fontFace->GetGdiCompatibleMetrics(
                                     emSize,
                                     pixelsPerDip,

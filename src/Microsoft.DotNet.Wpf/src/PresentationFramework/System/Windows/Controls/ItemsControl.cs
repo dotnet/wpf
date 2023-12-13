@@ -60,7 +60,7 @@ namespace System.Windows.Controls
 
         static ItemsControl()
         {
-            // Define default style in code instead of in theme files. 
+            // Define default style in code instead of in theme files.
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemsControl), new FrameworkPropertyMetadata(typeof(ItemsControl)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(ItemsControl));
             EventManager.RegisterClassHandler(typeof(ItemsControl), Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotFocus));
@@ -419,7 +419,7 @@ namespace System.Windows.Controls
                     if (ReadLocalValue(ItemTemplateSelectorProperty) != DependencyProperty.UnsetValue ||
                         ReadLocalValue(DisplayMemberPathProperty) == DependencyProperty.UnsetValue)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.DisplayMemberPathAndItemTemplateSelectorDefined));
+                        throw new InvalidOperationException(SR.DisplayMemberPathAndItemTemplateSelectorDefined);
                     }
                 }
 
@@ -664,11 +664,11 @@ namespace System.Windows.Controls
             {
                 if (!(this.ItemTemplateSelector is DisplayMemberTemplateSelector))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.ItemTemplateSelectorBreaksDisplayMemberPath));
+                    throw new InvalidOperationException(SR.ItemTemplateSelectorBreaksDisplayMemberPath);
                 }
                 if (Helper.IsTemplateDefined(ItemTemplateProperty, this))
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.DisplayMemberPathAndItemTemplateDefined));
+                    throw new InvalidOperationException(SR.DisplayMemberPathAndItemTemplateDefined);
                 }
             }
         }
@@ -1097,8 +1097,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static int GetAlternationIndex(DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             return (int)element.GetValue(AlternationIndexProperty);
         }
@@ -1196,8 +1195,7 @@ namespace System.Windows.Controls
         ///</summary>
         public static DependencyObject ContainerFromElement(ItemsControl itemsControl, DependencyObject element)
         {
-            if (element == null)
-                throw new ArgumentNullException("element");
+            ArgumentNullException.ThrowIfNull(element);
 
             // if the element is itself the desired container, return it
             if (IsContainerForItemsControl(element, itemsControl))
@@ -1342,7 +1340,7 @@ namespace System.Windows.Controls
                 Visual parent = VisualTreeHelper.GetParent(visual) as Visual;
                 if (parent != null)
                 {
-                    Invariant.Assert(parent is FrameworkElement, SR.Get(SRID.ItemsControl_ParentNotFrameworkElement));
+                    Invariant.Assert(parent is FrameworkElement, SR.ItemsControl_ParentNotFrameworkElement);
                     Panel p = parent as Panel;
                     if (p != null && (visual is UIElement))
                     {
@@ -1397,7 +1395,8 @@ namespace System.Windows.Controls
                 // The ItemTemplate isn't used, which may confuse the user (bug 991101).
                 if (ItemTemplate != null || ItemTemplateSelector != null)
                 {
-                    TraceData.Trace(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, AvTrace.TypeName(item));
+                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.ItemTemplateForDirectItem, null,
+                        traceParameters: new object[] { AvTrace.TypeName(item) });
                 }
             }
 
@@ -3011,7 +3010,7 @@ namespace System.Windows.Controls
 
             Rect viewPortBounds = new Rect(new Point(), viewPort.RenderSize);
             Rect elementBounds = new Rect(new Point(), element.RenderSize);
-            elementBounds = element.TransformToAncestor(viewPort).TransformBounds(elementBounds);
+            elementBounds = CorrectCatastrophicCancellation(element.TransformToAncestor(viewPort)).TransformBounds(elementBounds);
             bool northSouth = (axis == FocusNavigationDirection.Up || axis == FocusNavigationDirection.Down);
             bool eastWest = (axis == FocusNavigationDirection.Left || axis == FocusNavigationDirection.Right);
 
@@ -3076,6 +3075,78 @@ namespace System.Windows.Controls
                 return ElementViewportPosition.AfterViewport;
             }
             return ElementViewportPosition.None;
+        }
+
+        // this version also returns the element's layout rectangle (in viewport's coordinates).
+        // VirtualizingStackPanel needs this, to determine the element's scroll offset.
+        internal static ElementViewportPosition GetElementViewportPosition(FrameworkElement viewPort,
+            UIElement element,
+            FocusNavigationDirection axis,
+            bool fullyVisible,
+            bool ignorePerpendicularAxis,
+            out Rect elementRect,
+            out Rect layoutRect)
+        {
+            ElementViewportPosition position = GetElementViewportPosition(
+                viewPort,
+                element,
+                axis,
+                fullyVisible,
+                false,
+                out elementRect);
+
+            if (position == ElementViewportPosition.None)
+            {
+                layoutRect = Rect.Empty;
+            }
+            else
+            {
+                Visual parent = VisualTreeHelper.GetParent(element) as Visual;
+                Debug.Assert(element != viewPort && element.IsArrangeValid && parent != null, "GetElementViewportPosition called in unsupported situation");
+                layoutRect = CorrectCatastrophicCancellation(parent.TransformToAncestor(viewPort)).TransformBounds(element.PreviousArrangeRect);
+            }
+
+            return position;
+        }
+
+        // in large virtualized hierarchical lists (TreeView or grouping), the transform
+        // returned by element.TransformToAncestor(viewport) is vulnerable to catastrophic
+        // cancellation.  If element is at the top of the viewport, but embedded in
+        // layers of the hierarchy, the contributions of the intermediate elements add
+        // up to a large positive number which should exactly cancel out the large
+        // negative offset of the viewport's direct child to produce net offset of 0.0.
+        // But floating-point drift while accumulating the intermediate offsets and
+        // catastrophic cancellation in the last step may produce a very small
+        // non-zero number instead (e.g. -0.0000000000006548). This can lead to
+        // infinite loops and incorrect decisions in layout.
+        // To mitigate this problem, replace near-zero offsets with zero.
+        private static GeneralTransform CorrectCatastrophicCancellation(GeneralTransform transform)
+        {
+            MatrixTransform matrixTransform = transform as MatrixTransform;
+            if (matrixTransform != null)
+            {
+                bool needNewTransform = false;
+                Matrix matrix = matrixTransform.Matrix;
+
+                if (matrix.OffsetX != 0.0 && LayoutDoubleUtil.AreClose(matrix.OffsetX, 0.0))
+                {
+                    matrix.OffsetX = 0.0;
+                    needNewTransform = true;
+                }
+
+                if (matrix.OffsetY != 0.0 && LayoutDoubleUtil.AreClose(matrix.OffsetY, 0.0))
+                {
+                    matrix.OffsetY = 0.0;
+                    needNewTransform = true;
+                }
+
+                if (needNewTransform)
+                {
+                    transform = new MatrixTransform(matrix);
+                }
+            }
+
+            return transform;
         }
 
         private static bool ElementIntersectsViewport(Rect viewportRect, Rect elementRect)
@@ -3443,7 +3514,7 @@ namespace System.Windows.Controls
             {
                 // verify style is appropriate before applying it
                 if (!style.TargetType.IsInstanceOfType(container))
-                    throw new InvalidOperationException(SR.Get(SRID.StyleForWrongType, style.TargetType.Name, container.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.StyleForWrongType, style.TargetType.Name, container.GetType().Name));
 
                 foContainer.Style = style;
                 foContainer.IsStyleSetFromGenerator = true;
@@ -3617,9 +3688,8 @@ namespace System.Windows.Controls
                             // otherwise see if an unclaimed container matches the item
                             object item = info.Item;
                             ItemContainerGenerator.FindItem(
-                                delegate(object o, DependencyObject d)
-                                    { return ItemsControl.EqualsEx(o, item) &&
-                                        !claimedContainers.Contains(d); },
+                                static (state, o, d) => ItemsControl.EqualsEx(o, state.item) && !state.claimedContainers.Contains(d),
+                                (item, claimedContainers),
                                 out container, out index);
                         }
 
@@ -3934,7 +4004,16 @@ namespace System.Windows.Controls
             // HasItems may be wrong when underlying collection does not notify,
             // but this function should try to return what's consistent with ItemsControl state.
             int itemsCount = HasItems ? Items.Count : 0;
-            return SR.Get(SRID.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
+            return SR.Format(SR.ToStringFormatString_ItemsControl, this.GetType(), itemsCount);
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            if (!AccessibilitySwitches.ItemsControlDoesNotSupportAutomation)
+            {
+                return new ItemsControlWrapperAutomationPeer(this);
+            }
+            return null;
         }
 
         // This should really override OnCreateAutomationPeer, but that API addition

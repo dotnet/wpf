@@ -16,7 +16,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows;
 using System.Globalization;
 using System.Windows.Data;
@@ -52,7 +51,7 @@ namespace System.Windows.Markup
                 {
                    if (!Char.IsWhiteSpace(s[i]))
                     {
-                        throw new ArgumentException(SR.Get(SRID.NonWhiteSpaceInAddText, s));
+                        throw new ArgumentException(SR.Format(SR.NonWhiteSpaceInAddText, s));
                     }
                 }
             }

@@ -23,8 +23,6 @@ namespace System.Windows.Xps.Serialization.RCW
     
     [Guid("67BD7D69-1EEF-4BB1-B5E7-6F4F87BE8ABE"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
-    [SecurityCritical]
-    [SuppressUnmanagedCodeSecurity]
     internal interface IXpsOMColorProfileResource : IXpsOMResource
     {
         [MethodImpl(MethodImplOptions.InternalCall)]

@@ -12,7 +12,6 @@
 using System;
 using System.Runtime.Serialization;
 using System.Security;
-using System.Security.Permissions;
 
 namespace System.Windows
 {
@@ -36,7 +35,7 @@ namespace System.Windows
         {
             _resourceKey = resourceKey;
         }
-
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         ///<summary>
         /// Constructor (required for Xml web service)
         ///</summary>
@@ -44,7 +43,7 @@ namespace System.Windows
         {
             _resourceKey = info.GetValue("Key", typeof(object));
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
         ///<summary>
         /// LineNumber that the exception occured on.
         ///</summary>
@@ -63,18 +62,15 @@ namespace System.Windows
         /// <param name="context">
         /// The destination for this serialization.
         /// </param>
-        ///<SecurityNote>
-        ///     Critical: calls Exception.GetObjectData which LinkDemands
-        ///     PublicOK: a demand exists here
-        ///</SecurityNote>
-        [SecurityCritical]
-        [SecurityPermissionAttribute(SecurityAction.Demand,SerializationFormatter=true)]
+#pragma warning disable CS0672 // Member overrides obsolete member
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
             info.AddValue("Key", _resourceKey);
         }
-
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
+#pragma warning restore CS0672 // Member overrides obsolete member
         private object _resourceKey;
     }
 

@@ -33,9 +33,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
-using System.Security.Permissions;
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 // These types are aliased to match the unamanaged names used in interop
 using BOOL = System.UInt32;
 using WORD = System.UInt16;
@@ -145,7 +143,7 @@ namespace System.Windows.Media.Animation
         {
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
 
             WritePreamble();
@@ -253,7 +251,7 @@ namespace System.Windows.Media.Animation
             {
                 if (value == null)
                 {
-                    throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                    throw new System.ArgumentException(SR.Collection_NoNull);
                 }
 
                 WritePreamble();
@@ -299,10 +297,7 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -414,10 +409,7 @@ namespace System.Windows.Media.Animation
         {
             ReadPreamble();
 
-            if (array == null)
-            {
-                throw new ArgumentNullException("array");
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
@@ -429,7 +421,7 @@ namespace System.Windows.Media.Animation
 
             if (array.Rank != 1)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadRank));
+                throw new ArgumentException(SR.Collection_BadRank);
             }
 
             // Elsewhere in the collection we throw an AE when the type is
@@ -444,7 +436,7 @@ namespace System.Windows.Media.Animation
             }
             catch (InvalidCastException e)
             {
-                throw new ArgumentException(SR.Get(SRID.Collection_BadDestArray, this.GetType().Name), e);
+                throw new ArgumentException(SR.Format(SR.Collection_BadDestArray, this.GetType().Name), e);
             }
         }
 
@@ -529,14 +521,11 @@ namespace System.Windows.Media.Animation
 
         private Timeline Cast(object value)
         {
-            if( value == null )
-            {
-                throw new System.ArgumentNullException("value");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             if (!(value is Timeline))
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_BadType, this.GetType().Name, value.GetType().Name, "Timeline"));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Timeline"));
             }
 
             return (Timeline) value;
@@ -562,7 +551,7 @@ namespace System.Windows.Media.Animation
 
             if (value == null)
             {
-                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                throw new System.ArgumentException(SR.Collection_NoNull);
             }
             WritePreamble();
             Timeline newValue = value;
@@ -827,7 +816,7 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -845,7 +834,7 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Get(SRID.Enumerator_CollectionChanged));
+                    throw new InvalidOperationException(SR.Enumerator_CollectionChanged);
                 }
             }
 
@@ -879,12 +868,12 @@ namespace System.Windows.Media.Animation
                     }
                     else if (_index == -1)
                     {
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_NotStarted));
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
                         Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
-                        throw new InvalidOperationException(SR.Get(SRID.Enumerator_ReachedEnd));
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
             }
@@ -962,7 +951,7 @@ namespace System.Windows.Media.Animation
                         {
                             if (item == null)
                             {
-                                throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                                throw new System.ArgumentException(SR.Collection_NoNull);
                             }
                             Timeline newValue = item;
                             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
@@ -980,7 +969,7 @@ namespace System.Windows.Media.Animation
                     {
                         if (item == null)
                         {
-                            throw new System.ArgumentException(SR.Get(SRID.Collection_NoNull));
+                            throw new System.ArgumentException(SR.Collection_NoNull);
                         }
                         OnFreezablePropertyChanged(/* oldValue = */ null, item);
 

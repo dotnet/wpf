@@ -19,7 +19,6 @@ using System.Security;
 using System.Net.Cache;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Media
 {    
@@ -83,7 +82,7 @@ namespace System.Windows.Media
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Get(SRID.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
 
             HttpRequestCacheLevel level = (HttpRequestCacheLevel)Enum.Parse(typeof(HttpRequestCacheLevel), s, true);
@@ -109,20 +108,12 @@ namespace System.Windows.Media
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The policy to convert. </param>
         /// <param name="destinationType">The type to which to convert the policy. </param>
-        ///<SecurityNote>
-        ///     Critical: calls InstanceDescriptor ctor which LinkDemands
-        ///     PublicOK: can only make an InstanceDescriptor for RequestCachePolicy/HttpRequestCachePolicy, not an arbitrary class
-        ///</SecurityNote> 
-        [SecurityCritical]
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException("destinationType");
-            }
+            ArgumentNullException.ThrowIfNull(destinationType);
 
             HttpRequestCachePolicy httpPolicy = value as HttpRequestCachePolicy;
             if(httpPolicy != null)

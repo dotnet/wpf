@@ -14,13 +14,11 @@ using System.Windows.Media.TextFormatting;
 using System.Globalization;
 
 using System.Security;
-using System.Security.Permissions;
 using MS.Internal.Shaping;
 using MS.Internal.FontCache;
 using MS.Utility;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 using MS.Internal.Text.TextInterface;
 
@@ -139,11 +137,6 @@ namespace MS.Internal.TextFormatting
         /// <param name="textRunLength">text run length</param>
         /// <param name="offsetToFirstCp">character offset to the first cp</param>
         /// <param name="bidiLevel">bidi level of this run</param>
-        /// <SecurityNote>
-        ///     Critical: This has an unsafe code block
-        ///     TreatAsSafe: This code is ok to call since it does not expose the critical pointer
-        ///  </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal LSRun(
             TextRunInfo             runInfo,
             Plsrun                  type,
@@ -917,10 +910,6 @@ namespace MS.Internal.TextFormatting
         /// TypographyProperties should be either all null or all not-null.
         /// First is used for internal purposes, also can be used by simple clients.
         /// </summary>
-        /// <SecurityNote>
-        /// Critical - deals with unsafe int array
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static unsafe void CompileFeatureSet(
             LSRun[]                   lsruns,
             int*                      pcchRuns,
@@ -941,7 +930,7 @@ namespace MS.Internal.TextFormatting
                 {
                     if (lsruns[i].RunProp.TypographyProperties != null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.CompileFeatureSet_InvalidTypographyProperties));
+                        throw new ArgumentException(SR.CompileFeatureSet_InvalidTypographyProperties);
                     }
                 }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -19,7 +18,6 @@ using System.Windows.Threading;
 using MS.Internal;
 
 using SR=MS.Internal.PresentationCore.SR;
-using SRID=MS.Internal.PresentationCore.SRID;
 
 namespace System.Windows.Input
 {
@@ -59,14 +57,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to attach.</param>
         public static void AddPreviewExecutedHandler(UIElement element, ExecutedRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.AddHandler(PreviewExecutedEvent, handler);
         }
@@ -78,14 +70,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to remove.</param>
         public static void RemovePreviewExecutedHandler(UIElement element, ExecutedRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.RemoveHandler(PreviewExecutedEvent, handler);
         }
@@ -106,14 +92,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to attach.</param>
         public static void AddExecutedHandler(UIElement element, ExecutedRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.AddHandler(ExecutedEvent, handler);
         }
@@ -125,14 +105,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to remove.</param>
         public static void RemoveExecutedHandler(UIElement element, ExecutedRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.RemoveHandler(ExecutedEvent, handler);
         }
@@ -153,14 +127,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to attach.</param>
         public static void AddPreviewCanExecuteHandler(UIElement element, CanExecuteRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.AddHandler(PreviewCanExecuteEvent, handler);
         }
@@ -172,14 +140,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to remove.</param>
         public static void RemovePreviewCanExecuteHandler(UIElement element, CanExecuteRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.RemoveHandler(PreviewCanExecuteEvent, handler);
         }
@@ -200,14 +162,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to attach.</param>
         public static void AddCanExecuteHandler(UIElement element, CanExecuteRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.AddHandler(CanExecuteEvent, handler);
         }
@@ -219,14 +175,8 @@ namespace System.Windows.Input
         /// <param name="handler">The handler to remove.</param>
         public static void RemoveCanExecuteHandler(UIElement element, CanExecuteRoutedEventHandler handler)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(handler);
 
             element.RemoveHandler(CanExecuteEvent, handler);
         }
@@ -242,14 +192,8 @@ namespace System.Windows.Input
         /// <param name="inputBinding">InputBinding to register</param>
         public static void RegisterClassInputBinding(Type type, InputBinding inputBinding)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            if (inputBinding == null)
-            {
-                throw new ArgumentNullException("inputBinding");
-            }
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(inputBinding);
 
             lock (_classInputBindings.SyncRoot)
             {
@@ -277,14 +221,8 @@ namespace System.Windows.Input
         /// <param name="commandBinding">CommandBinding to register</param>
         public static void RegisterClassCommandBinding(Type type, CommandBinding commandBinding)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            if (commandBinding == null)
-            {
-                throw new ArgumentNullException("commandBinding");
-            }
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(commandBinding);
 
             lock (_classCommandBindings.SyncRoot)
             {
@@ -340,10 +278,6 @@ namespace System.Windows.Input
         /// </remarks>
         /// <param name="targetElement">UIElement/ContentElement to be scanned for input and command bindings</param>
         /// <param name="inputEventArgs">InputEventArgs to be matched against for gestures</param>
-        /// <SecurityNote>
-        ///     Critical: This code can be used to spoof input and cause elevations for Userinitiated paste
-        /// </SecurityNote>
-        [SecurityCritical]
         internal static void TranslateInput(IInputElement targetElement, InputEventArgs inputEventArgs)
         {
             if ((targetElement == null) || (inputEventArgs == null))
@@ -357,9 +291,9 @@ namespace System.Windows.Input
 
             // Determine UIElement/ContentElement/Neither type
             DependencyObject targetElementAsDO = targetElement as DependencyObject;
-            bool isUIElement = InputElement.IsUIElement(targetElementAsDO);
-            bool isContentElement = !isUIElement && InputElement.IsContentElement(targetElementAsDO);
-            bool isUIElement3D = !isUIElement && !isContentElement && InputElement.IsUIElement3D(targetElementAsDO);
+            bool isUIElement = targetElementAsDO is UIElement;
+            bool isContentElement = !isUIElement && targetElementAsDO is ContentElement;
+            bool isUIElement3D = !isUIElement && !isContentElement && targetElementAsDO is UIElement3D;
 
             // Step 1: Check local input bindings
             InputBindingCollection localInputBindings = null;
@@ -375,6 +309,7 @@ namespace System.Windows.Input
             {
                 localInputBindings = ((UIElement3D)targetElement).InputBindingsInternal;
             }
+
             if (localInputBindings != null)
             {
                 InputBinding inputBinding = localInputBindings.FindMatch(targetElement, inputEventArgs);
@@ -428,6 +363,7 @@ namespace System.Windows.Input
                 {
                     localCommandBindings = ((UIElement3D)targetElement).CommandBindingsInternal;
                 }
+
                 if (localCommandBindings != null)
                 {
                     command = localCommandBindings.FindMatch(targetElement, inputEventArgs);
@@ -502,11 +438,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - accesses critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information, does not modify)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ExecuteCommand(RoutedCommand routedCommand, object parameter, IInputElement target, InputEventArgs inputEventArgs)
         {
             return routedCommand.ExecuteCore(parameter, target, inputEventArgs.UserInitiated);
@@ -576,35 +507,9 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - creates critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static bool ExecuteCommandBinding(object sender, ExecutedRoutedEventArgs e, CommandBinding commandBinding)
         {
-            // Asserting a permission in the case that the command was user initiated
-            // and the command is a secure command. We can do this safely because at
-            // the time the binding was setup, we demanded the permission.
-            ISecureCommand secureCommand = e.Command as ISecureCommand;
-            bool elevate = e.UserInitiated && (secureCommand != null) && (secureCommand.UserInitiatedPermission != null);
-
-            if (elevate)
-            {
-                secureCommand.UserInitiatedPermission.Assert(); //BlessedAssert
-            }
-            try
-            {
-                commandBinding.OnExecuted(sender, e);
-            }
-            finally
-            {
-                if (elevate)
-                {
-                    CodeAccessPermission.RevertAssert();
-                }
-            }
-
+            commandBinding.OnExecuted(sender, e);
             return e.Handled;
         }
 
@@ -635,64 +540,56 @@ namespace System.Windows.Input
         private static void FindCommandBinding(object sender, RoutedEventArgs e, ICommand command, bool execute)
         {
             // Check local command bindings
-            CommandBindingCollection commandBindings = null;
-            DependencyObject senderAsDO = sender as DependencyObject;
-            if (InputElement.IsUIElement(senderAsDO))
+            CommandBindingCollection commandBindings = sender switch
             {
-                commandBindings = ((UIElement)senderAsDO).CommandBindingsInternal;
-            }
-            else if (InputElement.IsContentElement(senderAsDO))
-            {
-                commandBindings = ((ContentElement)senderAsDO).CommandBindingsInternal;
-            }
-            else if (InputElement.IsUIElement3D(senderAsDO))
-            {
-                commandBindings = ((UIElement3D)senderAsDO).CommandBindingsInternal;
-            }
-            if (commandBindings != null)
+                UIElement uiElement => uiElement.CommandBindingsInternal,
+                ContentElement contentElement => contentElement.CommandBindingsInternal,
+                UIElement3D uiElement3d => uiElement3d.CommandBindingsInternal,
+                _ => default
+            };
+            if (commandBindings is not null)
             {
                 FindCommandBinding(commandBindings, sender, e, command, execute);
             }
+
+            Type senderType = sender.GetType();
 
             // If no command binding is found, check class command bindings
             // First find the relevant command bindings, under the lock.
             // Most of the time there are no such bindings;  most of the rest of
             // the time there is only one.   Lazy-allocate with this in mind.
-            Tuple<Type, CommandBinding> tuple = null;       // zero or one binding
-            List<Tuple<Type, CommandBinding>> list = null;  // more than one
-
+            ValueTuple<Type, CommandBinding>? tuple = default;       // zero or one binding
+            List<ValueTuple<Type, CommandBinding>> list = default;   // more than one
+            
             lock (_classCommandBindings.SyncRoot)
             {
                 // Check from the current type to all the base types
-                Type classType = sender.GetType();
-                while (classType != null)
+                Type classType = senderType;
+                while (classType is not null)
                 {
-                    CommandBindingCollection classCommandBindings = _classCommandBindings[classType] as CommandBindingCollection;
-                    if (classCommandBindings != null)
+                    if (_classCommandBindings[classType] is CommandBindingCollection classCommandBindings)
                     {
                         int index = 0;
                         while (true)
                         {
                             CommandBinding commandBinding = classCommandBindings.FindMatch(command, ref index);
-                            if (commandBinding != null)
+                            if (commandBinding is null)
                             {
-                                if (tuple == null)
-                                {
-                                    tuple = new Tuple<Type, CommandBinding>(classType, commandBinding);
-                                }
-                                else
-                                {
-                                    if (list == null)
-                                    {
-                                        list = new List<Tuple<Type, CommandBinding>>();
-                                        list.Add(tuple);
-                                    }
-                                    list.Add(new Tuple<Type, CommandBinding>(classType, commandBinding));
-                                }
+                                break;
+                            }
+
+                            if (tuple is null)
+                            {
+                                tuple = ValueTuple.Create(classType, commandBinding);
                             }
                             else
                             {
-                                break;
+                                list ??= new List<ValueTuple<Type, CommandBinding>>(8)
+                                {
+                                    // We know that tuple cannot be null here
+                                    tuple.Value
+                                };
+                                list.Add(new ValueTuple<Type, CommandBinding>(classType, commandBinding));
                             }
                         }
                     }
@@ -702,37 +599,35 @@ namespace System.Windows.Input
 
             // execute the bindings.  This can call into user code, so it must
             // be done outside the lock to avoid deadlock.
-            if (list != null)
+            if (list is not null)
             {
                 // more than one binding
-                ExecutedRoutedEventArgs exArgs = execute ? (ExecutedRoutedEventArgs)e : null;
-                CanExecuteRoutedEventArgs canExArgs = execute ? null : (CanExecuteRoutedEventArgs)e;
-                for (int i=0; i<list.Count; ++i)
+                ExecutedRoutedEventArgs exArgs = execute ? (ExecutedRoutedEventArgs)e : default;
+                CanExecuteRoutedEventArgs canExArgs = execute ? default : (CanExecuteRoutedEventArgs)e;
+                for (int i = 0; i < list.Count; ++i)
                 {
                     // invoke the binding
-                    if ((execute && ExecuteCommandBinding(sender, exArgs, list[i].Item2)) ||
-                        (!execute && CanExecuteCommandBinding(sender, canExArgs, list[i].Item2)))
+                    if ((!execute || !ExecuteCommandBinding(sender, exArgs, list[i].Item2)) &&
+                        (execute || !CanExecuteCommandBinding(sender, canExArgs, list[i].Item2))) continue;
+                    // if it succeeds, advance past the remaining bindings for this type
+                    Type classType = list[i].Item1;
+                    while (++i < list.Count && list[i].Item1 == classType)
                     {
-                        // if it succeeds, advance past the remaining bindings for this type
-                        Type classType = list[i].Item1;
-                        while (++i<list.Count && list[i].Item1 == classType)
-                        {
-                            // no body needed
-                        }
-                        --i;    // back up, so that the outer for-loop advances to the right place
+                        // no body needed
                     }
+                    --i;    // back up, so that the outer for-loop advances to the right place
                 }
             }
-            else if (tuple != null)
+            else if (tuple is var (_, commandBinding))
             {
                 // only one binding
                 if (execute)
                 {
-                    ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, tuple.Item2);
+                    ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding);
                 }
                 else
                 {
-                    CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, tuple.Item2);
+                    CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding);
                 }
             }
         }
@@ -743,13 +638,18 @@ namespace System.Windows.Input
             while (true)
             {
                 CommandBinding commandBinding = commandBindings.FindMatch(command, ref index);
-                if ((commandBinding == null) ||
-                    (execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding)) ||
-                    (!execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding)))
+                if (HandleCommandBinding(sender, e, commandBinding, execute))
                 {
                     break;
                 }
             }
+        }
+
+        private static bool HandleCommandBinding(object sender, RoutedEventArgs e, CommandBinding commandBinding, bool execute)
+        {
+            return commandBinding is null ||
+                   execute && ExecuteCommandBinding(sender, (ExecutedRoutedEventArgs)e, commandBinding) ||
+                   !execute && CanExecuteCommandBinding(sender, (CanExecuteRoutedEventArgs)e, commandBinding);
         }
 
         private static void TransferEvent(IInputElement newSource, CanExecuteRoutedEventArgs e)
@@ -768,11 +668,6 @@ namespace System.Windows.Input
             }
         }
 
-        /// <SecurityNote>
-        ///     Critical - creates critical information (determining if command is driven from user input)
-        ///     TreatAsSafe - Does so correctly (only looking at protected information)
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         private static void TransferEvent(IInputElement newSource, ExecutedRoutedEventArgs e)
         {
             RoutedCommand command = e.Command as RoutedCommand;

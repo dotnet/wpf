@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security;
-using System.Security.Permissions;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
@@ -41,11 +40,6 @@ namespace System.Windows
     /// </remarks>
     public abstract partial class UIElement3D : Visual3D, IInputElement
     {
-        /// <SecurityNote>
-        ///  Critical: This code is used to register various thunks that are used to send input to the tree
-        ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         static UIElement3D()
         {
             UIElement.RegisterEvents(typeof(UIElement3D));
@@ -154,7 +148,7 @@ namespace System.Windows
             {
                 DependencyObject parent = InternalVisualParent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     Visual parentAsVisual = parent as Visual;
 
@@ -198,7 +192,7 @@ namespace System.Windows
             {
                 DependencyObject parent = oldParent;
 
-                if (!InputElement.IsUIElement(parent) && !InputElement.IsUIElement3D(parent))
+                if (parent is not UIElement and not UIElement3D)
                 {
                     // We are being unplugged from a non-UIElement visual. This
                     // means that our parent didn't play by the same rules we
@@ -1065,11 +1059,6 @@ namespace System.Windows
         }
         internal static readonly EventPrivateKey IsVisibleChangedKey = new EventPrivateKey(); // Used by ContentElement
 
-        /// <SecurityNote>
-        /// Critical - Calls a critical method (PresentationSource.CriticalFromVisual)
-        /// TreatAsSafe - No exposure
-        /// </SecurityNote>
-        [SecurityCritical, SecurityTreatAsSafe]
         internal void UpdateIsVisibleCache() // Called from PresentationSource
         {
             // IsVisible is a read-only property.  It derives its "base" value
@@ -1481,10 +1470,7 @@ namespace System.Windows
         /// <returns>True if capture was taken.</returns>
         public bool CaptureTouch(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             return touchDevice.Capture(this);
         }
@@ -1496,10 +1482,7 @@ namespace System.Windows
         /// <returns>true if capture was released, false otherwise.</returns>
         public bool ReleaseTouchCapture(TouchDevice touchDevice)
         {
-            if (touchDevice == null)
-            {
-                throw new ArgumentNullException("touchDevice");
-            }
+            ArgumentNullException.ThrowIfNull(touchDevice);
 
             if (touchDevice.Captured == this)
             {

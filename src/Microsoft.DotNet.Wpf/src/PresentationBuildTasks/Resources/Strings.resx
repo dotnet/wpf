@@ -132,30 +132,6 @@
   <data name="FileResolved" xml:space="preserve">
     <value>Input file '{0}' is resolved to new relative path '{1}' at directory '{2}'.</value>
   </data>
-  <data name="MarkupCompilePass1Task" xml:space="preserve">
-    <value>MarkupCompilePass1</value>
-  </data>
-  <data name="FileClassifierTask" xml:space="preserve">
-    <value>FileClassifier</value>
-  </data>
-  <data name="MarkupCompilePass2Task" xml:space="preserve">
-    <value>MarkupCompilePass2</value>
-  </data>
-  <data name="UidManagerTask" xml:space="preserve">
-    <value>UidManager</value>
-  </data>
-  <data name="ResourcesGeneratorTask" xml:space="preserve">
-    <value>ResourcesGenerator</value>
-  </data>
-  <data name="MergeLocalizationDirectivesTask" xml:space="preserve">
-    <value>MergeLocalizationDirectives</value>
-  </data>
-  <data name="UpdateManifestForBrowserApplicationTask" xml:space="preserve">
-    <value>UpdateManifestForBrowserApplication</value>
-  </data>
-  <data name="GetWinFXPathTask" xml:space="preserve">
-    <value>GetWinFXPath</value>
-  </data>
   <data name="CompileSucceed_Pass1" xml:space="preserve">
     <value>MarkupCompilePass1 successfully generated BAML or source code files.</value>
   </data>
@@ -266,6 +242,9 @@
   </data>
   <data name="MultipleSplashScreenImages" xml:space="preserve">
     <value>MC1004: Project file cannot specify more than one SplashScreen element.</value>
+  </data>
+  <data name="InvalidAssemblyVersion" xml:space="preserve">
+    <value>MC1005: Invalid AssemblyVersion detected: {0}.</value>
   </data>
   <data name="InvalidCulture" xml:space="preserve">
     <value>FC1001: The UICulture value '{0}' set in the project file is not valid.</value>
@@ -653,9 +632,6 @@
   </data>
   <data name="TemplateNoTriggerTarget" xml:space="preserve">
     <value>MC4111: Cannot find the Trigger target '{0}'.  (The target must appear before any Setters, Triggers, or Conditions that use it.)</value>
-  </data>
-  <data name="QualifiedNameHasWrongFormat" xml:space="preserve">
-    <value>MC4301: Type name '{0}' does not have the expected format 'className, assembly'.</value>
   </data>
   <data name="InvalidDeSerialize" xml:space="preserve">
     <value>MC4401: Serializer does not support Convert operations.</value>

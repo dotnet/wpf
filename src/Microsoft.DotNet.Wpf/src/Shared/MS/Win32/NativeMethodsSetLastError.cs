@@ -161,5 +161,8 @@ namespace MS.Internal.Drt
         public static extern IntPtr SetWindowLongPtrWndProc(HandleRef hWnd, int nIndex, NativeMethods.WndProc dwNewLong);
 
 #endif
+
+        [DllImport(PresentationNativeDll, EntryPoint="LsDisableSpecialCharacterLigature")]
+        public static extern void LsDisableSpecialCharacterLigature(bool fDisable);
     }
 }

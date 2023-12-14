@@ -395,6 +395,21 @@ namespace MS.Internal
 
         #endregion
 
+        #region DisableSpecialCharacterLigature
+
+        internal const string DisableSpecialCharacterLigatureSwitchName = "Switch.System.Windows.DisableSpecialCharacterLigature";
+        private static int _disableSpecialCharacterLigature;
+        public static bool DisableSpecialCharacterLigature
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableSpecialCharacterLigatureSwitchName, ref _disableSpecialCharacterLigature);
+            }
+        }
+
+        #endregion
+
     }
 #pragma warning restore 436
 }

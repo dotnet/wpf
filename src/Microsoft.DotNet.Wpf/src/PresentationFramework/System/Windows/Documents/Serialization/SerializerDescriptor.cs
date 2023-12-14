@@ -61,6 +61,8 @@ namespace System.Windows.Documents.Serialization
         ///
         ///     This method currently requires full trust to run.
         /// </remarks>
+        // Suppressing the single file warning til the problem is fixed, tracking in https://github.com/dotnet/wpf/issues/5226
+        [UnconditionalSuppressMessage("SingleFile", "IL3000:Avoid accessing Assembly file path when publishing as a single file")]
         public static SerializerDescriptor CreateFromFactoryInstance(
             ISerializerFactory  factoryInstance
             )

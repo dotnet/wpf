@@ -9,6 +9,7 @@
 namespace System.Windows.Documents
 {
     using MS.Internal;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using System.Xml;
     using System.IO;
@@ -374,7 +375,8 @@ namespace System.Windows.Documents
                 WriteXamlTextSegment(xmlWriter, textSegment.Start, textSegment.End, xamlTypeMapper, ref elementLevel, wpfPayload, ignoreWriteHyperlinkEnd, ignoreList, preserveTextElements);
 
                 Invariant.Assert(elementLevel >= 4, "At the minimun we expected to stay within four elements: Section(wrapper),Table,TableRowGroup,TableRow");
-                if (checkElementLevel < 0) checkElementLevel = elementLevel; // initialize level checking variable
+                if (checkElementLevel < 0)
+                    checkElementLevel = elementLevel; // initialize level checking variable
                 Invariant.Assert(checkElementLevel == elementLevel, "elementLevel is supposed to be unchanged between segments of table cell range");
 
                 // Assuming that the element is TableRow - close it.
@@ -538,6 +540,8 @@ namespace System.Windows.Documents
         /// If TRUE, TextElements are serialized as-is.  If FALSE, they're upcast
         /// to their base types.
         /// </param>
+        [UnconditionalSuppressMessage("SingleFile", "IL3002:Module.Name Returns a string with the value of <Unknown>",
+            Justification = "Code handles when the Module.Name is <Unknown>")]
         private static void WriteStartXamlElement(ITextRange range, ITextPointer textReader, XmlWriter xmlWriter, XamlTypeMapper xamlTypeMapper, bool reduceElement, bool preserveTextElements)
         {
             Type elementType = textReader.ParentType;
@@ -572,9 +576,15 @@ namespace System.Windows.Documents
             if (customTextElement)
             {
                 // If the element is not from PresentationFramework, we'll need to serialize a namespace
-                // Will module name always have a '.'?  If so, can remove conditional in assembly assignment below
-                int index = elementTypeStandardized.Module.Name.LastIndexOf('.');
-                string assembly = (index == -1 ? elementTypeStandardized.Module.Name : elementTypeStandardized.Module.Name.Substring(0, index));
+                string module = elementTypeStandardized.Module.Name;
+                string assembly;
+                if (module == "<Unknown>")
+                    assembly = elementTypeStandardized.Assembly.GetName().Name;
+                else
+                {
+                    int index = module.LastIndexOf('.');
+                    assembly = (index == -1 ? module : module.Substring(0, index));
+                }
                 string nameSpace = "clr-namespace:" + elementTypeStandardized.Namespace + ";" + "assembly=" + assembly;
                 string prefix = elementTypeStandardized.Namespace;
                 xmlWriter.WriteStartElement(prefix, elementTypeStandardized.Name, nameSpace);
@@ -617,7 +627,7 @@ namespace System.Windows.Documents
 
             Invariant.Assert(startColumn >= 0, "startColumn index is supposed to be non-negative");
 
-            if(columns.Count > 0)
+            if (columns.Count > 0)
             {
                 // Build an appropriate name for the complex property
                 string complexPropertyName = table.GetType().Name + ".Columns";
@@ -686,7 +696,7 @@ namespace System.Windows.Documents
             // So alternative solution for whitespace preservation could be setting xml:space="preserve"
             // attribute to only empty runs - this would make our whitespace preservation more
             // narrowed...
-            
+
             // Investigate if this is really worth doing.
             // Currently we wildly preserve all whitespaces in TextRange, which can produce
             // a problem if somebody manually provides this "innocent" xaml (notice newline between paragraphs):

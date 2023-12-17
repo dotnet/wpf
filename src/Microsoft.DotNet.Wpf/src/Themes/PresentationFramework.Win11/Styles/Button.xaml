@@ -398,6 +398,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}" />
-    <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type Button}" />
+    <!-- <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type Button}" /> -->
 
 </ResourceDictionary>

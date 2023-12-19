@@ -12,5 +12,10 @@
     <FontFamily x:Key="ContentControlThemeFontFamily">Segoe Ui</FontFamily>
 
     <FontFamily x:Key="SegoeFluentIcons">Segoe Fluent Icons</FontFamily>
+       <!--  https://github.com/microsoft/fluentui-system-icons  -->
+    <FontFamily x:Key="FluentSystemIcons">pack://application:,,,/PresentationFramework.Win11;component/Resources/Fonts/#FluentSystemIcons-Regular</FontFamily>
+
+    <!--  https://github.com/microsoft/fluentui-system-icons  -->
+    <FontFamily x:Key="FluentSystemIconsFilled">pack://application:,,,/PresentationFramework.Win11;component/Resources/Fonts/#FluentSystemIcons-Filled</FontFamily>
 
 </ResourceDictionary>

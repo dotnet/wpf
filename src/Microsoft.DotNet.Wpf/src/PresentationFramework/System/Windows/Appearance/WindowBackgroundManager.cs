@@ -21,7 +21,7 @@ namespace System.Windows.Appearance;
 /// );
 /// </code>
 /// </example>
-public static class WindowBackgroundManager
+internal static class WindowBackgroundManager
 {
     /// <summary>
     /// Tries to apply dark theme to <see cref="Window"/>.

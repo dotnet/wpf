@@ -100,7 +100,8 @@ internal static class WindowBackdrop
             _ = UnsafeNativeMethodsWindow.RemoveWindowDarkMode(hWnd);
         }
 
-        _ = UnsafeNativeMethodsWindow.RemoveWindowCaption(hWnd);
+        // BUG - This is causing TitleBar caption to be removed for normal windows
+        //_ = UnsafeNativeMethodsWindow.RemoveWindowCaption(hWnd);
 
         // 22H1
         if (!Utility.IsOSWindows11Insider1OrNewer)

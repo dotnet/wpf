@@ -20,7 +20,7 @@ namespace System.Windows.Appearance;
 /// var currentWindowTheme = SystemThemeManager.GetCachedSystemTheme();
 /// </code>
 /// </example>
-public static class SystemThemeManager
+internal static class SystemThemeManager
 {
     private static SystemTheme _cachedTheme = SystemTheme.Unknown;
 

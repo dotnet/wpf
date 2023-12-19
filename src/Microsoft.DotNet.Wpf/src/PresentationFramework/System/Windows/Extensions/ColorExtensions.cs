@@ -9,7 +9,7 @@ namespace System.Windows.Extensions;
 /// <summary>
 /// Adds an extension for <see cref="System.Windows.Media.Color"/> that allows manipulation with HSL and HSV color spaces.
 /// </summary>
-public static class ColorExtensions
+internal static class ColorExtensions
 {
     /// <summary>
     /// Maximum <see cref="Byte"/> size with the current <see cref="Single"/> precision.

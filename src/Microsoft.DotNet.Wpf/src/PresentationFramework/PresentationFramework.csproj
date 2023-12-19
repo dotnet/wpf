@@ -417,10 +417,7 @@
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
-    <!-- <Compile Include="System\Windows\Hardware\DpiHelper.cs" /> -->
-    <Compile Include="System\Windows\Hardware\RenderingTier.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />
-    <Compile Include="System\Windows\IThemeControl.cs" />
     <Compile Include="System\Windows\Interop\Dwapi.cs" />
     <Compile Include="System\Windows\Interop\Libraries.cs" />
     <Compile Include="System\Windows\Interop\WinDef\POINT.cs" />

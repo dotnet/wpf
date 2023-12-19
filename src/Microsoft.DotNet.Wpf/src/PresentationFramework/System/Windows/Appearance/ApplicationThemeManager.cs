@@ -151,6 +151,8 @@ public static class ApplicationThemeManager
 
         Changed?.Invoke(applicationTheme, ApplicationAccentColorManager.SystemAccent);
 
+        // TODO - Why this check for MW only and not for all windows?
+        
         if (Application.Current.MainWindow is Window mainWindow)
         {
             WindowBackgroundManager.UpdateBackground(

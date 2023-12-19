@@ -45,7 +45,7 @@ namespace PresentationFramework.Win11.Controls
     /// &lt;/Style&gt;
     /// </code>
     /// </example>
-    public class ClientAreaBorder : System.Windows.Controls.Border, IThemeControl
+    public class ClientAreaBorder : System.Windows.Controls.Border
     {
         private bool _borderBrushApplied = false;
 
@@ -63,7 +63,7 @@ namespace PresentationFramework.Win11.Controls
 
         private static Thickness? _windowChromeNonClientFrameThickness;
 
-        public ApplicationTheme ApplicationTheme { get; set; } = ApplicationTheme.Unknown;
+        private ApplicationTheme ApplicationTheme { get; set; } = ApplicationTheme.Unknown;
 
         /// <summary>
         /// Get the system <see cref="SM_CXPADDEDBORDER"/> value in WPF units.

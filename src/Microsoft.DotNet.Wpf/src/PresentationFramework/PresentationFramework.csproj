@@ -429,7 +429,6 @@
     <Compile Include="System\Windows\Interop\WinDef\RECTL.cs" />
     <Compile Include="System\Windows\Interop\WinDef\SIZE.cs" />
     <Compile Include="System\Windows\Interop\UxTheme.cs" />
-    <Compile Include="System\Windows\WindowCornerPreference.cs" />
     <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
     <Compile Include="System\Windows\Interop\UnsafeReflection.cs" />
     <Compile Include="System\Windows\Interop\User32.cs" />

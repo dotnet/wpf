@@ -39,7 +39,6 @@ public static class ApplicationThemeManager
 
     internal const string LibraryNamespace = "win11;";
 
-    // TODO: Need to correct this path
     internal const string ThemesDictionaryPath = "pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/";
 
     /// <summary>
@@ -97,23 +96,13 @@ public static class ApplicationThemeManager
                 themeDictionaryName = "Dark";
                 break;
             case ApplicationTheme.HighContrast:
-                switch (ApplicationThemeManager.GetSystemTheme())
+                themeDictionaryName = ApplicationThemeManager.GetSystemTheme() switch
                 {
-                    case SystemTheme.HC1:
-                        themeDictionaryName = "HC1";
-                        break;
-                    case SystemTheme.HC2:
-                        themeDictionaryName = "HC2";
-                        break;
-                    case SystemTheme.HCBlack:
-                        themeDictionaryName = "HCBlack";
-                        break;
-                    case SystemTheme.HCWhite:
-                    default:
-                        themeDictionaryName = "HCWhite";
-                        break;
-                }
-
+                    SystemTheme.HC1 => "HC1",
+                    SystemTheme.HC2 => "HC2",
+                    SystemTheme.HCBlack => "HCBlack",
+                    _ => "HCWhite",
+                };
                 break;
         }
 

@@ -23,10 +23,24 @@ namespace System.Windows.Interop;
 /// </summary>
 internal static class Dwmapi
 {
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct POINT
+    {
+        /// <summary>
+        /// Specifies the x-coordinate of the point.
+        /// </summary>
+        public int x;
+
+        /// <summary>
+        /// Specifies the y-coordinate of the point.
+        /// </summary>
+        public int y;
+    }
     /// <summary>
     /// Cloaked flags describing why a window is cloaked.
     /// </summary>
-    public enum DWM_CLOAKED
+    internal enum DWM_CLOAKED
     {
         DWM_CLOAKED_APP = 0x00000001,
         DWM_CLOAKED_SHELL = 0x00000002,
@@ -36,7 +50,7 @@ internal static class Dwmapi
     /// <summary>
     /// GT_*
     /// </summary>
-    public enum GESTURE_TYPE
+    internal enum GESTURE_TYPE
     {
         GT_PEN_TAP = 0,
         GT_PEN_DOUBLETAP = 1,
@@ -54,7 +68,7 @@ internal static class Dwmapi
     /// <summary>
     /// DWMTWR_* Tab window requirements.
     /// </summary>
-    public enum DWM_TAB_WINDOW_REQUIREMENTS
+    internal enum DWM_TAB_WINDOW_REQUIREMENTS
     {
         /// <summary>
         /// This result means the window meets all requirements requested.
@@ -124,7 +138,7 @@ internal static class Dwmapi
     /// Flags used by the DwmSetWindowAttribute function to specify the rounded corner preference for a window.
     /// </summary>
     [Flags]
-    public enum DWM_WINDOW_CORNER_PREFERENCE
+    internal enum DWM_WINDOW_CORNER_PREFERENCE
     {
         DEFAULT = 0,
         DONOTROUND = 1,
@@ -136,7 +150,7 @@ internal static class Dwmapi
     /// Backdrop types.
     /// </summary>
     [Flags]
-    public enum DWMSBT : uint
+    internal enum DWMSBT : uint
     {
         /// <summary>
         /// Automatically selects backdrop effect.
@@ -167,7 +181,7 @@ internal static class Dwmapi
     /// <summary>
     /// Non-client rendering policy attribute values
     /// </summary>
-    public enum DWMNCRENDERINGPOLICY
+    internal enum DWMNCRENDERINGPOLICY
     {
         /// <summary>
         /// Enable/disable non-client rendering based on window style
@@ -193,7 +207,7 @@ internal static class Dwmapi
     /// <summary>
     /// Values designating how Flip3D treats a given window.
     /// </summary>
-    public enum DWMFLIP3DWINDOWPOLICY
+    internal enum DWMFLIP3DWINDOWPOLICY
     {
         /// <summary>
         /// Hide or include the window in Flip3D based on window style and visibility.
@@ -221,7 +235,7 @@ internal static class Dwmapi
     /// <para><see href="https://github.com/electron/electron/issues/29937"/></para>
     /// </summary>
     [Flags]
-    public enum DWMWINDOWATTRIBUTE
+    internal enum DWMWINDOWATTRIBUTE
     {
         /// <summary>
         /// Is non-client rendering enabled/disabled
@@ -421,7 +435,7 @@ internal static class Dwmapi
     /// <summary>
     /// Specifies the input operations for which visual feedback should be provided. This enumeration is used by the DwmShowContact function.
     /// </summary>
-    public enum DWM_SHOWCONTACT
+    internal enum DWM_SHOWCONTACT
     {
         DWMSC_DOWN,
         DWMSC_UP,
@@ -435,7 +449,7 @@ internal static class Dwmapi
     /// <summary>
     /// Flags used by the DwmSetPresentParameters function to specify the frame sampling type.
     /// </summary>
-    public enum DWM_SOURCE_FRAME_SAMPLING
+    internal enum DWM_SOURCE_FRAME_SAMPLING
     {
         /// <summary>
         /// Use the first source frame that includes the first refresh of the output frame
@@ -505,7 +519,7 @@ internal static class Dwmapi
     /// <summary>
     /// SIT flags.
     /// </summary>
-    public enum DWM_SIT
+    internal enum DWM_SIT
     {
         /// <summary>
         /// None.
@@ -579,7 +593,7 @@ internal static class Dwmapi
     public static extern int DwmSetIconicLivePreviewBitmap(
         [In] IntPtr hWnd,
         [In] IntPtr hbmp,
-        [In, Optional] WinDef.POINT pptClient,
+        [In, Optional] POINT pptClient,
         [In] DWM_SIT dwSITFlags
     );
 

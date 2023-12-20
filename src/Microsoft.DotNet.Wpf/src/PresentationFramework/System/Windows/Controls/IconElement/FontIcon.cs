@@ -16,8 +16,6 @@ namespace System.Windows.Controls;
 /// <summary>
 /// Represents an icon that uses a glyph from the specified font.
 /// </summary>
-//[ToolboxItem(true)]
-//[ToolboxBitmap(typeof(FontIcon), "FontIcon.bmp")]
 public class FontIcon : IconElement
 {
     #region Static properties

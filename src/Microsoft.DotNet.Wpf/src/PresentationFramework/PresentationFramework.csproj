@@ -637,7 +637,6 @@
     <Compile Include="System\Windows\Controls\GroupStyle.cs" />
     <Compile Include="System\Windows\Controls\HeaderedContentControl.cs" />
     <Compile Include="System\Windows\Controls\HeaderedItemsControl.cs" />
-    <Compile Include="System\Windows\Controls\IAppearanceControl.cs" />
     <Compile Include="System\Windows\Controls\IIconControl.cs" />
     <Compile Include="System\Windows\Controls\IconElement\FontIcon.cs" />
     <Compile Include="System\Windows\Controls\IconElement\IconElement.cs" />

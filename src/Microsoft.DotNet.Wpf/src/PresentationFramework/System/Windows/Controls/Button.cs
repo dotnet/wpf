@@ -24,7 +24,7 @@ namespace System.Windows.Controls
     ///     Represents the standard button component that inherently reacts to the Click event.
     /// The Button control is one of the most basic forms of user interface (UI).
     /// </summary>
-    public class Button: ButtonBase, IAppearanceControl, IIconControl
+    public class Button: ButtonBase, IIconControl
     {
         #region Constructors
 

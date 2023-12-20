@@ -99,7 +99,7 @@
       PresentationFramework.Classic-ref;
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale-ref;
-      PresentationFramework.Win11;
+      PresentationFramework.Win11-ref;
       PresentationUI-ref;
       System.Printing-ref;
       System.Windows.Controls.Ribbon-ref;

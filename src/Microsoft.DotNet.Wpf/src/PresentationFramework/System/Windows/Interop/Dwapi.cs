@@ -548,7 +548,7 @@ internal static class Dwmapi
     [DllImport(Libraries.Dwmapi, PreserveSig = false)]
     public static extern void DwmExtendFrameIntoClientArea(
         [In] IntPtr hWnd,
-        [In] ref UxTheme.MARGINS pMarInset
+        [In] ref Standard.MARGINS pMarInset
     );
 
     /// <summary>

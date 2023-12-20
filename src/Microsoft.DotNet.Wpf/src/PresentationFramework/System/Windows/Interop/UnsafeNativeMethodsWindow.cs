@@ -368,17 +368,17 @@ internal static class UnsafeNativeMethodsWindow
             return false;
         }
 
-        var wtaOptions = new UxTheme.WTA_OPTIONS()
+        var wtaOptions = new WTA_OPTIONS()
         {
-            dwFlags = UxTheme.WTNCA.NODRAWCAPTION,
-            dwMask = UxTheme.WTNCA.VALIDBITS
+            dwFlags = WTNCA.NODRAWCAPTION,
+            dwMask = WTNCA.VALIDBITS
         };
 
-        UxTheme.SetWindowThemeAttribute(
+        NativeMethods.SetWindowThemeAttribute(
             hWnd,
-            UxTheme.WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
+            WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
             ref wtaOptions,
-            (uint)Marshal.SizeOf(typeof(UxTheme.WTA_OPTIONS))
+            (uint)Marshal.SizeOf(typeof(WTA_OPTIONS))
         );
 
         return true;
@@ -414,19 +414,18 @@ internal static class UnsafeNativeMethodsWindow
         }
 
         // #1 Remove titlebar elements
-        var wtaOptions = new UxTheme.WTA_OPTIONS()
+        var wtaOptions = new WTA_OPTIONS()
         {
-            dwFlags = (UxTheme.WTNCA.NODRAWCAPTION | UxTheme.WTNCA.NODRAWICON | UxTheme.WTNCA.NOSYSMENU),
-            dwMask = UxTheme.WTNCA.VALIDBITS
+            dwFlags = (WTNCA.NODRAWCAPTION | WTNCA.NODRAWICON | WTNCA.NOSYSMENU),
+            dwMask = WTNCA.VALIDBITS
         };
 
-        Interop
-            .UxTheme
-            .SetWindowThemeAttribute(
+
+        NativeMethods.SetWindowThemeAttribute(
                 hWnd,
-                UxTheme.WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
+                WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
                 ref wtaOptions,
-                (uint)Marshal.SizeOf(typeof(UxTheme.WTA_OPTIONS))
+                (uint)Marshal.SizeOf(typeof(WTA_OPTIONS))
             );
 
         DisplayDpi windowDpi = DpiHelper.GetWindowDpi(hWnd);
@@ -438,7 +437,7 @@ internal static class UnsafeNativeMethodsWindow
             windowDpi.DpiScaleY
         );
 
-        var dwmMargin = new UxTheme.MARGINS
+        var dwmMargin = new MARGINS
         {
             // err on the side of pushing in glass an extra pixel.
             cxLeftWidth = (int)Math.Ceiling(deviceGlassThickness.Left),

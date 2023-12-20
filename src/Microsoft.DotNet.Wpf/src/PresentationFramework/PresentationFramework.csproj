@@ -420,7 +420,6 @@
     <Compile Include="System\Windows\WindowBackdropType.cs" />
     <Compile Include="System\Windows\Interop\Dwapi.cs" />
     <Compile Include="System\Windows\Interop\Libraries.cs" />
-    <Compile Include="System\Windows\Interop\UxTheme.cs" />
     <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
     <Compile Include="System\Windows\Interop\UnsafeReflection.cs" />
     <Compile Include="System\Windows\Annotations\AnchorInfo.cs" />

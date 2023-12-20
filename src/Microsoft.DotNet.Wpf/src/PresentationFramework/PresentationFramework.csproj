@@ -555,6 +555,7 @@
     <Compile Include="System\Windows\Controls\ContextMenu.cs" />
     <Compile Include="System\Windows\Controls\ContextMenuService.cs" />
     <Compile Include="System\Windows\Controls\Control.cs" />
+    <Compile Include="System\Windows\Controls\Controlappearance.cs" />
     <Compile Include="System\Windows\Controls\ConversionValidationRule.cs" />
     <Compile Include="System\Windows\Controls\CustomDictionarySources.cs" />
     <Compile Include="System\Windows\Controls\DataErrorValidationRule.cs" />
@@ -636,6 +637,16 @@
     <Compile Include="System\Windows\Controls\GroupStyle.cs" />
     <Compile Include="System\Windows\Controls\HeaderedContentControl.cs" />
     <Compile Include="System\Windows\Controls\HeaderedItemsControl.cs" />
+    <Compile Include="System\Windows\Controls\IIconControl.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\FontIcon.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\IconElement.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\IconElementConverter.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\IconSourceElement.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\IconSourceElementConverter.cs" />
+    <Compile Include="System\Windows\Controls\IconElement\SymbolIcon.cs" />
+    <Compile Include="System\Windows\Controls\IconSource\IconSource.cs" />
+    <Compile Include="System\Windows\Controls\IconSource\SymbolIconSource.cs" />
+    <Compile Include="System\Windows\Controls\IconSource\FontIconSource.cs" />
     <Compile Include="System\Windows\Controls\Image.cs" />
     <Compile Include="System\Windows\Controls\InitializingNewItemEventArgs.cs" />
     <Compile Include="System\Windows\Controls\InitializingNewItemEventHandler.cs" />
@@ -758,6 +769,10 @@
     <Compile Include="System\Windows\Controls\Stack.cs" />
     <Compile Include="System\Windows\Controls\StickyNote.cs" />
     <Compile Include="System\Windows\Controls\StyleSelector.cs" />
+    <Compile Include="System\Windows\Controls\SymbolRegular.cs" />
+    <Compile Include="System\Windows\Controls\SymbolExtensions.cs" />
+    <Compile Include="System\Windows\Controls\SymbolFilled.cs" />
+    <Compile Include="System\Windows\Controls\SymbolGlyph.cs" />
     <Compile Include="System\Windows\Controls\TabControl.cs" />
     <Compile Include="System\Windows\Controls\TabItem.cs" />
     <Compile Include="System\Windows\Controls\TextAdaptor.cs" />

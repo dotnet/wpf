@@ -612,6 +612,17 @@ namespace System.Windows.Ink
                 {
                     this.AttributeChanged(this, e);
                 }
+
+                if (_drawingAttributeChangeSensitiveList != null)
+                {
+                    foreach (WeakReference<IDrawingAttributeChangeSensitive> weakReference in _drawingAttributeChangeSensitiveList)
+                    {
+                        if (weakReference.TryGetTarget(out var sensitive))
+                        {
+                            sensitive.OnDrawingAttributesChanged(e);
+                        }
+                    }
+                }
             }
         }
 
@@ -655,6 +666,38 @@ namespace System.Windows.Ink
         }
 
         #endregion Protected Methods
+
+        #region Internal Methods
+
+        internal void AddDrawingAttributeChangeSensitive(
+            IDrawingAttributeChangeSensitive drawingAttributeChangeSensitive)
+        {
+            _drawingAttributeChangeSensitiveList ??= new List<WeakReference<IDrawingAttributeChangeSensitive>>();
+            _drawingAttributeChangeSensitiveList.Add(new WeakReference<IDrawingAttributeChangeSensitive>(drawingAttributeChangeSensitive));
+        }
+
+        internal void RemoveDrawingAttributeChangeSensitive(
+            IDrawingAttributeChangeSensitive drawingAttributeChangeSensitive)
+        {
+            _drawingAttributeChangeSensitiveList?.RemoveAll(weakReference =>
+            {
+                if (weakReference.TryGetTarget(out var sensitive))
+                {
+                    if (sensitive == drawingAttributeChangeSensitive)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        #endregion
 
         #region Private Methods
 
@@ -1016,6 +1059,8 @@ namespace System.Windows.Ink
         #endregion
 
         #region Private Fields
+
+        private List<WeakReference<IDrawingAttributeChangeSensitive>> _drawingAttributeChangeSensitiveList;
 
         // The private PropertyChanged event
         private PropertyChangedEventHandler             _propertyChanged;

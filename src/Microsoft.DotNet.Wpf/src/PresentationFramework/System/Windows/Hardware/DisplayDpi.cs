@@ -13,7 +13,7 @@ namespace System.Windows.Hardware;
 /// Stores DPI information from which a <see cref="System.Windows.Media.Visual"/> or <see cref="System.Windows.UIElement"/>
 /// is rendered.
 /// </summary>
-public struct DisplayDpi
+internal struct DisplayDpi
 {
     /// <summary>
     /// Initializes a new instance of the System.Windows.DpiScale structure.

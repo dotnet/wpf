@@ -13,7 +13,7 @@ namespace Standard
     using System.Windows.Interop;
     using System.Windows.Hardware;
 
-    public static class DpiHelper
+    internal static class DpiHelper
     {
         [ThreadStatic]
         private static Matrix _transformToDevice;

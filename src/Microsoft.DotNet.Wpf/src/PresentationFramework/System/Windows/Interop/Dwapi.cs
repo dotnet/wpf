@@ -21,8 +21,6 @@ namespace System.Windows.Interop;
 /// <summary>
 /// Desktop Window Manager (DWM).
 /// </summary>
-// ReSharper disable IdentifierTypo
-// ReSharper disable InconsistentNaming
 internal static class Dwmapi
 {
     /// <summary>

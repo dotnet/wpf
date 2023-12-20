@@ -428,7 +428,6 @@
     <Compile Include="System\Windows\Interop\UxTheme.cs" />
     <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
     <Compile Include="System\Windows\Interop\UnsafeReflection.cs" />
-    <Compile Include="System\Windows\Interop\User32.cs" />
     <Compile Include="System\Windows\Annotations\AnchorInfo.cs" />
     <Compile Include="System\Windows\Annotations\Annotation.cs" />
     <Compile Include="System\Windows\Annotations\AnnotationAuthorChangedEventArgs.cs" />

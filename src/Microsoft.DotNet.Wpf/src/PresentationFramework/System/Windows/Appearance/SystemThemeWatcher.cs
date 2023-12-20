@@ -8,6 +8,7 @@ using System.Windows.Interop;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using Standard;
 
 namespace System.Windows.Appearance;
 
@@ -171,7 +172,7 @@ internal static class SystemThemeWatcher
     /// </summary>
     private static IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
-        if (msg == (int)User32.WM.WININICHANGE)
+        if (msg == (int)WM.WININICHANGE)
         {
             UpdateObservedWindow(hWnd);
         }

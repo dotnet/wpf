@@ -12,6 +12,10 @@ namespace Standard
     using System.Windows.Media;
     using System.Windows.Interop;
     using System.Windows.Hardware;
+    using System.Runtime.InteropServices;
+     using MS.Internal.Interop;
+    using MS.Internal.PresentationFramework;
+    using MS.Win32;
 
     internal static class DpiHelper
     {
@@ -55,7 +59,7 @@ namespace Standard
                 return new DisplayDpi(DefaultDpi, DefaultDpi);
             }
 
-            var windowDpi = (int)User32.GetDpiForWindow(windowHandle);
+            var windowDpi = (int)SafeNativeMethods.GetDpiForWindow( new HandleRef(null,windowHandle));
 
             return new DisplayDpi(windowDpi, windowDpi);
         }

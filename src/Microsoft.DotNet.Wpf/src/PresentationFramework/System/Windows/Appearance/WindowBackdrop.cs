@@ -86,7 +86,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (!User32.IsWindow(hWnd))
+        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }
@@ -166,7 +166,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (!User32.IsWindow(hWnd))
+        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }
@@ -231,7 +231,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (!User32.IsWindow(hWnd))
+        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }
@@ -275,7 +275,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (!User32.IsWindow(hWnd))
+        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }

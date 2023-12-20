@@ -77,7 +77,7 @@ namespace PresentationFramework.Win11.Controls
                     return _paddedBorderThickness.Value;
                 }
 
-                var paddedBorder = User32.GetSystemMetrics(User32.SM.CXPADDEDBORDER);
+                var paddedBorder = NativeMethods.GetSystemMetrics(SM.CXPADDEDBORDER);
 
                 (double factorX, double factorY) = GetDpi();
 
@@ -109,7 +109,7 @@ namespace PresentationFramework.Win11.Controls
         /// <summary>
         /// If you use a <see cref="WindowChrome"/> to extend the client area of a window to the non-client area, you need to handle the edge margin issue when the window is maximized.
         /// Use this property to get the correct margin value when the window is maximized, so that when the window is maximized, the client area can completely cover the screen client area by no less than a single pixel at any DPI.
-        /// The<see cref="User32.GetSystemMetrics"/> method cannot obtain this value directly.
+        /// The<see cref="NativeMethods.GetSystemMetrics"/> method cannot obtain this value directly.
         /// </summary>
         public Thickness WindowChromeNonClientFrameThickness =>
             _windowChromeNonClientFrameThickness ??= new Thickness(

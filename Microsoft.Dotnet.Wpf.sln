@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28815.4
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Xaml", "src\Microsoft.DotNet.Wpf\src\System.Xaml\System.Xaml.csproj", "{9AC36357-34B7-40A1-95CA-FE9F46D089A7}"
 EndProject
@@ -98,8 +98,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIAutomationTypes-ref", "src\Microsoft.DotNet.Wpf\src\UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj", "{29C13CF5-AFE9-4D43-8CF0-46361096117F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsBase-ref", "src\Microsoft.DotNet.Wpf\src\WindowsBase\ref\WindowsBase-ref.csproj", "{8D2B8BD2-25A5-47FD-B1E8-87E800CA2184}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B0EFDB12-C931-4E7F-A6C2-D4AC111D7EDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework-SystemCore", "src\Microsoft.DotNet.Wpf\src\Extensions\PresentationFramework-SystemCore\PresentationFramework-SystemCore.csproj", "{64366C3F-3542-4CC1-85A8-CC6B8C9B8C84}"
 EndProject
@@ -247,7 +245,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{34B64A4A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{A48B585E-6AB0-4F8D-8484-77F37CB44437}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xaml.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests\System.Xaml.Tests.csproj", "{B2F2A89C-55C9-41B1-A645-0948609BD8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Xaml.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests\System.Xaml.Tests.csproj", "{B2F2A89C-55C9-41B1-A645-0948609BD8BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationCore.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests\PresentationCore.Tests.csproj", "{13B85C9F-A136-4055-8A54-86A7575E9892}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluent", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj", "{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9}"
 EndProject
@@ -1978,6 +1978,25 @@ Global
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x64.Build.0 = Release|x64
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x86.Build.0 = Release|Any CPU
+		{B2F2A89C-55C9-41B1-A645-0948609BD8BE}.Release|x86.ActiveCfg = Release|Win32
+		{B2F2A89C-55C9-41B1-A645-0948609BD8BE}.Release|x86.Build.0 = Release|Win32
+		{B2F2A89C-55C9-41B1-A645-0948609BD8BE}.Release|x86.Deploy.0 = Release|Win32
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|x64.Build.0 = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Debug|x86.Build.0 = Debug|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|ARM64.Build.0 = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|x64.ActiveCfg = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|x64.Build.0 = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|x86.ActiveCfg = Release|Any CPU
+		{13B85C9F-A136-4055-8A54-86A7575E9892}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2100,6 +2119,7 @@ Global
 		{B2F2A89C-55C9-41B1-A645-0948609BD8BE} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
 		{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9} = {5ACFB055-649D-4A01-98C2-B0BFE7E543D6}
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
+		{13B85C9F-A136-4055-8A54-86A7575E9892} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4340004-DAC0-497D-B69D-CFA7CD93F567}

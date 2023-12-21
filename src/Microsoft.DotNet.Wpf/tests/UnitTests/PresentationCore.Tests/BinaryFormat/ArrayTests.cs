@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.IO;
+using Xunit;
 using FluentAssertions;
 using System.Threading;
 using System.Windows;

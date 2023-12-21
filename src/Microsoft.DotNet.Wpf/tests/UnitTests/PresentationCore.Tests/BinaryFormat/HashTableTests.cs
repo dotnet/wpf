@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using PresentationCore.Tests.TestUtilities;
-
 namespace PresentationCore.Tests.BinaryFormat;
 #pragma warning disable CS0618
 public class HashtableTests

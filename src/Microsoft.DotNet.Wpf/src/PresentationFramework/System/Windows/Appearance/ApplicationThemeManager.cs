@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows;
 
+#nullable enable
 namespace System.Windows.Appearance;
 
 /// <summary>
@@ -44,7 +45,7 @@ public static class ApplicationThemeManager
     /// <summary>
     /// Event triggered when the application's theme is changed.
     /// </summary>
-    public static event ThemeChangedEvent Changed;
+    public static event ThemeChangedEvent? Changed;
 
     /// <summary>
     /// Gets a value that indicates whether the application is currently using the high contrast theme.

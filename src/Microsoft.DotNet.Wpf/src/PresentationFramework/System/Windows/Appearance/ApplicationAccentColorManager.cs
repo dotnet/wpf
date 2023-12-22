@@ -303,7 +303,7 @@ public static class ApplicationAccentColorManager
         Application.Current.Resources["SystemAccentColorSecondary"] = secondaryAccent;
         Application.Current.Resources["SystemAccentColorTertiary"] = tertiaryAccent;
 
-        Application.Current.Resources["SystemAccentBrush"] = secondaryAccent.ToBrush();
+        Application.Current.Resources["SystemAccentBrush"] = systemAccent.ToBrush();
         Application.Current.Resources["SystemFillColorAttentionBrush"] = secondaryAccent.ToBrush();
         Application.Current.Resources["AccentTextFillColorPrimaryBrush"] = tertiaryAccent.ToBrush();
         Application.Current.Resources["AccentTextFillColorSecondaryBrush"] = tertiaryAccent.ToBrush();

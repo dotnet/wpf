@@ -464,7 +464,7 @@ namespace System.Windows.Ink
 
             bool geometricallyEqual = DrawingAttributes.GeometricallyEqual(drawingAttributes, this.DrawingAttributes);
 
-            // need to recalculate the PathGemetry if the DA passed in is "geometrically" different from
+            // need to recalculate the PathGeometry if the DA passed in is "geometrically" different from
             // this DA, or if the cached PathGeometry is dirty.
             if (false == geometricallyEqual || (true == geometricallyEqual && null == _cachedGeometry))
             {

@@ -415,6 +415,7 @@
     <Compile Include="System\Windows\Appearance\ThemeChangedEvent.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
+    <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />

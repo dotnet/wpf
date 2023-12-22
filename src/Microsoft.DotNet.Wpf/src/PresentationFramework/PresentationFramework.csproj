@@ -415,8 +415,12 @@
     <Compile Include="System\Windows\Appearance\ThemeChangedEvent.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
+    <Compile Include="System\Windows\ElementPlacement.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand{T}.cs" />
+    <Compile Include="System\Windows\Input\RelayCommand{T}.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />
     <Compile Include="System\Windows\Interop\Dwapi.cs" />
     <Compile Include="System\Windows\Interop\Libraries.cs" />

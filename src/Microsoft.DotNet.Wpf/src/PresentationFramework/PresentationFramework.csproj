@@ -548,7 +548,6 @@
     <Compile Include="System\Windows\Controls\BooleanToVisibilityConverter.cs" />
     <Compile Include="System\Windows\Controls\Border.cs" />
     <Compile Include="System\Windows\Controls\BorderGapMaskConverter.cs" />
-    <Compile Include="System\Windows\Controls\BrushToColorConverter.cs" />
     <Compile Include="System\Windows\Controls\Button.cs" />
     <Compile Include="System\Windows\Controls\Calendar.cs" />
     <Compile Include="System\Windows\Controls\CalendarBlackoutDatesCollection.cs" />

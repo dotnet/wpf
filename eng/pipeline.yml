@@ -151,7 +151,22 @@ jobs:
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
-      - script: eng\scripts\ciunittest.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
+
+      - task: PowerShell@2
+        displayName: Replace WPF binaries
+        inputs:
+          targetType: 'inline'
+          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+
+      - script: eng\scripts\ciunittest.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
       - task: PublishTestResults@2
@@ -186,13 +201,9 @@ jobs:
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x86')
-      - task: PowerShell@2
-        displayName: Replace WPF binaries
-        inputs:
-          targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+        condition: eq(variables['_Platform'], 'x86')  
+
+
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:

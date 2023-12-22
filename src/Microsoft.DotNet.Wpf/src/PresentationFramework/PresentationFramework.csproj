@@ -1104,6 +1104,7 @@
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
+    <Compile Include="System\Windows\ElementPlacement.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
     <Compile Include="System\Windows\EventSetterHandlerConverter.cs" />
     <Compile Include="System\Windows\EventTrigger.cs" />
@@ -1131,6 +1132,7 @@
     <Compile Include="System\Windows\Ink\Events.cs" />
     <Compile Include="System\Windows\Input\Command\CommandConverter.cs" />
     <Compile Include="System\Windows\Input\Command\CommandValueSerializer.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand.cs" />
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />

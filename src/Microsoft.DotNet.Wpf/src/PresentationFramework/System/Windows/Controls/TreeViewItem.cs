@@ -74,26 +74,6 @@ namespace System.Windows.Controls
                             new PropertyChangedCallback(OnIsExpandedChanged)));
 
         /// <summary>
-        /// Property for <see cref="Icon"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Icon),
-            typeof(IconElement),
-            typeof(TreeViewItem),
-            new PropertyMetadata(null)
-        );
-
-        /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        [Bindable(true), Category("Appearance")]
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
         ///     Specifies whether this item has expanded its children or not.
         /// </summary>
         public bool IsExpanded

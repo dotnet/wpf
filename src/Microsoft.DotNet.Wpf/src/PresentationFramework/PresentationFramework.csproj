@@ -662,6 +662,7 @@
     <Compile Include="System\Windows\Controls\IconElement\IconSourceElement.cs" />
     <Compile Include="System\Windows\Controls\IconElement\IconSourceElementConverter.cs" />
     <Compile Include="System\Windows\Controls\IconElement\SymbolIcon.cs" />
+    <Compile Include="System\Windows\Controls\SymbolIconExtension.cs" />
     <Compile Include="System\Windows\Controls\IconSource\IconSource.cs" />
     <Compile Include="System\Windows\Controls\IconSource\SymbolIconSource.cs" />
     <Compile Include="System\Windows\Controls\IconSource\FontIconSource.cs" />

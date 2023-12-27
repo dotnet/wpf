@@ -404,6 +404,7 @@
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
+    <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationAccentColorManager.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationThemeManager.cs" />
@@ -415,6 +416,7 @@
     <Compile Include="System\Windows\Appearance\ThemeChangedEvent.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
+    <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />
@@ -662,6 +664,7 @@
     <Compile Include="System\Windows\Controls\IconElement\IconSourceElement.cs" />
     <Compile Include="System\Windows\Controls\IconElement\IconSourceElementConverter.cs" />
     <Compile Include="System\Windows\Controls\IconElement\SymbolIcon.cs" />
+    <Compile Include="System\Windows\Controls\SymbolIconExtension.cs" />
     <Compile Include="System\Windows\Controls\IconSource\IconSource.cs" />
     <Compile Include="System\Windows\Controls\IconSource\SymbolIconSource.cs" />
     <Compile Include="System\Windows\Controls\IconSource\FontIconSource.cs" />

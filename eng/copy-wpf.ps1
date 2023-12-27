@@ -30,6 +30,7 @@ function Print-Usage()
 Write-Host "*** Copy WPF files procedure ***"
 
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+Write-host "Repo root = " $RepoRoot
 $Config = if ($release) { "Release" } else { "Debug" }
 
 Write-Host "Target architecture - configuration: " $arch $Config
@@ -37,6 +38,7 @@ Write-Host "Target architecture - configuration: " $arch $Config
 function CopyBinariesToLocation($location)
 {
     $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
+    Write-host "locallyBuiltBinaryLocationBase = " $locallyBuiltBinaryLocationBase
 
     Write-Host "Copy native binaries..."
     CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase
@@ -53,8 +55,26 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
     # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\win-x64
 
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
+    $PackageName += if ($release) { "" } else { ".Debug" }
     $BinaryLocationInPackage =  "win-$arch"
-    CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
+    # CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
+
+    $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
+    $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "runtimes", $binaryLocationInPackage,"native" , "*")
+    Write-host "Native binLocation = " $BinLocation
+
+    if (Test-Path $BinLocation)
+    {
+        Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
+        Write-Host "All files are copied" -ForegroundColor Green
+    }
+    else
+    {
+        Write-Host "Source files location unavailable: " $BinLocation -ForegroundColor Yellow -NoNewline
+        Write-Host "  Skip. No file has been copied."
+        return
+    }
+
 }
 function CopyManagedBinariesToLocation($location, $localBinLocation)
 {
@@ -63,7 +83,8 @@ function CopyManagedBinariesToLocation($location, $localBinLocation)
     # x64 - artifacts\packaging\Debug\x64\Microsoft.DotNet.Wpf.GitHub\lib\net6.0
 
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
-    $BinaryLocationInPackage = "net8.0"
+    $PackageName += if ($release) { "" } else { ".Debug" }
+    $BinaryLocationInPackage = "net9.0"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 
@@ -71,6 +92,8 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
 {
     $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
     $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "lib", $binaryLocationInPackage, "*")
+    Write-host "binLocation = " $BinLocation
+
     if (Test-Path $BinLocation)
     {
         Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
@@ -153,7 +176,7 @@ elseif($testhost)
 else
 {
     $runtimeIdentifer = "win-$arch"
-    $location = [System.IO.Path]::Combine($destination, "bin\Debug\net8.0", $runtimeIdentifer, "publish")
+    $location = [System.IO.Path]::Combine($destination, "bin\Debug\net9.0", $runtimeIdentifer, "publish")
     if(![System.IO.Directory]::Exists($location))
     {
         Write-Host "App publishing directory unavailable: " $location -ForegroundColor Red

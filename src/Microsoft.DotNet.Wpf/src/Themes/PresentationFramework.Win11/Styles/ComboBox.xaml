@@ -270,9 +270,6 @@
                                         BorderThickness="1"
                                         CornerRadius="{DynamicResource PopupCornerRadius}"
                                         SnapsToDevicePixels="True">
-                                        <Border.RenderTransform>
-                                            <TranslateTransform />
-                                        </Border.RenderTransform>
                                         <Grid>
                                             <ScrollViewer
                                                 MaxHeight="{TemplateBinding MaxDropDownHeight}"

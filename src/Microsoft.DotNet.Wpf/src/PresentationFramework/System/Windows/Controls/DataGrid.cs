@@ -141,6 +141,46 @@ namespace System.Windows.Controls
             DependencyProperty.Register("CanUserResizeColumns", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnNotifyColumnAndColumnHeaderPropertyChanged)));
 
         /// <summary>
+        /// A style to apply to all checkbox column in the DataGrid
+        /// </summary>
+        public Style CheckBoxColumnElementStyle
+        {
+            get => (Style)GetValue(CheckBoxColumnElementStyleProperty);
+            set => SetValue(CheckBoxColumnElementStyleProperty, value);
+        }
+
+        /// <summary>
+        /// A style to apply to all checkbox column in the DataGrid
+        /// </summary>
+        public Style CheckBoxColumnEditingElementStyle
+        {
+            get => (Style)GetValue(CheckBoxColumnEditingElementStyleProperty);
+            set => SetValue(CheckBoxColumnEditingElementStyleProperty, value);
+        }
+
+        /// <summary>
+        /// The DependencyProperty that represents the <see cref="CheckBoxColumnElementStyle"/> property.
+        /// </summary>
+        public static readonly DependencyProperty CheckBoxColumnElementStyleProperty =
+            DependencyProperty.Register(
+                nameof(CheckBoxColumnElementStyle),
+                typeof(Style),
+                typeof(DataGrid),
+                new FrameworkPropertyMetadata(null)
+            );
+
+        /// <summary>
+        /// The DependencyProperty that represents the <see cref="CheckBoxColumnEditingElementStyle"/> property.
+        /// </summary>
+        public static readonly DependencyProperty CheckBoxColumnEditingElementStyleProperty =
+            DependencyProperty.Register(
+                nameof(CheckBoxColumnEditingElementStyle),
+                typeof(Style),
+                typeof(DataGrid),
+                new FrameworkPropertyMetadata(null)
+            );
+
+        /// <summary>
         ///     Specifies the width of the header and cells within all the columns.
         /// </summary>
         public DataGridLength ColumnWidth
@@ -216,6 +256,49 @@ namespace System.Windows.Controls
         {
             double value = (double)v;
             return !(value < 0d || double.IsNaN(value));
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            Columns.CollectionChanged += ColumnsOnCollectionChanged;
+
+            UpdateColumnElementStyles();
+
+            base.OnInitialized(e);
+        }
+
+        private void ColumnsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            UpdateColumnElementStyles();
+        }
+
+        private void UpdateColumnElementStyles()
+        {
+            foreach (var singleColumn in Columns)
+                UpdateSingleColumn(singleColumn);
+        }
+
+        private void UpdateSingleColumn(DataGridColumn dataGridColumn)
+        {
+            if (dataGridColumn is DataGridCheckBoxColumn checkBoxColumn)
+            {
+                if (checkBoxColumn.ReadLocalValue(DataGridCheckBoxColumn.ElementStyleProperty)
+                    == DependencyProperty.UnsetValue)
+                    BindingOperations.SetBinding(checkBoxColumn,
+                        DataGridCheckBoxColumn.ElementStyleProperty,
+                        new Binding { Path = new PropertyPath(CheckBoxColumnElementStyleProperty), Source = this });
+
+                if (checkBoxColumn.ReadLocalValue(DataGridCheckBoxColumn.EditingElementStyleProperty)
+                    == DependencyProperty.UnsetValue)
+                    BindingOperations.SetBinding(checkBoxColumn,
+                        DataGridCheckBoxColumn.EditingElementStyleProperty,
+                        new Binding
+                        {
+                            Path = new PropertyPath(CheckBoxColumnEditingElementStyleProperty),
+                            Source = this
+                        }
+                    );
+            }
         }
 
         /// <summary>
@@ -363,7 +446,7 @@ namespace System.Windows.Controls
                 int retries = BringColumnIntoViewRetryCountField.GetValue(this);
                 if (retries < MaxBringColumnIntoViewRetries)
                 {
-                    BringColumnIntoViewRetryCountField.SetValue(this, retries+1);
+                    BringColumnIntoViewRetryCountField.SetValue(this, retries + 1);
                     return true;
                 }
             }
@@ -2733,7 +2816,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
 
                 case NewItemPlaceholderPosition.AtBeginning:
                     index = 1;
@@ -2741,7 +2824,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
             }
 
             // but if it's not where we expect, find it the hard way
@@ -2959,7 +3042,7 @@ namespace System.Windows.Controls
                         cell.NotifyCurrentCellContainerChanged();
                     }
                 }
-                else if  (oldCellContainer != null)
+                else if (oldCellContainer != null)
                 {
                     oldCellContainer.NotifyCurrentCellContainerChanged();
                 }
@@ -3080,7 +3163,7 @@ namespace System.Windows.Controls
             get { return LeaseItemInfo(CurrentCell.ItemInfo); }
         }
 
-        internal bool IsCurrent(DataGridRow row, DataGridColumn column=null)
+        internal bool IsCurrent(DataGridRow row, DataGridColumn column = null)
         {
             DataGridCellInfo currentCell = CurrentCell;
             if (currentCell.ItemInfo == null)
@@ -3093,9 +3176,9 @@ namespace System.Windows.Controls
             }
             DependencyObject currentContainer = currentCell.ItemInfo.Container;
             int currentIndex = currentCell.ItemInfo.Index;
-            return  (column == null || column == currentCell.Column) &&             // columns match
-                    (   (currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
-                        (   ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
+            return (column == null || column == currentCell.Column) &&             // columns match
+                    ((currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
+                        (ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
                             (currentIndex < 0 || currentIndex == ItemContainerGenerator.IndexFromContainer(row))
                         )
                     );
@@ -4079,7 +4162,7 @@ namespace System.Windows.Controls
             if (!_newItemMarginComputationPending)
             {
                 _newItemMarginComputationPending = true;
-                Dispatcher.BeginInvoke((Action)delegate()
+                Dispatcher.BeginInvoke((Action)delegate ()
                 {
                     double marginLeft = 0;
                     if (IsGrouping && InternalScrollHost != null)
@@ -5375,13 +5458,13 @@ namespace System.Windows.Controls
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _currentCellContainer = null;
-            List<Tuple<int,int>> ranges = null;
+            List<Tuple<int, int>> ranges = null;
 
             using (UpdateSelectedCells())
             {
                 if (e.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    ranges = new List<Tuple<int,int>>();
+                    ranges = new List<Tuple<int, int>>();
                     LocateSelectedItems(ranges);
                 }
 
@@ -5710,7 +5793,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5756,7 +5839,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5790,7 +5873,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5825,7 +5908,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -6724,11 +6807,11 @@ namespace System.Windows.Controls
         [Flags]
         private enum RelativeMousePositions
         {
-            Over    = 0x00,
-            Above   = 0x01,
-            Below   = 0x02,
-            Left    = 0x04,
-            Right   = 0x08,
+            Over = 0x00,
+            Above = 0x01,
+            Below = 0x02,
+            Left = 0x04,
+            Right = 0x08,
         }
 
         #endregion
@@ -7088,7 +7171,7 @@ namespace System.Windows.Controls
         private static object OnCoerceCanUserSortColumns(DependencyObject d, object baseValue)
         {
             DataGrid dataGrid = (DataGrid)d;
-            if( DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
+            if (DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
                 DataGridHelper.IsDefaultValue(dataGrid, CanUserSortColumnsProperty) &&
                 dataGrid.Items.CanSort == false)
             {
@@ -7653,7 +7736,7 @@ namespace System.Windows.Controls
             {
                 // Selector will try to maintain the previous row selection.
                 // Keep SelectedCells in sync.
-                List<Tuple<int,int>> ranges = new List<Tuple<int, int>>();
+                List<Tuple<int, int>> ranges = new List<Tuple<int, int>>();
                 LocateSelectedItems(ranges);
                 _selectedCells.RestoreOnlyFullRows(ranges);
             }
@@ -7763,7 +7846,7 @@ namespace System.Windows.Controls
             if (CellInfoNeedsAdjusting(CurrentCell))
                 list.Add(CurrentCell.ItemInfo);
 
-            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer:false);
+            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer: false);
             base.AdjustItemInfosAfterGeneratorChangeOverride();
             AdjustPendingInfos();
         }
@@ -7782,7 +7865,7 @@ namespace System.Windows.Controls
             {
                 using (UpdateSelectedCells())
                 {
-                    for (int i=_pendingInfos.Count - 1; i>=0; --i)
+                    for (int i = _pendingInfos.Count - 1; i >= 0; --i)
                     {
                         ItemInfo info = _pendingInfos[i];
                         if (info.Index >= 0)

@@ -1498,7 +1498,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnTemplateButtonClick(string parameter)
         {
-            System.Diagnostics.Debug.WriteLine($"INFO: {typeof(TextBox)} button clicked", "Wpf.Ui.TextBox");
+            System.Diagnostics.Debug.WriteLine($"INFO: {typeof(TextBox)} button clicked", "TextBox");
 
             OnClearButtonClick();
         }

@@ -68,7 +68,7 @@
 
         <Style.Triggers>
             <Trigger Property="TextBox.IsTextSelectionEnabled" Value="True">
-                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="IsReadOnly" Value="False" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="BorderBrush" Value="Transparent" />

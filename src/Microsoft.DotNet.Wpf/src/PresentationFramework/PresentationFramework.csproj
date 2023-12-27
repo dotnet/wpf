@@ -1203,6 +1203,7 @@
     <Compile Include="System\Windows\Markup\BamlRecordWriter.cs" />
     <Compile Include="System\Windows\Markup\BamlVersionHeader.cs" />
     <Compile Include="System\Windows\Markup\BamlWriter.cs" />
+    <Compile Include="System\Windows\Markup\ControlsDictionary.cs" />
     <Compile Include="System\Windows\Markup\DependencyPropertyConverter.cs" />
     <Compile Include="System\Windows\Markup\FilteredXmlReader.cs" />
     <Compile Include="System\Windows\Markup\IHaveResources.cs" />
@@ -1234,6 +1235,9 @@
     <Compile Include="System\Windows\Markup\StyleModeStack.cs" />
     <Compile Include="System\Windows\Markup\TemplateComponentConnector.cs" />
     <Compile Include="System\Windows\Markup\TemplateKeyConverter.cs" />
+    <Compile Include="System\Windows\Markup\ThemeResource.cs" />
+    <Compile Include="System\Windows\Markup\ThemeResourceExtension.cs" />
+    <Compile Include="System\Windows\Markup\ThemesDictionary.cs" />
     <Compile Include="System\Windows\Markup\TypeContext.cs" />
     <Compile Include="System\Windows\Markup\WpfXamlLoader.cs" />
     <Compile Include="System\Windows\Markup\XamlBrushSerializer.cs" />

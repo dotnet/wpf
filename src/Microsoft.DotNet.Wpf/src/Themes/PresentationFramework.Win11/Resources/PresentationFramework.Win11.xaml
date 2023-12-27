@@ -14,6 +14,24 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Palette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/DefaultContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/DefaultFocusVisualStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Calendar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ContextMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/DataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Label.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListViewItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ProgressBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RadioButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollViewer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/StatusBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToolTip.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Window.xaml" />
+
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

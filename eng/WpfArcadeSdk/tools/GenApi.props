@@ -25,10 +25,13 @@
 
     <GlobalApiExclusionsFile Condition="'$(GlobalApiExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalApiExclusions.txt</GlobalApiExclusionsFile>
     <GlobalAttrExclusionsFile Condition="'$(GlobalAttrExclusionsFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GlobalAttrExclusions.txt</GlobalAttrExclusionsFile>
+    <GenAPIHeaderFile Condition="'$(GenAPIHeaderFile)'==''">$(WpfArcadeSdkRoot)tools\GenApi\GenAPIHeaderText.txt</GenAPIHeaderFile>
 
     <GenAPIExcludeMembers>true</GenAPIExcludeMembers>
     <GenAPIExcludeApiList Condition="'$(GlobalApiExclusionsFile)'!=''">$(GlobalApiExclusionsFile)</GenAPIExcludeApiList>
     <GenAPIExcludeAttributesList Condition="'$(GlobalAttrExclusionsFile)'!=''">$(GlobalAttrExclusionsFile)</GenAPIExcludeAttributesList>
+    <GenAPIHeader>$(GenAPIHeaderFile)</GenAPIHeader>
+
 
     <!-- 
       GenAPI is run on demand.  Note that making a public API change without the associated reference assembly change will result in an ApiCompat error. 
@@ -37,7 +40,8 @@
     <_GenerateReferenceAssemblySource>false</_GenerateReferenceAssemblySource>
     <_GenerateReferenceAssemblySource Condition="'$(GenerateReferenceAssemblySource)'=='true'
                                                         and '$(GenAPIEnabledProjects)'!=''
-                                                        and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))">true</_GenerateReferenceAssemblySource>
+                                                        and $(GenAPIEnabledProjects.Contains('$(MSBuildProjectName);'))
+                                                        and !($(MSBuildProjectName.Contains('_wpftmp')))">true</_GenerateReferenceAssemblySource>
 
   </PropertyGroup>
 </Project>

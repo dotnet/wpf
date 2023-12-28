@@ -69,5 +69,6 @@ T:System.Reflection.DefaultMemberAttribute
 T:System.Timers.TimersDescriptionAttribute
 
 // These do not need to be persisted in the implementation
-T:System.ComponentModel.EditorBrowsableAttribute
-T:System.ObsoleteAttribute
+// Remove ObsoleteAttribute and EditorBrowsableAttribute from this list to minimize
+// ref assembly changes on regeneration.
+// Add it back later.

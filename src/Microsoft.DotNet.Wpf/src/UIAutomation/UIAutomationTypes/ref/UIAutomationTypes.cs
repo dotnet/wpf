@@ -1,8 +1,12 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Windows.Automation
 {
     public sealed partial class ActiveTextPositionChangedEventArgs : System.Windows.Automation.AutomationEventArgs
     {
-        public ActiveTextPositionChangedEventArgs(System.Windows.Automation.Provider.ITextRangeProvider textRangeProvider) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public ActiveTextPositionChangedEventArgs(System.Windows.Automation.Provider.ITextRangeProvider textRange) : base (default(System.Windows.Automation.AutomationEvent)) { }
         public System.Windows.Automation.Provider.ITextRangeProvider TextRange { get { throw null; } }
     }
     public sealed partial class AsyncContentLoadedEventArgs : System.Windows.Automation.AutomationEventArgs
@@ -283,7 +287,7 @@ namespace System.Windows.Automation
     }
     public sealed partial class NotificationEventArgs : System.Windows.Automation.AutomationEventArgs
     {
-        public NotificationEventArgs(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public NotificationEventArgs(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) : base (default(System.Windows.Automation.AutomationEvent)) { }
         public string ActivityId { get { throw null; } }
         public string DisplayString { get { throw null; } }
         public System.Windows.Automation.AutomationNotificationKind NotificationKind { get { throw null; } }

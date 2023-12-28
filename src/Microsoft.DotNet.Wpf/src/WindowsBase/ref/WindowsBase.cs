@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Collections.Specialized
 {
     public partial class CollectionChangedEventManager : System.Windows.WeakEventManager
@@ -881,7 +885,7 @@ namespace System.Windows
         public bool Remove(System.Collections.Generic.KeyValuePair<string, object> item) { throw null; }
         public bool Remove(string key) { throw null; }
         public static void SetNameScope(System.Windows.DependencyObject dependencyObject, System.Windows.Markup.INameScope value) { }
-        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.GetEnumerator() { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
         public void UnregisterName(string name) { }

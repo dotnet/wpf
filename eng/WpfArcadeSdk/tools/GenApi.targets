@@ -27,7 +27,6 @@
     
     <!-- Other GenAPI Task Parameters -->
     <GenAPIExcludeCompilerGenerated>true</GenAPIExcludeCompilerGenerated>
-    <GenAPILangVersion>$(LangVersion)</GenAPILangVersion>
   </PropertyGroup>
 
   <Target Name="EnsureGenAPITargetDirectory"

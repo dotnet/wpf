@@ -92,7 +92,7 @@ namespace MS.Internal.FontCache
                     {
                         if (_tryGetCompositeFontsOnly)
                         {
-                            files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                            files = Directory.GetFiles(_uri.LocalPath, $"*{Util.CompositeFontExtension}");
                             isOnlyCompositeFontFiles = true;                               
                         }
                         else

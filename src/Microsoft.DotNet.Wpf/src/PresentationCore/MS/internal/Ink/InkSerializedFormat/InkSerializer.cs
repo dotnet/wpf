@@ -344,7 +344,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             // Now read the size of the stream
             localBytesDecoded = SerializationHelper.Decode(inputStream, out remainingBytesInStream);
-            ISFDebugTrace("Decoded Stream Size in Bytes: " + remainingBytesInStream.ToString());
+            ISFDebugTrace($"Decoded Stream Size in Bytes: {remainingBytesInStream}");
             if (0 == remainingBytesInStream)
                 return;
 
@@ -362,7 +362,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     throw new ArgumentException(ISFDebugMessage("Invalid ISF data"));
                 }
 
-                ISFDebugTrace("Decoding Tag: " + ((KnownTagCache.KnownTagIndex)isfTag).ToString());
+                ISFDebugTrace($"Decoding Tag: {((KnownTagCache.KnownTagIndex)isfTag)}");
                 switch (isfTag)
                 {
                     case KnownTagCache.KnownTagIndex.GuidTable:
@@ -556,7 +556,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                                 case KnownTagCache.KnownTagIndex.Stroke:
                                     {
-                                        ISFDebugTrace("   Decoding Stroke Id#(" + (strokeIndex + 1).ToString() + ")");
+                                        ISFDebugTrace($"   Decoding Stroke Id#({(strokeIndex + 1)})");
 
                                         StrokeDescriptor strokeDescriptor = null;
 
@@ -731,7 +731,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         {
                             if ((uint)isfTag >= KnownIdCache.CustomGuidBaseIndex || ((uint)isfTag >= KnownTagCache.KnownTagCount && ((uint)isfTag < (KnownTagCache.KnownTagCount + KnownIdCache.OriginalISFIdTable.Length))))
                             {
-                                ISFDebugTrace("  CUSTOM_GUID=" + guidList.FindGuid(isfTag).ToString());
+                                ISFDebugTrace($"  CUSTOM_GUID={guidList.FindGuid(isfTag)}");
 
                                 // Loads any custom property data
                                 bytesDecodedInCurrentTag = remainingBytesInStream;
@@ -775,7 +775,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             break;
                         }
                 }
-                ISFDebugTrace("    Size = " + bytesDecodedInCurrentTag.ToString());
+                ISFDebugTrace($"    Size = {bytesDecodedInCurrentTag}");
                 if (bytesDecodedInCurrentTag > remainingBytesInStream)
                 {
                     throw new ArgumentException(ISFDebugMessage("Invalid ISF data"));
@@ -1735,7 +1735,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     // validate that the expected inkspace rectangle block in ISF was the actual size encoded
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("Encoded InkSpaceRectangle: size=" + localEncodedSize);
+                        ISFDebugTrace($"Encoded InkSpaceRectangle: size={localEncodedSize}");
 
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
@@ -1754,7 +1754,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("Encoded PersistenceFormat: size=" + localEncodedSize);
+                        ISFDebugTrace($"Encoded PersistenceFormat: size={localEncodedSize}");
 
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
@@ -1767,7 +1767,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += guidList.Save(localStream);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded Custom Guid Table: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded Custom Guid Table: size={localEncodedSize}");
 
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
@@ -1780,7 +1780,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += SerializeDrawingAttrsTable(localStream, guidList);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded DrawingAttributesTable: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded DrawingAttributesTable: size={localEncodedSize}");
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
 
@@ -1789,7 +1789,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += SerializePacketDescrTable(localStream);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded Packet Description: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded Packet Description: size={localEncodedSize}");
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
 
@@ -1798,7 +1798,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += SerializeMetricTable(localStream);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded Metric Table: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded Metric Table: size={localEncodedSize}");
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
 
@@ -1807,7 +1807,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += SerializeTransformTable(localStream);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded Transform Table: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded Transform Table: size={localEncodedSize}");
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
 
@@ -1818,7 +1818,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     cumulativeEncodedSize += ExtendedPropertySerializer.EncodeAsISF(_coreStrokes.ExtendedProperties, localStream, guidList, GetCompressionAlgorithm(), true);
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("Encoded Global Ink Attributes Table: size=" + localEncodedSize);
+                        ISFDebugTrace($"Encoded Global Ink Attributes Table: size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -1828,13 +1828,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cumulativeEncodedSize += SaveStrokeIds(_coreStrokes, localStream, false);
                 localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                 if (localEncodedSize != 0)
-                    ISFDebugTrace("Encoded Stroke Id List: size=" + localEncodedSize);
+                    ISFDebugTrace($"Encoded Stroke Id List: size={localEncodedSize}");
                 if (cumulativeEncodedSize != localStream.Length)
                     throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
 
                 StoreStrokeData(localStream, guidList, ref cumulativeEncodedSize, ref localEncodedSize);
 
-                ISFDebugTrace("Embedded ISF Stream size=" + cumulativeEncodedSize);
+                ISFDebugTrace($"Embedded ISF Stream size={cumulativeEncodedSize}");
 
                 // Now that all data has been written we need to prepend the stream
                 long preEncodingPosition = outputStream.Position;
@@ -1847,7 +1847,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 outputStream.Write(localStream.GetBuffer(), 0, (int)cumulativeEncodedSize);
                 cbFinal += cumulativeEncodedSize;
 
-                ISFDebugTrace("Final ISF Stream size=" + cbFinal);
+                ISFDebugTrace($"Final ISF Stream size={cbFinal}");
 
                 if (cbFinal != outputStream.Position - preEncodingPosition)
                 {
@@ -1879,7 +1879,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 Stroke s = _coreStrokes[i];
                 uint cbStroke = 0;
 
-                ISFDebugTrace("Encoding Stroke Id#" + strokeIds[i]);
+                ISFDebugTrace($"Encoding Stroke Id#{strokeIds[i]}");
 
                 // if the drawing attribute index is different from the current one, write it
                 if (currentDrawingAttributesTableIndex != _strokeLookupTable[s].DrawingAttributesTableIndex)
@@ -1890,7 +1890,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     currentDrawingAttributesTableIndex = _strokeLookupTable[s].DrawingAttributesTableIndex;
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("    Encoded DrawingAttribute Table Index: size=" + localEncodedSize);
+                        ISFDebugTrace($"    Encoded DrawingAttribute Table Index: size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -1904,7 +1904,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     currentStrokeDescriptorTableIndex = _strokeLookupTable[s].StrokeDescriptorTableIndex;
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("    Encoded Stroke Descriptor Index: size=" + localEncodedSize);
+                        ISFDebugTrace($"    Encoded Stroke Descriptor Index: size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -1918,7 +1918,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     uCurrMetricDescriptorTableIndex = _strokeLookupTable[s].MetricDescriptorTableIndex;
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("    Encoded Metric Index: size=" + localEncodedSize);
+                        ISFDebugTrace($"    Encoded Metric Index: size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -1932,7 +1932,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     currentTransformTableIndex = _strokeLookupTable[s].TransformTableIndex;
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("    Encoded Transform Index: size=" + localEncodedSize);
+                        ISFDebugTrace($"    Encoded Transform Index: size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -1955,7 +1955,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                     // Now write the tag KnownTagCache.KnownTagIndex.Stroke
                     cumulativeEncodedSize += SerializationHelper.Encode(localStream, (uint)KnownTagCache.KnownTagIndex.Stroke);
-                    ISFDebugTrace("Stroke size=" + tempstrm.Length);
+                    ISFDebugTrace($"Stroke size={tempstrm.Length}");
 
                     // Now write the size of the stroke
                     cumulativeEncodedSize += SerializationHelper.Encode(localStream, cbStroke);
@@ -1966,7 +1966,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                     localEncodedSize = cumulativeEncodedSize - localEncodedSize;
                     if (localEncodedSize != 0)
-                        ISFDebugTrace("Encoding Stroke Id#" + strokeIds[i] + " size=" + localEncodedSize);
+                        ISFDebugTrace($"Encoding Stroke Id#{strokeIds[i]} size={localEncodedSize}");
                     if (cumulativeEncodedSize != localStream.Length)
                         throw new InvalidOperationException(ISFDebugMessage("Calculated ISF stream size != actual stream size"));
                 }
@@ -2025,7 +2025,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // First write the KnownTagCache.KnownTagIndex.StrokeIds
             uint cbWrote = SerializationHelper.Encode(strm, (uint)KnownTagCache.KnownTagIndex.StrokeIds);
 
-            ISFDebugTrace("Saved KnownTagCache.KnownTagIndex.StrokeIds size=" + cbWrote.ToString());
+            ISFDebugTrace($"Saved KnownTagCache.KnownTagIndex.StrokeIds size={cbWrote}");
 
             // First findout the no of bytes required to huffman compress these ids
             byte algorithm = AlgoModule.DefaultCompression;

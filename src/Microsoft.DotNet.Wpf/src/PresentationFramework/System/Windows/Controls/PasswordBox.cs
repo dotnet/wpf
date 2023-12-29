@@ -101,6 +101,7 @@ namespace System.Windows.Controls
         public PasswordBox() : base()
         {
             Initialize();
+            _lockUpdatingContents = false;
         }
 
         #endregion Constructors
@@ -221,6 +222,44 @@ namespace System.Windows.Controls
                 return this.TextContainer.GetPasswordCopy();
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value deciding whether to display the reveal password button.
+        /// </summary>
+        public bool RevealButtonEnabled
+        {
+            get => (bool)GetValue(RevealButtonEnabledProperty);
+            set => SetValue(RevealButtonEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="RevealButtonEnabled"/>.
+        /// </summary>
+        public static readonly DependencyProperty RevealButtonEnabledProperty = DependencyProperty.Register(
+            nameof(RevealButtonEnabled),
+            typeof(bool),
+            typeof(PasswordBox),
+            new PropertyMetadata(true)
+        );
+
+        /// <summary>
+        /// Gets a value indicating whether the password is revealed.
+        /// </summary>
+        public bool IsPasswordRevealed
+        {
+            get => (bool)GetValue(IsPasswordRevealedProperty);
+            private set => SetValue(IsPasswordRevealedProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="IsPasswordRevealed"/>.
+        /// </summary>
+        public static readonly DependencyProperty IsPasswordRevealedProperty = DependencyProperty.Register(
+            nameof(IsPasswordRevealed),
+            typeof(bool),
+            typeof(PasswordBox),
+            new PropertyMetadata(false, OnPasswordRevealModePropertyChanged)
+        );
 
         /// <summary>
         /// The DependencyID for the PasswordChar property.
@@ -838,6 +877,32 @@ namespace System.Windows.Controls
 
         #region Private Methods
 
+        /// <summary>
+        /// Called if the reveal mode is changed in the during the run.
+        /// </summary>
+        private static void OnPasswordRevealModePropertyChanged(DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not PasswordBox control)
+                return;
+
+            control.OnPasswordRevealModeChanged();
+        }
+
+        private void OnPasswordRevealModeChanged()
+        {
+            _lockUpdatingContents = true;
+
+            //Text = IsPasswordRevealed ? Password : new String(PasswordChar, Password.Length);
+
+            //_lockUpdatingContents = false;
+
+            if (_lockUpdatingContents)
+            {
+                _lockUpdatingContents = false;
+            }
+        }
+
         // Worker for the ctors, initializes a new PasswordBox instance.
         private void Initialize()
         {
@@ -1277,6 +1342,8 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
+
+        private bool _lockUpdatingContents;
 
         // TextEditor working in this control instance
         private TextEditor _textEditor;

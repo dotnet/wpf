@@ -225,43 +225,26 @@ namespace Microsoft.Internal.Interop
 
         internal static bool IsOsVersionOrGreater(OperatingSystemVersion osVer)
         {
-            switch (osVer)
+            return osVer switch
             {
-                case OperatingSystemVersion.Windows10RS5:
-                    return IsOsWindows10RS5OrGreater;
-                case OperatingSystemVersion.Windows10RS4:
-                    return IsOsWindows10RS4OrGreater;
-                case OperatingSystemVersion.Windows10RS3:
-                    return IsOsWindows10RS3OrGreater;
-                case OperatingSystemVersion.Windows10RS2:
-                    return IsOsWindows10RS2OrGreater;
-                case OperatingSystemVersion.Windows10RS1:
-                    return IsOsWindows10RS1OrGreater;
-                case OperatingSystemVersion.Windows10TH2:
-                    return IsOsWindows10TH2OrGreater;
-                case OperatingSystemVersion.Windows10:
-                    return IsOsWindows10OrGreater;
-                case OperatingSystemVersion.Windows8Point1:
-                    return IsOsWindows8Point1OrGreater;
-                case OperatingSystemVersion.Windows8:
-                    return IsOsWindows8OrGreater;
-                case OperatingSystemVersion.Windows7SP1:
-                    return IsOsWindows7SP1OrGreater;
-                case OperatingSystemVersion.Windows7:
-                    return IsOsWindows7OrGreater;
-                case OperatingSystemVersion.WindowsVistaSP2:
-                    return IsOsWindowsVistaSP2OrGreater;
-                case OperatingSystemVersion.WindowsVistaSP1:
-                    return IsOsWindowsVistaSP1OrGreater;
-                case OperatingSystemVersion.WindowsVista:
-                    return IsOsWindowsVistaOrGreater;
-                case OperatingSystemVersion.WindowsXPSP3:
-                    return IsOsWindowsXPSP3OrGreater;
-                case OperatingSystemVersion.WindowsXPSP2:
-                    return IsOsWindowsXPSP2OrGreater;
-            }
-
-            throw new ArgumentException(string.Format("{0} is not a valid OS!", osVer.ToString()), "osVer");
+                OperatingSystemVersion.Windows10RS5 => IsOsWindows10RS5OrGreater,
+                OperatingSystemVersion.Windows10RS4 => IsOsWindows10RS4OrGreater,
+                OperatingSystemVersion.Windows10RS3 => IsOsWindows10RS3OrGreater,
+                OperatingSystemVersion.Windows10RS2 => IsOsWindows10RS2OrGreater,
+                OperatingSystemVersion.Windows10RS1 => IsOsWindows10RS1OrGreater,
+                OperatingSystemVersion.Windows10TH2 => IsOsWindows10TH2OrGreater,
+                OperatingSystemVersion.Windows10 => IsOsWindows10OrGreater,
+                OperatingSystemVersion.Windows8Point1 => IsOsWindows8Point1OrGreater,
+                OperatingSystemVersion.Windows8 => IsOsWindows8OrGreater,
+                OperatingSystemVersion.Windows7SP1 => IsOsWindows7SP1OrGreater,
+                OperatingSystemVersion.Windows7 => IsOsWindows7OrGreater,
+                OperatingSystemVersion.WindowsVistaSP2 => IsOsWindowsVistaSP2OrGreater,
+                OperatingSystemVersion.WindowsVistaSP1 => IsOsWindowsVistaSP1OrGreater,
+                OperatingSystemVersion.WindowsVista => IsOsWindowsVistaOrGreater,
+                OperatingSystemVersion.WindowsXPSP3 => IsOsWindowsXPSP3OrGreater,
+                OperatingSystemVersion.WindowsXPSP2 => IsOsWindowsXPSP2OrGreater,
+                _ => throw new ArgumentException($"{osVer} is not a valid OS!", nameof(osVer)),
+            };
         }
 
         internal static OperatingSystemVersion GetOsVersion()

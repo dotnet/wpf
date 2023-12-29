@@ -310,7 +310,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
                 if (constructor == null)
                 {
-                    string constructorName = type.FullName + "." + type.Name  + "()";
+                    string constructorName = $"{type.FullName}.{type.Name}()";
                     throw new MissingMethodException(constructorName);
                 }
 
@@ -335,7 +335,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1) });
                 if (constructor == null)
                 {
-                    string constructorName = string.Format("{0}.{1}({2})", type.FullName, type.Name, typeof(TArg1).Name);
+                    string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name})";
                     throw new MissingMethodException(constructorName);
                 }
 
@@ -362,7 +362,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1), typeof(TArg2) });
                 if (constructor == null)
                 {
-                    string constructorName = string.Format("{0}.{1}({2},{3})", type.FullName, type.Name, typeof(TArg1).Name, typeof(TArg2).Name);
+                    string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name},{typeof(TArg2).Name})";
                     throw new MissingMethodException(constructorName);
                 }
 

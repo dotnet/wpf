@@ -27,7 +27,7 @@ namespace System.Windows.Input
     /// interactive (trusted) way.
     ///</summary>
     [FriendAccessAllowed]
-    [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Input.CommandConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     internal interface ISecureCommand : ICommand
     {
     }

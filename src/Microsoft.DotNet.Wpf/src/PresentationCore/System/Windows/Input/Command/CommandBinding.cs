@@ -186,7 +186,7 @@ namespace System.Windows.Input
             {
                 if (Executed is null) return;
                 if (!CheckCanExecute(sender, e)) return;
-                Debug.Assert(Executed != null, nameof(Executed) + " != null");
+                Debug.Assert(Executed != null, $"{nameof(Executed)} != null");
                 Executed(sender, e);
                 e.Handled = true;
             }
@@ -194,7 +194,7 @@ namespace System.Windows.Input
             {
                 if (PreviewExecuted is null) return;
                 if (!CheckCanExecute(sender, e)) return;
-                Debug.Assert(PreviewExecuted != null, nameof(PreviewExecuted) + " != null");
+                Debug.Assert(PreviewExecuted != null, $"{nameof(PreviewExecuted)} != null");
                 PreviewExecuted(sender, e);
                 e.Handled = true;
             }

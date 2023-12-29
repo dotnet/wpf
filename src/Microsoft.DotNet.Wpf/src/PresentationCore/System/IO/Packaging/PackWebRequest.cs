@@ -66,7 +66,7 @@ namespace System.IO.Packaging
         /// <param name="cachedPackageIsThreadSafe">is the cacheEntry thread-safe?</param>
         /// <remarks>This should only be called by PackWebRequestFactory</remarks>
         /// <exception cref="ArgumentException">Will throw an ArgumentException if the given URI is not of the correct scheme</exception>
-        #pragma warning disable SYSLIB0014 
+        #pragma warning disable SYSLIB0014
         internal PackWebRequest(Uri uri, Uri packageUri, Uri partUri, Package cacheEntry,
             bool respectCachePolicy, bool cachedPackageIsThreadSafe)
         {
@@ -85,12 +85,10 @@ namespace System.IO.Packaging
 #if DEBUG
             if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
                 System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequest - working from Package Cache");
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - working from Package Cache");
 #endif
         }
-        #pragma warning restore SYSLIB0014 
+        #pragma warning restore SYSLIB0014
 
         //------------------------------------------------------
         //
@@ -116,7 +114,7 @@ namespace System.IO.Packaging
         public override WebResponse GetResponse()
         {
             bool cachedPackageAvailable = IsCachedPackage;
-            
+
             // if there is no cached package or it is from the public PackageStore, we must respect CachePolicy
             if (!cachedPackageAvailable || (cachedPackageAvailable && _respectCachePolicy))
             {
@@ -151,15 +149,13 @@ namespace System.IO.Packaging
                         }
                 }
             }
-            
+
             if (cachedPackageAvailable)
             {
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequest - Getting response from Package Cache");
+                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - Getting response from Package Cache");
 #endif
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
             }
@@ -173,9 +169,7 @@ namespace System.IO.Packaging
 #if DEBUG
                 if (PackWebRequestFactory._traceSwitch.Enabled)
                     System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequest - Getting new response");
+                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - Getting new response");
 #endif
                 // Create a new response for every call
                 return new PackWebResponse(_uri, _innerUri, _partName, request);
@@ -431,7 +425,7 @@ namespace System.IO.Packaging
         /// <value>Inner WebRequest object.</value>
         /// <exception cref="NotSupportedException">Inner uri is not resolvable to a valid transport protocol (such as
         /// ftp or http) and the request cannot be satisfied from the PackageStore.</exception>
-        /// <remarks>The inner WebRequest is provided for advanced scenarios only and 
+        /// <remarks>The inner WebRequest is provided for advanced scenarios only and
         /// need not be accessed in most cases.</remarks>
         /// <returns>A WebRequest created using the inner-uri or null if the inner uri is not resolvable and we
         /// have a valid PackageStore entry that can be used to provide data.</returns>
@@ -482,7 +476,7 @@ namespace System.IO.Packaging
             {
                 // Don't even attempt to create if we know it will fail.  This does not eliminate all failure cases
                 // but most and is very common so let's save an expensive exception.
-                // We still create a webRequest if possible even if we have a potential cacheEntry 
+                // We still create a webRequest if possible even if we have a potential cacheEntry
                 // because the caller may still specify BypassCache policy before calling GetResponse() that will force us to hit the server.
                 if (!IsPreloadedPackage)
                 {
@@ -521,7 +515,7 @@ namespace System.IO.Packaging
                     // In either case, we create a pseudo request to house property values.
                     // In case 1, we know there will never be a cache bypass (we ignore cache policy for PreloadedPackages)
                     // In case 2, the caller is using a schema that we cannot use for transport (not on of ftp, http, file, etc)
-                    // and we will silently accept and ignore their property modifications/queries.  
+                    // and we will silently accept and ignore their property modifications/queries.
                     // Note that if they change the cache policy to BypassCache they will get an exception when they call
                     // GetResponse().  If they leave cache policy intact, and call GetResponse()
                     // they will get data from the cached package.
@@ -577,7 +571,7 @@ namespace System.IO.Packaging
         // statics
         static private RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
 
-        // These are "cached" inner Uri's taken from the available application: and SiteOfOrigin: Uri's.  
+        // These are "cached" inner Uri's taken from the available application: and SiteOfOrigin: Uri's.
         // They are kept in statics to eliminate overhead of reparsing them on every request.
         // We are essentially extracting the "application://" out of "pack://application:,,"
         static private Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.SiteOfOriginBaseUri);

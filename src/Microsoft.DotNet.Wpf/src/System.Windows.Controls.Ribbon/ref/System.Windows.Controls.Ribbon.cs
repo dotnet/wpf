@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 namespace Microsoft.Windows.Input
 {
     public partial interface IPreviewCommand : System.Windows.Input.ICommand
@@ -487,6 +487,7 @@ namespace System.Windows.Controls.Ribbon
         public bool IsDropDownOpen { get { throw null; } set { } }
         public bool IsHostedInRibbonWindow { get { throw null; } }
         public bool IsMinimized { get { throw null; } set { } }
+        protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Media.Brush MouseOverBackground { get { throw null; } set { } }
         public System.Windows.Media.Brush MouseOverBorderBrush { get { throw null; } set { } }
         public System.Windows.Media.Brush PressedBackground { get { throw null; } set { } }
@@ -839,6 +840,7 @@ namespace System.Windows.Controls.Ribbon
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.Ribbon.RibbonControlLengthConverter))]
     public partial struct RibbonControlLength : System.IEquatable<System.Windows.Controls.Ribbon.RibbonControlLength>
     {
+        private int _dummyPrimitive;
         public RibbonControlLength(double pixels) { throw null; }
         public RibbonControlLength(double value, System.Windows.Controls.Ribbon.RibbonControlLengthUnitType type) { throw null; }
         public static System.Windows.Controls.Ribbon.RibbonControlLength Auto { get { throw null; } }
@@ -1246,6 +1248,7 @@ namespace System.Windows.Controls.Ribbon
         protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e) { }
         protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e) { }
         protected override void OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
+        protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo info) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("ControlSizeDefinitions")]
@@ -1325,6 +1328,7 @@ namespace System.Windows.Controls.Ribbon
         public double DropDownHeight { get { throw null; } set { } }
         public System.Windows.Media.Brush FocusedBackground { get { throw null; } set { } }
         public System.Windows.Media.Brush FocusedBorderBrush { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         public bool HasGallery { get { throw null; } }
         public bool IsDropDownOpen { get { throw null; } set { } }
         public bool IsDropDownPositionedAbove { get { throw null; } }
@@ -1557,6 +1561,7 @@ namespace System.Windows.Controls.Ribbon
         public System.Windows.Controls.Ribbon.Ribbon Ribbon { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) { }
+        protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
     [System.Windows.TemplatePartAttribute(Name="PART_HeaderButton", Type=typeof(System.Windows.Controls.Primitives.ButtonBase))]
     [System.Windows.TemplatePartAttribute(Name="PART_ToggleButton", Type=typeof(System.Windows.Controls.Ribbon.RibbonToggleButton))]
@@ -1651,6 +1656,7 @@ namespace System.Windows.Controls.Ribbon
         public object ContextualTabGroupHeader { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.Ribbon.StringCollectionConverter))]
         public System.Collections.Specialized.StringCollection GroupSizeReductionOrder { get { throw null; } set { } }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         public System.Windows.Style HeaderStyle { get { throw null; } set { } }
         public bool IsSelected { get { throw null; } set { } }
         public string KeyTip { get { throw null; } set { } }
@@ -1705,6 +1711,7 @@ namespace System.Windows.Controls.Ribbon
     public partial class RibbonTabHeaderItemsControl : System.Windows.Controls.ItemsControl
     {
         public RibbonTabHeaderItemsControl() { }
+        protected internal override bool HandlesScrolling { get { throw null; } }
         protected override System.Windows.DependencyObject GetContainerForItemOverride() { throw null; }
         protected override bool IsItemItsOwnContainerOverride(object item) { throw null; }
         public override void OnApplyTemplate() { }
@@ -1955,9 +1962,7 @@ namespace System.Windows.Controls.Ribbon.Primitives
     public partial class RibbonGalleryCategoriesPanel : System.Windows.Controls.Panel, System.Windows.Controls.Primitives.IScrollInfo, System.Windows.Controls.Ribbon.Primitives.IProvideStarLayoutInfoBase
     {
         public RibbonGalleryCategoriesPanel() { }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool CanHorizontallyScroll { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(true)]
         public bool CanVerticallyScroll { get { throw null; } set { } }
         public double ExtentHeight { get { throw null; } }
         public double ExtentWidth { get { throw null; } }

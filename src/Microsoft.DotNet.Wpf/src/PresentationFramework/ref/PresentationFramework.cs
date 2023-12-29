@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace Microsoft.Win32
 {
     public abstract partial class CommonDialog
@@ -13,39 +17,39 @@ namespace Microsoft.Win32
     }
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
-        private protected CommonItemDialog() { }
+        internal CommonItemDialog() { }
         public bool AddToRecent { get { throw null; } set { } }
-        public System.Guid? ClientGuid { get; set; }
+        public System.Guid? ClientGuid { get { throw null; } set { } }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
         public string DefaultDirectory { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
         public string RootDirectory { get { throw null; } set { } }
-        public bool ShowHiddenItems { get; set; }
+        public bool ShowHiddenItems { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
         protected virtual void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
-        protected override bool RunDialog(System.IntPtr hwndOwner) { throw null; }
         public override void Reset() { }
+        protected override bool RunDialog(System.IntPtr hwndOwner) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class FileDialog : Microsoft.Win32.CommonItemDialog
     {
-        private protected FileDialog() { }
+        internal FileDialog() { }
         public bool AddExtension { get { throw null; } set { } }
         public bool CheckFileExists { get { throw null; } set { } }
         public bool CheckPathExists { get { throw null; } set { } }
         public string DefaultExt { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public string[] FileNames { get { throw null; } }
-        public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
         public string Filter { get { throw null; } set { } }
         public int FilterIndex { get { throw null; } set { } }
-        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
-        public override void Reset() { }
         public bool RestoreDirectory { get { throw null; } set { } }
         public string SafeFileName { get { throw null; } }
         public string[] SafeFileNames { get { throw null; } }
+        public event System.ComponentModel.CancelEventHandler FileOk { add { } remove { } }
+        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
+        public override void Reset() { }
         public override string ToString() { throw null; }
     }
     public sealed partial class FileDialogCustomPlace
@@ -78,25 +82,25 @@ namespace Microsoft.Win32
     public sealed partial class OpenFileDialog : Microsoft.Win32.FileDialog
     {
         public OpenFileDialog() { }
-        public bool ForcePreviewPane { get; set; }
+        public bool ForcePreviewPane { get { throw null; } set { } }
         public bool Multiselect { get { throw null; } set { } }
+        public bool ReadOnlyChecked { get { throw null; } set { } }
+        public bool ShowReadOnly { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }
-        public bool ReadOnlyChecked { get { throw null; } set { } }
         public override void Reset() { }
-        public bool ShowReadOnly { get { throw null; } set { } }
     }
     public sealed partial class OpenFolderDialog : Microsoft.Win32.CommonItemDialog
     {
         public OpenFolderDialog() { }
         public string FolderName { get { throw null; } set { } }
         public string[] FolderNames { get { throw null; } }
-        public event System.ComponentModel.CancelEventHandler FolderOk { add { } remove { } }
         public bool Multiselect { get { throw null; } set { } }
-        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
-        public override void Reset() { }
         public string SafeFolderName { get { throw null; } }
         public string[] SafeFolderNames { get { throw null; } }
+        public event System.ComponentModel.CancelEventHandler FolderOk { add { } remove { } }
+        protected override void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
+        public override void Reset() { }
         public override string ToString() { throw null; }
     }
     public sealed partial class SaveFileDialog : Microsoft.Win32.FileDialog
@@ -180,7 +184,6 @@ namespace System.Windows
         public bool IncludeDescendants { get { throw null; } set { } }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        internal override bool IsBrowsable(System.Windows.DependencyObject d, System.Windows.DependencyProperty dp) { throw null; }
     }
     public enum BaseValueSource
     {
@@ -230,12 +233,9 @@ namespace System.Windows
         public Condition(System.Windows.Data.BindingBase binding, object conditionValue) { }
         public Condition(System.Windows.DependencyProperty conditionProperty, object conditionValue) { }
         public Condition(System.Windows.DependencyProperty conditionProperty, object conditionValue, string sourceName) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.BindingBase Binding { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string SourceName { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
         public object Value { get { throw null; } set { } }
@@ -256,6 +256,7 @@ namespace System.Windows
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.CornerRadiusConverter))]
     public partial struct CornerRadius : System.IEquatable<System.Windows.CornerRadius>
     {
+        private int _dummyPrimitive;
         public CornerRadius(double uniformRadius) { throw null; }
         public CornerRadius(double topLeft, double topRight, double bottomRight, double bottomLeft) { throw null; }
         public double BottomLeft { get { throw null; } set { } }
@@ -283,7 +284,6 @@ namespace System.Windows
         public DataTemplate() { }
         public DataTemplate(object dataType) { }
         public object DataTemplateKey { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public object DataType { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
@@ -358,7 +358,6 @@ namespace System.Windows
         public EventSetter() { }
         public EventSetter(System.Windows.RoutedEvent routedEvent, System.Delegate handler) { }
         public System.Windows.RoutedEvent Event { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool HandledEventsToo { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.EventSetterHandlerConverter))]
         public System.Delegate Handler { get { throw null; } set { } }
@@ -371,11 +370,9 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.TriggerActionCollection Actions { get { throw null; } }
         public System.Windows.RoutedEvent RoutedEvent { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string SourceName { get { throw null; } set { } }
         protected virtual void AddChild(object value) { }
         protected virtual void AddText(string text) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeActions() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -406,6 +403,7 @@ namespace System.Windows
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.FigureLengthConverter))]
     public partial struct FigureLength : System.IEquatable<System.Windows.FigureLength>
     {
+        private int _dummyPrimitive;
         public FigureLength(double pixels) { throw null; }
         public FigureLength(double value, System.Windows.FigureUnitType type) { throw null; }
         public System.Windows.FigureUnitType FigureUnitType { get { throw null; } }
@@ -501,7 +499,6 @@ namespace System.Windows
         public System.Windows.Style FocusVisualStyle { get { throw null; } set { } }
         public bool ForceCursor { get { throw null; } set { } }
         public System.Windows.Input.InputScope InputScope { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public bool IsInitialized { get { throw null; } }
         public bool IsLoaded { get { throw null; } }
         public System.Windows.Markup.XmlLanguage Language { get { throw null; } set { } }
@@ -522,7 +519,6 @@ namespace System.Windows
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuClosing { add { } remove { } }
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuOpening { add { } remove { } }
         public event System.Windows.DependencyPropertyChangedEventHandler DataContextChanged { add { } remove { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public event System.EventHandler Initialized { add { } remove { } }
         public event System.Windows.RoutedEventHandler Loaded { add { } remove { } }
         public event System.EventHandler<System.Windows.Data.DataTransferEventArgs> SourceUpdated { add { } remove { } }
@@ -556,9 +552,7 @@ namespace System.Windows
         public System.Windows.Data.BindingExpression SetBinding(System.Windows.DependencyProperty dp, string path) { throw null; }
         public System.Windows.Data.BindingExpressionBase SetBinding(System.Windows.DependencyProperty dp, System.Windows.Data.BindingBase binding) { throw null; }
         public void SetResourceReference(System.Windows.DependencyProperty dp, object name) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeResources() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeStyle() { throw null; }
         bool System.Windows.Markup.IQueryAmbient.IsAmbientPropertyAvailable(string propertyName) { throw null; }
         public object TryFindResource(object resourceKey) { throw null; }
@@ -629,7 +623,6 @@ namespace System.Windows
         public System.Windows.HorizontalAlignment HorizontalAlignment { get { throw null; } set { } }
         protected internal System.Windows.InheritanceBehavior InheritanceBehavior { get { throw null; } set { } }
         public System.Windows.Input.InputScope InputScope { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public bool IsInitialized { get { throw null; } }
         public bool IsLoaded { get { throw null; } }
         public System.Windows.Markup.XmlLanguage Language { get { throw null; } set { } }
@@ -650,7 +643,7 @@ namespace System.Windows
         public double MinWidth { get { throw null; } set { } }
         [System.ComponentModel.MergablePropertyAttribute(false)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
         public string Name { get { throw null; } set { } }
         public bool OverridesDefaultStyle { get { throw null; } set { } }
         public System.Windows.DependencyObject Parent { get { throw null; } }
@@ -675,7 +668,6 @@ namespace System.Windows
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuClosing { add { } remove { } }
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuOpening { add { } remove { } }
         public event System.Windows.DependencyPropertyChangedEventHandler DataContextChanged { add { } remove { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public event System.EventHandler Initialized { add { } remove { } }
         public event System.Windows.RoutedEventHandler Loaded { add { } remove { } }
         public event System.Windows.RequestBringIntoViewEventHandler RequestBringIntoView { add { } remove { } }
@@ -726,11 +718,8 @@ namespace System.Windows
         public System.Windows.Data.BindingExpressionBase SetBinding(System.Windows.DependencyProperty dp, System.Windows.Data.BindingBase binding) { throw null; }
         public static void SetFlowDirection(System.Windows.DependencyObject element, System.Windows.FlowDirection value) { }
         public void SetResourceReference(System.Windows.DependencyProperty dp, object name) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeResources() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeStyle() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeTriggers() { throw null; }
         bool System.Windows.Markup.IQueryAmbient.IsAmbientPropertyAvailable(string propertyName) { throw null; }
         public object TryFindResource(object resourceKey) { throw null; }
@@ -806,7 +795,7 @@ namespace System.Windows
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
     [System.Windows.Markup.ContentPropertyAttribute("VisualTree")]
-    public abstract partial class FrameworkTemplate : System.Windows.Threading.DispatcherObject, System.Windows.Markup.INameScope, System.Windows.Markup.IQueryAmbient
+    public abstract partial class FrameworkTemplate : System.Windows.Threading.DispatcherObject, System.Windows.ISealable, System.Windows.Markup.INameScope, System.Windows.Markup.IQueryAmbient
     {
         protected FrameworkTemplate() { }
         public bool HasContent { get { throw null; } }
@@ -814,7 +803,8 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
+        bool System.Windows.ISealable.CanSeal { get { throw null; } }
+        bool System.Windows.ISealable.IsSealed { get { throw null; } }
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.TemplateContent Template { get { throw null; } set { } }
         public System.Windows.FrameworkElementFactory VisualTree { get { throw null; } set { } }
@@ -822,10 +812,10 @@ namespace System.Windows
         public System.Windows.DependencyObject LoadContent() { throw null; }
         public void RegisterName(string name, object scopedElement) { }
         public void Seal() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        internal abstract void SetTargetTypeInternal(System.Type targetType);
         public bool ShouldSerializeResources(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeVisualTree() { throw null; }
+        void System.Windows.ISealable.Seal() { }
         object System.Windows.Markup.INameScope.FindName(string name) { throw null; }
         bool System.Windows.Markup.IQueryAmbient.IsAmbientPropertyAvailable(string propertyName) { throw null; }
         public void UnregisterName(string name) { }
@@ -834,6 +824,7 @@ namespace System.Windows
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.GridLengthConverter))]
     public partial struct GridLength : System.IEquatable<System.Windows.GridLength>
     {
+        private int _dummyPrimitive;
         public GridLength(double pixels) { throw null; }
         public GridLength(double value, System.Windows.GridUnitType type) { throw null; }
         public static System.Windows.GridLength Auto { get { throw null; } }
@@ -1081,7 +1072,6 @@ namespace System.Windows
         public int Count { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.DeferrableContent DeferrableContent { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool InvalidatesImplicitDataTemplateResources { get { throw null; } set { } }
         public bool IsFixedSize { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
@@ -1128,9 +1118,7 @@ namespace System.Windows
         protected ResourceReferenceKeyNotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ResourceReferenceKeyNotFoundException(string message, object resourceKey) { }
         public object Key { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class RoutedPropertyChangedEventArgs<T> : System.Windows.RoutedEventArgs
     {
@@ -1147,6 +1135,7 @@ namespace System.Windows
         public System.Windows.ReasonSessionEnding ReasonSessionEnding { get { throw null; } }
     }
     public delegate void SessionEndingCancelEventHandler(object sender, System.Windows.SessionEndingCancelEventArgs e);
+    [System.Windows.Markup.ContentPropertyAttribute("Value")]
     [System.Windows.Markup.XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [System.Windows.Markup.XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public partial class Setter : System.Windows.SetterBase, System.ComponentModel.ISupportInitialize
@@ -1154,11 +1143,9 @@ namespace System.Windows
         public Setter() { }
         public Setter(System.Windows.DependencyProperty property, object value) { }
         public Setter(System.Windows.DependencyProperty property, object value, string targetName) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public string TargetName { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
@@ -1222,12 +1209,11 @@ namespace System.Windows
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
     [System.Windows.Markup.DictionaryKeyPropertyAttribute("TargetType")]
-    public partial class Style : System.Windows.Threading.DispatcherObject, System.Windows.Markup.IAddChild, System.Windows.Markup.INameScope, System.Windows.Markup.IQueryAmbient
+    public partial class Style : System.Windows.Threading.DispatcherObject, System.Windows.ISealable, System.Windows.Markup.IAddChild, System.Windows.Markup.INameScope, System.Windows.Markup.IQueryAmbient
     {
         public Style() { }
         public Style(System.Type targetType) { }
         public Style(System.Type targetType, System.Windows.Style basedOn) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.Style BasedOn { get { throw null; } set { } }
         public bool IsSealed { get { throw null; } }
@@ -1235,6 +1221,8 @@ namespace System.Windows
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.SetterBaseCollection Setters { get { throw null; } }
+        bool System.Windows.ISealable.CanSeal { get { throw null; } }
+        bool System.Windows.ISealable.IsSealed { get { throw null; } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Type TargetType { get { throw null; } set { } }
@@ -1243,6 +1231,7 @@ namespace System.Windows
         public override int GetHashCode() { throw null; }
         public void RegisterName(string name, object scopedElement) { }
         public void Seal() { }
+        void System.Windows.ISealable.Seal() { }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
         object System.Windows.Markup.INameScope.FindName(string name) { throw null; }
@@ -1732,9 +1721,7 @@ namespace System.Windows
     {
         public TemplateBindingExtension() { }
         public TemplateBindingExtension(System.Windows.DependencyProperty property) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.IValueConverter Converter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public object ConverterParameter { get { throw null; } set { } }
         [System.Windows.Markup.ConstructorArgumentAttribute("property")]
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
@@ -1808,6 +1795,7 @@ namespace System.Windows
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial struct Thickness : System.IEquatable<System.Windows.Thickness>
     {
+        private int _dummyPrimitive;
         public Thickness(double uniformLength) { throw null; }
         public Thickness(double left, double top, double right, double bottom) { throw null; }
         public double Bottom { get { throw null; } set { } }
@@ -1839,7 +1827,6 @@ namespace System.Windows
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.SetterBaseCollection Setters { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public string SourceName { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
@@ -1907,6 +1894,7 @@ namespace System.Windows
     }
     public partial struct ValueSource
     {
+        private int _dummyPrimitive;
         public System.Windows.BaseValueSource BaseValueSource { get { throw null; } }
         public bool IsAnimated { get { throw null; } }
         public bool IsCoerced { get { throw null; } }
@@ -2008,7 +1996,6 @@ namespace System.Windows
         public double Left { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.WindowCollection OwnedWindows { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Window Owner { get { throw null; } set { } }
         public System.Windows.ResizeMode ResizeMode { get { throw null; } set { } }
         public System.Windows.Rect RestoreBounds { get { throw null; } }
@@ -2021,7 +2008,6 @@ namespace System.Windows
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]
         public double Top { get { throw null; } set { } }
         public bool Topmost { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.WindowStartupLocation.Manual)]
         public System.Windows.WindowStartupLocation WindowStartupLocation { get { throw null; } set { } }
         public System.Windows.WindowState WindowState { get { throw null; } set { } }
         public System.Windows.WindowStyle WindowStyle { get { throw null; } set { } }
@@ -2099,6 +2085,7 @@ namespace System.Windows
 }
 namespace System.Windows.Annotations
 {
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://schemas.microsoft.com/windows/annotations/2003/11/core", ElementName="Annotation")]
     public sealed partial class Annotation : System.Xml.Serialization.IXmlSerializable
     {
         public Annotation() { }
@@ -2158,6 +2145,7 @@ namespace System.Windows.Annotations
         public static void DeleteTextStickyNotesForSelection(System.Windows.Annotations.AnnotationService service) { }
         public static System.Windows.Annotations.IAnchorInfo GetAnchorInfo(System.Windows.Annotations.AnnotationService service, System.Windows.Annotations.Annotation annotation) { throw null; }
     }
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://schemas.microsoft.com/windows/annotations/2003/11/core", ElementName="Resource")]
     public sealed partial class AnnotationResource : System.ComponentModel.INotifyPropertyChanged, System.Xml.Serialization.IXmlSerializable
     {
         public AnnotationResource() { }
@@ -2199,6 +2187,7 @@ namespace System.Windows.Annotations
         public static System.Windows.Annotations.AnnotationService GetService(System.Windows.Controls.FlowDocumentScrollViewer viewer) { throw null; }
         public static System.Windows.Annotations.AnnotationService GetService(System.Windows.Controls.Primitives.DocumentViewerBase viewer) { throw null; }
     }
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://schemas.microsoft.com/windows/annotations/2003/11/core", ElementName="ContentLocator")]
     public sealed partial class ContentLocator : System.Windows.Annotations.ContentLocatorBase, System.Xml.Serialization.IXmlSerializable
     {
         public ContentLocator() { }
@@ -2215,6 +2204,7 @@ namespace System.Windows.Annotations
         event System.ComponentModel.PropertyChangedEventHandler System.ComponentModel.INotifyPropertyChanged.PropertyChanged { add { } remove { } }
         public abstract object Clone();
     }
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://schemas.microsoft.com/windows/annotations/2003/11/core", ElementName="ContentLocatorGroup")]
     public sealed partial class ContentLocatorGroup : System.Windows.Annotations.ContentLocatorBase, System.Xml.Serialization.IXmlSerializable
     {
         public ContentLocatorGroup() { }
@@ -2377,6 +2367,7 @@ namespace System.Windows.Automation.Peers
     public abstract partial class ContentTextAutomationPeer : System.Windows.Automation.Peers.FrameworkContentElementAutomationPeer
     {
         protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
+        internal abstract System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer start, System.Windows.Documents.ITextPointer end);
         public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
     public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
@@ -3124,6 +3115,7 @@ namespace System.Windows.Automation.Peers
     public abstract partial class TextAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
         protected TextAutomationPeer(System.Windows.FrameworkElement owner) : base (default(System.Windows.FrameworkElement)) { }
+        internal abstract System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetAutomationPeersFromRange(System.Windows.Documents.ITextPointer start, System.Windows.Documents.ITextPointer end);
         protected override string GetNameCore() { throw null; }
         public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
@@ -3248,6 +3240,7 @@ namespace System.Windows.Automation.Peers
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetNameCore() { throw null; }
+        protected override bool IsDialogCore() { throw null; }
     }
 }
 namespace System.Windows.Baml2006
@@ -3309,7 +3302,6 @@ namespace System.Windows.Controls
         public double LineHeight { get { throw null; } set { } }
         public System.Windows.LineStackingStrategy LineStackingStrategy { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute("")]
         public string Text { get { throw null; } set { } }
         public System.Windows.TextAlignment TextAlignment { get { throw null; } set { } }
         public System.Windows.TextDecorationCollection TextDecorations { get { throw null; } set { } }
@@ -3333,7 +3325,6 @@ namespace System.Windows.Controls
     {
         public AdornedElementPlaceholder() { }
         public System.Windows.UIElement AdornedElement { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public virtual System.Windows.UIElement Child { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
@@ -3678,7 +3669,6 @@ namespace System.Windows.Controls
         protected virtual void OnContentStringFormatChanged(string oldContentStringFormat, string newContentStringFormat) { }
         protected virtual void OnContentTemplateChanged(System.Windows.DataTemplate oldContentTemplate, System.Windows.DataTemplate newContentTemplate) { }
         protected virtual void OnContentTemplateSelectorChanged(System.Windows.Controls.DataTemplateSelector oldContentTemplateSelector, System.Windows.Controls.DataTemplateSelector newContentTemplateSelector) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual bool ShouldSerializeContent() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -3707,7 +3697,6 @@ namespace System.Windows.Controls
         protected virtual void OnContentTemplateChanged(System.Windows.DataTemplate oldContentTemplate, System.Windows.DataTemplate newContentTemplate) { }
         protected virtual void OnContentTemplateSelectorChanged(System.Windows.Controls.DataTemplateSelector oldContentTemplateSelector, System.Windows.Controls.DataTemplateSelector newContentTemplateSelector) { }
         protected virtual void OnTemplateChanged(System.Windows.DataTemplate oldTemplate, System.Windows.DataTemplate newTemplate) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeContentTemplateSelector() { throw null; }
     }
     [System.ComponentModel.DefaultEventAttribute("Opened")]
@@ -3904,7 +3893,6 @@ namespace System.Windows.Controls
     {
         public ControlTemplate() { }
         public ControlTemplate(System.Type targetType) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Type TargetType { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
@@ -4196,6 +4184,8 @@ namespace System.Windows.Controls
     }
     public partial struct DataGridCellInfo
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public DataGridCellInfo(object item, System.Windows.Controls.DataGridColumn column) { throw null; }
         public DataGridCellInfo(System.Windows.Controls.DataGridCell cell) { throw null; }
         public System.Windows.Controls.DataGridColumn Column { get { throw null; } }
@@ -4230,6 +4220,8 @@ namespace System.Windows.Controls
     }
     public partial struct DataGridClipboardCellContent
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public DataGridClipboardCellContent(object item, System.Windows.Controls.DataGridColumn column, object content) { throw null; }
         public System.Windows.Controls.DataGridColumn Column { get { throw null; } }
         public object Content { get { throw null; } }
@@ -4394,6 +4386,7 @@ namespace System.Windows.Controls
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.DataGridLengthConverter))]
     public partial struct DataGridLength : System.IEquatable<System.Windows.Controls.DataGridLength>
     {
+        private int _dummyPrimitive;
         public DataGridLength(double pixels) { throw null; }
         public DataGridLength(double value, System.Windows.Controls.DataGridLengthUnitType type) { throw null; }
         public DataGridLength(double value, System.Windows.Controls.DataGridLengthUnitType type, double desiredValue, double displayValue) { throw null; }
@@ -4644,7 +4637,6 @@ namespace System.Windows.Controls
     public partial class Decorator : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild
     {
         public Decorator() { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public virtual System.Windows.UIElement Child { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
@@ -5042,7 +5034,6 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         public void Refresh() { }
         public System.Windows.Navigation.JournalEntry RemoveBackEntry() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }
@@ -5080,9 +5071,7 @@ namespace System.Windows.Controls
         public static void SetIsSharedSizeScope(System.Windows.UIElement element, bool value) { }
         public static void SetRow(System.Windows.UIElement element, int value) { }
         public static void SetRowSpan(System.Windows.UIElement element, int value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeColumnDefinitions() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeRowDefinitions() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -5156,7 +5145,6 @@ namespace System.Windows.Controls
         public static System.Windows.Controls.GridViewColumnCollection GetColumnCollection(System.Windows.DependencyObject element) { throw null; }
         protected internal override void PrepareItem(System.Windows.Controls.ListViewItem item) { }
         public static void SetColumnCollection(System.Windows.DependencyObject element, System.Windows.Controls.GridViewColumnCollection collection) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static bool ShouldSerializeColumnCollection(System.Windows.DependencyObject obj) { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object column) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -5300,20 +5288,13 @@ namespace System.Windows.Controls
     {
         public static readonly System.Windows.Controls.ItemsPanelTemplate DefaultGroupPanel;
         public GroupStyle() { }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         public int AlternationCount { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Style ContainerStyle { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Controls.StyleSelector ContainerStyleSelector { get { throw null; } set { } }
         public static System.Windows.Controls.GroupStyle Default { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string HeaderStringFormat { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.DataTemplate HeaderTemplate { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Controls.DataTemplateSelector HeaderTemplateSelector { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool HidesIfEmpty { get { throw null; } set { } }
         public System.Windows.Controls.ItemsPanelTemplate Panel { get { throw null; } set { } }
         protected virtual event System.ComponentModel.PropertyChangedEventHandler PropertyChanged { add { } remove { } }
@@ -5382,6 +5363,8 @@ namespace System.Windows.Controls
     }
     public partial struct HierarchicalVirtualizationConstraints
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public HierarchicalVirtualizationConstraints(System.Windows.Controls.VirtualizationCacheLength cacheLength, System.Windows.Controls.VirtualizationCacheLengthUnit cacheLengthUnit, System.Windows.Rect viewport) { throw null; }
         public System.Windows.Controls.VirtualizationCacheLength CacheLength { get { throw null; } }
         public System.Windows.Controls.VirtualizationCacheLengthUnit CacheLengthUnit { get { throw null; } }
@@ -5394,6 +5377,8 @@ namespace System.Windows.Controls
     }
     public partial struct HierarchicalVirtualizationHeaderDesiredSizes
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public HierarchicalVirtualizationHeaderDesiredSizes(System.Windows.Size logicalSize, System.Windows.Size pixelSize) { throw null; }
         public System.Windows.Size LogicalSize { get { throw null; } }
         public System.Windows.Size PixelSize { get { throw null; } }
@@ -5405,6 +5390,8 @@ namespace System.Windows.Controls
     }
     public partial struct HierarchicalVirtualizationItemDesiredSizes
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public HierarchicalVirtualizationItemDesiredSizes(System.Windows.Size logicalSize, System.Windows.Size logicalSizeInViewport, System.Windows.Size logicalSizeBeforeViewport, System.Windows.Size logicalSizeAfterViewport, System.Windows.Size pixelSize, System.Windows.Size pixelSizeInViewport, System.Windows.Size pixelSizeBeforeViewport, System.Windows.Size pixelSizeAfterViewport) { throw null; }
         public System.Windows.Size LogicalSize { get { throw null; } }
         public System.Windows.Size LogicalSizeAfterViewport { get { throw null; } }
@@ -5817,7 +5804,6 @@ namespace System.Windows.Controls
         public System.Windows.Data.BindingGroup ItemBindingGroup { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(false)]
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public System.Windows.Controls.ItemContainerGenerator ItemContainerGenerator { get { throw null; } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Content")]
@@ -5856,6 +5842,7 @@ namespace System.Windows.Controls
         protected virtual bool IsItemItsOwnContainerOverride(object item) { throw null; }
         public static System.Windows.Controls.ItemsControl ItemsControlFromItemContainer(System.Windows.DependencyObject container) { throw null; }
         protected virtual void OnAlternationCountChanged(int oldAlternationCount, int newAlternationCount) { }
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnDisplayMemberPathChanged(string oldDisplayMemberPath, string newDisplayMemberPath) { }
         protected virtual void OnGroupStyleSelectorChanged(System.Windows.Controls.GroupStyleSelector oldGroupStyleSelector, System.Windows.Controls.GroupStyleSelector newGroupStyleSelector) { }
         protected virtual void OnItemBindingGroupChanged(System.Windows.Data.BindingGroup oldItemBindingGroup, System.Windows.Data.BindingGroup newItemBindingGroup) { }
@@ -5871,9 +5858,7 @@ namespace System.Windows.Controls
         protected override void OnTextInput(System.Windows.Input.TextCompositionEventArgs e) { }
         protected virtual void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
         protected virtual bool ShouldApplyItemContainerStyle(System.Windows.DependencyObject container, object item) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeGroupStyle() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeItems() { throw null; }
         void System.Windows.Controls.Primitives.IContainItemStorage.Clear() { }
         void System.Windows.Controls.Primitives.IContainItemStorage.ClearItemValue(object item, System.Windows.DependencyProperty dp) { }
@@ -6232,21 +6217,17 @@ namespace System.Windows.Controls
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected virtual void OnTemplateChanged(System.Windows.Controls.ControlTemplate oldTemplate, System.Windows.Controls.ControlTemplate newTemplate) { }
         protected internal sealed override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeShowsNavigationUI() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeTitle() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeWindowHeight() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeWindowTitle() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeWindowWidth() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object obj) { }
         void System.Windows.Markup.IAddChild.AddText(string str) { }
     }
     public partial struct PageRange
     {
+        private int _dummyPrimitive;
         public PageRange(int page) { throw null; }
         public PageRange(int pageFrom, int pageTo) { throw null; }
         public int PageFrom { get { throw null; } set { } }
@@ -6293,7 +6274,6 @@ namespace System.Windows.Controls
         protected override void OnRender(System.Windows.Media.DrawingContext dc) { }
         protected internal override void OnVisualChildrenChanged(System.Windows.DependencyObject visualAdded, System.Windows.DependencyObject visualRemoved) { }
         public static void SetZIndex(System.Windows.UIElement element, int value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeChildren() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -6323,9 +6303,7 @@ namespace System.Windows.Controls
         public System.Windows.Media.Brush CaretBrush { get { throw null; } set { } }
         public bool IsInactiveSelectionHighlightEnabled { get { throw null; } set { } }
         public bool IsSelectionActive { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         public int MaxLength { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute("")]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public string Password { get { throw null; } set { } }
         public char PasswordChar { get { throw null; } set { } }
@@ -6406,7 +6384,6 @@ namespace System.Windows.Controls
     {
         public static readonly System.Windows.DependencyProperty GroupNameProperty;
         public RadioButton() { }
-        [System.ComponentModel.DefaultValueAttribute("")]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public string GroupName { get { throw null; } set { } }
         protected override void OnAccessKey(System.Windows.Input.AccessKeyEventArgs e) { }
@@ -6434,7 +6411,6 @@ namespace System.Windows.Controls
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected override void OnDpiChanged(System.Windows.DpiScale oldDpiScaleInfo, System.Windows.DpiScale newDpiScaleInfo) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeDocument() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -6825,9 +6801,7 @@ namespace System.Windows.Controls
     {
         public static readonly System.Windows.DependencyProperty OrientationProperty;
         public StackPanel() { }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool CanHorizontallyScroll { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool CanVerticallyScroll { get { throw null; } set { } }
         public double ExtentHeight { get { throw null; } }
         public double ExtentWidth { get { throw null; } }
@@ -6978,7 +6952,7 @@ namespace System.Windows.Controls
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Text)]
     [System.Windows.Markup.ContentPropertyAttribute("Inlines")]
-    public partial class TextBlock : System.Windows.FrameworkElement, System.IServiceProvider, System.Windows.IContentHost, System.Windows.Markup.IAddChild, System.Windows.Markup.IAddChildInternal
+    public partial class TextBlock : System.Windows.FrameworkElement, System.IServiceProvider, System.Windows.IContentHost, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty BackgroundProperty;
         public static readonly System.Windows.DependencyProperty BaselineOffsetProperty;
@@ -7067,11 +7041,8 @@ namespace System.Windows.Controls
         public static void SetLineHeight(System.Windows.DependencyObject element, double value) { }
         public static void SetLineStackingStrategy(System.Windows.DependencyObject element, System.Windows.LineStackingStrategy value) { }
         public static void SetTextAlignment(System.Windows.DependencyObject element, System.Windows.TextAlignment value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBaselineOffset() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeText() { throw null; }
         object System.IServiceProvider.GetService(System.Type serviceType) { throw null; }
         System.Collections.ObjectModel.ReadOnlyCollection<System.Windows.Rect> System.Windows.IContentHost.GetRectangles(System.Windows.ContentElement child) { throw null; }
@@ -7099,22 +7070,16 @@ namespace System.Windows.Controls
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public int LineCount { get { throw null; } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public int MaxLength { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(2147483647)]
         public int MaxLines { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(1)]
         public int MinLines { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public string SelectedText { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public int SelectionLength { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public int SelectionStart { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute("")]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Text)]
         public string Text { get { throw null; } set { } }
         public System.Windows.TextAlignment TextAlignment { get { throw null; } set { } }
@@ -7140,7 +7105,6 @@ namespace System.Windows.Controls
         protected override void OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs e) { }
         public void ScrollToLine(int lineIndex) { }
         public void Select(int start, int length) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeText(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -7607,6 +7571,7 @@ namespace System.Windows.Controls
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.VirtualizationCacheLengthConverter))]
     public partial struct VirtualizationCacheLength : System.IEquatable<System.Windows.Controls.VirtualizationCacheLength>
     {
+        private int _dummyPrimitive;
         public VirtualizationCacheLength(double cacheBeforeAndAfterViewport) { throw null; }
         public VirtualizationCacheLength(double cacheBeforeViewport, double cacheAfterViewport) { throw null; }
         public double CacheAfterViewport { get { throw null; } }
@@ -7684,9 +7649,7 @@ namespace System.Windows.Controls
         public static readonly new System.Windows.DependencyProperty VirtualizationModeProperty;
         public VirtualizingStackPanel() { }
         protected override bool CanHierarchicallyScrollAndVirtualizeCore { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool CanHorizontallyScroll { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool CanVerticallyScroll { get { throw null; } set { } }
         public double ExtentHeight { get { throw null; } }
         public double ExtentWidth { get { throw null; } }
@@ -7879,6 +7842,8 @@ namespace System.Windows.Controls.Primitives
     }
     public partial struct CustomPopupPlacement
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public CustomPopupPlacement(System.Windows.Point point, System.Windows.Controls.Primitives.PopupPrimaryAxis primaryAxis) { throw null; }
         public System.Windows.Point Point { get { throw null; } set { } }
         public System.Windows.Controls.Primitives.PopupPrimaryAxis PrimaryAxis { get { throw null; } set { } }
@@ -8100,6 +8065,7 @@ namespace System.Windows.Controls.Primitives
     }
     public partial struct GeneratorPosition
     {
+        private int _dummyPrimitive;
         public GeneratorPosition(int index, int offset) { throw null; }
         public int Index { get { throw null; } set { } }
         public int Offset { get { throw null; } set { } }
@@ -8124,6 +8090,7 @@ namespace System.Windows.Controls.Primitives
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Media.Visual GetVisualChild(int index) { throw null; }
+        internal abstract void OnColumnPropertyChanged(System.Windows.Controls.GridViewColumn column, string propertyName);
         bool System.Windows.IWeakEventListener.ReceiveWeakEvent(System.Type managerType, object sender, System.EventArgs args) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -8820,45 +8787,28 @@ namespace System.Windows.Data
         public static readonly System.Windows.DependencyProperty XmlNamespaceManagerProperty;
         public Binding() { }
         public Binding(string path) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public object AsyncState { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool BindsDirectlyToSource { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.IValueConverter Converter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.CultureInfoIetfLanguageTagConverter))]
         public System.Globalization.CultureInfo ConverterCulture { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public object ConverterParameter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string ElementName { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool IsAsync { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Data.BindingMode.Default)]
         public System.Windows.Data.BindingMode Mode { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnSourceUpdated { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnTargetUpdated { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnValidationError { get { throw null; } set { } }
         public System.Windows.PropertyPath Path { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.RelativeSource RelativeSource { get { throw null; } set { } }
         public object Source { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.Data.UpdateSourceExceptionFilterCallback UpdateSourceExceptionFilter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Data.UpdateSourceTrigger.Default)]
         public System.Windows.Data.UpdateSourceTrigger UpdateSourceTrigger { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool ValidatesOnDataErrors { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool ValidatesOnExceptions { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(true)]
         public bool ValidatesOnNotifyDataErrors { get { throw null; } set { } }
         public System.Collections.ObjectModel.Collection<System.Windows.Controls.ValidationRule> ValidationRules { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string XPath { get { throw null; } set { } }
         public static void AddSourceUpdatedHandler(System.Windows.DependencyObject element, System.EventHandler<System.Windows.Data.DataTransferEventArgs> handler) { }
         public static void AddTargetUpdatedHandler(System.Windows.DependencyObject element, System.EventHandler<System.Windows.Data.DataTransferEventArgs> handler) { }
@@ -8866,11 +8816,8 @@ namespace System.Windows.Data
         public static void RemoveSourceUpdatedHandler(System.Windows.DependencyObject element, System.EventHandler<System.Windows.Data.DataTransferEventArgs> handler) { }
         public static void RemoveTargetUpdatedHandler(System.Windows.DependencyObject element, System.EventHandler<System.Windows.Data.DataTransferEventArgs> handler) { }
         public static void SetXmlNamespaceManager(System.Windows.DependencyObject target, System.Xml.XmlNamespaceManager value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializePath() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeSource() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeValidationRules() { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable, Readability=System.Windows.Readability.Unreadable)]
@@ -8878,18 +8825,13 @@ namespace System.Windows.Data
     public abstract partial class BindingBase : System.Windows.Markup.MarkupExtension
     {
         internal BindingBase() { }
-        [System.ComponentModel.DefaultValueAttribute("")]
         public string BindingGroupName { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(0)]
         public int Delay { get { throw null; } set { } }
         public object FallbackValue { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string StringFormat { get { throw null; } set { } }
         public object TargetNullValue { get { throw null; } set { } }
         public sealed override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeFallbackValue() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeTargetNullValue() { throw null; }
     }
     public sealed partial class BindingExpression : System.Windows.Data.BindingExpressionBase, System.Windows.IWeakEventListener
@@ -8961,7 +8903,6 @@ namespace System.Windows.Data
         public object CurrentAddItem { get { throw null; } }
         public object CurrentEditItem { get { throw null; } }
         public string CustomFilter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.GroupDescriptionSelectorCallback GroupBySelector { get { throw null; } set { } }
         public override System.Collections.ObjectModel.ObservableCollection<System.ComponentModel.GroupDescription> GroupDescriptions { get { throw null; } }
         public override System.Collections.ObjectModel.ReadOnlyObservableCollection<object> Groups { get { throw null; } }
@@ -8991,7 +8932,6 @@ namespace System.Windows.Data
         public override int IndexOf(object item) { throw null; }
         public override bool MoveCurrentToPosition(int position) { throw null; }
         protected override void OnAllowsCrossThreadChangesChanged() { }
-        [System.ObsoleteAttribute("Replaced by OnAllowsCrossThreadChangesChanged")]
         protected override void OnBeginChangeLogging(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
         public override bool PassesFilter(object item) { throw null; }
         protected override void ProcessCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
@@ -9052,7 +8992,6 @@ namespace System.Windows.Data
         event System.Collections.Specialized.NotifyCollectionChangedEventHandler System.Collections.Specialized.INotifyCollectionChanged.CollectionChanged { add { } remove { } }
         protected virtual void OnContainedCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
         protected virtual bool ReceiveWeakEvent(System.Type managerType, object sender, System.EventArgs e) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeCollection() { throw null; }
         bool System.Windows.IWeakEventListener.ReceiveWeakEvent(System.Type managerType, object sender, System.EventArgs e) { throw null; }
     }
@@ -9097,7 +9036,6 @@ namespace System.Windows.Data
         protected virtual event System.ComponentModel.PropertyChangedEventHandler PropertyChanged { add { } remove { } }
         event System.Collections.Specialized.NotifyCollectionChangedEventHandler System.Collections.Specialized.INotifyCollectionChanged.CollectionChanged { add { } remove { } }
         event System.ComponentModel.PropertyChangedEventHandler System.ComponentModel.INotifyPropertyChanged.PropertyChanged { add { } remove { } }
-        [System.ObsoleteAttribute("Replaced by ClearPendingChanges")]
         protected void ClearChangeLog() { }
         protected void ClearPendingChanges() { }
         public virtual bool Contains(object item) { throw null; }
@@ -9114,7 +9052,6 @@ namespace System.Windows.Data
         public virtual bool MoveCurrentToPrevious() { throw null; }
         protected bool OKToChangeCurrent() { throw null; }
         protected virtual void OnAllowsCrossThreadChangesChanged() { }
-        [System.ObsoleteAttribute("Replaced by OnAllowsCrossThreadChangesChanged")]
         protected virtual void OnBeginChangeLogging(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
         protected virtual void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
         protected void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
@@ -9284,7 +9221,6 @@ namespace System.Windows.Data
         public object CurrentEditItem { get { throw null; } }
         public System.Collections.IComparer CustomSort { get { throw null; } set { } }
         public override System.Predicate<object> Filter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public virtual System.Windows.Data.GroupDescriptionSelectorCallback GroupBySelector { get { throw null; } set { } }
         public override System.Collections.ObjectModel.ObservableCollection<System.ComponentModel.GroupDescription> GroupDescriptions { get { throw null; } }
         public override System.Collections.ObjectModel.ReadOnlyObservableCollection<object> Groups { get { throw null; } }
@@ -9323,7 +9259,6 @@ namespace System.Windows.Data
         protected object InternalItemAt(int index) { throw null; }
         public override bool MoveCurrentToPosition(int position) { throw null; }
         protected override void OnAllowsCrossThreadChangesChanged() { }
-        [System.ObsoleteAttribute("Replaced by OnAllowsCrossThreadChangesChanged")]
         protected override void OnBeginChangeLogging(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
         public override bool PassesFilter(object item) { throw null; }
         protected override void ProcessCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs args) { }
@@ -9338,35 +9273,22 @@ namespace System.Windows.Data
         public MultiBinding() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Collections.ObjectModel.Collection<System.Windows.Data.BindingBase> Bindings { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.IMultiValueConverter Converter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.CultureInfoIetfLanguageTagConverter))]
         public System.Globalization.CultureInfo ConverterCulture { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public object ConverterParameter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Data.BindingMode.Default)]
         public System.Windows.Data.BindingMode Mode { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnSourceUpdated { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnTargetUpdated { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool NotifyOnValidationError { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Windows.Data.UpdateSourceExceptionFilterCallback UpdateSourceExceptionFilter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Data.UpdateSourceTrigger.PropertyChanged)]
         public System.Windows.Data.UpdateSourceTrigger UpdateSourceTrigger { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool ValidatesOnDataErrors { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool ValidatesOnExceptions { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(true)]
         public bool ValidatesOnNotifyDataErrors { get { throw null; } set { } }
         public System.Collections.ObjectModel.Collection<System.Windows.Controls.ValidationRule> ValidationRules { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBindings() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeValidationRules() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -9387,21 +9309,15 @@ namespace System.Windows.Data
     {
         public ObjectDataProvider() { }
         public System.Collections.IList ConstructorParameters { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool IsAsynchronous { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string MethodName { get { throw null; } set { } }
         public System.Collections.IList MethodParameters { get { throw null; } }
         public object ObjectInstance { get { throw null; } set { } }
         public System.Type ObjectType { get { throw null; } set { } }
         protected override void BeginQuery() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeConstructorParameters() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeMethodParameters() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeObjectInstance() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeObjectType() { throw null; }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Bindings")]
@@ -9410,7 +9326,6 @@ namespace System.Windows.Data
         public PriorityBinding() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Collections.ObjectModel.Collection<System.Windows.Data.BindingBase> Bindings { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBindings() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -9433,11 +9348,8 @@ namespace System.Windows.Data
         public PropertyGroupDescription(string propertyName, System.Windows.Data.IValueConverter converter, System.StringComparison stringComparison) { }
         public static System.Collections.IComparer CompareNameAscending { get { throw null; } }
         public static System.Collections.IComparer CompareNameDescending { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Data.IValueConverter Converter { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string PropertyName { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.StringComparison.Ordinal)]
         public System.StringComparison StringComparison { get { throw null; } set { } }
         public override object GroupNameFromItem(object item, int level, System.Globalization.CultureInfo culture) { throw null; }
         public override bool NamesMatch(object groupName, object itemName) { throw null; }
@@ -9456,9 +9368,7 @@ namespace System.Windows.Data
         public static System.Windows.Data.RelativeSource Self { get { throw null; } }
         public static System.Windows.Data.RelativeSource TemplatedParent { get { throw null; } }
         public override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeAncestorLevel() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeAncestorType() { throw null; }
         void System.ComponentModel.ISupportInitialize.BeginInit() { }
         void System.ComponentModel.ISupportInitialize.EndInit() { }
@@ -9503,24 +9413,18 @@ namespace System.Windows.Data
         protected virtual System.Uri BaseUri { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public System.Xml.XmlDocument Document { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(true)]
         public bool IsAsynchronous { get { throw null; } set { } }
         public System.Uri Source { get { throw null; } set { } }
         System.Uri System.Windows.Markup.IUriContext.BaseUri { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Xml.XmlNamespaceManager XmlNamespaceManager { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Xml.Serialization.IXmlSerializable XmlSerializer { get { throw null; } }
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
         public string XPath { get { throw null; } set { } }
         protected override void BeginQuery() { }
         protected override void EndInit() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeSource() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeXmlSerializer() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeXPath() { throw null; }
     }
     public partial class XmlNamespaceMapping : System.ComponentModel.ISupportInitialize
@@ -9537,7 +9441,7 @@ namespace System.Windows.Data
         void System.ComponentModel.ISupportInitialize.EndInit() { }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
-    public partial class XmlNamespaceMappingCollection : System.Xml.XmlNamespaceManager, System.Collections.Generic.ICollection<System.Windows.Data.XmlNamespaceMapping>, System.Collections.Generic.IEnumerable<System.Windows.Data.XmlNamespaceMapping>, System.Collections.IEnumerable, System.Windows.Markup.IAddChild, System.Windows.Markup.IAddChildInternal
+    public partial class XmlNamespaceMappingCollection : System.Xml.XmlNamespaceManager, System.Collections.Generic.ICollection<System.Windows.Data.XmlNamespaceMapping>, System.Collections.Generic.IEnumerable<System.Windows.Data.XmlNamespaceMapping>, System.Collections.IEnumerable, System.Windows.Markup.IAddChild
     {
         public XmlNamespaceMappingCollection() : base (default(System.Xml.XmlNameTable)) { }
         public int Count { get { throw null; } }
@@ -9560,14 +9464,15 @@ namespace System.Windows.Diagnostics
 {
     public static partial class BindingDiagnostics
     {
-        public static event System.EventHandler<BindingFailedEventArgs> BindingFailed { add { } remove { } }
+        public static event System.EventHandler<System.Windows.Diagnostics.BindingFailedEventArgs> BindingFailed { add { } remove { } }
     }
-    public partial class BindingFailedEventArgs
+    public partial class BindingFailedEventArgs : System.EventArgs
     {
-        public System.Diagnostics.TraceEventType EventType { get { throw null; } }
-        public int Code { get { throw null; } }
-        public string Message { get { throw null; } }
+        internal BindingFailedEventArgs() { }
         public System.Windows.Data.BindingExpressionBase Binding { get { throw null; } }
+        public int Code { get { throw null; } }
+        public System.Diagnostics.TraceEventType EventType { get { throw null; } }
+        public string Message { get { throw null; } }
         public object[] Parameters { get { throw null; } }
     }
     public static partial class ResourceDictionaryDiagnostics
@@ -9668,7 +9573,6 @@ namespace System.Windows.Documents
         public System.Windows.Thickness Margin { get { throw null; } set { } }
         public System.Windows.Thickness Padding { get { throw null; } set { } }
         public System.Windows.TextAlignment TextAlignment { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     public abstract partial class Block : System.Windows.Documents.TextElement
@@ -9836,7 +9740,7 @@ namespace System.Windows.Documents
         public System.Windows.WrapDirection WrapDirection { get { throw null; } set { } }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Pages")]
-    public partial class FixedDocument : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
+    public partial class FixedDocument : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty PrintTicketProperty;
         public FixedDocument() { }
@@ -9852,7 +9756,7 @@ namespace System.Windows.Documents
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("References")]
-    public partial class FixedDocumentSequence : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
+    public partial class FixedDocumentSequence : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty PrintTicketProperty;
         public FixedDocumentSequence() { }
@@ -9869,7 +9773,7 @@ namespace System.Windows.Documents
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Children")]
-    public sealed partial class FixedPage : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
+    public sealed partial class FixedPage : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty BackgroundProperty;
         public static readonly System.Windows.DependencyProperty BleedBoxProperty;
@@ -10228,7 +10132,6 @@ namespace System.Windows.Documents
         public System.Windows.Documents.ListItem PreviousListItem { get { throw null; } }
         public System.Windows.Documents.ListItemCollection SiblingListItems { get { throw null; } }
         public System.Windows.TextAlignment TextAlignment { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     public partial class ListItemCollection : System.Windows.Documents.TextElementCollection<System.Windows.Documents.ListItem>
@@ -10243,11 +10146,10 @@ namespace System.Windows.Documents
         Forward = 1,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Child")]
-    public sealed partial class PageContent : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext, System.Windows.Markup.IAddChildInternal
+    public sealed partial class PageContent : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty SourceProperty;
         public PageContent() { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.FixedPage Child { get { throw null; } set { } }
         public System.Windows.Documents.LinkTargetCollection LinkTargets { get { throw null; } }
@@ -10258,7 +10160,6 @@ namespace System.Windows.Documents
         public System.Windows.Documents.FixedPage GetPageRoot(bool forceReload) { throw null; }
         public void GetPageRootAsync(bool forceReload) { }
         public void GetPageRootAsyncCancel() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeChild(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -10292,7 +10193,6 @@ namespace System.Windows.Documents
         public System.Windows.TextDecorationCollection TextDecorations { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double TextIndent { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Text")]
@@ -10303,7 +10203,6 @@ namespace System.Windows.Documents
         public Run(string text) { }
         public Run(string text, System.Windows.Documents.TextPointer insertionPosition) { }
         public string Text { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeText(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Blocks")]
@@ -10313,10 +10212,8 @@ namespace System.Windows.Documents
         public Section(System.Windows.Documents.Block block) { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.BlockCollection Blocks { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(true)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool HasTrailingParagraphBreakOnPaste { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeBlocks(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Inlines")]
@@ -10328,7 +10225,6 @@ namespace System.Windows.Documents
         public Span(System.Windows.Documents.TextPointer start, System.Windows.Documents.TextPointer end) { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.InlineCollection Inlines { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeInlines(System.Windows.Markup.XamlDesignerSerializationManager manager) { throw null; }
     }
     [System.Windows.Markup.ContentPropertyAttribute("RowGroups")]
@@ -10346,7 +10242,6 @@ namespace System.Windows.Documents
         public override void BeginInit() { }
         public override void EndInit() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeColumns() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -10459,7 +10354,6 @@ namespace System.Windows.Documents
         public TableRow() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.TableCellCollection Cells { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeCells() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -10503,7 +10397,6 @@ namespace System.Windows.Documents
         public TableRowGroup() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.TableRowCollection Rows { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeRows() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
@@ -11435,9 +11328,7 @@ namespace System.Windows.Markup
         public int LinePosition { get { throw null; } }
         public string NameContext { get { throw null; } }
         public string UidContext { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlReader
     {
@@ -11508,13 +11399,13 @@ namespace System.Windows.Markup
         public static string GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
         public static string GetXmlnsDefinition(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         public static System.Windows.Markup.XmlnsDictionary GetXmlnsDictionary(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
-        [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
+        [System.Windows.Markup.DesignerSerializationOptionsAttribute(1)]
         public static string GetXmlSpace(System.Windows.DependencyObject dependencyObject) { throw null; }
         public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, string value) { }
         public static void SetXmlnsDefinition(System.Windows.DependencyObject dependencyObject, string value) { }
@@ -11707,17 +11598,13 @@ namespace System.Windows.Media.Animation
     {
         public static readonly System.Windows.DependencyProperty StoryboardProperty;
         public BeginStoryboard() { }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Media.Animation.HandoffBehavior.SnapshotAndReplace)]
         public System.Windows.Media.Animation.HandoffBehavior HandoffBehavior { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string Name { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Windows.Media.Animation.Storyboard Storyboard { get { throw null; } set { } }
     }
     public abstract partial class ControllableStoryboardAction : System.Windows.TriggerAction
     {
         internal ControllableStoryboardAction() { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string BeginStoryboardName { get { throw null; } set { } }
     }
     public partial class DiscreteThicknessKeyFrame : System.Windows.Media.Animation.ThicknessKeyFrame
@@ -11763,15 +11650,12 @@ namespace System.Windows.Media.Animation
     {
         public SeekStoryboard() { }
         public System.TimeSpan Offset { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(System.Windows.Media.Animation.TimeSeekOrigin.BeginTime)]
         public System.Windows.Media.Animation.TimeSeekOrigin Origin { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeOffset() { throw null; }
     }
     public sealed partial class SetStoryboardSpeedRatio : System.Windows.Media.Animation.ControllableStoryboardAction
     {
         public SetStoryboardSpeedRatio() { }
-        [System.ComponentModel.DefaultValueAttribute(1)]
         public double SpeedRatio { get { throw null; } set { } }
     }
     public sealed partial class SkipStoryboardToFill : System.Windows.Media.Animation.ControllableStoryboardAction
@@ -11904,9 +11788,7 @@ namespace System.Windows.Media.Animation
         public bool IsCumulative { get { throw null; } set { } }
         public System.Windows.Media.Animation.ThicknessKeyFrameCollection KeyFrames { get { throw null; } set { } }
         System.Collections.IList System.Windows.Media.Animation.IKeyFrameAnimation.KeyFrames { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         protected virtual void AddChild(object child) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         protected virtual void AddText(string childText) { }
         public new System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
@@ -11919,7 +11801,6 @@ namespace System.Windows.Media.Animation
         protected sealed override System.Windows.Thickness GetCurrentValueCore(System.Windows.Thickness defaultOriginValue, System.Windows.Thickness defaultDestinationValue, System.Windows.Media.Animation.AnimationClock animationClock) { throw null; }
         protected sealed override System.Windows.Duration GetNaturalDurationCore(System.Windows.Media.Animation.Clock clock) { throw null; }
         protected override void OnChanged() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeKeyFrames() { throw null; }
         void System.Windows.Markup.IAddChild.AddChild(object child) { }
         void System.Windows.Markup.IAddChild.AddText(string childText) { }
@@ -11950,7 +11831,7 @@ namespace System.Windows.Media.Animation
         object System.Collections.IList.this[int index] { get { throw null; } set { } }
         public int Add(System.Windows.Media.Animation.ThicknessKeyFrame keyFrame) { throw null; }
         public void Clear() { }
-        public new System.Windows.Media.Animation.ThicknessKeyFrameCollection Clone() { throw null; }
+        public System.Windows.Media.Animation.ThicknessKeyFrameCollection Clone() { throw null; }
         protected override void CloneCore(System.Windows.Freezable sourceFreezable) { }
         protected override void CloneCurrentValueCore(System.Windows.Freezable sourceFreezable) { }
         public bool Contains(System.Windows.Media.Animation.ThicknessKeyFrame keyFrame) { throw null; }
@@ -12002,9 +11883,7 @@ namespace System.Windows.Navigation
         public System.Uri Source { get { throw null; } set { } }
         public static bool GetKeepAlive(System.Windows.DependencyObject dependencyObject) { throw null; }
         public static string GetName(System.Windows.DependencyObject dependencyObject) { throw null; }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public virtual void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
         public static void SetKeepAlive(System.Windows.DependencyObject dependencyObject, bool keepAlive) { }
         public static void SetName(System.Windows.DependencyObject dependencyObject, string name) { }
     }
@@ -12144,7 +12023,6 @@ namespace System.Windows.Navigation
         public System.Windows.Navigation.NavigationService NavigationService { get { throw null; } }
         public bool SandboxExternalContent { get { throw null; } set { } }
         public bool ShowsNavigationUI { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Uri Source { get { throw null; } set { } }
         System.Uri System.Windows.Markup.IUriContext.BaseUri { get { throw null; } set { } }
         public event System.Windows.Navigation.FragmentNavigationEventHandler FragmentNavigation { add { } remove { } }
@@ -12168,7 +12046,6 @@ namespace System.Windows.Navigation
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         public void Refresh() { }
         public System.Windows.Navigation.JournalEntry RemoveBackEntry() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }

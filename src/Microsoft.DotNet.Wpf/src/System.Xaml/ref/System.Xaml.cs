@@ -1,7 +1,10 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Windows.Markup
 {
     [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true, Inherited=true)]
-    [System.ObsoleteAttribute("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
     public partial class AcceptedMarkupExtensionExpressionTypeAttribute : System.Attribute
     {
         public AcceptedMarkupExtensionExpressionTypeAttribute(System.Type type) { }
@@ -123,9 +126,7 @@ namespace System.Windows.Markup
     {
         public MarkupExtensionReturnTypeAttribute() { }
         public MarkupExtensionReturnTypeAttribute(System.Type returnType) { }
-        [System.ObsoleteAttribute("The expressionType argument is not used by the XAML parser. To specify the expected return type, use MarkupExtensionReturnTypeAttribute(Type). To specify custom handling for expression types, use XamlSetMarkupExtensionAttribute.")]
         public MarkupExtensionReturnTypeAttribute(System.Type returnType, System.Type expressionType) { }
-        [System.ObsoleteAttribute("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
         public System.Type ExpressionType { get { throw null; } }
         public System.Type ReturnType { get { throw null; } }
     }
@@ -160,7 +161,6 @@ namespace System.Windows.Markup
     {
         public PropertyDefinition() { }
         public System.Collections.Generic.IList<System.Attribute> Attributes { get { throw null; } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public string Modifier { get { throw null; } set { } }
         public override string Name { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Xaml.Schema.XamlTypeTypeConverter))]
@@ -194,7 +194,6 @@ namespace System.Windows.Markup
         public StaticExtension(string member) { }
         [System.Windows.Markup.ConstructorArgumentAttribute("member")]
         public string Member { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         public System.Type MemberType { get { throw null; } set { } }
         public override object ProvideValue(System.IServiceProvider serviceProvider) { throw null; }
     }
@@ -209,7 +208,6 @@ namespace System.Windows.Markup
         public TypeExtension() { }
         public TypeExtension(string typeName) { }
         public TypeExtension(System.Type type) { }
-        [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.ConstructorArgumentAttribute("type")]
         public System.Type Type { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
@@ -495,9 +493,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException(System.Xaml.XamlMember member, System.Xaml.XamlType type) { }
         public System.Xaml.XamlMember DuplicateMember { get { throw null; } set { } }
         public System.Xaml.XamlType ParentType { get { throw null; } set { } }
-        #pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        #pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlException : System.Exception
     {
@@ -509,9 +505,7 @@ namespace System.Xaml
         public int LineNumber { get { throw null; } protected set { } }
         public int LinePosition { get { throw null; } protected set { } }
         public override string Message { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class XamlInternalException : System.Xaml.XamlException
     {

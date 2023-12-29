@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Windows.Automation.Provider
 {
     public static partial class AutomationInteropProvider
@@ -13,17 +17,20 @@ namespace System.Windows.Automation.Provider
         public static void RaiseStructureChangedEvent(System.Windows.Automation.Provider.IRawElementProviderSimple provider, System.Windows.Automation.StructureChangedEventArgs e) { }
         public static System.IntPtr ReturnRawElementProvider(System.IntPtr hwnd, System.IntPtr wParam, System.IntPtr lParam, System.Windows.Automation.Provider.IRawElementProviderSimple el) { throw null; }
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IDockProvider
     {
         System.Windows.Automation.DockPosition DockPosition { get; }
         void SetDockPosition(System.Windows.Automation.DockPosition dockPosition);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IExpandCollapseProvider
     {
         System.Windows.Automation.ExpandCollapseState ExpandCollapseState { get; }
         void Collapse();
         void Expand();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IGridItemProvider
     {
         int Column { get; }
@@ -32,20 +39,24 @@ namespace System.Windows.Automation.Provider
         int Row { get; }
         int RowSpan { get; }
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IGridProvider
     {
         int ColumnCount { get; }
         int RowCount { get; }
         System.Windows.Automation.Provider.IRawElementProviderSimple GetItem(int row, int column);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IInvokeProvider
     {
         void Invoke();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IItemContainerProvider
     {
         System.Windows.Automation.Provider.IRawElementProviderSimple FindItemByProperty(System.Windows.Automation.Provider.IRawElementProviderSimple startAfter, int propertyId, object value);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IMultipleViewProvider
     {
         int CurrentView { get; }
@@ -53,6 +64,7 @@ namespace System.Windows.Automation.Provider
         string GetViewName(int viewId);
         void SetCurrentView(int viewId);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRangeValueProvider
     {
         bool IsReadOnly { get; }
@@ -63,11 +75,13 @@ namespace System.Windows.Automation.Provider
         double Value { get; }
         void SetValue(double value);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRawElementProviderAdviseEvents : System.Windows.Automation.Provider.IRawElementProviderSimple
     {
         void AdviseEventAdded(int eventId, int[] properties);
         void AdviseEventRemoved(int eventId, int[] properties);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRawElementProviderFragment : System.Windows.Automation.Provider.IRawElementProviderSimple
     {
         System.Windows.Rect BoundingRectangle { get; }
@@ -77,19 +91,23 @@ namespace System.Windows.Automation.Provider
         System.Windows.Automation.Provider.IRawElementProviderFragment Navigate(System.Windows.Automation.Provider.NavigateDirection direction);
         void SetFocus();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRawElementProviderFragmentRoot : System.Windows.Automation.Provider.IRawElementProviderFragment, System.Windows.Automation.Provider.IRawElementProviderSimple
     {
         System.Windows.Automation.Provider.IRawElementProviderFragment ElementProviderFromPoint(double x, double y);
         System.Windows.Automation.Provider.IRawElementProviderFragment GetFocus();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRawElementProviderHwndOverride : System.Windows.Automation.Provider.IRawElementProviderSimple
     {
         System.Windows.Automation.Provider.IRawElementProviderSimple GetOverrideProviderForHwnd(System.IntPtr hwnd);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IScrollItemProvider
     {
         void ScrollIntoView();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IScrollProvider
     {
         bool HorizontallyScrollable { get; }
@@ -101,6 +119,7 @@ namespace System.Windows.Automation.Provider
         void Scroll(System.Windows.Automation.ScrollAmount horizontalAmount, System.Windows.Automation.ScrollAmount verticalAmount);
         void SetScrollPercent(double horizontalPercent, double verticalPercent);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ISelectionItemProvider
     {
         bool IsSelected { get; }
@@ -109,28 +128,33 @@ namespace System.Windows.Automation.Provider
         void RemoveFromSelection();
         void Select();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ISelectionProvider
     {
         bool CanSelectMultiple { get; }
         bool IsSelectionRequired { get; }
         System.Windows.Automation.Provider.IRawElementProviderSimple[] GetSelection();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ISynchronizedInputProvider
     {
         void Cancel();
         void StartListening(System.Windows.Automation.SynchronizedInputType inputType);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ITableItemProvider : System.Windows.Automation.Provider.IGridItemProvider
     {
         System.Windows.Automation.Provider.IRawElementProviderSimple[] GetColumnHeaderItems();
         System.Windows.Automation.Provider.IRawElementProviderSimple[] GetRowHeaderItems();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ITableProvider : System.Windows.Automation.Provider.IGridProvider
     {
         System.Windows.Automation.RowOrColumnMajor RowOrColumnMajor { get; }
         System.Windows.Automation.Provider.IRawElementProviderSimple[] GetColumnHeaders();
         System.Windows.Automation.Provider.IRawElementProviderSimple[] GetRowHeaders();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ITextProvider
     {
         System.Windows.Automation.Provider.ITextRangeProvider DocumentRange { get; }
@@ -140,11 +164,13 @@ namespace System.Windows.Automation.Provider
         System.Windows.Automation.Provider.ITextRangeProvider RangeFromChild(System.Windows.Automation.Provider.IRawElementProviderSimple childElement);
         System.Windows.Automation.Provider.ITextRangeProvider RangeFromPoint(System.Windows.Point screenLocation);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IToggleProvider
     {
         System.Windows.Automation.ToggleState ToggleState { get; }
         void Toggle();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ITransformProvider
     {
         bool CanMove { get; }
@@ -154,16 +180,19 @@ namespace System.Windows.Automation.Provider
         void Resize(double width, double height);
         void Rotate(double degrees);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IValueProvider
     {
         bool IsReadOnly { get; }
         string Value { get; }
         void SetValue(string value);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IVirtualizedItemProvider
     {
         void Realize();
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IWindowProvider
     {
         System.Windows.Automation.WindowInteractionState InteractionState { get; }

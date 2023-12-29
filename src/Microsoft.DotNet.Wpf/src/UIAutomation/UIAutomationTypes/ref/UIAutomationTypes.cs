@@ -1,8 +1,12 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Windows.Automation
 {
     public sealed partial class ActiveTextPositionChangedEventArgs : System.Windows.Automation.AutomationEventArgs
     {
-        public ActiveTextPositionChangedEventArgs(System.Windows.Automation.Provider.ITextRangeProvider textRangeProvider) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public ActiveTextPositionChangedEventArgs(System.Windows.Automation.Provider.ITextRangeProvider textRange) : base (default(System.Windows.Automation.AutomationEvent)) { }
         public System.Windows.Automation.Provider.ITextRangeProvider TextRange { get { throw null; } }
     }
     public sealed partial class AsyncContentLoadedEventArgs : System.Windows.Automation.AutomationEventArgs
@@ -215,9 +219,7 @@ namespace System.Windows.Automation
         protected ElementNotAvailableException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotAvailableException(string message) { }
         public ElementNotAvailableException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class ElementNotEnabledException : System.InvalidOperationException
     {
@@ -225,9 +227,7 @@ namespace System.Windows.Automation
         protected ElementNotEnabledException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ElementNotEnabledException(string message) { }
         public ElementNotEnabledException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public static partial class ExpandCollapsePatternIdentifiers
     {
@@ -277,13 +277,11 @@ namespace System.Windows.Automation
         protected NoClickablePointException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public NoClickablePointException(string message) { }
         public NoClickablePointException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public sealed partial class NotificationEventArgs : System.Windows.Automation.AutomationEventArgs
     {
-        public NotificationEventArgs(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) : base(default(System.Windows.Automation.AutomationEvent)) { }
+        public NotificationEventArgs(System.Windows.Automation.AutomationNotificationKind notificationKind, System.Windows.Automation.AutomationNotificationProcessing notificationProcessing, string displayString, string activityId) : base (default(System.Windows.Automation.AutomationEvent)) { }
         public string ActivityId { get { throw null; } }
         public string DisplayString { get { throw null; } }
         public System.Windows.Automation.AutomationNotificationKind NotificationKind { get { throw null; } }
@@ -301,9 +299,7 @@ namespace System.Windows.Automation
         protected ProxyAssemblyNotLoadedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ProxyAssemblyNotLoadedException(string message) { }
         public ProxyAssemblyNotLoadedException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public static partial class RangeValuePatternIdentifiers
     {
@@ -523,6 +519,7 @@ namespace System.Windows.Automation
 }
 namespace System.Windows.Automation.Provider
 {
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface IRawElementProviderSimple
     {
         System.Windows.Automation.Provider.IRawElementProviderSimple HostRawElementProvider { get; }
@@ -530,6 +527,7 @@ namespace System.Windows.Automation.Provider
         object GetPatternProvider(int patternId);
         object GetPropertyValue(int propertyId);
     }
+    [System.Runtime.InteropServices.InterfaceTypeAttribute(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
     public partial interface ITextRangeProvider
     {
         void AddToSelection();

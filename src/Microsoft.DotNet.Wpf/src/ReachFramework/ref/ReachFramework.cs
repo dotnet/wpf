@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Printing
 {
     public enum Collation
@@ -380,9 +384,7 @@ namespace System.Printing
         public System.Collections.ObjectModel.Collection<string> CommittedAttributesCollection { get { throw null; } }
         public System.Collections.ObjectModel.Collection<string> FailedAttributesCollection { get { throw null; } }
         public string PrintObjectName { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintingCanceledException : System.Printing.PrintJobException
     {
@@ -401,9 +403,7 @@ namespace System.Printing
         protected PrintingNotSupportedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintingNotSupportedException(string message) { }
         public PrintingNotSupportedException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintJobException : System.Printing.PrintSystemException
     {
@@ -418,9 +418,7 @@ namespace System.Printing
         public int JobId { get { throw null; } }
         public string JobName { get { throw null; } }
         public string PrintQueueName { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintQueueException : System.Printing.PrintSystemException
     {
@@ -432,9 +430,7 @@ namespace System.Printing
         public PrintQueueException(string message) { }
         public PrintQueueException(string message, System.Exception innerException) { }
         public string PrinterName { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintServerException : System.Printing.PrintSystemException
     {
@@ -445,9 +441,7 @@ namespace System.Printing
         public PrintServerException(string message) { }
         public PrintServerException(string message, System.Exception innerException) { }
         public string ServerName { get { throw null; } }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public partial class PrintSystemException : System.SystemException
     {
@@ -458,9 +452,7 @@ namespace System.Printing
         protected PrintSystemException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public PrintSystemException(string message) { }
         public PrintSystemException(string message, System.Exception innerException) { }
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-#pragma warning restore CS0672 // Member overrides obsolete member
     }
     public sealed partial class PrintTicket : System.ComponentModel.INotifyPropertyChanged
     {
@@ -521,6 +513,8 @@ namespace System.Printing
     }
     public partial struct ValidationResult
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public System.Printing.ConflictStatus ConflictStatus { get { throw null; } }
         public System.Printing.PrintTicket ValidatedPrintTicket { get { throw null; } }
         public override bool Equals(object o) { throw null; }
@@ -873,13 +867,21 @@ namespace System.Windows.Xps.Serialization
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) { throw null; }
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
         public override System.ComponentModel.PropertyDescriptorCollection GetProperties(System.ComponentModel.ITypeDescriptorContext context, object value, System.Attribute[] attributes) { throw null; }
     }
     public abstract partial class PackageSerializationManager : System.IDisposable
     {
         protected PackageSerializationManager() { }
+        internal abstract System.Windows.Xps.Serialization.BasePackagingPolicy PackagingPolicy { get; }
+        internal abstract System.Windows.Xps.Serialization.XpsResourceStream AcquireResourceStream(System.Type resourceType);
+        internal abstract System.Windows.Xps.Serialization.XpsResourceStream AcquireResourceStream(System.Type resourceType, string resourceID);
+        internal abstract System.Xml.XmlWriter AcquireXmlWriter(System.Type writerType);
+        internal abstract void AddRelationshipToCurrentPage(System.Uri targetUri, string relationshipName);
+        internal abstract string GetXmlNSForType(System.Type objectType);
+        internal abstract void ReleaseResourceStream(System.Type resourceType);
+        internal abstract void ReleaseResourceStream(System.Type resourceType, string resourceID);
+        internal abstract void ReleaseXmlWriter(System.Type writerType);
         public abstract void SaveAsXaml(object serializedObject);
         void System.IDisposable.Dispose() { }
     }

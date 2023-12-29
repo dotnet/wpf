@@ -1,15 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 namespace System.Windows.Automation.Peers
 {
     public sealed partial class WindowsFormsHostAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
         public WindowsFormsHostAutomationPeer(System.Windows.Forms.Integration.WindowsFormsHost owner) : base (default(System.Windows.FrameworkElement)) { }
+        protected internal override bool IsHwndHost { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
-        [System.Security.SecurityTreatAsSafeAttribute]
         protected override System.Windows.Automation.Peers.HostedWindowWrapper GetHostRawElementProviderCore() { throw null; }
     }
 }
@@ -27,9 +27,7 @@ namespace System.Windows.Forms.Integration
     {
         public ElementHost() { }
         [System.ComponentModel.BrowsableAttribute(true)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Always)]
         public override bool AutoSize { get { throw null; } set { } }
-        [System.ComponentModel.DefaultValueAttribute(false)]
         public bool BackColorTransparent { get { throw null; } set { } }
         protected override bool CanEnableIme { get { throw null; } }
         [System.ComponentModel.BrowsableAttribute(false)]
@@ -44,128 +42,87 @@ namespace System.Windows.Forms.Integration
         [System.ComponentModel.BrowsableAttribute(false)]
         public System.Windows.Forms.Integration.PropertyMap PropertyMap { get { throw null; } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler BindingContextChanged { add { } remove { } }
         public event System.EventHandler<System.Windows.Forms.Integration.ChildChangedEventArgs> ChildChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler Click { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler ClientSizeChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.ControlEventHandler ControlAdded { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.ControlEventHandler ControlRemoved { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler CursorChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler DoubleClick { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.DragEventHandler DragDrop { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.DragEventHandler DragEnter { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler DragLeave { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.DragEventHandler DragOver { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler Enter { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler FontChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler ForeColorChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.GiveFeedbackEventHandler GiveFeedback { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler GotFocus { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.InvalidateEventHandler Invalidated { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.KeyEventHandler KeyDown { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.KeyPressEventHandler KeyPress { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.KeyEventHandler KeyUp { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.LayoutEventHandler Layout { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler Leave { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler LostFocus { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler MouseCaptureChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseClick { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseDoubleClick { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseDown { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler MouseEnter { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler MouseHover { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler MouseLeave { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseMove { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseUp { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.MouseEventHandler MouseWheel { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler PaddingChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.PaintEventHandler Paint { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.PreviewKeyDownEventHandler PreviewKeyDown { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.Windows.Forms.QueryContinueDragEventHandler QueryContinueDrag { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler Resize { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler RightToLeftChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler SizeChanged { add { } remove { } }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new event System.EventHandler TextChanged { add { } remove { } }
         protected override void Dispose(bool disposing) { }
         public static void EnableModelessKeyboardInterop(System.Windows.Window window) { }
@@ -176,10 +133,8 @@ namespace System.Windows.Forms.Integration
         protected override void OnHandleCreated(System.EventArgs e) { }
         protected override void OnLeave(System.EventArgs e) { }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e) { }
         [System.ComponentModel.BrowsableAttribute(false)]
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs pevent) { }
         protected override void OnPrint(System.Windows.Forms.PaintEventArgs e) { }
         public virtual void OnPropertyChanged(string propertyName, object value) { }

@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 namespace System.Windows.Automation
 {
     public partial class AndCondition : System.Windows.Automation.Condition
@@ -124,6 +128,8 @@ namespace System.Windows.Automation
         public bool TryGetCurrentPattern(System.Windows.Automation.AutomationPattern pattern, out object patternObject) { throw null; }
         public partial struct AutomationElementInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public string AcceleratorKey { get { throw null; } }
             public string AccessKey { get { throw null; } }
             public string AutomationId { get { throw null; } }
@@ -199,6 +205,8 @@ namespace System.Windows.Automation
     }
     public partial struct ClientSideProviderDescription
     {
+        private object _dummy;
+        private int _dummyPrimitive;
         public ClientSideProviderDescription(System.Windows.Automation.ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className) { throw null; }
         public ClientSideProviderDescription(System.Windows.Automation.ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className, string imageName, System.Windows.Automation.ClientSideProviderMatchIndicator flags) { throw null; }
         public string ClassName { get { throw null; } }
@@ -230,6 +238,8 @@ namespace System.Windows.Automation
         public void SetDockPosition(System.Windows.Automation.DockPosition dockPosition) { }
         public partial struct DockPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public System.Windows.Automation.DockPosition DockPosition { get { throw null; } }
         }
     }
@@ -244,6 +254,8 @@ namespace System.Windows.Automation
         public void Expand() { }
         public partial struct ExpandCollapsePatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public System.Windows.Automation.ExpandCollapseState ExpandCollapseState { get { throw null; } }
         }
     }
@@ -260,6 +272,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.GridItemPattern.GridItemPatternInformation Current { get { throw null; } }
         public partial struct GridItemPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public int Column { get { throw null; } }
             public int ColumnSpan { get { throw null; } }
             public System.Windows.Automation.AutomationElement ContainingGrid { get { throw null; } }
@@ -278,22 +292,11 @@ namespace System.Windows.Automation
         public System.Windows.Automation.AutomationElement GetItem(int row, int column) { throw null; }
         public partial struct GridPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public int ColumnCount { get { throw null; } }
             public int RowCount { get { throw null; } }
         }
-    }
-    internal enum HeadingLevel
-    {
-        None = 80050,
-        Level1,
-        Level2,
-        Level3,
-        Level4,
-        Level5,
-        Level6,
-        Level7,
-        Level8,
-        Level9,
     }
     public partial class InvokePattern : System.Windows.Automation.BasePattern
     {
@@ -320,6 +323,8 @@ namespace System.Windows.Automation
         public void SetCurrentView(int viewId) { }
         public partial struct MultipleViewPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public int CurrentView { get { throw null; } }
             public int[] GetSupportedViews() { throw null; }
         }
@@ -363,6 +368,8 @@ namespace System.Windows.Automation
         public void SetValue(double value) { }
         public partial struct RangeValuePatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool IsReadOnly { get { throw null; } }
             public double LargeChange { get { throw null; } }
             public double Maximum { get { throw null; } }
@@ -396,6 +403,8 @@ namespace System.Windows.Automation
         public void SetScrollPercent(double horizontalPercent, double verticalPercent) { }
         public partial struct ScrollPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool HorizontallyScrollable { get { throw null; } }
             public double HorizontalScrollPercent { get { throw null; } }
             public double HorizontalViewSize { get { throw null; } }
@@ -420,6 +429,8 @@ namespace System.Windows.Automation
         public void Select() { }
         public partial struct SelectionItemPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool IsSelected { get { throw null; } }
             public System.Windows.Automation.AutomationElement SelectionContainer { get { throw null; } }
         }
@@ -436,6 +447,8 @@ namespace System.Windows.Automation
         public System.Windows.Automation.SelectionPattern.SelectionPatternInformation Current { get { throw null; } }
         public partial struct SelectionPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool CanSelectMultiple { get { throw null; } }
             public bool IsSelectionRequired { get { throw null; } }
             public System.Windows.Automation.AutomationElement[] GetSelection() { throw null; }
@@ -461,6 +474,8 @@ namespace System.Windows.Automation
         public new System.Windows.Automation.TableItemPattern.TableItemPatternInformation Current { get { throw null; } }
         public partial struct TableItemPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public int Column { get { throw null; } }
             public int ColumnSpan { get { throw null; } }
             public System.Windows.Automation.AutomationElement ContainingGrid { get { throw null; } }
@@ -481,6 +496,8 @@ namespace System.Windows.Automation
         public new System.Windows.Automation.TablePattern.TablePatternInformation Current { get { throw null; } }
         public partial struct TablePatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public int ColumnCount { get { throw null; } }
             public int RowCount { get { throw null; } }
             public System.Windows.Automation.RowOrColumnMajor RowOrColumnMajor { get { throw null; } }
@@ -543,6 +560,8 @@ namespace System.Windows.Automation
         public void Toggle() { }
         public partial struct TogglePatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public System.Windows.Automation.ToggleState ToggleState { get { throw null; } }
         }
     }
@@ -560,6 +579,8 @@ namespace System.Windows.Automation
         public void Rotate(double degrees) { }
         public partial struct TransformPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool CanMove { get { throw null; } }
             public bool CanResize { get { throw null; } }
             public bool CanRotate { get { throw null; } }
@@ -596,6 +617,8 @@ namespace System.Windows.Automation
         public void SetValue(string value) { }
         public partial struct ValuePatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool IsReadOnly { get { throw null; } }
             public string Value { get { throw null; } }
         }
@@ -625,6 +648,8 @@ namespace System.Windows.Automation
         public bool WaitForInputIdle(int milliseconds) { throw null; }
         public partial struct WindowPatternInformation
         {
+            private object _dummy;
+            private int _dummyPrimitive;
             public bool CanMaximize { get { throw null; } }
             public bool CanMinimize { get { throw null; } }
             public bool IsModal { get { throw null; } }

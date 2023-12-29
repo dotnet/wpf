@@ -4,13 +4,29 @@
                       Condition="'$(_GenerateReferenceAssemblySource)'=='true'"/>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(_GenerateReferenceAssemblySource)'=='true'">
+  <PropertyGroup Condition="'$(_GenerateReferenceAssemblySource)'=='true'
+                                or $(MSBuildProjectName.Contains('_wpftmp'))">
     <!-- 
       By default, GenAPI's target (GenerateReferenceAssemblySource) generates code into $(TargetDir).
       Instead, WPF generates into the ref directory in the project's source tree.
     -->
     <GenAPITargetDir>$(MSBuildProjectDir)ref\</GenAPITargetDir>
+
+    <!-- 
+      Sets GenAPITargetDir for _wpftmp assemblies, these directories are not needed
+      and removed after generation.
+      This is a quick hack to avoid failures during GenerateReferenceAssemblySource for 
+      _wpftmp assemblies. Added this because once we set GenerateReferenceAssemblySource
+      parameter from CLI, it is enabled for temp assemblies as well, and we fail to filter
+      out those assemblies.
+     -->
+    <GenAPITargetDir Condition="'$(_GenerateReferenceAssemblySource)'=='false'">$(MSBuildProjectDir)ref\temp\</GenAPITargetDir>
+
     <GenAPITargetPath>$(GenAPITargetDir)$(AssemblyName).cs</GenAPITargetPath>
+
+    
+    <!-- Other GenAPI Task Parameters -->
+    <GenAPIExcludeCompilerGenerated>true</GenAPIExcludeCompilerGenerated>
   </PropertyGroup>
 
   <Target Name="EnsureGenAPITargetDirectory"
@@ -18,5 +34,19 @@
         Condition="!Exists('$(GenAPITargetDir)')">
     <MakeDir Directories="$(GenAPITargetDir)" />
   </Target>
+
+  <!-- 
+    Target to remove ref files generated while building _wpftmp projects.
+    These files are generated when we call the GenerateTemporaryTargetAssembly task on
+    the main assembly.
+    PS : This is the part of the hack above, to delete the unwanted ref assembly files.
+  -->
+  <Target Name="RemoveTempGenAPITargetDirectory"
+        AfterTargets="GenerateReferenceAssemblySource"
+        Condition="'$(_GenerateReferenceAssemblySource)'=='false'">
+    <RemoveDir Directories="$(GenAPITargetDir)" />
+  </Target>
+
+
 
 </Project>

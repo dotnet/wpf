@@ -50,7 +50,8 @@
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.23621.2</MicrosoftDotNetApiCompatVersion>
     <MicrosoftDotNetCodeAnalysisPackageVersion>9.0.0-beta.23621.2</MicrosoftDotNetCodeAnalysisPackageVersion>
-  </PropertyGroup>
+    <MicrosoftDotNetGenAPIVersion>9.0.0-beta.23621.2</MicrosoftDotNetGenAPIVersion>
+ </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>
     <MicrosoftSourceLinkGitHubVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubVersion>

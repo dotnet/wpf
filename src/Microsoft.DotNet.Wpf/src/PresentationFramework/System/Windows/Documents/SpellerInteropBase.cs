@@ -61,7 +61,7 @@ namespace System.Windows.Documents
             IReadOnlyList<string> Suggestions { get; }
 
             /// <summary>
-            /// Returns true if the segment has no spelling erorrs
+            /// Returns true if the segment has no spelling errors
             /// </summary>
             bool IsClean { get; }
 

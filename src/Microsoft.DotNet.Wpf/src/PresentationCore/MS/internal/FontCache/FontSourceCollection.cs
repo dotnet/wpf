@@ -130,7 +130,7 @@ namespace MS.Internal.FontCache
                         {
                             if (_tryGetCompositeFontsOnly)
                             {
-                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                                files = Directory.GetFiles(_uri.LocalPath, $"*{Util.CompositeFontExtension}");
                                 isOnlyCompositeFontFiles = true;
                             }
                             else
@@ -168,7 +168,7 @@ namespace MS.Internal.FontCache
                         {
                             if (_tryGetCompositeFontsOnly)
                             {
-                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                                files = Directory.GetFiles(_uri.LocalPath, $"*{Util.CompositeFontExtension}");
                                 isOnlyCompositeFontFiles = true;                               
                             }
                             else
@@ -269,7 +269,7 @@ namespace MS.Internal.FontCache
         private bool                               _tryGetCompositeFontsOnly;
 
         private const string InstalledWindowsFontsRegistryKey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
-        private const string InstalledWindowsFontsRegistryKeyFullPath = @"HKEY_LOCAL_MACHINE\" + InstalledWindowsFontsRegistryKey;
+        private const string InstalledWindowsFontsRegistryKeyFullPath = $@"HKEY_LOCAL_MACHINE\{InstalledWindowsFontsRegistryKey}";
 }
 }
 

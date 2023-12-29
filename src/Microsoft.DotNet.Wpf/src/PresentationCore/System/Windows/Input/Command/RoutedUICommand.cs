@@ -18,7 +18,7 @@ namespace System.Windows.Input
     /// <summary>
     ///     RoutedCommand with added UI Information.
     /// </summary>
-    [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Input.CommandConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     public class RoutedUICommand : RoutedCommand
     {
         /// <summary>

@@ -133,7 +133,7 @@ namespace System.Windows.Media
                     }
                     else if (Invariant.Strict)
                     {
-                        Invariant.Assert(false, String.Format(CultureInfo.InvariantCulture, "IWICColorContext::GetExifColorSpace returned {0}.", colorSpace));
+                        Invariant.Assert(false, string.Create(CultureInfo.InvariantCulture, $"IWICColorContext::GetExifColorSpace returned {colorSpace}."));
                     }
 
                     break;

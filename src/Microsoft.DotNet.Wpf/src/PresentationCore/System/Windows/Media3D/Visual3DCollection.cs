@@ -570,11 +570,7 @@ namespace System.Windows.Media.Media3D
 
                 Debug.Assert(visual.InternalVisualParent == _owner, "Why isn't our child's parent pointer the same as the collection owner?");
                 Debug.Assert(visual.ParentIndex == i,
-                    String.Format(
-                        CultureInfo.InvariantCulture,
-                        "Child's ParentIndex does not match the child's actual position in the collection. Expected='{0}' Actual='{1}'",
-                        i,
-                        visual.ParentIndex));
+                    $"Child's ParentIndex does not match the child's actual position in the collection. Expected='{i}' Actual='{visual.ParentIndex}'");
 
                 // If the Visual3D is being added to the collection via a resource reference
                 // its inheritance context will be the owner of the ResourceDictionary in which

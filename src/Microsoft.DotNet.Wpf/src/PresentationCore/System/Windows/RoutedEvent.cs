@@ -109,7 +109,7 @@ namespace System.Windows
         /// </summary>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", _ownerType.Name, _name );
+            return string.Create(CultureInfo.InvariantCulture, $"{_ownerType.Name}.{_name}");
         }
 
         #endregion External API

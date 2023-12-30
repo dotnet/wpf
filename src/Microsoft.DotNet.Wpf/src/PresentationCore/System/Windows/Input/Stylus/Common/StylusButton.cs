@@ -100,7 +100,7 @@ namespace System.Windows.Input
         /// <returns><see cref="System.String"/> name of the tablet</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.CurrentCulture, "{0}({1})", base.ToString(), this.Name);
+            return $"{base.ToString()}({this.Name})";
         }
 
         /////////////////////////////////////////////////////////////////////

@@ -12,9 +12,11 @@ using MS.Internal;
 using System.Text;
 using System.Collections;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 
 namespace System.Windows
 {
@@ -47,7 +49,7 @@ namespace System.Windows
         {
             get
             {
-                return Math.Sqrt(_x*_x + _y*_y);
+                return Math.Sqrt(LengthSquared);
             }
         }
 
@@ -56,10 +58,8 @@ namespace System.Windows
         /// </summary>
         public double LengthSquared
         {
-            get
-            {
-                return _x*_x + _y*_y;
-            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _x * _x + _y * _y;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace System.Windows
         public void Normalize()
         {
             // Avoid overflow
-            this /= Math.Max(Math.Abs(_x),Math.Abs(_y));
+            this /= Math.Max(Math.Abs(_x), Math.Abs(_y));
             this /= Length;
         }
 

@@ -365,7 +365,7 @@ namespace System.Windows
             // The Template may change in OnApplyTemplate so we'll retry in this case.
             // We dont want to get stuck in a loop doing this, so limit the number of
             // template changes before we bail out.
-            int retryCount = 2;
+            const int retryCount = 2;
             for (int i = 0; template != null && i < retryCount; i++)
             {
                 // VisualTree application never clears existing trees. Trees
@@ -4299,223 +4299,221 @@ namespace System.Windows
         {
 
             // If using layout rounding, check whether rounding needs to compensate for high DPI
-            bool useLayoutRounding = this.UseLayoutRounding;
+            bool useLayoutRounding = UseLayoutRounding;
             DpiScale dpi = GetDpi();
             if (useLayoutRounding)
             {
                 if (!CheckFlagsAnd(VisualFlags.UseLayoutRounding))
                 {
-                    this.SetFlags(true, VisualFlags.UseLayoutRounding);
+                    SetFlags(true, VisualFlags.UseLayoutRounding);
                 }
             }
 
-            //build the visual tree from styles first
+            // Build the visual tree from styles first
             ApplyTemplate();
 
             if (BypassLayoutPolicies)
             {
                 return MeasureOverride(availableSize);
             }
-            else
+
+            Thickness margin = Margin;
+            double marginWidth = margin.Left + margin.Right;
+            double marginHeight = margin.Top + margin.Bottom;
+
+            if (useLayoutRounding && (this is ScrollContentPresenter || !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness))
             {
-                Thickness margin = Margin;
-                double marginWidth = margin.Left + margin.Right;
-                double marginHeight = margin.Top + margin.Bottom;
+                // Related: WPF popup windows appear in wrong place when
+                // windows is in Medium DPI and a search box changes height
+                // 
+                // ScrollViewer and ScrollContentPresenter depend on rounding their
+                // measurements in a consistent way.  Round the margins first - if we
+                // round the result of (size-margin), the answer might round up or
+                // down depending on size. 
+                marginWidth = RoundLayoutValue(marginWidth, dpi.DpiScaleX);
+                marginHeight = RoundLayoutValue(marginHeight, dpi.DpiScaleY);
+            }
 
-                if (useLayoutRounding && (this is ScrollContentPresenter || !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness))
-                {
-                    // Related: WPF popup windows appear in wrong place when
-                    // windows is in Medium DPI and a search box changes height
-                    // 
-                    // ScrollViewer and ScrollContentPresenter depend on rounding their
-                    // measurements in a consistent way.  Round the margins first - if we
-                    // round the result of (size-margin), the answer might round up or
-                    // down depending on size. 
-                    marginWidth = RoundLayoutValue(marginWidth, dpi.DpiScaleX);
-                    marginHeight = RoundLayoutValue(marginHeight, dpi.DpiScaleY);
-                }
-
-                //  parent size is what parent want us to be
-                Size frameworkAvailableSize = new Size(
+            //  parent size is what parent want us to be
+            Size frameworkAvailableSize = new(
                 Math.Max(availableSize.Width - marginWidth, 0),
                 Math.Max(availableSize.Height - marginHeight, 0));
 
-                MinMax mm = new MinMax(this);
+            MinMax mm = new(this);
 
-                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
-                {
-                    mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
-                    mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
-                    mm.minHeight = UIElement.RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
-                    mm.minWidth = UIElement.RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
-                }
-
-                LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
-                {
-                    Transform layoutTransform = this.LayoutTransform;
-                    //  check that LayoutTransform is non-trivial
-                    if (layoutTransform != null && !layoutTransform.IsIdentity)
-                    {
-                        if (ltd == null)
-                        {
-                            //  allocate and store ltd if needed
-                            ltd = new LayoutTransformData();
-                            LayoutTransformDataField.SetValue(this, ltd);
-                        }
-
-                        ltd.CreateTransformSnapshot(layoutTransform);
-                        ltd.UntransformedDS = new Size();
-
-                        if (useLayoutRounding)
-                        {
-                            ltd.TransformedUnroundedDS = new Size();
-                        }
-                    }
-                    else if (ltd != null)
-                    {
-                        //  clear ltd storage
-                        ltd = null;
-                        LayoutTransformDataField.ClearValue(this);
-                    }
-                }
-
-                if (ltd != null)
-                {
-                    // Find the maximal area rectangle in local (child) space that we can fit, post-transform
-                    // in the decorator's measure constraint.
-                    frameworkAvailableSize = FindMaximalAreaLocalSpaceRect(ltd.Transform, frameworkAvailableSize);
-                }
-
-                frameworkAvailableSize.Width = Math.Max(mm.minWidth, Math.Min(frameworkAvailableSize.Width, mm.maxWidth));
-                frameworkAvailableSize.Height = Math.Max(mm.minHeight, Math.Min(frameworkAvailableSize.Height, mm.maxHeight));
-
-                // If layout rounding is enabled, round available size passed to MeasureOverride.
-                if (useLayoutRounding)
-                {
-                    frameworkAvailableSize = UIElement.RoundLayoutSize(frameworkAvailableSize, dpi.DpiScaleX, dpi.DpiScaleY);
-                }
-
-                //  call to specific layout to measure
-                Size desiredSize = MeasureOverride(frameworkAvailableSize);
-
-                //  maximize desiredSize with user provided min size
-                desiredSize = new Size(
-                    Math.Max(desiredSize.Width, mm.minWidth),
-                    Math.Max(desiredSize.Height, mm.minHeight));
-
-                //here is the "true minimum" desired size - the one that is
-                //for sure enough for the control to render its content.
-                Size unclippedDesiredSize = desiredSize;
-
-                if (ltd != null)
-                {
-                    //need to store unclipped, untransformed desired size to be able to arrange later
-                    ltd.UntransformedDS = unclippedDesiredSize;
-
-                    //transform unclipped desired size
-                    Rect unclippedBoundsTransformed = Rect.Transform(new Rect(0, 0, unclippedDesiredSize.Width, unclippedDesiredSize.Height), ltd.Transform.Value);
-                    unclippedDesiredSize.Width = unclippedBoundsTransformed.Width;
-                    unclippedDesiredSize.Height = unclippedBoundsTransformed.Height;
-                }
-
-                bool clipped = false;
-
-                // User-specified max size starts to "clip" the control here.
-                //Starting from this point desiredSize could be smaller then actually
-                //needed to render the whole control
-                if (desiredSize.Width > mm.maxWidth)
-                {
-                    desiredSize.Width = mm.maxWidth;
-                    clipped = true;
-                }
-
-                if (desiredSize.Height > mm.maxHeight)
-                {
-                    desiredSize.Height = mm.maxHeight;
-                    clipped = true;
-                }
-
-                //transform desired size to layout slot space
-                if (ltd != null)
-                {
-                    Rect childBoundsTransformed = Rect.Transform(new Rect(0, 0, desiredSize.Width, desiredSize.Height), ltd.Transform.Value);
-                    desiredSize.Width = childBoundsTransformed.Width;
-                    desiredSize.Height = childBoundsTransformed.Height;
-                }
-
-                //  because of negative margins, clipped desired size may be negative.
-                //  need to keep it as doubles for that reason and maximize with 0 at the
-                //  very last point - before returning desired size to the parent.
-                double clippedDesiredWidth = desiredSize.Width + marginWidth;
-                double clippedDesiredHeight = desiredSize.Height + marginHeight;
-
-                // In overconstrained scenario, parent wins and measured size of the child,
-                // including any sizes set or computed, can not be larger then
-                // available size. We will clip the guy later.
-                if (clippedDesiredWidth > availableSize.Width)
-                {
-                    clippedDesiredWidth = availableSize.Width;
-                    clipped = true;
-                }
-
-                if (clippedDesiredHeight > availableSize.Height)
-                {
-                    clippedDesiredHeight = availableSize.Height;
-                    clipped = true;
-                }
-
-                // Set transformed, unrounded size on layout transform, if any.
-                if (ltd != null)
-                {
-                    ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
-                }
-
-                // If using layout rounding, round desired size.
-                if (useLayoutRounding)
-                {
-                    clippedDesiredWidth = UIElement.RoundLayoutValue(clippedDesiredWidth, dpi.DpiScaleX);
-                    clippedDesiredHeight = UIElement.RoundLayoutValue(clippedDesiredHeight, dpi.DpiScaleY);
-                }
-
-                //  Note: unclippedDesiredSize is needed in ArrangeCore,
-                //  because due to the layout protocol, arrange should be called
-                //  with constraints greater or equal to child's desired size
-                //  returned from MeasureOverride. But in most circumstances
-                //  it is possible to reconstruct original unclipped desired size.
-                //  In such cases we want to optimize space and save 16 bytes by
-                //  not storing it on each FrameworkElement.
-                //
-                //  The if statement conditions below lists the cases when
-                //  it is NOT possible to recalculate unclipped desired size later
-                //  in ArrangeCore, thus we save it into Uncommon Fields...
-                //
-                //  Note 2: use SizeBox to avoid CLR boxing of Size.
-                //  measurements show it is better to allocate an object once than
-                //  have spurious boxing allocations on every resize
-                SizeBox sb = UnclippedDesiredSizeField.GetValue(this);
-                if (clipped
-                    || clippedDesiredWidth < 0
-                    || clippedDesiredHeight < 0)
-                {
-                    if (sb == null) //not yet allocated, allocate the box
-                    {
-                        sb = new SizeBox(unclippedDesiredSize);
-                        UnclippedDesiredSizeField.SetValue(this, sb);
-                    }
-                    else //we already have allocated size box, simply change it
-                    {
-                        sb.Width = unclippedDesiredSize.Width;
-                        sb.Height = unclippedDesiredSize.Height;
-                    }
-                }
-                else
-                {
-                    if (sb != null)
-                        UnclippedDesiredSizeField.ClearValue(this);
-                }
-
-                return new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+            if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+            {
+                mm.maxHeight = RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
+                mm.maxWidth = RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
+                mm.minHeight = RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
+                mm.minWidth = RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
             }
+
+            LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
+
+            Transform layoutTransform = LayoutTransform;
+            //  check that LayoutTransform is non-trivial
+            if (layoutTransform is { IsIdentity: false })
+            {
+                if (ltd == null)
+                {
+                    //  allocate and store ltd if needed
+                    ltd = new LayoutTransformData();
+                    LayoutTransformDataField.SetValue(this, ltd);
+                }
+
+                ltd.CreateTransformSnapshot(layoutTransform);
+                ltd.UntransformedDS = new Size();
+
+                if (useLayoutRounding)
+                {
+                    ltd.TransformedUnroundedDS = new Size();
+                }
+            }
+            else if (ltd != null)
+            {
+                //  clear ltd storage
+                ltd = null;
+                LayoutTransformDataField.ClearValue(this);
+            }
+
+
+            if (ltd != null)
+            {
+                // Find the maximal area rectangle in local (child) space that we can fit, post-transform
+                // in the decorator's measure constraint.
+                frameworkAvailableSize = FindMaximalAreaLocalSpaceRect(ltd.Transform, frameworkAvailableSize);
+            }
+
+            frameworkAvailableSize.Width = Math.Max(mm.minWidth, Math.Min(frameworkAvailableSize.Width, mm.maxWidth));
+            frameworkAvailableSize.Height = Math.Max(mm.minHeight, Math.Min(frameworkAvailableSize.Height, mm.maxHeight));
+
+            // If layout rounding is enabled, round available size passed to MeasureOverride.
+            if (useLayoutRounding)
+            {
+                frameworkAvailableSize = RoundLayoutSize(frameworkAvailableSize, dpi.DpiScaleX, dpi.DpiScaleY);
+            }
+
+            //  call to specific layout to measure
+            Size desiredSize = MeasureOverride(frameworkAvailableSize);
+
+            //  maximize desiredSize with user provided min size
+            desiredSize = new Size(
+                Math.Max(desiredSize.Width, mm.minWidth),
+                Math.Max(desiredSize.Height, mm.minHeight));
+
+            //here is the "true minimum" desired size - the one that is
+            //for sure enough for the control to render its content.
+            Size unclippedDesiredSize = desiredSize;
+
+            if (ltd != null)
+            {
+                //need to store unclipped, untransformed desired size to be able to arrange later
+                ltd.UntransformedDS = unclippedDesiredSize;
+
+                //transform unclipped desired size
+                Rect unclippedBoundsTransformed = Rect.Transform(new Rect(0, 0, unclippedDesiredSize.Width, unclippedDesiredSize.Height), ltd.Transform.Value);
+                unclippedDesiredSize.Width = unclippedBoundsTransformed.Width;
+                unclippedDesiredSize.Height = unclippedBoundsTransformed.Height;
+            }
+
+            bool clipped = false;
+
+            // User-specified max size starts to "clip" the control here.
+            //Starting from this point desiredSize could be smaller then actually
+            //needed to render the whole control
+            if (desiredSize.Width > mm.maxWidth)
+            {
+                desiredSize.Width = mm.maxWidth;
+                clipped = true;
+            }
+
+            if (desiredSize.Height > mm.maxHeight)
+            {
+                desiredSize.Height = mm.maxHeight;
+                clipped = true;
+            }
+
+            //transform desired size to layout slot space
+            if (ltd != null)
+            {
+                Rect childBoundsTransformed = Rect.Transform(new Rect(0, 0, desiredSize.Width, desiredSize.Height), ltd.Transform.Value);
+                desiredSize.Width = childBoundsTransformed.Width;
+                desiredSize.Height = childBoundsTransformed.Height;
+            }
+
+            //  because of negative margins, clipped desired size may be negative.
+            //  need to keep it as doubles for that reason and maximize with 0 at the
+            //  very last point - before returning desired size to the parent.
+            double clippedDesiredWidth = desiredSize.Width + marginWidth;
+            double clippedDesiredHeight = desiredSize.Height + marginHeight;
+
+            // In overconstrained scenario, parent wins and measured size of the child,
+            // including any sizes set or computed, can not be larger then
+            // available size. We will clip the guy later.
+            if (clippedDesiredWidth > availableSize.Width)
+            {
+                clippedDesiredWidth = availableSize.Width;
+                clipped = true;
+            }
+
+            if (clippedDesiredHeight > availableSize.Height)
+            {
+                clippedDesiredHeight = availableSize.Height;
+                clipped = true;
+            }
+
+            // Set transformed, unrounded size on layout transform, if any.
+            if (ltd != null)
+            {
+                ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+            }
+
+            // If using layout rounding, round desired size.
+            if (useLayoutRounding)
+            {
+                clippedDesiredWidth = RoundLayoutValue(clippedDesiredWidth, dpi.DpiScaleX);
+                clippedDesiredHeight = RoundLayoutValue(clippedDesiredHeight, dpi.DpiScaleY);
+            }
+
+            //  Note: unclippedDesiredSize is needed in ArrangeCore,
+            //  because due to the layout protocol, arrange should be called
+            //  with constraints greater or equal to child's desired size
+            //  returned from MeasureOverride. But in most circumstances
+            //  it is possible to reconstruct original unclipped desired size.
+            //  In such cases we want to optimize space and save 16 bytes by
+            //  not storing it on each FrameworkElement.
+            //
+            //  The if statement conditions below lists the cases when
+            //  it is NOT possible to recalculate unclipped desired size later
+            //  in ArrangeCore, thus we save it into Uncommon Fields...
+            //
+            //  Note 2: use SizeBox to avoid CLR boxing of Size.
+            //  measurements show it is better to allocate an object once than
+            //  have spurious boxing allocations on every resize
+            SizeBox sb = UnclippedDesiredSizeField.GetValue(this);
+            if (clipped
+                || clippedDesiredWidth < 0
+                || clippedDesiredHeight < 0)
+            {
+                if (sb == null) //not yet allocated, allocate the box
+                {
+                    sb = new SizeBox(unclippedDesiredSize);
+                    UnclippedDesiredSizeField.SetValue(this, sb);
+                }
+                else //we already have allocated size box, simply change it
+                {
+                    sb.Width = unclippedDesiredSize.Width;
+                    sb.Height = unclippedDesiredSize.Height;
+                }
+            }
+            else
+            {
+                if (sb != null)
+                    UnclippedDesiredSizeField.ClearValue(this);
+            }
+
+            return new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
         }
 
         /// <summary>
@@ -4524,7 +4522,7 @@ namespace System.Windows
         protected sealed override void ArrangeCore(Rect finalRect)
         {
             // If using layout rounding, check whether rounding needs to compensate for high DPI
-            bool useLayoutRounding = this.UseLayoutRounding;
+            bool useLayoutRounding = UseLayoutRounding;
             DpiScale dpi = GetDpi();
             LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
             Size transformedUnroundedDS = Size.Empty;
@@ -4678,13 +4676,13 @@ namespace System.Windows
 
                 }
 
-                MinMax mm = new MinMax(this);
+                MinMax mm = new(this);
                 if(useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
                 {
-                    mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
-                    mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
-                    mm.minHeight = UIElement.RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
-                    mm.minWidth = UIElement.RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
+                    mm.maxHeight = RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
+                    mm.maxWidth = RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
+                    mm.minHeight = RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
+                    mm.minWidth = RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
                 }
 
                 //we have to choose max between UnclippedDesiredSize and Max here, because
@@ -4707,7 +4705,7 @@ namespace System.Windows
                 // If using layout rounding, round size passed to children.
                 if (useLayoutRounding)
                 {
-                    arrangeSize = UIElement.RoundLayoutSize(arrangeSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                    arrangeSize = RoundLayoutSize(arrangeSize, dpi.DpiScaleX, dpi.DpiScaleY);
                 }
 
 
@@ -4720,7 +4718,7 @@ namespace System.Windows
                 RenderSize = innerInkSize;
                 if (useLayoutRounding)
                 {
-                    RenderSize = UIElement.RoundLayoutSize(RenderSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                    RenderSize = RoundLayoutSize(RenderSize, dpi.DpiScaleX, dpi.DpiScaleY);
                 }
 
                 //clippedInkSize differs from InkSize only what MaxWidth/Height explicitly clip the
@@ -4733,7 +4731,7 @@ namespace System.Windows
 
                 if (useLayoutRounding)
                 {
-                    clippedInkSize = UIElement.RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                    clippedInkSize = RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
                 }
 
                 //remember we have to clip if Max properties limit the inkSize
@@ -4750,7 +4748,7 @@ namespace System.Windows
 
                     if (useLayoutRounding)
                     {
-                        clippedInkSize = UIElement.RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                        clippedInkSize = RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
                     }
                 }
 
@@ -4761,12 +4759,12 @@ namespace System.Windows
                 // This is the "window" through which we see the content of the child.
                 // Alignments position ink of the child in this "window".
                 // Max with 0 is neccessary because layout slot may be smaller then unclipped desired size.
-                Size clientSize = new Size(Math.Max(0, finalRect.Width - marginWidth),
+                Size clientSize = new(Math.Max(0, finalRect.Width - marginWidth),
                                         Math.Max(0, finalRect.Height - marginHeight));
 
                 if (useLayoutRounding)
                 {
-                    clientSize = UIElement.RoundLayoutSize(clientSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                    clientSize = RoundLayoutSize(clientSize, dpi.DpiScaleX, dpi.DpiScaleY);
                 }
 
                 //remember we have to clip if clientSize limits the inkSize
@@ -4782,8 +4780,8 @@ namespace System.Windows
                 // If using layout rounding, round offset.
                 if (useLayoutRounding)
                 {
-                    offset.X = UIElement.RoundLayoutValue(offset.X, dpi.DpiScaleX);
-                    offset.Y = UIElement.RoundLayoutValue(offset.Y, dpi.DpiScaleY);
+                    offset.X = RoundLayoutValue(offset.X, dpi.DpiScaleX);
+                    offset.Y = RoundLayoutValue(offset.Y, dpi.DpiScaleY);
                 }
 
                 SetLayoutOffset(offset, oldRenderSize);

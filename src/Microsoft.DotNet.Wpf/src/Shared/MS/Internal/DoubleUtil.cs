@@ -16,7 +16,6 @@
 
 using System;
 using System.Windows;
-using System.Runtime.InteropServices;
 
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
@@ -57,12 +56,7 @@ namespace MS.Internal
         /// <param name="value2"> The second double to compare. </param>
         public static bool AreClose(double value1, double value2)
         {
-            //in case they are Infinities (then epsilon check does not work)
-            if(value1 == value2) return true;
-            // This computes (|value1-value2| / (|value1| + |value2| + 10.0)) < DBL_EPSILON
-            double eps = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * DBL_EPSILON;
-            double delta = value1 - value2;
-            return(-eps < delta) && (eps > delta);
+            return Math.Abs(value1 - value2) < 10.0 * DBL_EPSILON;
         }
 
         /// <summary>
@@ -173,7 +167,7 @@ namespace MS.Internal
         /// <param name="value"> The double to compare to 1. </param>
         public static bool IsOne(double value)
         {
-            return Math.Abs(value-1.0) < 10.0 * DBL_EPSILON;
+            return Math.Abs(value - 1.0) < 10.0 * DBL_EPSILON;
         }
 
         /// <summary>
@@ -202,8 +196,8 @@ namespace MS.Internal
         /// <returns>Whether or not the two points are equal</returns>
         public static bool AreClose(Point point1, Point point2)
         {
-            return DoubleUtil.AreClose(point1.X, point2.X) && 
-            DoubleUtil.AreClose(point1.Y, point2.Y);
+            return AreClose(point1.X, point2.X) && 
+            AreClose(point1.Y, point2.Y);
         }
 
         /// <summary>
@@ -216,8 +210,8 @@ namespace MS.Internal
         /// <returns>Whether or not the two Size instances are equal</returns>
         public static bool AreClose(Size size1, Size size2)
         {
-            return DoubleUtil.AreClose(size1.Width, size2.Width) && 
-                   DoubleUtil.AreClose(size1.Height, size2.Height);
+            return AreClose(size1.Width, size2.Width) && 
+                   AreClose(size1.Height, size2.Height);
         }
         
         /// <summary>
@@ -230,8 +224,8 @@ namespace MS.Internal
         /// <returns>Whether or not the two Vector instances are equal</returns>
         public static bool AreClose(System.Windows.Vector vector1, System.Windows.Vector vector2)
         { 
-            return DoubleUtil.AreClose(vector1.X, vector2.X) && 
-                   DoubleUtil.AreClose(vector1.Y, vector2.Y);
+            return AreClose(vector1.X, vector2.X) && 
+                   AreClose(vector1.Y, vector2.Y);
         }
 
         /// <summary>
@@ -254,10 +248,10 @@ namespace MS.Internal
             // rect2.IsEmpty, followed by property-wise compares.
 
             return (!rect2.IsEmpty) &&
-                DoubleUtil.AreClose(rect1.X, rect2.X) &&
-                DoubleUtil.AreClose(rect1.Y, rect2.Y) &&
-                DoubleUtil.AreClose(rect1.Height, rect2.Height) &&
-                DoubleUtil.AreClose(rect1.Width, rect2.Width);
+                AreClose(rect1.X, rect2.X) &&
+                AreClose(rect1.Y, rect2.Y) &&
+                AreClose(rect1.Height, rect2.Height) &&
+                AreClose(rect1.Width, rect2.Width);
         }
 
         /// <summary>

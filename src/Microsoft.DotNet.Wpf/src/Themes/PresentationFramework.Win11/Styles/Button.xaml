@@ -11,7 +11,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:PresentationFramework.Win11">
+    >
 
     <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
     <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>

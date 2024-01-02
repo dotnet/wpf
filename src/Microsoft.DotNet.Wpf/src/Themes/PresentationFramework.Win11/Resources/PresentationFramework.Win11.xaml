@@ -29,6 +29,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollViewer.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/StatusBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToolTip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Window.xaml" />
 

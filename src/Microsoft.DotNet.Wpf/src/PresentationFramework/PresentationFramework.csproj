@@ -416,6 +416,8 @@
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
+    <Compile Include="System\Windows\Controls\ElementPlacement.cs" />
+    <Compile Include="System\Windows\Controls\PassiveScrollViewer.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />
@@ -1152,6 +1154,9 @@
     <Compile Include="System\Windows\Input\Command\CommandConverter.cs" />
     <Compile Include="System\Windows\Input\Command\CommandValueSerializer.cs" />
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand.cs" />
+    <Compile Include="System\Windows\Input\RelayCommand{T}.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand{T}.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />

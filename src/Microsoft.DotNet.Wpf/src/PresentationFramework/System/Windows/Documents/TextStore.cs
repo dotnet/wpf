@@ -2914,9 +2914,9 @@ namespace System.Windows.Documents
             for (int i = 0; i < _preparedattributes.Count; i++)
             {
                 var attributeVal = (UnsafeNativeMethods.TS_ATTRVAL)_preparedattributes[i];
-                if (attributeVal.val != null && attributeVal.val.vt == (short)NativeMethods.tagVT.VT_UNKNOWN && attributeVal.val.data1?.Value != null)
+                if (attributeVal.val != null && attributeVal.val.vt == (short)NativeMethods.tagVT.VT_UNKNOWN && attributeVal.val.data1.Value != IntPtr.Zero)
                 {
-                    Marshal.Release(attrval.val.data1.Value);
+                    Marshal.Release(attributeVal.val.data1.Value);
                 }
             }
 

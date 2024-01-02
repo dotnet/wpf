@@ -99,6 +99,7 @@ namespace System.Windows.Controls
             this.TextEditor.AcceptsRichContent = false;
 
             SetValue(TemplateButtonCommandProperty, new RelayCommand<string>(OnTemplateButtonClick));
+    
         }
 
         #endregion Constructors
@@ -964,87 +965,7 @@ namespace System.Windows.Controls
                 return new Typography(this);
             }
         }
-
-        /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Defines which side the icon should be placed on.
-        /// </summary>
-        public ElementPlacement IconPlacement
-        {
-            get => (ElementPlacement)GetValue(IconPlacementProperty);
-            set => SetValue(IconPlacementProperty, value);
-        }
-
-        public KeyboardNavigation keyboardNavigation { get; set; }
-
-        /// <summary>
-        /// Gets or sets numbers pattern.
-        /// </summary>
-        public string PlaceholderText
-        {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to display the placeholder.
-        /// </summary>
-        public bool PlaceholderEnabled
-        {
-            get => (bool)GetValue(PlaceholderEnabledProperty);
-            set => SetValue(PlaceholderEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to enable the clear button.
-        /// </summary>
-        public bool ClearButtonEnabled
-        {
-            get => (bool)GetValue(ClearButtonEnabledProperty);
-            set => SetValue(ClearButtonEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to show the clear button when <see cref="TextBox"/> is focused.
-        /// </summary>
-        public bool ShowClearButton
-        {
-            get => (bool)GetValue(ShowClearButtonProperty);
-            protected set => SetValue(ShowClearButtonProperty, value);
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsTextSelectionEnabled
-        {
-            get => (bool)GetValue(IsTextSelectionEnabledProperty);
-            set => SetValue(IsTextSelectionEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Command triggered after clicking the button.
-        /// </summary>
-        public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
-
-        #endregion Public Properties
-
-        //------------------------------------------------------
-        //
-        //  Static Properties
-        //
-        //------------------------------------------------------
-
-        #region Static properties
-
+        
         /// <summary>
         /// Property for <see cref="Icon"/>.
         /// </summary>
@@ -1125,7 +1046,148 @@ namespace System.Windows.Controls
             new PropertyMetadata(null)
         );
 
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets displayed <see cref="IconElement"/>.
+        /// </summary>
+        public IconElement Icon
+        {
+            get => (IconElement)GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        /// <summary>
+        /// Defines which side the icon should be placed on.
+        /// </summary>
+        public ElementPlacement IconPlacement
+        {
+            get => (ElementPlacement)GetValue(IconPlacementProperty);
+            set => SetValue(IconPlacementProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets numbers pattern.
+        /// </summary>
+        public string PlaceholderText
+        {
+            get => (string)GetValue(PlaceholderTextProperty);
+            set => SetValue(PlaceholderTextProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value determining whether to display the placeholder.
+        /// </summary>
+        public bool PlaceholderEnabled
+        {
+            get => (bool)GetValue(PlaceholderEnabledProperty);
+            set => SetValue(PlaceholderEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value determining whether to enable the clear button.
+        /// </summary>
+        public bool ClearButtonEnabled
+        {
+            get => (bool)GetValue(ClearButtonEnabledProperty);
+            set => SetValue(ClearButtonEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value determining whether to show the clear button when <see cref="TextBox"/> is focused.
+        /// </summary>
+        public bool ShowClearButton
+        {
+            get => (bool)GetValue(ShowClearButtonProperty);
+            protected set => SetValue(ShowClearButtonProperty, value);
+        }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public bool IsTextSelectionEnabled
+        {
+            get => (bool)GetValue(IsTextSelectionEnabledProperty);
+            set => SetValue(IsTextSelectionEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Command triggered after clicking the button.
+        /// </summary>
+        public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+
         #endregion
+
+
+
+        /// <inheritdoc />
+        protected override void OnTextChanged(TextChangedEventArgs e)
+        {
+            base.OnTextChanged(e);
+
+            if (PlaceholderEnabled && Text.Length > 0)
+                PlaceholderEnabled = false;
+
+            if (!PlaceholderEnabled && Text.Length < 1)
+                PlaceholderEnabled = true;
+
+            RevealClearButton();
+        }
+
+        /// <inheritdoc />
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            CaretIndex = Text.Length;
+
+            RevealClearButton();
+        }
+
+        /// <inheritdoc />
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            base.OnLostFocus(e);
+
+            HideClearButton();
+        }
+
+        /// <summary>
+        /// Reveals the clear button by <see cref="ShowClearButton"/> property.
+        /// </summary>
+        protected void RevealClearButton()
+        {
+            if (ClearButtonEnabled && IsKeyboardFocusWithin)
+                ShowClearButton = Text.Length > 0;
+        }
+
+        /// <summary>
+        /// Hides the clear button by <see cref="ShowClearButton"/> property.
+        /// </summary>
+        protected void HideClearButton()
+        {
+            if (ClearButtonEnabled && !IsKeyboardFocusWithin && ShowClearButton)
+                ShowClearButton = false;
+        }
+
+        /// <summary>
+        /// Triggered when the user clicks the clear text button.
+        /// </summary>
+        protected virtual void OnClearButtonClick()
+        {
+            if (Text.Length > 0)
+                Text = string.Empty;
+        }
+
+        /// <summary>
+        /// Triggered by clicking a button in the control template.
+        /// </summary>
+        protected virtual void OnTemplateButtonClick(string parameter)
+        {
+
+            OnClearButtonClick();
+        }
+        #endregion Public Properties
 
         //------------------------------------------------------
         //
@@ -1432,75 +1494,6 @@ namespace System.Windows.Controls
             {
                 SetScrollViewerMinMaxHeight();
             }
-        }
-
-        /// <inheritdoc />
-        protected override void OnTextChanged(TextChangedEventArgs e)
-        {
-            base.OnTextChanged(e);
-
-            if (PlaceholderEnabled && Text.Length > 0)
-                PlaceholderEnabled = false;
-
-            if (!PlaceholderEnabled && Text.Length < 1)
-                PlaceholderEnabled = true;
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            CaretIndex = Text.Length;
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnLostFocus(RoutedEventArgs e)
-        {
-            base.OnLostFocus(e);
-
-            HideClearButton();
-        }
-
-        /// <summary>
-        /// Reveals the clear button by <see cref="ShowClearButton"/> property.
-        /// </summary>
-        protected void RevealClearButton()
-        {
-            if (ClearButtonEnabled && IsKeyboardFocusWithin)
-                ShowClearButton = Text.Length > 0;
-        }
-
-        /// <summary>
-        /// Hides the clear button by <see cref="ShowClearButton"/> property.
-        /// </summary>
-        protected void HideClearButton()
-        {
-            if (ClearButtonEnabled && !IsKeyboardFocusWithin && ShowClearButton)
-                ShowClearButton = false;
-        }
-
-        /// <summary>
-        /// Triggered when the user clicks the clear text button.
-        /// </summary>
-        protected virtual void OnClearButtonClick()
-        {
-            if (Text.Length > 0)
-                Text = string.Empty;
-        }
-
-        /// <summary>
-        /// Triggered by clicking a button in the control template.
-        /// </summary>
-        protected virtual void OnTemplateButtonClick(string parameter)
-        {
-            System.Diagnostics.Debug.WriteLine($"INFO: {typeof(TextBox)} button clicked", "Wpf.Ui.TextBox");
-
-            OnClearButtonClick();
         }
 
         // this method is called by an editable ComboBox to raise a TextChanged event after

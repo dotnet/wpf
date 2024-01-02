@@ -89,7 +89,9 @@ public class RelayCommand<T> : IRelayCommand<T>
     public bool CanExecute(T parameter)
     {
         if (_canExecute is null)
-            return false;
+        {
+            return true;
+        }
         return _canExecute.Invoke(parameter) != false;
     }
 

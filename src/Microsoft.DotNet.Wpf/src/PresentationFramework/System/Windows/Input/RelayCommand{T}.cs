@@ -81,7 +81,7 @@ public class RelayCommand<T> : IRelayCommand<T>
     /// <inheritdoc/>
     public void NotifyCanExecuteChanged()
     {
-        CanExecuteChanged.Invoke(this, EventArgs.Empty);
+        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <inheritdoc/>

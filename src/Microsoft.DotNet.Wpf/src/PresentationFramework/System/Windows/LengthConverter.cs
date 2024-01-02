@@ -181,59 +181,40 @@ namespace System.Windows
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
         static internal double FromString(string s, CultureInfo cultureInfo)
         {
-            string valueString = s.Trim();
-            string goodString = valueString.ToLowerInvariant();
-            int strLen = goodString.Length;
-            int strLenUnit = 0;
+            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
             double unitFactor = 1.0;
 
             //Auto is represented and Double.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
-            if (goodString == "auto") return Double.NaN;
+            if (valueSpan.Equals("auto", StringComparison.OrdinalIgnoreCase))
+                return Double.NaN;
 
-            for (int i = 0; i < PixelUnitStrings.Length; i++)
+            PixelUnit pixelUnit;
+            if (PixelUnit.TryParsePixel(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
             {
-                // NOTE: This is NOT a culture specific comparison.
-                // This is by design: we want the same unit string table to work across all cultures.
-                if (goodString.EndsWith(PixelUnitStrings[i], StringComparison.Ordinal))
-                {
-                    strLenUnit = PixelUnitStrings[i].Length;
-                    unitFactor = PixelUnitFactors[i];
-                    break;
-                }
+                valueSpan = valueSpan.Slice(0, valueSpan.Length - pixelUnit.Name.Length);
+                unitFactor = pixelUnit.Factor;
             }
 
-            //  important to substring original non-lowered string 
-            //  this allows case sensitive ToDouble below handle "NaN" and "Infinity" correctly. 
-            //  this addresses windows bug 1177408
-            valueString = valueString.Substring(0, strLen - strLenUnit);
+            if (valueSpan.IsEmpty)
+                return 0;
 
-            // FormatException errors thrown by Convert.ToDouble are pretty uninformative.
+            // FormatException errors thrown by double.Parse are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
             // to create a Length instance from a string.  This addresses windows bug 968884
             try
             {
-                double result = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
-                return result;
+                return double.Parse(valueSpan, cultureInfo) * unitFactor;
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Format(SR.LengthFormatError, valueString));
+                throw new FormatException(SR.Format(SR.LengthFormatError, valueSpan.ToString()));
             }
         }
-
-        // This array contains strings for unit types 
-        // These are effectively "TypeConverter only" units.
-        // They are all expressable in terms of the Pixel unit type and a conversion factor.
-        static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
-        static private double[] PixelUnitFactors = 
-        { 
-            1.0,              // Pixel itself
-            96.0,             // Pixels per Inch
-            96.0 / 2.54,      // Pixels per Centimeter
-            96.0 / 72.0,      // Pixels per Point
-        };
 
         static internal string ToString(double l, CultureInfo cultureInfo)
         {

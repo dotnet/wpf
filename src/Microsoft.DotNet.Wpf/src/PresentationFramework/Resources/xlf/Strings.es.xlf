@@ -4815,7 +4815,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="needs-translation">Top</target>
+        <target state="translated">Arriba</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

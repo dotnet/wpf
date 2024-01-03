@@ -1,17 +1,23 @@
 <!--
+    Copyright (c) Microsoft. All rights reserved.
+    This code is licensed under the MIT License (MIT).
+    THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+    THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
+    
     This Source Code Form is subject to the terms of the MIT License.
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
     All Rights Reserved.
-    
-    Based on Microsoft XAML for Win UI
-    Copyright (c) Microsoft Corporation. All Rights Reserved.
 -->
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <!--
@@ -567,7 +573,7 @@
 
                             <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
 
-                            <controls:SymbolIcon
+                            <SymbolIcon
                                 x:Name="SortIcon"
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
@@ -663,8 +669,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding Border.CornerRadius}"
                         SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
-                            <ScrollViewer.Template>
+                        <PassiveScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
+                            <PassiveScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -726,9 +732,9 @@
                                         </Grid>
                                     </Grid>
                                 </ControlTemplate>
-                            </ScrollViewer.Template>
+                            </PassiveScrollViewer.Template>
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
+                        </PassiveScrollViewer>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Disabled">
@@ -752,7 +758,7 @@
         </Style.Triggers>
     </Style>
 
-    <controls:FallbackBrushConverter x:Key="FallbackBrushConverter" />
+    <FallbackBrushConverter x:Key="FallbackBrushConverter" />
 
     <Color x:Key="FallbackColor">#FFFF0000</Color>
 
@@ -809,7 +815,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                                 <Grid>
-                                    <controls:SymbolIcon
+                                    <SymbolIcon
                                         x:Name="ControlIcon"
                                         Margin="0"
                                         HorizontalAlignment="Center"
@@ -818,10 +824,10 @@
                                         FontWeight="Bold"
                                         Symbol="Checkmark48"
                                         Visibility="Collapsed">
-                                        <controls:SymbolIcon.Foreground>
+                                        <SymbolIcon.Foreground>
                                             <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
-                                        </controls:SymbolIcon.Foreground>
-                                    </controls:SymbolIcon>
+                                        </SymbolIcon.Foreground>
+                                    </SymbolIcon>
                                 </Grid>
                             </Border>
                         </BulletDecorator.Bullet>
@@ -907,13 +913,13 @@
     <Style
         x:Key="DefaultUiDataGridStyle"
         BasedOn="{StaticResource DefaultDataGridStyle}"
-        TargetType="{x:Type controls:DataGrid}">
+        TargetType="{x:Type DataGrid}">
         <Setter Property="CheckBoxColumnEditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
         <Setter Property="CheckBoxColumnElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
     </Style>
 
     <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />
     <!--<Style BasedOn="{StaticResource DefaultDataGridStyle}" TargetType="{x:Type DataGrid}" />-->
-    <Style BasedOn="{StaticResource DefaultUiDataGridStyle}" TargetType="{x:Type controls:DataGrid}" />
+    <Style BasedOn="{StaticResource DefaultUiDataGridStyle}" TargetType="{x:Type DataGrid}" />
 
 </ResourceDictionary>

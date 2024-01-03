@@ -22,7 +22,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/DataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Label.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListViewItem.xaml" />
+        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListViewItem.xaml" /> -->
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollBar.xaml" />

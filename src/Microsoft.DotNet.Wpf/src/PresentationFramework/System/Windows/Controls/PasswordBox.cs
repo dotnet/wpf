@@ -11,7 +11,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 using System.Security;
-using System.Text;
+//using System.Text;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using MS.Internal;
+//using MS.Internal.Text;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Windows.Controls.Primitives;
@@ -893,14 +894,14 @@ namespace System.Windows.Controls
         {
             _lockUpdatingContents = true;
 
-            //Text = IsPasswordRevealed ? Password : new String(PasswordChar, Password.Length);
+            Text = IsPasswordRevealed ? Password : new String(PasswordChar, Password.Length);
 
-            //_lockUpdatingContents = false;
+            _lockUpdatingContents = false;
 
-            if (_lockUpdatingContents)
-            {
-                _lockUpdatingContents = false;
-            }
+            //if (_lockUpdatingContents)
+            //{
+            //    _lockUpdatingContents = false;
+            //}
         }
 
         // Worker for the ctors, initializes a new PasswordBox instance.

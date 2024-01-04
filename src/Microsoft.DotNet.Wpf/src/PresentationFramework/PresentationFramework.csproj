@@ -417,6 +417,8 @@
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
+    <Compile Include="System\Windows\Controls\ElementPlacement.cs" />
+    <Compile Include="System\Windows\Controls\PassiveScrollViewer.cs" />
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
     <Compile Include="System\Windows\WindowBackdropType.cs" />
@@ -1153,6 +1155,9 @@
     <Compile Include="System\Windows\Input\Command\CommandConverter.cs" />
     <Compile Include="System\Windows\Input\Command\CommandValueSerializer.cs" />
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand.cs" />
+    <Compile Include="System\Windows\Input\RelayCommand{T}.cs" />
+    <Compile Include="System\Windows\Input\IRelayCommand{T}.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />
@@ -1204,6 +1209,7 @@
     <Compile Include="System\Windows\Markup\BamlRecordWriter.cs" />
     <Compile Include="System\Windows\Markup\BamlVersionHeader.cs" />
     <Compile Include="System\Windows\Markup\BamlWriter.cs" />
+    <Compile Include="System\Windows\Markup\ControlsDictionary.cs" />
     <Compile Include="System\Windows\Markup\DependencyPropertyConverter.cs" />
     <Compile Include="System\Windows\Markup\FilteredXmlReader.cs" />
     <Compile Include="System\Windows\Markup\IHaveResources.cs" />
@@ -1235,6 +1241,9 @@
     <Compile Include="System\Windows\Markup\StyleModeStack.cs" />
     <Compile Include="System\Windows\Markup\TemplateComponentConnector.cs" />
     <Compile Include="System\Windows\Markup\TemplateKeyConverter.cs" />
+    <Compile Include="System\Windows\Markup\ThemeResource.cs" />
+    <Compile Include="System\Windows\Markup\ThemeResourceExtension.cs" />
+    <Compile Include="System\Windows\Markup\ThemesDictionary.cs" />
     <Compile Include="System\Windows\Markup\TypeContext.cs" />
     <Compile Include="System\Windows\Markup\WpfXamlLoader.cs" />
     <Compile Include="System\Windows\Markup\XamlBrushSerializer.cs" />

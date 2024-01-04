@@ -77,5 +77,10 @@
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Collections.Concurrent" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Menu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 
 </Project>

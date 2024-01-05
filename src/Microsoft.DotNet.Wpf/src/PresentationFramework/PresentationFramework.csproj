@@ -1170,6 +1170,8 @@
     <Compile Include="System\Windows\Localization.cs" />
     <Compile Include="System\Windows\LogicalTreeHelper.cs" />
     <Compile Include="System\Windows\LostFocusEventManager.cs" />
+    <Compile Include="System\Windows\ControlsDictionary.cs" />
+    <Compile Include="System\Windows\ThemesDictionary.cs" />
     <Compile Include="System\Windows\Markup\AttributeData.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KeyRecord.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KnownTypes.cs" />
@@ -1209,7 +1211,6 @@
     <Compile Include="System\Windows\Markup\BamlRecordWriter.cs" />
     <Compile Include="System\Windows\Markup\BamlVersionHeader.cs" />
     <Compile Include="System\Windows\Markup\BamlWriter.cs" />
-    <Compile Include="System\Windows\Markup\ControlsDictionary.cs" />
     <Compile Include="System\Windows\Markup\DependencyPropertyConverter.cs" />
     <Compile Include="System\Windows\Markup\FilteredXmlReader.cs" />
     <Compile Include="System\Windows\Markup\IHaveResources.cs" />
@@ -1243,7 +1244,6 @@
     <Compile Include="System\Windows\Markup\TemplateKeyConverter.cs" />
     <Compile Include="System\Windows\Markup\ThemeResource.cs" />
     <Compile Include="System\Windows\Markup\ThemeResourceExtension.cs" />
-    <Compile Include="System\Windows\Markup\ThemesDictionary.cs" />
     <Compile Include="System\Windows\Markup\TypeContext.cs" />
     <Compile Include="System\Windows\Markup\WpfXamlLoader.cs" />
     <Compile Include="System\Windows\Markup\XamlBrushSerializer.cs" />

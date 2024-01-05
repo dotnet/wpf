@@ -338,12 +338,29 @@ namespace System.Windows.Automation.Peers
         {
             int position = AutomationProperties.AutomationPositionInSetDefault;
             ItemCollection itemCollection = itemsControl.Items;
-            position = itemCollection.IndexOf(item);
 
             if (itemsControl.IsGrouping)
             {
                 int sizeOfGroup;
                 position = FindPositionInGroup(itemCollection.Groups, position, out sizeOfGroup);
+            }
+            else
+            {
+                position = itemCollection.IndexOf(item);
+
+                // Some items may not be visible, so we don't want to count
+                foreach (var child in (itemCollection.CollectionView))
+                {
+                    if (item == child)
+                    {
+                        break;
+                    }
+
+                    if (child is not UIElement element || element.Visibility != Visibility.Visible)
+                    {
+                        position -= 1;
+                    }
+                }
             }
 
             return position + 1;
@@ -362,6 +379,15 @@ namespace System.Windows.Automation.Peers
             else
             {
                 size = itemCollection.Count;
+
+                // Some items may not be visible, so we don't want to count
+                foreach (var child in (itemCollection.CollectionView))
+                {
+                    if (child is not UIElement element || element.Visibility != Visibility.Visible)
+                    {
+                        size -= 1;
+                    }
+                }
             }
 
             return size;

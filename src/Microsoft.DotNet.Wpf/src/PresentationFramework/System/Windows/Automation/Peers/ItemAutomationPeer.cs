@@ -348,15 +348,15 @@ namespace System.Windows.Automation.Peers
             {
                 position = itemCollection.IndexOf(item);
 
-                // Some items may not be visible, so we don't want to count
-                foreach (var child in (itemCollection.CollectionView))
+                // Some items may not be visible, so we don't want to count them
+                foreach (var child in itemCollection.CollectionView)
                 {
                     if (item == child)
                     {
                         break;
                     }
 
-                    if (child is not UIElement element || element.Visibility != Visibility.Visible)
+                    if (child is UIElement element && element.Visibility != Visibility.Visible)
                     {
                         position -= 1;
                     }
@@ -380,10 +380,10 @@ namespace System.Windows.Automation.Peers
             {
                 size = itemCollection.Count;
 
-                // Some items may not be visible, so we don't want to count
-                foreach (var child in (itemCollection.CollectionView))
+                // Some items may not be visible, so we don't want to count them
+                foreach (var child in itemCollection.CollectionView)
                 {
-                    if (child is not UIElement element || element.Visibility != Visibility.Visible)
+                    if (child is UIElement element && element.Visibility != Visibility.Visible)
                     {
                         size -= 1;
                     }

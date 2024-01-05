@@ -5,7 +5,7 @@
 
 using System.Windows.Markup;
 
-namespace System.Windows.Markup;
+namespace System.Windows;
 
 /// <summary>
 /// Provides a dictionary implementation that contains <c>WPF UI</c> controls resources used by components and other elements of a WPF application.

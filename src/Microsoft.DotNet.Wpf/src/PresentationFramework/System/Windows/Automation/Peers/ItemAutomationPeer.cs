@@ -338,6 +338,7 @@ namespace System.Windows.Automation.Peers
         {
             int position = AutomationProperties.AutomationPositionInSetDefault;
             ItemCollection itemCollection = itemsControl.Items;
+            position = itemCollection.IndexOf(item);
 
             if (itemsControl.IsGrouping)
             {
@@ -346,8 +347,6 @@ namespace System.Windows.Automation.Peers
             }
             else
             {
-                position = itemCollection.IndexOf(item);
-
                 // Some items may not be visible, so we don't want to count them
                 foreach (var child in itemCollection.CollectionView)
                 {

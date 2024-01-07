@@ -455,11 +455,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>the new FormatException instance</returns>
         internal static FormatException NewPrintCapFormatException(string detailMsg, Exception innerException)
         {
-            return new FormatException(String.Format(CultureInfo.CurrentCulture,
-                                                     "{0} {1} {2}",
-                                                     PrintSchemaTags.Framework.PrintCapRoot,
-                                                     PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
-                                                     detailMsg),
+            return new FormatException($"{PrintSchemaTags.Framework.PrintCapRoot} {PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {detailMsg}",
                                        innerException);
         }
 

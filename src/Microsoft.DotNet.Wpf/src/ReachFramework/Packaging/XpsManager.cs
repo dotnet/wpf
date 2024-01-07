@@ -1093,59 +1093,49 @@ namespace System.Windows.Xps.Packaging
 
             if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.DocumentSequenceContentType))
             {
-                 uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "{0}.fdseq",
-                                          new object[] { contentKey });
+                 uniqueUri = $"{contentKey}.fdseq";
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedDocumentContentType))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Documents/{0}/FixedDocument.fdoc",
-                                          new object[] {  counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Documents/{counter}/FixedDocument.fdoc");
                 string pageContentKey = GetContentCounterKey(XpsS0Markup.FixedPageContentType);
                 _contentTypes[pageContentKey] = 1;
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedPageContentType))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Documents/{0}/Pages/{1}.fpage",
-                                          new object[] { docCounter, counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Documents/{docCounter}/Pages/{counter}.fpage");
             }
             else if (contentKey.Equals("Dictionary", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.dict",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.dict");
             }
             else if (contentKey.Equals("Font", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.ttf",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.ttf");
             }
             else if (contentKey.Equals("ColorContext", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.icc",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.icc");
             }
             else if (contentKey.Equals("ResourceDictionary", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.dict",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.dict");
             }
             else if (contentKey.Equals("Image", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.{1}",
-                                          new object[] { uniqueName, LookupImageExtension(contentType) });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.{LookupImageExtension(contentType)}");
             }
             else
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/{0}s/{0}_{1}.xaml",
-                                          new object[] { contentKey, counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/{contentKey}s/{contentKey}_{counter}.xaml");
             }
 
             //

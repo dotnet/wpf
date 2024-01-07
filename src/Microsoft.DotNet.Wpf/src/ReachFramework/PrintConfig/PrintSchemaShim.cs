@@ -158,12 +158,7 @@ namespace MS.Internal.Printing.Configuration
                 XPathNavigator docNavigator = ticket.XmlDoc.DocumentElement.CreateNavigator();
                 if (docNavigator != null)
                 {
-                    string xPathString = string.Format(
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        @"{0}:PrintTicket/{0}:ParameterInit[@name='{1}:PageDevmodeSnapshot']/{0}:Value",
-                        psfPrefix,
-                        oemDriverPrefix
-                    );
+                    string xPathString = $@"{psfPrefix}:PrintTicket/{psfPrefix}:ParameterInit[@name='{oemDriverPrefix}:PageDevmodeSnapshot']/{psfPrefix}:Value";
 
                     XPathNavigator node = docNavigator.SelectSingleNode(xPathString, ticket.NamespaceManager);
                     if (node != null)

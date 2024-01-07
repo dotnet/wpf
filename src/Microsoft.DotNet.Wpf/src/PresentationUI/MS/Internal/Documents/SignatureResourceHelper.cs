@@ -84,12 +84,7 @@ namespace MS.Internal.Documents
                 sigStatus = SignatureStatus.Invalid;
             }
 
-            string resourceName = string.Format(
-                CultureInfo.InvariantCulture,
-                @"{0}_{1}x{2}",
-                sigStatus.ToString(),
-                height,
-                width);
+            string resourceName = $@"{sigStatus}_{height}x{width}";
             return (Drawing.Image)Resources.ResourceManager.GetObject(resourceName);
         }
 
@@ -318,13 +313,7 @@ namespace MS.Internal.Documents
         /// <returns>The short date or 'none' if the value was null.</returns>
         private static string GetFormattedDate(Nullable<DateTime> date)
         {
-            string none = SR.SignatureResourceHelperNone;
-
-            return date == null ? 
-                none : 
-                String.Format(
-                    CultureInfo.CurrentCulture,
-                    ((DateTime)date).ToShortDateString());
+            return date?.ToShortDateString() ?? SR.SignatureResourceHelperNone;
         }
         #endregion Private Methods
 

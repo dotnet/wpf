@@ -814,17 +814,10 @@ namespace MS.Internal.Documents.Application
             file = this.GetHashCode().ToString(CultureInfo.InvariantCulture);
         }
 
-        string temp = string.Format(
-            CultureInfo.CurrentCulture,
-            "{0}{1}~{2}{3}{4}",
-            Path.GetDirectoryName(path),
-            Path.DirectorySeparatorChar,
-            generation == 0 ? 
-                string.Empty :
-                generation.ToString(CultureInfo.CurrentCulture)
-                + "~",
-            file,
-            XpsFileExtension);
+        string temp = generation == 0
+            ? $"{Path.GetDirectoryName(path)}{Path.DirectorySeparatorChar}~{file}{XpsFileExtension}"
+            : $"{Path.GetDirectoryName(path)}{Path.DirectorySeparatorChar}~{generation}~{file}{XpsFileExtension}";
+
         return new Uri(temp);
     }
 

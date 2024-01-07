@@ -104,7 +104,7 @@ namespace System.Windows.Automation.Peers
 
                 foreach (var item in parent.Items)
                 {
-                    // ItemAutomationPeer.GetPositionInSetFromItemsControl excludes invisible UI elements
+                    // ItemAutomationPeer.GetSizeOfSetFromItemsControl excludes invisible UI elements
                     // from its count, so we only exclude separators that are visible. Otherwise, we would
                     // double count invisible separators, leading to a lower count than expected.
                     if (item is Separator separator && separator.Visibility == Visibility.Visible)

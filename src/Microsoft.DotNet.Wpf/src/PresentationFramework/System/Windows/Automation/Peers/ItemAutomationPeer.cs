@@ -355,7 +355,7 @@ namespace System.Windows.Automation.Peers
                         break;
                     }
 
-                    if (child is UIElement element && element.Visibility != Visibility.Visible)
+                    if (child is UIElement { Visibility: not Visibility.Visible })
                     {
                         position -= 1;
                     }
@@ -382,7 +382,7 @@ namespace System.Windows.Automation.Peers
                 // Some items may not be visible, so we don't want to count them
                 foreach (var child in itemCollection.CollectionView)
                 {
-                    if (child is UIElement element && element.Visibility != Visibility.Visible)
+                    if (child is UIElement { Visibility: not Visibility.Visible })
                     {
                         size -= 1;
                     }

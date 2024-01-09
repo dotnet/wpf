@@ -16,8 +16,9 @@
     <Thickness x:Key="ExpanderPadding">11,11,11,11</Thickness>
     <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
     <system:Double x:Key="ExpanderChevronSize">16.0</system:Double>
+    <AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
 
-    <ControlTemplate x:Key="DefaultExpanderToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+    <ControlTemplate x:Key="DefaultExpanderToggleButtonDownStyle" TargetType="{x:Type ToggleButton}">
         <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -75,6 +76,196 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="DefaultExpanderToggleButtonUpStyle" TargetType="{x:Type ToggleButton}">
+        <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ContentPresenter
+                x:Name="ContentPresenter"
+                Grid.Column="0"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Content="{TemplateBinding Content}"
+                TextElement.FontSize="{TemplateBinding FontSize}" />
+            <Grid
+                x:Name="ChevronGrid"
+                Grid.Column="1"
+                Margin="0"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                RenderTransformOrigin="0.5, 0.5">
+                <Grid.RenderTransform>
+                    <RotateTransform Angle="0" />
+                </Grid.RenderTransform>
+                <SymbolIcon
+                    x:Name="ControlChevronIcon"
+                    FontSize="{StaticResource ExpanderChevronSize}"
+                    Foreground="{TemplateBinding Foreground}"
+                    Symbol="ChevronUp24" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="180"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="0"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="DefaultExpanderToggleButtonLeftStyle" TargetType="{x:Type ToggleButton}">
+        <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ContentPresenter
+                x:Name="ContentPresenter"
+                Grid.Row="0"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Content="{TemplateBinding Content}"
+                TextElement.FontSize="{TemplateBinding FontSize}" />
+            <Grid
+                x:Name="ChevronGrid"
+                Grid.Row="1"
+                Margin="0"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                RenderTransformOrigin="0.5, 0.5">
+                <Grid.RenderTransform>
+                    <RotateTransform Angle="0" />
+                </Grid.RenderTransform>
+                <SymbolIcon
+                    x:Name="ControlChevronIcon"
+                    FontSize="{StaticResource ExpanderChevronSize}"
+                    Foreground="{TemplateBinding Foreground}"
+                    Symbol="ChevronLeft24" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="180"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="0"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="DefaultExpanderToggleButtonRightStyle" TargetType="{x:Type ToggleButton}">
+        <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ContentPresenter
+                x:Name="ContentPresenter"
+                Grid.Row="0"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Content="{TemplateBinding Content}"
+                TextElement.FontSize="{TemplateBinding FontSize}" />
+            <Grid
+                x:Name="ChevronGrid"
+                Grid.Row="1"
+                Margin="0"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                RenderTransformOrigin="0.5, 0.5">
+                <Grid.RenderTransform>
+                    <RotateTransform Angle="0" />
+                </Grid.RenderTransform>
+                <SymbolIcon
+                    x:Name="ControlChevronIcon"
+                    FontSize="{StaticResource ExpanderChevronSize}"
+                    Foreground="{TemplateBinding Foreground}"
+                    Symbol="ChevronRight24" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="180"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="ChevronGrid"
+                                Storyboard.TargetProperty="(Grid.RenderTransform).(RotateTransform.Angle)"
+                                To="0"
+                                Duration="00:00:00.167" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ExpanderHeaderFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="0"
+                                StrokeThickness="1"
+                                Stroke="Black"
+                                StrokeDashArray="1 2"
+                                SnapsToDevicePixels="true"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="DefaultExpanderStyle" TargetType="{x:Type Expander}">
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
@@ -95,61 +286,48 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
-                    <ControlTemplate.Resources>
-                        <AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
-                    </ControlTemplate.Resources>
-
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <!--  Top level controls always visible  -->
-                        <Border
-                            x:Name="ToggleButtonBorder"
-                            Grid.Row="0"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="{TemplateBinding Border.CornerRadius}">
+                    <DockPanel>
+                        <Border x:Name="ToggleButtonBorder"
+                                DockPanel.Dock="Top"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{TemplateBinding Border.CornerRadius}">
                             <ToggleButton
-                                x:Name="ExpanderToggleButton"
-                                Margin="0"
-                                Padding="{TemplateBinding Padding}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                Content="{TemplateBinding Header}"
-                                FontSize="{TemplateBinding FontSize}"
-                                Foreground="{TemplateBinding Foreground}"
-                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                IsEnabled="{TemplateBinding IsEnabled}"
-                                OverridesDefaultStyle="True"
-                                Template="{StaticResource DefaultExpanderToggleButtonStyle}" />
+                                        x:Name="ExpanderToggleButton"
+                                        Margin="0"
+                                        Padding="{TemplateBinding Padding}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Center"
+                                        Content="{TemplateBinding Header}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                        IsEnabled="{TemplateBinding IsEnabled}"
+                                        OverridesDefaultStyle="True"
+                                        Template="{StaticResource DefaultExpanderToggleButtonDownStyle}"
+                                        FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"/>
                         </Border>
 
-                        <!--  Collapsed content to expand  -->
-                        <Grid Grid.Row="1" ClipToBounds="True">
-                            <Border
-                                x:Name="ContentPresenterBorder"
-                                Background="{DynamicResource ExpanderContentBackground}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1,0,1,1"
-                                CornerRadius="0,0,4,4"
-                                Visibility="Collapsed">
-                                <ContentPresenter
-                                    x:Name="ContentPresenter"
-                                    Margin="{TemplateBinding Padding}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Content="{TemplateBinding Content}" />
+                        <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
+                            <Border x:Name="ContentPresenterBorder"
+                                    Background="{DynamicResource ExpanderContentBackground}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    CornerRadius="0,0,4,4"
+                                    Visibility="Collapsed">
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}" />
                                 <Border.Tag>
                                     <system:Double>0.0</system:Double>
                                 </Border.Tag>
-                                <Border.RenderTransform>
-                                    <TranslateTransform>
+                                <Border.Resources>
+                                    <TranslateTransform x:Key="HeightAnimation">
                                         <TranslateTransform.Y>
                                             <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="negative">
                                                 <Binding ElementName="ContentPresenterBorder" Path="ActualHeight" />
@@ -157,15 +335,28 @@
                                             </MultiBinding>
                                         </TranslateTransform.Y>
                                     </TranslateTransform>
-                                </Border.RenderTransform>
+                                    <TranslateTransform x:Key="WidthAnimation">
+                                        <TranslateTransform.X>
+                                            <MultiBinding Converter="{StaticResource AnimationFactorToValueConverter}" ConverterParameter="negative">
+                                                <Binding ElementName="ContentPresenterBorder" Path="ActualWidth" />
+                                                <Binding ElementName="ContentPresenterBorder" Path="Tag" />
+                                            </MultiBinding>
+                                        </TranslateTransform.X>
+                                    </TranslateTransform>
+                                </Border.Resources>
                             </Border>
                         </Grid>
-                    </Grid>
+                    </DockPanel>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="True">
-                            <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="4,4,0,0" />
-                            <Trigger.EnterActions>
+                        <!-- Down Expansion Animations -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Down" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
+                            <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
@@ -180,8 +371,8 @@
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
@@ -192,18 +383,211 @@
                                             <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
                                             <SplineDoubleKeyFrame
                                                 KeySpline="1.0, 1.0, 0.0, 1.0"
-                                                KeyTime="0:0:0.167"
+                                                KeyTime="0:0:0.333"
                                                 Value="1.0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        
+                        <!-- Up Expansion Animations -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Up" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,0,4,4" />
+                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="4,4,0,0" />
+                            <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="-1.0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.0, 0.0, 0.0, 1.0"
+                                                KeyTime="0:0:0.333"
+                                                Value="0.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="1.0, 1.0, 0.0, 1.0"
+                                                KeyTime="0:0:0.333"
+                                                Value="-1.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        
+                        <!-- Left Expansion Animations -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Left" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="0,4,4,0" />
+                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="1,1,0,1" />
+                            <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="4,0,0,4" />
+                            <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="-1.0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.0, 0.0, 0.0, 1.0"
+                                                KeyTime="0:0:0.333"
+                                                Value="0.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="1.0, 1.0, 0.0, 1.0"
+                                                KeyTime="0:0:0.333"
+                                                Value="-1.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        
+                        <!-- Right Expansion Animations -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition Property="ExpandDirection" Value="Right" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ToggleButtonBorder" Property="CornerRadius" Value="4,0,0,4" />
+                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,1,1,1" />
+                            <Setter TargetName="ContentPresenterBorder" Property="CornerRadius" Value="0,4,4,0" />
+                            <Setter TargetName="ContentPresenterBorder" Property="Visibility" Value="Visible" />
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="1.0" />
+                                            <SplineDoubleKeyFrame
+                                                    KeySpline="0.0, 0.0, 0.0, 1.0"
+                                                    KeyTime="0:0:0.333"
+                                                    Value="0.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="Tag">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
+                                            <SplineDoubleKeyFrame
+                                                    KeySpline="1.0, 1.0, 0.0, 1.0"
+                                                    KeyTime="0:0:0.333"
+                                                    Value="1.0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+                        <Trigger Property="ExpandDirection"
+                                 Value="Right">
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Right"
+                                    TargetName="ContentPresenterGrid"/>
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Left"
+                                    TargetName="ToggleButtonBorder"/>
+                            <Setter Property="Template"
+                                    Value="{StaticResource DefaultExpanderToggleButtonRightStyle}"
+                                    TargetName="ExpanderToggleButton"/>
+                            <Setter Property="RenderTransform"
+                                    Value="{DynamicResource WidthAnimation}"
+                                    TargetName="ContentPresenterBorder" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
+
+                        <Trigger Property="ExpandDirection"
+                                 Value="Up">
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Top"
+                                    TargetName="ContentPresenterGrid"/>
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Bottom"
+                                    TargetName="ToggleButtonBorder"/>
+                            <Setter Property="Template"
+                                    Value="{StaticResource DefaultExpanderToggleButtonUpStyle}"
+                                    TargetName="ExpanderToggleButton"/>
+                            <Setter Property="RenderTransform"
+                                    Value="{DynamicResource HeightAnimation}"
+                                    TargetName="ContentPresenterBorder" />
+                        </Trigger>
+
+                        <Trigger Property="ExpandDirection" 
+                                 Value="Down">
+                            <Setter Property="RenderTransform"
+                                    Value="{DynamicResource HeightAnimation}"
+                                    TargetName="ContentPresenterBorder" />
+                        </Trigger>
+
+                        <Trigger Property="ExpandDirection"
+                                 Value="Left">
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Left"
+                                    TargetName="ContentPresenterGrid"/>
+                            <Setter Property="DockPanel.Dock"
+                                    Value="Right"
+                                    TargetName="ToggleButtonBorder"/>
+                            <Setter Property="Template"
+                                    Value="{StaticResource DefaultExpanderToggleButtonLeftStyle}"
+                                    TargetName="ExpanderToggleButton"/>
+                            <Setter Property="RenderTransform"
+                                    Value="{DynamicResource WidthAnimation}"
+                                    TargetName="ContentPresenterBorder" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
                             <Setter TargetName="ExpanderToggleButton" Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
                             <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderDisabledBorderBrush}" />
                         </Trigger>
+
                         <Trigger SourceName="ExpanderToggleButton" Property="IsMouseOver" Value="True">
                             <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderPointerOverBrush}" />
                         </Trigger>

@@ -38,7 +38,7 @@ public static class ApplicationThemeManager
 {
     private static ApplicationTheme _cachedApplicationTheme = ApplicationTheme.Unknown;
 
-    internal const string LibraryNamespace = "PresentationFramework.win11;";
+    internal const string LibraryNamespace = "win11;";
 
     internal const string ThemesDictionaryPath = "pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/";
 

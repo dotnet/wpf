@@ -6,7 +6,7 @@
 using System.Windows.Markup;
 using System.Windows.Controls;
 using System.Windows.Appearance;
-namespace System.Windows.Markup;
+namespace System.Windows;
 
 /// <summary>
 /// Provides a dictionary implementation that contains <c>WPF UI</c> theme resources used by components and other elements of a WPF application.

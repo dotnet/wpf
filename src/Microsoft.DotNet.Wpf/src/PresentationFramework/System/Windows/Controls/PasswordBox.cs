@@ -11,7 +11,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 using System.Security;
-//using System.Text;
+using System.Text;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,7 +22,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using MS.Internal;
-//using MS.Internal.Text;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Windows.Controls.Primitives;
@@ -64,7 +63,7 @@ namespace System.Windows.Controls
             PasswordCharProperty.OverrideMetadata(typeof(PasswordBox),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPasswordCharChanged)));
 
-            // Declaree listener for Padding property
+            // Declare listener for Padding property
             Control.PaddingProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPaddingChanged)));
 
@@ -102,7 +101,6 @@ namespace System.Windows.Controls
         public PasswordBox() : base()
         {
             Initialize();
-            _lockUpdatingContents = false;
         }
 
         #endregion Constructors
@@ -223,44 +221,6 @@ namespace System.Windows.Controls
                 return this.TextContainer.GetPasswordCopy();
             }
         }
-
-        /// <summary>
-        /// Gets or sets a value deciding whether to display the reveal password button.
-        /// </summary>
-        public bool RevealButtonEnabled
-        {
-            get => (bool)GetValue(RevealButtonEnabledProperty);
-            set => SetValue(RevealButtonEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="RevealButtonEnabled"/>.
-        /// </summary>
-        public static readonly DependencyProperty RevealButtonEnabledProperty = DependencyProperty.Register(
-            nameof(RevealButtonEnabled),
-            typeof(bool),
-            typeof(PasswordBox),
-            new PropertyMetadata(true)
-        );
-
-        /// <summary>
-        /// Gets a value indicating whether the password is revealed.
-        /// </summary>
-        public bool IsPasswordRevealed
-        {
-            get => (bool)GetValue(IsPasswordRevealedProperty);
-            private set => SetValue(IsPasswordRevealedProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="IsPasswordRevealed"/>.
-        /// </summary>
-        public static readonly DependencyProperty IsPasswordRevealedProperty = DependencyProperty.Register(
-            nameof(IsPasswordRevealed),
-            typeof(bool),
-            typeof(PasswordBox),
-            new PropertyMetadata(false, OnPasswordRevealModePropertyChanged)
-        );
 
         /// <summary>
         /// The DependencyID for the PasswordChar property.
@@ -386,6 +346,82 @@ namespace System.Windows.Controls
         {
             get { return (bool)GetValue(IsSelectionActiveProperty); }
         }
+
+        /// <summary>
+        /// Defines which side the icon should be placed on.
+        /// </summary>
+        public ElementPlacement IconPlacement
+        {
+            get => (ElementPlacement)GetValue(IconPlacementProperty);
+            set => SetValue(IconPlacementProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="IconPlacement"/>.
+        /// </summary>
+        public static readonly DependencyProperty IconPlacementProperty = DependencyProperty.Register(
+           nameof(IconPlacement),
+           typeof(ElementPlacement),
+           typeof(PasswordBox),
+           new PropertyMetadata(ElementPlacement.Left)
+        );
+
+        /// <summary>
+        /// Gets or sets displayed <see cref="IconElement"/>.
+        /// </summary>
+        public IconElement Icon
+        {
+            get => (IconElement)GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="Icon"/>.
+        /// </summary>
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+           nameof(Icon),
+           typeof(IconElement),
+           typeof(PasswordBox),
+           new PropertyMetadata(null, null, IconSourceElementConverter.ConvertToIconElement)
+        );
+
+        /// <summary>
+        /// Gets or sets numbers pattern.
+        /// </summary>
+        public string PlaceholderText
+        {
+            get => (string)GetValue(PlaceholderTextProperty);
+            set => SetValue(PlaceholderTextProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="PlaceholderText"/>.
+        /// </summary>
+        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
+           nameof(PlaceholderText),
+           typeof(string),
+           typeof(PasswordBox),
+           new PropertyMetadata(String.Empty)
+        );
+
+        /// <summary>
+        /// Gets or sets a value determining whether to display the placeholder.
+        /// </summary>
+        public bool PlaceholderEnabled
+        {
+            get => (bool)GetValue(PlaceholderEnabledProperty);
+            set => SetValue(PlaceholderEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="PlaceholderEnabled"/>.
+        /// </summary>
+        public static readonly DependencyProperty PlaceholderEnabledProperty = DependencyProperty.Register(
+           nameof(PlaceholderEnabled),
+           typeof(bool),
+           typeof(PasswordBox),
+           new PropertyMetadata(true)
+        );
 
         /// <summary>
         /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabledProperty"/>
@@ -878,32 +914,6 @@ namespace System.Windows.Controls
 
         #region Private Methods
 
-        /// <summary>
-        /// Called if the reveal mode is changed in the during the run.
-        /// </summary>
-        private static void OnPasswordRevealModePropertyChanged(DependencyObject d,
-            DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not PasswordBox control)
-                return;
-
-            control.OnPasswordRevealModeChanged();
-        }
-
-        private void OnPasswordRevealModeChanged()
-        {
-            _lockUpdatingContents = true;
-
-            Text = IsPasswordRevealed ? Password : new String(PasswordChar, Password.Length);
-
-            _lockUpdatingContents = false;
-
-            //if (_lockUpdatingContents)
-            //{
-            //    _lockUpdatingContents = false;
-            //}
-        }
-
         // Worker for the ctors, initializes a new PasswordBox instance.
         private void Initialize()
         {
@@ -920,7 +930,7 @@ namespace System.Windows.Controls
             // PasswordBox only accepts plain text, so change TextEditor's default to that.
             _textEditor.AcceptsRichContent = false;
 
-            // PasswordBox does not accetps tabs.
+            // PasswordBox does not accepts tabs.
             _textEditor.AcceptsTab = false;
         }
 
@@ -1343,8 +1353,6 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
-
-        private bool _lockUpdatingContents;
 
         // TextEditor working in this control instance
         private TextEditor _textEditor;

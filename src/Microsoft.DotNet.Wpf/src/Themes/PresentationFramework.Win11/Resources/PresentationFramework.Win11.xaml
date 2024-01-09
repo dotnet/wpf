@@ -6,31 +6,47 @@
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Variables.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Typography.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/StaticColors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Accent.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Palette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/DefaultContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/DefaultFocusVisualStyle.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Palette.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/StaticColors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Typography.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Variables.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Calendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/DataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/DatePicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Expander.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Frame.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Label.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListBoxItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListView.xaml" />
-        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListViewItem.xaml" /> -->
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ListViewItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/MenuItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RadioButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RichTextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollViewer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Separator.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Slider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/StatusBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToggleButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToolBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToolTip.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TreeView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TreeViewItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Window.xaml" />
 
 

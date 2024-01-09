@@ -11,7 +11,7 @@ namespace System.Windows.Controls;
 /// <summary>
 /// Set of extensions for the enumeration of icons to facilitate their management and replacement.
 /// </summary>
-public static class SymbolExtensions
+internal static class SymbolExtensions
 {
     /// <summary>
     /// Replaces <see cref="SymbolRegular"/> with <see cref="SymbolFilled"/>.

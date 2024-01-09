@@ -3,6 +3,7 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System.Windows.Media;
 // ReSharper disable once CheckNamespace
 namespace System.Windows.Controls;
 
@@ -28,13 +29,13 @@ public class ImageIcon : IconElement
     /// <summary>
     /// Gets or sets the Source on this Image.
     /// </summary>
-    public ImageSource? Source
+    public ImageSource Source
     {
         get => (ImageSource)GetValue(SourceProperty);
         set => SetValue(SourceProperty, value);
     }
 
-    protected System.Windows.Controls.Image? Image;
+    protected System.Windows.Controls.Image Image;
 
     protected override UIElement InitializeChildren()
     {

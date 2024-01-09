@@ -836,6 +836,14 @@ namespace System.IO.Packaging
             if (!valid)
             {
                 X509ChainStatus[] chainStatus = chain.ChainStatus;
+
+                //check if build has experienced any internal failure
+                if (chainStatus.Length == 0)
+                {
+                    //Internal failure has occurred while building
+                    return X509ChainStatusFlags.NotValidForUsage;
+                }
+
                 for (int i = 0; i < chainStatus.Length; i++)
                 {
                     status |= chainStatus[i].Status;

@@ -324,10 +324,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
     /// <exception cref="System.ObjectDisposedException"/>
     private void ThrowIfDisposed()
     {
-        if (_isDisposed)
-        {
-            throw new ObjectDisposedException(this.GetType().Name);
-        }
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
     }
 #endif
     #endregion Private Methods

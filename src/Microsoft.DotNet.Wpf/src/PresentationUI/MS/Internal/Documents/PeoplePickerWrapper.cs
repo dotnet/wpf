@@ -462,7 +462,7 @@ namespace MS.Internal.Documents
             /// </summary>
             private void ThrowIfDisposed()
             {
-                if (_isDisposed) throw new ObjectDisposedException("DsObjectNamesWrapper");
+                ObjectDisposedException.ThrowIf(_isDisposed, typeof(DsObjectNamesWrapper));
             }
 
             /// <summary>

@@ -271,10 +271,7 @@ namespace System.Windows.Ink
         // Verify whether this object has been disposed.
         private void VerifyDisposed()
         {
-            if ( _disposed )
-            {
-                throw new ObjectDisposedException("GestureRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(GestureRecognizer));
         }
 
         #endregion Private Methods

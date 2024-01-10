@@ -209,10 +209,7 @@ namespace System.Windows.Xps.Packaging
             }
             set
             {
-                if (null == _metroPackage)
-                {
-                    throw new ObjectDisposedException("XpsManager");
-                }
+                ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
                 if ( !Streaming && null != GetXpsDocumentStartingPart(_metroPackage))
                 {
                     throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasStartingPart);
@@ -306,10 +303,7 @@ namespace System.Windows.Xps.Packaging
             Uri      	partUri
             )
        {
-            if (null == _metroPackage)
-            {
-                throw new ObjectDisposedException("XpsManager");
-            }
+            ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
             if (!IsWriter)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OnlyWriters);
@@ -359,10 +353,7 @@ namespace System.Windows.Xps.Packaging
             ContentType contentType
             )
         {
-            if (null == _metroPackage)
-            {
-                throw new ObjectDisposedException("XpsManager");
-            }
+            ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
             if (!IsWriter)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OnlyWriters);
@@ -408,10 +399,7 @@ namespace System.Windows.Xps.Packaging
         GenerateObfuscatedFontPart(
             )
         {
-            if (null == _metroPackage)
-            {
-                throw new ObjectDisposedException("XpsManager");
-            }
+            ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
             if (!IsWriter)
             {
                 throw new XpsPackagingException(SR.ReachPackaging_OnlyWriters);
@@ -554,10 +542,7 @@ namespace System.Windows.Xps.Packaging
             Uri         uri
             )
         {
-            if (null == _metroPackage)
-            {
-                throw new ObjectDisposedException("XpsManager");
-            }
+            ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
 
             if (_cachedParts.ContainsKey(uri))
             {
@@ -879,10 +864,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             PackageDigitalSignature signature = null;
-            if (null == _metroPackage)
-            {
-                throw new ObjectDisposedException("XpsManager");
-            }
+            ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
 
             PackageDigitalSignatureManager dsm = new PackageDigitalSignatureManager(_metroPackage);
             if( embedCertificate )

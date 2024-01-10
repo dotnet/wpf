@@ -297,10 +297,7 @@ namespace System.Printing
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetPrintCapStart);
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             MemoryStream ptStream = null;
 
@@ -377,10 +374,7 @@ namespace System.Printing
                                                             PrintTicket      deltaPrintTicket,
                                                             PrintTicketScope scope)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             // Base PrintTicket is required. Delta PrintTicket is optional.
             ArgumentNullException.ThrowIfNull(basePrintTicket);
@@ -418,10 +412,7 @@ namespace System.Printing
         /// <returns>The converted PrintTicket object.</returns>
         public PrintTicket ConvertDevModeToPrintTicket(byte[] devMode)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertDevModeToPrintTicket(_ptProvider,
                                                                             devMode,
@@ -437,10 +428,7 @@ namespace System.Printing
         public byte[] ConvertPrintTicketToDevMode(PrintTicket printTicket,
                                                   BaseDevModeType baseType)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertPrintTicketToDevMode(_ptProvider,
                                                                             printTicket,

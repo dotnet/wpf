@@ -973,10 +973,7 @@ namespace System.Xaml
 
         private void ThrowIfDisposed()
         {
-            if(IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlObjectWriter");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlObjectWriter));
         }
 
         public XAML3.INameScope RootNameScope

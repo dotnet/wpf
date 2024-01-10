@@ -261,10 +261,7 @@ namespace System.Xaml
 
         void CheckIsDisposed()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlXmlWriter");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlXmlWriter));
         }
 
         static bool StringStartsWithCurly(string s)

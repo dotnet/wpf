@@ -33,8 +33,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (TabletDevices == null)
-                    throw new ObjectDisposedException(nameof(TabletDeviceCollection));
+                ObjectDisposedException.ThrowIf(TabletDevices == null, typeof(TabletDeviceCollection));
 
                 return TabletDevices.Count;
             }

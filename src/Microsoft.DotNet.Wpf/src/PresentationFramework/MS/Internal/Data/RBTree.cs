@@ -628,8 +628,8 @@ namespace MS.Internal.Data
 
         void VerifyIndex(int index, int delta = 0)
         {
-            if (index < 0 || index >= Count + delta)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Count + delta);
         }
 
         #endregion IList<T>

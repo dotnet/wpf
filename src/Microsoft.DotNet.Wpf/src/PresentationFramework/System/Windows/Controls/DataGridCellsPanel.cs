@@ -2150,10 +2150,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (index < 0 || index >= parentDataGrid.Columns.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, parentDataGrid.Columns.Count);
 
             // if the column widths aren't known, try again when they are
             if (parentDataGrid.InternalColumns.ColumnWidthsComputationPending)

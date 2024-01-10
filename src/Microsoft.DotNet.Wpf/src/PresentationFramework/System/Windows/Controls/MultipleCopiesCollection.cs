@@ -282,15 +282,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ((index >= 0) && (index < RepeatCount))
-                {
-                    Debug.Assert(_item != null, "_item should be non-null.");
-                    return _item;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("index");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, RepeatCount);
+
+                Debug.Assert(_item != null, "_item should be non-null.");
+                return _item;
             }
 
             set

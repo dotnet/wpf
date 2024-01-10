@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,7 +33,7 @@ namespace System.Xaml
         /// Lazy init: NullableReference.IsSet is null when not initialized
         /// </summary>
         private NullableReference<Type> _underlyingType;
-        
+
         // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
         ReadOnlyCollection<string> _namespaces;
@@ -53,7 +55,7 @@ namespace System.Xaml
             _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
-        }        
+        }
 
         public XamlType(Type underlyingType, XamlSchemaContext schemaContext)
             :this(underlyingType, schemaContext, null)
@@ -225,7 +227,7 @@ namespace System.Xaml
             get
             {
                 XamlCollectionKind collectionKind = GetCollectionKind();
-                if (collectionKind != XamlCollectionKind.Collection && 
+                if (collectionKind != XamlCollectionKind.Collection &&
                     collectionKind != XamlCollectionKind.Dictionary)
                 {
                     return null;
@@ -233,7 +235,7 @@ namespace System.Xaml
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by GetCollectionKind");
                 if (_reflector.AllowedContentTypes == null)
                 {
-                    _reflector.AllowedContentTypes = LookupAllowedContentTypes() ?? 
+                    _reflector.AllowedContentTypes = LookupAllowedContentTypes() ??
                         EmptyList<XamlType>.Value;
                 }
                 return _reflector.AllowedContentTypes;
@@ -251,7 +253,7 @@ namespace System.Xaml
                 Debug.Assert(_reflector != null, "_reflector should have been initialized by IsCollection");
                 if (_reflector.ContentWrappers == null)
                 {
-                    _reflector.ContentWrappers = LookupContentWrappers() ?? 
+                    _reflector.ContentWrappers = LookupContentWrappers() ??
                         EmptyList<XamlType>.Value;
                 }
                 return _reflector.ContentWrappers;
@@ -364,7 +366,7 @@ namespace System.Xaml
         public XamlMember GetAliasedProperty(XamlDirective directive)
         {
             EnsureReflector();
-            // Perf note: would be nice to optimize this. We currently have to do the same mapping of 
+            // Perf note: would be nice to optimize this. We currently have to do the same mapping of
             // the directive to one of the four known directives 3 times for each type in the hierarchy
             XamlMember result;
             if (!_reflector.TryGetAliasedProperty(directive, out result))
@@ -471,19 +473,19 @@ namespace System.Xaml
             AppendTypeName(sb, false);
             return sb.ToString();
         }
-        
+
         internal bool IsUsableAsReadOnly
         {
             get
             {
                 XamlCollectionKind collectionKind = GetCollectionKind();
-                return 
+                return
                     (collectionKind == XamlCollectionKind.Collection) ||
                     (collectionKind == XamlCollectionKind.Dictionary) ||
                     IsXData;
             }
         }
-       
+
         internal MethodInfo IsReadOnlyMethod
         {
             get
@@ -995,8 +997,8 @@ namespace System.Xaml
             }
 
             EnsureReflector();
-            ICollection<PropertyInfo> properties; 
-            ICollection<EventInfo> events; 
+            ICollection<PropertyInfo> properties;
+            ICollection<EventInfo> events;
             List<XamlMember> result;
             _reflector.LookupAllMembers(out properties, out events, out result);
 
@@ -1535,7 +1537,7 @@ namespace System.Xaml
             {
                 return null;
             }
-            
+
             // Force the list of all members to populate
             ICollection<XamlMember> allMembers = GetAllMembers();
 
@@ -1675,7 +1677,7 @@ namespace System.Xaml
         // This poses a challenge: if the attribute is defined on a base type, and a derived type
         //   shadows the named member, which do we return?
         // v3 returned that derived member. Also, some attribute lookup methods (e.g. TypeDescriptor)
-        //   always coalesce inheritance hierarchy, which would make it difficult to determine 
+        //   always coalesce inheritance hierarchy, which would make it difficult to determine
         //   whether the attribute was defined on a base or derived class.
         // So, for consistency and compat, we coalesce the hierarchy here, so the caller will always
         //   return the derived member.

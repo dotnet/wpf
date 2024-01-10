@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -24,7 +26,7 @@ namespace System.Windows.Markup
         public ArrayExtension()
         {
         }
-        
+
         /// <summary>
         /// Constructor that takes one parameter. This initializes the type of the array.
         /// </summary>
@@ -56,7 +58,7 @@ namespace System.Windows.Markup
         /// Called to Add a text as a new array item. This will append the
         /// object to the end of the array.
         /// </summary>
-        /// <param name="text">Text to Add to the end of the array.</param> 
+        /// <param name="text">Text to Add to the end of the array.</param>
         public void AddText(string text) => AddChild(text);
 
         ///<summary>

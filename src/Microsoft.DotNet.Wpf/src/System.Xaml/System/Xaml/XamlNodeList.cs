@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -9,7 +11,7 @@ namespace System.Xaml
 {
     // provides a place to Write a list of Xaml nodes
     // and Read them back.  W/o exposing the 'XamlNode' type.
-    
+
     // Single Writer, multiple reader.
     // Must complete writing and Close, before reading.
 
@@ -106,7 +108,7 @@ namespace System.Xaml
             }
             return _nodeList[idx];
         }
-              
+
         public void Clear()
         {
             _nodeList.Clear();

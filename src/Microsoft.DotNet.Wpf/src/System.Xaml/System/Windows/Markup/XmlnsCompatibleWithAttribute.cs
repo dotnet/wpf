@@ -2,20 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
     /// <summary>
-    /// This attribute allows an assembly to declare that previously published 
+    /// This attribute allows an assembly to declare that previously published
     /// XmlnsDefinitions are subsumed by a new version.
-    /// 
-    /// Such as 
-    /// 
-    ///    "http://schemas.example.com/2003/mynamespace" 
-    /// 
-    /// is changed to 
-    /// 
+    ///
+    /// Such as
+    ///
+    ///    "http://schemas.example.com/2003/mynamespace"
+    ///
+    /// is changed to
+    ///
     ///    "http://schemas.example.com/2005/mynamespace"
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]

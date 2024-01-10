@@ -2,11 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Windows.Markup
 {
     /// <summary>
     /// Attribute to declare that this associated property will have special parsing rules
-    /// for any text that is enclosed between these special characters. 
+    /// for any text that is enclosed between these special characters.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
     public sealed class MarkupExtensionBracketCharactersAttribute : Attribute

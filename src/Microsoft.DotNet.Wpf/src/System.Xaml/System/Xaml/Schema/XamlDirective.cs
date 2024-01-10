@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,7 +19,7 @@ namespace System.Xaml
         private readonly ReadOnlyCollection<string> _xamlNamespaces;
 
         internal XamlDirective(ReadOnlyCollection<string> immutableXamlNamespaces, string name, AllowedMemberLocations allowedLocation, MemberReflector reflector)
-            : base(name, reflector) 
+            : base(name, reflector)
         {
 #if DEBUG
             Debug.Assert(immutableXamlNamespaces is not null);

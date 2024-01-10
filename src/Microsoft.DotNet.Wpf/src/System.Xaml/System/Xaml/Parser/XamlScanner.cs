@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -784,7 +786,7 @@ namespace MS.Internal.Xaml.Parser
 
             // (GetFixedDocumentSequence raises Exception "UnicodeString property does not
             // contain enough characters to correspond to the contents of Indices property.")
-            // 
+            //
             // XamlText.Paste normally converts CRLF to LF, even in attribute values.
             // When the property is Glyphs.UnicodeString, disable this;
             // the length of the string must correspond to the number of entries in

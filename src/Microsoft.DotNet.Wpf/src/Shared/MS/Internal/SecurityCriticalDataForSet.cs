@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 // Description:
 //              This is a helper class to facilate the storage of data that's Critical for set.
 //              The data itself is not information disclosure but the value controls a critical
@@ -10,7 +12,7 @@
 //              For example a filepath variable might control what part of the file system the
 //              code gets access to.
 
-using System ; 
+using System ;
 using System.Security ;
 
 #if WINDOWS_BASE
@@ -43,11 +45,11 @@ namespace MS.Internal
     internal struct SecurityCriticalDataForSet<T>
     {
         internal SecurityCriticalDataForSet(T value)
-        { 
-            _value = value; 
+        {
+            _value = value;
         }
 
-        internal T Value 
+        internal T Value
         {
         #if DEBUG
             [System.Diagnostics.DebuggerStepThrough]

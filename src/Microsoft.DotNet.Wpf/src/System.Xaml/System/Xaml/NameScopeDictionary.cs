@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,7 +14,7 @@ namespace System.Xaml
 {
     //
     // The implementation for this class is taken directly from the source of NameScope, including the use
-    // of HybridDictionary to match the performance semantics of 3.0 for the time being 
+    // of HybridDictionary to match the performance semantics of 3.0 for the time being
     // Note that the IEnumerable<T> uses KeyValuePair<string, object>
     // This means that we need to create KeyValuePairs on the fly
     // The other option would be to just use IEnumerable (or change the HybridDictionary to Dictionary<K,V>)
@@ -22,7 +24,7 @@ namespace System.Xaml
         private HybridDictionary _nameMap;
         private INameScope _underlyingNameScope;
         private FrugalObjectList<string> _names;
-        
+
         public NameScopeDictionary()
         {
         }
@@ -130,7 +132,7 @@ namespace System.Xaml
             HybridDictionary _nameMap;
             INameScope _underlyingNameScope;
             FrugalObjectList<string> _names;
-            
+
             public Enumerator(NameScopeDictionary nameScopeDictionary)
             {
                 _nameMap = nameScopeDictionary._nameMap;
@@ -285,7 +287,7 @@ namespace System.Xaml
 
         #region IDictionary<string, object> methods
         object IDictionary<string, object>.this[string key]
-        { 
+        {
             get
             {
                 throw new NotImplementedException();

@@ -909,9 +909,9 @@ namespace System.Windows
                 dictionarySourceUri = null;
 
                 // Create the resource manager that will load the byte array
-                ResourceManager rm = new ResourceManager(assemblyName + ".g", assembly);
+                ResourceManager rm = new ResourceManager($"{assemblyName}.g", assembly);
 
-                resourceName = resourceName + ".baml";
+                resourceName = $"{resourceName}.baml";
                 // Load the resource stream
                 Stream stream = null;
                 try
@@ -956,7 +956,7 @@ namespace System.Windows
 
                         AssemblyName asemblyName = new AssemblyName(assembly.FullName);
                         Uri streamUri = null;
-                        string packUri = string.Format("pack://application:,,,/{0};v{1};component/{2}", asemblyName.Name, asemblyName.Version.ToString(), resourceName);
+                        string packUri = $"pack://application:,,,/{asemblyName.Name};v{asemblyName.Version.ToString()};component/{resourceName}";
                         if (Uri.TryCreate(packUri, UriKind.Absolute, out streamUri))
                         {
                             if (XamlSourceInfoHelper.IsXamlSourceInfoEnabled)
@@ -1021,18 +1021,18 @@ namespace System.Windows
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
         /// This is the default HWND used to listen for theme-change messages.
-        /// 
-        /// When <see cref="IsPerMonitorDpiScalingActive"/> is true, additional notification windows are created 
+        ///
+        /// When <see cref="IsPerMonitorDpiScalingActive"/> is true, additional notification windows are created
         /// on-demand by <see cref="EnsureResourceChangeListener(DpiUtil.HwndDpiInfo)"/>
         /// as the need arises. For e.g., when <see cref="System.Windows.Interop.HwndHost"/> calls into <see cref="GetDpiAwarenessCompatibleNotificationWindow(HandleRef)"/>,
         /// we would look for a notify-window that matches both (a) DPI Awareness Context and (b) DPI Scale factor of the foreign window from HwndHost to return. If none is found,
         /// we would create one and add it to our list in <see cref="_hwndNotify"/> and return the newly created notify-window.
-        /// 
-        /// Over the lifetime of a DPI-aware application, unique notify-windows could be created for each combination 
+        ///
+        /// Over the lifetime of a DPI-aware application, unique notify-windows could be created for each combination
         /// of <see cref="DpiAwarenessContextValue"/> + DPI that is observed - i.e., for each unique <see cref="DpiUtil.HwndDpiInfo"/>. This
         /// would be bounded by:
         ///     #(valid DpiAwarenessContextValues) + 2*#(unique DPI values that are observed during calls to <see cref="GetDpiAwarenessCompatibleNotificationWindow(HandleRef)"/>)
-        /// The only DpiAwarenessContextValues for which unique DPI values would matter are <see cref="DpiAwarenessContextValue.PerMonitorAware"/> and 
+        /// The only DpiAwarenessContextValues for which unique DPI values would matter are <see cref="DpiAwarenessContextValue.PerMonitorAware"/> and
         /// <see cref="DpiAwarenessContextValue.PerMonitorAwareVersion2"/>. For <see cref="DpiAwarenessContextValue.SystemAware"/> and <see cref="DpiAwarenessContextValue.Unaware"/>,
         /// the OS would never report back anything other than the System DPI and 96 respectively, and thus we would only ever maintain one entry for those
         /// DpiAwarenessContextValues.
@@ -1040,8 +1040,8 @@ namespace System.Windows
         private static void EnsureResourceChangeListener()
         {
             // Create a new notify window if we haven't already created any corresponding to ProcessDpiAwarenessContextValue for this thread.
-            if (_hwndNotify == null || 
-                _hwndNotifyHook == null || 
+            if (_hwndNotify == null ||
+                _hwndNotifyHook == null ||
                 _hwndNotify.Count == 0 ||
                 _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
             {
@@ -1076,13 +1076,13 @@ namespace System.Windows
 
             if (!_hwndNotify.ContainsKey(hwndDpiInfo))
             {
-                var hwndDpiInfoKey = 
+                var hwndDpiInfoKey =
                     CreateResourceChangeListenerWindow(
-                        hwndDpiInfo.DpiAwarenessContextValue, 
-                        hwndDpiInfo.ContainingMonitorScreenRect.left, 
+                        hwndDpiInfo.DpiAwarenessContextValue,
+                        hwndDpiInfo.ContainingMonitorScreenRect.left,
                         hwndDpiInfo.ContainingMonitorScreenRect.top);
 
-                if (hwndDpiInfoKey == hwndDpiInfo &&                        // If hwndDpiInfoKey != hwndDpiInfo, something is wrong, abort. 
+                if (hwndDpiInfoKey == hwndDpiInfo &&                        // If hwndDpiInfoKey != hwndDpiInfo, something is wrong, abort.
                     !_dpiAwarenessContextAndDpis.Contains(hwndDpiInfo))
                 {
                     _dpiAwarenessContextAndDpis.Add(hwndDpiInfo);
@@ -1093,7 +1093,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Creates notify-window by switching the thread to <paramref name="dpiContextValue"/> temporarily, adds the 
+        /// Creates notify-window by switching the thread to <paramref name="dpiContextValue"/> temporarily, adds the
         /// corresponding <see cref="HwndWrapper"/> to <see cref="_hwndNotify"/>, and registers relevant hooks
         /// </summary>
         /// <param name="dpiContextValue">DPI Awareness Context for which notify-window has to be ensured</param>
@@ -1130,8 +1130,8 @@ namespace System.Windows
                 // Do not call into DpiUtil.GetExtendedDpiInfoForWindow()
                 // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow()
                 // in turn calls into methods that are only supported on platforms with high DPI
-                // support (for e.g., not supported on Windows 7). 
-                var hwndDpiInfo = 
+                // support (for e.g., not supported on Windows 7).
+                var hwndDpiInfo =
                     IsPerMonitorDpiScalingActive ?
                     DpiUtil.GetExtendedDpiInfoForWindow(hwndNotify.Handle):
                     new DpiUtil.HwndDpiInfo(dpiContextValue, GetDpiScaleForUnawareOrSystemAwareContext(dpiContextValue));
@@ -1296,9 +1296,9 @@ namespace System.Windows
         /// <param name="lParam"></param>
         private static void InvalidateTabletDevices(WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
-            
+
             // Don't forward messages to tablets if the stack is turned off.
-            
+
             // If the StylusLogic for this thread has not been instantiated, do not attempt to forward
             // tablet messages.  This stops potential instantiations of Dispatcher during process
             // shutdown.  StylusLogic should be instantiated by <see cref="HwndSource.Initialize">.
@@ -1310,7 +1310,7 @@ namespace System.Windows
                 Dispatcher dispatcher = Hwnd.Dispatcher;
                 if (dispatcher?.InputManager != null)
                 {
-                    
+
                     // Switch to using CurrentStylusLogic mechanism and guard against the stack
                     // not being enabled.
                     StylusLogic.CurrentStylusLogic.HandleMessage(msg, wParam, lParam);
@@ -1494,9 +1494,9 @@ namespace System.Windows
         /// <summary>
         /// Returns the <see cref="DpiAwarenessContextValue"/> of the current process
         /// as reported by <see cref="HwndTarget"/>
-        /// 
+        ///
         /// If <see cref="HwndTarget"/> has yet to initialize this information, the process
-        /// is queried directly for this information. 
+        /// is queried directly for this information.
         /// </summary>
         private static DpiAwarenessContextValue ProcessDpiAwarenessContextValue
         {
@@ -1524,8 +1524,8 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Reports whether per-monitor DPI scaling is active - i.e., 
-        /// the process is (a) manifested for per-monitor DPI awareness, 
+        /// Reports whether per-monitor DPI scaling is active - i.e.,
+        /// the process is (a) manifested for per-monitor DPI awareness,
         /// (b) WPF recognizes this and has met the right preconditions (TFM, AppContext
         /// switches, OS version etc.) to turn on the DPI processing capabilities.
         /// </summary>
@@ -1533,8 +1533,8 @@ namespace System.Windows
         {
             get
             {
-                return HwndTarget.IsPerMonitorDpiScalingEnabled && 
-                    (ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAware || 
+                return HwndTarget.IsPerMonitorDpiScalingEnabled &&
+                    (ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAware ||
                     ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAwareVersion2);
             }
         }
@@ -1543,7 +1543,7 @@ namespace System.Windows
         /// This used to be the internal accessor for the
         /// HWND intended to watch for messages. It has since been changed
         /// into a private accessor, and replaced with <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
-        /// 
+        ///
         /// This accessor now returns the notify-window corresponding to the current process
         /// only. When a notify window corresponding to another HWND is needed (for e.g., to
         /// re-parent that HWND under the said notify-window), use <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
@@ -1572,16 +1572,16 @@ namespace System.Windows
         /// <remarks>
         /// Currently, this is used by <see cref="HwndHost"/> as a place to parent
         /// child HWND's when they are disconnected.
-        /// 
+        ///
         /// We attempt to select a notify-window that matches the DPI Awareness Context and DPI Scale factor
         /// of <paramref name="hwnd"/>. If one is not found, then we create a new notify-window that matches
-        /// those two characteristics. 
-        /// 
+        /// those two characteristics.
+        ///
         /// Ensuring that the DPI Awareness contexts match is necessary to avoid unexpected behavior. The documentation
         /// for (Win32 function) SetParent outlines the problems associated with re-parenting of HWND's with mismatched
         /// DPI Awareness Contexts:
-        /// 
-        ///     Unexpected behavior or errors may occur if hWndNewParent and hWndChild are running in different DPI awareness modes. 
+        ///
+        ///     Unexpected behavior or errors may occur if hWndNewParent and hWndChild are running in different DPI awareness modes.
         ///     The table below outlines this behavior:
         ///     <list type="table">
         ///         <!-- Heading -->
@@ -1593,9 +1593,9 @@ namespace System.Windows
         ///         </item>
         ///         <!-- In-proc behavior -->
         ///         <item>
-        ///             <term>SetParent (In-Proc)</term>    
+        ///             <term>SetParent (In-Proc)</term>
         ///             <term>N/A</term>
-        ///             <term><b>Forced reset</b> (of current process)</term>            
+        ///             <term><b>Forced reset</b> (of current process)</term>
         ///             <term><b>Fail</b>(ERROR_INVALID_STATE)</term>
         ///         </item>
         ///         <!-- Cross-proc behaviror -->
@@ -1606,20 +1606,20 @@ namespace System.Windows
         ///             <term><b>Forced reset</b>(of child window's process)</term>
         ///         </item>
         ///     </list>
-        ///     
+        ///
         /// This sort of unexpected behavior is further complicated by the fact that the HWND presented by HwndHost might,
         /// in turn, host WPF controls again. (Some real-world applications, notably Visual Studio, use HwndHost to host
-        /// native windows that in turn host WPF again). 
-        /// 
+        /// native windows that in turn host WPF again).
+        ///
         /// WPF does not make any allowances for changes to the DPI Awareness Context of an HWND/window after it has been created. Windows/Win32
-        /// does not have a consistent model for dealing with reparenting of HWND's (observe the "In-Proc" row in the above table) with 
-        /// mismatched DPI Awareness Contexts, nor is there any notification mechanism when this happens. 
-        /// 
-        /// Our data structures and book-keeping in the UI thread, as well as the render thread, could start deviating from reality in unexpected ways 
-        /// if this were to happen. We do in fact dynamically query the DPI of HWND's as often as possible, but we have not designed the DPI support with 
+        /// does not have a consistent model for dealing with reparenting of HWND's (observe the "In-Proc" row in the above table) with
+        /// mismatched DPI Awareness Contexts, nor is there any notification mechanism when this happens.
+        ///
+        /// Our data structures and book-keeping in the UI thread, as well as the render thread, could start deviating from reality in unexpected ways
+        /// if this were to happen. We do in fact dynamically query the DPI of HWND's as often as possible, but we have not designed the DPI support with
         /// the assumption that the DPI Awareness Context of an HWND is mutable. The safest approach for us here is to avoid the problem before it is
-        /// created, and remove any potential for recharacterization of an HWND's DPI Awareness Context. 
-        /// 
+        /// created, and remove any potential for recharacterization of an HWND's DPI Awareness Context.
+        ///
         /// Ensuring that the DPI Scale Factor of the notify-window matches that of the reference HWND is only necessary when
         /// working with Per-Monitor Aware (or Per Monitor Aware v2) HWND's. Matching of DPI Scale factor ensures that the
         /// child-window (the one being supplied by HwndHost, and likely created and owned by the application, sometimes out-of-proc)
@@ -1632,9 +1632,9 @@ namespace System.Windows
             var processDpiAwarenessContextValue = ProcessDpiAwarenessContextValue;
 
             // Do not call into DpiUtil.GetExtendedDpiInfoForWindow(), DpiUtil.GetWindowDpi etc.
-            // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow(), 
+            // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow(),
             // DpiUtil.GetWindowDpi() etc.in turn call into methods that are only supported on platforms
-            // with high DPI support (for e.g., not supported on Windows 7). 
+            // with high DPI support (for e.g., not supported on Windows 7).
             DpiUtil.HwndDpiInfo hwndDpiInfo =
                 IsPerMonitorDpiScalingActive ?
                 DpiUtil.GetExtendedDpiInfoForWindow(hwnd.Handle, fallbackToNearestMonitorHeuristic: true) :
@@ -1707,7 +1707,7 @@ namespace System.Windows
 
         #endregion
     }
-    
+
     internal class DeferredResourceReference : DeferredReference
     {
         #region Constructor

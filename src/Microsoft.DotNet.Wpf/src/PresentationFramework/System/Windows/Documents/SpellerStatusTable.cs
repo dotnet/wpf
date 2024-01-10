@@ -736,8 +736,7 @@ namespace System.Windows.Documents
                     runType = "error";
                 }
 
-                Debug.WriteLine(i + ": " + run.Position.TextContainer.Start.GetOffsetToPosition(run.Position) +
-                                " " + runType);
+                Debug.WriteLine($"{i}: {run.Position.TextContainer.Start.GetOffsetToPosition(run.Position)} {runType}");
             }
         }
 #endif // DEBUG

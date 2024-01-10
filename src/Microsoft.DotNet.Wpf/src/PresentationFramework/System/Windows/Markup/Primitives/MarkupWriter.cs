@@ -565,7 +565,7 @@ namespace System.Windows.Markup.Primitives
                         property.VerifyOnlySerializableTypes();
 
                         string propertyPrefix = scope.GetPrefixOf(typeUri);
-                        string localName = dependencyProperty.OwnerType.Name + "." + dependencyProperty.Name;
+                        string localName = $"{dependencyProperty.OwnerType.Name}.{dependencyProperty.Name}";
                         if (string.IsNullOrEmpty(propertyPrefix))
                         {
                             _writer.WriteAttributeString(localName, property.StringValue);
@@ -642,20 +642,20 @@ namespace System.Windows.Markup.Primitives
                 scope.XmlnsSpacePreserve = true;
 
                 // Per the documentation for XmlWriterSettings.Indent, elements are indented as
-                // long as the element does not contain mixed content. Once WriteString or 
-                // WriteWhiteSpace method is called to write out a mixed element content, 
+                // long as the element does not contain mixed content. Once WriteString or
+                // WriteWhiteSpace method is called to write out a mixed element content,
                 // the XmlWriter stops indenting. The indenting resumes once the mixed content
-                // element is closed. 
-                // 
-                // It is desirable to ensure that indentation is suspended within 
+                // element is closed.
+                //
+                // It is desirable to ensure that indentation is suspended within
                 // an element with xml:space="preserve". Here, we make a dummy call to WriteString
-                // to indicate to the XmlWriter that we are about to write a "mixed" element 
-                // content. When we call WriteEndElement later in this method, indentation 
-                // behavior will be rolled back to that of the parent element (typically, 
+                // to indicate to the XmlWriter that we are about to write a "mixed" element
+                // content. When we call WriteEndElement later in this method, indentation
+                // behavior will be rolled back to that of the parent element (typically,
                 // indentaiton will simply be resumed).
-                // 
-                // If the underlying XmlWriterSettings did not specify indentation, this would 
-                // have no net effect.  
+                //
+                // If the underlying XmlWriterSettings did not specify indentation, this would
+                // have no net effect.
                 _writer.WriteString(string.Empty);
 
                 if( scope.IsTopOfSpacePreservationScope && _xmlTextWriter != null )
@@ -700,12 +700,13 @@ namespace System.Windows.Markup.Primitives
                                 else
                                 {
                                     string dpUri = scope.MakeAddressable(property.DependencyProperty.OwnerType);
-                                    WritePropertyStart(scope.GetPrefixOf(dpUri), property.DependencyProperty.OwnerType.Name + "." + property.DependencyProperty.Name, dpUri);
+                                    WritePropertyStart(scope.GetPrefixOf(dpUri),
+                                        $"{property.DependencyProperty.OwnerType.Name}.{property.DependencyProperty.Name}", dpUri);
                                 }
                             }
                             else
                             {
-                                WritePropertyStart(prefix, item.ObjectType.Name + "." + property.PropertyDescriptor.Name, uri);
+                                WritePropertyStart(prefix, $"{item.ObjectType.Name}.{property.PropertyDescriptor.Name}", uri);
 
                                 writtenAttributes[property.Name] = property.Name;
                             }
@@ -831,7 +832,7 @@ namespace System.Windows.Markup.Primitives
                     {
                         Debug.Assert(property.PropertyDescriptor != null);
                         writtenAttributes[property.Name] = property.Name;
-                        _writer.WriteStartElement(prefix, item.ObjectType.Name + "." + property.PropertyDescriptor.Name, uri);
+                        _writer.WriteStartElement(prefix, $"{item.ObjectType.Name}.{property.PropertyDescriptor.Name}", uri);
 
                         if (property.IsComposite || property.StringValue.IndexOf('{') == 0)
                         {
@@ -1533,7 +1534,7 @@ namespace System.Windows.Markup.Primitives
                 if (prefix == null || prefix == "")
                     return type.Name;
                 else
-                    return prefix + ":" + type.Name;
+                    return $"{prefix}:{type.Name}";
             }
 
             public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
@@ -1614,16 +1615,14 @@ namespace System.Windows.Markup.Primitives
                 {
                     if (type.Namespace == null)
                     {
-                        result = string.Format(CultureInfo.InvariantCulture, clrUriPrefix + ";assembly={0}",
-                            type.Assembly.GetName().Name);
+                        result = $"{clrUriPrefix};assembly={type.Assembly.GetName().Name}";
                     }
                     else
                     {
                         Dictionary<string, string> namespaceToUri = GetMappingsFor(type.Assembly);
                         if (!namespaceToUri.TryGetValue(type.Namespace, out result))
                         {
-                            result = string.Format(CultureInfo.InvariantCulture, clrUriPrefix + "{0};assembly={1}", type.Namespace,
-                                type.Assembly.GetName().Name);
+                            result = $"{clrUriPrefix}{type.Namespace};assembly={type.Assembly.GetName().Name}";
                         }
                     }
                 }

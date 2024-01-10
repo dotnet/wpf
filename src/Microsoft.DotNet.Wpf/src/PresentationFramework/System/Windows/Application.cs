@@ -1984,7 +1984,7 @@ namespace System.Windows
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
- 
+
         }
 
         // This function returns the resource stream including resource and content file.
@@ -2002,7 +2002,7 @@ namespace System.Windows
 
             Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
             Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
-            
+
             //
             // ResourceContainer must have been added into the package cache, the code should just
             // take use of that ResourceContainer instance, instead of creating a new instance here.
@@ -2029,7 +2029,7 @@ namespace System.Windows
             {
                 Uri packUri = PackUriHelper.Create(packageUri);
                 Invariant.Assert(packUri == BaseUriHelper.PackAppBaseUri || packUri == BaseUriHelper.SiteOfOriginBaseUri,
-                                "Unknown packageUri passed: "+packageUri);
+                    $"Unknown packageUri passed: {packageUri}");
 
                 Invariant.Assert(IsApplicationObjectShuttingDown);
                 throw new InvalidOperationException(SR.ApplicationShuttingDown);
@@ -2284,7 +2284,7 @@ namespace System.Windows
         private string GetSystemSound(string soundName)
         {
             string soundFile = null;
-            string regPath = string.Format(CultureInfo.InvariantCulture, SYSTEM_SOUNDS_REGISTRY_LOCATION, soundName);
+            string regPath = $@"AppEvents\Schemes\Apps\Explorer\{soundName}\.current\";
             try
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
@@ -2451,7 +2451,6 @@ namespace System.Windows
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NODEFAULT |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_ASYNC |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NOSTOP;
-        private const string SYSTEM_SOUNDS_REGISTRY_LOCATION            = @"AppEvents\Schemes\Apps\Explorer\{0}\.current\";
         private const string SYSTEM_SOUNDS_REGISTRY_BASE                = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\";
         private const string SOUND_NAVIGATING                           = "Navigating";
         private const string SOUND_COMPLETE_NAVIGATION                  = "ActivatingDocument";

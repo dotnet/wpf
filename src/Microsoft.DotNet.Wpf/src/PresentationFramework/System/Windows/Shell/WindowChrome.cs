@@ -337,7 +337,7 @@ namespace Microsoft.Windows.Shell
                     new Binding
                     {
 #if RIBBON_IN_FRAMEWORK
-                        Path = new PropertyPath("(SystemParameters." + bp.SystemParameterPropertyName + ")"),
+                        Path = new PropertyPath($"(SystemParameters.{bp.SystemParameterPropertyName})"),
 #else
                         Source = SystemParameters2.Current,
                         Path = new PropertyPath(bp.SystemParameterPropertyName),

@@ -119,10 +119,8 @@ namespace System.Windows
         {
             Type type = DataType as Type;
             return (DataType != null)
-                    ?   String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}({1})",
-                                    this.GetType().Name, DataType)
-                    :   String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}(null)",
-                                    this.GetType().Name);
+                    ?   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}({DataType})")
+                    :   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}(null)");
         }
 
         /// <summary>

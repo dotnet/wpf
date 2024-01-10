@@ -104,8 +104,7 @@ namespace System.Windows
                 string type = (this.Type == null) ? String.Empty : this.Type.Name;
                 string prop = (this.Property == null) ? "-" : this.Property.Name;
                 string inst = (Instance == null) ? "-" : "*";
-                string res = String.Format(CultureInfo.InvariantCulture,
-                    "{0}.{1} inst={2}", type, prop, inst);
+                string res = $"{type}.{prop} inst={inst}";
                 return res;
             }
         }
@@ -438,7 +437,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -466,7 +465,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -491,7 +490,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -735,7 +734,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -1235,9 +1234,10 @@ namespace System.Windows
                 Debug.Assert(templateChildName != null);
 
                 DependencyProperty dpContent = DependencyProperty.FromName(contentSource, targetType);
-                DependencyProperty dpContentTemplate = DependencyProperty.FromName(contentSource + "Template", targetType);
-                DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName(contentSource + "TemplateSelector", targetType);
-                DependencyProperty dpContentStringFormat = DependencyProperty.FromName(contentSource + "StringFormat", targetType);
+                DependencyProperty dpContentTemplate = DependencyProperty.FromName($"{contentSource}Template", targetType);
+                DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName(
+                    $"{contentSource}TemplateSelector", targetType);
+                DependencyProperty dpContentStringFormat = DependencyProperty.FromName($"{contentSource}StringFormat", targetType);
 
                 if (dpContent == null && isContentSourceSet)
                 {

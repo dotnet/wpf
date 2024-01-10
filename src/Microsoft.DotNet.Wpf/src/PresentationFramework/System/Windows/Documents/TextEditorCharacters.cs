@@ -90,7 +90,7 @@ namespace System.Windows.Documents
             // Check whether the property is known
             if (!TextSchema.IsParagraphProperty(formattingProperty) && !TextSchema.IsCharacterProperty(formattingProperty))
             {
-                Invariant.Assert(false, "The property '" + formattingProperty.Name + "' is unknown to TextEditor");
+                Invariant.Assert(false, $"The property '{formattingProperty.Name}' is unknown to TextEditor");
                 return;
             }
 

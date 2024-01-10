@@ -422,7 +422,7 @@ namespace MS.Win32
                     ThemeState themeState = EnsureThemeState(themeChanged:false);
                     if (themeState.IsActive)
                     {
-                        return "themes/" + themeState.ThemeName.ToLowerInvariant() + "." + themeState.ThemeColor.ToLowerInvariant();
+                        return $"themes/{themeState.ThemeName.ToLowerInvariant()}.{themeState.ThemeColor.ToLowerInvariant()}";
                     }
                     else
                     {
@@ -433,7 +433,7 @@ namespace MS.Win32
                 {
                     if (_isActive)
                     {
-                        return "themes/" + _themeName.ToLowerInvariant() + "." + _themeColor.ToLowerInvariant();
+                        return $"themes/{_themeName.ToLowerInvariant()}.{_themeColor.ToLowerInvariant()}";
                     }
                     else
                     {

@@ -321,7 +321,7 @@ namespace MS.Internal.IO.Packaging
 
             if (_filter == null || _xpsFileName == null)
             {
-                ppszFileName = "*." + PackagingUtilities.ContainerFileExtension;
+                ppszFileName = $"*.{PackagingUtilities.ContainerFileExtension}";
                 return NativeMethods.S_FALSE;
             }
 

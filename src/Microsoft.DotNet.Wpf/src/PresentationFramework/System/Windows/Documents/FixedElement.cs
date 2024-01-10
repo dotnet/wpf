@@ -44,7 +44,7 @@ namespace System.Windows.Documents
             Italic,
             Underline,
             Object,
-            Container, 
+            Container,
             Section,
             Figure,
             Table,
@@ -65,47 +65,47 @@ namespace System.Windows.Documents
                                 typeof(FixedElement));
 
         // only apply to ElementType.Run
-        public static readonly DependencyProperty FontFamilyProperty = 
+        public static readonly DependencyProperty FontFamilyProperty =
                     TextElement.FontFamilyProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FontStyleProperty = 
+        public static readonly DependencyProperty FontStyleProperty =
                     TextElement.FontStyleProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FontWeightProperty = 
+        public static readonly DependencyProperty FontWeightProperty =
                     TextElement.FontWeightProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty FontStretchProperty = 
+
+        public static readonly DependencyProperty FontStretchProperty =
                     TextElement.FontStretchProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty FontSizeProperty = 
+
+        public static readonly DependencyProperty FontSizeProperty =
                     TextElement.FontSizeProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty ForegroundProperty = 
+
+        public static readonly DependencyProperty ForegroundProperty =
                     TextElement.ForegroundProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FlowDirectionProperty = 
+        public static readonly DependencyProperty FlowDirectionProperty =
                     FrameworkElement.FlowDirectionProperty.AddOwner(
                                 typeof(FixedElement));
 
 
 
         //Applies only to Table
-        public static readonly DependencyProperty CellSpacingProperty = 
+        public static readonly DependencyProperty CellSpacingProperty =
                     Table.CellSpacingProperty.AddOwner(
                                 typeof(FixedElement));
-       
+
 
         //Applies only to TableCell
-        public static readonly DependencyProperty BorderThicknessProperty = 
+        public static readonly DependencyProperty BorderThicknessProperty =
                     Block.BorderThicknessProperty.AddOwner(typeof(FixedElement));
 
-        public static readonly DependencyProperty BorderBrushProperty = 
+        public static readonly DependencyProperty BorderBrushProperty =
                     Block.BorderBrushProperty.AddOwner(typeof(FixedElement));
 
         public static readonly DependencyProperty ColumnSpanProperty =
@@ -163,7 +163,7 @@ namespace System.Windows.Documents
         /// <returns>string - A string representation of this object</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "{{S@{0}---E@{1}}} {2}", _start, _end, System.Enum.GetName(typeof(ElementType), _type));
+            return string.Create(CultureInfo.InvariantCulture, $"{{S@{_start}---E@{_end}}} {System.Enum.GetName(_type)}");
         }
 #endif
 

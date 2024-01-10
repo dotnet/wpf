@@ -399,7 +399,7 @@ namespace System.Windows.Interop
                     // this info in, so we resort to the Message property. Anyway, those exceptions are primarily
                     // meant to provide debugging convenience and should not be reported to the end-user in a well-
                     // tested application. Essentially all of this is to be conceived as "deferred compilation".
-                    string member = "[" + (memberName ?? "(default)") + "]";
+                    string member = $"[{(memberName ?? "(default)")}]";
                     Exception comException = hr.GetException();
 
                     if (hr == HRESULT.DISP_E_EXCEPTION)
@@ -408,7 +408,7 @@ namespace System.Windows.Interop
                         // free of COMExceptions that reflect a mere implementation detail.
                         int errorCode = exInfo.scode != 0 ? exInfo.scode : exInfo.wCode;
                         hr = HRESULT.Make(true /* severity */, Facility.Dispatch, errorCode);
-                        string message = member + " " + (exInfo.bstrDescription ?? string.Empty);
+                        string message = $"{member} {(exInfo.bstrDescription ?? string.Empty)}";
                         throw new TargetInvocationException(message, comException)
                         {
                             HelpLink = exInfo.bstrHelpFile,

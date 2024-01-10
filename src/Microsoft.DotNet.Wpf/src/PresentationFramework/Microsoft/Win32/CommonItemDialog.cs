@@ -86,7 +86,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            return base.ToString() + ": Title: " + Title;
+            return $"{base.ToString()}: Title: {Title}";
         }
 
         #endregion Public Methods

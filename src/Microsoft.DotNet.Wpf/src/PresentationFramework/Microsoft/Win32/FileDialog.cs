@@ -3,11 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 //
-// 
+//
 // Description:
 //              FileDialog is an abstract class derived from CommonItemDialog
 //              that implements shared functionality common to both File
-//              Open and File Save common dialogs.  
+//              Open and File Save common dialogs.
 //              Creation of the specific IFileOpenDialog and IFileSaveDialog are
 //              deferred to the derived classes.
 //
@@ -44,7 +44,7 @@ namespace Microsoft.Win32
         #region Constructors
 
         /// <summary>
-        /// In an inherited class, initializes a new instance of 
+        /// In an inherited class, initializes a new instance of
         /// the System.Windows.FileDialog class.
         /// </summary>
         private protected FileDialog()
@@ -67,7 +67,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Resets all properties to their default values.
-        ///  Classes derived from FileDialog are expected to 
+        ///  Classes derived from FileDialog are expected to
         ///  call Base.Reset() at the beginning of their
         ///  implementation of Reset() if they choose to
         ///  override this function.
@@ -86,7 +86,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            return base.ToString() + ", FileName: " + FileName;
+            return $"{base.ToString()}, FileName: {FileName}";
         }
 
         #endregion Public Methods
@@ -99,9 +99,9 @@ namespace Microsoft.Win32
         #region Public Properties
 
         /// <summary>
-        ///  Gets a string containing the filename component of the 
+        ///  Gets a string containing the filename component of the
         ///  file selected in the dialog box.
-        /// 
+        ///
         ///  Example:  if FileName = "c:\windows\explorer.exe" ,
         ///              SafeFileName = "explorer.exe"
         /// </summary>
@@ -161,7 +161,7 @@ namespace Microsoft.Win32
 
         //   If multiple files are selected, we only return the first filename.
         /// <summary>
-        ///  Gets or sets a string containing the full path of the file selected in 
+        ///  Gets or sets a string containing the full path of the file selected in
         ///  the file dialog box.
         /// </summary>
         public string FileName
@@ -213,13 +213,13 @@ namespace Microsoft.Win32
         public bool AddExtension { get; set; }
 
         //   FOS_FILEMUSTEXIST is only used for Open dialog
-        //   boxes, according to MSDN.  It implies 
+        //   boxes, according to MSDN.  It implies
         //   FOS_PATHMUSTEXIST and "cannot be used" with a
         //   Save As dialog box...  in practice, it seems
-        //   to be ignored when used with Save As boxes 
+        //   to be ignored when used with Save As boxes
         /// <summary>
         ///  Gets or sets a value indicating whether
-        ///  the dialog box displays a warning if the 
+        ///  the dialog box displays a warning if the
         ///  user specifies a file name that does not exist.
         /// </summary>
         public bool CheckFileExists
@@ -238,7 +238,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Specifies that the user can type only valid paths and file names. If this flag is
-        ///  used and the user types an invalid path and file name in the File Name entry field, 
+        ///  used and the user types an invalid path and file name in the File Name entry field,
         ///  a warning is displayed in a message box.
         /// </summary>
         public bool CheckPathExists
@@ -256,7 +256,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         /// The AddExtension property attempts to determine the appropriate extension
-        /// by using the selected filter.  The DefaultExt property serves as a fallback - 
+        /// by using the selected filter.  The DefaultExt property serves as a fallback -
         ///  if the extension cannot be determined from the filter, DefaultExt will
         /// be used instead.
         /// </summary>
@@ -274,8 +274,8 @@ namespace Microsoft.Win32
                 if (value != null)
                 {
                     // Use Ordinal here as per FxCop CA1307
-                    if (value.StartsWith(".", StringComparison.Ordinal)) // Allow calling code to provide 
-                                                                         // extensions like ".ext" - 
+                    if (value.StartsWith(".", StringComparison.Ordinal)) // Allow calling code to provide
+                                                                         // extensions like ".ext" -
                     {
                         value = value.Substring(1);    // but strip out the period to leave only "ext"
                     }
@@ -353,12 +353,12 @@ namespace Microsoft.Win32
         //   developers, but is a side effect of a Win32 feature that allows you to add a template
         //   filter string that is filled in when the user selects a file for future uses of the dialog.
         //   We don't support that feature, so only values >1 are valid.
-        //  
+        //
         //   For details, see MSDN docs for OPENFILENAME Structure, nFilterIndex
         /// <summary>
         ///  Gets or sets the index of the filter currently selected in the file dialog box.
         ///
-        ///  NOTE:  The index of the first filter entry is 1, not 0.  
+        ///  NOTE:  The index of the first filter entry is 1, not 0.
         /// </summary>
         public int FilterIndex
         {
@@ -404,7 +404,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Occurs when the user clicks on the Open or Save button on a file dialog
-        ///  box.  
+        ///  box.
         /// </summary>
         public event CancelEventHandler FileOk;
 
@@ -448,8 +448,8 @@ namespace Microsoft.Win32
         /// <summary>
         /// PromptUserIfAppropriate is a virtual function that shows any prompt
         /// message boxes (like "Do you want to overwrite this file") necessary after
-        ///  the Open button is pressed in a file dialog.  
-        ///  
+        ///  the Open button is pressed in a file dialog.
+        ///
         /// Return value is false if we showed a dialog box and true if we did not.
         /// (in other words, true if it's OK to continue with the open process and
         /// false if we need to return the user to the dialog to make another selection.)
@@ -457,7 +457,7 @@ namespace Microsoft.Win32
         /// <remarks>
         ///  SaveFileDialog overrides this method to add additional message boxes for
         ///  its unique properties.
-        /// 
+        ///
         ///  For FileDialog:
         ///   If FOS_FILEMUSTEXIST is set, we check to be sure the path passed in on the
         ///   fileName parameter exists as an actual file on the hard disk.  If so, we
@@ -474,12 +474,12 @@ namespace Microsoft.Win32
             {
                 try
                 {
-                    // File.Exists requires a full path, so we call GetFullPath on	
+                    // File.Exists requires a full path, so we call GetFullPath on
                     // the filename before checking if it exists.
                     string tempPath = Path.GetFullPath(fileName);
                     fileExists = File.Exists(tempPath);
                 }
-                // FileIOPermission constructor will throw on invalid paths.	
+                // FileIOPermission constructor will throw on invalid paths.
                 catch (PathTooLongException)
                 {
                     fileExists = false;
@@ -568,7 +568,7 @@ namespace Microsoft.Win32
             //
             _defaultExtension = null;
             _filter = null;
-            _filterIndex = 1;        // The index of the first filter entry is 1, not 0.  
+            _filterIndex = 1;        // The index of the first filter entry is 1, not 0.
                                      // 0 is reserved for the custom filter functionality
                                      // provided by Windows, which we do not expose to the user.
         }
@@ -597,7 +597,7 @@ namespace Microsoft.Win32
                 {
                     string fileName = MutableItemNames[i];
 
-                    // If AddExtension is enabled and we do not already have an extension:            
+                    // If AddExtension is enabled and we do not already have an extension:
                     if (AddExtension && !Path.HasExtension(fileName))
                     {
                         // Loop through all extensions, starting with the default extension
@@ -620,7 +620,7 @@ namespace Microsoft.Win32
                             // we'll go ahead and remove an existing extension if it
                             // somehow slipped through.
                             //
-                            // Strip out any extension that may be remaining and place the rest 
+                            // Strip out any extension that may be remaining and place the rest
                             // of the filename in s.
 
                             string newFilename;
@@ -631,7 +631,7 @@ namespace Microsoft.Win32
                             }
                             else
                             {
-                                newFilename = string.Concat(fileName.AsSpan(0, fileName.Length - currentExtension.Length), ".", extensions[j]);
+                                newFilename = $"{fileName.AsSpan(0, fileName.Length - currentExtension.Length)}.{extensions[j]}";
                             }
 
                             // If FOS_FILEMUSTEXIST is not set, or if it is set but the filename we generated
@@ -706,7 +706,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         /// Extracts the file extensions specified by the current file filter into
-        /// an array of strings.  None of the extensions contain .'s, and the 
+        /// an array of strings.  None of the extensions contain .'s, and the
         /// default extension is first.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">

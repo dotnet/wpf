@@ -1184,9 +1184,9 @@ namespace System.Windows
                     Type targetType = _frameworkTemplate.TargetTypeInternal;
 
                     DependencyProperty dpContent = DependencyProperty.FromName(prefix, targetType);
-                    DependencyProperty dpContentTemplate = DependencyProperty.FromName(prefix + "Template", targetType);
-                    DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName(prefix + "TemplateSelector", targetType);
-                    DependencyProperty dpContentStringFormat = DependencyProperty.FromName(prefix + "StringFormat", targetType);
+                    DependencyProperty dpContentTemplate = DependencyProperty.FromName($"{prefix}Template", targetType);
+                    DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName($"{prefix}TemplateSelector", targetType);
+                    DependencyProperty dpContentStringFormat = DependencyProperty.FromName($"{prefix}StringFormat", targetType);
 
                     // if desired source for Content doesn't exist, report an error
                     if (dpContent == null && o != DependencyProperty.UnsetValue)

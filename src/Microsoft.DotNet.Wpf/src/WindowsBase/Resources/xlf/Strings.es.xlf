@@ -1292,11 +1292,6 @@
         <target state="translated">El objeto de referencia especificado entra en conflicto con la referencia específica de paquete predefinida.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">No se puede acceder a la parte porque el paquete principal se cerró.</target>

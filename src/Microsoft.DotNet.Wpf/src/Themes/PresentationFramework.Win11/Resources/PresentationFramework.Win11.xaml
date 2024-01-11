@@ -48,7 +48,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TreeView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TreeViewItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Window.xaml" />
-
-
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TitleBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/FluentWindow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

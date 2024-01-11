@@ -425,7 +425,8 @@
     <SolidColorBrush x:Key="ContextMenuForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  DataGrid  -->
-    <!--  TODO  -->
+    <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
 
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

@@ -416,6 +416,7 @@
     <Compile Include="System\Windows\Appearance\ThemeChangedEvent.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
+    <Compile Include="System\Windows\ElementPlacement.cs" />
     <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
     <Compile Include="System\Windows\Controls\ElementPlacement.cs" />
     <Compile Include="System\Windows\Controls\PassiveScrollViewer.cs" />

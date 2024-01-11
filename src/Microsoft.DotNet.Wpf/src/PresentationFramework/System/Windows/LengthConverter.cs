@@ -203,16 +203,21 @@ namespace System.Windows
             if (valueSpan.IsEmpty)
                 return 0;
 
+            return ParseDouble(valueSpan, cultureInfo) * unitFactor;
+        }
+
+        private static double ParseDouble(ReadOnlySpan<char> span, CultureInfo cultureInfo)
+        {
             // FormatException errors thrown by double.Parse are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
             // to create a Length instance from a string.  This addresses windows bug 968884
             try
             {
-                return double.Parse(valueSpan, cultureInfo) * unitFactor;
+                return double.Parse(span, cultureInfo);
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Format(SR.LengthFormatError, valueSpan.ToString()));
+                throw new FormatException(SR.Format(SR.LengthFormatError, span.ToString()));
             }
         }
 

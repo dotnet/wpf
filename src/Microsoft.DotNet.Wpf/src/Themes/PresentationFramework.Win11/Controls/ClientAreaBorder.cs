@@ -63,7 +63,7 @@ namespace PresentationFramework.Win11.Controls
 
         private static Thickness? _windowChromeNonClientFrameThickness;
 
-        private ApplicationTheme ApplicationTheme { get; set; } = ApplicationTheme.Unknown;
+        public ApplicationTheme ApplicationTheme { get; set; } = ApplicationTheme.Unknown;
 
         /// <summary>
         /// Get the system <see cref="SM_CXPADDEDBORDER"/> value in WPF units.

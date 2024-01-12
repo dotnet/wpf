@@ -27,7 +27,7 @@ namespace System.Windows.Appearance;
 /// );
 /// </code>
 /// </example>
-internal static class SystemThemeWatcher
+public static class SystemThemeWatcher
 {
     private static readonly ICollection<ObservedWindow> _observedWindows = new List<ObservedWindow>();
 

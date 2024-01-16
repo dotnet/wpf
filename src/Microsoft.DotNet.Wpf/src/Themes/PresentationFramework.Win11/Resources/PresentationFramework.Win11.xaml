@@ -33,6 +33,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RadioButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RepeatButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RichTextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ScrollViewer.xaml" />

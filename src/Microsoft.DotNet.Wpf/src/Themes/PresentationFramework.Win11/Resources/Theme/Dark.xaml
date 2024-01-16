@@ -550,6 +550,17 @@
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{DynamicResource SystemAccentColorPrimary}" />
 
+    <!-- RepeatButton -->
+    <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="{StaticResource ControlFillColorTertiary}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+
     <!--  Separator  -->
     <SolidColorBrush x:Key="SeparatorBorderBrush" Color="{StaticResource DividerStrokeColorDefault}" />
 

@@ -96,7 +96,7 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
 
     if (Test-Path $BinLocation)
     {
-        Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location
+        Copy-Item -path $BinLocation -include "*.dll","*.pdb" -Destination $location -Exclude DirectWriteForwarder.*
         Write-Host "All files are copied" -ForegroundColor Green
     }
     else

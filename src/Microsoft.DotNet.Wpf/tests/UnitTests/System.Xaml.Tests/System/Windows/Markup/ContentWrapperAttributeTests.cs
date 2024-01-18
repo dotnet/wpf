@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
 using System.Collections.Generic;
 using Xunit;
 
@@ -18,18 +19,18 @@ public class ContentWrapperAttributeTests
         Assert.Equal(contentWrapper, attribute.ContentWrapper);
     }
 
-    public static IEnumerable<object?[]> Equals_TestData()
+    public static IEnumerable<object[]> Equals_TestData()
     {
         var attribute = new ContentWrapperAttribute(typeof(int));
-        yield return new object?[] { attribute, attribute, true };
-        yield return new object?[] { attribute, new ContentWrapperAttribute(typeof(int)), true };
-        yield return new object?[] { attribute, new ContentWrapperAttribute(typeof(string)), false };
-        yield return new object?[] { attribute, new ContentWrapperAttribute(null), false };
-        yield return new object?[] { new ContentWrapperAttribute(null), new ContentWrapperAttribute(null), true };
-        yield return new object?[] { new ContentWrapperAttribute(null), new ContentWrapperAttribute(typeof(int)), false };
+        yield return new object[] { attribute, attribute, true };
+        yield return new object[] { attribute, new ContentWrapperAttribute(typeof(int)), true };
+        yield return new object[] { attribute, new ContentWrapperAttribute(typeof(string)), false };
+        yield return new object[] { attribute, new ContentWrapperAttribute(null), false };
+        yield return new object[] { new ContentWrapperAttribute(null), new ContentWrapperAttribute(null), true };
+        yield return new object[] { new ContentWrapperAttribute(null), new ContentWrapperAttribute(typeof(int)), false };
 
-        yield return new object?[] { attribute, new object(), false };
-        yield return new object?[] { attribute, null, false };
+        yield return new object[] { attribute, new object(), false };
+        yield return new object[] { attribute, null, false };
     }
 
     [Theory]

@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
 using System.Collections.Generic;
 using System.Xaml;
 using Xunit;
@@ -95,7 +96,7 @@ public class ReferenceTests
     
     private class CustomServiceProvider : IServiceProvider
     {
-        public Func<Type, object>? ServiceAction { get; set; }
+        public Func<Type, object> ServiceAction { get; set; }
 
         public object GetService(Type serviceType)
         {
@@ -113,7 +114,7 @@ public class ReferenceTests
     {
         public bool IsFixupTokenAvailable => throw new NotImplementedException();
 
-        public Func<string, object>? ResolveAction { get; set; }
+        public Func<string, object> ResolveAction { get; set; }
 
         public object Resolve(string name)
         {
@@ -129,7 +130,7 @@ public class ReferenceTests
 
         public object GetFixupToken(IEnumerable<string> names) => throw new NotImplementedException();
 
-        public Func<IEnumerable<string>, bool, object>? GetFixupTokenAction { get; set; }
+        public Func<IEnumerable<string>, bool, object> GetFixupTokenAction { get; set; }
         
         public object GetFixupToken(IEnumerable<string> names, bool canAssignDirectly)
         {

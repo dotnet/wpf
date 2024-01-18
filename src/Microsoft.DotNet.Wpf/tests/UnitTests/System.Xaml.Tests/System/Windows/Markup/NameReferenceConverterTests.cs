@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -119,13 +120,13 @@ public class NameReferenceConverterTests
         Assert.Throws<InvalidOperationException>(() => converter.ConvertFrom(context, null, value));
     }
 
-    public static IEnumerable<object?[]> CanConvertTo_TestData()
+    public static IEnumerable<object[]> CanConvertTo_TestData()
     {
-        yield return new object?[] { null, null, false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => null! }, typeof(string), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new object() }, typeof(string), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(int), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(string), true };
+        yield return new object[] { null, null, false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => null! }, typeof(string), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new object() }, typeof(string), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(int), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(string), true };
     }
 
     [Theory]
@@ -201,7 +202,7 @@ public class NameReferenceConverterTests
 
         public PropertyDescriptor PropertyDescriptor => throw new NotImplementedException();
 
-        public Func<Type, object>? GetServiceAction { get; set; }
+        public Func<Type, object> GetServiceAction { get; set; }
 
         public object GetService(Type serviceType)
         {
@@ -222,7 +223,7 @@ public class NameReferenceConverterTests
     {
         public bool IsFixupTokenAvailable => throw new NotImplementedException();
 
-        public Func<string, object>? ResolveAction { get; set; }
+        public Func<string, object> ResolveAction { get; set; }
 
         public object Resolve(string name)
         {
@@ -238,7 +239,7 @@ public class NameReferenceConverterTests
 
         public object GetFixupToken(IEnumerable<string> names) => throw new NotImplementedException();
 
-        public Func<IEnumerable<string>, bool, object>? GetFixupTokenAction { get; set; }
+        public Func<IEnumerable<string>, bool, object> GetFixupTokenAction { get; set; }
         
         public object GetFixupToken(IEnumerable<string> names, bool canAssignDirectly)
         {
@@ -262,7 +263,7 @@ public class NameReferenceConverterTests
 
     private class CustomXamlNameProvider : IXamlNameProvider
     {
-        public Func<object, string>? GetNameAction { get; set; }
+        public Func<object, string> GetNameAction { get; set; }
         
         public string GetName(object value)
         {

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -30,7 +28,7 @@ namespace System.Windows.Markup
         /// of XAML content with property of the given name.
         /// </summary>
         /// <param name="name">The property to associate to direct XAML content</param>
-        public ContentPropertyAttribute(string name)
+        public ContentPropertyAttribute(string? name)
         {
             Name = name;
         }
@@ -38,6 +36,6 @@ namespace System.Windows.Markup
         /// <summary>
         /// The name of the property that is associated with direct XAML content
         /// </summary>
-        public string Name { get; }
+        public string? Name { get; }
     }
 }

@@ -95,7 +95,7 @@ namespace System.Xaml.Schema
             {
                 if (TargetType != null)
                 {
-                    return ConverterType.Name + "(" + TargetType.Name + ")";
+                    return $"{ConverterType.Name}({TargetType.Name})";
                 }
 
                 return ConverterType.Name;

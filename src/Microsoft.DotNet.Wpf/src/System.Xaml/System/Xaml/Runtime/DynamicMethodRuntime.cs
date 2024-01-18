@@ -280,7 +280,7 @@ namespace MS.Internal.Xaml.Runtime
                 return _delegateCreatorWithoutHelper;
             }
 
-            DynamicMethod dynamicMethod = CreateDynamicMethod(targetType.Name + "DelegateHelper",
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{targetType.Name}DelegateHelper",
                 typeof(Delegate), typeof(Type), typeof(object), typeof(string));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -315,7 +315,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(ConstructorInfo ctor)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(ctor.DeclaringType.Name + "Ctor",
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{ctor.DeclaringType.Name}Ctor", 
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -329,7 +329,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(MethodInfo factory)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(factory.Name + "Factory",
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{factory.Name}Factory", 
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -407,7 +407,7 @@ namespace MS.Internal.Xaml.Runtime
         // Note that CreateGetDelegate fails verification for value types (and probably shouldn't)
         private PropertyGetDelegate CreateGetDelegate(MethodInfo getter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(getter.Name + "Getter",
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{getter.Name}Getter", 
                 typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -425,7 +425,7 @@ namespace MS.Internal.Xaml.Runtime
         // Note that CreateSetDelegate fails verification for value types (and probably shouldn't)
         private PropertySetDelegate CreateSetDelegate(MethodInfo setter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(setter.Name + "Setter",
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{setter.Name}Setter", 
                 typeof(void), typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 

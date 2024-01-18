@@ -76,7 +76,7 @@ namespace System.Xaml
                 return memberName;
             }
 
-            return declaringType.ToString() + "." + memberName;
+            return $"{declaringType}.{memberName}";
         }
     }
 }

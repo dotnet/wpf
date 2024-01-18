@@ -207,21 +207,6 @@ namespace Microsoft.Windows.Controls.Ribbon
             set { RibbonControlService.SetToolTipFooterImageSource(this, value); }
         }
 
-        /// <summary>
-        /// DependencyProperty for CornerRadius
-        /// </summary>
-        public static new readonly DependencyProperty CornerRadiusProperty =
-            RibbonControlService.CornerRadiusProperty.AddOwner(typeof(RibbonButton));
-
-        /// <summary>
-        /// CornerRadius of the RibbonButton
-        /// </summary>
-        public new CornerRadius CornerRadius
-        {
-            get { return RibbonControlService.GetCornerRadius(this); }
-            set { RibbonControlService.SetCornerRadius(this, value); }
-        }
-
         #endregion
 
         #region PseudoInheritedProperties
@@ -314,66 +299,6 @@ namespace Microsoft.Windows.Controls.Ribbon
         public Ribbon Ribbon
         {
             get { return RibbonControlService.GetRibbon(this); }
-        }
-
-        /// <summary>
-        ///     DependencyProperty for MouseOverBorderBrush property.
-        /// </summary>
-        public static new readonly DependencyProperty MouseOverBorderBrushProperty =
-            RibbonControlService.MouseOverBorderBrushProperty.AddOwner(typeof(RibbonButton));
-
-        /// <summary>
-        ///     Outer border brush used in a "hover" state of the RibbonButton.
-        /// </summary>
-        public new Brush MouseOverBorderBrush 
-        {
-            get { return RibbonControlService.GetMouseOverBorderBrush(this); }
-            set { RibbonControlService.SetMouseOverBorderBrush(this, value); }
-        }
-
-        /// <summary>
-        ///     DependencyProperty for MouseOverBackground property.
-        /// </summary>
-        public static new readonly DependencyProperty MouseOverBackgroundProperty =
-            RibbonControlService.MouseOverBackgroundProperty.AddOwner(typeof(RibbonButton));
-
-        /// <summary>
-        ///     Control background brush used in a "hover" state of the RibbonButton.
-        /// </summary>
-        public new Brush MouseOverBackground 
-        {
-            get { return RibbonControlService.GetMouseOverBackground(this); }
-            set { RibbonControlService.SetMouseOverBackground(this, value); }
-        }
-
-        /// <summary>
-        ///     DependencyProperty for PressedBorderBrush property.
-        /// </summary>
-        public static new readonly DependencyProperty PressedBorderBrushProperty =
-            RibbonControlService.PressedBorderBrushProperty.AddOwner(typeof(RibbonButton));
-
-        /// <summary>
-        ///     Outer border brush used in a "pressed" state of the RibbonButton.
-        /// </summary>
-        public new Brush PressedBorderBrush 
-        {
-            get { return RibbonControlService.GetPressedBorderBrush(this); }
-            set { RibbonControlService.SetPressedBorderBrush(this, value); }
-        }
-
-        /// <summary>
-        ///     DependencyProperty for PressedBackground property.
-        /// </summary>
-        public static new readonly DependencyProperty PressedBackgroundProperty =
-            RibbonControlService.PressedBackgroundProperty.AddOwner(typeof(RibbonButton));
-
-        /// <summary>
-        ///     Control background brush used in a "pressed" state of the RibbonButton.
-        /// </summary>
-        public new Brush PressedBackground 
-        {
-            get { return RibbonControlService.GetPressedBackground(this); }
-            set { RibbonControlService.SetPressedBackground(this, value); }
         }
 
         /// <summary>

@@ -63,7 +63,7 @@ namespace System.Windows.Controls
             PasswordCharProperty.OverrideMetadata(typeof(PasswordBox),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPasswordCharChanged)));
 
-            // Declaree listener for Padding property
+            // Declare listener for Padding property
             Control.PaddingProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPaddingChanged)));
 
@@ -346,6 +346,82 @@ namespace System.Windows.Controls
         {
             get { return (bool)GetValue(IsSelectionActiveProperty); }
         }
+
+        /// <summary>
+        /// Defines which side the icon should be placed on.
+        /// </summary>
+        public ElementPlacement IconPlacement
+        {
+            get => (ElementPlacement)GetValue(IconPlacementProperty);
+            set => SetValue(IconPlacementProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="IconPlacement"/>.
+        /// </summary>
+        public static readonly DependencyProperty IconPlacementProperty = DependencyProperty.Register(
+           nameof(IconPlacement),
+           typeof(ElementPlacement),
+           typeof(PasswordBox),
+           new PropertyMetadata(ElementPlacement.Left)
+        );
+
+        /// <summary>
+        /// Gets or sets displayed <see cref="IconElement"/>.
+        /// </summary>
+        public IconElement Icon
+        {
+            get => (IconElement)GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="Icon"/>.
+        /// </summary>
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
+           nameof(Icon),
+           typeof(IconElement),
+           typeof(PasswordBox),
+           new PropertyMetadata(null, null, IconSourceElementConverter.ConvertToIconElement)
+        );
+
+        /// <summary>
+        /// Gets or sets numbers pattern.
+        /// </summary>
+        public string PlaceholderText
+        {
+            get => (string)GetValue(PlaceholderTextProperty);
+            set => SetValue(PlaceholderTextProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="PlaceholderText"/>.
+        /// </summary>
+        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
+           nameof(PlaceholderText),
+           typeof(string),
+           typeof(PasswordBox),
+           new PropertyMetadata(String.Empty)
+        );
+
+        /// <summary>
+        /// Gets or sets a value determining whether to display the placeholder.
+        /// </summary>
+        public bool PlaceholderEnabled
+        {
+            get => (bool)GetValue(PlaceholderEnabledProperty);
+            set => SetValue(PlaceholderEnabledProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="PlaceholderEnabled"/>.
+        /// </summary>
+        public static readonly DependencyProperty PlaceholderEnabledProperty = DependencyProperty.Register(
+           nameof(PlaceholderEnabled),
+           typeof(bool),
+           typeof(PasswordBox),
+           new PropertyMetadata(true)
+        );
 
         /// <summary>
         /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabledProperty"/>
@@ -854,7 +930,7 @@ namespace System.Windows.Controls
             // PasswordBox only accepts plain text, so change TextEditor's default to that.
             _textEditor.AcceptsRichContent = false;
 
-            // PasswordBox does not accetps tabs.
+            // PasswordBox does not accepts tabs.
             _textEditor.AcceptsTab = false;
         }
 

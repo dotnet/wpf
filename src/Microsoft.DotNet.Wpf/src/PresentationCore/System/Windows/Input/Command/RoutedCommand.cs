@@ -22,8 +22,8 @@ namespace System.Windows.Input
     /// <summary>
     ///     A command that causes handlers associated with it to be called.
     /// </summary>
-    [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-    [ValueSerializer("System.Windows.Input.CommandValueSerializer, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Input.CommandConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
+    [ValueSerializer($"System.Windows.Input.CommandValueSerializer, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     public class RoutedCommand : ICommand
     {
         #region Constructors

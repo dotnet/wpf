@@ -107,15 +107,19 @@ namespace System.Windows.Media
 
             get 
             {
+                if (_ranges.Length == 0)
+                {
+                    return string.Empty;
+                }
+
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
                 for (int i = 0; i < _ranges.Length; ++i)
                 {
-                    if (i != 0) sb.Append(',');
-                    sb.AppendFormat(NumberFormatInfo.InvariantInfo, "{0:x4}-{1:x4}", _ranges[i].First, _ranges[i].Last);
+                    sb.Append(NumberFormatInfo.InvariantInfo, $"{_ranges[i].First:x4}-{_ranges[i].Last:x4},");
                 }
 
-                return sb.ToString();
+                return sb.ToString(0, sb.Length - 1);
             }
         }
 

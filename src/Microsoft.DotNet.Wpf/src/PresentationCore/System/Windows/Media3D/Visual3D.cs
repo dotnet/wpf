@@ -662,9 +662,7 @@ namespace System.Windows.Media.Media3D
             {
                 // This should never happen, users can not extend the abstract HitTestParameters3D class.
                 Invariant.Assert(false,
-                    String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                        "'{0}' HitTestParameters3D are not supported on {1}.",
-                        hitTestParameters.GetType().Name, this.GetType().Name));
+                    $"'{hitTestParameters.GetType().Name}' HitTestParameters3D are not supported on {this.GetType().Name}.");
             }
         }
 

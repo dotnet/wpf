@@ -122,15 +122,11 @@ namespace System.Windows
                 else if (destinationType == typeof(string))
                 {
 #pragma warning disable 56506 // Suppress presharp warning: Parameter 'cultureInfo.TextInfo' to this public method must be validated:  A null-dereference can occur here.
-                    return String.Format(
-                        cultureInfo,
-                        "{0}{4}{1}{4}{2}{4}{3}",
-                        keySpline.ControlPoint1.X,
-                        keySpline.ControlPoint1.Y,
-                        keySpline.ControlPoint2.X,
-                        keySpline.ControlPoint2.Y,
-                        cultureInfo != null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator);
+                    string separator = cultureInfo != null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator;
 #pragma warning restore 56506
+                    return string.Create(
+                        cultureInfo,
+                        $"{keySpline.ControlPoint1.X}{separator}{keySpline.ControlPoint1.Y}{separator}{keySpline.ControlPoint2.X}{separator}{keySpline.ControlPoint2.Y}");
                 }
             }
 

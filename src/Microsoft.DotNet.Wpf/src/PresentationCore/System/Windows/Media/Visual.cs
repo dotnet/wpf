@@ -2002,9 +2002,7 @@ namespace System.Windows.Media
                 {
                     // This should never happen, users can not extend the abstract HitTestParameters class.
                     Invariant.Assert(false,
-                        String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                            "'{0}' HitTestParameters are not supported on {1}.",
-                            hitTestParameters.GetType().Name, this.GetType().Name));
+                        $"'{hitTestParameters.GetType().Name}' HitTestParameters are not supported on {this.GetType().Name}.");
                 }
             }
         }

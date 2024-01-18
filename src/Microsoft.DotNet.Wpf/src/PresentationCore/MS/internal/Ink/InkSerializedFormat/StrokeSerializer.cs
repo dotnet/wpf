@@ -81,9 +81,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             if (cb != size)
             {
-                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Stroke size (" +
-                    cb.ToString(System.Globalization.CultureInfo.InvariantCulture) + ") != expected (" + 
-                    size.ToString(System.Globalization.CultureInfo.InvariantCulture) + ")"));
+                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage(
+                    string.Create(System.Globalization.CultureInfo.InvariantCulture, $"Stroke size ({cb}) != expected ({size})")));
             }
 
             stroke = new Stroke(stylusPoints, drawingAttributes, extendedProperties);

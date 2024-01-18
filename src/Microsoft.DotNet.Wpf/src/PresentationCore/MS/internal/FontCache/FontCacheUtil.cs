@@ -322,7 +322,7 @@ namespace MS.Internal.FontCache
 
         static Util()
         {
-            string s = Environment.GetEnvironmentVariable(WinDir) + @"\Fonts\";
+            string s = $@"{Environment.GetEnvironmentVariable(WinDir)}\Fonts\";
 
             _windowsFontsLocalPath = s.ToUpperInvariant();
 
@@ -538,7 +538,7 @@ namespace MS.Internal.FontCache
             // so that they don't conflict with the fragment part.
             string canonicalPathUri = new Uri(fontUri).GetComponents(UriComponents.AbsoluteUri, UriFormat.SafeUnescaped);
             string faceIndexString = faceIndex.ToString(CultureInfo.InvariantCulture);
-            return new Uri(canonicalPathUri + '#' + faceIndexString);
+            return new Uri($"{canonicalPathUri}#{faceIndexString}");
         }
 
         internal static bool IsSupportedFontExtension(string extension, out bool isComposite)
@@ -662,7 +662,7 @@ namespace MS.Internal.FontCache
             {
                 // No fragment separator. The entire string is a family name so convert to uppercase
                 // and add a fragment separator at the beginning.
-                return string.Concat("#", fontFamilyReference.AsSpan(startIndex, length)).ToUpperInvariant();
+                return $"#{fontFamilyReference.AsSpan(startIndex, length)}".ToUpperInvariant();
             }
             else if (fragmentIndex + 1 == startIndex + length)
             {
@@ -702,11 +702,7 @@ namespace MS.Internal.FontCache
             if (!string.IsNullOrEmpty(location))
             {
                 // We just escaped the family name and the location part should already be a valid URI reference.
-                fontFamilyReference = string.Concat(
-                    location,
-                    "#",
-                    fontFamilyReference
-                    );
+                fontFamilyReference = $"{location}#{fontFamilyReference}";
             }
 
             return fontFamilyReference;

@@ -4,7 +4,9 @@
     See the LICENSE file in the project root for more information.
     ==================================================================-->
 
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes">
     <Style x:Key="{x:Type TextBoxBase}"
            TargetType="{x:Type TextBoxBase}"
            BasedOn="{x:Null}">        

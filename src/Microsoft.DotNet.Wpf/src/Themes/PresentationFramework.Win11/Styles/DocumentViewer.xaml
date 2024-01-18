@@ -4,7 +4,9 @@
     See the LICENSE file in the project root for more information.
     ==================================================================-->
 
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI">
     <Style x:Key="{x:Type DocumentViewer}" 
            BasedOn="{x:Null}"
            TargetType="{x:Type DocumentViewer}">

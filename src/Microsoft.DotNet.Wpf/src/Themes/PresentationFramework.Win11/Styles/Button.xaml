@@ -58,55 +58,6 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
                             TextElement.Foreground="{TemplateBinding Foreground}" />
-
-                        <!--
-                        Without the hacky workaround for the themes, we cannot use the freezable VisualState.
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="Background">
-                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonBackgroundPointerOver}" />
- </ObjectAnimationUsingKeyFrames>
- <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="BorderBrush">
-     <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ControlElevationBorderBrush}" />
- </ObjectAnimationUsingKeyFrames>
- <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextElement.Foreground)">
-     <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonForegroundPointerOver}" />
- </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonBackgroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonBorderBrushPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextElement.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonForegroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonBackgroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBorder" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonBorderBrushDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextElement.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ButtonForegroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        -->
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

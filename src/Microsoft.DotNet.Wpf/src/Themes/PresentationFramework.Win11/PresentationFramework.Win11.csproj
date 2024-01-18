@@ -22,6 +22,7 @@
     <Page Include="**\*.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" />
   </ItemGroup>
 
   <!-- Compile Items -->

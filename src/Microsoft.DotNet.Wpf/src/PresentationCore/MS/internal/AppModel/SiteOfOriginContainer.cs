@@ -24,6 +24,10 @@ using System.Windows;
 using System.Windows.Navigation;
 using System.Security;
 using MS.Internal.PresentationCore;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace MS.Internal.AppModel
 {
@@ -55,11 +59,8 @@ namespace MS.Internal.AppModel
                     // Calling FixFileUri because BaseDirectory will be a c:\\ style path
                     siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
                 }
-#if DEBUG
-            if (_traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: SiteOfOriginContainer: returning site of origin {siteOfOrigin}");
-#endif
+
+                Trace($"SiteOfOriginContainer: returning site of origin {siteOfOrigin}");
 
                 return siteOfOrigin;
             }
@@ -192,7 +193,120 @@ namespace MS.Internal.AppModel
         //  Internal Methods
         //
         //------------------------------------------------------
-        // None
+
+        [Conditional("DEBUG")]
+        internal static void Trace(string message)
+        {
+            if (_traceSwitch.Enabled)
+            {
+                System.Diagnostics.Trace.TraceInformation(
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: {message}");
+            }
+
+        }
+
+        [Conditional("DEBUG")]
+        internal static void Trace(ref TraceInterpolatedStringHandler message)
+        {
+            if (_traceSwitch.Enabled)
+            {
+                System.Diagnostics.Trace.TraceInformation(message.ToStringAndClear());
+            }
+
+        }
+
+        /// <summary>
+        ///   Provides an interpolated string handler for <see
+        ///   cref="TraceSwitchExtensions.TraceVerbose(TraceSwitch?, ref TraceSwitchExtensions.TraceVerboseInterpolatedStringHandler)"
+        ///   /> that only performs formatting if the condition applies.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [InterpolatedStringHandler]
+        public struct TraceInterpolatedStringHandler
+        {
+            /// <summary>
+            ///   The handler we use to perform the formatting.
+            /// </summary>
+            private StringBuilder.AppendInterpolatedStringHandler _stringBuilderHandler;
+
+            /// <summary>
+            ///   The underlying <see cref="StringBuilder"/> instance used by <see cref="_stringBuilderHandler"/>,
+            ///   if any.
+            /// </summary>
+            private StringBuilder _builder;
+
+            /// <summary>
+            ///   Creates an instance of the handler.
+            /// </summary>
+            /// <param name="literalLength">The number of constant characters outside of interpolation expressions in the interpolated string.</param>
+            /// <param name="formattedCount">The number of interpolation expressions in the interpolated string.</param>
+            /// <param name="traceSwitch">The TraceSwitch passed to the <see cref="TraceSwitchExtensions"/> method.</param>
+            /// <param name="shouldAppend">A value indicating whether formatting should proceed.</param>
+            /// <remarks>
+            ///   This is intended to be called only by compiler-generated code. Arguments are not validated as they'd
+            ///   otherwise be for members intended to be used directly.
+            /// </remarks>
+            internal TraceInterpolatedStringHandler(int literalLength, int formattedCount, out bool shouldAppend)
+            {
+                if (_traceSwitch.Enabled)
+                {
+                    _builder = new StringBuilder();
+                    _builder.Append($"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: ");
+                    _stringBuilderHandler = new StringBuilder.AppendInterpolatedStringHandler(literalLength, formattedCount,
+                        _builder);
+                    shouldAppend = true;
+                }
+                else
+                {
+                    _stringBuilderHandler = default;
+                    shouldAppend = false;
+                }
+            }
+
+            /// <summary>
+            ///   Extracts the built string from the handler.
+            /// </summary>
+            internal string ToStringAndClear()
+            {
+                string s = _builder?.ToString() ?? string.Empty;
+                _stringBuilderHandler = default;
+                _builder = null;
+                return s;
+            }
+
+            /// <summary>
+            ///   Writes the specified string to the handler.
+            /// </summary>
+            /// <param name="value">The string to write.</param>
+            public void AppendLiteral(string value) => _stringBuilderHandler.AppendLiteral(value);
+
+            /// <summary>
+            ///   Writes the specified value to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            /// <typeparam name="T">The type of the value to write.</typeparam>
+            public void AppendFormatted<T>(T value) => _stringBuilderHandler.AppendFormatted(value);
+
+            /// <summary>
+            ///   Writes the specified value to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            /// <param name="format">The format string.</param>
+            /// <typeparam name="T">The type of the value to write.</typeparam>
+            public void AppendFormatted<T>(T value, string? format) => _stringBuilderHandler.AppendFormatted(value, format);
+
+            /// <summary>
+            ///   Writes the specified character span to the handler.
+            /// </summary>
+            /// <param name="value">The span to write.</param>
+            public void AppendFormatted(ReadOnlySpan<char> value) => _stringBuilderHandler.AppendFormatted(value);
+
+            /// <summary>
+            ///   Writes the specified character span to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            public void AppendFormatted(string value) => _stringBuilderHandler.AppendFormatted(value);
+        }
 
         //------------------------------------------------------
         //
@@ -224,11 +338,7 @@ namespace MS.Internal.AppModel
         /// <returns></returns>
         protected override PackagePart GetPartCore(Uri uri)
         {
-#if DEBUG
-            if (_traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: SiteOfOriginContainer: Creating SiteOfOriginPart for Uri {uri}");
-#endif
+            Trace($"SiteOfOriginContainer: Creating SiteOfOriginPart for Uri {uri}");
             return new SiteOfOriginPart(this, uri);
         }
 

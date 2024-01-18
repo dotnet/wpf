@@ -82,11 +82,7 @@ namespace System.IO.Packaging
             _cachedPackageIsThreadSafe = cachedPackageIsThreadSafe;
             _cachePolicy = _defaultCachePolicy;         // always use default and then let them change it
 
-#if DEBUG
-            if (PackWebRequestFactory._traceSwitch.Enabled && (cacheEntry != null))
-                System.Diagnostics.Trace.TraceInformation(
-                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - working from Package Cache");
-#endif
+            PackWebRequestFactory.Trace(this, "working from Package Cache");
         }
         #pragma warning restore SYSLIB0014
 
@@ -152,11 +148,7 @@ namespace System.IO.Packaging
 
             if (cachedPackageAvailable)
             {
-#if DEBUG
-                if (PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation(
-                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - Getting response from Package Cache");
-#endif
+                PackWebRequestFactory.Trace(this, "Getting response from Package Cache");
                 return new PackWebResponse(_uri, _innerUri, _partName, _cacheEntry, _cachedPackageIsThreadSafe);
             }
             else
@@ -166,11 +158,8 @@ namespace System.IO.Packaging
                 if (_webRequest == null || _webRequest is PseudoWebRequest)
                     throw new InvalidOperationException(SR.SchemaInvalidForTransport);
 
-#if DEBUG
-                if (PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation(
-                        $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: PackWebRequest - Getting new response");
-#endif
+                PackWebRequestFactory.Trace(this, "Getting new response");
+
                 // Create a new response for every call
                 return new PackWebResponse(_uri, _innerUri, _partName, request);
             }

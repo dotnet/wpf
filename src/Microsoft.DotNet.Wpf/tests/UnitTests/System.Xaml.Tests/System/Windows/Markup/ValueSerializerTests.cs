@@ -65,8 +65,8 @@ public class ValueSerializerTests
     public void ConvertFromString_NullValue_ThrowsNotSupportedException()
     {
         var serializer = new CustomValueSerializer();
-        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null, null));
-        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null, new CustomValueSerializerContext()));
+        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null!, null));
+        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null!, new CustomValueSerializerContext()));
     }
 
     [Theory]
@@ -154,28 +154,28 @@ public class ValueSerializerTests
     [Fact]
     public void GetSerializerFor_TypeConverterAttributeCanConvertToString_ReturnsExpected()
     {
-        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute));
-        Assert.True(serializer.CanConvertToString(null, null));
+        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute))!;
+        Assert.True(serializer.CanConvertToString(null!, null));
     }
 
     [Fact]
     public void GetSerializerFor_TypeConverterAttributeConvertToString_ReturnsExpected()
     {
-        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute));
+        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute))!;
         Assert.Equal("1", serializer.ConvertToString(1, null));
     }
 
     [Fact]
     public void GetSerializerFor_TypeConverterAttributeCanConvertFromString_ReturnsExpected()
     {
-        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute));
+        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute))!;
         Assert.True(serializer.CanConvertFromString(null, null));
     }
 
     [Fact]
     public void GetSerializerFor_TypeConverterAttributeConvertFromString_ReturnsExpected()
     {
-        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute));
+        ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(ClassWithPublicTypeConverterAttribute))!;
         Assert.Equal("1", serializer.ConvertFromString("1", null));
     }
 

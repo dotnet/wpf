@@ -4009,11 +4009,19 @@ namespace System.Windows.Controls
 
         protected override AutomationPeer OnCreateAutomationPeer()
         {
-            if (!AccessibilitySwitches.ItemsControlDoesNotSupportAutomation)
+            // In both cases we are returning null, but returning null without calling 
+            //  the base causes OnCreateAutomationPeerInternal to be executed and 
+            //  ItemsControlWrapperAutomationPeer is created by the ItemsControl.
+            //  This fixes an issue when grouped ItemsControl did not expose Group children
+            //  to the automation.
+            if (this.IsGrouping)
             {
-                return new ItemsControlWrapperAutomationPeer(this);
+                return null;
             }
-            return null;
+            else
+            {
+                return base.OnCreateAutomationPeer();
+            }
         }
 
         // This should really override OnCreateAutomationPeer, but that API addition

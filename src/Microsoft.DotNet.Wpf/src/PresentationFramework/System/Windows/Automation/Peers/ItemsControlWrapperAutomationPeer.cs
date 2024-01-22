@@ -21,6 +21,20 @@ namespace System.Windows.Automation.Peers
 
         override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
         {
+            if (item is UIElement element)
+            {
+                // Some UIElements have their own automation peers, so we need to check for that.
+                var peer = element.CreateAutomationPeer();
+                if (peer is not null)
+                {
+                    return new ItemsControlElementAutomationPeer(element, peer, this);
+                }
+
+                // Some other UIElements don't have their own automation peers, so we treat them as ItemsControlItems.
+            }
+
+            // If the item is not a UIElement, or if it is a UIElement that doesn't have its own automation peer,
+            // we create an ItemsControlItemAutomationPeer for it.
             return new ItemsControlItemAutomationPeer(item, this);
         }
 

@@ -1245,9 +1245,9 @@ namespace System.Windows.Documents
             GetCompositionPositions(view, out start, out end);
 
             // The call to MarkCultureProperty or SetText (which calls MarkCultureProperty)
-            // modifies the start and end TextPointers in the case of a multiple characters being replaced by 
+            // modifies the start and end TextPointers in the case of a multiple characters being replaced by
             // input from the IMEPad in a langugage different than that of the current text.
-            // startOffsetBefore, endOffsetBefore and _lastCompositionText are stored in a 
+            // startOffsetBefore, endOffsetBefore and _lastCompositionText are stored in a
             // CompositionEventRecord to be later replayed in RaiseCompositionEvents (after releasing the lock).
             // Store these variables based off of the original start and end TextPointers.
             int startOffsetBefore = start.Offset;
@@ -2401,7 +2401,7 @@ namespace System.Windows.Documents
 
                             // The next call to HandleCompositionEvents involves firing events
                             // that could result in a reentrancy. By initializing these TextPointers
-                            // we are being prepared for such an eventuality. 
+                            // we are being prepared for such an eventuality.
                             _previousCompositionStart = (_previousCompositionStartOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionStartOffset, LogicalDirection.Backward);
                             _previousCompositionEnd = (_previousCompositionEndOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionEndOffset, LogicalDirection.Forward);
                         }
@@ -5265,8 +5265,7 @@ namespace System.Windows.Documents
 
             public override string ToString()
             {
-                return String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5}",
-                    OpDepth, NetCharCount, IMECharCount, Op, EventState, Detail);
+                return string.Create(CultureInfo.InvariantCulture, $"{OpDepth} {NetCharCount} {IMECharCount} {Op} {EventState} {Detail}");
             }
 
             internal void Write(BinaryWriter writer)

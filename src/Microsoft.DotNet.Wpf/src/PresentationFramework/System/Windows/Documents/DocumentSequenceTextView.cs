@@ -3,9 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 //
-// Description: 
+// Description:
 //      DocumentSequenceTextView implements TextView for DocumentSequence
-//      to support text editing (e.g Selection). 
+//      to support text editing (e.g Selection).
 //
 
 namespace System.Windows.Documents
@@ -25,7 +25,7 @@ namespace System.Windows.Documents
 
     /// <summary>
     /// DocumentSequenceTextView implements TextView for DocumentSequence
-    /// to support text editing (e.g Selection). 
+    /// to support text editing (e.g Selection).
     /// </summary>
     internal sealed class DocumentSequenceTextView : TextViewBase
     {
@@ -46,7 +46,7 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -62,9 +62,9 @@ namespace System.Windows.Documents
         /// Point in pixel coordinates to test.
         /// </param>
         /// <param name="snapToText">
-        /// If true, this method must always return a positioned text position 
-        /// (the closest position as calculated by the control's heuristics). 
-        /// If false, this method should return null position, if the test 
+        /// If true, this method must always return a positioned text position
+        /// (the closest position as calculated by the control's heuristics).
+        /// If false, this method should return null position, if the test
         /// point does not fall within any character bounding box.
         /// </param>
         /// <returns>
@@ -72,12 +72,12 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetTextPositionFromPoint(Point point, bool snapToText)
         {
-            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("GetTextPositionFromPoint {0}-{1}", point, snapToText));
+            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetTextPositionFromPoint {point}-{snapToText}");
             DocumentSequenceTextPointer tp = null;
             LogicalDirection edge = LogicalDirection.Forward;
 
@@ -92,13 +92,13 @@ namespace System.Windows.Documents
             }
 
             // When snapToText is true, ChildTextView.GetTextPositionFromPoint will guranttee to
-            // return a non-null position. 
-            // In current code, ChildTextView can't be null. 
+            // return a non-null position.
+            // In current code, ChildTextView can't be null.
             return tp == null ? null : DocumentSequenceTextPointer.CreatePointer(tp, edge);
         }
 
         /// <summary>
-        /// Retrieves the height and offset, in pixels, of the edge of 
+        /// Retrieves the height and offset, in pixels, of the edge of
         /// the object/character represented by position.
         /// </summary>
         /// <param name="position">
@@ -108,23 +108,23 @@ namespace System.Windows.Documents
         /// Transform to be applied to returned rect
         /// </param>
         /// <returns>
-        /// The height, in pixels, of the edge of the object/character 
+        /// The height, in pixels, of the edge of the object/character
         /// represented by position.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
         /// Rect.Width is always 0.
-        /// 
+        ///
         /// If the document is empty, then this method returns the expected
         /// height of a character, if placed at the specified position.
         /// </remarks>
         internal override Rect GetRawRectangleFromTextPosition(ITextPointer position, out Transform transform)
         {
-            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("GetRawRectangleFromTextPosition {0} {1}", position, position.LogicalDirection));
+            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetRawRectangleFromTextPosition {position} {position.LogicalDirection}");
             DocumentSequenceTextPointer tp = null;
 
             // Initialize transform to identity
@@ -157,7 +157,7 @@ namespace System.Windows.Documents
             {
                 DocumentSequenceTextPointer startTp = null;
                 DocumentSequenceTextPointer endTp = null;
-                
+
                 startTp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(startPosition);
                 endTp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(endPosition);
 
@@ -171,36 +171,36 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Retrieves an oriented text position matching position advanced by 
+        /// Retrieves an oriented text position matching position advanced by
         /// a number of lines from its initial position.
         /// </summary>
         /// <param name="position">
         /// Initial text position of an object/character.
         /// </param>
         /// <param name="suggestedX">
-        /// The suggested X offset, in pixels, of text position on the destination 
-        /// line. If suggestedX is set to Double.NaN it will be ignored, otherwise 
-        /// the method will try to find a position on the destination line closest 
+        /// The suggested X offset, in pixels, of text position on the destination
+        /// line. If suggestedX is set to Double.NaN it will be ignored, otherwise
+        /// the method will try to find a position on the destination line closest
         /// to suggestedX.
         /// </param>
         /// <param name="count">
         /// Number of lines to advance. Negative means move backwards.
         /// </param>
         /// <param name="newSuggestedX">
-        /// newSuggestedX is the offset at the position moved (useful when moving 
+        /// newSuggestedX is the offset at the position moved (useful when moving
         /// between columns or pages).
         /// </param>
         /// <param name="linesMoved">
-        /// linesMoved indicates the number of lines moved, which may be less 
+        /// linesMoved indicates the number of lines moved, which may be less
         /// than count if there is no more content.
         /// </param>
         /// <returns>
-        /// A TextPointer and its orientation matching suggestedX on the 
+        /// A TextPointer and its orientation matching suggestedX on the
         /// destination line.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetPositionAtNextLine(ITextPointer position, double suggestedX, int count, out double newSuggestedX, out int linesMoved)
@@ -208,7 +208,7 @@ namespace System.Windows.Documents
             newSuggestedX = suggestedX;
             linesMoved = count;
 
-            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("GetPositionAtNextLine {0} {1} {2} {3} ", position, position.LogicalDirection, suggestedX, count));
+            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetPositionAtNextLine {position} {position.LogicalDirection} {suggestedX} {count} ");
             DocumentSequenceTextPointer newTp  = null;
             LogicalDirection newEdge = LogicalDirection.Forward;
             DocumentSequenceTextPointer tp = null;
@@ -243,12 +243,12 @@ namespace System.Windows.Documents
         /// Position to test.
         /// </param>
         /// <returns>
-        /// Returns true if the specified position precedes or follows 
+        /// Returns true if the specified position precedes or follows
         /// the first or last code point of a caret unit, respectively.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
@@ -269,16 +269,16 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Finds the next position at the edge of a caret unit in 
+        /// Finds the next position at the edge of a caret unit in
         /// specified direction.
         /// </summary>
         /// <param name="position">
         /// Initial text position of an object/character.
         /// </param>
         /// <param name="direction">
-        /// If Forward, this method returns the "caret unit" position following 
+        /// If Forward, this method returns the "caret unit" position following
         /// the initial position.
-        /// If Backward, this method returns the caret unit" position preceding 
+        /// If Backward, this method returns the caret unit" position preceding
         /// the initial position.
         /// </param>
         /// <returns>
@@ -286,21 +286,21 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
-        /// In the context of this method, "caret unit" refers to a group of one 
+        /// In the context of this method, "caret unit" refers to a group of one
         /// or more Unicode code points that map to a single rendered glyph.
-        /// 
-        /// If position is located between two caret units, this method returns 
-        /// a new position located at the opposite edge of the caret unit in 
+        ///
+        /// If position is located between two caret units, this method returns
+        /// a new position located at the opposite edge of the caret unit in
         /// the indicated direction.
-        /// If position is located within a group of Unicode code points that map 
-        /// to a single caret unit, this method returns a new position at 
+        /// If position is located within a group of Unicode code points that map
+        /// to a single caret unit, this method returns a new position at
         /// the indicated edge of the containing caret unit.
-        /// If position is located at the beginning of end of content -- there is 
-        /// no content in the indicated direction -- then this method returns 
+        /// If position is located at the beginning of end of content -- there is
+        /// no content in the indicated direction -- then this method returns
         /// a position located at the same location as initial position.
         /// </remarks>
         internal override ITextPointer GetNextCaretUnitPosition(ITextPointer position, LogicalDirection direction)
@@ -326,7 +326,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetBackspaceCaretUnitPosition(ITextPointer position)
@@ -352,12 +352,12 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override TextSegment GetLineRange(ITextPointer position)
         {
-            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("GetLineRange {0} {1}", position, position.LogicalDirection));
+            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetLineRange {position} {position.LogicalDirection}");
             DocumentSequenceTextPointer tpStart = null;
             DocumentSequenceTextPointer tpEnd   = null;
             DocumentSequenceTextPointer tpLine = null;
@@ -384,7 +384,7 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Provides a collection of glyph properties corresponding to runs 
+        /// Provides a collection of glyph properties corresponding to runs
         /// of Unicode code points.
         /// </summary>
         /// <param name="start">
@@ -398,7 +398,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
@@ -420,17 +420,17 @@ namespace System.Windows.Documents
         /// A position to test.
         /// </param>
         /// <returns>
-        /// True if TextView contains specified text position. 
+        /// True if TextView contains specified text position.
         /// Otherwise returns false.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override bool Contains(ITextPointer position)
         {
-            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("Contains {0} {1}", position, position.LogicalDirection));
+            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"Contains {position} {position.LogicalDirection}");
             DocumentSequenceTextPointer tp = null;
             if (position != null)
             {
@@ -452,13 +452,13 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Makes sure that TextView is in a clean layout state and it is 
+        /// Makes sure that TextView is in a clean layout state and it is
         /// possible to retrieve layout related data.
         /// </summary>
         /// <remarks>
-        /// If IsValid returns false, it is required to call this method 
+        /// If IsValid returns false, it is required to call this method
         /// before calling any other method on TextView.
-        /// Validate method might be very expensive, because it may lead 
+        /// Validate method might be very expensive, because it may lead
         /// to full layout update.
         /// </remarks>
         internal override bool Validate()
@@ -494,9 +494,9 @@ namespace System.Windows.Documents
 
         /// <summary>
         /// </summary>
-        internal override UIElement RenderScope 
-        { 
-            get 
+        internal override UIElement RenderScope
+        {
+            get
             {
                 Visual visual = _docPage.Visual;
 
@@ -526,13 +526,13 @@ namespace System.Windows.Documents
         /// </summary>
         internal override bool IsValid
         {
-            get 
+            get
             {
                 if (ChildTextView != null)
                 {
                     return ChildTextView.IsValid;
                 }
-                return true; 
+                return true;
             }
         }
 

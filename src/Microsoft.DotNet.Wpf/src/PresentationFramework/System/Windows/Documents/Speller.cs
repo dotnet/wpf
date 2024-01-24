@@ -377,7 +377,7 @@ namespace System.Windows.Documents
             }
             catch(Exception e)
             {
-                System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Unloading dictionary failed. Original Uri:{0}, file Uri:{1}, exception:{2}", uri.ToString(), info.PathUri.ToString(), e.ToString()));
+                System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Unloading dictionary failed. Original Uri:{uri}, file Uri:{info.PathUri}, exception:{e}"));
                 throw;
             }
             UriMap.Remove(uri);
@@ -851,20 +851,24 @@ namespace System.Windows.Documents
                             if (status.TimeoutPosition.CompareTo(start) <= 0)
                             {
                                 // Diagnostic info for bug 1577085.
-                                string debugMessage = "Speller is not advancing! \n" +
-                                                      "Culture = " + culture + "\n" +
-                                                      "Start offset = " + start.Offset + " parent = " + start.ParentType.Name + "\n" +
-                                                      "ContextStart offset = " + contextStart.Offset + " parent = " + contextStart.ParentType.Name + "\n" +
-                                                      "ContentStart offset = " + contentStart.Offset + " parent = " + contentStart.ParentType.Name + "\n" +
-                                                      "ContentEnd offset = " + contentEnd.Offset + " parent = " + contentEnd.ParentType.Name + "\n" +
-                                                      "ContextEnd offset = " + contextEnd.Offset + " parent = " + contextEnd.ParentType.Name + "\n" +
-                                                      "Timeout offset = " + status.TimeoutPosition.Offset + " parent = " + status.TimeoutPosition.ParentType.Name + "\n" +
-                                                      "textMap TextLength = " + textMap.TextLength + " text = " + new string(textMap.Text) + "\n" +
-                                                      "Document = " + start.TextContainer.Parent.GetType().Name + "\n";
+                                string debugMessage =
+                                    $"""
+                                     Speller is not advancing!
+                                     Culture = {culture}
+                                     Start offset = {start.Offset} parent = {start.ParentType.Name}
+                                     ContextStart offset = {contextStart.Offset} parent = {contextStart.ParentType.Name}
+                                     ContentStart offset = {contentStart.Offset} parent = {contentStart.ParentType.Name}
+                                     ContentEnd offset = {contentEnd.Offset} parent = {contentEnd.ParentType.Name}
+                                     ContextEnd offset = {contextEnd.Offset} parent = {contextEnd.ParentType.Name}
+                                     Timeout offset = {status.TimeoutPosition.Offset} parent = {status.TimeoutPosition.ParentType.Name}
+                                     textMap TextLength = {textMap.TextLength} text = {new string(textMap.Text)}
+                                     Document = {start.TextContainer.Parent.GetType().Name}
+
+                                     """;
 
                                 if (start is TextPointer)
                                 {
-                                    debugMessage += "Xml = " + new TextRange((TextPointer)start.TextContainer.Start, (TextPointer)start.TextContainer.End).Xml;
+                                    debugMessage += $"Xml = {new TextRange((TextPointer)start.TextContainer.Start, (TextPointer)start.TextContainer.End).Xml}";
                                 }
 
                                 Invariant.Assert(false, debugMessage);
@@ -1564,7 +1568,7 @@ namespace System.Windows.Documents
             Uri fileUri;
             if (!uri.IsAbsoluteUri)
             {
-                fileUri = new Uri(new Uri(Directory.GetCurrentDirectory() + "/"), uri);
+                fileUri = new Uri(new Uri($"{Directory.GetCurrentDirectory()}/"), uri);
             }
             else
             {
@@ -1614,7 +1618,7 @@ namespace System.Windows.Documents
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Failure to delete temporary file with custom dictionary data. file Uri:{0},exception:{1}", tempLocationUri.ToString(), e.ToString()));
+                    System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Failure to delete temporary file with custom dictionary data. file Uri:{tempLocationUri},exception:{e}"));
                     throw;
                 }
             }

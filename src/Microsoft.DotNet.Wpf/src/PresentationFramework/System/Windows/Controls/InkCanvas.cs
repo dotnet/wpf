@@ -58,7 +58,7 @@ namespace System.Windows.Controls
         {
             Type ownerType = typeof(InkCanvas);
 
-            // 
+            //
             // We should add the following listener as the class handler which will be guarantied to receive the
             // notification before the handler on the instances. So we won't be trapped in the bad state due to the
             // event routing.
@@ -431,7 +431,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Top attached property.</param>
         /// <returns>The property's value.</returns>
         /// <seealso cref="InkCanvas.TopProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetTop(UIElement element)
         {
@@ -465,7 +465,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Bottom attached property.</param>
         /// <returns>The property's Length value.</returns>
         /// <seealso cref="InkCanvas.BottomProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetBottom(UIElement element)
         {
@@ -499,7 +499,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Left attached property.</param>
         /// <returns>The property's value.</returns>
         /// <seealso cref="InkCanvas.LeftProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
@@ -533,7 +533,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Right attached property.</param>
         /// <returns>The property's Length value.</returns>
         /// <seealso cref="InkCanvas.RightProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetRight(UIElement element)
         {
@@ -1435,7 +1435,7 @@ namespace System.Windows.Controls
         internal void RaiseSelectionMoved(EventArgs e)
         {
             Debug.Assert(e != null, "EventArg can not be null");
-            
+
             this.OnSelectionMoved(e);
             // Update the cursor of SelectionEditor behavior.
             EditingCoordinator.SelectionEditor.OnInkCanvasSelectionChanged();
@@ -1748,7 +1748,7 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            // 
+            //
             // Try to switch to Select mode first. If we fail to change the mode, then just simply no-op.
             if ( EnsureActiveEditingMode(InkCanvasEditingMode.Select) )
             {
@@ -2371,8 +2371,8 @@ namespace System.Windows.Controls
                             // We only have to reset IsSelected for the elements no longer exists in the new collection.
                             if ( !validStrokes.Contains(strokes[i]) )
                             {
-                                // 
-                                // Make sure we reset the IsSelected property which could have been 
+                                //
+                                // Make sure we reset the IsSelected property which could have been
                                 // set to true in the dynamic selection.
                                 strokes[i].IsSelected = false;
                             }
@@ -2395,7 +2395,7 @@ namespace System.Windows.Controls
                     int countOldSelectedStrokes = strokes.Count;
                     for ( int i = 0; i < countOldSelectedStrokes; i++ )
                     {
-                        // Make sure we reset the IsSelected property which could have been 
+                        // Make sure we reset the IsSelected property which could have been
                         // set to true in the dynamic selection but not being selected previously.
                         if ( !currentSelectedStrokes.Contains(strokes[i]) )
                         {
@@ -2512,7 +2512,7 @@ namespace System.Windows.Controls
             List<UIElement> elements = new List<UIElement>();
             foreach (UIElement element in selectedElements)
             {
-                // 
+                //
                 // Don't add the duplicated element.
                 if ( !elements.Contains(element) )
                 {
@@ -2775,7 +2775,7 @@ namespace System.Windows.Controls
             Debug.Assert(inkCanvas != null);
 
             if ( inkCanvas.IsEnabled
-                // 
+                //
                 // If user is editing, we should disable all commands.
                 && !inkCanvas.EditingCoordinator.UserIsEditing )
             {
@@ -2804,18 +2804,18 @@ namespace System.Windows.Controls
                 else if ( command == ApplicationCommands.SelectAll )
                 {
                     //anything to select?
-                    args.CanExecute = ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select 
+                    args.CanExecute = ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select
                                             && (inkCanvas.Strokes.Count > 0 || inkCanvas.Children.Count > 0));
                 }
             }
             else
             {
-                // 
+                //
                 // Return false for CanExecute if InkCanvas is disabled.
                 args.CanExecute = false;
             }
 
-            // 
+            //
             // Mark Handled as true so that the clipboard commands stops routing to InkCanvas' ancestors.
             if ( command == ApplicationCommands.Cut || command == ApplicationCommands.Copy
                 || command == ApplicationCommands.Paste )
@@ -2881,7 +2881,7 @@ namespace System.Windows.Controls
             if ( !e.Handled || inkCanvas.ForceCursor )
             {
                 Cursor cursor = inkCanvas.EditingCoordinator.GetActiveBehaviorCursor();
-                
+
                 // If cursor is null, we don't handle the event and leave it as whatever the default is.
                 if ( cursor != null )
                 {

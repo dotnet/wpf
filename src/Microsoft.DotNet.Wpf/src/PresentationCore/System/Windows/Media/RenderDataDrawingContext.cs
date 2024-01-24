@@ -117,10 +117,7 @@ namespace System.Windows.Media
         {
             base.VerifyApiNonstructuralChange();
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("RenderDataDrawingContext");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(RenderDataDrawingContext));
         }
 
         /// <summary>

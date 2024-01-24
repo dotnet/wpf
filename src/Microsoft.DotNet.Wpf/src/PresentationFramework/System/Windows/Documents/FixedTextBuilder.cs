@@ -172,7 +172,7 @@ namespace System.Windows.Documents
         internal void AddVirtualPage()
         {
 #if DEBUG
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("AppendVirtualPage {0}", _pageStructures.Count));
+            DocumentsTrace.FixedTextOM.Builder.Trace($"AppendVirtualPage {_pageStructures.Count}");
 #endif
             FixedPageStructure pageStructure = new FixedPageStructure(_pageStructures.Count);
 #if DEBUG
@@ -230,7 +230,7 @@ namespace System.Windows.Documents
                         pageStructure.FixedSOMPage = pageConstructor.FixedSOMPage;
                     }
 
-                    DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("_EnsureTextOMForPage Loading..."));
+                    DocumentsTrace.FixedTextOM.Builder.Trace("_EnsureTextOMForPage Loading...");
                     _CreateFixedMappingAndElementForPage(pageStructure, page, constructSOM);
 
 #if DEBUG
@@ -946,7 +946,7 @@ namespace System.Windows.Documents
         {
             int pageIndex = pageStructure.PageIndex;
 
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("_FlowOrderAnalysis P{0}-L[{0}]", pageIndex, nestingLevel));
+            DocumentsTrace.FixedTextOM.Builder.Trace($"_FlowOrderAnalysis P{pageIndex}-L[{pageIndex}]");
 
             int currentScopeId = _NewScopeId();
 
@@ -1678,13 +1678,13 @@ namespace System.Windows.Documents
 
                         if (i>0 && _builder._IsNonContiguous(_textRuns[i-1], run, comparison))
                         {
-                            _textRuns[i-1].Text = _textRuns[i-1].Text + " ";
+                            _textRuns[i-1].Text = $"{_textRuns[i - 1].Text} ";
                             textRunLength++;
                         }
                     }
                     if (addSpace && run.Text.Length>0 && !run.Text.EndsWith(" ", StringComparison.Ordinal) && !IsHyphen(run.Text[run.Text.Length - 1]))
                     {
-                        run.Text = run.Text + " ";
+                        run.Text = $"{run.Text} ";
                         textRunLength ++;
                     }
 

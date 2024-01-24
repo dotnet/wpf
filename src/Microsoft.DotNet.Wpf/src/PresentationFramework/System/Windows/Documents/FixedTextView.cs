@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// 
-// Description: TextView implementation for FixedDocument. 
+//
+// Description: TextView implementation for FixedDocument.
 //
 
 namespace System.Windows.Documents
@@ -57,10 +57,10 @@ namespace System.Windows.Documents
         /// Point in pixel coordinates to test.
         /// </param>
         /// <param name="snapToText">
-        /// If true, this method must always return a positioned text position 
+        /// If true, this method must always return a positioned text position
         /// (the closest position as calculated by the control's heuristics)
         /// unless the point is outside the boundaries of the page.
-        /// If false, this method should return null position, if the test 
+        /// If false, this method should return null position, if the test
         /// point does not fall within any character bounding box.
         /// </param>
         /// <returns>
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetTextPositionFromPoint(Point point, bool snapToText)
@@ -88,9 +88,9 @@ namespace System.Windows.Documents
                 }
                 return textPos;
             }
-        
+
             ITextPointer pos = null;
-            
+
             UIElement e;
             bool isHit = _HitTest(point, out e);
             if (isHit)
@@ -124,12 +124,12 @@ namespace System.Windows.Documents
             }
 
 
-            DocumentsTrace.FixedTextOM.TextView.Trace(string.Format("GetTextPositionFromPoint P{0}, STT={1}, CP={2}", point, snapToText, pos == null ? "null" : ((FixedTextPointer)pos).ToString()));
+            DocumentsTrace.FixedTextOM.TextView.Trace($"GetTextPositionFromPoint P{point}, STT={snapToText}, CP={(pos == null ? "null" : ((FixedTextPointer)pos).ToString())}");
             return pos;
         }
 
         /// <summary>
-        /// Retrieves the height and offset, in pixels, of the edge of 
+        /// Retrieves the height and offset, in pixels, of the edge of
         /// the object/character represented by position.
         /// </summary>
         /// <param name="position">
@@ -139,17 +139,17 @@ namespace System.Windows.Documents
         /// Transform to be applied to returned rect
         /// </param>
         /// <returns>
-        /// The height, in pixels, of the edge of the object/character 
+        /// The height, in pixels, of the edge of the object/character
         /// represented by position.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
         /// Rect.Width is always 0.
-        /// Output parameter Transform is always Identity. It is not expected that editing scenarios 
+        /// Output parameter Transform is always Identity. It is not expected that editing scenarios
         /// will require speparate transform with raw rectangle for this case.
         /// If the document is empty, then this method returns the expected
         /// height of a character, if placed at the specified position.
@@ -157,7 +157,7 @@ namespace System.Windows.Documents
         internal override Rect GetRawRectangleFromTextPosition(ITextPointer position, out Transform transform)
         {
 #if DEBUG
-            DocumentsTrace.FixedTextOM.TextView.Trace(string.Format("GetRectFromTextPosition {0}, {1}", (FixedTextPointer)position, position.LogicalDirection));
+            DocumentsTrace.FixedTextOM.TextView.Trace($"GetRectFromTextPosition {(FixedTextPointer)position}, {position.LogicalDirection}");
 #endif
 
             FixedTextPointer ftp = Container.VerifyPosition(position);
@@ -250,7 +250,7 @@ namespace System.Windows.Documents
             Dictionary<FixedPage, ArrayList> highlights = new Dictionary<FixedPage,ArrayList>();
             FixedTextPointer startftp = this.Container.VerifyPosition(startPosition);
             FixedTextPointer endftp = this.Container.VerifyPosition(endPosition);
-            
+
             this.Container.GetMultiHighlights(startftp, endftp, highlights, FixedHighlightType.TextSelection, null, null);
 
             ArrayList highlightList;
@@ -288,7 +288,7 @@ namespace System.Windows.Documents
                         Rect clipRect = fh.Element.Clip.Bounds;
                         backgroundRect.Intersect(clipRect);
                     }
-                    
+
                     Geometry thisGeometry = new RectangleGeometry(backgroundRect);
                     thisGeometry.Transform = t;
 
@@ -302,36 +302,36 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Retrieves an oriented text position matching position advanced by 
+        /// Retrieves an oriented text position matching position advanced by
         /// a number of lines from its initial position.
         /// </summary>
         /// <param name="position">
         /// Initial text position of an object/character.
         /// </param>
         /// <param name="suggestedX">
-        /// The suggested X offset, in pixels, of text position on the destination 
-        /// line. If suggestedX is set to Double.NaN it will be ignored, otherwise 
-        /// the method will try to find a position on the destination line closest 
+        /// The suggested X offset, in pixels, of text position on the destination
+        /// line. If suggestedX is set to Double.NaN it will be ignored, otherwise
+        /// the method will try to find a position on the destination line closest
         /// to suggestedX.
         /// </param>
         /// <param name="count">
         /// Number of lines to advance. Negative means move backwards.
         /// </param>
         /// <param name="newSuggestedX">
-        /// newSuggestedX is the offset at the position moved (useful when moving 
+        /// newSuggestedX is the offset at the position moved (useful when moving
         /// between columns or pages).
         /// </param>
         /// <param name="linesMoved">
-        /// linesMoved indicates the number of lines moved, which may be less 
+        /// linesMoved indicates the number of lines moved, which may be less
         /// than count if there is no more content.
         /// </param>
         /// <returns>
-        /// A TextPointer and its orientation matching suggestedX on the 
+        /// A TextPointer and its orientation matching suggestedX on the
         /// destination line.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetPositionAtNextLine(ITextPointer position, double suggestedX, int count, out double newSuggestedX, out int linesMoved)
@@ -339,7 +339,7 @@ namespace System.Windows.Documents
             newSuggestedX = suggestedX;
             linesMoved = 0;
 #if DEBUG
-            DocumentsTrace.FixedTextOM.TextView.Trace(string.Format("FixedTextView.MoveToLine {0}, {1}, {2}, {3}", (FixedTextPointer)position, position.LogicalDirection, suggestedX, count));
+            DocumentsTrace.FixedTextOM.TextView.Trace($"FixedTextView.MoveToLine {(FixedTextPointer)position}, {position.LogicalDirection}, {suggestedX}, {count}");
 #endif
 
             FixedPosition fixedp;
@@ -408,7 +408,7 @@ namespace System.Windows.Documents
             {
                 linesMoved = -linesMoved;
             }
-            
+
             pos = _CreateTextPointer(fixedp, edge);
             Debug.Assert(pos != null);
 
@@ -416,7 +416,7 @@ namespace System.Windows.Documents
             {
                 linesMoved = 0;
             }
-            
+
             return pos;
         }
 
@@ -427,12 +427,12 @@ namespace System.Windows.Documents
         /// Position to test.
         /// </param>
         /// <returns>
-        /// Returns true if the specified position precedes or follows 
+        /// Returns true if the specified position precedes or follows
         /// the first or last code point of a caret unit, respectively.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
@@ -477,16 +477,16 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Finds the next position at the edge of a caret unit in 
+        /// Finds the next position at the edge of a caret unit in
         /// specified direction.
         /// </summary>
         /// <param name="position">
         /// Initial text position of an object/character.
         /// </param>
         /// <param name="direction">
-        /// If Forward, this method returns the "caret unit" position following 
+        /// If Forward, this method returns the "caret unit" position following
         /// the initial position.
-        /// If Backward, this method returns the caret unit" position preceding 
+        /// If Backward, this method returns the caret unit" position preceding
         /// the initial position.
         /// </param>
         /// <returns>
@@ -494,21 +494,21 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         /// <remarks>
-        /// In the context of this method, "caret unit" refers to a group of one 
+        /// In the context of this method, "caret unit" refers to a group of one
         /// or more Unicode code points that map to a single rendered glyph.
-        /// 
-        /// If position is located between two caret units, this method returns 
-        /// a new position located at the opposite edge of the caret unit in 
+        ///
+        /// If position is located between two caret units, this method returns
+        /// a new position located at the opposite edge of the caret unit in
         /// the indicated direction.
-        /// If position is located within a group of Unicode code points that map 
-        /// to a single caret unit, this method returns a new position at 
+        /// If position is located within a group of Unicode code points that map
+        /// to a single caret unit, this method returns a new position at
         /// the indicated edge of the containing caret unit.
-        /// If position is located at the beginning of end of content -- there is 
-        /// no content in the indicated direction -- then this method returns 
+        /// If position is located at the beginning of end of content -- there is
+        /// no content in the indicated direction -- then this method returns
         /// a position located at the same location as initial position.
         /// </remarks>
         internal override ITextPointer GetNextCaretUnitPosition(ITextPointer position, LogicalDirection direction)
@@ -563,7 +563,7 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override ITextPointer GetBackspaceCaretUnitPosition(ITextPointer position)
@@ -582,13 +582,13 @@ namespace System.Windows.Documents
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override TextSegment GetLineRange(ITextPointer position)
         {
 #if DEBUG
-            DocumentsTrace.FixedTextOM.TextView.Trace(string.Format("GetLineRange {0}, {1}", (FixedTextPointer)position, position.LogicalDirection));
+            DocumentsTrace.FixedTextOM.TextView.Trace($"GetLineRange {(FixedTextPointer)position}, {position.LogicalDirection}");
 #endif
             FixedTextPointer ftp = Container.VerifyPosition(position);
             FixedPosition fixedp;
@@ -635,12 +635,12 @@ namespace System.Windows.Documents
         /// A position to test.
         /// </param>
         /// <returns>
-        /// True if TextView contains specified text position. 
+        /// True if TextView contains specified text position.
         /// Otherwise returns false.
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// Throws InvalidOperationException if IsValid is false.
-        /// If IsValid returns false, Validate method must be called before 
+        /// If IsValid returns false, Validate method must be called before
         /// calling this method.
         /// </exception>
         internal override bool Contains(ITextPointer position)
@@ -654,18 +654,18 @@ namespace System.Windows.Documents
         }
 
         /// <summary>
-        /// Makes sure that TextView is in a clean layout state and it is 
+        /// Makes sure that TextView is in a clean layout state and it is
         /// possible to retrieve layout related data.
         /// </summary>
         /// <remarks>
-        /// If IsValid returns false, it is required to call this method 
+        /// If IsValid returns false, it is required to call this method
         /// before calling any other method on TextView.
-        /// Validate method might be very expensive, because it may lead 
+        /// Validate method might be very expensive, because it may lead
         /// to full layout update.
         /// </remarks>
         internal override bool Validate()
         {
-            // Always valid. Do nothing. 
+            // Always valid. Do nothing.
             return true;
         }
 
@@ -681,9 +681,9 @@ namespace System.Windows.Documents
 
         /// <summary>
         /// </summary>
-        internal override UIElement RenderScope 
-        { 
-            get 
+        internal override UIElement RenderScope
+        {
+            get
             {
                 Visual visual = _docPage.Visual;
 
@@ -723,8 +723,8 @@ namespace System.Windows.Documents
         /// Collection of TextSegments representing content of the TextView.
         /// </summary>
         internal override ReadOnlyCollection<TextSegment> TextSegments
-        { 
-            get 
+        {
+            get
             {
                 if (_textSegments == null)
                 {
@@ -772,7 +772,7 @@ namespace System.Windows.Documents
         #region Private Methods
 
         // hit testing to find the inner most UIElement that was hit
-        // as well as the containing fixed page. 
+        // as well as the containing fixed page.
         private bool _HitTest(Point pt, out UIElement e)
         {
             e = null;
@@ -786,7 +786,7 @@ namespace System.Windows.Documents
                 if (t == UIElementType || t.IsSubclassOf(UIElementType))
                 {
                     e = (UIElement) v;
-                    
+
                     return true;
                 }
                 v = VisualTreeHelper.GetParent(v);
@@ -837,7 +837,7 @@ namespace System.Windows.Documents
                     GeneralTransform tranToGlyphs = this.FixedPage.TransformToDescendant(startGlyphs);
                     Point transformedPt = point;
                     if (tranToGlyphs != null)
-                    {                        
+                    {
                         tranToGlyphs.TryTransform(transformedPt, out transformedPt);
                     }
 
@@ -899,7 +899,7 @@ namespace System.Windows.Documents
             {
                 FixedPage page = Container.FixedDocument.SyncGetPage(pageIndex, false);
                 // This line contains multiple Glyhs. Scan backward
-                // util we hit the first one whose OriginX is smaller 
+                // util we hit the first one whose OriginX is smaller
                 // then suggestedX;
                 if (Double.IsInfinity(suggestedX))
                 {
@@ -923,7 +923,7 @@ namespace System.Windows.Documents
                         Point pt1 = topOfPage;
                         Point pt2 = secondPoint;
                         if (transform != null)
-                        {                            
+                        {
                             transform.TryTransform(pt1, out pt1);
                             transform.TryTransform(pt2, out pt2);
                         }
@@ -989,7 +989,7 @@ namespace System.Windows.Documents
             return run.GetDistanceFromCaretCharacterHit(new CharacterHit(firstChar, trailingLength));
         }
 
-        // char index == -1 implies end of run. 
+        // char index == -1 implies end of run.
         internal static Rect _GetGlyphRunDesignRect(Glyphs g, int charStart, int charEnd)
         {
             GlyphRun run = g.ToGlyphRun();
@@ -1082,8 +1082,8 @@ namespace System.Windows.Documents
         // FlowPosition --> FixedPosition
         //---------------------------------------------------------------------
 
-        // Helper function to overcome the limitation in FixedTextBuilder.GetFixedPosition 
-        // Making sure we are asking a position that is either a Run or an EmbeddedElement. 
+        // Helper function to overcome the limitation in FixedTextBuilder.GetFixedPosition
+        // Making sure we are asking a position that is either a Run or an EmbeddedElement.
         private bool _GetFixedPosition(FixedTextPointer ftp, out FixedPosition fixedp)
         {
             LogicalDirection textdir = ftp.LogicalDirection;
@@ -1171,7 +1171,7 @@ namespace System.Windows.Documents
         // FixedPosition --> ITextPointer
         //---------------------------------------------------------------------
 
-        // Create a text position from description of a fixed position. 
+        // Create a text position from description of a fixed position.
         // This is primarily called from HitTesting code
         private ITextPointer _CreateTextPointer(FixedPosition fixedPosition, LogicalDirection edge)
         {
@@ -1179,7 +1179,7 @@ namespace System.Windows.Documents
             FlowPosition flowHit = Container.FixedTextBuilder.CreateFlowPosition(fixedPosition);
             if (flowHit != null)
             {
-                DocumentsTrace.FixedTextOM.TextView.Trace(string.Format("_CreatetTextPointer {0}:{1}", fixedPosition.ToString(), flowHit.ToString()));
+                DocumentsTrace.FixedTextOM.TextView.Trace($"_CreatetTextPointer {fixedPosition}:{flowHit}");
 
                 // Create a TextPointer from the flow position
                 return new FixedTextPointer(true, edge, flowHit);
@@ -1187,7 +1187,7 @@ namespace System.Windows.Documents
             return null;
         }
 
-        // Create a text position from description of a fixed position. 
+        // Create a text position from description of a fixed position.
         // This is primarily called from HitTesting code
         private ITextPointer _CreateTextPointerFromGlyphs(Glyphs g, Point point)
         {
@@ -1207,7 +1207,7 @@ namespace System.Windows.Documents
         private void _SkipFormattingTags(ITextPointer textPointer)
         {
             Debug.Assert(!textPointer.IsFrozen, "Can't reposition a frozen pointer!");
-            
+
             LogicalDirection dir = textPointer.LogicalDirection;
             int increment = (dir == LogicalDirection.Forward ? +1 : -1);
             while (TextSchema.IsFormattingType( textPointer.GetElementType(dir)) )
@@ -1252,7 +1252,7 @@ namespace System.Windows.Documents
             }
         }
 
-        // 
+        //
         private int PageIndex
         {
             get

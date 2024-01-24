@@ -116,7 +116,7 @@ namespace System.Windows.Markup
             // so that we'll find MarkupExtension subclasses.
             if (typeAndSerializer == null)
             {
-                typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, localName + "Extension", null);
+                typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, $"{localName}Extension", null);
             }
 
             if (typeAndSerializer != null &&
@@ -1213,7 +1213,7 @@ namespace System.Windows.Markup
     {
         MethodInfo memberInfo = null;
 
-        memberInfo = ownerType.GetMethod("Set" + propName,
+        memberInfo = ownerType.GetMethod($"Set{propName}",
                                             BindingFlags.Public |
                                             BindingFlags.Static |
                                             BindingFlags.FlattenHierarchy);
@@ -1225,7 +1225,7 @@ namespace System.Windows.Markup
         // Try read-only case (Getter only)
         if (memberInfo == null)
         {
-            memberInfo = ownerType.GetMethod("Get" + propName,
+            memberInfo = ownerType.GetMethod($"Get{propName}",
                                                 BindingFlags.Public |
                                                 BindingFlags.Static |
                                                 BindingFlags.FlattenHierarchy);

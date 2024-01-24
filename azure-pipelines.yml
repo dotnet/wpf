@@ -63,7 +63,8 @@ pr:
     - release/7.*
     - release/8.*
     - experimental/*
-    - win11themingCI
+    - feature/win11theming/staging
+    - feature/win11theming/release
   paths:
     exclude:
     - Documentation/*

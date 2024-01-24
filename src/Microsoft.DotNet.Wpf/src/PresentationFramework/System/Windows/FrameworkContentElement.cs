@@ -598,7 +598,7 @@ namespace System.Windows
                                 #region EventTracing
                                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                                 {
-                                    string TypeAndName = "[" + GetType().Name + "]" + dp.Name;
+                                    string TypeAndName = $"[{GetType().Name}]{dp.Name}";
                                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                          EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
                                                                          GetHashCode(), TypeAndName);

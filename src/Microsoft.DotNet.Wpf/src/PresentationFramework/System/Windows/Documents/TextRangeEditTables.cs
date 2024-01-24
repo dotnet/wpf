@@ -79,18 +79,18 @@ namespace System.Windows.Documents
             {
                 //
                 // A -ve column index implies that these cells were not yet laid out.
-                // (Table code calculates this property during layout phase 
+                // (Table code calculates this property during layout phase
                 // even if they are quite available without any layout - not a good idea).
-                // 
+                //
                 // Note that for table selection initiated with a user gesture this condition can never hold true,
                 // because we will always have a valid layout.
                 //
-                // It can only happen when someone programmatically creates a FlowDocument, 
-                // adds some table content to it, creates a selection and tries to serialize it. 
+                // It can only happen when someone programmatically creates a FlowDocument,
+                // adds some table content to it, creates a selection and tries to serialize it.
                 // This is logically a valid scenario, but it is low priority for us. So for now,
                 // we return false here and loose table column information.
                 //
-                // We cannot efficiently compute a cell's column index at editing level. 
+                // We cannot efficiently compute a cell's column index at editing level.
                 // (The presence of rowspans makes this an O(n*n) algorithm to walk all rows.)
                 // The right fix to enable this scenario would be in table code since they can cache
                 // table properties and make them available to us before layout.
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
             firstColumnIndex = firstCell.ColumnIndex;
             lastColumnIndex = lastCell.ColumnIndex + lastCell.ColumnSpan - 1;
 
-            Invariant.Assert(firstColumnIndex <= lastColumnIndex, "expecting: firstColumnIndex <= lastColumnIndex. Actual values: " + firstColumnIndex + " and " + lastColumnIndex);
+            Invariant.Assert(firstColumnIndex <= lastColumnIndex, $"expecting: firstColumnIndex <= lastColumnIndex. Actual values: {firstColumnIndex} and {lastColumnIndex}");
 
             return true;
         }
@@ -225,8 +225,8 @@ namespace System.Windows.Documents
         /// True if both ends cross Cell boundaries and those cells belong to the same row.
         /// </returns>
         internal static bool IsTableCellRange(
-            TextPointer anchorPosition, TextPointer movingPosition, 
-            bool includeCellAtMovingPosition, 
+            TextPointer anchorPosition, TextPointer movingPosition,
+            bool includeCellAtMovingPosition,
             out TableCell anchorCell, out TableCell movingCell)
         {
             // Find boundary cells and validate parameters
@@ -237,11 +237,11 @@ namespace System.Windows.Documents
             Table anchorTable;
             Table movingTable;
             if (!IdentifyTableElements(
-                anchorPosition, movingPosition, 
-                includeCellAtMovingPosition, 
-                out anchorCell, out movingCell, 
-                out anchorRow, out movingRow, 
-                out anchorRowGroup, out movingRowGroup, 
+                anchorPosition, movingPosition,
+                includeCellAtMovingPosition,
+                out anchorCell, out movingCell,
+                out anchorRow, out movingRow,
+                out anchorRowGroup, out movingRowGroup,
                 out anchorTable, out movingTable))
             {
                 return false;
@@ -280,8 +280,8 @@ namespace System.Windows.Documents
         /// Otherwise returns null.
         /// </returns>
         internal static List<TextSegment> BuildTableRange(
-            TextPointer anchorPosition, TextPointer movingPosition, 
-            bool includeCellAtMovingPosition, 
+            TextPointer anchorPosition, TextPointer movingPosition,
+            bool includeCellAtMovingPosition,
             out bool isTableCellRange)
         {
             // Find boundary cells and validate parameters
@@ -294,11 +294,11 @@ namespace System.Windows.Documents
             Table anchorTable;
             Table movingTable;
             if (!IdentifyTableElements(
-                anchorPosition, movingPosition, 
-                includeCellAtMovingPosition, 
-                out anchorCell, out movingCell, 
-                out anchorRow, out movingRow, 
-                out anchorRowGroup, out movingRowGroup, 
+                anchorPosition, movingPosition,
+                includeCellAtMovingPosition,
+                out anchorCell, out movingCell,
+                out anchorRow, out movingRow,
+                out anchorRowGroup, out movingRowGroup,
                 out anchorTable, out movingTable))
             {
                 isTableCellRange = false;
@@ -313,8 +313,8 @@ namespace System.Windows.Documents
                 return BuildCellSelection(anchorCell, movingCell);
             }
             else if (
-                anchorRow != null || movingRow != null || 
-                anchorRowGroup != null || movingRowGroup != null || 
+                anchorRow != null || movingRow != null ||
+                anchorRowGroup != null || movingRowGroup != null ||
                 anchorTable != null || movingTable != null)
             {
                 // Crossed table boundary
@@ -371,7 +371,7 @@ namespace System.Windows.Documents
         }
 
         private static List<TextSegment> BuildCrossTableSelection(
-            TextPointer anchorPosition, TextPointer movingPosition, 
+            TextPointer anchorPosition, TextPointer movingPosition,
             TableRow anchorRow, TableRow movingRow)
         {
             List<TextSegment> textSegments = new List<TextSegment>(1);
@@ -379,14 +379,14 @@ namespace System.Windows.Documents
             {
                 textSegments.Add(
                     NewNormalizedTextSegment(
-                        anchorRow != null ? anchorRow.ContentStart : anchorPosition, 
+                        anchorRow != null ? anchorRow.ContentStart : anchorPosition,
                         movingRow != null ? movingRow.ContentEnd : movingPosition));
             }
             else
             {
                 textSegments.Add(
                     NewNormalizedTextSegment(
-                        movingRow != null ? movingRow.ContentStart : movingPosition, 
+                        movingRow != null ? movingRow.ContentStart : movingPosition,
                         anchorRow != null ? anchorRow.ContentEnd : anchorPosition));
             }
 
@@ -453,7 +453,7 @@ namespace System.Windows.Documents
                     // This is a case when selection returns back to acnhor cell from the next cell
                     movingPosition = anchorCell.ContentEnd.GetInsertionPosition();
                 }
-                else if (direction == LogicalDirection.Forward && 
+                else if (direction == LogicalDirection.Forward &&
                     (movingCell.Row == anchorCell.Row && movingCell.Index + 1 == anchorCell.Index ||
                     anchorCell.Index == 0 && movingCell.Index == movingCell.Row.Cells.Count - 1 && movingCell.Row.Index + 1 == anchorCell.Row.Index))
                 {
@@ -721,7 +721,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                // Check if position is at one of special structural boundary positions, where we can potentially have an 
+                // Check if position is at one of special structural boundary positions, where we can potentially have an
                 // insertion position and create one.
 
                 if (position.IsAtRowEnd)
@@ -780,7 +780,7 @@ namespace System.Windows.Documents
             TextPointer nextInsertionPosition = rowEndPosition;
 
             while (nextInsertionPosition != null &&
-                nextInsertionPosition.IsAtRowEnd && // the following insertion position may be IsAtRowEnd again 
+                nextInsertionPosition.IsAtRowEnd && // the following insertion position may be IsAtRowEnd again
                 currentTable == TextRangeEditTables.GetTableFromPosition(nextInsertionPosition))
             {
                 nextInsertionPosition = nextInsertionPosition.GetNextInsertionPosition(LogicalDirection.Forward);
@@ -958,14 +958,14 @@ namespace System.Windows.Documents
             // we may encounter following tables, so that start/end range will be
             // again table-crossing.
             while (
-                start.CompareTo(end) < 0 
+                start.CompareTo(end) < 0
                 &&
                 IdentifyTableElements(
-                    /*anchorPosition:*/start, /*movingPosition:*/end, 
-                    /*includeCellAtMovingPosition:*/false, 
-                    out startCell, out endCell, 
-                    out startRow, out endRow, 
-                    out startRowGroup, out endRowGroup, 
+                    /*anchorPosition:*/start, /*movingPosition:*/end,
+                    /*includeCellAtMovingPosition:*/false,
+                    out startCell, out endCell,
+                    out startRow, out endRow,
+                    out startRowGroup, out endRowGroup,
                     out startTable, out endTable))
             {
                 if (startTable == null && endTable == null || startTable == endTable)
@@ -1538,8 +1538,8 @@ namespace System.Windows.Documents
             TableCell endCell;
 
             if (!IsTableCellRange(
-                textRange.Start, textRange.End, 
-                /*includeCellAtMovingPosition:*/false, 
+                textRange.Start, textRange.End,
+                /*includeCellAtMovingPosition:*/false,
                 out startCell, out endCell))
             {
                 return false;
@@ -1574,11 +1574,11 @@ namespace System.Windows.Documents
 
         // A private worker for TableBorderHitTest
         private static bool TableBorderHitTest(
-            ITextView textView, Point point, 
-            out Table table, 
-            out int columnIndex, 
-            out Rect columnRect, 
-            out double tableAutofitWidth, 
+            ITextView textView, Point point,
+            out Table table,
+            out int columnIndex,
+            out Rect columnRect,
+            out double tableAutofitWidth,
             out double[] columnWidths)
         {
             // Default values for output parameters
@@ -1602,7 +1602,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            // Translate the point from purlic coordinates relative to UIElement (render scope) 
+            // Translate the point from purlic coordinates relative to UIElement (render scope)
             // into internal coordinates relative to DocumentPage in TextDocumentView
             // In the current implementation the offset between content and renderScope is zero in RichTextBox,
             // but it may be just random, or may change in the future after eliminating TextFlow.
@@ -1628,7 +1628,7 @@ namespace System.Windows.Documents
             }
 
             // Ensure we're not hitting off the end of the table.
-            if (cell.ColumnIndex + cell.ColumnSpan <= cell.Table.ColumnCount && 
+            if (cell.ColumnIndex + cell.ColumnSpan <= cell.Table.ColumnCount &&
                 point.X > cellInfo.CellArea.Right - sensitivity)
             {
                 if(!IsLastCellInRow(cell) || point.X < cellInfo.CellArea.Right + sensitivity)
@@ -2040,11 +2040,11 @@ namespace System.Windows.Documents
         /// (up to their commin ancestor element).
         /// </returns>
         private static bool IdentifyTableElements(
-            TextPointer anchorPosition, TextPointer movingPosition, 
-            bool includeCellAtMovingPosition, 
-            out TableCell anchorCell, out TableCell movingCell, 
-            out TableRow anchorRow, out TableRow movingRow, 
-            out TableRowGroup anchorRowGroup, out TableRowGroup movingRowGroup, 
+            TextPointer anchorPosition, TextPointer movingPosition,
+            bool includeCellAtMovingPosition,
+            out TableCell anchorCell, out TableCell movingCell,
+            out TableRow anchorRow, out TableRow movingRow,
+            out TableRowGroup anchorRowGroup, out TableRowGroup movingRowGroup,
             out Table anchorTable, out Table movingTable)
         {
             // We need to normalize pointers to make sure that we do not stay above TableCell level
@@ -2118,18 +2118,18 @@ namespace System.Windows.Documents
             // so they must be non-null only if they both belong to the same table.
             //Invariant.Assert(anchorCell == null && movingCell == null || anchorCell != null && movingCell != null && anchorCell.Table == movingCell.Table);
 
-            return 
-                anchorCell != null || movingCell != null || 
-                anchorRow != null || movingRow != null || 
-                anchorRowGroup != null || movingRowGroup != null || 
+            return
+                anchorCell != null || movingCell != null ||
+                anchorRow != null || movingRow != null ||
+                anchorRowGroup != null || movingRowGroup != null ||
                 anchorTable != null || movingTable != null;
         }
 
         private static bool FindTableElements(
-            TextPointer anchorPosition, TextPointer movingPosition, 
-            out TableCell anchorCell, out TableCell movingCell, 
-            out TableRow anchorRow, out TableRow movingRow, 
-            out TableRowGroup anchorRowGroup, out TableRowGroup movingRowGroup, 
+            TextPointer anchorPosition, TextPointer movingPosition,
+            out TableCell anchorCell, out TableCell movingCell,
+            out TableRow anchorRow, out TableRow movingRow,
+            out TableRowGroup anchorRowGroup, out TableRowGroup movingRowGroup,
             out Table anchorTable, out Table movingTable)
         {
             // Most typical check start - fast return for simlest text segment
@@ -2164,11 +2164,11 @@ namespace System.Windows.Documents
         }
 
         private static void FindTableElements(
-            TextElement commonAncestor, 
-            TextPointer position, 
-            out TableCell cell, 
-            out TableRow row, 
-            out TableRowGroup rowGroup, 
+            TextElement commonAncestor,
+            TextPointer position,
+            out TableCell cell,
+            out TableRow row,
+            out TableRowGroup rowGroup,
             out Table table)
         {
             cell = null;

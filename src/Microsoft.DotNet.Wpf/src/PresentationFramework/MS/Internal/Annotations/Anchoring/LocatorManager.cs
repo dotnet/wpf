@@ -417,8 +417,8 @@ namespace MS.Internal.Annotations.Anchoring
             ContentLocator realLocator = locator as ContentLocator;
             if (realLocator != null)
             {
-                if (offset < 0 || offset >= realLocator.Parts.Count)
-                    throw new ArgumentOutOfRangeException("offset");
+                ArgumentOutOfRangeException.ThrowIfNegative(offset);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(offset, realLocator.Parts.Count);
             }
 
             return InternalResolveLocator(locator, offset, startNode, false /*skipStartNode*/, out attachmentLevel);

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Windows.Markup;
 using System.Xaml.Permissions;
 
@@ -52,7 +54,7 @@ namespace System.Xaml
 
         /// <summary>
         /// SourceBamlUri will be used by XamlObjectWriter in BeginInitHandler's SourceBamlUri property, in place of the actual BaseUri.
-        /// This is only useful to give the correct info in that handler, while keeping runtime behavior fully compatible. 
+        /// This is only useful to give the correct info in that handler, while keeping runtime behavior fully compatible.
         /// </summary>
         public Uri SourceBamlUri { get; set; }
 

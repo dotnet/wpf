@@ -107,7 +107,7 @@ namespace System.Windows.Markup
         internal const char VLine = '|';
         internal const char Plus = '+';
     }
-    
+
     /// <summary>
     /// XamlReaderHelper class.
     /// </summary>
@@ -143,7 +143,7 @@ namespace System.Windows.Markup
             // setup the _textFlow stack
             _textFlowStack = new Stack();
 
-            // push a rootLevel stack 
+            // push a rootLevel stack
             // For now always use InlineBlock.
             TextFlowStackData textFlowStackData = new TextFlowStackData();
             textFlowStackData.StripLeadingSpaces = true;
@@ -477,7 +477,7 @@ namespace System.Windows.Markup
         {
             if (extensionFirst)
             {
-                if (ControllingXamlParser.GetElementType(XmlReader, localName + "Extension",
+                if (ControllingXamlParser.GetElementType(XmlReader, $"{localName}Extension",
                                namespaceURI, ref assemblyName, ref typeFullName,
                                ref baseType, ref serializerType))
                 {
@@ -500,7 +500,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    return ControllingXamlParser.GetElementType(XmlReader, localName + "Extension",
+                    return ControllingXamlParser.GetElementType(XmlReader, $"{localName}Extension",
                                namespaceURI, ref assemblyName, ref typeFullName,
                                ref baseType, ref serializerType);
                 }
@@ -581,7 +581,7 @@ namespace System.Windows.Markup
                 localAssembly = (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly);
                 if (localAssembly)
                 {
-                    ownerTypeFullName = namespaceMaps[0].ClrNamespace + "." + parentTypeName;
+                    ownerTypeFullName = $"{namespaceMaps[0].ClrNamespace}.{parentTypeName}";
                 }
             }
 #endif
@@ -1730,7 +1730,7 @@ namespace System.Windows.Markup
             }
 
             // We have a special check for the Metro xaml namespace, which should
-            // only allow Key attributes.  Anything else is an error.  
+            // only allow Key attributes.  Anything else is an error.
             if (attributeNamespaceUri.Equals(DefinitionMetroNamespaceURI))
             {
                 if (attributeLocalName == DefinitionName)
@@ -1824,7 +1824,7 @@ namespace System.Windows.Markup
                 // type name and look for that class too.
                 else if (null != ownerName)
                 {
-                    string globalClassName = ownerName + "Extension";
+                    string globalClassName = $"{ownerName}Extension";
                     mi = XamlTypeMapper.GetClrInfoForClass(false,
                                                    elementBaseType,
                                                    attributeNamespaceUri,
@@ -2419,7 +2419,7 @@ namespace System.Windows.Markup
             /// </summary>
             public MappingScanner(string text, int offset)
             {
-                _text = text + '\x0';
+                _text = $"{text}\0";
                 _current = offset;
             }
 
@@ -3211,7 +3211,7 @@ namespace System.Windows.Markup
                     if (methodInfo.GetParameters().Length == 1)
                     {
                         methodInfo = methodInfo.DeclaringType.GetMethod(
-                            "Set" + methodInfo.Name.Substring("Get".Length),
+                            $"Set{methodInfo.Name.Substring("Get".Length)}",
                             BindingFlags.Static | BindingFlags.Public);
                     }
                     propertyCanWrite = methodInfo != null && methodInfo.GetParameters().Length == 2;
@@ -3233,7 +3233,7 @@ namespace System.Windows.Markup
 
             if (propInfo != null && !XamlTypeMapper.IsAllowedPropertySet(propInfo))
             {
-                ThrowException(nameof(SR.ParserCantSetAttribute), "property", declaringType.Name + "." + attribLocalName, "set");
+                ThrowException(nameof(SR.ParserCantSetAttribute), "property", $"{declaringType.Name}.{attribLocalName}", "set");
             }
 
             string parentName = parentType != null ? parentType.Name : string.Empty;
@@ -3523,7 +3523,7 @@ namespace System.Windows.Markup
             if (methodInfo != null)
             {
                 return (methodInfo.GetParameters().Length == 2) ||
-                    null != methodInfo.DeclaringType.GetMethod("Set" + methodInfo.Name.Substring("Get".Length),
+                    null != methodInfo.DeclaringType.GetMethod($"Set{methodInfo.Name.Substring("Get".Length)}",
                         BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy);
             }
 
@@ -3533,7 +3533,7 @@ namespace System.Windows.Markup
                 return !((DependencyProperty)propertyMember).ReadOnly;
             }
 #endif
-            return true; 
+            return true;
         }
 
         #endregion // Attributes
@@ -3665,7 +3665,7 @@ namespace System.Windows.Markup
                                 {
                                     // This prevents conditions where ResourceDictionary is followed by a locally defined type,
                                     // the ParentContext needs to know that FirstChildRead is true, else there is a mismatch in
-                                    // StartElement & EndElement nodes. 
+                                    // StartElement & EndElement nodes.
                                     if (ParentContext != null && !namespaceURI.Equals(DefinitionNamespaceURI))
                                     {
                                         ParentContext.FirstChildRead = true;
@@ -4354,7 +4354,7 @@ namespace System.Windows.Markup
                     if (ParentContext.ContextDataType == null)
                     {
                         //PropertyElement was the Parent tag.
-                        FirstTagName = ((Type)GrandParentContext.ContextData).Name + "." + GrandParentContext.ChildTagLocalName;
+                        FirstTagName = $"{((Type)GrandParentContext.ContextData).Name}.{GrandParentContext.ChildTagLocalName}";
                     }
                     else
                     {
@@ -5063,7 +5063,7 @@ namespace System.Windows.Markup
                           xmlNodeType == XmlNodeType.SignificantWhitespace ||
                           xmlNodeType == XmlNodeType.CDATA ||
                           xmlNodeType == XmlNodeType.None,
-                          "Internal error - the caller method should not have passed in a XML node type of " + xmlNodeType);
+                $"Internal error - the caller method should not have passed in a XML node type of {xmlNodeType}");
             switch(xmlNodeType)
             {
                 case XmlNodeType.Text:
@@ -5140,7 +5140,7 @@ namespace System.Windows.Markup
                 //  a bug in the calling code, we'll need a new clause in the
                 //  if/else tree above to properly handle the new context type.
                 Debug.Assert (parentNodeType == ElementContextType.Unknown,
-                    "This method does not expect to see element context type of " + parentNodeType);
+                    $"This method does not expect to see element context type of {parentNodeType}");
 
                 // Sometimes we just don't know what the element is.  This occurs,
                 //  for example, during pass 1 of compilation when the object being
@@ -6354,7 +6354,7 @@ namespace System.Windows.Markup
                     //  compatibility.
 
                     default:
-                        Debug.Assert(false,"State machine checking for TypeConverter syntax has encountered an unexpected XamlNode type " + tokenType);
+                        Debug.Fail($"State machine checking for TypeConverter syntax has encountered an unexpected XamlNode type {tokenType}");
 
                         // If we didn't expect it - assume it invalidates our ability
                         //  to use a TypeConverter.
@@ -6869,7 +6869,7 @@ namespace System.Windows.Markup
         public string Name { get { return _name; } }
         public Type OwnerType { get { return _ownerType; } }
 
-        public string FullName { get { return _ownerType.FullName + "." + _name; } }
+        public string FullName { get { return $"{_ownerType.FullName}.{_name}"; } }
 
         public override bool Equals(object o)
         {

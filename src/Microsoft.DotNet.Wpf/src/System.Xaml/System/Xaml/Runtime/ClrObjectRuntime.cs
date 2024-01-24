@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -330,7 +332,7 @@ namespace MS.Internal.Xaml.Runtime
 
         public override IList<object> GetCollectionItems(object collection, XamlType collectionType)
         {
-            List<object> result; 
+            List<object> result;
             IEnumerator enumerator = GetItems(collection, collectionType);
             try
             {
@@ -358,7 +360,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 // Dictionaries are required to either give us an either:
                 // - an IDictionaryEnumerator,
-                // - an IEnumerator<KeyValuePair<K,V>>, or 
+                // - an IEnumerator<KeyValuePair<K,V>>, or
                 // - an IEnumerator that returns DictionaryEntrys
                 IDictionaryEnumerator dictionaryEnumerator = enumerator as IDictionaryEnumerator;
                 if (dictionaryEnumerator != null)
@@ -652,7 +654,7 @@ namespace MS.Internal.Xaml.Runtime
                 //let the value passthrough (to be set as the property value later).
                 obj = value;
             }
-            
+
             return obj;
         }
 

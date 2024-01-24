@@ -362,10 +362,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(typeof(DocumentPageView).ToString());
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DocumentPageView));
         }
 
         #endregion Private Methods

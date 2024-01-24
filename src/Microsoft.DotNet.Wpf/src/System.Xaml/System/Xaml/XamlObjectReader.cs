@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -951,7 +953,7 @@ namespace System.Xaml
                     // that read-only properties must be attributed with DesignerSerializationVisibility.Content
                     // to visible. Unless RequireExplicitContentVisibility is set to true, we don't require that
                     // for readonly collection/dictionary/xdata.
-                    return !context.Settings.RequireExplicitContentVisibility || 
+                    return !context.Settings.RequireExplicitContentVisibility ||
                            GetSerializationVisibility(property) == DesignerSerializationVisibility.Content;
                 }
             }
@@ -2091,7 +2093,7 @@ namespace System.Xaml
 
             static bool IsNull(MemberMarkupInfo propertyInfo)
             {
-                return propertyInfo.Children.Count == 1 && 
+                return propertyInfo.Children.Count == 1 &&
                        propertyInfo.Children[0] is ObjectMarkupInfo objectInfo &&
                        objectInfo.XamlNode.XamlType == XamlLanguage.Null;
             }

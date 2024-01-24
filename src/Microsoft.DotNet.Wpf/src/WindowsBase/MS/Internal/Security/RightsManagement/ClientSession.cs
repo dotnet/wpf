@@ -1974,9 +1974,7 @@ namespace MS.Internal.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            if ((_hSession == null) ||
-                (_hSession.IsInvalid))
-                throw new ObjectDisposedException("SecureEnvironment");
+            ObjectDisposedException.ThrowIf((_hSession == null) ||(_hSession.IsInvalid), typeof(SecureEnvironment));
         }
 
         private const string _defaultUserName = @"DefaultUser@DefaultDomain.DefaultCom";     // RM default user name

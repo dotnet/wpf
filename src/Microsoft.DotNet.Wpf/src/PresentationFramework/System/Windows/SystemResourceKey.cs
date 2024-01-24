@@ -259,7 +259,7 @@ namespace System.Windows
         InternalSystemParametersEnd,
 
         MenuItemSeparatorStyle,
-        
+
         GridViewScrollViewerStyle,
         GridViewStyle,
         GridViewItemContainerStyle,
@@ -301,31 +301,31 @@ namespace System.Windows
         //
         private const short SystemResourceKeyIDStart = (short)SystemResourceKeyID.InternalSystemColorsStart;
         private const short SystemResourceKeyIDEnd = (short)SystemResourceKeyID.InternalSystemThemeStylesEnd;
-        
+
         //
         // This is the enum range representing the extended SystemResource[Key]s.
         //
         private const short SystemResourceKeyIDExtendedStart = (short)SystemResourceKeyID.InternalSystemColorsExtendedStart;
         private const short SystemResourceKeyIDExtendedEnd = (short)SystemResourceKeyID.InternalSystemColorsExtendedEnd;
-        
+
         //
         // This is the BAML id range representing the original SystemResourceKeys.
         //
         private const short SystemResourceKeyBAMLIDStart = SystemResourceKeyIDStart;
         private const short SystemResourceKeyBAMLIDEnd = SystemResourceKeyIDEnd;
-        
+
         //
         // This is the BAML id range representing the original SystemResources.
         //
         private const short SystemResourceBAMLIDStart = SystemResourceKeyBAMLIDEnd;
         private const short SystemResourceBAMLIDEnd = (short)(SystemResourceBAMLIDStart + (SystemResourceKeyBAMLIDEnd - SystemResourceKeyBAMLIDStart));
-        
+
         //
         // This is the BAML id range representing the extended SystemResourceKeys.
         //
         private const short SystemResourceKeyBAMLIDExtendedStart = SystemResourceBAMLIDEnd;
         private const short SystemResourceKeyBAMLIDExtendedEnd = (short)(SystemResourceKeyBAMLIDExtendedStart + (SystemResourceKeyIDExtendedEnd - SystemResourceKeyIDExtendedStart));
-        
+
         //
         // This is the BAML id range representing the extended SystemResources.
         //
@@ -336,7 +336,7 @@ namespace System.Windows
         internal static short GetSystemResourceKeyIdFromBamlId(short bamlId, out bool isKey)
         {
             isKey = true;
-            
+
             if (bamlId > SystemResourceBAMLIDStart && bamlId < SystemResourceBAMLIDEnd)
             {
                 // Not extended and not a key
@@ -384,10 +384,10 @@ namespace System.Windows
                 srkField = memberName;
             }
 #if PBTCOMPILER
-            
+
             found &= targetType.Assembly == XamlTypeMapper.AssemblyPF &&
                 targetType.FullName == "System.Windows.SystemParameters";
-                
+
 #endif
 
             if (found &&
@@ -1710,10 +1710,10 @@ namespace System.Windows
 
                 case (short)SystemResourceKeyID.ToolTipPopupAnimation:
                     return SystemParameters.ToolTipPopupAnimationKey;
-                
+
                 case (short)SystemResourceKeyID.FocusVisualStyle:
                     return SystemParameters.FocusVisualStyleKey;
-                
+
                 case (short)SystemResourceKeyID.NavigationChromeDownLevelStyle:
                     return SystemParameters.NavigationChromeDownLevelStyleKey;
 
@@ -1746,13 +1746,13 @@ namespace System.Windows
 
                 case (short)SystemResourceKeyID.ToolBarCheckBoxStyle:
                     return ToolBar.CheckBoxStyleKey;
-                
+
                 case (short)SystemResourceKeyID.ToolBarRadioButtonStyle:
                     return ToolBar.RadioButtonStyleKey;
-                
+
                 case (short)SystemResourceKeyID.ToolBarComboBoxStyle:
                     return ToolBar.ComboBoxStyleKey;
-                
+
                 case (short)SystemResourceKeyID.ToolBarTextBoxStyle:
                     return ToolBar.TextBoxStyleKey;
 
@@ -1859,7 +1859,7 @@ namespace System.Windows
                 ((SystemResourceKeyID.InternalSystemFontsStart < id) && (id < SystemResourceKeyID.InternalSystemFontsEnd)) ||
                 ((SystemResourceKeyID.InternalSystemParametersStart < id) && (id < SystemResourceKeyID.InternalSystemParametersEnd)) ||
                 ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) && (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)),
-                String.Format("Invalid SystemResourceKeyID (id={0})", (int)id));
+                $"Invalid SystemResourceKeyID (id={(int)id})");
             _id = id;
         }
 

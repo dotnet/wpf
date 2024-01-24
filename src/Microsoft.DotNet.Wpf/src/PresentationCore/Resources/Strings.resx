@@ -1822,15 +1822,6 @@
   <data name="PaginatorNegativePageNumber" xml:space="preserve">
     <value>Page number cannot be negative.</value>
   </data>
-  <data name="ParameterMustBeBetween" xml:space="preserve">
-    <value>The parameter value must be between '{0}' and '{1}'.</value>
-  </data>
-  <data name="ParameterValueCannotBeInfinity" xml:space="preserve">
-    <value>The parameter value must be finite.</value>
-  </data>
-  <data name="ParameterValueCannotBeNaN" xml:space="preserve">
-    <value>The parameter value must be a number.</value>
-  </data>
   <data name="Parsers_IllegalToken" xml:space="preserve">
     <value>Token is not valid.</value>
   </data>

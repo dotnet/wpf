@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -189,7 +191,7 @@ namespace System.Xaml.Schema
                     {
                         // There is a built-in TypeConverter available. Very likely, System.UriTypeConverter, but this was not naturally
                         // discovered. this is probably due to the fact that System.Uri does not have [TypeConverterAttribute(typeof(UriConverter))]
-                        // in the .NET Core codebase. 
+                        // in the .NET Core codebase.
                         // Since a default converter was discovered, just use that instead of our own (very nearly equivalent) implementation.
                         s_Uri = new BuiltInValueConverter<TypeConverter>(stdConverter.GetType(), () => TypeDescriptor.GetConverter(typeof(Uri)));
                     }

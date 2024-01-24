@@ -226,7 +226,7 @@ namespace System.Windows.Documents
             {
                 _ClearStatus(BlockStatus.UnloadedBlock);
 
-                DocumentsTrace.FixedDocumentSequence.TextOM.Trace("Loading TextContainer " + _docRef.ToString());
+                DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"Loading TextContainer {_docRef}");
                 // Load the TextContainer
                 IDocumentPaginatorSource idp = _docRef.GetDocument(false /*forceReload*/);
                 IServiceProvider isp = idp as IServiceProvider;

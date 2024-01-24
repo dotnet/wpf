@@ -3,12 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
-// 
+//
 //
 // Description: Plug-in document serializers implement this class
 //
 //              See spec at <Need to post existing spec>
-// 
+//
 namespace System.Windows.Documents.Serialization
 {
     using System;
@@ -177,7 +177,7 @@ namespace System.Windows.Documents.Serialization
 
                 key.Close();
 
-                // update language strings. 
+                // update language strings.
                 if (!uiLanguage.Equals(CultureInfo.CurrentUICulture.Name))
                 {
                     ISerializerFactory factory = sd.CreateSerializerFactory();
@@ -200,7 +200,7 @@ namespace System.Windows.Documents.Serialization
             if (sd != null)
             {
                 // This will be noted in the release notes as an unsupported API until 4479 is fixed.
-                // https://github.com/dotnet/wpf/issues/4479 
+                // https://github.com/dotnet/wpf/issues/4479
                 #pragma warning disable SYSLIB0018 // 'Assembly.ReflectionOnlyLoadFrom(string)' is obsolete: 'ReflectionOnly loading is not su pported and throws PlatformNotSupportedException.'
                 Assembly plugIn = Assembly.ReflectionOnlyLoadFrom(sd._assemblyPath);
                 #pragma warning restore SYSLIB0018 // 'Assembly.ReflectionOnlyLoadFrom(string)' is obsolete: 'ReflectionOnly loading is not supported and throws PlatformNotSupportedException.'
@@ -355,7 +355,7 @@ namespace System.Windows.Documents.Serialization
         /// </summary>
         public override int GetHashCode()
         {
-            string id = _displayName + "/" + _assemblyName + "/" + _assemblyPath + "/" + _factoryInterfaceName + "/" + _assemblyVersion + "/" + _winFXVersion;
+            string id = $"{_displayName}/{_assemblyName}/{_assemblyPath}/{_factoryInterfaceName}/{_assemblyVersion}/{_winFXVersion}";
             return id.GetHashCode();
         }
 

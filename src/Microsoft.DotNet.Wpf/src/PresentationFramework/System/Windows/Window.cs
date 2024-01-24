@@ -913,7 +913,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Top
         {
             get
@@ -964,7 +964,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Left
         {
             get
@@ -3762,8 +3762,8 @@ namespace System.Windows
             double workAreaWidthDeviceUnits = workAreaRectDeviceUnits.right - workAreaRectDeviceUnits.left;
             double workAreaHeightDeviceUnits = workAreaRectDeviceUnits.bottom - workAreaRectDeviceUnits.top;
 
-            Debug.Assert(workAreaWidthDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaWidth ({0})for monitor ({1}) is negative", hMonitor, workAreaWidthDeviceUnits));
-            Debug.Assert(workAreaHeightDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaHeight ({0}) for monitor ({1}) is negative", hMonitor, workAreaHeightDeviceUnits));
+            Debug.Assert(workAreaWidthDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaWidth ({hMonitor})for monitor ({workAreaWidthDeviceUnits}) is negative"));
+            Debug.Assert(workAreaHeightDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaHeight ({hMonitor}) for monitor ({workAreaHeightDeviceUnits}) is negative"));
 
             leftDeviceUnits = (workAreaRectDeviceUnits.left + ((workAreaWidthDeviceUnits - currentSizeDeviceUnits.Width) / 2));
             topDeviceUnits = (workAreaRectDeviceUnits.top + ((workAreaHeightDeviceUnits - currentSizeDeviceUnits.Height) / 2));
@@ -5818,7 +5818,7 @@ namespace System.Windows
                     wp.rcNormalPosition_right = wp.rcNormalPosition_left + currentWidth;
                     break;
                 default:
-                    Debug.Assert(false, String.Format("specifiedRestoreBounds can't be {0}", specifiedRestoreBounds));
+                    Debug.Assert(false, $"specifiedRestoreBounds can't be {specifiedRestoreBounds}");
                     break;
             }
 

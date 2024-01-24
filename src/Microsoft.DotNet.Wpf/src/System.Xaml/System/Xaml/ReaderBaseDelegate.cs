@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     // This is the base class for the simplest implementation of a
@@ -19,7 +21,7 @@ namespace System.Xaml
 
         protected ReaderBaseDelegate(XamlSchemaContext schemaContext)
         {
-            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));            
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
         }
 
         public override XamlNodeType NodeType
@@ -73,7 +75,7 @@ namespace System.Xaml
 
         public int LineNumber
         {
-            get 
+            get
             {
                 if (_currentLineInfo != null)
                 {

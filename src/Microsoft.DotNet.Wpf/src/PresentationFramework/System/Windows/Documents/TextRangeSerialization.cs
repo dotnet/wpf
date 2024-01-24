@@ -575,7 +575,7 @@ namespace System.Windows.Documents
                 // Will module name always have a '.'?  If so, can remove conditional in assembly assignment below
                 int index = elementTypeStandardized.Module.Name.LastIndexOf('.');
                 string assembly = (index == -1 ? elementTypeStandardized.Module.Name : elementTypeStandardized.Module.Name.Substring(0, index));
-                string nameSpace = "clr-namespace:" + elementTypeStandardized.Namespace + ";" + "assembly=" + assembly;
+                string nameSpace = $"clr-namespace:{elementTypeStandardized.Namespace};assembly={assembly}";
                 string prefix = elementTypeStandardized.Namespace;
                 xmlWriter.WriteStartElement(prefix, elementTypeStandardized.Name, nameSpace);
             }
@@ -620,7 +620,7 @@ namespace System.Windows.Documents
             if(columns.Count > 0)
             {
                 // Build an appropriate name for the complex property
-                string complexPropertyName = table.GetType().Name + ".Columns";
+                string complexPropertyName = $"{table.GetType().Name}.Columns";
 
                 // Write the start element for the complex property.
                 xmlWriter.WriteStartElement(complexPropertyName);
@@ -751,7 +751,7 @@ namespace System.Windows.Documents
                         else
                         {
                             // Regular case using own property name
-                            propertyName = property.OwnerType == typeof(Typography) ? "Typography." + property.Name : property.Name;
+                            propertyName = property.OwnerType == typeof(Typography) ? $"Typography.{property.Name}" : property.Name;
                         }
                         xmlWriter.WriteAttributeString(propertyName, stringValue);
                     }
@@ -1098,7 +1098,7 @@ namespace System.Windows.Documents
                 // The elementType is an owner of this property, so we can use its name
                 if (forceComplexName)
                 {
-                    propertyName = elementType.Name + "." + property.Name;
+                    propertyName = $"{elementType.Name}.{property.Name}";
                 }
                 else
                 {
@@ -1108,7 +1108,7 @@ namespace System.Windows.Documents
             else
             {
                 // The elementType does not own this property, so we use the property's registered owner type name.
-                propertyName = property.OwnerType.Name + "." + property.Name;
+                propertyName = $"{property.OwnerType.Name}.{property.Name}";
             }
 
             return propertyName;
@@ -1191,7 +1191,7 @@ namespace System.Windows.Documents
                         // Write Source property as the complex property to specify the BitmapImage
                         // cache option as "OnLoad" instead of the default "OnDeman". Otherwise,
                         // we couldn't load the image by disposing WpfPayload package.
-                        xmlWriter.WriteStartElement(typeof(Image).Name + "." + Image.SourceProperty.Name);
+                        xmlWriter.WriteStartElement($"{typeof(Image).Name}.{Image.SourceProperty.Name}");
                         xmlWriter.WriteStartElement(typeof(System.Windows.Media.Imaging.BitmapImage).Name);
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.UriSourceProperty.Name, imageSource);
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.CacheOptionProperty.Name, "OnLoad");
@@ -1519,16 +1519,20 @@ namespace System.Windows.Documents
                 TextPointerContext backwardFromEnd = end.GetPointerContext(LogicalDirection.Backward);
                 Invariant.Assert(forwardFromStart == TextPointerContext.ElementStart, "Expecting first opening tag of pasted fragment");
                 Invariant.Assert(backwardFromEnd == TextPointerContext.ElementEnd, "Expecting last closing tag of pasted fragment");
-                Invariant.Assert(itemType.IsAssignableFrom(start.GetAdjacentElement(LogicalDirection.Forward).GetType()), "The first pasted fragment item is expected to be a " + itemType.Name);
-                Invariant.Assert(itemType.IsAssignableFrom(end.GetAdjacentElement(LogicalDirection.Backward).GetType()), "The last pasted fragment item is expected to be a " + itemType.Name);
+                Invariant.Assert(itemType.IsAssignableFrom(start.GetAdjacentElement(LogicalDirection.Forward).GetType()),
+                    $"The first pasted fragment item is expected to be a {itemType.Name}");
+                Invariant.Assert(itemType.IsAssignableFrom(end.GetAdjacentElement(LogicalDirection.Backward).GetType()),
+                    $"The last pasted fragment item is expected to be a {itemType.Name}");
 
                 // Veryfy outer part
                 TextPointerContext backwardFromStart = start.GetPointerContext(LogicalDirection.Backward);
                 TextPointerContext forwardFromEnd = end.GetPointerContext(LogicalDirection.Forward);
                 Invariant.Assert(backwardFromStart == TextPointerContext.ElementStart || backwardFromStart == TextPointerContext.ElementEnd || backwardFromStart == TextPointerContext.None, "Bad context preceding a pasted fragment");
-                Invariant.Assert(!(backwardFromStart == TextPointerContext.ElementEnd) || itemType.IsAssignableFrom(start.GetAdjacentElement(LogicalDirection.Backward).GetType()), "An element preceding a pasted fragment is expected to be a " + itemType.Name);
+                Invariant.Assert(!(backwardFromStart == TextPointerContext.ElementEnd) || itemType.IsAssignableFrom(start.GetAdjacentElement(LogicalDirection.Backward).GetType()),
+                    $"An element preceding a pasted fragment is expected to be a {itemType.Name}");
                 Invariant.Assert(forwardFromEnd == TextPointerContext.ElementStart || forwardFromEnd == TextPointerContext.ElementEnd || forwardFromEnd == TextPointerContext.None, "Bad context following a pasted fragment");
-                Invariant.Assert(!(forwardFromEnd == TextPointerContext.ElementStart) || itemType.IsAssignableFrom(end.GetAdjacentElement(LogicalDirection.Forward).GetType()), "An element following a pasted fragment is expected to be a " + itemType.Name);
+                Invariant.Assert(!(forwardFromEnd == TextPointerContext.ElementStart) || itemType.IsAssignableFrom(end.GetAdjacentElement(LogicalDirection.Forward).GetType()),
+                    $"An element following a pasted fragment is expected to be a {itemType.Name}");
             }
         }
 

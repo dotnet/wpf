@@ -248,7 +248,7 @@ namespace System.Windows.Annotations.Storage
             IList<Annotation> annotations = null;
             try
             {
-                string query = @"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":" + AnnotationXmlConstants.Elements.ContentLocator;
+                string query = $@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:{AnnotationXmlConstants.Elements.ContentLocator}";
 
                 if (anchorLocator.Parts.Count > 0)
                 {
@@ -276,7 +276,7 @@ namespace System.Windows.Annotations.Storage
                     }
                 }
 
-                query += @"/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Anchors/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                query += $@"/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Anchors/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, anchorLocator);
             }
@@ -301,7 +301,7 @@ namespace System.Windows.Annotations.Storage
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.GetAnnotationsBegin);
             try
             {
-                string query = "//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                string query = $"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, null);
             }
@@ -739,9 +739,8 @@ namespace System.Windows.Annotations.Storage
                 _document.PreserveWhitespace = false;
                 if (_stream.Length == 0)
                 {
-                    _document.LoadXml("<?xml version=\"1.0\" encoding=\"utf-8\"?> <" +
-                        AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations xmlns:" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + "=\"" +
-                        AnnotationXmlConstants.Namespaces.CoreSchemaNamespace + "\" xmlns:" + AnnotationXmlConstants.Prefixes.BaseSchemaPrefix + "=\"" + AnnotationXmlConstants.Namespaces.BaseSchemaNamespace + "\" />");
+                    _document.LoadXml(
+                        $"<?xml version=\"1.0\" encoding=\"utf-8\"?> <{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations xmlns:{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.CoreSchemaNamespace}\" xmlns:{AnnotationXmlConstants.Prefixes.BaseSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.BaseSchemaNamespace}\" />");
                 }
                 else
                 {
@@ -758,7 +757,7 @@ namespace System.Windows.Annotations.Storage
                 // use an iterator to get a single node.
 
                 XPathNavigator navigator = _document.CreateNavigator();
-                XPathNodeIterator iterator = navigator.Select("//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations", _namespaceManager);
+                XPathNodeIterator iterator = navigator.Select($"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations", _namespaceManager);
                 Invariant.Assert(iterator.Count == 1, "More than one annotation returned for the query");
 
                 iterator.MoveNext();
@@ -920,7 +919,7 @@ namespace System.Windows.Annotations.Storage
 
                 // We use XmlConvert.ToString to turn the Guid into a string because
                 // that's what is used by the Annotation's serialization methods.
-                XPathNodeIterator iterator = tempNavigator.Select(@"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + @":Annotation[@Id=""" + XmlConvert.ToString(id) + @"""]", _namespaceManager);
+                XPathNodeIterator iterator = tempNavigator.Select($@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation[@Id=""{XmlConvert.ToString(id)}""]", _namespaceManager);
                 if (iterator.MoveNext())
                 {
                     navigator = (XPathNavigator)iterator.Current;

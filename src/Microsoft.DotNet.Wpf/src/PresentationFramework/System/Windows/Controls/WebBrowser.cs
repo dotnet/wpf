@@ -652,17 +652,12 @@ namespace System.Windows.Controls
             {
                 if (_axIWebBrowser2 == null)
                 {
-                    if (!IsDisposed)
-                    {
-                        //This should call AttachInterfaces which will set this member variable
-                        //We don't want to force the state to InPlaceActive yet since we don't
-                        //have the parent handle yet.
-                        TransitionUpTo(ActiveXHelper.ActiveXState.Running);
-                    }
-                    else
-                    {
-                        throw new System.ObjectDisposedException(GetType().Name);
-                    }
+                    ObjectDisposedException.ThrowIf(IsDisposed, this);
+
+                    //This should call AttachInterfaces which will set this member variable
+                    //We don't want to force the state to InPlaceActive yet since we don't
+                    //have the parent handle yet.
+                    TransitionUpTo(ActiveXHelper.ActiveXState.Running);
                 }
                 // We still don't have _axIWebBrowser2. Throw an exception.
                 if (_axIWebBrowser2 == null)

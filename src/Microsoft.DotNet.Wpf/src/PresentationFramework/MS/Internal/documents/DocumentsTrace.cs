@@ -121,7 +121,7 @@ namespace MS.Internal.Documents
         {
 #if DEBUG
             string name = SafeSecurityHelper.GetAssemblyPartialName( Assembly.GetCallingAssembly() );
-            _switch = new BooleanSwitch(switchName, "[" + name + "]");
+            _switch = new BooleanSwitch(switchName, $"[{name}]");
 #endif
         }
 
@@ -138,7 +138,7 @@ namespace MS.Internal.Documents
 #if DEBUG
             if (_switch.Enabled)
             {
-                System.Diagnostics.Trace.WriteLine(_switch.Description + " " + _switch.DisplayName + " : " + message);
+                System.Diagnostics.Trace.WriteLine($"{_switch.Description} {_switch.DisplayName} : {message}");
             }
 #endif
         }
@@ -158,7 +158,7 @@ namespace MS.Internal.Documents
                 for (int i=0; i < st.FrameCount && i < Depth; i++)
                 {
                     System.Diagnostics.StackFrame sf = st.GetFrame(i);
-                    Trace(sf.GetMethod()+"+"+sf.GetILOffset().ToString());
+                    Trace($"{sf.GetMethod()}+{sf.GetILOffset()}");
                 }
 
                 Unindent();

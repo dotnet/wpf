@@ -268,8 +268,8 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.CompositeFont_TooManyFamilyMaps);
 
             // Validate the index.
-            if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, Count);
 
             // PrepareToAddFamilyMap validates the familyName and updates the internal state
             // of the CompositeFontInfo object.
@@ -361,8 +361,8 @@ namespace System.Windows.Media
 
         private void RangeCheck(int index)
         {
-            if (index < 0 || index >= _count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _count);
         }
 
         private void VerifyChangeable()

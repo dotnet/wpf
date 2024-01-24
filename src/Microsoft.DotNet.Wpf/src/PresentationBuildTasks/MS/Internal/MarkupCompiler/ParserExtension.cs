@@ -520,7 +520,7 @@ namespace MS.Internal
             else if (!_compiler.IsBamlNeeded && !_compiler.ProcessingRootContext && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
             {
                 if ((!localName.Equals(MarkupCompiler.CODETAG) &&
-                     !localName.Equals(MarkupCompiler.CODETAG + "Extension")) ||
+                     !localName.Equals($"{MarkupCompiler.CODETAG}Extension")) ||
                     !namespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI))
                 {
                     _compiler.IsBamlNeeded = true;
@@ -666,7 +666,7 @@ namespace MS.Internal
                     if (MemberAttributes.Private != _fieldModifier &&
                         MemberAttributes.Assembly != _fieldModifier)
                     {
-                        MarkupCompiler.GenerateXmlComments(_nameField, _nameField.Name + " Name Field");
+                        MarkupCompiler.GenerateXmlComments(_nameField, $"{_nameField.Name} Name Field");
                     }
 
                     _nameField.Attributes = _fieldModifier;

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Xml;
 using System.Collections;
@@ -170,7 +172,7 @@ namespace System.Windows.Markup
 
             bool more = Reader.Read(); //passed as ref arg to ReadStartElement and ReadEndElement
             bool result = false;
-          
+
             while (more)
             {
                 switch (Reader.NodeType)
@@ -279,7 +281,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            // if the element is empty (e.g. "<a ... />" and we pushed a scope then we need to set a flag 
+            // if the element is empty (e.g. "<a ... />" and we pushed a scope then we need to set a flag
             // to get rid of the scope when we hit the next element.
             // We also need to store the current elementDepth.
             if (isEmpty)

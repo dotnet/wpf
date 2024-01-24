@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Diagnostics;
 
 namespace System.Xaml
@@ -20,7 +22,7 @@ namespace System.Xaml
 
     internal delegate void XamlNodeAddDelegate(XamlNodeType nodeType, object data);
     internal delegate void XamlLineInfoAddDelegate(int lineNumber, int linePosition);
-    internal delegate XamlNode XamlNodeNextDelegate();     
+    internal delegate XamlNode XamlNodeNextDelegate();
     internal delegate XamlNode XamlNodeIndexDelegate(int idx);
 
     [DebuggerDisplay("{ToString()}")]
@@ -34,7 +36,7 @@ namespace System.Xaml
 
         public XamlNodeType NodeType
         {
-            get { return _nodeType; } 
+            get { return _nodeType; }
         }
 
         public XamlNode(XamlNodeType nodeType)

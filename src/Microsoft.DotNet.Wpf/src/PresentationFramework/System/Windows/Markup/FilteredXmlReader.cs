@@ -238,7 +238,7 @@ internal class FilteredXmlReader : XmlTextReader
     {
         haveUid = false;
         uidPrefix = defaultPrefix;  
-        uidQualifiedName = uidPrefix + ":" + uidLocalName; 
+        uidQualifiedName = $"{uidPrefix}:{uidLocalName}"; 
     }
 
     #endregion Internal Constructors
@@ -321,7 +321,7 @@ internal class FilteredXmlReader : XmlTextReader
         if( base.Prefix != uidPrefix )
         {
             uidPrefix = base.Prefix;
-            uidQualifiedName = uidPrefix + ":" + uidLocalName;
+            uidQualifiedName = $"{uidPrefix}:{uidLocalName}";
 
             // Prefix updated - run a check again for Uid.
             CheckForUidAttribute();

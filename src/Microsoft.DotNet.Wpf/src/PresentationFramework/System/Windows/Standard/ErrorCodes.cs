@@ -81,7 +81,7 @@ namespace Standard
         /// <returns>The equivilent HRESULT value.</returns>
         public static explicit operator HRESULT(Win32Error error)
         {
-            // #define __HRESULT_FROM_WIN32(x) 
+            // #define __HRESULT_FROM_WIN32(x)
             //     ((HRESULT)(x) <= 0 ? ((HRESULT)(x)) : ((HRESULT) (((x) & 0x0000FFFF) | (FACILITY_WIN32 << 16) | 0x80000000)))
             if (error._value <= 0)
             {
@@ -96,7 +96,7 @@ namespace Standard
         /// <returns>The equivilent HRESULT value.</returns>
         public HRESULT ToHRESULT()
         {
-            return (HRESULT)this; 
+            return (HRESULT)this;
         }
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
@@ -308,7 +308,7 @@ namespace Standard
             // To properly add an HRESULT's name to the ToString table, just add the HRESULT
             // like all the others above.
             //
-            // CONSIDER: This data is static.  It could be cached 
+            // CONSIDER: This data is static.  It could be cached
             // after first usage for fast lookup since the keys are unique.
             //
             foreach (FieldInfo publicStaticField in typeof(HRESULT).GetFields(BindingFlags.Static | BindingFlags.Public))
@@ -333,7 +333,7 @@ namespace Standard
                         var error = (Win32Error)publicStaticField.GetValue(null);
                         if ((HRESULT)error == this)
                         {
-                            return "HRESULT_FROM_WIN32(" + publicStaticField.Name + ")";
+                            return $"HRESULT_FROM_WIN32({publicStaticField.Name})";
                         }
                     }
                 }
@@ -341,7 +341,7 @@ namespace Standard
 
             // If there's no good name for this HRESULT,
             // return the string as readable hex (0x########) format.
-            return string.Format(CultureInfo.InvariantCulture, "0x{0:X8}", _value);
+            return string.Create(CultureInfo.InvariantCulture, $"0x{_value:X8}");
         }
 
         public override bool Equals(object obj)
@@ -408,7 +408,7 @@ namespace Standard
 #if DEBUG
                 else
                 {
-                    message += " (" + ToString() + ")";
+                    message += $" ({ToString()})";
                 }
 #endif
                 // Wow.  Reflection in a throw call.  Later on this may turn out to have been a bad idea.
@@ -466,7 +466,7 @@ namespace Standard
             // Only expecting to call this when we're expecting a failed GetLastError()
             Assert.Fail();
         }
-        
+
         private static Exception CreateWin32Exception(int code, string message)
         {
             return new Win32Exception(code, message);

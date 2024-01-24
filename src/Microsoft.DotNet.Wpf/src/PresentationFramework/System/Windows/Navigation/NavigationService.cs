@@ -1039,7 +1039,7 @@ namespace System.Windows.Navigation
                 UpdateJournal(navInfo.NavigationMode, JournalReason.NewContentNavigation, navInfo.JournalEntry);
             }
 
-            // Future: 
+            // Future:
             // The journal entry of the new page that is navigated to might be lost because the navigation is
             // cancelled after the current page being added to jounral. E.g, The journal looks like:
             //  Page1
@@ -1536,7 +1536,7 @@ namespace System.Windows.Navigation
                 EventTrace.EventProvider.TraceEvent(
                     EventTrace.Event.Wpf_NavigationStart, EventTrace.Keyword.KeywordHosting | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info,
                     navInfo != null ? navInfo.NavigationMode.ToString() : NavigationMode.New.ToString(),
-                    source != null ? "\"" + source.ToString() + "\"" : "(null)");
+                    source != null ? $"\"{source}\"" : "(null)");
             }
 
             Invariant.Assert(IsConsistent(navInfo));
@@ -1865,7 +1865,7 @@ namespace System.Windows.Navigation
                     {
                         // WebRequest.Abort() wants to call the AsyncCallback that was passed to
                         // BeginGetResponse(). Our HandleWebResponse() has to know that the request was
-                        // aborted. That's why _request is cleared before calling Abort(). 
+                        // aborted. That's why _request is cleared before calling Abort().
                         WebRequest request = _request;
                         _request = null;
                         request.Abort();
@@ -2969,8 +2969,8 @@ namespace System.Windows.Navigation
                         // browser if safe to do so.
                         // For loose XAML viewing, we can get in this situation if the web server doesn't
                         // return the right MIME type. UrlMon in IE 7+ has some heuristics based on file extension
-                        // to detect XAML, so PresentationHost may get invoked, but our 
-                        // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular, 
+                        // to detect XAML, so PresentationHost may get invoked, but our
+                        // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular,
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
                         if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
                         {
@@ -3340,7 +3340,7 @@ namespace System.Windows.Navigation
                         string fragment = BindUriHelper.GetFragment(_currentSource);
                         if (!string.IsNullOrEmpty(fragment))
                         {
-                            name = name + "#" + fragment;
+                            name = $"{name}#{fragment}";
                         }
                     }
                 }
@@ -3355,7 +3355,7 @@ namespace System.Windows.Navigation
                     {
                         if (CurrentSource != null)
                         {
-                            name = String.Format(CultureInfo.CurrentCulture, "{0} ({1})", navWin.Title, JournalEntry.GetDisplayName(_currentSource, SiteOfOriginContainer.SiteOfOrigin));
+                            name = $"{navWin.Title} ({JournalEntry.GetDisplayName(_currentSource, SiteOfOriginContainer.SiteOfOrigin)})";
                         }
                         else
                         {
@@ -3638,8 +3638,8 @@ namespace System.Windows.Navigation
             _parentNavigationService = null;
             _webBrowser = null;
         }
-        
-        // This is set when the navigationservice is loaded from unsafe xps doc. 
+
+        // This is set when the navigationservice is loaded from unsafe xps doc.
         internal bool IsUnsafe { get; set; }
         #region Private Functions
 
@@ -3724,7 +3724,7 @@ namespace System.Windows.Navigation
                     endingPF.ToString());
             }
 
-            // 
+            //
             // handle this situation gracefully -
             // this happens if someone calls Navigate() and then Finishes
             // before we have a chance to navigate.
@@ -3968,7 +3968,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                Debug.Fail("Unhandled scenario: PageFunction returning to " + parentEntry.GetType().Name);
+                Debug.Fail($"Unhandled scenario: PageFunction returning to {parentEntry.GetType().Name}");
             }
         }
 

@@ -31,8 +31,8 @@ namespace System.Windows.Documents
 
     //=====================================================================
     /// <summary>
-    /// DocumentReference is the class that references a Document. 
-    /// Each document 
+    /// DocumentReference is the class that references a Document.
+    /// Each document
     /// </summary>
     [UsableDuringInitialization(false)]
     public sealed class DocumentReference : FrameworkElement, IUriContext
@@ -57,28 +57,28 @@ namespace System.Windows.Documents
         }
 
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
         //
         //---------------------------------------------------------------------
-        
+
         #region Public Methods
         /// <summary>
-        /// Synchonrously download and parse the document based on the Source specification. 
-        /// If a document was attached earlier and forceReload == false, the attached 
-        /// document will be returned.  forceReload == true results in downloading of the referenced 
+        /// Synchonrously download and parse the document based on the Source specification.
+        /// If a document was attached earlier and forceReload == false, the attached
+        /// document will be returned.  forceReload == true results in downloading of the referenced
         /// document based on Source specification, any previously attached document is ignored
-        /// in this case. 
-        /// Regardless of forceReload, the document will be loaded based on Source specification if 
+        /// in this case.
+        /// Regardless of forceReload, the document will be loaded based on Source specification if
         /// it hasn't been loaded earlier.
         /// </summary>
         /// <param name="forceReload">Force reloading the document instead of using cached value</param>
         /// <returns>The document tree</returns>
         public FixedDocument GetDocument(bool forceReload)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("DocumentReference.GetDocument ({0}, {1})", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source, forceReload));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
              VerifyAccess();
 
             FixedDocument idp = null;
@@ -86,19 +86,20 @@ namespace System.Windows.Documents
             {
                 idp = _doc;
             }
-            else 
+            else
             {
                 if (!forceReload)
                 {
                      idp = CurrentlyLoadedDoc;
                 }
-                
+
                 if (idp == null)
                 {
                     FixedDocument idpReloaded = _LoadDocument();
                     if (idpReloaded != null)
                     {
-                        DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("DocumentReference.GetDocument Loaded IDP {0}", idpReloaded.GetHashCode()));
+                        DocumentsTrace.FixedDocumentSequence.IDF.Trace(
+                            $"DocumentReference.GetDocument Loaded IDP {idpReloaded.GetHashCode()}");
                         // save the doc's identity
                         _docIdentity = idpReloaded;
                         idp = idpReloaded;
@@ -140,9 +141,9 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty SourceProperty =
                 DependencyProperty.Register(
-                        "Source", 
-                        typeof(Uri), 
-                        typeof(DocumentReference), 
+                        "Source",
+                        typeof(Uri),
+                        typeof(DocumentReference),
                         new FrameworkPropertyMetadata(
                                 (Uri) null,
                                 new PropertyChangedCallback(OnSourceChanged)));
@@ -150,16 +151,14 @@ namespace System.Windows.Documents
 
         static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("DocumentReference.Source_Invaidated"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("DocumentReference.Source_Invaidated");
             DocumentReference docRef = (DocumentReference)d;
- 
+
             if (!object.Equals(e.OldValue, e.NewValue))
             {
                 Uri oldSource = (Uri) e.OldValue;
                 Uri newSource = (Uri) e.NewValue;
-                DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("====Replace old doc {0} with new {1}", 
-                    oldSource == null ? "null" : oldSource.ToString(), 
-                    newSource == null? "null" : newSource.ToString()));
+                DocumentsTrace.FixedDocumentSequence.IDF.Trace($"====Replace old doc {(oldSource == null ? "null" : oldSource.ToString())} with new {(newSource == null ? "null" : newSource.ToString())}");
                 // drop loaded document if source changed
                 docRef._doc = null;
                 //
@@ -170,7 +169,7 @@ namespace System.Windows.Documents
 
 
         /// <summary>
-        /// Get/Set Source property that references an external page stream. 
+        /// Get/Set Source property that references an external page stream.
         /// </summary>
         public Uri Source
         {
@@ -210,10 +209,13 @@ namespace System.Windows.Documents
 #if DEBUG
         internal void Dump()
         {
-            DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("     This {0}", this.GetHashCode()));
-            DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("         Source {0}", this.Source == null ? "null" : this.Source.ToString()));
-            DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("         _doc   {0}", _doc == null ? 0 : _doc.GetHashCode()));
-            DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("         _docIdentity {0}", _docIdentity == null ? 0 : _docIdentity.GetHashCode()));
+            DocumentsTrace.FixedDocumentSequence.Content.Trace(
+                $"""
+                      This {this.GetHashCode()}
+                          Source {(this.Source == null ? "null" : this.Source.ToString())}
+                          _doc   {_doc?.GetHashCode() ?? 0}
+                          _docIdentity {_docIdentity?.GetHashCode() ?? 0}
+                 """);
         }
 #endif
         #endregion Internal Methods
@@ -304,7 +306,7 @@ namespace System.Windows.Documents
                 }
                 idp.DocumentReference = this;
             }
- 
+
            return idp;
         }
         #endregion Private Methods
@@ -317,7 +319,7 @@ namespace System.Windows.Documents
 
         #region Private Fields
         private FixedDocument _doc;
-        private FixedDocument _docIdentity;     // used to cache the identity of the IDF so the IDF knows where it come from. 
+        private FixedDocument _docIdentity;     // used to cache the identity of the IDF so the IDF knows where it come from.
         #endregion Private Fields
     }
 }

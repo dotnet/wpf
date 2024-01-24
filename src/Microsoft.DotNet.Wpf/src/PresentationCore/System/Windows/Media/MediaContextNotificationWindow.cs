@@ -134,10 +134,7 @@ namespace System.Windows.Media
         /// </param>
         internal void SetAsChannelNotificationWindow()
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("MediaContextNotificationWindow");
-            }
+            ObjectDisposedException.ThrowIf(_isDisposed, typeof(MediaContextNotificationWindow));
 
             _ownerMediaContext.Channel.SetNotificationWindow(_hwndNotification.Value.Handle, s_channelNotifyMessage);
         }
@@ -147,10 +144,7 @@ namespace System.Windows.Media
         /// </summary>
         private IntPtr MessageFilter(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException("MediaContextNotificationWindow");
-            }
+            ObjectDisposedException.ThrowIf(_isDisposed, typeof(MediaContextNotificationWindow));
 
             WindowMessage message = (WindowMessage)msg;
             Debug.Assert(_ownerMediaContext != null);

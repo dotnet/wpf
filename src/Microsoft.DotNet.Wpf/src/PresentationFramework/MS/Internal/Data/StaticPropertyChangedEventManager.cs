@@ -604,7 +604,7 @@ namespace MS.Internal.Data
 
             public void StartListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {
@@ -615,7 +615,7 @@ namespace MS.Internal.Data
 
             public void StopListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {

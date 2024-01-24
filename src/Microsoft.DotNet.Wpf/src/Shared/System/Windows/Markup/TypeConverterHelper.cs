@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 //  Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
@@ -85,7 +87,7 @@ namespace System.Windows.Markup
                     {
                         // Use the Setter of the attached property (if any)
                         memberInfo = methodInfo.DeclaringType.GetMethod(
-                             "Get" + methodInfo.Name.Substring("Set".Length),
+                            $"Get{methodInfo.Name.Substring("Set".Length)}",
                              BindingFlags.Public | BindingFlags.NonPublic |
                              BindingFlags.Static | BindingFlags.FlattenHierarchy);
                     }

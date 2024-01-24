@@ -5432,7 +5432,7 @@ namespace System.Windows.Documents
 
         internal void AppendInlineXamlPostfix(ConverterState converterState)
         {
-            Xaml = Xaml + "</Span>";
+            Xaml = $"{Xaml}</Span>";
         }
 
         internal void AppendImageXamlPrefix()
@@ -8163,7 +8163,7 @@ namespace System.Windows.Documents
                     int uriSourceEndIndex = dnImage.Xaml.IndexOf('\"', uriSourceIndex + 11);
 
                     string imageXaml = dnImage.Xaml.Substring(0, uriSourceIndex);
-                    imageXaml += "UriSource=\"" + pictureUri + "\"";
+                    imageXaml += $"UriSource=\"{pictureUri}\"";
                     imageXaml += dnImage.Xaml.Substring(uriSourceEndIndex + 1);
 
                     dnImage.Xaml = imageXaml;
@@ -8210,7 +8210,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
+                            dn.Xaml = $"{dnInstruction.Xaml}{dn.Xaml}</Hyperlink>";
                         }
                     }
 
@@ -8238,7 +8238,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
+                            dn.Xaml = $"{dnInstruction.Xaml}{dn.Xaml}</Hyperlink>";
                         }
                     }
                 }

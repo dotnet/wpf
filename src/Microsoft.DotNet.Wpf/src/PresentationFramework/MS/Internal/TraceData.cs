@@ -254,21 +254,17 @@ namespace MS.Internal
             Type type = o.GetType();
 
             if (type.IsPrimitive || type.IsEnum)
-                return Format("'{0}'", o);
+            {
+                return string.Create(TypeConverterHelper.InvariantEnglishUS, $"'{o}'");
+            }
 
-            string s = o as String;
-            if (s != null)
-                return Format("'{0}'", AvTrace.AntiFormat(s));
-
-            NamedObject n = o as NamedObject;
-            if (n != null)
-                return AvTrace.AntiFormat(n.ToString());
-
-            ICollection ic = o as ICollection;
-            if (ic != null)
-                return Format("{0} (hash={1} Count={2})", type.Name, AvTrace.GetHashCodeHelper(o), ic.Count);
-
-            return Format("{0} (hash={1})", type.Name, AvTrace.GetHashCodeHelper(o));
+            return o switch
+            {
+                string s => $"'{AvTrace.AntiFormat(s)}'",
+                NamedObject n => AvTrace.AntiFormat(n.ToString()),
+                ICollection ic => string.Create(TypeConverterHelper.InvariantEnglishUS, $"{type.Name} (hash={AvTrace.GetHashCodeHelper(o)} Count={ic.Count})"),
+                _ => string.Create(TypeConverterHelper.InvariantEnglishUS, $"{type.Name} (hash={AvTrace.GetHashCodeHelper(o)})")
+            };
         }
 
         static public string IdentifyWeakEvent(Type type)
@@ -285,19 +281,13 @@ namespace MS.Internal
 
         static public string IdentifyAccessor(object accessor)
         {
-            DependencyProperty dp = accessor as DependencyProperty;
-            if (dp != null)
-                return Format("{0}({1})", dp.GetType().Name, dp.Name);
-
-            PropertyInfo pi = accessor as PropertyInfo;;
-            if (pi != null)
-                return Format("{0}({1})", pi.GetType().Name, pi.Name);
-
-            PropertyDescriptor pd = accessor as PropertyDescriptor;;
-            if (pd != null)
-                return Format("{0}({1})", pd.GetType().Name, pd.Name);
-
-            return Identify(accessor);
+            return accessor switch
+            {
+                DependencyProperty dp => $"{dp.GetType().Name}({dp.Name})",
+                PropertyInfo pi => $"{pi.GetType().Name}({pi.Name})",
+                PropertyDescriptor pd => $"{pd.GetType().Name}({pd.Name})",
+                _ => Identify(accessor)
+            };
         }
 
         static public string IdentifyException(Exception ex)
@@ -305,12 +295,7 @@ namespace MS.Internal
             if (ex == null)
                 return "<no error>";
 
-            return Format("{0} ({1})", ex.GetType().Name, AvTrace.AntiFormat(ex.Message));
-        }
-
-        static string Format(string format, params object[] args)
-        {
-            return String.Format(TypeConverterHelper.InvariantEnglishUS, format, args);
+            return $"{ex.GetType().Name} ({AvTrace.AntiFormat(ex.Message)})";
         }
 
         /// <summary>

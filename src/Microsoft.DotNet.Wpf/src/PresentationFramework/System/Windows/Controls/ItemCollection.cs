@@ -532,8 +532,8 @@ namespace System.Windows.Controls
             {
                 CheckIsUsingInnerView();
 
-                if (index < 0 || index >= _internalView.Count)
-                    throw new ArgumentOutOfRangeException("index");
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _internalView.Count);
 
                 _internalView[index] = value;
             }

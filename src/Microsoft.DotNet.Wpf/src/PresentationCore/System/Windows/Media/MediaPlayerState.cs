@@ -262,10 +262,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -312,10 +310,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -932,10 +928,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
 
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 HRESULT.Check(MILMedia.SetRate(_nativeMedia, value));
             }

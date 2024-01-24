@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,12 +17,12 @@ using MS.Internal.Serialization;
 namespace System.Windows.Markup
 {
     /// <summary>
-    /// ValueSerializer allows a type to declare a serializer to control how the type is serialized to and from strings. 
-    /// If a TypeConverter is declared for a type that converts to and from a string, a default value serializer will 
-    /// be created for the type. The string values must be loss-less (i.e. converting to and from a string doesn't loose 
-    /// data) and must be stable (i.e. returns the same string for the same value). If a type converter doesn't  meet 
-    /// these requirements, a custom ValueSerializer must be declared that meet the requirements or associate a null 
-    /// ValueSerializer with the type to indicate the type converter should be ignored. Implementation of ValueSerializer 
+    /// ValueSerializer allows a type to declare a serializer to control how the type is serialized to and from strings.
+    /// If a TypeConverter is declared for a type that converts to and from a string, a default value serializer will
+    /// be created for the type. The string values must be loss-less (i.e. converting to and from a string doesn't loose
+    /// data) and must be stable (i.e. returns the same string for the same value). If a type converter doesn't  meet
+    /// these requirements, a custom ValueSerializer must be declared that meet the requirements or associate a null
+    /// ValueSerializer with the type to indicate the type converter should be ignored. Implementation of ValueSerializer
     /// should avoid throwing exceptions. Any exceptions thrown could possibly terminate serialization.
     /// </summary>
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
@@ -85,7 +87,7 @@ namespace System.Windows.Markup
         /// a value serializer for System.Type, any types it asks to convert should be supplied in the returned
         /// enumeration. This allows a serializer to ensure a de-serializer has enough information about the types
         /// this serializer converts.
-        /// 
+        ///
         /// Since a value serializer doesn't exist by default, it is important the value serializer be requested from
         /// the IValueSerializerContext, not ValueSerializer.GetSerializerFor. This allows a serializer to encode
         /// context information (such as xmlns definitions) to the System.Type converter (for example, which prefix
@@ -167,7 +169,7 @@ namespace System.Windows.Markup
         public static ValueSerializer GetSerializerFor(PropertyDescriptor descriptor)
         {
             ArgumentNullException.ThrowIfNull(descriptor);
-            
+
             ValueSerializerAttribute serializerAttribute = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
             if (serializerAttribute != null)
             {
@@ -212,7 +214,7 @@ namespace System.Windows.Markup
 
         /// <summary>
         /// Get the value serializer declared for the given property. ValueSerializer can be overriden by an attribute
-        /// on the property declaration. This version should be called whenever the caller has a 
+        /// on the property declaration. This version should be called whenever the caller has a
         /// IValueSerializerContext to ensure that the correct value serializer is returned for the given context.
         /// </summary>
         /// <param name="descriptor">PropertyDescriptor for the property to be serialized</param>

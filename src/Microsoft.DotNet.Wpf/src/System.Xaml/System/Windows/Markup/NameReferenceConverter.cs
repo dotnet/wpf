@@ -2,13 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Globalization;
 using System.Xaml;
 
 namespace System.Windows.Markup
 {
-    public class NameReferenceConverter: TypeConverter 
+    public class NameReferenceConverter: TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -23,7 +25,7 @@ namespace System.Windows.Markup
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             ArgumentNullException.ThrowIfNull(context);
-            
+
             var nameResolver = (IXamlNameResolver)context.GetService(typeof(IXamlNameResolver));
             if (nameResolver == null)
             {
@@ -57,7 +59,7 @@ namespace System.Windows.Markup
             }
 
             return base.CanConvertTo(context, destinationType);
-            
+
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
@@ -70,7 +72,7 @@ namespace System.Windows.Markup
                 throw new InvalidOperationException(SR.MissingNameProvider);
             }
 
-            return nameProvider.GetName(value);            
+            return nameProvider.GetName(value);
         }
     }
 }

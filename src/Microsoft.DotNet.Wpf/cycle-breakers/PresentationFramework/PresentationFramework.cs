@@ -1152,6 +1152,7 @@ namespace System.Windows
     public delegate void SessionEndingCancelEventHandler(object sender, System.Windows.SessionEndingCancelEventArgs e);
     [System.Windows.Markup.XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [System.Windows.Markup.XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
+    [System.Windows.Markup.ContentPropertyAttribute("Value")]
     public partial class Setter : System.Windows.SetterBase, System.ComponentModel.ISupportInitialize
     {
         public Setter() { }

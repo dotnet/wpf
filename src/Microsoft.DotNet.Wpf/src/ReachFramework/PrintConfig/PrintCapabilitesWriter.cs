@@ -518,7 +518,7 @@ namespace MS.Internal.Printing.Configuration
                             {
                                 string x = XmlConvert.ToString(resolutions[i].x);
                                 string y = XmlConvert.ToString(resolutions[i].y);
-                                WriteStartOption(this._privateNamespace, null, x + " x " + y, "None");
+                                WriteStartOption(this._privateNamespace, null, $"{x} x {y}", "None");
                                 {
                                     WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "ResolutionX");
                                     {

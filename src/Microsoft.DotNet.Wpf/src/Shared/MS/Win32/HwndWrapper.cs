@@ -287,7 +287,7 @@ namespace MS.Win32
             
             if( IntPtr.Zero != result )
             {
-                System.Diagnostics.Debug.WriteLine("Non-zero WndProc result=" + result);
+                System.Diagnostics.Debug.WriteLine($"Non-zero WndProc result={result}");
                 if( handled )
                 {
                     if( System.Diagnostics.Debugger.IsAttached )

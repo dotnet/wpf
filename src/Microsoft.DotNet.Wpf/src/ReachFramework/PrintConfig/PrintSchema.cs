@@ -1959,15 +1959,7 @@ namespace MS.Internal.Printing.Configuration
             internal const string Unspecified =        "Unspecified";
             internal const string Unknown     =        "Unknown";
 
-            internal const string EmptyPrintTicket =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<" + PrintSchemaPrefixes.Framework + ":" + PrintSchemaTags.Framework.PrintTicketRoot +
-                    " xmlns:" + PrintSchemaPrefixes.Framework + "=\"" + PrintSchemaNamespaces.Framework + "\"" +
-                    " xmlns:" + PrintSchemaPrefixes.StandardKeywordSet + "=\"" + PrintSchemaNamespaces.StandardKeywordSet + "\"" +
-                    " xmlns:" + PrintSchemaPrefixes.xsi + "=\"" + PrintSchemaNamespaces.xsi + "\"" +
-                    " xmlns:" + PrintSchemaPrefixes.xsd + "=\"" + PrintSchemaNamespaces.xsd + "\"" +
-                    " version=\"1\">" +
-                "</" + PrintSchemaPrefixes.Framework + ":" + PrintSchemaTags.Framework.PrintTicketRoot + ">";
+            internal const string EmptyPrintTicket = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?><{PrintSchemaPrefixes.Framework}:{PrintSchemaTags.Framework.PrintTicketRoot} xmlns:{PrintSchemaPrefixes.Framework}=\"{PrintSchemaNamespaces.Framework}\" xmlns:{PrintSchemaPrefixes.StandardKeywordSet}=\"{PrintSchemaNamespaces.StandardKeywordSet}\" xmlns:{PrintSchemaPrefixes.xsi}=\"{PrintSchemaNamespaces.xsi}\" xmlns:{PrintSchemaPrefixes.xsd}=\"{PrintSchemaNamespaces.xsd}\" version=\"1\"></{PrintSchemaPrefixes.Framework}:{PrintSchemaTags.Framework.PrintTicketRoot}>";
         }
 
         internal class Keywords

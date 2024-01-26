@@ -283,7 +283,7 @@ namespace System.Windows
         /// <summary>
         /// String to use for assert of registry permissions
         /// </summary>
-        private const string WpfPackagingKey = @"HKEY_CURRENT_USER\" + WpfPackagingSubKeyPath;
+        private const string WpfPackagingKey = $@"HKEY_CURRENT_USER\{WpfPackagingSubKeyPath}";
 
         /// <summary>
         /// The key location for the registry switch to configure the Packaging API

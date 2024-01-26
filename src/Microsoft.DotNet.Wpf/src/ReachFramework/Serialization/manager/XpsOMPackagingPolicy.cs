@@ -795,7 +795,7 @@ namespace System.Windows.Xps.Packaging
         Uri
         GenerateUriForObfuscatedFont()
         {
-            String uniqueUri = "/Resources/" + Guid.NewGuid().ToString() + XpsS0Markup.ObfuscatedFontExt;
+            String uniqueUri = $"/Resources/{Guid.NewGuid()}{XpsS0Markup.ObfuscatedFontExt}";
             Uri uri = PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
             return uri;
         }

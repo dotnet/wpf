@@ -2,11 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/*++                                                                     
+/*++
     Abstract:
         This file contains the definition of a class that defines
         the common functionality required to serialize a FixedDocument
-                                                                         
+
 --*/
 using System.ComponentModel;
 using System.Xml;
@@ -36,13 +36,13 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
 
         #region Public Methods
-        
+
         public
         override
         void
@@ -54,15 +54,15 @@ namespace System.Windows.Xps.Serialization
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
                 {
                     EndPersistObjectData();
                     break;
                 }
-                
+
                 default:
                 {
                     base.AsyncOperation(context);
@@ -103,11 +103,11 @@ namespace System.Windows.Xps.Serialization
         #endregion Public Methods
 
         #region Internal Methods
-        
+
         /// <summary>
         /// The main method that is called to serialize the FixedDocument
-        /// and that is usually called from within the serialization manager 
-        /// when a node in the graph of objects is at a turn where it should 
+        /// and that is usually called from within the serialization manager
+        /// when a node in the graph of objects is at a turn where it should
         /// be serialized.
         /// </summary>
         /// <param name="serializedProperty">
@@ -138,7 +138,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         /// <summary>
-        /// The method is called once the object data is discovered at that 
+        /// The method is called once the object data is discovered at that
         /// point of the serizlization process.
         /// </summary>
         /// <param name="serializableObjectContext">
@@ -178,7 +178,7 @@ namespace System.Windows.Xps.Serialization
 
                     ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentPrintTicket,
                                                                      0);
 
@@ -215,7 +215,7 @@ namespace System.Windows.Xps.Serialization
             // Clear off the table from the packaging policy
             //
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = null;
-            
+
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = null;
 
 
@@ -224,7 +224,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Document has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,
                                                          0,
                                                          0,
@@ -236,7 +236,7 @@ namespace System.Windows.Xps.Serialization
                (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
             }
         }
-    
+
         /// <summary>
         /// This method is the one that writed out the attribute within
         /// the xml stream when serializing simple properties.
@@ -257,7 +257,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
+            if ( (attributeValue != null) &&
                  (attributeValue.Length > 0) )
             {
                 //
@@ -269,7 +269,7 @@ namespace System.Windows.Xps.Serialization
 
 
         /// <summary>
-        /// Converts the Value of the Attribute to a String by calling into 
+        /// Converts the Value of the Attribute to a String by calling into
         /// the appropriate type converters.
         /// </summary>
         /// <param name="serializablePropertyContext">
@@ -299,10 +299,7 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else
@@ -316,7 +313,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Methods
 
         #region Public Properties
-        
+
         /// <summary>
         /// Queries / Set the XmlWriter for a FixedDocument
         /// </summary>
@@ -346,5 +343,5 @@ namespace System.Windows.Xps.Serialization
 
     };
 }
-    
+
 

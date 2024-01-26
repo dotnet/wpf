@@ -217,7 +217,7 @@ namespace MS.Internal
                     return;
 #if DEBUG
             default:
-                Debug.Fail("Matrix multiply hit an invalid case: " + combinedType);
+                Debug.Fail($"Matrix multiply hit an invalid case: {combinedType}");
                 break;
 #endif
             }

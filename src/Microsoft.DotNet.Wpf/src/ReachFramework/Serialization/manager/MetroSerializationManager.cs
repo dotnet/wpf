@@ -813,7 +813,7 @@ namespace System.Windows.Xps.Serialization
                               //
                               MemberInfo memberInfo = dependencyProperty.
                                                     OwnerType.
-                                                    GetMethod("Get" + dependencyProperty.Name,
+                                                    GetMethod($"Get{dependencyProperty.Name}",
                                                              BindingFlags.Public | BindingFlags.NonPublic |
                                                              BindingFlags.Static | BindingFlags.FlattenHierarchy);
 

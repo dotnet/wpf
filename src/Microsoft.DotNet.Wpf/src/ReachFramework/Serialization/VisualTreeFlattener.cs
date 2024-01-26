@@ -59,7 +59,7 @@ namespace MS.Internal.ReachFramework
             )
         {
 
-            string bitmapName = "bitmap" + m_bitmapId;
+            string bitmapName = $"bitmap{m_bitmapId}";
 
             BitmapEncoder encoder = null;
 
@@ -104,7 +104,7 @@ namespace MS.Internal.ReachFramework
 
                     if (encoder != null)
                     {
-                        bitmapName = bitmapName + '.' + extension;
+                        bitmapName = $"{bitmapName}.{extension}";
                     }
                 }
             }
@@ -115,13 +115,13 @@ namespace MS.Internal.ReachFramework
                 {
                     encoder = new WmpBitmapEncoder();
 
-                    bitmapName = bitmapName + ".wmp";
+                    bitmapName = $"{bitmapName}.wmp";
                 }
                 else
                 {
                     encoder = new PngBitmapEncoder();
 
-                    bitmapName = bitmapName + ".png";
+                    bitmapName = $"{bitmapName}.png";
                 }
             }
 
@@ -141,12 +141,12 @@ namespace MS.Internal.ReachFramework
                 index = m_mainFile.Length;
             }
 
-            string uri = string.Concat(m_mainFile.Substring(0, index), "_", bitmapName);
+            string uri = $"{m_mainFile.AsSpan(0, index)}_{bitmapName}";
 
             Stream bitmapStreamDest = new System.IO.FileStream(uri, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
 
 #if DEBUG
-            Console.WriteLine("Saving " + uri);
+            Console.WriteLine($"Saving {uri}");
 #endif
 
             encoder.Save(bitmapStreamDest);
@@ -247,13 +247,13 @@ namespace MS.Internal.ReachFramework
                 {
                     m_imageConverter = new LooseImageSourceTypeConverter(m_mainFile);
                 }
-                
+
                 return m_imageConverter;
             }
 
             return null;
         }
-    } 
+    }
 }
 
 namespace System.Windows.Xps.Serialization
@@ -344,7 +344,7 @@ namespace System.Windows.Xps.Serialization
         internal VisualTreeFlattener(IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             Debug.Assert(treeWalkProgress != null);
-            
+
             // DrawingContextFlattener flattens calls to DrawingContext
             _dcf = new DrawingContextFlattener(dc, pageSize, treeWalkProgress);
         }
@@ -359,7 +359,7 @@ namespace System.Windows.Xps.Serialization
         internal VisualTreeFlattener(System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, PackageSerializationManager manager, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             Debug.Assert(treeWalkProgress != null);
-                        
+
             VisualSerializer dc = new VisualSerializer(resWriter, bodyWriter, manager);
 
             _dcf = new DrawingContextFlattener(dc, pageSize, treeWalkProgress);
@@ -383,7 +383,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             DrawingGroup dg = drawing as DrawingGroup;
-            
+
             if (dg != null)
             {
                 if (Utility.IsTransparent(dg.Opacity))
@@ -487,7 +487,7 @@ namespace System.Windows.Xps.Serialization
 
             FrameworkElement fe = visual as FrameworkElement;
             String nameAttr = null;
-            // we will presever the name for this element if 
+            // we will presever the name for this element if
             // 1. It is FrameworkElement and Name is non empty.
             // 2. It is not FixedPage(because NameProperty of FixedPage is already reserved)
             // 3. It is not from template. TemplatedParent is null.
@@ -501,7 +501,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 int dummy;
                 // Some classes like DocumentViewer, in its visual tree, will implicitly generate
-                // some named elements. We will avoid create the duplicate names. 
+                // some named elements. We will avoid create the duplicate names.
                 if (_nameList.TryGetValue(fe.Name, out dummy) == false)
                 {
                     nameAttr = fe.Name;
@@ -666,7 +666,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return;
             }
-            
+
             {
                 GeometryDrawing gd = d as GeometryDrawing;
 
@@ -677,7 +677,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             {
                 GlyphRunDrawing gd = d as GlyphRunDrawing;
 
@@ -688,7 +688,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             {
                 ImageDrawing id = d as ImageDrawing;
 
@@ -699,7 +699,7 @@ namespace System.Windows.Xps.Serialization
                     return;
                 }
             }
-            
+
             DrawingGroup dg = d as DrawingGroup;
 
             if (dg != null)
@@ -745,7 +745,7 @@ namespace System.Windows.Xps.Serialization
             }
 
 #if DEBUG
-            Console.WriteLine("Drawing of type '" + d.GetType() + "' not handled.");
+            Console.WriteLine($"Drawing of type '{d.GetType()}' not handled.");
 #endif
         }
 
@@ -805,7 +805,7 @@ namespace System.Windows.Xps.Serialization
             resWriter.WriteStartElement("Canvas.Resources");
             resWriter.WriteStartElement("ResourceDictionary");
             resWriter.WriteWhitespace("\r\n");
-            
+
             VisualTreeFlattener flattener = new VisualTreeFlattener(resWriter, bodyWriter, manager, new Size(8.5 * 96, 11 * 96), new TreeWalkProgress());
 
             flattener.VisualWalk(visual);

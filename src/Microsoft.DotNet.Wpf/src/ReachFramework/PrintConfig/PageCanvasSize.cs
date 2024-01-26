@@ -90,7 +90,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this imageable area.</returns>
         public override string ToString()
         {
-            return "[ImageableArea: Origin (" + OriginWidth + "," + OriginHeight + "), Extent (" + ExtentWidth + "x" + ExtentHeight + ")]";
+            return $"[ImageableArea: Origin ({OriginWidth},{OriginHeight}), Extent ({ExtentWidth}x{ExtentHeight})]";
         }
 
         #endregion Public Methods
@@ -167,8 +167,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this imageable size capability object.</returns>
         public override string ToString()
         {
-            return "ImageableSizeWidth=" + ImageableSizeWidth + ", ImageableSizeHeight=" + ImageableSizeHeight + " " +
-                   ((ImageableArea != null) ? ImageableArea.ToString() : "[ImageableArea: null]");
+            return $"ImageableSizeWidth={ImageableSizeWidth}, ImageableSizeHeight={ImageableSizeHeight} {((ImageableArea != null) ? ImageableArea.ToString() : "[ImageableArea: null]")}";
         }
 
         #endregion Public Methods

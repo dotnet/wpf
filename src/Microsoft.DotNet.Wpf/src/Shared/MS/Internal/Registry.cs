@@ -13,8 +13,17 @@ namespace MS.Internal
         internal const string
             WPF = @"Software\Microsoft\.NETFramework\Windows Presentation Foundation",
 
-            WPF_Features = WPF+"\\Features",
+            WPF_Features = $"{WPF}\\Features",
+                value_MediaImageDisallow = "MediaImageDisallow",
+                value_MediaVideoDisallow = "MediaVideoDisallow",
+                value_MediaAudioDisallow = "MediaAudioDisallow",
+                value_WebBrowserDisallow = "WebBrowserDisallow",
+                value_ScriptInteropDisallow = "ScriptInteropDisallow",
                 value_AutomationWeakReferenceDisallow = "AutomationWeakReferenceDisallow",
+
+            WPF_Hosting = $"{WPF}\\Hosting",
+                value_DisableXbapErrorPage = "DisableXbapErrorPage",
+                value_UnblockWebBrowserControl = "UnblockWebBrowserControl",
 
             HKCU_XpsViewer = @"HKEY_CURRENT_USER\Software\Microsoft\XPSViewer",
                 value_IsolatedStorageUserQuota = "IsolatedStorageUserQuota",
@@ -25,12 +34,12 @@ namespace MS.Internal
             // wpf\src\Shared\Cpp\Utils.cxx
             // Should these reg keys change the above file should be also modified to reflect that.
             FRAMEWORK_RegKey  = @"Software\Microsoft\Net Framework Setup\NDP\v4\Client\",
-            FRAMEWORK_RegKey_FullPath  = @"HKEY_LOCAL_MACHINE\" + FRAMEWORK_RegKey,
+            FRAMEWORK_RegKey_FullPath  = $@"HKEY_LOCAL_MACHINE\{FRAMEWORK_RegKey}",
             FRAMEWORK_InstallPath_RegValue = "InstallPath";
 
         internal static bool ReadLocalMachineBool(string key, string valueName)
         {
-            string keyPath = "HKEY_LOCAL_MACHINE\\" + key;
+            string keyPath = $"HKEY_LOCAL_MACHINE\\{key}";
             object value = Registry.GetValue(keyPath, valueName, null);
             return value is int && (int)value != 0;
         }

@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace Microsoft.Internal.AlphaFlattener
 {
-    internal class DisplayList 
+    internal class DisplayList
     {
         public bool   m_DisJoint;
         public double m_width;
@@ -31,7 +31,7 @@ namespace Microsoft.Internal.AlphaFlattener
         internal static string LeftPad(object obj, int len)
         {
             string s;
-        
+
             List<int> l = obj as List<int>;
 
             if (l != null)
@@ -42,13 +42,13 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     if (s.Length > 1)
                     {
-                        s = s + ' ';
+                        s = $"{s} ";
                     }
-                    
+
                     s = s + i;
                 }
 
-                return s + ">";
+                return $"{s}>";
             }
             else if (obj is Double)
             {
@@ -56,10 +56,9 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else if (obj is Rect r)
             {
-                return " [" + LeftPad(r.Left, 6) + ' '
-                            + LeftPad(r.Top, 6) + ' '
-                            + LeftPad(r.Width, 6) + ' '
-                            + LeftPad(r.Height, 6) + "]";
+                Rect r = (Rect) obj;
+
+                return $" [{LeftPad(r.Left, 6)} {LeftPad(r.Top, 6)} {LeftPad(r.Width, 6)} {LeftPad(r.Height, 6)}]";
             }
             else
             {
@@ -76,7 +75,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.WriteLine();
 
                 Console.WriteLine(" No      Type           Und Ovr TrO           Bounding Box                   Clipping");
-        
+
                 if (verbose)
                 {
                     Console.Write("                     Transform");
@@ -85,15 +84,15 @@ namespace Microsoft.Internal.AlphaFlattener
                 Console.WriteLine();
                 return;
             }
-            
+
             Primitive p = info.primitive;
 
             string typ = p.GetType().ToString();
 
             typ = typ.Substring(typ.LastIndexOf('.') + 1);
 
-            Console.Write(LeftPad(index, 4) + LeftPad(typ, 18) + ":");
-            
+            Console.Write($"{LeftPad(index, 4)}{LeftPad(typ, 18)}:");
+
             List<int> extra = null;
 
             if (p.IsOpaque)
@@ -118,7 +117,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (info.overlap != null)
             {
-                Console.Write(' ' + LeftPad(info.overlap.Count, 3));
+                Console.Write($" {LeftPad(info.overlap.Count, 3)}");
 
                 if (info.overlapHasTransparency != 0)
                 {
@@ -136,30 +135,30 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Console.Write("         ");
             }
-            
+
             Console.Write(LeftPad(info.bounds, 0));
-            
+
             Geometry clip = p.Clip;
 
             if (clip != null)
             {
                 Console.Write(LeftPad(clip.Bounds, 0));
             }
-            
+
             if (verbose)
             {
                 Matrix m = p.Transform;
 
                 Console.Write(" {");
-                Console.Write(LeftPad(m.M11, 3) + ' ');
-                Console.Write(LeftPad(m.M12, 3) + ' ');
-                Console.Write(LeftPad(m.M21, 3) + ' ');
-                Console.Write(LeftPad(m.M22, 3) + ' ');
-                Console.Write(LeftPad(m.OffsetX, 6) + ' ');
+                Console.Write($"{LeftPad(m.M11, 3)} ");
+                Console.Write($"{LeftPad(m.M12, 3)} ");
+                Console.Write($"{LeftPad(m.M21, 3)} ");
+                Console.Write($"{LeftPad(m.M22, 3)} ");
+                Console.Write($"{LeftPad(m.OffsetX, 6)} ");
                 Console.Write(LeftPad(m.OffsetY, 6));
                 Console.Write("} ");
             }
-            
+
             if (verbose)
             {
                 GlyphPrimitive gp = p as GlyphPrimitive;
@@ -167,14 +166,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 if (gp != null)
                 {
                     IList<char> chars = gp.GlyphRun.Characters;
-                                
+
                     Console.Write(" \"");
 
                     for (int i = 0; i < chars.Count; i ++)
                     {
                         Console.Write(chars[i]);
                     }
-                    
+
                     Console.Write('"');
                 }
             }
@@ -193,7 +192,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                         if (sb != null)
                         {
-                            Console.Write(" SolidColorBrush({0})", sb.Color);
+                            Console.Write($" SolidColorBrush({sb.Color})");
                         }
                     }
                 }
@@ -203,7 +202,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Console.Write(' ');
                 Console.Write(LeftPad(extra, 0));
-            }   
+            }
 
             Console.WriteLine();
         }
@@ -364,7 +363,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             if (Configuration.Verbose >= 2)
             {
-                Console.Write(" <{0} {1}>", one, two);
+                Console.Write($" <{one} {two}>");
 
                 overlapcount ++;
 

@@ -129,7 +129,7 @@ namespace MS.Internal.Printing.Configuration
                 {
                     XmlAttribute nameAttr = ticket.XmlDoc.CreateAttribute("name");
                     {
-                        nameAttr.Value = oemDriverPrefix + ":PageDevmodeSnapshot";
+                        nameAttr.Value = $"{oemDriverPrefix}:PageDevmodeSnapshot";
                     }
                     parameterInitElem.Attributes.Append(nameAttr);
 

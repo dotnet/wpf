@@ -30,7 +30,7 @@ namespace System.Windows.Xps.Serialization
         {
             ///
             /// Fail if manager is not XpsOMSerializationManager
-            /// 
+            ///
             _xpsOMSerializationManager = (XpsOMSerializationManager)manager;
         }
 
@@ -139,7 +139,7 @@ namespace System.Windows.Xps.Serialization
 
             treeWalker = new ReachTreeWalker(this);
             treeWalker.SerializeLinksInFixedPage((FixedPage)serializableObjectContext.TargetObject);
-            
+
             String xmlnsForType = SerializationManager.GetXmlNSForType(serializableObjectContext.TargetObject.GetType());
 
             if (xmlnsForType == null)
@@ -293,10 +293,7 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else

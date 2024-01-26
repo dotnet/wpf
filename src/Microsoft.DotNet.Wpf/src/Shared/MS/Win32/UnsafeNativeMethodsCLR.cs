@@ -125,10 +125,7 @@ namespace MS.Win32
             bool result = IntDeleteObject(hObject);
             int error = Marshal.GetLastWin32Error();
 
-            if(!result)
-            {
-                Debug.WriteLine("DeleteObject failed.  Error = " + error);
-            }
+            Debug.WriteLineIf(!result, $"DeleteObject failed.  Error = {error}");
 
             return result;
         }
@@ -334,10 +331,7 @@ namespace MS.Win32
             bool result = IntCloseHandle(handle);
             int error = Marshal.GetLastWin32Error();
 
-            if(!result)
-            {
-                Debug.WriteLine("CloseHandle failed.  Error = " + error);
-            }
+            Debug.WriteLineIf(!result, $"CloseHandle failed.  Error = {error}");
 
             return result;
 }
@@ -384,10 +378,7 @@ namespace MS.Win32
             bool result = IntUnmapViewOfFile(pvBaseAddress);
             int error = Marshal.GetLastWin32Error();
 
-            if(!result)
-            {
-                Debug.WriteLine("UnmapViewOfFile failed.  Error = " + error);
-            }
+            Debug.WriteLineIf(!result, $"UnmapViewOfFile failed.  Error = {error}");
 
             return result;
         }
@@ -705,68 +696,68 @@ namespace MS.Win32
         {
             None = 0x00000000,
             /// <summary>
-            /// If this value is used, and the executable module is a DLL, the system does 
-            /// not call DllMain for process and thread initialization and termination. 
-            /// Also, the system does not load additional executable modules that are 
+            /// If this value is used, and the executable module is a DLL, the system does
+            /// not call DllMain for process and thread initialization and termination.
+            /// Also, the system does not load additional executable modules that are
             /// referenced by the specified module.
             /// </summary>
             /// <remarks>
-            /// Do not use this value; it is provided only for backward compatibility. 
-            /// If you are planning to access only data or resources in the DLL, use 
-            /// <see cref="LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE"/> or 
+            /// Do not use this value; it is provided only for backward compatibility.
+            /// If you are planning to access only data or resources in the DLL, use
+            /// <see cref="LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE"/> or
             /// <see cref="LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE"/> or <see cref="LOAD_LIBRARY_AS_IMAGE_RESOURCE"/>
-            /// or both. Otherwise, load the library as a DLL or executable module 
+            /// or both. Otherwise, load the library as a DLL or executable module
             /// using the <see cref="LoadLibrary(string)"/>function.
             /// </remarks>
             DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
             /// <summary>
-            /// If this value is used, the system does not check AppLocker rules or apply 
-            /// Software Restriction Policies for the DLL. This action applies only to the 
-            /// DLL being loaded and not to its dependencies. This value is recommended 
+            /// If this value is used, the system does not check AppLocker rules or apply
+            /// Software Restriction Policies for the DLL. This action applies only to the
+            /// DLL being loaded and not to its dependencies. This value is recommended
             /// for use in setup programs that must run extracted DLLs during installation.
             /// </summary>
             /// <remarks>
-            /// Windows Server 2008 R2 and Windows 7:  
-            ///     On systems with KB2532445 installed, the 
-            ///     caller must be running as "LocalSystem" or "TrustedInstaller"; otherwise the 
-            ///     system ignores this flag. For more information, see "You can circumvent AppLocker 
-            ///     rules by using an Office macro on a computer that is running Windows 7 or 
-            ///     Windows Server 2008 R2" in the Help and Support Knowledge Base 
+            /// Windows Server 2008 R2 and Windows 7:
+            ///     On systems with KB2532445 installed, the
+            ///     caller must be running as "LocalSystem" or "TrustedInstaller"; otherwise the
+            ///     system ignores this flag. For more information, see "You can circumvent AppLocker
+            ///     rules by using an Office macro on a computer that is running Windows 7 or
+            ///     Windows Server 2008 R2" in the Help and Support Knowledge Base
             ///     at <see cref="http://support.microsoft.com/kb/2532445."/>
-            /// 
-            /// Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP:  
+            ///
+            /// Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP:
             ///     AppLocker was introduced in Windows 7 and Windows Server 2008 R2.
             /// </remarks>
             LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
             /// <summary>
-            /// If this value is used, the system maps the file into the calling process's 
-            /// virtual address space as if it were a data file. Nothing is done to execute 
-            /// or prepare to execute the mapped file. Therefore, you cannot call functions 
-            /// like GetModuleFileName, GetModuleHandle or GetProcAddress with this DLL. 
-            /// Using this value causes writes to read-only memory to raise an access violation. 
-            /// Use this flag when you want to load a DLL only to extract messages or resources 
+            /// If this value is used, the system maps the file into the calling process's
+            /// virtual address space as if it were a data file. Nothing is done to execute
+            /// or prepare to execute the mapped file. Therefore, you cannot call functions
+            /// like GetModuleFileName, GetModuleHandle or GetProcAddress with this DLL.
+            /// Using this value causes writes to read-only memory to raise an access violation.
+            /// Use this flag when you want to load a DLL only to extract messages or resources
             /// from it.This value can be used with <see cref="LOAD_LIBRARY_AS_IMAGE_RESOURCE"/>.
             /// </summary>
             LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
             /// <summary>
-            /// Similar to LOAD_LIBRARY_AS_DATAFILE, except that the DLL file is opened with 
-            /// exclusive write access for the calling process. Other processes cannot open 
-            /// the DLL file for write access while it is in use. However, the DLL can 
-            /// still be opened by other processes. This value can be used with 
-            /// <see cref="LOAD_LIBRARY_AS_IMAGE_RESOURCE"/>. 
+            /// Similar to LOAD_LIBRARY_AS_DATAFILE, except that the DLL file is opened with
+            /// exclusive write access for the calling process. Other processes cannot open
+            /// the DLL file for write access while it is in use. However, the DLL can
+            /// still be opened by other processes. This value can be used with
+            /// <see cref="LOAD_LIBRARY_AS_IMAGE_RESOURCE"/>.
             /// </summary>
             /// <remarks>
-            /// Windows Server 2003 and Windows XP:  This value is not supported until 
+            /// Windows Server 2003 and Windows XP:  This value is not supported until
             /// Windows Vista.
             /// </remarks>
             LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
             /// <summary>
-            /// If this value is used, the system maps the file into the process's virtual 
-            /// address space as an image file. However, the loader does not load the static 
-            /// imports or perform the other usual initialization steps. Use this flag when 
-            /// you want to load a DLL only to extract messages or resources from it. Unless 
-            /// the application depends on the file having the in-memory layout of an image, 
-            /// this value should be used with either <see cref="LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE "/> or 
+            /// If this value is used, the system maps the file into the process's virtual
+            /// address space as an image file. However, the loader does not load the static
+            /// imports or perform the other usual initialization steps. Use this flag when
+            /// you want to load a DLL only to extract messages or resources from it. Unless
+            /// the application depends on the file having the in-memory layout of an image,
+            /// this value should be used with either <see cref="LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE "/> or
             /// <see cref="LOAD_LIBRARY_AS_DATAFILE"/>.
             /// </summary>
             /// <remarks>
@@ -774,86 +765,86 @@ namespace MS.Win32
             /// </remarks>
             LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
             /// <summary>
-            /// If this value is used, the application's installation directory is searched for the 
-            /// DLL and its dependencies. Directories in the standard search path are not searched. 
+            /// If this value is used, the application's installation directory is searched for the
+            /// DLL and its dependencies. Directories in the standard search path are not searched.
             /// This value cannot be combined with <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>.
             /// </summary>
             /// <remarks>
-            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  
+            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:
             ///     This value requires KB2533623 to be installed.
-            /// Windows Server 2003 and Windows XP:  
+            /// Windows Server 2003 and Windows XP:
             ///     This value is not supported.
             /// </remarks>
             LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
             /// <summary>
-            /// This value is a combination of <see cref="LOAD_LIBRARY_SEARCH_APPLICATION_DIR"/>, 
-            /// <see cref="LOAD_LIBRARY_SEARCH_SYSTEM32"/>, and <see cref="LOAD_LIBRARY_SEARCH_USER_DIRS"/>. 
-            /// Directories in the standard search path are not searched. This value cannot be combined with 
-            /// <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>. This value represents the recommended maximum number 
+            /// This value is a combination of <see cref="LOAD_LIBRARY_SEARCH_APPLICATION_DIR"/>,
+            /// <see cref="LOAD_LIBRARY_SEARCH_SYSTEM32"/>, and <see cref="LOAD_LIBRARY_SEARCH_USER_DIRS"/>.
+            /// Directories in the standard search path are not searched. This value cannot be combined with
+            /// <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>. This value represents the recommended maximum number
             /// of directories an application should include in its DLL search path.
             /// </summary>
             /// <remarks>
-            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  
-            ///     This value requires KB2533623 to be installed. 
-            /// 
-            /// Windows Server 2003 and Windows XP:  
+            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:
+            ///     This value requires KB2533623 to be installed.
+            ///
+            /// Windows Server 2003 and Windows XP:
             ///     This value is not supported.
             /// </remarks>
             LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
             /// <summary>
-            /// If this value is used, the directory that contains the DLL is temporarily added to 
-            /// the beginning of the list of directories that are searched for the DLL's dependencies. 
+            /// If this value is used, the directory that contains the DLL is temporarily added to
+            /// the beginning of the list of directories that are searched for the DLL's dependencies.
             /// Directories in the standard search path are not searched.
-            /// 
-            /// The lpFileName parameter must specify a fully qualified path. This value cannot be 
-            /// combined with <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>. 
-            /// 
-            /// For example, if Lib2.dll is a dependency of C:\Dir1\Lib1.dll, loading Lib1.dll with 
-            /// this value causes the system to search for Lib2.dll only in C:\Dir1. To search for 
-            /// Lib2.dll in C:\Dir1 and all of the directories in the DLL search path, combine this 
+            ///
+            /// The lpFileName parameter must specify a fully qualified path. This value cannot be
+            /// combined with <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>.
+            ///
+            /// For example, if Lib2.dll is a dependency of C:\Dir1\Lib1.dll, loading Lib1.dll with
+            /// this value causes the system to search for Lib2.dll only in C:\Dir1. To search for
+            /// Lib2.dll in C:\Dir1 and all of the directories in the DLL search path, combine this
             /// value with <see cref="LOAD_LIBRARY_DEFAULT_DIRS"/>.
             /// </summary>
             /// <remarks>
-            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  
+            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:
             ///     This value requires KB2533623 to be installed.
-            /// 
-            /// Windows Server 2003 and Windows XP:  
+            ///
+            /// Windows Server 2003 and Windows XP:
             ///     This value is not supported.
             /// </remarks>
             LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
             /// <summary>
-            /// If this value is used, %windows%\system32 is searched for the DLL and its dependencies. 
-            /// Directories in the standard search path are not searched. This value cannot be 
+            /// If this value is used, %windows%\system32 is searched for the DLL and its dependencies.
+            /// Directories in the standard search path are not searched. This value cannot be
             /// combined with <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>
             /// </summary>
             /// <remarks>
-            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  
+            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:
             ///     This value requires KB2533623 to be installed.
-            /// Windows Server 2003 and Windows XP:  
+            /// Windows Server 2003 and Windows XP:
             ///     This value is not supported.
             /// </remarks>
             LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
             /// <summary>
-            /// If this value is used, directories added using the AddDllDirectory or the SetDllDirectory 
-            /// function are searched for the DLL and its dependencies. If more than one directory has been added, 
-            /// the order in which the directories are searched is unspecified. Directories in the 
-            /// standard search path are not searched. This value cannot be combined with 
+            /// If this value is used, directories added using the AddDllDirectory or the SetDllDirectory
+            /// function are searched for the DLL and its dependencies. If more than one directory has been added,
+            /// the order in which the directories are searched is unspecified. Directories in the
+            /// standard search path are not searched. This value cannot be combined with
             /// <see cref="LOAD_WITH_ALTERED_SEARCH_PATH"/>
             /// </summary>
             /// <remarks>
-            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  
+            /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:
             ///     This value requires KB2533623 to be installed.
-            /// Windows Server 2003 and Windows XP:  
+            /// Windows Server 2003 and Windows XP:
             ///     This value is not supported.
             /// </remarks>
             LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
             /// <summary>
-            /// If this value is used and lpFileName specifies an absolute path, the system uses the alternate 
-            /// file search strategy discussed in the Remarks section to find associated executable modules that 
-            /// the specified module causes to be loaded. If this value is used and lpFileName specifies a 
-            /// relative path, the behavior is undefined. If this value is not used, or if lpFileName does not specify a path, 
-            /// the system uses the standard search strategy discussed in the Remarks section to find associated 
-            /// executable modules that the specified module causes to be loaded.This value cannot be combined with 
+            /// If this value is used and lpFileName specifies an absolute path, the system uses the alternate
+            /// file search strategy discussed in the Remarks section to find associated executable modules that
+            /// the specified module causes to be loaded. If this value is used and lpFileName specifies a
+            /// relative path, the behavior is undefined. If this value is not used, or if lpFileName does not specify a path,
+            /// the system uses the standard search strategy discussed in the Remarks section to find associated
+            /// executable modules that the specified module causes to be loaded.This value cannot be combined with
             /// any LOAD_LIBRARY_SEARCH flag.
             /// </summary>
             LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
@@ -871,19 +862,19 @@ namespace MS.Win32
         {
             None = 0x00000000,
             /// <summary>
-            /// The lpModuleName parameter in <see cref="GetModuleHandleEx"/> is an address 
+            /// The lpModuleName parameter in <see cref="GetModuleHandleEx"/> is an address
             /// in the module.
             /// </summary>
             GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS = 0x00000004,
             /// <summary>
-            /// The module stays loaded until the process is terminated, no matter how many times 
+            /// The module stays loaded until the process is terminated, no matter how many times
             /// FreeLibrary is called.
             /// This option cannot be used with <see cref="GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT"/>.
             /// </summary>
             GET_MODULE_HANDLE_EX_FLAG_PIN = 0x00000001,
             /// <summary>
-            /// The reference count for the module is not incremented. This option is equivalent to the 
-            /// behavior of GetModuleHandle. Do not pass the retrieved module handle to the FreeLibrary 
+            /// The reference count for the module is not incremented. This option is equivalent to the
+            /// behavior of GetModuleHandle. Do not pass the retrieved module handle to the FreeLibrary
             /// function; doing so can cause the DLL to be unmapped prematurely.
             /// This option cannot be used with <see cref="GET_MODULE_HANDLE_EX_FLAG_PIN"/>.
             /// </summary>
@@ -1042,7 +1033,7 @@ namespace MS.Win32
         public static extern IntPtr SetActiveWindow(HandleRef hWnd);
 
         //Refactor shared native methods so that parser dependency
-        // is in separate file. 
+        // is in separate file.
 #if PBTCOMPILER
         [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
         public static extern IntPtr SetCursor(HandleRef hcursor);
@@ -1064,15 +1055,15 @@ namespace MS.Win32
             bool result = IntDestroyIcon(hIcon);
             int error = Marshal.GetLastWin32Error();
 
-            if(!result)
-            {
-                // To be consistent with out other PInvoke wrappers
-                // we should "throw" here.  But we don't want to
-                // introduce new "throws" w/o time to follow up on any
-                // new problems that causes.
-                Debug.WriteLine("DestroyIcon failed.  Error = " + error);
+            // To be consistent with out other PInvoke wrappers
+            // we should "throw" here.  But we don't want to
+            // introduce new "throws" w/o time to follow up on any
+            // new problems that causes.
+            Debug.WriteLineIf(!result, $"DestroyIcon failed.  Error = {error}");
+            // if(!result)
+            // {
                 //throw new Win32Exception();
-            }
+            // }
 
             return result;
         }
@@ -1085,15 +1076,15 @@ namespace MS.Win32
             bool result = IntDeleteObject(hObject);
             int error = Marshal.GetLastWin32Error();
 
-            if(!result)
-            {
-                // To be consistent with out other PInvoke wrappers
-                // we should "throw" here.  But we don't want to
-                // introduce new "throws" w/o time to follow up on any
-                // new problems that causes.
-                Debug.WriteLine("DeleteObject failed.  Error = " + error);
+            // To be consistent with out other PInvoke wrappers
+            // we should "throw" here.  But we don't want to
+            // introduce new "throws" w/o time to follow up on any
+            // new problems that causes.
+            Debug.WriteLineIf(!result, $"DeleteObject failed.  Error = {error}");
+            // if(!result)
+            // {
                 //throw new Win32Exception();
-            }
+            // }
 
             return result;
         }
@@ -1112,10 +1103,7 @@ namespace MS.Win32
             NativeMethods.BitmapHandle hBitmap = PrivateCreateDIBSection(hdc, ref bitmapInfo, iUsage, ref ppvBits, hSection, dwOffset);
             int error = Marshal.GetLastWin32Error();
 
-            if ( hBitmap.IsInvalid )
-            {
-                Debug.WriteLine("CreateDIBSection failed. Error = " + error);
-            }
+            Debug.WriteLineIf(hBitmap.IsInvalid, $"CreateDIBSection failed. Error = {error}");
 
             return hBitmap;
         }
@@ -1128,10 +1116,7 @@ namespace MS.Win32
             NativeMethods.BitmapHandle hBitmap = PrivateCreateBitmap(width, height, planes, bitsPerPixel, lpvBits);
             int error = Marshal.GetLastWin32Error();
 
-            if ( hBitmap.IsInvalid )
-            {
-                Debug.WriteLine("CreateBitmap failed. Error = " + error);
-            }
+            Debug.WriteLineIf(hBitmap.IsInvalid, $"CreateBitmap failed. Error = {error}");
 
             return hBitmap;
         }
@@ -1145,10 +1130,7 @@ namespace MS.Win32
             bool result = PrivateDestroyIcon(handle);
             int error = Marshal.GetLastWin32Error();
 
-            if ( !result )
-            {
-                Debug.WriteLine("DestroyIcon failed. Error = " + error);
-            }
+            Debug.WriteLineIf(!result, $"DestroyIcon failed. Error = {error}");
 
             return result;
         }
@@ -1160,10 +1142,7 @@ namespace MS.Win32
             NativeMethods.IconHandle hIcon = PrivateCreateIconIndirect(iconInfo);
             int error = Marshal.GetLastWin32Error();
 
-            if ( hIcon.IsInvalid )
-            {
-                Debug.WriteLine("CreateIconIndirect failed. Error = " + error);
-            }
+            Debug.WriteLineIf(hIcon.IsInvalid, $"CreateIconIndirect failed. Error = {error}");
 
             return hIcon;
         }
@@ -3054,7 +3033,7 @@ namespace MS.Win32
         /// </returns>
         /// <remarks>
         /// Use this API to change the DPI_AWARENESS_CONTEXT for the thread from the default value for the app.
-        /// 
+        ///
         /// Minimum supported client: Windows 10, version 1607 (RS1)
         /// </remarks>
         [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
@@ -3068,7 +3047,7 @@ namespace MS.Win32
         /// This method will return the latest DPI_AWARENESS_CONTEXT sent to SetThreadDpiAwarenessContext.
         /// If SetThreadDpiAwarenessContext was never called for this thread, then the return value will equal
         /// the default DPI_AWARENESS_CONTEXT for the process.
-        /// 
+        ///
         /// Minimum supported client: Windows 10, version 1607 (RS1)
         /// </remarks>
         [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
@@ -3085,7 +3064,7 @@ namespace MS.Win32
         /// </summary>
         /// <param name="hdc">
         /// A handle to a display device context that defines the visible region of interest.
-        /// 
+        ///
         /// If this parameter is NULL, the hdcMonitor parameter passed to the callback function
         /// will be NULL, and the visible region of interest is the virtual screen that encompasses all
         /// the displays on the desktop.
@@ -3093,10 +3072,10 @@ namespace MS.Win32
         /// <param name="lprcClip">
         /// A pointer to a RECT structure that specifies a clipping rectangle. The region of interest
         /// is the intersection of the clipping rectangle with the visible region specified by hdc.
-        /// 
+        ///
         /// If hdc is non-NULL, the coordinates of the clipping rectangle are relative to the origin
         /// of the hdc.If hdc is NULL, the coordinates are virtual-screen coordinates.
-        /// 
+        ///
         /// This parameter can be NULL if you don't want to clip the region specified by hdc.
         /// </param>
         /// <param name="lpfnEnum">A pointer to a MonitorEnumProc application-defined callback function.</param>
@@ -3108,20 +3087,20 @@ namespace MS.Win32
         /// </returns>
         /// <remarks>
         /// There are two reasons to call the EnumDisplayMonitors function:
-        /// 
+        ///
         ///     You want to draw optimally into a device context that spans several display monitors, and the monitors have different color formats.
         ///     You want to obtain a handle and position rectangle for one or more display monitors.
-        /// 
+        ///
         /// To determine whether all the display monitors in a system share the same color format, call GetSystemMetrics (SM_SAMEDISPLAYFORMAT).
-        /// 
+        ///
         /// You do not need to use the EnumDisplayMonitors function when a window spans display monitors that have different color formats.
         /// You can continue to paint under the assumption that the entire screen has the color properties of the primary monitor.Your windows will
         /// look fine.EnumDisplayMonitors just lets you make them look better.
-        /// 
+        ///
         /// Setting the hdc parameter to NULL lets you use the EnumDisplayMonitors function to obtain a handle and position rectangle for
         /// one or more display monitors.The following table shows how the four combinations of NULL and non-NULLhdc and lprcClip values affect
         /// the behavior of the EnumDisplayMonitors function.
-        /// 
+        ///
         /// +-----------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
         /// |                                        hdc                                        | lprcRect |                                                                          EnumDisplayMonitors behavior                                                                          |
         /// +-----------------------------------------------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3138,9 +3117,9 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool EnumDisplayMonitors(
-            IntPtr hdc, 
-            IntPtr lprcClip, 
-            NativeMethods.MonitorEnumProc lpfnEnum, 
+            IntPtr hdc,
+            IntPtr lprcClip,
+            NativeMethods.MonitorEnumProc lpfnEnum,
             IntPtr lParam);
 
         /// <summary>

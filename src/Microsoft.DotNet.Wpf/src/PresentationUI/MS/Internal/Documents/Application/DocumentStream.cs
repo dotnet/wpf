@@ -146,7 +146,7 @@ namespace MS.Internal.Documents.Application
             }
         }
         // Since we have already closed the original file, we need to reopen it if we
-        // fail to copy the file or open the new file.  After doing so, we rethrow the 
+        // fail to copy the file or open the new file.  After doing so, we rethrow the
         // original exception so it can be handled at a higher level.
         catch
         {
@@ -210,7 +210,7 @@ namespace MS.Internal.Documents.Application
     /// <remarks>
     /// We prefer to create the temporary file in the same location as the
     /// source to inherit the folders attributes and security.
-    /// 
+    ///
     /// If we can not we will use a system generated file.
     /// </remarks>
     /// <param name="copyoriginal">When true we will copy the source file if
@@ -252,7 +252,7 @@ namespace MS.Internal.Documents.Application
             // Copy Data
             if (copyOriginal)
             {
-                // We use a native File.Copy if possible because this is 
+                // We use a native File.Copy if possible because this is
                 // most performant.  This is only possible if the source is file
                 // based.
                 if (isFileSource)
@@ -487,9 +487,9 @@ namespace MS.Internal.Documents.Application
     /// <returns>False if the operation failed.</returns>
     /// <remarks>
     /// This method is inplace to work around issues with re-publishing
-    /// XpsDocuments into the same file.  The intended use for the method is 
+    /// XpsDocuments into the same file.  The intended use for the method is
     /// to logically allow in place editing for the user.
-    /// 
+    ///
     /// After use this object is unusable and should be disposed as the
     /// temporary file is gone; it has become the original. In the event of an
     /// error while swapping the file, the file no longer becomes the original,
@@ -575,7 +575,7 @@ namespace MS.Internal.Documents.Application
             // exceptions here.
             catch
             {
-                // TODO: 1603621 back out changes in case of failure 
+                // TODO: 1603621 back out changes in case of failure
                 Trace.SafeWrite(
                     Trace.File,
                     "File attributes or permissions could not be set.");
@@ -652,7 +652,7 @@ namespace MS.Internal.Documents.Application
     void IDisposable.Dispose()
     {
         Dispose(true);
-        GC.SuppressFinalize(this); 
+        GC.SuppressFinalize(this);
     }
 
 
@@ -721,7 +721,7 @@ namespace MS.Internal.Documents.Application
     /// <param name="temporary">The stream for the temporary file.</param>
     /// <param name="tempToken">The file token for the temporary file.</param>
     private void MakeTempFile(
-        bool inSameFolder, 
+        bool inSameFolder,
         out FileStream temporary,
         out CriticalFileToken tempToken)
     {
@@ -788,8 +788,10 @@ namespace MS.Internal.Documents.Application
 #if DEBUG
             Invariant.Assert(
                 ((i != 3) || (temporary != null) || (inSameFolder)),
-                "Unable to create a temp file.\n"
-                + "Unless IE Cache is read-only we have a defect.");
+                """
+                Unable to create a temp file.
+                Unless IE Cache is read-only we have a defect.
+                """);
 #endif
         }
     }
@@ -827,19 +829,19 @@ namespace MS.Internal.Documents.Application
     /// <remarks>
     /// Design is simple Source needs to be moved to Target ensuring
     /// no data loss on errror.
-    /// 
+    ///
     /// If Source exists rename it (creating Backup)
     /// Move Source to Target
     /// If error occurs Move Backup to Source (resore from Backup)
     /// If all was good (delete Backup)
-    /// 
+    ///
     /// This design incures trival I/O costs by using moves.
     /// </remarks>
     private void RobustFileMove()
     {
         string sourceFile = _xpsFileToken.Location.LocalPath;
         string targetFile = _original._xpsFileToken.Location.LocalPath;
-        string backupFile = targetFile + ".bak";
+        string backupFile = $"{targetFile}.bak";
 
         bool backupExists = false;
         FileAttributes targetAttributes = FileAttributes.Normal;
@@ -866,7 +868,7 @@ namespace MS.Internal.Documents.Application
             // Save the original file attributes so we can restore them if
             // the temp file copy fails.
             targetAttributes = File.GetAttributes(targetFile);
-            File.Move(targetFile, backupFile);              
+            File.Move(targetFile, backupFile);
 
             Trace.SafeWrite(
                 Trace.File,
@@ -888,7 +890,7 @@ namespace MS.Internal.Documents.Application
                 Trace.File,
                 "Moved(Saved) {0} as {1}.",
                 sourceFile,
-                targetFile);                
+                targetFile);
         }
         catch
         {
@@ -898,7 +900,7 @@ namespace MS.Internal.Documents.Application
             if (backupExists)
             {
                 // restore original on failure
-                File.Move(backupFile, targetFile);                    
+                File.Move(backupFile, targetFile);
                 Trace.SafeWrite(
                     Trace.File,
                     "Restored {0} from {1}, due to exception.",
@@ -915,8 +917,8 @@ namespace MS.Internal.Documents.Application
         {
             // Try to delete the backup file
             if (backupExists)
-            {                    
-                File.Delete(backupFile); 
+            {
+                File.Delete(backupFile);
                 backupExists = false;
                 Trace.SafeWrite(
                     Trace.File,
@@ -932,7 +934,7 @@ namespace MS.Internal.Documents.Application
                     "Unable to remove backup {0}.\n{1}",
                 backupFile,
                 e);
-        }            
+        }
     }
 
     /// <summary>

@@ -17,7 +17,7 @@ namespace System.Windows
     /// <summary>
     ///     An attached dependency-based property
     /// </summary>
-    [TypeConverter("System.Windows.Markup.DependencyPropertyConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Markup.DependencyPropertyConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     [ValueSerializer(typeof(DependencyPropertyValueSerializer))]
     public sealed class DependencyProperty
     {
@@ -1098,7 +1098,7 @@ namespace System.Windows
             {
                 if (ownerType != null)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TooManyDependencyProperties, ownerType.Name + "." + name));
+                    throw new InvalidOperationException(SR.Format(SR.TooManyDependencyProperties, $"{ownerType.Name}.{name}"));
                 }
                 else
                 {

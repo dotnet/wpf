@@ -50,7 +50,7 @@ namespace MS.Internal.ComponentModel
         ///     Attributes property and demand create the attributes at that time.
         /// </summary>
         internal DependencyObjectPropertyDescriptor(DependencyProperty dp, Type ownerType)
-            : base(string.Concat(dp.OwnerType.Name, ".", dp.Name), null) 
+            : base($"{dp.OwnerType.Name}.{dp.Name}", null) 
         {
             _dp = dp;
             _componentType = ownerType;
@@ -396,7 +396,7 @@ namespace MS.Internal.ComponentModel
 
             if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
-                string methodName = string.Concat("Get", dp.Name);
+                string methodName = $"Get{dp.Name}";
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, DpType, null);
 
                 lock(_getMethodCache) {
@@ -562,7 +562,7 @@ namespace MS.Internal.ComponentModel
 
             if (methodObj == null || (method != null && !object.ReferenceEquals(method.DeclaringType, reflectionType))) {
                 BindingFlags f = BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly;
-                string methodName = string.Concat("Set", dp.Name);
+                string methodName = $"Set{dp.Name}";
     
                 Type[] paramTypes = new Type[] {
                     DpType[0],

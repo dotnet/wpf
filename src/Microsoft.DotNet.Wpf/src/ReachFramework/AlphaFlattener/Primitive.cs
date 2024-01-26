@@ -534,7 +534,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
 #if DEBUG
-            Console.WriteLine("Drawing of type '" + d.GetType() + "' not handled.");
+            Console.WriteLine($"Drawing of type '{d.GetType()}' not handled.");
 #endif
 
             return null;

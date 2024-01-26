@@ -810,9 +810,7 @@ namespace System.Windows.Xps.Serialization
                         _fpPrintTicket = args.PrintTicket;
 
                         // The NULL check might not be needed but just in case...
-                        String printTicketPairXMLStr =
-                            (_rootPrintTicket == null ? "" : _rootPrintTicket.ToXmlString()) +
-                            (_fpPrintTicket == null ? "" : _fpPrintTicket.ToXmlString());
+                        string printTicketPairXMLStr = $"{_rootPrintTicket?.ToXmlString()}{_fpPrintTicket?.ToXmlString()}";
 
                         PrintTicket newActivePrintTicket;
 

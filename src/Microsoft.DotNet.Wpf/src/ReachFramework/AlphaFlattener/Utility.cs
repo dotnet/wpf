@@ -23,7 +23,7 @@ using MS.Utility;
 
 using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 
-[assembly: InternalsVisibleTo(       "System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
+[assembly: InternalsVisibleTo($"System.Printing, PublicKey={BuildInfo.WCP_PUBLIC_KEY_STRING}")]
 
 // This code is debug only until we decide to go all the way with enforcements.
 #if ENFORCEMENT
@@ -52,7 +52,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (Configuration.Verbose >= 2)
             {
-                Console.WriteLine("{0} {1} {2}", s_count, elapsed.TotalSeconds, s_total);
+                Console.WriteLine($"{s_count} {elapsed.TotalSeconds} {s_total}");
             }
         }
 	}
@@ -1000,7 +1000,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 if (IsRectangle(GetAsPathGeometry(one)) && IsRectangle(GetAsPathGeometry(two)))
                 {
-                    Console.WriteLine("Combine({0})", mode);
+                    Console.WriteLine($"Combine({mode})");
                 }
             }
 
@@ -1597,7 +1597,7 @@ namespace Microsoft.Internal.AlphaFlattener
                             uiElement.Arrange(new Rect(uiElement.DesiredSize));
                         }
 		    }
-		    
+
                     bounds = VisualTreeHelper.GetDescendantBounds(visualBrush.Visual);
 
                     Geometry clip = VisualTreeHelper.GetClip(visualBrush.Visual);

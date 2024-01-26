@@ -18,13 +18,13 @@ using MS.Internal.Drt;
 namespace MS.Internal
 {
     using System;
-    using System.Security; 
+    using System.Security;
     using Microsoft.Win32;
     using System.Diagnostics;
     using System.Windows;
-    
+
     /// <summary>
-    /// Provides methods that assert an application is in a valid state. 
+    /// Provides methods that assert an application is in a valid state.
     /// </summary>
     [FriendAccessAllowed] // Built into Base, used by Framework.
     internal // DO NOT MAKE PUBLIC - See security notes on Assert
@@ -187,7 +187,7 @@ namespace MS.Internal
         /// <summary>
         ///     Shuts down the process immediately, with no chance for additional
         ///     code to run.
-        /// 
+        ///
         ///     In debug we raise a Debug.Assert dialog before shutting down.
         /// </summary>
         /// <param name="message">
@@ -207,7 +207,7 @@ namespace MS.Internal
                 Debugger.Break();
             }
 
-            Debug.Assert(false, "Invariant failure: " + message, detailMessage);
+            Debug.Fail($"Invariant failure: {message}", detailMessage);
 
             Environment.FailFast(SR.InvariantFailure);
         }

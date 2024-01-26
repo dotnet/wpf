@@ -65,7 +65,7 @@ namespace System.Windows.Markup
                     {
                         // Get the method member that defines the DependencyProperty
                         memberInfo = dp.OwnerType.GetMethod(
-                                     "Get" + dp.Name,
+                            $"Get{dp.Name}",
                                      BindingFlags.Public | BindingFlags.NonPublic |
                                      BindingFlags.Static | BindingFlags.FlattenHierarchy);
                     }
@@ -85,7 +85,7 @@ namespace System.Windows.Markup
                     {
                         // Use the Setter of the attached property (if any)
                         memberInfo = methodInfo.DeclaringType.GetMethod(
-                             "Get" + methodInfo.Name.Substring("Set".Length),
+                            $"Get{methodInfo.Name.Substring("Set".Length)}",
                              BindingFlags.Public | BindingFlags.NonPublic |
                              BindingFlags.Static | BindingFlags.FlattenHierarchy);
                     }

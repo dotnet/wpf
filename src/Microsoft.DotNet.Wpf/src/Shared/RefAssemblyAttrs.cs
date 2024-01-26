@@ -40,38 +40,38 @@ namespace Microsoft.Internal
         internal const string DEVDIV_PUBLIC_KEY_TOKEN = "b77a5c561934e089";
 
         // Constants to prevent hardcoding in InternalsVisibleTo attribute
-        internal const string DirectWriteForwarder = "DirectWriteForwarder, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationCore = "PresentationCore, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationCFFRasterizer = "PresentationCFFRasterizer, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFramework = "PresentationFramework, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationUI = "PresentationUI, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkLuna = "PresentationFramework.Luna, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkRoyale = "PresentationFramework.Royale, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAero = "PresentationFramework.Aero, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAero2 = "PresentationFramework.Aero2, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkAeroLite = "PresentationFramework.AeroLite, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkClassic = "PresentationFramework.Classic, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemCore = "PresentationFramework-SystemCore, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemData = "PresentationFramework-SystemData, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemDrawing = "PresentationFramework-SystemDrawing, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemXml = "PresentationFramework-SystemXml, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string PresentationFrameworkSystemXmlLinq = "PresentationFramework-SystemXmlLinq, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string ReachFramework = "ReachFramework, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string SystemPrinting = "System.Printing, PublicKey=" + WCP_PUBLIC_KEY_STRING;
-        internal const string SystemXaml = "System.Xaml, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string WindowsFormsIntegration = "WindowsFormsIntegration, PublicKey=" + WCP_PUBLIC_KEY_STRING;
+        internal const string DirectWriteForwarder = $"DirectWriteForwarder, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationCore = $"PresentationCore, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationCFFRasterizer = $"PresentationCFFRasterizer, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFramework = $"PresentationFramework, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationUI = $"PresentationUI, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkLuna = $"PresentationFramework.Luna, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkRoyale = $"PresentationFramework.Royale, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkAero = $"PresentationFramework.Aero, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkAero2 = $"PresentationFramework.Aero2, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkAeroLite = $"PresentationFramework.AeroLite, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkClassic = $"PresentationFramework.Classic, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkSystemCore = $"PresentationFramework-SystemCore, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkSystemData = $"PresentationFramework-SystemData, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkSystemDrawing = $"PresentationFramework-SystemDrawing, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkSystemXml = $"PresentationFramework-SystemXml, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkSystemXmlLinq = $"PresentationFramework-SystemXmlLinq, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string ReachFramework = $"ReachFramework, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string SystemPrinting = $"System.Printing, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string SystemXaml = $"System.Xaml, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string WindowsFormsIntegration = $"WindowsFormsIntegration, PublicKey={WCP_PUBLIC_KEY_STRING}";
 
         // Make internal visible to the 3.5 dll, System.Windows.Presentation.dll.
         // we hard code the key here because the 3.5 dll is built in the devdiv depot using the CLR key.
-        internal const string SystemWindowsPresentation = "System.Windows.Presentation, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
-        internal const string SystemWindowsControlsRibbon = "System.Windows.Controls.Ribbon, PublicKey=" + DEVDIV_PUBLIC_KEY_STRING;
+        internal const string SystemWindowsPresentation = $"System.Windows.Presentation, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
+        internal const string SystemWindowsControlsRibbon = $"System.Windows.Controls.Ribbon, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
     }
 
     internal static class DllImport
     {
-        internal const string PresentationNative = "PresentationNative" + BuildInfo.WCP_VERSION_SUFFIX + ".dll";
-        internal const string PresentationCFFRasterizerNative = "PresentationCFFRasterizerNative" + BuildInfo.WCP_VERSION_SUFFIX + ".dll";
-        internal const string MilCore = "wpfgfx" + BuildInfo.WCP_VERSION_SUFFIX + ".dll";
+        internal const string PresentationNative = $"PresentationNative{BuildInfo.WCP_VERSION_SUFFIX}.dll";
+        internal const string PresentationCFFRasterizerNative = $"PresentationCFFRasterizerNative{BuildInfo.WCP_VERSION_SUFFIX}.dll";
+        internal const string MilCore = $"wpfgfx{BuildInfo.WCP_VERSION_SUFFIX}.dll";
 
         // DLL's w/o version suffix
         internal const string UIAutomationCore = "UIAutomationCore.dll";

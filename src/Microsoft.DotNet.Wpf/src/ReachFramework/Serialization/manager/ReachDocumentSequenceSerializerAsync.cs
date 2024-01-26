@@ -21,13 +21,13 @@ using System.Windows.Markup;
 namespace System.Windows.Xps.Serialization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class DocumentSequenceSerializerAsync :
                    ReachSerializerAsync
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public
         DocumentSequenceSerializerAsync(
@@ -35,7 +35,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            
+
         }
 
         public
@@ -49,15 +49,15 @@ namespace System.Windows.Xps.Serialization
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
                 {
                     EndPersistObjectData();
                     break;
                 }
-                
+
                 default:
                 {
                     base.AsyncOperation(context);
@@ -101,7 +101,7 @@ namespace System.Windows.Xps.Serialization
 
                 if(serializableObjectContext.IsComplexValue)
                 {
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentSequencePrintTicket,
                                                                      0);
 
@@ -140,7 +140,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Sequence has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentSequenceWritingProgress,
                                                          0,
                                                          0,
@@ -153,9 +153,9 @@ namespace System.Windows.Xps.Serialization
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
         }
 
-    
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public
         override
@@ -195,7 +195,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
+            if ( (attributeValue != null) &&
                  (attributeValue.Length > 0) )
             {
                 //
@@ -229,10 +229,7 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else
@@ -244,5 +241,5 @@ namespace System.Windows.Xps.Serialization
         }
     };
 }
-    
+
 

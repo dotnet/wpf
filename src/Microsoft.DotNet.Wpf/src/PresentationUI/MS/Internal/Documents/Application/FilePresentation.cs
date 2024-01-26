@@ -38,7 +38,7 @@ internal static class FilePresentation
         string extension = SR.FileManagementSaveExt;
 
         Trace.SafeWrite(Trace.File, "Showing SafeFileDialog.");
-        
+
         bool result = false;
 
         SaveFileDialog save = new SaveFileDialog();
@@ -85,10 +85,10 @@ internal static class FilePresentation
             // gets up to homework.386, then the dialog would just pass it through as
             // is, requiring us to append the extension here.
             if (!extension.Equals(
-                Path.GetExtension(filePath), 
+                Path.GetExtension(filePath),
                 StringComparison.OrdinalIgnoreCase))
             {
-                filePath = filePath + extension;
+                filePath += extension;
             }
 
             Uri file = new Uri(filePath);

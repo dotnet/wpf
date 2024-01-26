@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Description: 
+// Description:
 //    SignatureResourceHelper is a helper class used to get resources.
 using System;
 using System.Collections;
@@ -53,7 +53,7 @@ namespace MS.Internal.Documents
                 case SignatureStatus.NotSigned:
                     docSigStatusResources.Text = String.Empty;
                     docSigStatusResources.ToolTip = SR.DocumentSignatureManagerDefaultToolTip;
-                    break;                
+                    break;
                 default: // SignatureStatus.Unknown or SignatureStatus.Undetermined
                          // In this case signatures have been applied to the document, but
                          // the validity of the signatures is not yet known.
@@ -72,7 +72,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="sigStatus">Requested signature status</param>
         /// <param name="certStatus">Requested certificate status</param>
-        /// <returns>A Image on success (valid status, DrawingBrush found), null 
+        /// <returns>A Image on success (valid status, DrawingBrush found), null
         /// otherwise.</returns>
         internal static Drawing.Image GetImageFromStatus(
             int height,
@@ -108,9 +108,9 @@ namespace MS.Internal.Documents
 
             resources._displayImage = GetImageFromStatus(
                 defaultHeight, defaultWidth, signature.SignatureState, certStatus);
-            resources._location = 
+            resources._location =
                 string.IsNullOrEmpty(signature.Location) ? none : signature.Location;
-            resources._reason = 
+            resources._reason =
                 string.IsNullOrEmpty(signature.Reason) ? none : signature.Reason;
             resources._signBy = GetFormattedDate(signature.SignedOn);
             resources._subjectName = signature.SubjectName;
@@ -131,7 +131,7 @@ namespace MS.Internal.Documents
         /// Get the DrawingBrush icon for the status.
         /// </summary>
         /// <param name="status">Requested status</param>
-        /// <returns>A DrawingBrush on success (valid status, DrawingBrush found), null 
+        /// <returns>A DrawingBrush on success (valid status, DrawingBrush found), null
         /// otherwise.</returns>
         private static DrawingBrush GetDrawingBrushFromStatus(SignatureStatus sigStatus)
         {
@@ -159,9 +159,7 @@ namespace MS.Internal.Documents
                 if (_brushResources[index] == null)
                 {
                     // Determine resource name.
-                    string resourceName = "PUISignatureStatus"
-                        + Enum.GetName(typeof(SignatureStatus), sigStatus)
-                        + "BrushKey";
+                    string resourceName = $"PUISignatureStatus{Enum.GetName(sigStatus)}BrushKey";
 
                     // Acquire reference to the brush.
                     object resource = _frameworkElement.FindResource(
@@ -238,7 +236,7 @@ namespace MS.Internal.Documents
                         signature.SubjectName,
                         GetFormattedDate(signature.SignedOn),
                         location);
-                    break;                            
+                    break;
             }
 
             return result;
@@ -302,7 +300,7 @@ namespace MS.Internal.Documents
             else if (sigStatus == SignatureStatus.Unverifiable)
             {
                 message = SR.SignatureResourceHelperSignatureStatusUnverifiable;
-            }   
+            }
             else
             {
                 message = SR.SignatureResourceHelperSignatureStatusInvalid;
@@ -356,11 +354,11 @@ namespace MS.Internal.Documents
         {
             return String.Format(
                 CultureInfo.CurrentCulture,
-                SR.SignatureResourcesFormatForAccessibility, 
-                _summaryMessage, 
-                _subjectName, 
-                _reason, 
-                _location, 
+                SR.SignatureResourcesFormatForAccessibility,
+                _summaryMessage,
+                _subjectName,
+                _reason,
+                _location,
                 _signBy);
         }
     }

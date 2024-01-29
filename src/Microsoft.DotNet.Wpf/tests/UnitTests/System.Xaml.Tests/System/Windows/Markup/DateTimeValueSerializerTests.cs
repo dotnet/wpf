@@ -81,6 +81,6 @@ public class DateTimeValueSerializerTests
     public void ConvertFromString_NullString_ThrowsNotSupportedException()
     {
         var serializer = new DateTimeValueSerializer();
-        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null, null));   
+        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null!, null));   
     }
 }

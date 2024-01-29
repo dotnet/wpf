@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,7 +40,7 @@ namespace System.Windows.Markup
         /// <param name="value">Value to convert</param>
         /// <param name="context">Context information</param>
         /// <returns>Whether or not the value can be converted to a string</returns>
-        public virtual bool CanConvertToString(object value, IValueSerializerContext context)
+        public virtual bool CanConvertToString(object? value, IValueSerializerContext? context)
         {
             return false;
         }
@@ -53,7 +51,7 @@ namespace System.Windows.Markup
         /// <param name="value">The string to convert</param>
         /// <param name="context">Context information</param>
         /// <returns>Whether or not the value can be converted from a string</returns>
-        public virtual bool CanConvertFromString(string value, IValueSerializerContext context)
+        public virtual bool CanConvertFromString(string? value, IValueSerializerContext? context)
         {
             return false;
         }
@@ -65,7 +63,7 @@ namespace System.Windows.Markup
         /// <param name="value">The value to convert to a string</param>
         /// <param name="context">Context information</param>
         /// <returns>A string representation of value</returns>
-        public virtual string ConvertToString(object value, IValueSerializerContext context)
+        public virtual string? ConvertToString(object? value, IValueSerializerContext? context)
         {
             throw GetConvertToException(value, typeof(string));
         }
@@ -77,7 +75,7 @@ namespace System.Windows.Markup
         /// <param name="value">The string value to convert</param>
         /// <param name="context">Context information</param>
         /// <returns>An object corresponding to the string value</returns>
-        public virtual object ConvertFromString(string value, IValueSerializerContext context)
+        public virtual object? ConvertFromString(string value, IValueSerializerContext? context)
         {
             throw GetConvertFromException(value);
         }
@@ -96,7 +94,7 @@ namespace System.Windows.Markup
         /// <param name="value">The value being serialized</param>
         /// <param name="context">Context information</param>
         /// <returns>An enumeration of the types converted by this serializer</returns>
-        public virtual IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
+        public virtual IEnumerable<Type> TypeReferences(object? value, IValueSerializerContext? context)
         {
             return Array.Empty<Type>();
         }
@@ -106,11 +104,11 @@ namespace System.Windows.Markup
         /// </summary>
         /// <param name="type">The value type to serialize</param>
         /// <returns>The value serializer associated with the given type</returns>
-        public static ValueSerializer GetSerializerFor(Type type)
+        public static ValueSerializer? GetSerializerFor(Type type)
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            object value = s_valueSerializers[type];
+            object? value = s_valueSerializers[type];
             if (value != null)
             {
                 // This uses s_valueSerializersLock's instance as a sentinal for null  (as opposed to not attempted yet).
@@ -118,12 +116,11 @@ namespace System.Windows.Markup
             }
 
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            ValueSerializerAttribute attribute = attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
-            ValueSerializer result = null;
+            ValueSerializer? result = null;
 
-            if (attribute != null)
+            if (attributes[typeof(ValueSerializerAttribute)] is ValueSerializerAttribute attribute)
             {
-                result = (ValueSerializer)Activator.CreateInstance(attribute.ValueSerializerType);
+                result = (ValueSerializer?)Activator.CreateInstance(attribute.ValueSerializerType);
             }
 
             if (result == null)
@@ -166,22 +163,21 @@ namespace System.Windows.Markup
         /// </summary>
         /// <param name="descriptor">PropertyDescriptor for the property to be serialized</param>
         /// <returns>A value serializer associated with the given property</returns>
-        public static ValueSerializer GetSerializerFor(PropertyDescriptor descriptor)
+        public static ValueSerializer? GetSerializerFor(PropertyDescriptor descriptor)
         {
             ArgumentNullException.ThrowIfNull(descriptor);
 
-            ValueSerializerAttribute serializerAttribute = descriptor.Attributes[typeof(ValueSerializerAttribute)] as ValueSerializerAttribute;
-            if (serializerAttribute != null)
+            if (descriptor.Attributes[typeof(ValueSerializerAttribute)] is ValueSerializerAttribute serializerAttribute)
             {
-                return (ValueSerializer)Activator.CreateInstance(serializerAttribute.ValueSerializerType);
+                return (ValueSerializer?)Activator.CreateInstance(serializerAttribute.ValueSerializerType);
             }
 
-            ValueSerializer result = GetSerializerFor(descriptor.PropertyType);
-            if (result == null || result is TypeConverterValueSerializer)
+            ValueSerializer? result = GetSerializerFor(descriptor.PropertyType);
+            if (result is null or TypeConverterValueSerializer)
             {
                 TypeConverter converter = descriptor.Converter;
                 if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
-                    !(converter is ReferenceConverter))
+                    converter is not ReferenceConverter)
                 {
                     result = new TypeConverterValueSerializer(converter);
                 }
@@ -198,7 +194,7 @@ namespace System.Windows.Markup
         /// <param name="type">The value type to serialize</param>
         /// <param name="context">Context information</param>
         /// <returns>The value serializer associated with the given type</returns>
-        public static ValueSerializer GetSerializerFor(Type type, IValueSerializerContext context)
+        public static ValueSerializer? GetSerializerFor(Type type, IValueSerializerContext? context)
         {
             if (context != null)
             {
@@ -220,7 +216,7 @@ namespace System.Windows.Markup
         /// <param name="descriptor">PropertyDescriptor for the property to be serialized</param>
         /// <param name="context">Context information</param>
         /// <returns>A value serializer associated with the given property</returns>
-        public static ValueSerializer GetSerializerFor(PropertyDescriptor descriptor, IValueSerializerContext context)
+        public static ValueSerializer? GetSerializerFor(PropertyDescriptor descriptor, IValueSerializerContext? context)
         {
             if (context != null)
             {
@@ -237,11 +233,11 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return a exception to throw if the value cannot be converted
         /// </summary>
-        protected Exception GetConvertToException(object value, Type destinationType)
+        protected Exception GetConvertToException(object? value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            string text;
+            string? text;
             if (value == null)
             {
                 text = SR.ToStringNull;
@@ -256,9 +252,9 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return a exception to throw if the string cannot be converted
         /// </summary>
-        protected Exception GetConvertFromException(object value)
+        protected Exception GetConvertFromException(object? value)
         {
-            string text;
+            string? text;
             if (value == null)
             {
                 text = SR.ToStringNull;

@@ -2,8 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,17 +29,17 @@ namespace System.Windows.Markup
         /// <summary>
         /// Indicate that we do convert DateTime's from string.
         /// </summary>
-        public override bool CanConvertFromString(string value, IValueSerializerContext context) => true;
+        public override bool CanConvertFromString(string? value, IValueSerializerContext? context) => true;
 
         /// <summary>
         /// Indicate that we do convert a DateTime to string.
         /// </summary>
-        public override bool CanConvertToString(object value, IValueSerializerContext context) => value is DateTime;
+        public override bool CanConvertToString(object? value, IValueSerializerContext? context) => value is DateTime;
 
         /// <summary>
         /// Converts the given value object to a <see cref="T:System.DateTime"></see>.
         /// </summary>
-        public override object ConvertFromString(string value, IValueSerializerContext context)
+        public override object ConvertFromString(string value, IValueSerializerContext? context)
         {
             if (value == null)
             {
@@ -53,7 +52,7 @@ namespace System.Windows.Markup
 
             // Get a DateTimeFormatInfo and set the formatting style for round-tripping
             // and to trim the string.
-            DateTimeFormatInfo dateTimeFormatInfo = (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(typeof(DateTimeFormatInfo));
+            DateTimeFormatInfo dateTimeFormatInfo = (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(typeof(DateTimeFormatInfo))!;
             const DateTimeStyles DateTimeStyles = DateTimeStyles.RoundtripKind
                       | DateTimeStyles.NoCurrentDateDefault
                       | DateTimeStyles.AllowLeadingWhite
@@ -65,7 +64,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Converts the given value object to a <see cref="T:System.DateTime"></see> using the arguments.
         /// </summary>
-        public override string ConvertToString(object value, IValueSerializerContext context)
+        public override string ConvertToString(object? value, IValueSerializerContext? context)
         {
             if (value == null || !(value is DateTime dateTime))
             {

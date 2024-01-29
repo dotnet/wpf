@@ -21,12 +21,12 @@ public class XmlnsCompatibleWithAttributeTests
     [Fact]
     public void Ctor_NullOldNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("oldNamespace", () => new XmlnsCompatibleWithAttribute(null, "newNamespace"));
+        Assert.Throws<ArgumentNullException>("oldNamespace", () => new XmlnsCompatibleWithAttribute(null!, "newNamespace"));
     }
 
     [Fact]
     public void Ctor_NullNewNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("newNamespace", () => new XmlnsCompatibleWithAttribute("oldNamespace", null));
+        Assert.Throws<ArgumentNullException>("newNamespace", () => new XmlnsCompatibleWithAttribute("oldNamespace", null!));
     }
 }

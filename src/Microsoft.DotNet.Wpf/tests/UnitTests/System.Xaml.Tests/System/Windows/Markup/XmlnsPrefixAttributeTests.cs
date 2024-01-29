@@ -21,12 +21,12 @@ public class XmlnsPrefixAttributeTests
     [Fact]
     public void Ctor_NullXmlNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("xmlNamespace", () => new XmlnsPrefixAttribute(null, "prefix"));
+        Assert.Throws<ArgumentNullException>("xmlNamespace", () => new XmlnsPrefixAttribute(null!, "prefix"));
     }
 
     [Fact]
     public void Ctor_NullPrefix_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("prefix", () => new XmlnsPrefixAttribute("xmlNamespace", null));
+        Assert.Throws<ArgumentNullException>("prefix", () => new XmlnsPrefixAttribute("xmlNamespace", null!));
     }
 }

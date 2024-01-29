@@ -13,6 +13,7 @@
 
     <Style x:Key="DefaultMenuStyle" TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource MenuBarBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MenuBarForeground}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

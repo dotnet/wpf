@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
@@ -42,7 +40,7 @@ namespace System.Windows.Markup
         /// Overrides Object.Equals to implement correct equality semantics for this
         /// attribute.
         /// </summary>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return
                 obj is ContentWrapperAttribute other &&

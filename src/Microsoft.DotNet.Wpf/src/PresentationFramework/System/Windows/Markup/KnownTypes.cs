@@ -1066,6 +1066,7 @@ namespace System.Windows.Markup
         ScrollViewer_Content,
         Section_Blocks,
         Selector_Items,
+        Setter_Value,
         SingleAnimationUsingKeyFrames_KeyFrames,
         SizeAnimationUsingKeyFrames_KeyFrames,
         Span_Inlines,
@@ -2786,6 +2787,9 @@ namespace System.Windows.Markup
                 case KnownElements.ToolBarTray:
                     name = "ToolBars";
                     break;
+                case KnownElements.Setter:
+                    name = "Value";
+                    break;
                 case KnownElements.ControlTemplate:
                 case KnownElements.DataTemplate:
                 case KnownElements.FrameworkTemplate:
@@ -2795,9 +2799,6 @@ namespace System.Windows.Markup
                     break;
                 case KnownElements.XmlDataProvider:
                     name = "XmlSerializer";
-                    break;
-                case KnownElements.Setter:
-                    name = "Value";
                     break;
             }
             return name;
@@ -3678,6 +3679,10 @@ namespace System.Windows.Markup
                 case KnownElements.XmlDataProvider:
                     if (string.Equals(fieldName, "XmlSerializer", StringComparison.Ordinal))
                         return (short)KnownProperties.XmlDataProvider_XmlSerializer;
+                    break;
+                case KnownElements.Setter:
+                    if (string.Equals(fieldName, "Value", StringComparison.Ordinal))
+                        return (short)KnownProperties.Setter_Value;
                     break;
             }
             return 0;

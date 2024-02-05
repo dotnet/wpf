@@ -13,7 +13,7 @@ namespace System.Windows.Markup
         public Type Type { get; set; }
 
         public AcceptedMarkupExtensionExpressionTypeAttribute(Type type)
-	    {
+        {
             Type = type;
         }
     }

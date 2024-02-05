@@ -39,13 +39,8 @@ trigger:
   branches:
     include: 
     - main
-    - release/3.*
-    - release/5.*
-    - release/6.*
-    - release/7.*
-    - release/8.*
-    - internal/release/5.*
-    - internal/release/6.*
+    - release/*
+    - internal/release/*
     - experimental/*
   paths:
     exclude:
@@ -56,12 +51,7 @@ pr:
   branches:
     include:
     - main
-    - release/3.* 
-    - internal/release/3.*
-    - release/5.*
-    - release/6.*
-    - release/7.*
-    - release/8.*
+    - release/* 
     - experimental/*
     - feature/win11theming/staging
     - feature/win11theming/release

@@ -496,6 +496,7 @@
 
     <!--  Menu  -->
     <SolidColorBrush x:Key="MenuBarBackground" Color="{StaticResource SubtleFillColorTransparent}" />
+    <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource ControlAltFillColorTertiary}" />
 

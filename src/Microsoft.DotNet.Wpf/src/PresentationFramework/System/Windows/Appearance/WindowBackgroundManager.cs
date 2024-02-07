@@ -5,6 +5,7 @@
 
 using System.Windows.Controls;
 using System.Windows.Interop;
+using Standard;
 
 namespace System.Windows.Appearance;
 
@@ -80,12 +81,14 @@ internal static class WindowBackgroundManager
         {
             backdrop = WindowBackdropType.None;
         }
+        else
+        {
+            if(Utility.IsOSWindows11OrNewer)
+            {
+               _ = WindowBackdrop.RemoveBackground(window);
+            }
+        }
 
-        // This was required to update the background when moving from a HC theme to light/dark theme. However, this breaks theme proper light/dark theme changing on Windows 10.
-        // else
-        // {
-        //    _ = WindowBackdrop.RemoveBackground(window);
-        // }
         _ = WindowBackdrop.ApplyBackdrop(window, backdrop);
         if (applicationTheme is ApplicationTheme.Dark)
         {

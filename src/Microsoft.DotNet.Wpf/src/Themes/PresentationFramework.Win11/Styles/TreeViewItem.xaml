@@ -76,6 +76,7 @@
         <!--  Universal WPF UI focus  -->
         <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
         <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />
+        <Setter Property="Margin" Value="0,0,0,2" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="FontSize" Value="{StaticResource TreeViewItemFontSize}" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -93,7 +94,8 @@
                         <Border
                             x:Name="Border"
                             Grid.Row="0"
-                            CornerRadius="{TemplateBinding Border.CornerRadius}">
+                            CornerRadius="{TemplateBinding Border.CornerRadius}"
+                            Margin="{TemplateBinding Margin}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="19" />

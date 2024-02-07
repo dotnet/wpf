@@ -385,6 +385,7 @@
 
     <!--  Menu  -->
     <SolidColorBrush x:Key="MenuBarBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
 

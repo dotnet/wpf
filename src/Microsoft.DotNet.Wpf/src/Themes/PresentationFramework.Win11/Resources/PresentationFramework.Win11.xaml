@@ -48,6 +48,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/NavigationWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Paragraph.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/RepeatButton.xaml" />

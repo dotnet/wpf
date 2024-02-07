@@ -577,110 +577,110 @@
 
 
     <!--  Colors  -->
-    <!--  Colors copied from Default theme to match list of keys. Should not be using these keys. These are set to Red to notify that.  -->
-    <Color x:Key="TextFillColorPrimary">#FF0000</Color>
-    <Color x:Key="TextFillColorSecondary">#FF0000</Color>
-    <Color x:Key="TextFillColorTertiary">#FF0000</Color>
-    <Color x:Key="TextFillColorDisabled">#FF0000</Color>
+    <!--  Colors copied from Default theme to match list of keys. Should not be using these keys.  -->
+    <Color x:Key="TextFillColorPrimary">#FFFFFF</Color>
+    <Color x:Key="TextFillColorSecondary">#FFFFFF</Color>
+    <Color x:Key="TextFillColorTertiary">#FFFFFF</Color>
+    <Color x:Key="TextFillColorDisabled">#A6A6A6</Color>
     <Color x:Key="TextPlaceholderColor">#FF0000</Color>
-    <Color x:Key="TextFillColorInverse">#FF0000</Color>
+    <Color x:Key="TextFillColorInverse">#FFFFFF</Color>
 
-    <Color x:Key="AccentTextFillColorDisabled">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorSelectedText">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorPrimary">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorSecondary">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorDisabled">#FF0000</Color>
+    <Color x:Key="AccentTextFillColorDisabled">#A6A6A6</Color>
+    <Color x:Key="TextOnAccentFillColorSelectedText">#FFFFFF</Color>
+    <Color x:Key="TextOnAccentFillColorPrimary">#FFFFFF</Color>
+    <Color x:Key="TextOnAccentFillColorSecondary">#FFFFFF</Color>
+    <Color x:Key="TextOnAccentFillColorDisabled">#A6A6A6</Color>
 
-    <Color x:Key="ControlFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlFillColorDisabled">#FF0000</Color>
-    <Color x:Key="ControlFillColorTransparent">#FF0000</Color>
-    <Color x:Key="ControlFillColorInputActive">#FF0000</Color>
+    <Color x:Key="ControlFillColorDefault">#2D3236</Color>
+    <Color x:Key="ControlFillColorSecondary">#2D3236</Color>
+    <Color x:Key="ControlFillColorTertiary">#2D3236</Color>
+    <Color x:Key="ControlFillColorDisabled">#2D3236</Color>
+    <Color x:Key="ControlFillColorTransparent">Transparent</Color>
+    <Color x:Key="ControlFillColorInputActive">#2D3236</Color>
 
-    <Color x:Key="ControlStrongFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrongFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
+    <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="ControlSolidFillColorDefault">#FF0000</Color>
+    <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
-    <Color x:Key="SubtleFillColorTransparent">#FF0000</Color>
-    <Color x:Key="SubtleFillColorSecondary">#FF0000</Color>
-    <Color x:Key="SubtleFillColorTertiary">#FF0000</Color>
-    <Color x:Key="SubtleFillColorDisabled">#FF0000</Color>
+    <Color x:Key="SubtleFillColorTransparent">Transparent</Color>
+    <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
+    <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
+    <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="ControlAltFillColorTransparent">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorQuarternary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlAltFillColorTransparent">Transparent</Color>
+    <Color x:Key="ControlAltFillColorSecondary">#2D3236</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#2D3236</Color>
+    <Color x:Key="ControlAltFillColorQuarternary">#2D3236</Color>
+    <Color x:Key="ControlAltFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="ControlOnImageFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlOnImageFillColorDefault">#2D3236</Color>
+    <Color x:Key="ControlOnImageFillColorSecondary">#2D3236</Color>
+    <Color x:Key="ControlOnImageFillColorTertiary">#2D3236</Color>
+    <Color x:Key="ControlOnImageFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="AccentFillColorDisabled">#FF0000</Color>
+    <Color x:Key="AccentFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="ControlStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentDefault">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentSecondary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentTertiary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrokeColorDefault">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorSecondary">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorTertiary">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorOnAccentDefault">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorOnAccentSecondary">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorOnAccentTertiary">#B6F6F0</Color>
+    <Color x:Key="ControlStrokeColorOnAccentDisabled">#A6A6A6</Color>
 
-    <Color x:Key="ControlStrokeColorForStrongFillWhenOnImage">#FF0000</Color>
+    <Color x:Key="ControlStrokeColorForStrongFillWhenOnImage">#B6F6F0</Color>
 
-    <Color x:Key="CardStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="CardStrokeColorDefaultSolid">#FF0000</Color>
+    <Color x:Key="CardStrokeColorDefault">#FFFFFF</Color>
+    <Color x:Key="CardStrokeColorDefaultSolid">#FFFFFF</Color>
 
-    <Color x:Key="ControlStrongStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrongStrokeColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrongStrokeColorDefault">#B6F6F0</Color>
+    <Color x:Key="ControlStrongStrokeColorDisabled">#B6F6F0</Color>
 
-    <Color x:Key="SurfaceStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="SurfaceStrokeColorFlyout">#FF0000</Color>
-    <Color x:Key="SurfaceStrokeColorInverse">#FF0000</Color>
+    <Color x:Key="SurfaceStrokeColorDefault">#FFFFFF</Color>
+    <Color x:Key="SurfaceStrokeColorFlyout">#FFFFFF</Color>
+    <Color x:Key="SurfaceStrokeColorInverse">#FFFFFF</Color>
 
-    <Color x:Key="DividerStrokeColorDefault">#FF0000</Color>
+    <Color x:Key="DividerStrokeColorDefault">#FFFFFF</Color>
 
-    <Color x:Key="FocusStrokeColorOuter">#FF0000</Color>
-    <Color x:Key="FocusStrokeColorInner">#FF0000</Color>
+    <Color x:Key="FocusStrokeColorOuter">#FFFFFF</Color>
+    <Color x:Key="FocusStrokeColorInner">#2D3236</Color>
 
-    <Color x:Key="CardBackgroundFillColorDefault">#FF0000</Color>
-    <Color x:Key="CardBackgroundFillColorSecondary">#FF0000</Color>
+    <Color x:Key="CardBackgroundFillColorDefault">#2D3236</Color>
+    <Color x:Key="CardBackgroundFillColorSecondary">#2D3236</Color>
 
-    <Color x:Key="SmokeFillColorDefault">#FF0000</Color>
+    <Color x:Key="SmokeFillColorDefault">#2D3236</Color>
 
-    <Color x:Key="LayerFillColorDefault">#FF0000</Color>
-    <Color x:Key="LayerFillColorAlt">#FF0000</Color>
-    <Color x:Key="LayerOnAcrylicFillColorDefault">#FF0000</Color>
-    <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#FF0000</Color>
+    <Color x:Key="LayerFillColorDefault">#2D3236</Color>
+    <Color x:Key="LayerFillColorAlt">#2D3236</Color>
+    <Color x:Key="LayerOnAcrylicFillColorDefault">#2D3236</Color>
+    <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#2D3236</Color>
 
     <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
-    <Color x:Key="AcrylicBackgroundFillColorDefault">#FF0000</Color>
+    <Color x:Key="AcrylicBackgroundFillColorDefault">#2D3236</Color>
 
     <Color x:Key="LayerOnMicaBaseAltFillColorDefault">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorSecondary">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorTertiary">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorTransparent">#FF0000</Color>
 
-    <Color x:Key="SolidBackgroundFillColorBase">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorSecondary">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorTertiary">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorQuarternary">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorTransparent">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorBaseAlt">#FF0000</Color>
+    <Color x:Key="SolidBackgroundFillColorBase">#2D3236</Color>
+    <Color x:Key="SolidBackgroundFillColorSecondary">#2D3236</Color>
+    <Color x:Key="SolidBackgroundFillColorTertiary">#2D3236</Color>
+    <Color x:Key="SolidBackgroundFillColorQuarternary">#2D3236</Color>
+    <Color x:Key="SolidBackgroundFillColorTransparent">Transparent</Color>
+    <Color x:Key="SolidBackgroundFillColorBaseAlt">#2D3236</Color>
 
-    <Color x:Key="SystemFillColorSuccess">#FF0000</Color>
-    <Color x:Key="SystemFillColorCaution">#FF0000</Color>
-    <Color x:Key="SystemFillColorCritical">#FF0000</Color>
-    <Color x:Key="SystemFillColorNeutral">#FF0000</Color>
+    <Color x:Key="SystemFillColorSuccess">#FFFFFF</Color>
+    <Color x:Key="SystemFillColorCaution">#FFFFFF</Color>
+    <Color x:Key="SystemFillColorCritical">#FFFFFF</Color>
+    <Color x:Key="SystemFillColorNeutral">#FFFFFF</Color>
     <Color x:Key="SystemFillColorSolidNeutral">#FF0000</Color>
-    <Color x:Key="SystemFillColorAttentionBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorSuccessBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorCautionBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorCriticalBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorNeutralBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorSolidAttentionBackground">#FF0000</Color>
+    <Color x:Key="SystemFillColorAttentionBackground">#2D3236</Color>
+    <Color x:Key="SystemFillColorSuccessBackground">#2D3236</Color>
+    <Color x:Key="SystemFillColorCautionBackground">#2D3236</Color>
+    <Color x:Key="SystemFillColorCriticalBackground">#2D3236</Color>
+    <Color x:Key="SystemFillColorNeutralBackground">#2D3236</Color>
+    <Color x:Key="SystemFillColorSolidAttentionBackground">#2D3236</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#FF0000</Color>
 </ResourceDictionary>

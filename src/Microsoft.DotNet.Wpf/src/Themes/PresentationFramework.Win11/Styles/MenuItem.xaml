@@ -530,6 +530,9 @@
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground">
                     <Setter.Value>
@@ -592,6 +595,9 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
             </Trigger>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="IconElement" Property="Visibility" Value="Collapsed" />
@@ -658,6 +664,7 @@
                     FontSize="16" />
 
                 <ContentPresenter
+                    x:Name="ItemSource"
                     Grid.Column="3"
                     ContentSource="Header"
                     RecognizesAccessKey="True"
@@ -677,6 +684,9 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
             </Trigger>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="IconElement" Property="Visibility" Value="Collapsed" />
@@ -793,6 +803,9 @@
             </Trigger>
             <Trigger Property="IsHighlighted" Value="true">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
             </Trigger>
             <!--<Trigger SourceName="Popup" Property="AllowsTransparency" Value="True">
                 <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="4" />

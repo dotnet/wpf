@@ -1,0 +1,86 @@
+<!--=================================================================
+    Licensed to the .NET Foundation under one or more agreements.
+    The .NET Foundation licenses this file to you under the MIT license.
+    See the LICENSE file in the project root for more information.
+    ==================================================================-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI">
+    <Style x:Key="{x:Type DocumentViewer}" 
+           BasedOn="{x:Null}"
+           TargetType="{x:Type DocumentViewer}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ContextMenu" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DocumentViewer}">
+                  <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                    <Grid Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Local">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                      </Grid.RowDefinitions>
+                      <!-- One column for both the toolbar and the content -->
+                      <!-- Top row, auto height for the Toolbar -->
+                      <!-- Middle row, full height for the Content area -->
+                      <!-- Bottom row, auto height for the find Toolbar -->
+                      <!-- DocumentViewer's ToolBar, docked to the Top -->
+                      <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources},                                 ResourceId=PUIDocumentViewerToolBarStyleKey}}"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      TabIndex="0"/>
+                      <!-- Define the Content area and its paging/scrolling controls inside the Grid -->
+                      <ScrollViewer Grid.Row="1"
+                                    Grid.Column="0"
+                                    CanContentScroll="true"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    x:Name="PART_ContentHost"
+                                    Focusable="{TemplateBinding Focusable}"
+                                    IsTabStop="true"
+                                    TabIndex="1"/>
+                      <!-- Toolbar shadow -->
+                      <DockPanel Grid.Row="1">
+                        <!-- saves space for the scrollbar -->
+                        <FrameworkElement DockPanel.Dock="Right"
+                                          Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"/>
+                        <Rectangle
+                                   Visibility="Visible"
+                                   VerticalAlignment="top"
+                                   Height="10">
+                          <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0"
+                                                 EndPoint="0,1">
+                              <GradientBrush.GradientStops>
+                                <GradientStopCollection>
+                                  <GradientStop Color="#66000000"
+                                                Offset="0"/>
+                                  <GradientStop Color="Transparent"
+                                                Offset="1"/>
+                                </GradientStopCollection>
+                              </GradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Rectangle.Fill>
+                        </Rectangle>
+                      </DockPanel>
+                      <!-- Find ToolBar, docked to the bottom -->
+                      <ContentControl Grid.Row="2"
+                                      Grid.Column="0"
+                                      TabIndex="2"
+                                      Focusable="{TemplateBinding Focusable}"
+                                      x:Name="PART_FindToolBarHost"/>
+                    </Grid>
+                  </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -217,7 +217,8 @@ configuration:
           branch: main
       - and:
         - isAction:
-            action: Null
+            action: Closed
+        - isMerged
         - not:
             titleContains:
               pattern: '[main] Update dependencies'
@@ -406,4 +407,4 @@ configuration:
           label: Community Contribution
       description: Label community PRs with `community contribution` label
 onFailure: 
-onSuccess: 
+onSuccess:

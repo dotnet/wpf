@@ -28,7 +28,7 @@ public class ArrayTests
         length.Should().Be(expectedLength);
     }
 
-    public static TheoryData<Stream, int, int> ArrayInfo_ParseSuccessData => new()
+    public static TheoryData<MemoryStream, int, int> ArrayInfo_ParseSuccessData => new()
      {
          { new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }), 0, 0 },
          { new MemoryStream(new byte[] { 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00 }), 1, 1 },
@@ -44,7 +44,7 @@ public class ArrayTests
         Assert.Throws(expectedException, () => ArrayInfo.Parse(reader, out Count length));
     }
 
-    public static TheoryData<Stream, Type> ArrayInfo_ParseNegativeData => new()
+    public static TheoryData<MemoryStream, Type> ArrayInfo_ParseNegativeData => new()
      {
          // Not enough data
          { new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }), typeof(EndOfStreamException) },

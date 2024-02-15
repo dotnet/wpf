@@ -40,8 +40,8 @@ function CopyBinariesToLocation($location)
     $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
     Write-host "locallyBuiltBinaryLocationBase = " $locallyBuiltBinaryLocationBase
 
-    Write-Host "Copy native binaries..."
-    CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase
+    # Write-Host "Copy native binaries..."
+    # CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase
 
     Write-Host "Copy managed binaries..."
     CopyManagedBinariesToLocation $location  $locallyBuiltBinaryLocationBase

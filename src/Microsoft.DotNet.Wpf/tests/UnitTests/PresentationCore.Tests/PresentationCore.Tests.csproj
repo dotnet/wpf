@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <TargetFramework>net9.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64;x86</Platforms>
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
 

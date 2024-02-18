@@ -95,7 +95,13 @@ namespace System.Windows
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            return _Left.GetHashCode() ^ _Top.GetHashCode() ^ _Right.GetHashCode() ^ _Bottom.GetHashCode();
+            var hashCode = new System.HashCode();
+            hashCode.Add(_Left);
+            hashCode.Add(_Top);
+            hashCode.Add(_Right);
+            hashCode.Add(_Bottom);
+            var code = hashCode.ToHashCode();
+            return code;
         }
 
         /// <summary>

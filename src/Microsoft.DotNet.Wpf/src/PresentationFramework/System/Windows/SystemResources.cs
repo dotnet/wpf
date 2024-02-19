@@ -35,6 +35,7 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
+using Microsoft.Win32;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -53,6 +54,35 @@ namespace System.Windows
         // ------------------------------------------------
 
         #region Methods
+
+        /// <summary>
+        /// Updates the application resources with the specified <see cref="ResourceDictionary"/>.
+        /// </summary>
+        /// <param name="newDictionary">The new <see cref="ResourceDictionary"/> to update the application resources with.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="newDictionary"/> is null.</exception>
+        internal static void UpdateApplicationResources(Uri dictionaryUri)
+        {
+            if (dictionaryUri == null)
+            throw new ArgumentNullException(nameof(dictionaryUri));
+
+            ResourceDictionary newDictionary = new ResourceDictionary();
+            newDictionary.Source = dictionaryUri;
+
+            foreach (var key in newDictionary.Keys)
+            {
+                if (Application.Current.Resources.Contains(key))
+                {
+                    if (!object.Equals(Application.Current.Resources[key], newDictionary[key]))
+                    {
+                        Application.Current.Resources[key] = newDictionary[key];
+                    }
+                }
+                else
+                {
+                    Application.Current.Resources.Add(key, newDictionary[key]);
+                }
+            }
+        }
 
         /// <summary>
         ///     Returns a resource for the given key type from the system resources collection.
@@ -1412,6 +1442,19 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
+                    var currentTheme = Registry.GetValue(
+                    "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
+                    "CurrentTheme",
+                    "aero.theme"
+                    ) as string
+                    ?? String.Empty;
+                    if(currentTheme.Contains("dark.theme") && Utilities.IsOSWindows11OrNewer)
+                    {
+                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
+
+                    } else if(currentTheme.Contains("aero") && Utilities.IsOSWindows11OrNewer){
+                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
+                    }
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:

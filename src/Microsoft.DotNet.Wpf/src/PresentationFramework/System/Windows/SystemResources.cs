@@ -47,16 +47,6 @@ namespace System.Windows
     /// </summary>
     internal static class SystemResources
     {
-        /// <summary>
-        /// Maximum <see cref="Byte"/> size with the current <see cref="Single"/> precision.
-        /// </summary>
-        private static readonly float _byteMax = (float)Byte.MaxValue;
-
-        /// <summary>
-        /// The maximum value of the background HSV brightness after which the text on the accent will be turned dark.
-        /// </summary>
-        private const double BackgroundBrightnessThresholdValue = 80d;
-
         // ------------------------------------------------
         //
         // Methods
@@ -1452,58 +1442,7 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
-
-                    var regKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM";
-                    
-                    var regValue = (Int32)Registry.GetValue(
-                        regKey,
-                        "AccentColor",
-                        null);
-                    
-                    var currentTheme = Registry.GetValue(
-                        "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
-                        "CurrentTheme",
-                        "aero.theme"
-                    ) as string
-                    ?? String.Empty;
-                    if(currentTheme.Contains("dark.theme") && Utilities.IsOSWindows11OrNewer)
-                    {
-                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
-
-                    } else if(currentTheme.Contains("aero") && Utilities.IsOSWindows11OrNewer){
-                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
-                    }
-                    ByteColor currentAccent  = new ByteColor(0xff, 0x00, 0x78, 0xd4);
-
-                    if(regValue is Int32 x)
-                    {
-                        currentAccent = ParseDWordColor(x);
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
-
-                    Color systemAccent = Color.FromArgb(currentAccent.A, currentAccent.R, currentAccent.G, currentAccent.B);
-
-                    Color primaryAccent;
-                    Color secondaryAccent;
-                    Color tertiaryAccent;
-
-                    if (currentTheme.Contains("dark.theme"))
-                    {
-                        primaryAccent = UpdateColor(systemAccent, 15f, -12f);
-                        secondaryAccent = UpdateColor(systemAccent, 30f, -24f);
-                        tertiaryAccent = UpdateColor(systemAccent, 45f, -36f);
-                    }
-                    else
-                    {
-                        primaryAccent = UpdateColorBrightness(systemAccent, -5f);
-                        secondaryAccent = UpdateColorBrightness(systemAccent, -10f);
-                        tertiaryAccent = UpdateColorBrightness(systemAccent, -15f);
-                    }
-
-                    UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
+                    DWMColorization.ApplyAccentColors();
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:
@@ -1528,6 +1467,354 @@ namespace System.Windows
 
         }
 
+        internal static bool ClearBitArray(BitArray cacheValid)
+        {
+            bool changed = false;
+
+            for (int i = 0; i < cacheValid.Count; i++)
+            {
+                if (ClearSlot(cacheValid, i))
+                {
+                    changed = true;
+                }
+            }
+
+            return changed;
+        }
+
+        internal static bool ClearSlot(BitArray cacheValid, int slot)
+        {
+            if (cacheValid[slot])
+            {
+                cacheValid[slot] = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        // Flag the parser to create DeferredThemeReferences for thread safety
+        internal static bool IsSystemResourcesParsing
+        {
+            get
+            {
+                return _parsing > 0;
+            }
+            set
+            {
+                if (value)
+                {
+                    _parsing++;
+                }
+                else
+                {
+                    _parsing--;
+                }
+            }
+        }
+
+        // This is the lock used to protect access to the
+        // theme dictionaries and the associated cache.
+        internal static object ThemeDictionaryLock
+        {
+            get { return _resourceCache.SyncRoot; }
+        }
+
+        /// <summary>
+        /// Returns the <see cref="DpiAwarenessContextValue"/> of the current process
+        /// as reported by <see cref="HwndTarget"/>
+        /// 
+        /// If <see cref="HwndTarget"/> has yet to initialize this information, the process
+        /// is queried directly for this information. 
+        /// </summary>
+        private static DpiAwarenessContextValue ProcessDpiAwarenessContextValue
+        {
+            get
+            {
+                if (HwndTarget.IsProcessUnaware == true)
+                {
+                    return DpiAwarenessContextValue.Unaware;
+                }
+
+                if (HwndTarget.IsProcessSystemAware == true)
+                {
+                    return DpiAwarenessContextValue.SystemAware;
+                }
+
+                if (HwndTarget.IsProcessPerMonitorDpiAware == true)
+                {
+                    return DpiAwarenessContextValue.PerMonitorAware;
+                }
+
+                // HwndTarget has not been initialized yet - ask the current process
+                // directly for its process DPI Awareness context value
+                return DpiUtil.GetProcessDpiAwarenessContextValue(IntPtr.Zero);
+            }
+        }
+
+        /// <summary>
+        /// Reports whether per-monitor DPI scaling is active - i.e., 
+        /// the process is (a) manifested for per-monitor DPI awareness, 
+        /// (b) WPF recognizes this and has met the right preconditions (TFM, AppContext
+        /// switches, OS version etc.) to turn on the DPI processing capabilities.
+        /// </summary>
+        private static bool IsPerMonitorDpiScalingActive
+        {
+            get
+            {
+                return HwndTarget.IsPerMonitorDpiScalingEnabled && 
+                    (ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAware || 
+                    ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAwareVersion2);
+            }
+        }
+
+        /// <summary>
+        /// This used to be the internal accessor for the
+        /// HWND intended to watch for messages. It has since been changed
+        /// into a private accessor, and replaced with <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
+        /// 
+        /// This accessor now returns the notify-window corresponding to the current process
+        /// only. When a notify window corresponding to another HWND is needed (for e.g., to
+        /// re-parent that HWND under the said notify-window), use <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
+        /// to obtain a matching (w.r.t. DPI Awareness Context) notify-window.
+        /// </summary>
+        private static HwndWrapper Hwnd
+        {
+            get
+            {
+                EnsureResourceChangeListener();
+
+                var hwndDpiInfo = _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue);
+                Debug.Assert(hwndDpiInfo != null);
+
+                // will throw when a match is not found, which should never happen because we just called Ensure...()
+                return _hwndNotify[hwndDpiInfo].Value;
+            }
+        }
+
+        /// <summary>
+        /// Returns a notify-window with a DPI Awareness Context and DPI Scale factor that matches
+        /// that of <paramref name="hwnd"/>
+        /// </summary>
+        /// <param name="hwnd">HWND to which DPI Awareness Context and DPI Scale factor is to be matched</param>
+        /// <returns>Appropriate notify-window</returns>
+        /// <remarks>
+        /// Currently, this is used by <see cref="HwndHost"/> as a place to parent
+        /// child HWND's when they are disconnected.
+        /// 
+        /// We attempt to select a notify-window that matches the DPI Awareness Context and DPI Scale factor
+        /// of <paramref name="hwnd"/>. If one is not found, then we create a new notify-window that matches
+        /// those two characteristics. 
+        /// 
+        /// Ensuring that the DPI Awareness contexts match is necessary to avoid unexpected behavior. The documentation
+        /// for (Win32 function) SetParent outlines the problems associated with re-parenting of HWND's with mismatched
+        /// DPI Awareness Contexts:
+        /// 
+        ///     Unexpected behavior or errors may occur if hWndNewParent and hWndChild are running in different DPI awareness modes. 
+        ///     The table below outlines this behavior:
+        ///     <list type="table">
+        ///         <!-- Heading -->
+        ///         <item>
+        ///             <term>Operation</term>
+        ///             <term>Windows 8.1</term>
+        ///             <term>Windows 10(1607 and earlier)</term>
+        ///             <term>Windows 10(1703 and later)</term>
+        ///         </item>
+        ///         <!-- In-proc behavior -->
+        ///         <item>
+        ///             <term>SetParent (In-Proc)</term>    
+        ///             <term>N/A</term>
+        ///             <term><b>Forced reset</b> (of current process)</term>            
+        ///             <term><b>Fail</b>(ERROR_INVALID_STATE)</term>
+        ///         </item>
+        ///         <!-- Cross-proc behaviror -->
+        ///         <item>
+        ///             <term>SetParent(Cross-Proc)</term>
+        ///             <term><b>Forced reset</b>(of child window's process)</term>
+        ///             <term><b>Forced reset</b>(of child window's process)</term>
+        ///             <term><b>Forced reset</b>(of child window's process)</term>
+        ///         </item>
+        ///     </list>
+        ///     
+        /// This sort of unexpected behavior is further complicated by the fact that the HWND presented by HwndHost might,
+        /// in turn, host WPF controls again. (Some real-world applications, notably Visual Studio, use HwndHost to host
+        /// native windows that in turn host WPF again). 
+        /// 
+        /// WPF does not make any allowances for changes to the DPI Awareness Context of an HWND/window after it has been created. Windows/Win32
+        /// does not have a consistent model for dealing with reparenting of HWND's (observe the "In-Proc" row in the above table) with 
+        /// mismatched DPI Awareness Contexts, nor is there any notification mechanism when this happens. 
+        /// 
+        /// Our data structures and book-keeping in the UI thread, as well as the render thread, could start deviating from reality in unexpected ways 
+        /// if this were to happen. We do in fact dynamically query the DPI of HWND's as often as possible, but we have not designed the DPI support with 
+        /// the assumption that the DPI Awareness Context of an HWND is mutable. The safest approach for us here is to avoid the problem before it is
+        /// created, and remove any potential for recharacterization of an HWND's DPI Awareness Context. 
+        /// 
+        /// Ensuring that the DPI Scale Factor of the notify-window matches that of the reference HWND is only necessary when
+        /// working with Per-Monitor Aware (or Per Monitor Aware v2) HWND's. Matching of DPI Scale factor ensures that the
+        /// child-window (the one being supplied by HwndHost, and likely created and owned by the application, sometimes out-of-proc)
+        /// does not receive WM_DPICHANGED, WM_DPICHANGED_AFTERPARENT, WM_DPICHANGED_BEFOREPARENT messages, and in turn, it is not
+        /// susceptible to unexpected (and sometimes ill-defined - note that these notify-windows are zero sized windows) size-change
+        /// requests.
+        /// </remarks>
+        internal static HwndWrapper GetDpiAwarenessCompatibleNotificationWindow(HandleRef hwnd)
+        {
+            var processDpiAwarenessContextValue = ProcessDpiAwarenessContextValue;
+
+            // Do not call into DpiUtil.GetExtendedDpiInfoForWindow(), DpiUtil.GetWindowDpi etc.
+            // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow(), 
+            // DpiUtil.GetWindowDpi() etc.in turn call into methods that are only supported on platforms
+            // with high DPI support (for e.g., not supported on Windows 7). 
+            DpiUtil.HwndDpiInfo hwndDpiInfo =
+                IsPerMonitorDpiScalingActive ?
+                DpiUtil.GetExtendedDpiInfoForWindow(hwnd.Handle, fallbackToNearestMonitorHeuristic: true) :
+                new DpiUtil.HwndDpiInfo(processDpiAwarenessContextValue, GetDpiScaleForUnawareOrSystemAwareContext(processDpiAwarenessContextValue));
+
+            if (EnsureResourceChangeListener(hwndDpiInfo))
+            {
+                return _hwndNotify[hwndDpiInfo].Value;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Makes sure the listener window is the last one to get the Dispatcher.ShutdownFinished notification,
+        /// thus giving any child windows a chance to respond first. See HwndHost.BuildOrReparentWindow().
+        /// </summary>
+        internal static void DelayHwndShutdown()
+        {
+            if (_hwndNotify != null && _hwndNotify.Count != 0)
+            {
+                Dispatcher d = Dispatcher.CurrentDispatcher;
+                d.ShutdownFinished -= OnShutdownFinished;
+                d.ShutdownFinished += OnShutdownFinished;
+            }
+        }
+
+        #endregion
+
+        #region Data
+
+        [ThreadStatic] private static int _parsing;
+
+        /// <summary>
+        /// List of {<see cref="DpiAwarenessContextValue"/> , <see cref="DpiScale2"/>} combinations for which notify-windows are being maintained
+        /// </summary>
+        [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
+
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
+        [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
+
+        private static Hashtable _resourceCache = new Hashtable();
+        private static DTypeMap _themeStyleCache = new DTypeMap(100); // This is based upon the max DType.ID found in MSN scenario
+        private static Dictionary<Assembly, ResourceDictionaries> _dictionaries;
+
+        private static object _specialNull = new object();
+
+        internal const string GenericResourceName = "themes/generic";
+        internal const string ClassicResourceName = "themes/classic";
+
+        private static Assembly _mscorlib;
+        private static Assembly _presentationFramework;
+        private static Assembly _presentationCore;
+        private static Assembly _windowsBase;
+        internal const string PresentationFrameworkName = "PresentationFramework";
+
+        // SystemResourcesHaveChanged indicates to FE that the font properties need to be coerced
+        // when creating a new root element
+        internal static bool SystemResourcesHaveChanged;
+
+        // SystemResourcesAreChanging is used by FE when coercing the font properties to determine
+        // if it should return the current system metric or the value passed to the coerce callback
+        [ThreadStatic]
+        internal static bool SystemResourcesAreChanging;
+
+        // Events supporting ResourceDictionaryDiagnostics
+        internal static event EventHandler<ResourceDictionaryLoadedEventArgs> ThemedDictionaryLoaded;
+        internal static event EventHandler<ResourceDictionaryUnloadedEventArgs> ThemedDictionaryUnloaded;
+        internal static event EventHandler<ResourceDictionaryLoadedEventArgs> GenericDictionaryLoaded;
+
+        #endregion
+    }
+
+    internal static class DWMColorization
+    {
+        /// <summary>
+        /// Maximum <see cref="Byte"/> size with the current <see cref="Single"/> precision.
+        /// </summary>
+        private static readonly float _byteMax = (float)Byte.MaxValue;
+
+        /// <summary>
+        /// The maximum value of the background HSV brightness after which the text on the accent will be turned dark.
+        /// </summary>
+        private const double BackgroundBrightnessThresholdValue = 80d;
+
+        /// <summary>
+        /// The registry path containing colorization information.
+        /// </summary>
+        private static readonly string dwmKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM";
+
+        /// <summary>
+        /// The registry path containing theme information.
+        /// </summary>
+        private static readonly string themeKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes";
+
+        /// <summary>
+        /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        internal static void ApplyAccentColors()
+        {
+            var dwmValue = (Int32)Registry.GetValue(
+                dwmKey,
+                "AccentColor",
+                null);
+            
+            var currentTheme = Registry.GetValue(
+                themeKey,
+                "CurrentTheme",
+                "aero.theme"
+            ) as string
+            ?? String.Empty;
+
+            ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
+
+            if (dwmValue is Int32 x)
+            {
+                systemAccentByteValue = ParseDWordColor(x);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            Color systemAccent = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
+
+            Color primaryAccent;
+            Color secondaryAccent;
+            Color tertiaryAccent;
+
+            if (currentTheme.Contains("dark.theme"))
+            {
+                primaryAccent = UpdateColor(systemAccent, 15f, -12f);
+                secondaryAccent = UpdateColor(systemAccent, 30f, -24f);
+                tertiaryAccent = UpdateColor(systemAccent, 45f, -36f);
+            }
+            else
+            {
+                primaryAccent = UpdateColorBrightness(systemAccent, -5f);
+                secondaryAccent = UpdateColorBrightness(systemAccent, -10f);
+                tertiaryAccent = UpdateColorBrightness(systemAccent, -15f);
+            }
+
+            UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
+        }
+
+        /// <summary>
+        /// Updates application resources.
+        /// </summary>        
         private static void UpdateColorResources(
             Color systemAccent,
             Color primaryAccent,
@@ -1640,6 +1927,14 @@ namespace System.Windows
             Application.Current.Resources["AccentFillColorTertiaryBrush"] = ToBrush(secondaryAccent, 0.8);
         }
 
+        /// <summary>
+        /// Allows to change the brightness, saturation and luminance by a factors based on the HSL and HSV color space.
+        /// </summary>
+        /// <param name="color">Color to convert.</param>
+        /// <param name="brightnessFactor">The value of the brightness change factor from <see langword="100"/> to <see langword="-100"/>.</param>
+        /// <param name="saturationFactor">The value of the saturation change factor from <see langword="100"/> to <see langword="-100"/>.</param>
+        /// <param name="luminanceFactor">The value of the luminance change factor from <see langword="100"/> to <see langword="-100"/>.</param>
+        /// <returns>Updated <see cref="System.Windows.Media.Color"/>.</returns>
         private static Color UpdateColor(
             Color color,
             float brightnessFactor,
@@ -1681,6 +1976,12 @@ namespace System.Windows
             return Color.FromArgb(color.A, ToColorByte(red), ToColorByte(green), ToColorByte(blue));
         }
 
+        /// <summary>
+        /// Allows to change the brightness by a factor based on the HSV color space.
+        /// </summary>
+        /// <param name="color">Input color.</param>
+        /// <param name="factor">The value of the brightness change factor from <see langword="100"/> to <see langword="-100"/>.</param>
+        /// <returns>Updated <see cref="System.Windows.Media.Color"/>.</returns>
         private static Color UpdateColorBrightness(Color color, float factor)
         {
             if (factor > 100f || factor < -100f)
@@ -1999,6 +2300,11 @@ namespace System.Windows
             return Convert.ToByte(value);
         }
 
+        /// <summary>
+        /// Converts the color of type Int32 to type ByteColor
+        /// </summary>
+        /// <param name="color">The Int32 color to be converted to corresponding ByteColor</param>
+        /// <returns>Corresponding <see cref="System.Windows.ByteColor"/></returns>
         private static ByteColor ParseDWordColor(Int32 color)
         {
             Byte
@@ -2032,277 +2338,6 @@ namespace System.Windows
         {
             return new SolidColorBrush { Color = color, Opacity = opacity };
         }
-
-        internal static bool ClearBitArray(BitArray cacheValid)
-        {
-            bool changed = false;
-
-            for (int i = 0; i < cacheValid.Count; i++)
-            {
-                if (ClearSlot(cacheValid, i))
-                {
-                    changed = true;
-                }
-            }
-
-            return changed;
-        }
-
-        internal static bool ClearSlot(BitArray cacheValid, int slot)
-        {
-            if (cacheValid[slot])
-            {
-                cacheValid[slot] = false;
-                return true;
-            }
-
-            return false;
-        }
-
-        #endregion
-
-        // Flag the parser to create DeferredThemeReferences for thread safety
-        internal static bool IsSystemResourcesParsing
-        {
-            get
-            {
-                return _parsing > 0;
-            }
-            set
-            {
-                if (value)
-                {
-                    _parsing++;
-                }
-                else
-                {
-                    _parsing--;
-                }
-            }
-        }
-
-        // This is the lock used to protect access to the
-        // theme dictionaries and the associated cache.
-        internal static object ThemeDictionaryLock
-        {
-            get { return _resourceCache.SyncRoot; }
-        }
-
-        /// <summary>
-        /// Returns the <see cref="DpiAwarenessContextValue"/> of the current process
-        /// as reported by <see cref="HwndTarget"/>
-        /// 
-        /// If <see cref="HwndTarget"/> has yet to initialize this information, the process
-        /// is queried directly for this information. 
-        /// </summary>
-        private static DpiAwarenessContextValue ProcessDpiAwarenessContextValue
-        {
-            get
-            {
-                if (HwndTarget.IsProcessUnaware == true)
-                {
-                    return DpiAwarenessContextValue.Unaware;
-                }
-
-                if (HwndTarget.IsProcessSystemAware == true)
-                {
-                    return DpiAwarenessContextValue.SystemAware;
-                }
-
-                if (HwndTarget.IsProcessPerMonitorDpiAware == true)
-                {
-                    return DpiAwarenessContextValue.PerMonitorAware;
-                }
-
-                // HwndTarget has not been initialized yet - ask the current process
-                // directly for its process DPI Awareness context value
-                return DpiUtil.GetProcessDpiAwarenessContextValue(IntPtr.Zero);
-            }
-        }
-
-        /// <summary>
-        /// Reports whether per-monitor DPI scaling is active - i.e., 
-        /// the process is (a) manifested for per-monitor DPI awareness, 
-        /// (b) WPF recognizes this and has met the right preconditions (TFM, AppContext
-        /// switches, OS version etc.) to turn on the DPI processing capabilities.
-        /// </summary>
-        private static bool IsPerMonitorDpiScalingActive
-        {
-            get
-            {
-                return HwndTarget.IsPerMonitorDpiScalingEnabled && 
-                    (ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAware || 
-                    ProcessDpiAwarenessContextValue == DpiAwarenessContextValue.PerMonitorAwareVersion2);
-            }
-        }
-
-        /// <summary>
-        /// This used to be the internal accessor for the
-        /// HWND intended to watch for messages. It has since been changed
-        /// into a private accessor, and replaced with <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
-        /// 
-        /// This accessor now returns the notify-window corresponding to the current process
-        /// only. When a notify window corresponding to another HWND is needed (for e.g., to
-        /// re-parent that HWND under the said notify-window), use <see cref="GetDpiCompatibleNotificationWindow(HandleRef)"/>
-        /// to obtain a matching (w.r.t. DPI Awareness Context) notify-window.
-        /// </summary>
-        private static HwndWrapper Hwnd
-        {
-            get
-            {
-                EnsureResourceChangeListener();
-
-                var hwndDpiInfo = _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue);
-                Debug.Assert(hwndDpiInfo != null);
-
-                // will throw when a match is not found, which should never happen because we just called Ensure...()
-                return _hwndNotify[hwndDpiInfo].Value;
-            }
-        }
-
-        /// <summary>
-        /// Returns a notify-window with a DPI Awareness Context and DPI Scale factor that matches
-        /// that of <paramref name="hwnd"/>
-        /// </summary>
-        /// <param name="hwnd">HWND to which DPI Awareness Context and DPI Scale factor is to be matched</param>
-        /// <returns>Appropriate notify-window</returns>
-        /// <remarks>
-        /// Currently, this is used by <see cref="HwndHost"/> as a place to parent
-        /// child HWND's when they are disconnected.
-        /// 
-        /// We attempt to select a notify-window that matches the DPI Awareness Context and DPI Scale factor
-        /// of <paramref name="hwnd"/>. If one is not found, then we create a new notify-window that matches
-        /// those two characteristics. 
-        /// 
-        /// Ensuring that the DPI Awareness contexts match is necessary to avoid unexpected behavior. The documentation
-        /// for (Win32 function) SetParent outlines the problems associated with re-parenting of HWND's with mismatched
-        /// DPI Awareness Contexts:
-        /// 
-        ///     Unexpected behavior or errors may occur if hWndNewParent and hWndChild are running in different DPI awareness modes. 
-        ///     The table below outlines this behavior:
-        ///     <list type="table">
-        ///         <!-- Heading -->
-        ///         <item>
-        ///             <term>Operation</term>
-        ///             <term>Windows 8.1</term>
-        ///             <term>Windows 10(1607 and earlier)</term>
-        ///             <term>Windows 10(1703 and later)</term>
-        ///         </item>
-        ///         <!-- In-proc behavior -->
-        ///         <item>
-        ///             <term>SetParent (In-Proc)</term>    
-        ///             <term>N/A</term>
-        ///             <term><b>Forced reset</b> (of current process)</term>            
-        ///             <term><b>Fail</b>(ERROR_INVALID_STATE)</term>
-        ///         </item>
-        ///         <!-- Cross-proc behaviror -->
-        ///         <item>
-        ///             <term>SetParent(Cross-Proc)</term>
-        ///             <term><b>Forced reset</b>(of child window's process)</term>
-        ///             <term><b>Forced reset</b>(of child window's process)</term>
-        ///             <term><b>Forced reset</b>(of child window's process)</term>
-        ///         </item>
-        ///     </list>
-        ///     
-        /// This sort of unexpected behavior is further complicated by the fact that the HWND presented by HwndHost might,
-        /// in turn, host WPF controls again. (Some real-world applications, notably Visual Studio, use HwndHost to host
-        /// native windows that in turn host WPF again). 
-        /// 
-        /// WPF does not make any allowances for changes to the DPI Awareness Context of an HWND/window after it has been created. Windows/Win32
-        /// does not have a consistent model for dealing with reparenting of HWND's (observe the "In-Proc" row in the above table) with 
-        /// mismatched DPI Awareness Contexts, nor is there any notification mechanism when this happens. 
-        /// 
-        /// Our data structures and book-keeping in the UI thread, as well as the render thread, could start deviating from reality in unexpected ways 
-        /// if this were to happen. We do in fact dynamically query the DPI of HWND's as often as possible, but we have not designed the DPI support with 
-        /// the assumption that the DPI Awareness Context of an HWND is mutable. The safest approach for us here is to avoid the problem before it is
-        /// created, and remove any potential for recharacterization of an HWND's DPI Awareness Context. 
-        /// 
-        /// Ensuring that the DPI Scale Factor of the notify-window matches that of the reference HWND is only necessary when
-        /// working with Per-Monitor Aware (or Per Monitor Aware v2) HWND's. Matching of DPI Scale factor ensures that the
-        /// child-window (the one being supplied by HwndHost, and likely created and owned by the application, sometimes out-of-proc)
-        /// does not receive WM_DPICHANGED, WM_DPICHANGED_AFTERPARENT, WM_DPICHANGED_BEFOREPARENT messages, and in turn, it is not
-        /// susceptible to unexpected (and sometimes ill-defined - note that these notify-windows are zero sized windows) size-change
-        /// requests.
-        /// </remarks>
-        internal static HwndWrapper GetDpiAwarenessCompatibleNotificationWindow(HandleRef hwnd)
-        {
-            var processDpiAwarenessContextValue = ProcessDpiAwarenessContextValue;
-
-            // Do not call into DpiUtil.GetExtendedDpiInfoForWindow(), DpiUtil.GetWindowDpi etc.
-            // unless IsPerMonitorDpiscalingActive == true. DpiUtil.GetExtendedDpiInfoForWindow(), 
-            // DpiUtil.GetWindowDpi() etc.in turn call into methods that are only supported on platforms
-            // with high DPI support (for e.g., not supported on Windows 7). 
-            DpiUtil.HwndDpiInfo hwndDpiInfo =
-                IsPerMonitorDpiScalingActive ?
-                DpiUtil.GetExtendedDpiInfoForWindow(hwnd.Handle, fallbackToNearestMonitorHeuristic: true) :
-                new DpiUtil.HwndDpiInfo(processDpiAwarenessContextValue, GetDpiScaleForUnawareOrSystemAwareContext(processDpiAwarenessContextValue));
-
-            if (EnsureResourceChangeListener(hwndDpiInfo))
-            {
-                return _hwndNotify[hwndDpiInfo].Value;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Makes sure the listener window is the last one to get the Dispatcher.ShutdownFinished notification,
-        /// thus giving any child windows a chance to respond first. See HwndHost.BuildOrReparentWindow().
-        /// </summary>
-        internal static void DelayHwndShutdown()
-        {
-            if (_hwndNotify != null && _hwndNotify.Count != 0)
-            {
-                Dispatcher d = Dispatcher.CurrentDispatcher;
-                d.ShutdownFinished -= OnShutdownFinished;
-                d.ShutdownFinished += OnShutdownFinished;
-            }
-        }
-
-        #endregion
-
-        #region Data
-
-        [ThreadStatic] private static int _parsing;
-
-        /// <summary>
-        /// List of {<see cref="DpiAwarenessContextValue"/> , <see cref="DpiScale2"/>} combinations for which notify-windows are being maintained
-        /// </summary>
-        [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
-
-        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
-        [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
-
-        private static Hashtable _resourceCache = new Hashtable();
-        private static DTypeMap _themeStyleCache = new DTypeMap(100); // This is based upon the max DType.ID found in MSN scenario
-        private static Dictionary<Assembly, ResourceDictionaries> _dictionaries;
-
-        private static object _specialNull = new object();
-
-        internal const string GenericResourceName = "themes/generic";
-        internal const string ClassicResourceName = "themes/classic";
-
-        private static Assembly _mscorlib;
-        private static Assembly _presentationFramework;
-        private static Assembly _presentationCore;
-        private static Assembly _windowsBase;
-        internal const string PresentationFrameworkName = "PresentationFramework";
-
-        // SystemResourcesHaveChanged indicates to FE that the font properties need to be coerced
-        // when creating a new root element
-        internal static bool SystemResourcesHaveChanged;
-
-        // SystemResourcesAreChanging is used by FE when coercing the font properties to determine
-        // if it should return the current system metric or the value passed to the coerce callback
-        [ThreadStatic]
-        internal static bool SystemResourcesAreChanging;
-
-        // Events supporting ResourceDictionaryDiagnostics
-        internal static event EventHandler<ResourceDictionaryLoadedEventArgs> ThemedDictionaryLoaded;
-        internal static event EventHandler<ResourceDictionaryUnloadedEventArgs> ThemedDictionaryUnloaded;
-        internal static event EventHandler<ResourceDictionaryLoadedEventArgs> GenericDictionaryLoaded;
-
-        #endregion
     }
     
     internal class DeferredResourceReference : DeferredReference

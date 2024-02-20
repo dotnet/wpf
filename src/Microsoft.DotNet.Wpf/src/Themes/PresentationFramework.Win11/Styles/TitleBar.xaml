@@ -205,13 +205,13 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="TitleGrid" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
-                        <Trigger Property="ApplicationTheme" Value="Dark">
+                        <!-- <Trigger Property="ApplicationTheme" Value="Dark">
                             <Setter Property="ButtonsBackground">
                                 <Setter.Value>
                                     <SolidColorBrush Color="#17FFFFFF" />
                                 </Setter.Value>
                             </Setter>
-                        </Trigger>
+                        </Trigger> -->
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_Icon" Property="Margin" Value="0" />

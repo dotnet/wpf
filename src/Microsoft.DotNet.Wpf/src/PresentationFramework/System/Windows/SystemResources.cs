@@ -28,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Resources;
+using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -82,6 +83,20 @@ namespace System.Windows
                     Application.Current.Resources.Add(key, newDictionary[key]);
                 }
             }
+        }
+
+        internal static void InitializeThemeResources()
+        {
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+			{
+				Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/PresentationFramework.Win11.xaml", UriKind.RelativeOrAbsolute)
+			});
+
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+			{
+				Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/theme/light.xaml", UriKind.RelativeOrAbsolute)
+			});
+            
         }
 
         /// <summary>
@@ -1442,6 +1457,27 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
+                    var currentTheme = Registry.GetValue(
+                    "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
+                    "CurrentTheme",
+                    "aero.theme"
+                    ) as string
+                    ?? String.Empty;
+
+                    // Convert IntPtr to Window
+                    Window currentWindow = Application.Current.MainWindow;
+
+                    if (currentTheme.Contains("dark.theme") && Utilities.IsOSWindows11OrNewer)
+                    {
+                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
+                        WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
+                    }
+                    else if (currentTheme.Contains("aero") && Utilities.IsOSWindows11OrNewer)
+                    {
+                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
+                        WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Light, WindowBackdropType.Mica, false);
+                    }
+
                     DWMColorization.ApplyAccentColors();
                     break;
 
@@ -1757,11 +1793,6 @@ namespace System.Windows
         private static readonly string dwmKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM";
 
         /// <summary>
-        /// The registry path containing theme information.
-        /// </summary>
-        private static readonly string themeKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes";
-
-        /// <summary>
         /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
@@ -1771,13 +1802,8 @@ namespace System.Windows
                 dwmKey,
                 "AccentColor",
                 null);
-            
-            var currentTheme = Registry.GetValue(
-                themeKey,
-                "CurrentTheme",
-                "aero.theme"
-            ) as string
-            ?? String.Empty;
+
+            bool isDarkTheme = Application.isThemeDark();
 
             ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
 
@@ -1796,7 +1822,7 @@ namespace System.Windows
             Color secondaryAccent;
             Color tertiaryAccent;
 
-            if (currentTheme.Contains("dark.theme"))
+            if (isDarkTheme)
             {
                 primaryAccent = UpdateColor(systemAccent, 15f, -12f);
                 secondaryAccent = UpdateColor(systemAccent, 30f, -24f);

@@ -47,7 +47,7 @@ namespace PresentationFramework.Win11.Controls
     /// </example>
     public class ClientAreaBorder : System.Windows.Controls.Border
     {
-        private bool _borderBrushApplied = false;
+        // private bool _borderBrushApplied = false;
 
         private const int SM_CXFRAME = 32;
 
@@ -63,7 +63,7 @@ namespace PresentationFramework.Win11.Controls
 
         private static Thickness? _windowChromeNonClientFrameThickness;
 
-        public ApplicationTheme ApplicationTheme { get; set; } = ApplicationTheme.Unknown;
+        public ApplicationTheme ApplicaitonTheme { get; set; } = ApplicationTheme.Unknown;
 
         /// <summary>
         /// Get the system <see cref="SM_CXPADDEDBORDER"/> value in WPF units.
@@ -122,21 +122,21 @@ namespace PresentationFramework.Win11.Controls
 
         public ClientAreaBorder()
         {
-            ApplicationTheme = ApplicationThemeManager.GetAppTheme();
-            ApplicationThemeManager.Changed += OnThemeChanged;
+            ApplicaitonTheme = ApplicationTheme.Dark;
+            // ApplicationThemeManager.Changed += OnThemeChanged;
         }
 
-        private void OnThemeChanged(ApplicationTheme currentApplicationTheme, Color systemAccent)
-        {
-            ApplicationTheme = currentApplicationTheme;
+        // private void OnThemeChanged(ApplicationTheme currentApplicationTheme, Color systemAccent)
+        // {
+        //     ApplicationTheme = currentApplicationTheme;
 
-            if (!_borderBrushApplied || _oldWindow == null)
-            {
-                return;
-            }
+        //     if (!_borderBrushApplied || _oldWindow == null)
+        //     {
+        //         return;
+        //     }
 
-            ApplyDefaultWindowBorder();
-        }
+        //     ApplyDefaultWindowBorder();
+        // }
 
         /// <inheritdoc />
         protected internal override void OnVisualParentChanged(DependencyObject oldParent)
@@ -165,7 +165,7 @@ namespace PresentationFramework.Win11.Controls
 
         private void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            ApplicationThemeManager.Changed -= OnThemeChanged;
+            // ApplicationThemeManager.Changed -= OnThemeChanged;
             if (_oldWindow != null)
             {
                 _oldWindow.Closing -= OnWindowClosing;
@@ -193,12 +193,12 @@ namespace PresentationFramework.Win11.Controls
                 return;
             }
 
-            _borderBrushApplied = true;
+            // _borderBrushApplied = true;
 
             // SystemParameters.WindowGlassBrush
             _oldWindow.BorderThickness = new Thickness(1);
             _oldWindow.BorderBrush = new SolidColorBrush(
-                ApplicationTheme == ApplicationTheme.Light
+                ApplicaitonTheme == ApplicationTheme.Light
                     ? Color.FromArgb(0xFF, 0x7A, 0x7A, 0x7A)
                     : Color.FromArgb(0xFF, 0x3A, 0x3A, 0x3A)
             );

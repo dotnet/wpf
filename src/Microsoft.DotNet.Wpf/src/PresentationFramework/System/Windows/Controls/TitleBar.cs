@@ -41,12 +41,12 @@ public class TitleBar : System.Windows.Controls.Control
     /// <summary>
     /// Property for <see cref="ApplicationTheme"/>.
     /// </summary>
-    public static readonly DependencyProperty ApplicationThemeProperty = DependencyProperty.Register(
-        nameof(ApplicationTheme),
-        typeof(Appearance.ApplicationTheme),
-        typeof(TitleBar),
-        new PropertyMetadata(Appearance.ApplicationTheme.Unknown)
-    );
+    // public static readonly DependencyProperty ApplicationThemeProperty = DependencyProperty.Register(
+    //     nameof(ApplicationTheme),
+    //     typeof(Appearance.ApplicationTheme),
+    //     typeof(TitleBar),
+    //     new PropertyMetadata(Appearance.ApplicationTheme.Unknown)
+    // );
 
     /// <summary>
     /// Property for <see cref="Title"/>.
@@ -237,11 +237,11 @@ public class TitleBar : System.Windows.Controls.Control
     #region Properties
 
     /// <inheritdoc />
-    public Appearance.ApplicationTheme ApplicationTheme
-    {
-        get => (Appearance.ApplicationTheme)GetValue(ApplicationThemeProperty);
-        set => SetValue(ApplicationThemeProperty, value);
-    }
+    // public Appearance.ApplicationTheme ApplicationTheme
+    // {
+    //     get => (Appearance.ApplicationTheme)GetValue(ApplicationThemeProperty);
+    //     set => SetValue(ApplicationThemeProperty, value);
+    // }
 
     /// <summary>
     /// Gets or sets title displayed on the left.
@@ -436,8 +436,8 @@ public class TitleBar : System.Windows.Controls.Control
     {
         base.OnInitialized(e);
 
-        ApplicationTheme = Appearance.ApplicationThemeManager.GetAppTheme();
-        Appearance.ApplicationThemeManager.Changed += OnThemeChanged;
+        // ApplicationTheme = Appearance.ApplicationThemeManager.GetAppTheme();
+        // Appearance.ApplicationThemeManager.Changed += OnThemeChanged;
     }
 
     protected virtual void OnLoaded(object sender, RoutedEventArgs e)
@@ -462,7 +462,7 @@ public class TitleBar : System.Windows.Controls.Control
         Loaded -= OnLoaded;
         Unloaded -= OnUnloaded;
 
-        Appearance.ApplicationThemeManager.Changed -= OnThemeChanged;
+        // Appearance.ApplicationThemeManager.Changed -= OnThemeChanged;
     }
 
     /// <summary>
@@ -490,18 +490,18 @@ public class TitleBar : System.Windows.Controls.Control
     /// <summary>
     /// This virtual method is triggered when the app's theme changes.
     /// </summary>
-    protected virtual void OnThemeChanged(
-        Appearance.ApplicationTheme currentApplicationTheme,
-        Color systemAccent
-    )
-    {
-        Debug.WriteLine(
-            $"INFO | {typeof(TitleBar)} received theme -  {currentApplicationTheme}",
-            "Wpf.Ui.TitleBar"
-        );
+    // protected virtual void OnThemeChanged(
+    //     Appearance.ApplicationTheme currentApplicationTheme,
+    //     Color systemAccent
+    // )
+    // {
+    //     Debug.WriteLine(
+    //         $"INFO | {typeof(TitleBar)} received theme -  {currentApplicationTheme}",
+    //         "Wpf.Ui.TitleBar"
+    //     );
 
-        ApplicationTheme = currentApplicationTheme;
-    }
+    //     ApplicationTheme = currentApplicationTheme;
+    // }
 
     private void CloseWindow()
     {

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +27,7 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
+using Microsoft.Win32;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
@@ -2507,6 +2509,35 @@ namespace System.Windows
                 MSGFLTINFO info;
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WM_TASKBARBUTTONCREATED, MSGFLT.ALLOW, out info);
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
+            }
+
+            if (Utilities.IsOSWindows11OrNewer)
+            {
+                // Initializing the application window with current system theme
+                // This is one time initialization that updates the resourcedictionary and 
+                // calls WindowBackgroundManager to update its Background based on current SystemTheme
+
+                var currentTheme = Registry.GetValue(
+                    "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
+                    "CurrentTheme",
+                    "aero.theme"
+                    ) as string
+                    ?? String.Empty;
+
+                    var window = Application.Current.MainWindow;
+
+                    if (currentTheme.Contains("dark.theme") && Utilities.IsOSWindows11OrNewer)
+                    {
+                        SystemResources.UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
+                        WindowBackgroundManager.UpdateBackground(window, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
+                    }
+                    else if (currentTheme.Contains("aero") && Utilities.IsOSWindows11OrNewer)
+                    {
+                        SystemResources.UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
+                        WindowBackgroundManager.UpdateBackground(window, ApplicationTheme.Light, WindowBackdropType.Mica, false);
+                    }
+
+                    DWMColorization.ApplyAccentColors();
             }
 
             // Sub classes can have different intialization. RBW does very minimalistic

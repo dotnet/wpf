@@ -85,20 +85,6 @@ namespace System.Windows
             }
         }
 
-        internal static void InitializeThemeResources()
-        {
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
-			{
-				Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/PresentationFramework.Win11.xaml", UriKind.RelativeOrAbsolute)
-			});
-
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
-			{
-				Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/theme/light.xaml", UriKind.RelativeOrAbsolute)
-			});
-            
-        }
-
         /// <summary>
         ///     Returns a resource for the given key type from the system resources collection.
         /// </summary>
@@ -1457,12 +1443,13 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
+                    
                     var currentTheme = Registry.GetValue(
-                    "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
-                    "CurrentTheme",
-                    "aero.theme"
-                    ) as string
-                    ?? String.Empty;
+                        "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
+                        "CurrentTheme",
+                        "aero.theme"
+                        ) as string
+                        ?? String.Empty;
 
                     // Convert IntPtr to Window
                     Window currentWindow = Application.Current.MainWindow;

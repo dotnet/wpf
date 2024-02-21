@@ -20,6 +20,7 @@
     <Thickness x:Key="TextBoxClearButtonMargin">0,0,4,0</Thickness>
     <Thickness x:Key="TextBoxClearButtonPadding">0,0,0,0</Thickness>
     <system:Double x:Key="TextBoxClearButtonHeight">24</system:Double>
+    <system:String x:Key="ClearGlyph">&#xE894;</system:String>
 
     <!--  TODO: Rework TextBox ScrollViewer  -->
     <Style x:Key="DefaultTextBoxScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
@@ -206,9 +207,7 @@
                         Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}"
                         Cursor="Arrow"
                         Foreground="{DynamicResource TextControlButtonForeground}">
-                        <Button.Icon>
-                            <SymbolIcon FontSize="{TemplateBinding FontSize}" Symbol="Dismiss24" />
-                        </Button.Icon>
+                            <FontIcon FontFamily="Segoe Fluent Icons" FontSize="{TemplateBinding FontSize}" Glyph="{StaticResource ClearGlyph}" />
                     </Button>
 
                     <ContentPresenter

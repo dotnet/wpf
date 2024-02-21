@@ -29,10 +29,10 @@
   <ItemGroup>
     <Compile Include="**\*.cs" />
   </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Resource Include="Resources\Fonts\FluentSystemIcons-Filled.ttf" />
     <Resource Include="Resources\Fonts\FluentSystemIcons-Regular.ttf" />
-  </ItemGroup>
+  </ItemGroup> -->
 
   <!-- Project References -->
   <ItemGroup>

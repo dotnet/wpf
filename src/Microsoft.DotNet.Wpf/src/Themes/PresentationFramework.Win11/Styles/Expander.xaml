@@ -17,6 +17,10 @@
     <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
     <system:Double x:Key="ExpanderChevronSize">16.0</system:Double>
     <AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
+    <system:String x:Key="ExpanderChevronUpGlyph">&#xE70E;</system:String>
+    <system:String x:Key="ExpanderChevronDownGlyph">&#xE70D;</system:String>    
+    <system:String x:Key="ExpanderChevronLeftGlyph">&#xE76B;</system:String>
+    <system:String x:Key="ExpanderChevronRightGlyph">&#xE76C;</system:String>
 
     <ControlTemplate x:Key="DefaultExpanderToggleButtonDownStyle" TargetType="{x:Type ToggleButton}">
         <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
@@ -41,11 +45,12 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <SymbolIcon
+                <FontIcon
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    Symbol="ChevronDown24" />
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="{StaticResource ExpanderChevronDownGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -99,11 +104,12 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <SymbolIcon
+                <FontIcon
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    Symbol="ChevronUp24" />
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="{StaticResource ExpanderChevronUpGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -157,11 +163,12 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <SymbolIcon
+                <FontIcon
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    Symbol="ChevronLeft24" />
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="{StaticResource ExpanderChevronLeftGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -215,11 +222,12 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <SymbolIcon
+                <FontIcon
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    Symbol="ChevronRight24" />
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="{StaticResource ExpanderChevronRightGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>

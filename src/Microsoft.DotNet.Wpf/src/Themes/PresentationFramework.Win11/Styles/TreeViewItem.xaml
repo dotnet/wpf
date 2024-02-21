@@ -13,6 +13,7 @@
 
     <system:Double x:Key="TreeViewItemChevronSize">10</system:Double>
     <system:Double x:Key="TreeViewItemFontSize">14</system:Double>
+    <system:String x:Key="TreeViewChevronRightGlyph">&#xE76C;</system:String>
 
     <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <!--  Universal WPF UI focus  -->
@@ -33,11 +34,12 @@
                         <Grid.RenderTransform>
                             <RotateTransform Angle="0" />
                         </Grid.RenderTransform>
-                        <symbol:SymbolIcon
+                        <FontIcon
                             x:Name="ChevronIcon"
                             VerticalAlignment="Center"
                             FontSize="{StaticResource TreeViewItemChevronSize}"
-                            Symbol="ChevronRight28" />
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="{StaticResource TreeViewChevronRightGlyph}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">

@@ -40,6 +40,9 @@
     <Color x:Key="ControlPressedColor">#FF211AA9</Color>
     <Color x:Key="GlyphColor">#FF444444</Color>
 
+    <system:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</system:String>
+    <system:String x:Key="CheckBoxIndeterminateGlyph">&#xE9AE;</system:String>
+
     <LinearGradientBrush x:Key="MenuPopupBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Offset="0" Color="{DynamicResource ControlLightColor}" />
         <GradientStop Offset="0.5" Color="{DynamicResource ControlMediumColor}" />
@@ -582,14 +585,15 @@
 
                             <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
 
-                            <SymbolIcon
+                            <FontIcon
                                 x:Name="SortIcon"
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="12"
                                 Opacity="0"
-                                Symbol="TextSortAscending24" />
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xE8CB;" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SortStates">
@@ -824,19 +828,20 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                                 <Grid>
-                                    <SymbolIcon
+                                    <FontIcon
                                         x:Name="ControlIcon"
                                         Margin="0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource CheckBoxIconSize}"
                                         FontWeight="Bold"
-                                        Symbol="Checkmark48"
+                                        FontFamily="Segoe Fluent Icons"
+                                        Glyph="{StaticResource CheckBoxCheckedGlyph}"
                                         Visibility="Collapsed">
-                                        <SymbolIcon.Foreground>
+                                        <FontIcon.Foreground>
                                             <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
-                                        </SymbolIcon.Foreground>
-                                    </SymbolIcon>
+                                        </FontIcon.Foreground>
+                                    </FontIcon>
                                 </Grid>
                             </Border>
                         </BulletDecorator.Bullet>
@@ -855,7 +860,7 @@
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="0" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Symbol" Value="Subtract16" />
+                            <Setter TargetName="ControlIcon" Property="Glyph" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background">
                                 <Setter.Value>

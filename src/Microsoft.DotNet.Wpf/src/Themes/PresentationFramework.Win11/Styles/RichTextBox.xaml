@@ -34,7 +34,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="4"
                         Focusable="False">
-                        <PassiveScrollViewer
+                        <ScrollViewer
                             x:Name="PART_ContentHost"
                             Margin="0,0,2,0"
                             Padding="{TemplateBinding Padding}"

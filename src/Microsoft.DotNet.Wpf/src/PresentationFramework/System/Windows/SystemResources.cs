@@ -55,36 +55,6 @@ namespace System.Windows
         // ------------------------------------------------
 
         #region Methods
-
-        /// <summary>
-        /// Updates the application resources with the specified <see cref="ResourceDictionary"/>.
-        /// </summary>
-        /// <param name="newDictionary">The new <see cref="ResourceDictionary"/> to update the application resources with.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="newDictionary"/> is null.</exception>
-        internal static void UpdateApplicationResources(Uri dictionaryUri)
-        {
-            if (dictionaryUri == null)
-            throw new ArgumentNullException(nameof(dictionaryUri));
-
-            ResourceDictionary newDictionary = new ResourceDictionary();
-            newDictionary.Source = dictionaryUri;
-
-            foreach (var key in newDictionary.Keys)
-            {
-                if (Application.Current.Resources.Contains(key))
-                {
-                    if (!object.Equals(Application.Current.Resources[key], newDictionary[key]))
-                    {
-                        Application.Current.Resources[key] = newDictionary[key];
-                    }
-                }
-                else
-                {
-                    Application.Current.Resources.Add(key, newDictionary[key]);
-                }
-            }
-        }
-
         /// <summary>
         ///     Returns a resource for the given key type from the system resources collection.
         /// </summary>
@@ -1444,28 +1414,16 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
                     
-                    var currentTheme = Registry.GetValue(
-                        "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes",
-                        "CurrentTheme",
-                        "aero.theme"
-                        ) as string
-                        ?? String.Empty;
+                    string currentApplicationTheme = ThemeColorization.currentApplicationTheme;
+                    string themeToApply = ThemeColorization.getNewTheme();
+                    Color currentApplicationAccentColor = DWMColorization.currentApplicationAccentColor;
+                    Color accentColorToApply = DWMColorization.getNewAccentColor();
 
-                    // Convert IntPtr to Window
-                    Window currentWindow = Application.Current.MainWindow;
-
-                    if (currentTheme.Contains("dark.theme") && Utilities.IsOSWindows11OrNewer)
+                    if (themeToApply != currentApplicationTheme || accentColorToApply != currentApplicationAccentColor)
                     {
-                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
-                        WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
+                        DWMColorization.ApplyAccentColors();
+                        ThemeColorization.ApplyTheme();
                     }
-                    else if (currentTheme.Contains("aero") && Utilities.IsOSWindows11OrNewer)
-                    {
-                        UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
-                        WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Light, WindowBackdropType.Mica, false);
-                    }
-
-                    DWMColorization.ApplyAccentColors();
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:
@@ -1762,6 +1720,107 @@ namespace System.Windows
         #endregion
     }
 
+    internal static class ThemeColorization
+    {
+        // ------------------------------------------------
+        //
+        // Members
+        //
+        // ------------------------------------------------
+        #region Private Members
+        /// <summary>
+        /// Registry Path containing current theme information.
+        /// </summary>
+        private static readonly string regThemeKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes";
+
+        #endregion
+        
+        #region Internal Members
+        /// <summary>
+        /// Static member indicating theme which is currently applied.
+        /// </summary>
+        internal static string currentApplicationTheme = "C:\\windows\\resources\\Themes\\aero.theme";
+
+        #endregion
+
+
+        // ------------------------------------------------
+        //
+        // Methods
+        //
+        // ------------------------------------------------
+        #region internal Methods
+
+        /// <summary>
+        /// Updates the application resources with the specified <see cref="ResourceDictionary"/>.
+        /// </summary>
+        /// <param name="newDictionary">The new <see cref="ResourceDictionary"/> to update the application resources with.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="newDictionary"/> is null.</exception>
+        internal static void UpdateApplicationResources(Uri dictionaryUri)
+        {
+            if (dictionaryUri == null)
+            throw new ArgumentNullException(nameof(dictionaryUri));
+
+            ResourceDictionary newDictionary = new ResourceDictionary();
+            newDictionary.Source = dictionaryUri;
+
+            foreach (var key in newDictionary.Keys)
+            {
+                if (Application.Current.Resources.Contains(key))
+                {
+                    if (!object.Equals(Application.Current.Resources[key], newDictionary[key]))
+                    {
+                        Application.Current.Resources[key] = newDictionary[key];
+                    }
+                }
+                else
+                {
+                    Application.Current.Resources.Add(key, newDictionary[key]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the value of resources based on Type of theme applied in resource dictionary
+        /// </summary>
+        internal static void ApplyTheme()
+        {
+            string themeToApply = getNewTheme();
+            
+            Window currentWindow = Application.Current.MainWindow;
+
+            if (themeToApply.Contains("dark") && Utilities.IsOSWindows11OrNewer)
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
+            }
+            else if (Utilities.IsOSWindows11OrNewer)
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Light, WindowBackdropType.Mica, false);
+            }
+
+            currentApplicationTheme = themeToApply;
+        }
+
+        /// <summary>
+        /// Fetches registry value
+        /// </summary>
+        /// <returns>string indicating the current theme</returns>
+        internal static string getNewTheme()
+        {
+            string newTheme = Registry.GetValue(
+                regThemeKey,
+                "CurrentTheme",
+                "aero.theme"
+                ) as string
+                ?? String.Empty;
+
+            return newTheme;
+        }
+        #endregion
+    }
+
     internal static class DWMColorization
     {
         /// <summary>
@@ -1780,17 +1839,21 @@ namespace System.Windows
         private static readonly string dwmKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM";
 
         /// <summary>
-        /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
+        /// The Accent Color that is currently applied to the application.
         /// </summary>
+        internal static Color currentApplicationAccentColor = Color.FromArgb(255, 0, 120, 212);
+
+        /// <summary>
+        /// Computes the accent color from value in the registry key.
+        /// </summary>
+        /// <returns>Updated <see cref="System.Windows.Media.Color"/> Accent Color.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal static void ApplyAccentColors()
+        internal static Color getNewAccentColor()
         {
             var dwmValue = (Int32)Registry.GetValue(
                 dwmKey,
                 "AccentColor",
                 null);
-
-            bool isDarkTheme = Application.isThemeDark();
 
             ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
 
@@ -1803,11 +1866,23 @@ namespace System.Windows
                 throw new NotImplementedException();
             }
 
-            Color systemAccent = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
+            Color newAccentColor = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
+
+            return newAccentColor;
+        }
+
+        /// <summary>
+        /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
+        /// </summary>
+        internal static void ApplyAccentColors()
+        {
+            Color systemAccent = getNewAccentColor();
 
             Color primaryAccent;
             Color secondaryAccent;
             Color tertiaryAccent;
+
+            bool isDarkTheme = Application.isThemeDark();
 
             if (isDarkTheme)
             {
@@ -1823,6 +1898,8 @@ namespace System.Windows
             }
 
             UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
+
+            currentApplicationAccentColor = systemAccent;
         }
 
         /// <summary>

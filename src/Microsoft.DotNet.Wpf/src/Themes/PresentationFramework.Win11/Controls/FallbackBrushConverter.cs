@@ -7,9 +7,9 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Media;
 
-namespace System.Windows.Controls
+namespace PresentationFramework.Win11.Controls
 {
-    public class FallbackBrushConverter : IValueConverter
+    internal class FallbackBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

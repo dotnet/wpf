@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace System.Windows
+namespace PresentationFramework.Win11.Controls
 {
-    public class AnimationFactorToValueConverter : IMultiValueConverter
+    internal class AnimationFactorToValueConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

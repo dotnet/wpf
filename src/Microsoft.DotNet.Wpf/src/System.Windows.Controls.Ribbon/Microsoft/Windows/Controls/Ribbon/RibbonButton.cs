@@ -207,6 +207,21 @@ namespace Microsoft.Windows.Controls.Ribbon
             set { RibbonControlService.SetToolTipFooterImageSource(this, value); }
         }
 
+        /// <summary>
+        /// DependencyProperty for CornerRadius
+        /// </summary>
+        public static readonly DependencyProperty CornerRadiusProperty =
+            RibbonControlService.CornerRadiusProperty.AddOwner(typeof(RibbonButton));
+
+        /// <summary>
+        /// CornerRadius of the RibbonButton
+        /// </summary>
+        public CornerRadius CornerRadius
+        {
+            get { return RibbonControlService.GetCornerRadius(this); }
+            set { RibbonControlService.SetCornerRadius(this, value); }
+        }
+
         #endregion
 
         #region PseudoInheritedProperties

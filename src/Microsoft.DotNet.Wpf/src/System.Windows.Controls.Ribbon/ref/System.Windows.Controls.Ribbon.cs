@@ -580,7 +580,7 @@ namespace System.Windows.Controls.Ribbon
     {
         public static readonly System.Windows.DependencyProperty CanAddToQuickAccessToolBarDirectlyProperty;
         public static readonly System.Windows.DependencyProperty ControlSizeDefinitionProperty;
-        public static new readonly System.Windows.DependencyProperty CornerRadiusProperty;
+        public static readonly System.Windows.DependencyProperty CornerRadiusProperty;
         public static readonly System.Windows.DependencyProperty FocusedBackgroundProperty;
         public static readonly System.Windows.DependencyProperty FocusedBorderBrushProperty;
         public static readonly System.Windows.DependencyProperty IsInControlGroupProperty;
@@ -606,7 +606,7 @@ namespace System.Windows.Controls.Ribbon
         public RibbonButton() { }
         public bool CanAddToQuickAccessToolBarDirectly { get { throw null; } set { } }
         public System.Windows.Controls.Ribbon.RibbonControlSizeDefinition ControlSizeDefinition { get { throw null; } set { } }
-        public new System.Windows.CornerRadius CornerRadius { get { throw null; } set { } }
+        public System.Windows.CornerRadius CornerRadius { get { throw null; } set { } }
         public System.Windows.Media.Brush FocusedBackground { get { throw null; } set { } }
         public System.Windows.Media.Brush FocusedBorderBrush { get { throw null; } set { } }
         public bool IsInControlGroup { get { throw null; } }

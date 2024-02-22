@@ -315,29 +315,7 @@ namespace System.Windows.Controls
         get => (IconElement)GetValue(IconProperty);
         set => SetValue(IconProperty, value);
     }
-    /// <summary>
-    /// Property for <see cref="CornerRadius"/>.
-    /// </summary>
-    public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-        nameof(CornerRadius),
-        typeof(CornerRadius),
-        typeof(Button),
-        (PropertyMetadata)
-            new FrameworkPropertyMetadata(
-                (object)new CornerRadius(),
-                FrameworkPropertyMetadataOptions.AffectsMeasure
-                    | FrameworkPropertyMetadataOptions.AffectsRender
-            )
-    );
 
-    /// <summary>
-    /// Gets or sets a value that represents the degree to which the corners of a <see cref="T:System.Windows.Controls.Border" /> are rounded.
-    /// </summary>
-    public CornerRadius CornerRadius
-    {
-        get => (CornerRadius)GetValue(CornerRadiusProperty);
-        set => SetValue(CornerRadiusProperty, (object)value);
-    }
         /// <summary>
     /// Property for <see cref="Appearance"/>.
     /// </summary>

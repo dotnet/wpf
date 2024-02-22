@@ -350,15 +350,14 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Content=""
                                     Focusable="False"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
-                                    <Button.Icon>
+                                    <Button.Content>
                                         <SymbolIcon
                                             Filled="True"
-                                            FontSize="26"
+                                            FontSize="20"
                                             Symbol="CaretUp20" />
-                                    </Button.Icon>
+                                    </Button.Content>
                                 </Button>
                                 <Button
                                     x:Name="PART_NextButton"
@@ -371,15 +370,14 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Content=""
                                     Focusable="False"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
-                                    <Button.Icon>
+                                    <Button.Content>
                                         <SymbolIcon
                                             Filled="True"
-                                            FontSize="26"
+                                            FontSize="20"
                                             Symbol="CaretDown20" />
-                                    </Button.Icon>
+                                    </Button.Content>
                                 </Button>
                             </Grid>
 

@@ -200,7 +200,6 @@
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Appearance="Secondary"
                         Background="Transparent"
                         BorderBrush="Transparent"
                         Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}"

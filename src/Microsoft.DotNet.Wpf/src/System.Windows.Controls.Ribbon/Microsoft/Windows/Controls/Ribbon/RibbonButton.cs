@@ -317,6 +317,66 @@ namespace Microsoft.Windows.Controls.Ribbon
         }
 
         /// <summary>
+        ///     DependencyProperty for MouseOverBorderBrush property.
+        /// </summary>
+        public static readonly DependencyProperty MouseOverBorderBrushProperty =
+            RibbonControlService.MouseOverBorderBrushProperty.AddOwner(typeof(RibbonButton));
+
+        /// <summary>
+        ///     Outer border brush used in a "hover" state of the RibbonButton.
+        /// </summary>
+        public Brush MouseOverBorderBrush 
+        {
+            get { return RibbonControlService.GetMouseOverBorderBrush(this); }
+            set { RibbonControlService.SetMouseOverBorderBrush(this, value); }
+        }
+
+        /// <summary>
+        ///     DependencyProperty for MouseOverBackground property.
+        /// </summary>
+        public static readonly DependencyProperty MouseOverBackgroundProperty =
+            RibbonControlService.MouseOverBackgroundProperty.AddOwner(typeof(RibbonButton));
+
+        /// <summary>
+        ///     Control background brush used in a "hover" state of the RibbonButton.
+        /// </summary>
+        public Brush MouseOverBackground 
+        {
+            get { return RibbonControlService.GetMouseOverBackground(this); }
+            set { RibbonControlService.SetMouseOverBackground(this, value); }
+        }
+
+        /// <summary>
+        ///     DependencyProperty for PressedBorderBrush property.
+        /// </summary>
+        public static readonly DependencyProperty PressedBorderBrushProperty =
+            RibbonControlService.PressedBorderBrushProperty.AddOwner(typeof(RibbonButton));
+
+        /// <summary>
+        ///     Outer border brush used in a "pressed" state of the RibbonButton.
+        /// </summary>
+        public Brush PressedBorderBrush 
+        {
+            get { return RibbonControlService.GetPressedBorderBrush(this); }
+            set { RibbonControlService.SetPressedBorderBrush(this, value); }
+        }
+
+        /// <summary>
+        ///     DependencyProperty for PressedBackground property.
+        /// </summary>
+        public static readonly DependencyProperty PressedBackgroundProperty =
+            RibbonControlService.PressedBackgroundProperty.AddOwner(typeof(RibbonButton));
+
+        /// <summary>
+        ///     Control background brush used in a "pressed" state of the RibbonButton.
+        /// </summary>
+        public Brush PressedBackground 
+        {
+            get { return RibbonControlService.GetPressedBackground(this); }
+            set { RibbonControlService.SetPressedBackground(this, value); }
+        }
+
+        /// <summary>
         ///     DependencyProperty for FocusedBackground property.
         /// </summary>
         public static readonly DependencyProperty FocusedBackgroundProperty =

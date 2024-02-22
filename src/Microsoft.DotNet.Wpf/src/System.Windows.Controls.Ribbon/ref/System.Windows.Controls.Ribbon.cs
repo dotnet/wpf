@@ -588,10 +588,10 @@ namespace System.Windows.Controls.Ribbon
         public static readonly System.Windows.DependencyProperty KeyTipProperty;
         public static readonly System.Windows.DependencyProperty LabelProperty;
         public static readonly System.Windows.DependencyProperty LargeImageSourceProperty;
-        public static new readonly System.Windows.DependencyProperty MouseOverBackgroundProperty;
-        public static new readonly System.Windows.DependencyProperty MouseOverBorderBrushProperty;
-        public static new readonly System.Windows.DependencyProperty PressedBackgroundProperty;
-        public static new readonly System.Windows.DependencyProperty PressedBorderBrushProperty;
+        public static readonly System.Windows.DependencyProperty MouseOverBackgroundProperty;
+        public static readonly System.Windows.DependencyProperty MouseOverBorderBrushProperty;
+        public static readonly System.Windows.DependencyProperty PressedBackgroundProperty;
+        public static readonly System.Windows.DependencyProperty PressedBorderBrushProperty;
         public static readonly System.Windows.DependencyProperty QuickAccessToolBarControlSizeDefinitionProperty;
         public static readonly System.Windows.DependencyProperty QuickAccessToolBarIdProperty;
         public static readonly System.Windows.DependencyProperty RibbonProperty;
@@ -614,10 +614,10 @@ namespace System.Windows.Controls.Ribbon
         public string KeyTip { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
         public System.Windows.Media.ImageSource LargeImageSource { get { throw null; } set { } }
-        public new System.Windows.Media.Brush MouseOverBackground { get { throw null; } set { } }
-        public new System.Windows.Media.Brush MouseOverBorderBrush { get { throw null; } set { } }
-        public new System.Windows.Media.Brush PressedBackground { get { throw null; } set { } }
-        public new System.Windows.Media.Brush PressedBorderBrush { get { throw null; } set { } }
+        public System.Windows.Media.Brush MouseOverBackground { get { throw null; } set { } }
+        public System.Windows.Media.Brush MouseOverBorderBrush { get { throw null; } set { } }
+        public System.Windows.Media.Brush PressedBackground { get { throw null; } set { } }
+        public System.Windows.Media.Brush PressedBorderBrush { get { throw null; } set { } }
         public System.Windows.Controls.Ribbon.RibbonControlSizeDefinition QuickAccessToolBarControlSizeDefinition { get { throw null; } set { } }
         public object QuickAccessToolBarId { get { throw null; } set { } }
         public System.Windows.Controls.Ribbon.Ribbon Ribbon { get { throw null; } }

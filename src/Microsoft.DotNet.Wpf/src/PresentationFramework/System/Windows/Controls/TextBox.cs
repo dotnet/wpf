@@ -965,26 +965,6 @@ namespace System.Windows.Controls
                 return new Typography(this);
             }
         }
-        
-        /// <summary>
-        /// Property for <see cref="Icon"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Icon),
-            typeof(IconElement),
-            typeof(TextBox),
-            new PropertyMetadata(null, null, IconSourceElementConverter.ConvertToIconElement)
-        );
-
-        /// <summary>
-        /// Property for <see cref="IconPlacement"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconPlacementProperty = DependencyProperty.Register(
-            nameof(IconPlacement),
-            typeof(ElementPlacement),
-            typeof(TextBox),
-            new PropertyMetadata(ElementPlacement.Left)
-        );
 
         /// <summary>
         /// Property for <see cref="PlaceholderText"/>.
@@ -1047,24 +1027,6 @@ namespace System.Windows.Controls
         );
 
         #region Properties
-
-        /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Defines which side the icon should be placed on.
-        /// </summary>
-        public ElementPlacement IconPlacement
-        {
-            get => (ElementPlacement)GetValue(IconPlacementProperty);
-            set => SetValue(IconPlacementProperty, value);
-        }
 
         /// <summary>
         /// Gets or sets numbers pattern.

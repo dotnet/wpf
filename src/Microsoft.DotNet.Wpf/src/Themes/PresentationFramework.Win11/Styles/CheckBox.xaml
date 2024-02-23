@@ -29,6 +29,8 @@
     <system:Double x:Key="CheckBoxIconSize">14</system:Double>
     <system:Double x:Key="CheckBoxHeight">22</system:Double>
     <system:Double x:Key="CheckBoxWidth">22</system:Double>
+    <system:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</system:String>
+    <system:String x:Key="CheckBoxIndeterminateGlyph">&#xE9AE;</system:String>
 
     <Style x:Key="DefaultCheckBoxStyle" TargetType="{x:Type CheckBox}">
         <!--  Universal WPF UI focus  -->
@@ -75,7 +77,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding Border.CornerRadius}">
                                     <Grid>
-                                        <controls:SymbolIcon
+                                        <FontIcon
                                             x:Name="ControlIcon"
                                             Margin="0"
                                             HorizontalAlignment="Center"
@@ -83,7 +85,8 @@
                                             FontSize="{StaticResource CheckBoxIconSize}"
                                             FontWeight="Bold"
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
-                                            Symbol="Checkmark48"
+                                            FontFamily="Segoe Fluent Icons"
+                                            Glyph="{StaticResource CheckBoxCheckedGlyph}"
                                             Visibility="Collapsed" />
                                     </Grid>
                                 </Border>
@@ -106,7 +109,7 @@
                             <Setter Property="MinWidth" Value="30" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Symbol" Value="Subtract16" />
+                            <Setter TargetName="ControlIcon" Property="Glyph" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
                             <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />

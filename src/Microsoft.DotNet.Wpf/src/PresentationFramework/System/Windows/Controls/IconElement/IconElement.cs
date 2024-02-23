@@ -14,7 +14,7 @@ namespace System.Windows.Controls;
 /// <summary>
 /// Represents the base class for an icon UI element.
 /// </summary>
-[TypeConverter(typeof(IconElementConverter))]
+// [TypeConverter(typeof(IconElementConverter))]
 public abstract class IconElement : FrameworkElement
 {
     static IconElement()

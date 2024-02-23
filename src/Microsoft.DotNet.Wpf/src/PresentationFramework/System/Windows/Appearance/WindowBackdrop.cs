@@ -15,13 +15,13 @@ namespace System.Windows.Appearance;
 /// <summary>
 /// Applies the chosen backdrop effect to the selected window.
 /// </summary>
-public static class WindowBackdrop
+internal static class WindowBackdrop
 {
     /// <summary>
     /// Checks whether the selected backdrop type is supported on current platform.
     /// </summary>
     /// <returns><see langword="true"/> if the selected backdrop type is supported on current platform.</returns>
-    public static bool IsSupported(WindowBackdropType backdropType)
+    internal static bool IsSupported(WindowBackdropType backdropType)
     {
         return backdropType switch
         {
@@ -39,7 +39,7 @@ public static class WindowBackdrop
     /// </summary>
     /// <param name="window">Selected window.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    public static bool ApplyBackdrop(System.Windows.Window window, WindowBackdropType backdropType)
+    internal static bool ApplyBackdrop(System.Windows.Window window, WindowBackdropType backdropType)
     {
         if (window is null)
         {
@@ -79,7 +79,7 @@ public static class WindowBackdrop
     /// </summary>
     /// <param name="hWnd">Window handle.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    public static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
+    internal static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -136,7 +136,7 @@ public static class WindowBackdrop
     /// Tries to remove backdrop effects if they have been applied to the <see cref="Window"/>.
     /// </summary>
     /// <param name="window">The window from which the effect should be removed.</param>
-    public static bool RemoveBackdrop(System.Windows.Window window)
+    internal static bool RemoveBackdrop(System.Windows.Window window)
     {
         if (window is null)
         {
@@ -152,7 +152,7 @@ public static class WindowBackdrop
     /// Tries to remove all effects if they have been applied to the <c>hWnd</c>.
     /// </summary>
     /// <param name="hWnd">Pointer to the window handle.</param>
-    public static bool RemoveBackdrop(IntPtr hWnd)
+    internal static bool RemoveBackdrop(IntPtr hWnd)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -196,7 +196,7 @@ public static class WindowBackdrop
     /// </summary>
     /// <param name="window">Window to manipulate.</param>
     /// <returns><see langword="true"/> if operation was successful.</returns>
-    public static bool RemoveBackground(System.Windows.Window window)
+    internal static bool RemoveBackground(System.Windows.Window window)
     {
         if (window is null)
         {

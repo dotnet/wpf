@@ -61,8 +61,8 @@
                                    IsOpen="{Binding Path=(MenuItem.IsSubmenuOpen),RelativeSource={RelativeSource TemplatedParent}}"
                                    Focusable="false"
                                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-                            <theme:SystemDropShadowChrome Name="Shdw"
-                                                          Color="Transparent">
+                            <!-- <theme:SystemDropShadowChrome Name="Shdw"
+                                                          Color="Transparent"> -->
                                 <Border Name="SubMenuBorder"
                                         Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
                                         BorderThickness="1"
@@ -84,7 +84,7 @@
                                       </Grid>
                                     </ScrollViewer>
                                 </Border>
-                            </theme:SystemDropShadowChrome>
+                            <!-- </theme:SystemDropShadowChrome> -->
                         </Popup>
                         
                         <Grid x:Name="Panel" 
@@ -133,7 +133,7 @@
                                     Property="Fill" 
                                     Value="#A5AABE"/>
                         </Trigger>
-                        <Trigger SourceName="PART_Popup"
+                        <!-- <Trigger SourceName="PART_Popup"
                                  Property="Popup.HasDropShadow"
                                  Value="true">
                             <Setter TargetName="Shdw"
@@ -145,7 +145,7 @@
                             <Setter TargetName="Shdw"
                                     Property="Color"
                                     Value="#71000000"/>
-                        </Trigger>
+                        </Trigger> -->
                         <Trigger SourceName="SubMenuScrollViewer"
                                  Property="ScrollViewer.CanContentScroll"
                                  Value="false" >

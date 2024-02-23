@@ -130,7 +130,6 @@
                                         VerticalAlignment="Top"
                                         HorizontalContentAlignment="Center"
                                         VerticalContentAlignment="Center"
-                                        Appearance="Secondary"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         Cursor="Arrow">

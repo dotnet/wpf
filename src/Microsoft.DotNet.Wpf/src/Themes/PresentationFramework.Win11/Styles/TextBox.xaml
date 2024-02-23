@@ -200,15 +200,17 @@
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Appearance="Secondary"
                         Background="Transparent"
                         BorderBrush="Transparent"
                         Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}"
                         Cursor="Arrow"
                         Foreground="{DynamicResource TextControlButtonForeground}">
-                        <Button.Icon>
+                        <!-- <Button.Icon>
                             <SymbolIcon FontSize="{TemplateBinding FontSize}" Symbol="Dismiss24" />
-                        </Button.Icon>
+                        </Button.Icon> -->
+                        <Button.Content>
+                            <SymbolIcon FontSize="{TemplateBinding FontSize}" Symbol="Dismiss24" />
+                        </Button.Content>
                     </Button>
 
                     <ContentPresenter

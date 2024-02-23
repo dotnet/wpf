@@ -17,7 +17,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Bold.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Border.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Button.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ButtonBase.xaml" />
+        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ButtonBase.xaml" /> -->
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Calendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ComboBox.xaml" />
@@ -62,7 +62,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBoxBase.xaml" />
+        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TextBoxBase.xaml" /> -->
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Thumb.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/ToolBar.xaml" />

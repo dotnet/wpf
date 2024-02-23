@@ -81,7 +81,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultUiButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="DefaultUiButtonStyle" TargetType="{x:Type ButtonBase}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
@@ -290,6 +290,7 @@
     </Style>
 
     <!-- <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}" /> -->
+    <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type ButtonBase}" />
     <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type Button}" />
 
 </ResourceDictionary>

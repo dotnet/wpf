@@ -39,7 +39,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
@@ -68,7 +68,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
                         <Border
                             x:Name="ContentBorder"
@@ -369,7 +369,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="{x:Type TextBox}" /> -->
+    <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />
     <Style BasedOn="{StaticResource DefaultUiTextBoxStyle}" TargetType="{x:Type TextBox}" />
 
 </ResourceDictionary>

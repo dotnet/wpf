@@ -1489,7 +1489,7 @@ namespace System.Windows
             
             if (currentTheme != null)
             {
-                currentTheme.Contains("dark.theme");
+                return currentTheme.Contains("dark.theme");
             }
 
             return false;

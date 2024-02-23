@@ -1491,6 +1491,19 @@ namespace System.Windows
             {
                 currentTheme.Contains("dark.theme");
             }
+
+            return false;
+        }
+
+        internal static bool isThemeHighContrast()
+        {
+            string currentTheme = ThemeColorization.getNewTheme();
+
+            if(currentTheme != null)
+            {
+                return currentTheme.Contains("hc");
+            }
+
             return false;
         }
 

@@ -13,16 +13,14 @@
 //  web requests other than through WININET
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;              // For Win32Exception
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.IO.IsolatedStorage;        // For IsolatedStorage temp file
 using System.Net;
-using System.Net.Cache;                     // For RequestCachePolicy
-using System.Runtime.InteropServices;   // For Marshal
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
+using System.Net.Cache;                  // For RequestCachePolicy
+using System.Runtime.InteropServices;    // For Marshal
 using System.Threading;                  // For Mutex
 using Microsoft.Win32.SafeHandles;
 using MS.Internal.PresentationCore;
@@ -39,7 +37,7 @@ namespace MS.Internal.IO.Packaging
     [FriendAccessAllowed]
     internal class ByteRangeDownloader : IDisposable
     {
-         //------------------------------------------------------
+        //------------------------------------------------------
         //
         //  Constructors
         //
@@ -60,7 +58,7 @@ namespace MS.Internal.IO.Packaging
 
             if (tempFileName.Length <= 0)
             {
-                throw new ArgumentException(SR.InvalidTempFileName, "tempFileName");
+                throw new ArgumentException(SR.InvalidTempFileName, nameof(tempFileName));
             }
 
             _tempFileStream = File.Open(tempFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
@@ -164,8 +162,8 @@ namespace MS.Internal.IO.Packaging
                 byteRanges = new int[rangeCount, 2];
                 for (int i = 0; i < rangeCount; ++i)
                 {
-                    byteRanges[i, Offset_Index] = (int)_byteRangesAvailable[(i * 2) + Offset_Index];
-                    byteRanges[i, Length_Index] = (int)_byteRangesAvailable[(i * 2) + Length_Index];
+                    byteRanges[i, Offset_Index] = _byteRangesAvailable[(i * 2) + Offset_Index];
+                    byteRanges[i, Length_Index] = _byteRangesAvailable[(i * 2) + Length_Index];
                 }
                 _byteRangesAvailable.Clear();
             }
@@ -213,18 +211,15 @@ namespace MS.Internal.IO.Packaging
                 else    // cannot make request yet, put the request in the wait queue
                 {
                     // Lazy Init
-                    if (_requestsOnWait == null)
-                    {
-                        // there are currently only ever two of these (one pair)
-                        // so optimize
-                        _requestsOnWait = new ArrayList(2);
-                    }
+                    // there are currently only ever two of these (one pair)
+                    // so optimize
+                    _requestsOnWait ??= new List<int>(2);
 
                     for (int i = 0; i < byteRanges.GetLength(0); ++i)
                     {
                         // Add requests to the wait queue
-                        _requestsOnWait.Add((int) byteRanges[i, Offset_Index]);
-                        _requestsOnWait.Add((int) byteRanges[i, Length_Index]);
+                        _requestsOnWait.Add(byteRanges[i, Offset_Index]);
+                        _requestsOnWait.Add(byteRanges[i, Length_Index]);
                     }
                 }
             }
@@ -240,12 +235,12 @@ namespace MS.Internal.IO.Packaging
         {
             CheckOneDimensionalByteRanges(inByteRanges);
 
-            int[,] outByteRanges = new int[(inByteRanges.Length / 2),2];
+            int[,] outByteRanges = new int[(inByteRanges.Length / 2), 2];
 
-            for (int i=0, j=0; i < inByteRanges.Length; ++i, ++j)
+            for (int i = 0, j = 0; i < inByteRanges.Length; ++i, ++j)
             {
-                outByteRanges[j,Offset_Index] = inByteRanges[i];
-                outByteRanges[j,Length_Index] = inByteRanges[i+1];
+                outByteRanges[j, Offset_Index] = inByteRanges[i];
+                outByteRanges[j, Length_Index] = inByteRanges[i + 1];
 
                 ++i;
             }
@@ -270,7 +265,7 @@ namespace MS.Internal.IO.Packaging
 
             int[] outByteRanges = new int[inByteRanges.Length];
 
-            for (int i=0, j=0; i < inByteRanges.GetLength(0); ++i, ++j)
+            for (int i = 0, j = 0; i < inByteRanges.GetLength(0); ++i, ++j)
             {
                 outByteRanges[j] = inByteRanges[i, Offset_Index];
                 outByteRanges[++j] = inByteRanges[i, Length_Index];
@@ -407,14 +402,14 @@ namespace MS.Internal.IO.Packaging
             // Ensure uri is correct scheme (http or https) Do case-sensitive comparison since Uri.Scheme contract is to return in lower case only.
             if (!string.Equals(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) && !string.Equals(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
             {
-                throw new ArgumentException(SR.InvalidScheme, "requestedUri");
+                throw new ArgumentException(SR.InvalidScheme, nameof(requestedUri));
             }
 
             ArgumentNullException.ThrowIfNull(eventHandle);
 
             if (eventHandle.IsInvalid || eventHandle.IsClosed)
             {
-                throw new ArgumentException(SR.InvalidEventHandle, "eventHandle");
+                throw new ArgumentException(SR.InvalidEventHandle, nameof(eventHandle));
             }
 
             _requestedUri = requestedUri;
@@ -461,8 +456,8 @@ namespace MS.Internal.IO.Packaging
             // Add byte ranges (to header)
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
-                request.AddRange(byteRanges[i,Offset_Index],
-                                 byteRanges[i,Offset_Index] + byteRanges[i,Length_Index] - 1);
+                request.AddRange(byteRanges[i, Offset_Index],
+                                 byteRanges[i, Offset_Index] + byteRanges[i, Length_Index] - 1);
             }
 
             return request;
@@ -519,7 +514,7 @@ namespace MS.Internal.IO.Packaging
 
                         // Get the header and make sure that it was indeed the byte range response
                         int beginOffset = _byteRangesInProgress[0, Offset_Index];
-                        int endOffset = beginOffset+ _byteRangesInProgress[0,Length_Index] - 1;
+                        int endOffset = beginOffset + _byteRangesInProgress[0, Length_Index] - 1;
 
                         // HttpWebRequest in the current CLR does not allow multiple byte range requests.
                         // At this point, none of the callers of this class will make more than one range at a time
@@ -565,17 +560,14 @@ namespace MS.Internal.IO.Packaging
                 catch   // catch (and re-throw) all kinds of exceptions so we can inform the other thread
                 {
                     // inform other thread of error condition
-                    _erroredOut= true;
+                    _erroredOut = true;
                     _erroredOutException = null;
 
                     throw;
                 }
                 finally
                 {
-                    if (webResponse != null)
-                    {
-                        webResponse.Close();
-                    }
+                    webResponse?.Close();
 
                     // bytes requested are downloaded or errored out
                     //  inform the caller that these ranges are available
@@ -587,7 +579,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     ProcessWaitQueue();
                 }
-           }
+            }
         }
 
         /// <summary>
@@ -632,10 +624,7 @@ namespace MS.Internal.IO.Packaging
             // Get the downloaded stream
             using (Stream s = response.GetResponseStream())
             {
-                if (_buffer == null)
-                {
-                    _buffer = new byte[WriteBufferSize];
-                }
+                _buffer ??= new byte[WriteBufferSize];
 
                 // mutex available?
                 if (_fileMutex != null)
@@ -672,8 +661,8 @@ namespace MS.Internal.IO.Packaging
             if (_requestsOnWait != null && _requestsOnWait.Count > 0)
             {
                 // _byteRangesInProgress is already allocated and can be reused
-                _byteRangesInProgress[0,Offset_Index] = (int) _requestsOnWait[Offset_Index];
-                _byteRangesInProgress[0,Length_Index] = (int) _requestsOnWait[Length_Index];
+                _byteRangesInProgress[0, Offset_Index] = _requestsOnWait[Offset_Index];
+                _byteRangesInProgress[0, Length_Index] = _requestsOnWait[Length_Index];
                 _requestsOnWait.RemoveRange(0, 2);
 
                 _webRequest = CreateHttpWebRequest(_byteRangesInProgress);
@@ -706,7 +695,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int i = 0; i < byteRanges.Length; i++)
             {
-                if (byteRanges[i] < 0 || byteRanges[i+1] <= 0)
+                if (byteRanges[i] < 0 || byteRanges[i + 1] <= 0)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
@@ -731,7 +720,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
-                if (byteRanges[i,Offset_Index] < 0 || byteRanges[i,Length_Index] <= 0)
+                if (byteRanges[i, Offset_Index] < 0 || byteRanges[i, Length_Index] <= 0)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
@@ -756,7 +745,7 @@ namespace MS.Internal.IO.Packaging
         ///         True if the some bytes of the requested bytes are included in the response.</returns>
         static private bool CheckContentRange(WebHeaderCollection responseHeaders, int beginOffset, ref int endOffset)
         {
-            String contentRange = responseHeaders[ContentRangeHeader];
+            string contentRange = responseHeaders[ContentRangeHeader];
 
             // No Content-Range (condition #1)
             if (contentRange == null)
@@ -782,7 +771,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the first byte offset of the range (XXX)
-            int firstByteOffset = Int32.Parse(contentRange.AsSpan(ByteRangeUnit.Length,
+            int firstByteOffset = int.Parse(contentRange.AsSpan(ByteRangeUnit.Length,
                                                                         index - ByteRangeUnit.Length),
                                                 NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
@@ -796,7 +785,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Get the last byte offset of the range (YYY)
-            int lastByteOffset = Int32.Parse(contentRangeSpan.Slice(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
+            int lastByteOffset = int.Parse(contentRangeSpan.Slice(0, index), NumberStyles.None, NumberFormatInfo.InvariantInfo);
 
             // Get the instance length
             // ContentRange: ZZZ
@@ -807,7 +796,7 @@ namespace MS.Internal.IO.Packaging
                 //  if it is not an integer or the integer is bigger than Int32 since HttpWebRequest.AddRange
                 //  only supports Int32
                 //  Once HttpWebRequest.AddRange start supporting Int64 we should change it to Int64 and long
-                Int32.Parse(contentRangeSpan, NumberStyles.None, NumberFormatInfo.InvariantInfo);
+                int.Parse(contentRangeSpan, NumberStyles.None, NumberFormatInfo.InvariantInfo);
             }
 
             // The response is considered to be successful if
@@ -845,7 +834,7 @@ namespace MS.Internal.IO.Packaging
 
         private bool _firstRequestMade;
         private bool _disposed;
-        private Object _syncObject = new Object();
+        private readonly object _syncObject = new object();
         private bool _erroredOut;
         private Exception _erroredOutException;
 
@@ -854,15 +843,15 @@ namespace MS.Internal.IO.Packaging
 
         private IWebProxy _proxy;
         private ICredentials _credentials;
-        private CookieContainer _cookieContainer = new CookieContainer(1);
+        private readonly CookieContainer _cookieContainer = new CookieContainer(1);
 
         private SafeWaitHandle _eventHandle;    // event handle which needs to be raised to inform the caller that
-                                         //  the requested bytes are available
-        private Mutex _fileMutex;       // object controlling synchronization on the temp file - if this is null, we own the stream
-        private System.IO.Stream _tempFileStream;   // stream to write to
+                                                //  the requested bytes are available
+        private readonly Mutex _fileMutex;       // object controlling synchronization on the temp file - if this is null, we own the stream
+        private Stream _tempFileStream;   // stream to write to
 
-        private ArrayList _byteRangesAvailable = new ArrayList(2); // byte ranges that are downloaded
-        private ArrayList _requestsOnWait;      // List of byte ranges requested need to be processed
+        private List<int> _byteRangesAvailable = new List<int>(2); // byte ranges that are downloaded
+        private List<int> _requestsOnWait;      // List of byte ranges requested need to be processed
         private int[,] _byteRangesInProgress;
 
         private HttpWebRequest _webRequest;
@@ -874,8 +863,8 @@ namespace MS.Internal.IO.Packaging
         private const int Offset_Index = 0;
         private const int Length_Index = 1;
 
-        private const String ByteRangeUnit = "BYTES ";
-        private const String ContentRangeHeader = "Content-Range";
+        private const string ByteRangeUnit = "BYTES ";
+        private const string ContentRangeHeader = "Content-Range";
 
         #endregion Private Fields
     }

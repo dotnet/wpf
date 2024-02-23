@@ -10,16 +10,10 @@
 //
 
 using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+using System.Collections.Generic;
 using System.IO.Packaging;
 
-using MS.Internal;
-using MS.Internal.PresentationCore;     // for ExceptionStringTable
+using MS.Internal.PresentationCore;   // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
 {
@@ -35,16 +29,6 @@ namespace MS.Internal.IO.Packaging
     {
         //------------------------------------------------------
         //
-        //  Static Constructors
-        //
-        //------------------------------------------------------
-        static PreloadedPackages()
-        {
-            _globalLock = new Object();
-        }
-
-        //------------------------------------------------------
-        //
         //  Internal Methods
         //
         //------------------------------------------------------
@@ -58,8 +42,7 @@ namespace MS.Internal.IO.Packaging
         /// <exception cref="ArgumentException">uri must be absolute</exception>
         internal static Package GetPackage(Uri uri)
         {
-            bool ignored;
-            return GetPackage(uri, out ignored);
+            return GetPackage(uri, out bool _);
         }
 
         /// <summary>
@@ -80,8 +63,7 @@ namespace MS.Internal.IO.Packaging
 
                 if (_packagePairs != null)
                 {
-                    PackageThreadSafePair packagePair = _packagePairs[uri] as PackageThreadSafePair;
-                    if (packagePair != null)
+                    if (_packagePairs.TryGetValue(uri, out PackageThreadSafePair packagePair))
                     {
                         package = packagePair.Package;
                         threadSafe = packagePair.ThreadSafe;
@@ -120,10 +102,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs == null)
-                {
-                    _packagePairs = new HybridDictionary(3);
-                }
+                _packagePairs ??= new Dictionary<Uri, PackageThreadSafePair>(3);
 
                 _packagePairs.Add(uri, new PackageThreadSafePair(package, threadSafe));
             }
@@ -142,10 +121,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs != null)
-                {
-                    _packagePairs.Remove(uri);
-                }
+                _packagePairs?.Remove(uri);
             }
         }
 
@@ -164,7 +140,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, nameof(uri));
             }
         }
 
@@ -237,8 +213,8 @@ namespace MS.Internal.IO.Packaging
         // ListDictionary is the best fit for this scenarios; otherwise we should be using
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
-        static private HybridDictionary _packagePairs;
-        static private readonly Object  _globalLock;
+        static private Dictionary<Uri, PackageThreadSafePair> _packagePairs;
+        static private readonly object                        _globalLock = new object();
 
         #endregion Private Fields
     }

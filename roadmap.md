@@ -24,7 +24,7 @@ Enhancing the performance of WPF apps both in terms of reduced memory usage, imp
 
 | Goal | Description | Rationale |
 | ------------- |:--------------|:-------------|
-| Accessibility Improvements | Improving accessibility support for WPF controls | This enables WPF applications to be more inclusive & would be able to better serve needs of specially abled users. This involves addressing high priority accessibility bugs. |
+| Accessibility Improvements | Improving accessibility support for WPF controls | This enables WPF applications to be more inclusive & would be able to better serve needs of users of all abilities. This involves addressing high priority accessibility bugs. |
 | Performance | Benchmarking and optimizing WPF for enhanced support on all devices | Improving fundamentals of WPF. 
 
 ---

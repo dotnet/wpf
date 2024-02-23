@@ -404,7 +404,7 @@
     <Compile Include="MS\Win32\UxThemeWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
-    <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" />
+    <!-- <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" /> -->
     <Compile Include="System\Windows\Appearance\ApplicationAccentColorManager.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationThemeManager.cs" />
@@ -417,7 +417,7 @@
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <Compile Include="System\Windows\ElementPlacement.cs" />
-    <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />
+    <!-- <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" /> -->
     <Compile Include="System\Windows\Controls\ElementPlacement.cs" />
     <!-- <Compile Include="System\Windows\Controls\PassiveScrollViewer.cs" /> -->
     <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />

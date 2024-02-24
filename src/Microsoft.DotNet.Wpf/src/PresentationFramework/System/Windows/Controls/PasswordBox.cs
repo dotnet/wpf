@@ -348,42 +348,19 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Defines which side the icon should be placed on.
+        /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabledProperty"/>
         /// </summary>
-        public ElementPlacement IconPlacement
+        public static readonly DependencyProperty IsInactiveSelectionHighlightEnabledProperty =
+            TextBoxBase.IsInactiveSelectionHighlightEnabledProperty.AddOwner(typeof(PasswordBox));
+
+        /// <summary>
+        /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabled"/>
+        /// </summary>
+        public bool IsInactiveSelectionHighlightEnabled
         {
-            get => (ElementPlacement)GetValue(IconPlacementProperty);
-            set => SetValue(IconPlacementProperty, value);
+            get { return (bool)GetValue(IsInactiveSelectionHighlightEnabledProperty); }
+            set { SetValue(IsInactiveSelectionHighlightEnabledProperty, value); }
         }
-
-        /// <summary>
-        /// Property for <see cref="IconPlacement"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconPlacementProperty = DependencyProperty.Register(
-           nameof(IconPlacement),
-           typeof(ElementPlacement),
-           typeof(PasswordBox),
-           new PropertyMetadata(ElementPlacement.Left)
-        );
-
-        /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="Icon"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-           nameof(Icon),
-           typeof(IconElement),
-           typeof(PasswordBox),
-           new PropertyMetadata(null, null, IconSourceElementConverter.ConvertToIconElement)
-        );
 
         /// <summary>
         /// Gets or sets numbers pattern.
@@ -403,40 +380,6 @@ namespace System.Windows.Controls
            typeof(PasswordBox),
            new PropertyMetadata(String.Empty)
         );
-
-        /// <summary>
-        /// Gets or sets a value determining whether to display the placeholder.
-        /// </summary>
-        public bool PlaceholderEnabled
-        {
-            get => (bool)GetValue(PlaceholderEnabledProperty);
-            set => SetValue(PlaceholderEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="PlaceholderEnabled"/>.
-        /// </summary>
-        public static readonly DependencyProperty PlaceholderEnabledProperty = DependencyProperty.Register(
-           nameof(PlaceholderEnabled),
-           typeof(bool),
-           typeof(PasswordBox),
-           new PropertyMetadata(true)
-        );
-
-        /// <summary>
-        /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabledProperty"/>
-        /// </summary>
-        public static readonly DependencyProperty IsInactiveSelectionHighlightEnabledProperty =
-            TextBoxBase.IsInactiveSelectionHighlightEnabledProperty.AddOwner(typeof(PasswordBox));
-
-        /// <summary>
-        /// <see cref="TextBoxBase.IsInactiveSelectionHighlightEnabled"/>
-        /// </summary>
-        public bool IsInactiveSelectionHighlightEnabled
-        {
-            get { return (bool)GetValue(IsInactiveSelectionHighlightEnabledProperty); }
-            set { SetValue(IsInactiveSelectionHighlightEnabledProperty, value); }
-        }
 
         #endregion Public Properties
 
@@ -1006,6 +949,18 @@ namespace System.Windows.Controls
                 return;
             }
 
+            if(PlaceholderText != string.Empty && Password.Length > 0)
+            {
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
+            }
+
+            if(_placeholderText != string.Empty && Password.Length == 0)
+            {
+                PlaceholderText = _placeholderText;
+                _placeholderText = string.Empty;
+            }
+
             RaiseEvent(new RoutedEventArgs(PasswordChangedEvent));
         }
 
@@ -1368,6 +1323,8 @@ namespace System.Windows.Controls
 
         // Border
         private Border _border;
+
+        private string _placeholderText;
 
         // An element marked as ContentHostTemplateName which we assign our _renderScope as a child.
         private FrameworkElement _passwordBoxContentHost;

@@ -35,7 +35,6 @@ namespace System.Windows
         public DataFormat(string name, int id)
         {
             ArgumentException.ThrowIfNullOrEmpty(name);
-            ArgumentNullException.ThrowIfNull(name);
 
             this._name = name;
             this._id = id;

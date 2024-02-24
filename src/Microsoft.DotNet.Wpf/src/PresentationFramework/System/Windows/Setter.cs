@@ -14,7 +14,6 @@ using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Data;
 using System.Globalization;
-using System.Reflection;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -24,7 +23,7 @@ namespace System.Windows
     ///     TargetType property setting class.
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {

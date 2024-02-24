@@ -979,7 +979,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Property for <see cref="ClearButtonEnabled"/>.
         /// </summary>
-        public static readonly DependencyProperty ClearButtonEnabledProperty = DependencyProperty.Register(
+        internal static readonly DependencyProperty ClearButtonEnabledProperty = DependencyProperty.Register(
             nameof(ClearButtonEnabled),
             typeof(bool),
             typeof(TextBox),
@@ -1012,7 +1012,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets a value determining whether to enable the clear button.
         /// </summary>
-        public bool ClearButtonEnabled
+        internal bool ClearButtonEnabled
         {
             get => (bool)GetValue(ClearButtonEnabledProperty);
             set => SetValue(ClearButtonEnabledProperty, value);

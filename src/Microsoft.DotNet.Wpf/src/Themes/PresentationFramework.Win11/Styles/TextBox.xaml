@@ -239,10 +239,14 @@
             <Trigger Property="PlaceholderText" Value="string.Empty">
                 <Setter TargetName="PlaceholderTextBox" Property="Visibility" Value="Collapsed" />
             </Trigger>
-            <Trigger Property="ClearButtonEnabled" Value="False">
+            <Trigger Property="Text" Value="{x:Static system:String.Empty}">
                 <Setter TargetName="ClearButton" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="ClearButton" Property="Margin" Value="0" />
             </Trigger>
+            <!-- <Trigger Property="ClearButtonEnabled" Value="False">
+                <Setter TargetName="ClearButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="ClearButton" Property="Margin" Value="0" />
+            </Trigger> -->
             <Trigger Property="IsFocused" Value="True">
                 <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
                 <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource TextControlFocusedBorderBrush}" />
@@ -269,7 +273,10 @@
                 <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
                 <Setter TargetName="PlaceholderTextBox" Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
                 <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                <Setter Property="ClearButtonEnabled" Value="False" />
+                <!-- <Setter Property="ClearButtonEnabled" Value="False" /> -->
+                <Setter TargetName="ClearButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="ClearButton" Property="Margin" Value="0" />
+
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

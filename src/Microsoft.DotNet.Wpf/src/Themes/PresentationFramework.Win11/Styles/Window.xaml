@@ -44,12 +44,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <AdornerDecorator>
-                        <controls:ClientAreaBorder
+                        <!-- <controls:ClientAreaBorder
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        </controls:ClientAreaBorder> -->
                             <ContentPresenter x:Name="ContentPresenter" />
-                        </controls:ClientAreaBorder>
                     </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>

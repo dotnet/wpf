@@ -27,8 +27,11 @@
 
   <!-- Compile Items -->
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
+    <!-- <Compile Include="Controls\ClientAreaBorder.cs" /> -->
+    <Compile Include="Controls\FallbackBrushConverter.cs" />
   </ItemGroup>
+
   <!-- <ItemGroup>
     <Resource Include="Resources\Fonts\FluentSystemIcons-Filled.ttf" />
     <Resource Include="Resources\Fonts\FluentSystemIcons-Regular.ttf" />

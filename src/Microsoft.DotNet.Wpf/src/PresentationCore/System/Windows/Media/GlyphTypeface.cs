@@ -9,6 +9,7 @@
 //
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,7 @@ using System.Windows.Markup;
 
 using MS.Internal;
 using MS.Internal.TextFormatting;
+using MS.Internal.Text.TextInterface;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
@@ -1335,7 +1337,7 @@ namespace System.Windows.Media
             if (!nullFont)
             {
                 CharacterBufferRange charBufferRange = new CharacterBufferRange(unsafeCharString, stringLength);
-                MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(stringLength);
+                GlyphMetrics[] glyphMetrics = ArrayPool<GlyphMetrics>.Shared.Rent(stringLength);
 
                 GetGlyphMetricsOptimized(charBufferRange,
                                          emSize,
@@ -1362,7 +1364,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                BufferCache.ReleaseGlyphMetrics(glyphMetrics);
+                ArrayPool<GlyphMetrics>.Shared.Return(glyphMetrics);
             }
             else
             {
@@ -1509,7 +1511,7 @@ namespace System.Windows.Media
 
             if (glyphIndices == null)
             {
-                glyphIndices = BufferCache.GetUShorts(characterCount);
+                glyphIndices = ArrayPool<ushort>.Shared.Rent(characterCount);
                 releaseIndices = true;
             }
 
@@ -1528,7 +1530,7 @@ namespace System.Windows.Media
 
             if (releaseIndices)
             {
-                BufferCache.ReleaseUShorts(glyphIndices);
+                ArrayPool<ushort>.Shared.Return(glyphIndices);
             }
         }            
 

@@ -163,7 +163,6 @@
     <Compile Include="MS\Internal\Automation\VirtualizedItemProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\WindowProviderWrapper.cs" />
     <Compile Include="MS\Internal\Collections\InternalCollectionDelegates.cs" />
-    <Compile Include="MS\Internal\FontCache\BufferCache.cs" />
     <Compile Include="MS\Internal\FontCache\CachedTypeface.cs" />
     <Compile Include="MS\Internal\FontCache\CanonicalFontFamilyReference.cs" />
     <Compile Include="MS\Internal\FontCache\DWriteFactory.cs" />

@@ -15,6 +15,7 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
@@ -332,7 +333,7 @@ namespace System.Windows.Media.TextFormatting
                 Invariant.Assert(characterLength > 0);
 
                 CharacterBufferRange newBuffer = new CharacterBufferRange(characterString, characterLength);
-                MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(characterLength);
+                GlyphMetrics[] glyphMetrics = ArrayPool<GlyphMetrics>.Shared.Rent(characterLength);
 
                 glyphTypeface.GetGlyphMetricsOptimized(newBuffer,
                                                        _emSize,
@@ -372,7 +373,7 @@ namespace System.Windows.Media.TextFormatting
                 }
 
 
-                BufferCache.ReleaseGlyphMetrics(glyphMetrics);
+                ArrayPool<GlyphMetrics>.Shared.Return(glyphMetrics);
             }
         }
 

@@ -965,7 +965,6 @@ namespace System.Windows.Controls
                 return new Typography(this);
             }
         }
-
         /// <summary>
         /// Property for <see cref="PlaceholderText"/>.
         /// </summary>
@@ -976,15 +975,6 @@ namespace System.Windows.Controls
             new PropertyMetadata(String.Empty)
         );
 
-        /// <summary>
-        /// Property for <see cref="PlaceholderEnabled"/>.
-        /// </summary>
-        public static readonly DependencyProperty PlaceholderEnabledProperty = DependencyProperty.Register(
-            nameof(PlaceholderEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(true)
-        );
 
         /// <summary>
         /// Property for <see cref="ClearButtonEnabled"/>.
@@ -993,33 +983,14 @@ namespace System.Windows.Controls
             nameof(ClearButtonEnabled),
             typeof(bool),
             typeof(TextBox),
-            new PropertyMetadata(true)
-        );
-
-        /// <summary>
-        /// Property for <see cref="ShowClearButton"/>.
-        /// </summary>
-        public static readonly DependencyProperty ShowClearButtonProperty = DependencyProperty.Register(
-            nameof(ShowClearButton),
-            typeof(bool),
-            typeof(TextBox),
             new PropertyMetadata(false)
         );
 
-        /// <summary>
-        /// Property for <see cref="IsTextSelectionEnabledProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty IsTextSelectionEnabledProperty = DependencyProperty.Register(
-            nameof(IsTextSelectionEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(false)
-        );
 
         /// <summary>
         /// Property for <see cref="TemplateButtonCommand"/>.
         /// </summary>
-        public static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
             nameof(TemplateButtonCommand),
             typeof(IRelayCommand),
             typeof(TextBox),
@@ -1037,14 +1008,6 @@ namespace System.Windows.Controls
             set => SetValue(PlaceholderTextProperty, value);
         }
 
-        /// <summary>
-        /// Gets or sets a value determining whether to display the placeholder.
-        /// </summary>
-        public bool PlaceholderEnabled
-        {
-            get => (bool)GetValue(PlaceholderEnabledProperty);
-            set => SetValue(PlaceholderEnabledProperty, value);
-        }
 
         /// <summary>
         /// Gets or sets a value determining whether to enable the clear button.
@@ -1056,27 +1019,9 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value determining whether to show the clear button when <see cref="TextBox"/> is focused.
-        /// </summary>
-        public bool ShowClearButton
-        {
-            get => (bool)GetValue(ShowClearButtonProperty);
-            protected set => SetValue(ShowClearButtonProperty, value);
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsTextSelectionEnabled
-        {
-            get => (bool)GetValue(IsTextSelectionEnabledProperty);
-            set => SetValue(IsTextSelectionEnabledProperty, value);
-        }
-
-        /// <summary>
         /// Command triggered after clicking the button.
         /// </summary>
-        public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+        internal IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
 
         #endregion
 
@@ -1087,11 +1032,18 @@ namespace System.Windows.Controls
         {
             base.OnTextChanged(e);
 
-            if (PlaceholderEnabled && Text.Length > 0)
-                PlaceholderEnabled = false;
+            if (PlaceholderText != string.Empty && Text.Length > 0)
+            {
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
+            }
+                
 
-            if (!PlaceholderEnabled && Text.Length < 1)
-                PlaceholderEnabled = true;
+            if (_placeholderText != string.Empty && Text.Length < 1)
+            {
+                PlaceholderText = _placeholderText;
+                _placeholderText = string.Empty;
+            }
 
             RevealClearButton();
         }
@@ -1115,21 +1067,23 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Reveals the clear button by <see cref="ShowClearButton"/> property.
+        /// Reveals the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
         protected void RevealClearButton()
         {
-            if (ClearButtonEnabled && IsKeyboardFocusWithin)
-                ShowClearButton = Text.Length > 0;
+            if (IsKeyboardFocusWithin)
+            {
+                ClearButtonEnabled = Text.Length > 0;
+            }
         }
 
         /// <summary>
-        /// Hides the clear button by <see cref="ShowClearButton"/> property.
+        /// Hides the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
         protected void HideClearButton()
         {
-            if (ClearButtonEnabled && !IsKeyboardFocusWithin && ShowClearButton)
-                ShowClearButton = false;
+            if (ClearButtonEnabled && !IsKeyboardFocusWithin)
+                ClearButtonEnabled = false;
         }
 
         /// <summary>
@@ -2121,6 +2075,8 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
+        private string _placeholderText;
 
         #endregion Private Fields
     }

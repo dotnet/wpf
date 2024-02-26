@@ -1069,7 +1069,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Reveals the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
-        protected void RevealClearButton()
+        internal void RevealClearButton()
         {
             if (IsKeyboardFocusWithin)
             {
@@ -1080,7 +1080,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Hides the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
-        protected void HideClearButton()
+        internal void HideClearButton()
         {
             if (ClearButtonEnabled && !IsKeyboardFocusWithin)
                 ClearButtonEnabled = false;
@@ -1089,7 +1089,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Triggered when the user clicks the clear text button.
         /// </summary>
-        protected virtual void OnClearButtonClick()
+        internal void OnClearButtonClick()
         {
             if (Text.Length > 0)
                 Text = string.Empty;
@@ -1098,9 +1098,8 @@ namespace System.Windows.Controls
         /// <summary>
         /// Triggered by clicking a button in the control template.
         /// </summary>
-        protected virtual void OnTemplateButtonClick(string parameter)
+        internal void OnTemplateButtonClick(string parameter)
         {
-
             OnClearButtonClick();
         }
         #endregion Public Properties

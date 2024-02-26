@@ -1479,13 +1479,7 @@ namespace System.Windows
 
         internal static bool isThemeDark()
         {
-            string themeKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes";
-            var currentTheme = Registry.GetValue(
-                themeKey,
-                "CurrentTheme",
-                "aero.theme"
-                ) as string
-                    ?? String.Empty;
+            var currentTheme = ThemeColorization.getNewTheme();
             
             if (currentTheme != null)
             {

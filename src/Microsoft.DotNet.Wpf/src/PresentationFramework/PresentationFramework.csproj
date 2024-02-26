@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -405,12 +404,12 @@
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
     <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" />
-    <Compile Include="System\Windows\Appearance\ObservedWindow.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
-    <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
+    <Compile Include="System\Windows\Appearance\ObservedWindow.cs" />
     <Compile Include="System\Windows\Appearance\ResourceDictionaryManager.cs" />
     <Compile Include="System\Windows\Appearance\SystemTheme.cs" />
     <Compile Include="System\Windows\Appearance\SystemThemeManager.cs" />
+    <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <Compile Include="System\Windows\ElementPlacement.cs" />
     <Compile Include="System\Windows\Controls\FallbackBrushConverter.cs" />

@@ -646,7 +646,7 @@
     <Compile Include="System\Windows\Controls\FlowDocumentReader.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentScrollViewer.cs" />
     <Compile Include="System\Windows\Controls\FluentWindow.cs" />
-    <Compile Include="System\Windows\Controls\WindowCornerPreference.cs" />
+    <!-- <Compile Include="System\Windows\Controls\WindowCornerPreference.cs" /> -->
     <Compile Include="System\Windows\Controls\Frame.cs" />
     <Compile Include="System\Windows\Controls\Grid.cs" />
     <Compile Include="System\Windows\Controls\GridSplitter.cs" />
@@ -819,7 +819,7 @@
     <Compile Include="System\Windows\Controls\ToolTip.cs" />
     <Compile Include="System\Windows\Controls\ToolTipService.cs" />
     <Compile Include="System\Windows\Controls\TreeView.cs" />
-    <Compile Include="System\Windows\Controls\TypedEventHandler.cs" />
+    <!-- <Compile Include="System\Windows\Controls\TypedEventHandler.cs" /> -->
     <Compile Include="System\Windows\Controls\TreeViewItem.cs" />
     <Compile Include="System\Windows\Controls\UIElementCollection.cs" />
     <Compile Include="System\Windows\Controls\UserControl.cs" />
@@ -1165,9 +1165,9 @@
     <Compile Include="System\Windows\Input\Command\CommandConverter.cs" />
     <Compile Include="System\Windows\Input\Command\CommandValueSerializer.cs" />
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
-    <Compile Include="System\Windows\Input\IRelayCommand.cs" />
-    <Compile Include="System\Windows\Input\RelayCommand{T}.cs" />
-    <Compile Include="System\Windows\Input\IRelayCommand{T}.cs" />
+    <!-- <Compile Include="System\Windows\Input\IRelayCommand.cs" /> -->
+    <!-- <Compile Include="System\Windows\Input\RelayCommand{T}.cs" /> -->
+    <!-- <Compile Include="System\Windows\Input\IRelayCommand{T}.cs" /> -->
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />

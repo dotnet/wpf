@@ -660,7 +660,7 @@
 
     <Color x:Key="SystemFillColorSuccess">#3D3D3D</Color>
     <Color x:Key="SystemFillColorCaution">#3D3D3D</Color>
-    <Color x:Key="SystemFillColorCritical">#F3D3D3DF0000</Color>
+    <Color x:Key="SystemFillColorCritical">#F3D3D3DF</Color>
     <Color x:Key="SystemFillColorNeutral">#3D3D3D</Color>
     <Color x:Key="SystemFillColorSolidNeutral">#FF0000</Color>
     <Color x:Key="SystemFillColorAttentionBackground">#3D3D3D</Color>

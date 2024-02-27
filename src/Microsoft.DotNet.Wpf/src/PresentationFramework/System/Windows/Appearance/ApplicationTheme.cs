@@ -8,7 +8,7 @@ namespace System.Windows.Appearance;
 /// <summary>
 /// Theme in which an application using WPF UI is displayed.
 /// </summary>
-public enum ApplicationTheme
+internal enum ApplicationTheme
 {
     /// <summary>
     /// Unknown application theme.

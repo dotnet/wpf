@@ -1180,7 +1180,6 @@
     <Compile Include="System\Windows\Localization.cs" />
     <Compile Include="System\Windows\LogicalTreeHelper.cs" />
     <Compile Include="System\Windows\LostFocusEventManager.cs" />
-    <Compile Include="System\Windows\ControlsDictionary.cs" />
     <Compile Include="System\Windows\Markup\AttributeData.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KeyRecord.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KnownTypes.cs" />

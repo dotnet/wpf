@@ -1479,7 +1479,7 @@ namespace System.Windows
 
         internal static bool isThemeDark()
         {
-            var currentTheme = ThemeColorization.getNewTheme();
+            var currentTheme = ThemeColorization.GetNewTheme();
             
             if (currentTheme != null)
             {
@@ -1491,7 +1491,7 @@ namespace System.Windows
 
         internal static bool isThemeHighContrast()
         {
-            string currentTheme = ThemeColorization.getNewTheme();
+            string currentTheme = ThemeColorization.GetNewTheme();
 
             if(currentTheme != null)
             {

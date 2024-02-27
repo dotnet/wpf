@@ -308,7 +308,7 @@ internal static class WindowBackdrop
     {
         if(Application.isThemeHighContrast()) 
         {
-            string currentTheme = ThemeColorization.getNewTheme();
+            string currentTheme = ThemeColorization.GetNewTheme();
             if(currentTheme.Contains("hc1"))
             {
                 return new SolidColorBrush(Color.FromArgb(0xFF, 0x2D, 0x32, 0x36));

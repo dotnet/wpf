@@ -1381,6 +1381,8 @@
     <Compile Include="System\Windows\SystemResourceHost.cs" />
     <Compile Include="System\Windows\SystemResourceKey.cs" />
     <Compile Include="System\Windows\SystemResources.cs" />
+    <Compile Include="System\Windows\ThemeColorization.cs" />
+    <Compile Include="System\Windows\DWMColorization.cs" />
     <Compile Include="System\Windows\SystemThemeKey.cs" />
     <Compile Include="System\Windows\TemplateBindingExpression.cs" />
     <Compile Include="System\Windows\TemplateBindingExpressionConverter.cs" />

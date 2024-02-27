@@ -2511,7 +2511,7 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Utilities.IsOSWindows11OrNewer)
+            if (Utilities.IsOSWindows11OrNewer && ThemeColorization.AppInitContainsNewTheme)
             {
                 // Initializing the application window with current system theme
                 // This is one time initialization that updates the resourcedictionary and 

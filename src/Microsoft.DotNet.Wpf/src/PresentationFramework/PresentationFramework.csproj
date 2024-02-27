@@ -405,7 +405,6 @@
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
     <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
-    <Compile Include="System\Windows\Appearance\ObservedWindow.cs" />
     <Compile Include="System\Windows\Appearance\ResourceDictionaryManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />

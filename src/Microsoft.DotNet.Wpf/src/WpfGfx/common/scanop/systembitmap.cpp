@@ -167,7 +167,7 @@ HRESULT CSystemMemoryBitmap::Lock(
 
         void *pvPixels = static_cast<BYTE*>(m_pPixels) +
             (static_cast<int>(nBitLeft) / 8) +
-            rcLock.top * static_cast<int>(m_nStride);
+            rcLock.top * m_nStride;
 
         if (nBitPosition == 0)
         {

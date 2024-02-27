@@ -32,7 +32,8 @@ namespace System.Windows.Markup
         /// </summary>
         public ArrayExtension(Type arrayType)
         {
-            Type = arrayType ?? throw new ArgumentNullException(nameof(arrayType));
+            ArgumentNullException.ThrowIfNull(arrayType);
+            Type = arrayType;
         }
 
         /// <summary>

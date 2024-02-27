@@ -41,11 +41,8 @@ namespace System.Windows
         /// <param name="scopedElement">object mapped to name</param>
         public void RegisterName(string name, object scopedElement)
         {
-            ArgumentNullException.ThrowIfNull(name);
+            ArgumentException.ThrowIfNullOrEmpty(name);
             ArgumentNullException.ThrowIfNull(scopedElement);
-
-            if (name.Length == 0)
-                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
@@ -86,10 +83,7 @@ namespace System.Windows
         /// <param name="name">name to be registered</param>
         public void UnregisterName(string name)
         {
-            ArgumentNullException.ThrowIfNull(name);
-
-            if (name.Length == 0)
-                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
+            ArgumentException.ThrowIfNullOrEmpty(name);
 
             if (_nameMap != null && _nameMap[name] != null)
             {

@@ -23,7 +23,7 @@ namespace System.Windows
     ///     TargetType property setting class.
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {
@@ -256,10 +256,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Setter setter = targetObject as Setter;
-            if (setter == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
+            ArgumentNullException.ThrowIfNull(setter, nameof(targetObject));
             ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")

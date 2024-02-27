@@ -32,7 +32,8 @@ namespace System.Windows.Markup
         /// </summary>
         public TypeExtension(string typeName)
         {
-            _typeName = typeName ?? throw new ArgumentNullException(nameof(typeName));
+            ArgumentNullException.ThrowIfNull(typeName);
+            _typeName = typeName;
         }
 
         /// <summary>
@@ -40,7 +41,8 @@ namespace System.Windows.Markup
         /// </summary>
         public TypeExtension(Type type)
         {
-            _type = type ?? throw new ArgumentNullException(nameof(type));
+            ArgumentNullException.ThrowIfNull(type);
+            _type = type;
         }
 
         /// <summary>
@@ -94,7 +96,8 @@ namespace System.Windows.Markup
             set
             {
                 // Reset the type so ProvideValue does not use the existing type.
-                _typeName = value ?? throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(value);
+                _typeName = value;
                 _type = null;
             }
         }
@@ -110,7 +113,8 @@ namespace System.Windows.Markup
             set
             {
                 // Reset the type name so ProvideValue does not use the existing type name.
-                _type = value ?? throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(value);
+                _type = value;
                 _typeName = null;
             }
         }

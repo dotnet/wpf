@@ -2079,9 +2079,6 @@ Do you want to replace it?</value>
   <data name="NameScopeInvalidIdentifierName" xml:space="preserve">
     <value>'{0}' name is not valid for identifier.</value>
   </data>
-  <data name="NameScopeNameNotEmptyString" xml:space="preserve">
-    <value>Name cannot be an empty string.</value>
-  </data>
   <data name="NameScopeNameNotFound" xml:space="preserve">
     <value>'{0}' Name is not found.</value>
   </data>
@@ -4004,9 +4001,6 @@ Do you want to replace it?</value>
   </data>
   <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
     <value>Cannot set SandboxExternalContent to true in partial trust.</value>
-  </data>
-  <data name="StringEmpty" xml:space="preserve">
-    <value>Parameter cannot be a zero-length string.</value>
   </data>
   <data name="TokenizerHelperEmptyToken" xml:space="preserve">
     <value>Empty token encountered at position {0} while parsing '{1}'.</value>

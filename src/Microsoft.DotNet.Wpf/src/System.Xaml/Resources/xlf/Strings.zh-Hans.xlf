@@ -782,11 +782,6 @@
         <target state="translated">“{0}”名称对标识符无效。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">名称不能为空字符串。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">未找到名称“{0}”。</target>
@@ -1210,16 +1205,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">可直接指定的链接地址信息只能有一个名称。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">参数不能为零长度的字符串。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">该字符串为 null 或为空。</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

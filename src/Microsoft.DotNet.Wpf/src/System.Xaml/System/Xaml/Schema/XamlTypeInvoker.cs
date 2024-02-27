@@ -37,7 +37,8 @@ namespace System.Xaml.Schema
 
         public XamlTypeInvoker(XamlType type)
         {
-            _xamlType = type ?? throw new ArgumentNullException(nameof(type));
+            ArgumentNullException.ThrowIfNull(type);
+            _xamlType = type;
         }
 
         public static XamlTypeInvoker UnknownInvoker

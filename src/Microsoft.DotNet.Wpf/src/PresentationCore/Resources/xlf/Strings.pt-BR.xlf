@@ -667,11 +667,6 @@
         <target state="translated">O objeto de dados deve ter pelo menos um formato.</target>
         <note />
       </trans-unit>
-      <trans-unit id="DataObject_EmptyFormatNotAllowed">
-        <source>Empty string is not a valid value for parameter 'format'.</source>
-        <target state="translated">A cadeia de caracteres vazia não é um valor válido para o parâmetro 'format'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">O caminho de depósito do arquivo '{0}' não é válido.</target>
@@ -2987,11 +2982,6 @@
         <target state="translated">BeginFigure deve ser chamado antes desta API.</target>
         <note />
       </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">O parâmetro não pode ser uma cadeia de caracteres de comprimento zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">O número de traços é dois.</target>
@@ -3050,11 +3040,6 @@
       <trans-unit id="Stylus_PlugInIsDuplicated">
         <source>'{0}' already exists in the collection.</source>
         <target state="translated">'{0}' já existe na coleção.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Stylus_PlugInIsNull">
-        <source>'{0}' must be non-null.</source>
-        <target state="translated">'{0}' deve ser diferente de nulo.</target>
         <note />
       </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">

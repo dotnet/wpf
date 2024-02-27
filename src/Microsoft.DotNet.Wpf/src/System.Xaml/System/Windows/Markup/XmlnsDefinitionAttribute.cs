@@ -46,8 +46,10 @@ namespace System.Windows.Markup
         /// </param>
         public XmlnsDefinitionAttribute(string xmlNamespace, string clrNamespace)
         {
-            XmlNamespace = xmlNamespace ?? throw new ArgumentNullException(nameof(xmlNamespace));
-            ClrNamespace = clrNamespace ?? throw new ArgumentNullException(nameof(clrNamespace));
+            ArgumentNullException.ThrowIfNull(xmlNamespace);
+            ArgumentNullException.ThrowIfNull(clrNamespace);
+            XmlNamespace = xmlNamespace;
+            ClrNamespace = clrNamespace;
         }
 
         /// <summary>

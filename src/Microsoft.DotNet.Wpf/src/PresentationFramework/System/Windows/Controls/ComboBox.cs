@@ -156,7 +156,24 @@ namespace System.Windows.Controls
             set { SetValue(ShouldPreserveUserEnteredPrefixProperty, BooleanBoxes.Box(value));  }
         }
 
+        /// <summary>
+        /// Property for <see cref="PlaceholderText"/>.
+        /// </summary>
+        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
+            nameof(PlaceholderText),
+            typeof(string),
+            typeof(ComboBox),
+            new PropertyMetadata(String.Empty)
+        );
 
+        /// <summary>
+        /// Gets or sets numbers pattern.
+        /// </summary>
+        public string PlaceholderText
+        {
+            get => (string)GetValue(PlaceholderTextProperty);
+            set => SetValue(PlaceholderTextProperty, value);
+        }
         private static object CoerceIsDropDownOpen(DependencyObject d, object value)
         {
             if ((bool) value)
@@ -827,6 +844,7 @@ namespace System.Windows.Controls
             if (IsEditable)
             {
                 UpdateEditableTextBox();
+                UpdatePlaceholderText();
             }
             else
             {
@@ -859,6 +877,20 @@ namespace System.Windows.Controls
             }
         }
 
+
+        private void UpdatePlaceholderText()
+        {
+            if(UpdatingText && PlaceholderText != string.Empty)
+            {
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
+            }
+            if(!UpdatingText && _placeholderText != string.Empty)
+            {
+                PlaceholderText = _placeholderText;
+                _placeholderText = string.Empty;
+            }
+        }
         /// <summary>
         /// This function updates the selected item in the "selection box".
         /// This is called when selection changes or when the combobox
@@ -883,6 +915,8 @@ namespace System.Windows.Controls
                 item = contentControl.Content;
                 itemTemplate = contentControl.ContentTemplate;
                 stringFormat = contentControl.ContentStringFormat;
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
             }
 
             if (_clonedElement != null)
@@ -2035,6 +2069,7 @@ namespace System.Windows.Controls
         private DispatcherTimer _autoScrollTimer;
         private UIElement _clonedElement;
         private DispatcherOperation _updateTextBoxOperation;
+        private string _placeholderText;
         private enum CacheBits
         {
             IsMouseOverItemsHost        = 0x01,

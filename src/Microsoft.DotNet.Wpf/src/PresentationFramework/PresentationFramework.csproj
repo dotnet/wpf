@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -405,15 +404,8 @@
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="System\ComponentModel\DesignerProperties.cs" />
     <!-- <Compile Include="System\Windows\AnimationFactorToValueConverter.cs" /> -->
-    <Compile Include="System\Windows\Appearance\ApplicationAccentColorManager.cs" />
     <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
-    <Compile Include="System\Windows\Appearance\ApplicationThemeManager.cs" />
-    <Compile Include="System\Windows\Appearance\ObservedWindow.cs" />
     <Compile Include="System\Windows\Appearance\ResourceDictionaryManager.cs" />
-    <Compile Include="System\Windows\Appearance\SystemTheme.cs" />
-    <Compile Include="System\Windows\Appearance\SystemThemeManager.cs" />
-    <Compile Include="System\Windows\Appearance\SystemThemeWatcher.cs" />
-    <Compile Include="System\Windows\Appearance\ThemeChangedEvent.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
     <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
     <!-- <Compile Include="System\Windows\ElementPlacement.cs" /> -->
@@ -1182,8 +1174,6 @@
     <Compile Include="System\Windows\Localization.cs" />
     <Compile Include="System\Windows\LogicalTreeHelper.cs" />
     <Compile Include="System\Windows\LostFocusEventManager.cs" />
-    <Compile Include="System\Windows\ControlsDictionary.cs" />
-    <Compile Include="System\Windows\ThemesDictionary.cs" />
     <Compile Include="System\Windows\Markup\AttributeData.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KeyRecord.cs" />
     <Compile Include="System\Windows\Markup\Baml2006\Baml2006KnownTypes.cs" />
@@ -1385,6 +1375,8 @@
     <Compile Include="System\Windows\SystemResourceHost.cs" />
     <Compile Include="System\Windows\SystemResourceKey.cs" />
     <Compile Include="System\Windows\SystemResources.cs" />
+    <Compile Include="System\Windows\ThemeColorization.cs" />
+    <Compile Include="System\Windows\DWMColorization.cs" />
     <Compile Include="System\Windows\SystemThemeKey.cs" />
     <Compile Include="System\Windows\TemplateBindingExpression.cs" />
     <Compile Include="System\Windows\TemplateBindingExpressionConverter.cs" />

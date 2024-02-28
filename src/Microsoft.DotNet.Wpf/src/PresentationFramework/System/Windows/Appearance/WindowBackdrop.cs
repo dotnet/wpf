@@ -21,7 +21,7 @@ internal static class WindowBackdrop
     /// Checks whether the selected backdrop type is supported on current platform.
     /// </summary>
     /// <returns><see langword="true"/> if the selected backdrop type is supported on current platform.</returns>
-    public static bool IsSupported(WindowBackdropType backdropType)
+    internal static bool IsSupported(WindowBackdropType backdropType)
     {
         return backdropType switch
         {
@@ -39,7 +39,7 @@ internal static class WindowBackdrop
     /// </summary>
     /// <param name="window">Selected window.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    public static bool ApplyBackdrop(System.Windows.Window window, WindowBackdropType backdropType)
+    internal static bool ApplyBackdrop(System.Windows.Window window, WindowBackdropType backdropType)
     {
         if (window is null)
         {
@@ -79,7 +79,7 @@ internal static class WindowBackdrop
     /// </summary>
     /// <param name="hWnd">Window handle.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    public static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
+    internal static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -91,7 +91,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark)
+        if (Application.isThemeDark())
         {
             _ = UnsafeNativeMethodsWindow.ApplyWindowDarkMode(hWnd);
         }
@@ -136,7 +136,7 @@ internal static class WindowBackdrop
     /// Tries to remove backdrop effects if they have been applied to the <see cref="Window"/>.
     /// </summary>
     /// <param name="window">The window from which the effect should be removed.</param>
-    public static bool RemoveBackdrop(System.Windows.Window window)
+    internal static bool RemoveBackdrop(System.Windows.Window window)
     {
         if (window is null)
         {
@@ -152,7 +152,7 @@ internal static class WindowBackdrop
     /// Tries to remove all effects if they have been applied to the <c>hWnd</c>.
     /// </summary>
     /// <param name="hWnd">Pointer to the window handle.</param>
-    public static bool RemoveBackdrop(IntPtr hWnd)
+    internal static bool RemoveBackdrop(IntPtr hWnd)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -196,7 +196,7 @@ internal static class WindowBackdrop
     /// </summary>
     /// <param name="window">Window to manipulate.</param>
     /// <returns><see langword="true"/> if operation was successful.</returns>
-    public static bool RemoveBackground(System.Windows.Window window)
+    internal static bool RemoveBackground(System.Windows.Window window)
     {
         if (window is null)
         {
@@ -306,22 +306,27 @@ internal static class WindowBackdrop
 
     private static Brush GetFallbackBackgroundBrush()
     {
-        if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.HighContrast)
+        if(Application.isThemeHighContrast()) 
         {
-            switch (ApplicationThemeManager.GetSystemTheme())
+            string currentTheme = ThemeColorization.GetNewTheme();
+            if(currentTheme.Contains("hc1"))
             {
-                case SystemTheme.HC1:
-                    return new SolidColorBrush(Color.FromArgb(0xFF, 0x2D, 0x32, 0x36));
-                case SystemTheme.HC2:
-                    return new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));
-                case SystemTheme.HCBlack:
-                    return new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
-                case SystemTheme.HCWhite:
-                default:
-                    return new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFA, 0xEF));
+                return new SolidColorBrush(Color.FromArgb(0xFF, 0x2D, 0x32, 0x36));
+            }
+            else if(currentTheme.Contains("hc2"))
+            {
+                return new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));
+            }
+            else if(currentTheme.Contains("hcblack"))
+            {
+                return new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
+            }
+            else
+            {
+                return new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFA, 0xEF));
             }
         }
-        else if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Dark)
+        if(Application.isThemeDark())
         {
             return new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
         }

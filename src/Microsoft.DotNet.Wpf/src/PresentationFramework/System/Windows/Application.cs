@@ -1477,6 +1477,30 @@ namespace System.Windows
             }
         }
 
+        internal static bool isThemeDark()
+        {
+            var currentTheme = ThemeColorization.GetNewTheme();
+            
+            if (currentTheme != null)
+            {
+                return currentTheme.Contains("dark.theme");
+            }
+
+            return false;
+        }
+
+        internal static bool isThemeHighContrast()
+        {
+            string currentTheme = ThemeColorization.GetNewTheme();
+
+            if(currentTheme != null)
+            {
+                return currentTheme.Contains("hc");
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Application Startup.

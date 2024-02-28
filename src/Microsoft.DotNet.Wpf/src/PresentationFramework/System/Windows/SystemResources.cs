@@ -28,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Resources;
+using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -53,7 +54,6 @@ namespace System.Windows
         // ------------------------------------------------
 
         #region Methods
-
         /// <summary>
         ///     Returns a resource for the given key type from the system resources collection.
         /// </summary>
@@ -1412,6 +1412,20 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
+                    
+                    if(ThemeColorization.AppInitContainsNewTheme)
+                    {
+                        string currentApplicationTheme = ThemeColorization.CurrentApplicationTheme;
+                        string themeToApply = ThemeColorization.GetNewTheme();
+                        Color currentApplicationAccentColor = DWMColorization.CurrentApplicationAccentColor;
+                        Color accentColorToApply = DWMColorization.GetNewAccentColor();
+
+                        if (themeToApply != currentApplicationTheme || accentColorToApply != currentApplicationAccentColor)
+                        {
+                            DWMColorization.ApplyAccentColors();
+                            ThemeColorization.ApplyTheme();
+                        }
+                    }
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:
@@ -2028,7 +2042,23 @@ namespace System.Windows
         #endregion Properties
     }
 
+    internal struct ByteColor
+    {
+        internal byte A { get; set; }
+        internal byte R { get; set; }
+        internal byte G { get; set; }
+        internal byte B { get; set; }
+
+        internal ByteColor(byte a, byte r, byte g, byte b)
+        {
+            A = a;
+            R = r;
+            G = g;
+            B = b;
+        }
+    }
 }
+
 
 
 

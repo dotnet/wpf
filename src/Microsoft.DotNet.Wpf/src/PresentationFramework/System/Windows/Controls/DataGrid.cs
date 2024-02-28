@@ -143,7 +143,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// A style to apply to all checkbox column in the DataGrid
         /// </summary>
-        public Style CheckBoxColumnElementStyle
+        internal Style CheckBoxColumnElementStyle
         {
             get => (Style)GetValue(CheckBoxColumnElementStyleProperty);
             set => SetValue(CheckBoxColumnElementStyleProperty, value);
@@ -152,7 +152,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// A style to apply to all checkbox column in the DataGrid
         /// </summary>
-        public Style CheckBoxColumnEditingElementStyle
+        internal Style CheckBoxColumnEditingElementStyle
         {
             get => (Style)GetValue(CheckBoxColumnEditingElementStyleProperty);
             set => SetValue(CheckBoxColumnEditingElementStyleProperty, value);
@@ -161,7 +161,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// The DependencyProperty that represents the <see cref="CheckBoxColumnElementStyle"/> property.
         /// </summary>
-        public static readonly DependencyProperty CheckBoxColumnElementStyleProperty =
+        internal static readonly DependencyProperty CheckBoxColumnElementStyleProperty =
             DependencyProperty.Register(
                 nameof(CheckBoxColumnElementStyle),
                 typeof(Style),
@@ -172,7 +172,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// The DependencyProperty that represents the <see cref="CheckBoxColumnEditingElementStyle"/> property.
         /// </summary>
-        public static readonly DependencyProperty CheckBoxColumnEditingElementStyleProperty =
+        internal static readonly DependencyProperty CheckBoxColumnEditingElementStyleProperty =
             DependencyProperty.Register(
                 nameof(CheckBoxColumnEditingElementStyle),
                 typeof(Style),

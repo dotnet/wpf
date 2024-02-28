@@ -929,8 +929,12 @@
         x:Key="DefaultUiDataGridStyle"
         BasedOn="{StaticResource DefaultDataGridStyle}"
         TargetType="{x:Type DataGrid}">
-        <Setter Property="CheckBoxColumnEditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
-        <Setter Property="CheckBoxColumnElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
+        
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCheckBoxColumn}">
+        <Setter Property="ElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
+        <Setter Property="EditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
     </Style>
 
     <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />

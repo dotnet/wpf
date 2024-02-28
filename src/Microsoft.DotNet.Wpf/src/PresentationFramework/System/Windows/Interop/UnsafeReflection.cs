@@ -35,14 +35,14 @@ internal static class UnsafeReflection
     /// <summary>
     /// Casts <see cref="WindowCornerPreference"/> to <see cref="Dwmapi.DWM_WINDOW_CORNER_PREFERENCE"/>.
     /// </summary>
-    public static Dwmapi.DWM_WINDOW_CORNER_PREFERENCE Cast(WindowCornerPreference cornerPreference)
-    {
-        return cornerPreference switch
-        {
-            WindowCornerPreference.Round => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.ROUND,
-            WindowCornerPreference.RoundSmall => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.ROUNDSMALL,
-            WindowCornerPreference.DoNotRound => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.DONOTROUND,
-            _ => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.DEFAULT
-        };
-    }
+    // public static Dwmapi.DWM_WINDOW_CORNER_PREFERENCE Cast(WindowCornerPreference cornerPreference)
+    // {
+    //     return cornerPreference switch
+    //     {
+    //         WindowCornerPreference.Round => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.ROUND,
+    //         WindowCornerPreference.RoundSmall => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.ROUNDSMALL,
+    //         WindowCornerPreference.DoNotRound => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.DONOTROUND,
+    //         _ => Dwmapi.DWM_WINDOW_CORNER_PREFERENCE.DEFAULT
+    //     };
+    // }
 }

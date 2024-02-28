@@ -15,6 +15,23 @@ namespace System.Windows.Controls;
 public class TitleBarButton : Button
 {
     /// <summary>
+    ///     DependencyProperty for MouseOverBackground property.
+    /// </summary>
+    public static readonly DependencyProperty MouseOverBackgroundProperty = DependencyProperty.Register(
+        nameof(MouseOverBackground),
+        typeof(Brush),
+        typeof(Button),
+        new PropertyMetadata(Border.BackgroundProperty.DefaultMetadata.DefaultValue)
+    );
+
+    public Brush MouseOverBackground
+    {
+        get => (Brush)GetValue(MouseOverBackgroundProperty);
+        set => SetValue(MouseOverBackgroundProperty, value);
+    }
+
+
+    /// <summary>
     /// Property for <see cref="ButtonType"/>.
     /// </summary>
     public static readonly DependencyProperty ButtonTypeProperty = DependencyProperty.Register(

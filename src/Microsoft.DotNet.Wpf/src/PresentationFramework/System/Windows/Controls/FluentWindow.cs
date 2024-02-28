@@ -30,12 +30,12 @@ public class FluentWindow : System.Windows.Window
     /// <summary>
     /// Property for <see cref="WindowCornerPreference"/>.
     /// </summary>
-    public static readonly DependencyProperty WindowCornerPreferenceProperty = DependencyProperty.Register(
-        nameof(WindowCornerPreference),
-        typeof(WindowCornerPreference),
-        typeof(FluentWindow),
-        new PropertyMetadata(WindowCornerPreference.Round, OnCornerPreferenceChanged)
-    );
+    // public static readonly DependencyProperty WindowCornerPreferenceProperty = DependencyProperty.Register(
+    //     nameof(WindowCornerPreference),
+    //     typeof(WindowCornerPreference),
+    //     typeof(FluentWindow),
+    //     new PropertyMetadata(WindowCornerPreference.Round, OnCornerPreferenceChanged)
+    // );
 
     /// <summary>
     /// Property for <see cref="WindowBackdropType"/>.
@@ -61,11 +61,11 @@ public class FluentWindow : System.Windows.Window
     /// <summary>
     /// Gets or sets a value determining corner preference for current <see cref="Window"/>.
     /// </summary>
-    public System.Windows.Controls.WindowCornerPreference WindowCornerPreference
-    {
-        get => (WindowCornerPreference)GetValue(WindowCornerPreferenceProperty);
-        set => SetValue(WindowCornerPreferenceProperty, value);
-    }
+    // public System.Windows.Controls.WindowCornerPreference WindowCornerPreference
+    // {
+    //     get => (WindowCornerPreference)GetValue(WindowCornerPreferenceProperty);
+    //     set => SetValue(WindowCornerPreferenceProperty, value);
+    // }
 
     /// <summary>
     /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
@@ -107,7 +107,7 @@ public class FluentWindow : System.Windows.Window
     /// <inheritdoc />
     protected override void OnSourceInitialized(EventArgs e)
     {
-        OnCornerPreferenceChanged(default, WindowCornerPreference);
+        // OnCornerPreferenceChanged(default, WindowCornerPreference);
         OnExtendsContentIntoTitleBarChanged(default, ExtendsContentIntoTitleBar);
         OnBackdropTypeChanged(default, WindowBackdropType);
 
@@ -117,33 +117,33 @@ public class FluentWindow : System.Windows.Window
     /// <summary>
     /// Private <see cref="WindowCornerPreference"/> property callback.
     /// </summary>
-    private static void OnCornerPreferenceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        if (d is not FluentWindow window)
-            return;
+    // private static void OnCornerPreferenceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    // {
+    //     if (d is not FluentWindow window)
+    //         return;
 
-        if (e.OldValue == e.NewValue)
-            return;
+    //     if (e.OldValue == e.NewValue)
+    //         return;
 
-        window.OnCornerPreferenceChanged(
-            (WindowCornerPreference)e.OldValue,
-            (WindowCornerPreference)e.NewValue
-        );
-    }
+    //     window.OnCornerPreferenceChanged(
+    //         (WindowCornerPreference)e.OldValue,
+    //         (WindowCornerPreference)e.NewValue
+    //     );
+    // }
 
     /// <summary>
     /// This virtual method is called when <see cref="WindowCornerPreference"/> is changed.
     /// </summary>
-    protected virtual void OnCornerPreferenceChanged(
-        WindowCornerPreference oldValue,
-        WindowCornerPreference newValue
-    )
-    {
-        if (InteropHelper.Handle == IntPtr.Zero)
-            return;
+    // protected virtual void OnCornerPreferenceChanged(
+    //     WindowCornerPreference oldValue,
+    //     WindowCornerPreference newValue
+    // )
+    // {
+    //     if (InteropHelper.Handle == IntPtr.Zero)
+    //         return;
 
-        UnsafeNativeMethodsWindow.ApplyWindowCornerPreference(InteropHelper.Handle, newValue);
-    }
+    //     UnsafeNativeMethodsWindow.ApplyWindowCornerPreference(InteropHelper.Handle, newValue);
+    // }
 
     /// <summary>
     /// Private <see cref="WindowBackdropType"/> property callback.

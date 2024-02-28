@@ -24,6 +24,7 @@
     <Thickness x:Key="ComboBoxItemContentMargin">10,8,8,8</Thickness>
     <system:Double x:Key="ComboBoxChevronSize">11.0</system:Double>
     <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
+    <system:String x:Key="ComboBoxChevronDownGlyph">&#xE70D;</system:String>    
 
     <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Focus by parent element  -->
@@ -213,18 +214,19 @@
                                             TextElement.Foreground="{TemplateBinding Foreground}" />
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="{StaticResource ComboBoxChevronMargin}">
-                                        <controls:SymbolIcon
+                                        <FontIcon
                                             x:Name="ChevronIcon"
                                             Margin="0"
                                             VerticalAlignment="Center"
                                             FontSize="{StaticResource ComboBoxChevronSize}"
                                             Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"
                                             RenderTransformOrigin="0.5, 0.5"
-                                            Symbol="ChevronDown24">
-                                            <controls:SymbolIcon.RenderTransform>
+                                            FontFamily="Segoe Fluent Icons"
+                                            Glyph="{StaticResource ComboBoxChevronDownGlyph}">
+                                            <FontIcon.RenderTransform>
                                                 <RotateTransform Angle="0" />
-                                            </controls:SymbolIcon.RenderTransform>
-                                        </controls:SymbolIcon>
+                                            </FontIcon.RenderTransform>
+                                        </FontIcon>
                                     </Grid>
                                     <Grid
                                         Grid.Column="0"
@@ -310,7 +312,7 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="ChevronIcon"
-                                            Storyboard.TargetProperty="(controls:SymbolIcon.RenderTransform).(RotateTransform.Angle)"
+                                            Storyboard.TargetProperty="(FontIcon.RenderTransform).(RotateTransform.Angle)"
                                             From="0"
                                             To="180"
                                             Duration="00:00:00.167" />
@@ -332,7 +334,7 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="ChevronIcon"
-                                            Storyboard.TargetProperty="(controls:SymbolIcon.RenderTransform).(RotateTransform.Angle)"
+                                            Storyboard.TargetProperty="(FontIcon.RenderTransform).(RotateTransform.Angle)"
                                             From="180"
                                             To="0"
                                             Duration="00:00:00.167" />

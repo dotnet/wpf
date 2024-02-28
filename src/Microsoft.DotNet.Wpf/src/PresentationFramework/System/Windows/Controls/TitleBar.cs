@@ -12,6 +12,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using MS.Internal.Commands;
 
 // ReSharper disable once CheckNamespace
 namespace System.Windows.Controls;
@@ -182,52 +183,52 @@ public class TitleBar : System.Windows.Controls.Control
             new PropertyMetadata(false)
         );
 
-    /// <summary>
-    /// Routed event for <see cref="CloseClicked"/>.
-    /// </summary>
-    public static readonly RoutedEvent CloseClickedEvent = EventManager.RegisterRoutedEvent(
-        nameof(CloseClicked),
-        RoutingStrategy.Bubble,
-        typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
-        typeof(TitleBar)
-    );
+    // /// <summary>
+    // /// Routed event for <see cref="CloseClicked"/>.
+    // /// </summary>
+    // public static readonly RoutedEvent CloseClickedEvent = EventManager.RegisterRoutedEvent(
+    //     nameof(CloseClicked),
+    //     RoutingStrategy.Bubble,
+    //     typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
+    //     typeof(TitleBar)
+    // );
 
-    /// <summary>
-    /// Routed event for <see cref="MaximizeClicked"/>.
-    /// </summary>
-    public static readonly RoutedEvent MaximizeClickedEvent = EventManager.RegisterRoutedEvent(
-        nameof(MaximizeClicked),
-        RoutingStrategy.Bubble,
-        typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
-        typeof(TitleBar)
-    );
+    // /// <summary>
+    // /// Routed event for <see cref="MaximizeClicked"/>.
+    // /// </summary>
+    // public static readonly RoutedEvent MaximizeClickedEvent = EventManager.RegisterRoutedEvent(
+    //     nameof(MaximizeClicked),
+    //     RoutingStrategy.Bubble,
+    //     typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
+    //     typeof(TitleBar)
+    // );
 
-    /// <summary>
-    /// Routed event for <see cref="MinimizeClicked"/>.
-    /// </summary>
-    public static readonly RoutedEvent MinimizeClickedEvent = EventManager.RegisterRoutedEvent(
-        nameof(MinimizeClicked),
-        RoutingStrategy.Bubble,
-        typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
-        typeof(TitleBar)
-    );
+    // /// <summary>
+    // /// Routed event for <see cref="MinimizeClicked"/>.
+    // /// </summary>
+    // public static readonly RoutedEvent MinimizeClickedEvent = EventManager.RegisterRoutedEvent(
+    //     nameof(MinimizeClicked),
+    //     RoutingStrategy.Bubble,
+    //     typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
+    //     typeof(TitleBar)
+    // );
 
-    /// <summary>
-    /// Routed event for <see cref="HelpClicked"/>.
-    /// </summary>
-    public static readonly RoutedEvent HelpClickedEvent = EventManager.RegisterRoutedEvent(
-        nameof(HelpClicked),
-        RoutingStrategy.Bubble,
-        typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
-        typeof(TitleBar)
-    );
+    // /// <summary>
+    // /// Routed event for <see cref="HelpClicked"/>.
+    // /// </summary>
+    // public static readonly RoutedEvent HelpClickedEvent = EventManager.RegisterRoutedEvent(
+    //     nameof(HelpClicked),
+    //     RoutingStrategy.Bubble,
+    //     typeof(TypedEventHandler<TitleBar, RoutedEventArgs>),
+    //     typeof(TitleBar)
+    // );
 
     /// <summary>
     /// Property for <see cref="TemplateButtonCommand"/>.
     /// </summary>
     public static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
         nameof(TemplateButtonCommand),
-        typeof(IRelayCommand),
+        typeof(RoutedCommand),
         typeof(TitleBar),
         new PropertyMetadata(null)
     );
@@ -365,43 +366,43 @@ public class TitleBar : System.Windows.Controls.Control
     /// <summary>
     /// Event triggered after clicking close button.
     /// </summary>
-    public event TypedEventHandler<TitleBar, RoutedEventArgs> CloseClicked
-    {
-        add => AddHandler(CloseClickedEvent, value);
-        remove => RemoveHandler(CloseClickedEvent, value);
-    }
+    // public event TypedEventHandler<TitleBar, RoutedEventArgs> CloseClicked
+    // {
+    //     add => AddHandler(CloseClickedEvent, value);
+    //     remove => RemoveHandler(CloseClickedEvent, value);
+    // }
 
-    /// <summary>
-    /// Event triggered after clicking maximize or restore button.
-    /// </summary>
-    public event TypedEventHandler<TitleBar, RoutedEventArgs> MaximizeClicked
-    {
-        add => AddHandler(MaximizeClickedEvent, value);
-        remove => RemoveHandler(MaximizeClickedEvent, value);
-    }
+    // /// <summary>
+    // /// Event triggered after clicking maximize or restore button.
+    // /// </summary>
+    // public event TypedEventHandler<TitleBar, RoutedEventArgs> MaximizeClicked
+    // {
+    //     add => AddHandler(MaximizeClickedEvent, value);
+    //     remove => RemoveHandler(MaximizeClickedEvent, value);
+    // }
 
-    /// <summary>
-    /// Event triggered after clicking minimize button.
-    /// </summary>
-    public event TypedEventHandler<TitleBar, RoutedEventArgs> MinimizeClicked
-    {
-        add => AddHandler(MinimizeClickedEvent, value);
-        remove => RemoveHandler(MinimizeClickedEvent, value);
-    }
+    // /// <summary>
+    // /// Event triggered after clicking minimize button.
+    // /// </summary>
+    // public event TypedEventHandler<TitleBar, RoutedEventArgs> MinimizeClicked
+    // {
+    //     add => AddHandler(MinimizeClickedEvent, value);
+    //     remove => RemoveHandler(MinimizeClickedEvent, value);
+    // }
 
-    /// <summary>
-    /// Event triggered after clicking help button
-    /// </summary>
-    public event TypedEventHandler<TitleBar, RoutedEventArgs> HelpClicked
-    {
-        add => AddHandler(HelpClickedEvent, value);
-        remove => RemoveHandler(HelpClickedEvent, value);
-    }
+    // /// <summary>
+    // /// Event triggered after clicking help button
+    // /// </summary>
+    // public event TypedEventHandler<TitleBar, RoutedEventArgs> HelpClicked
+    // {
+    //     add => AddHandler(HelpClickedEvent, value);
+    //     remove => RemoveHandler(HelpClickedEvent, value);
+    // }
 
     /// <summary>
     /// Command triggered after clicking the titlebar button.
     /// </summary>
-    public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+    public RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
 
     /// <summary>
     /// Lets you override the behavior of the Maximize/Restore button with an <see cref="Action"/>.
@@ -420,15 +421,33 @@ public class TitleBar : System.Windows.Controls.Control
     private System.Windows.Controls.ContentPresenter _icon = null!;
     private readonly TitleBarButton[] _buttons = new TitleBarButton[4];
 
+    static TitleBar()
+    {
+        CommandHelpers.RegisterCommandHandler(typeof(TitleBar), TitleBar.TitleBarButtonCommand, OnTitleBarButtonCommand);
+    }
+
     /// <summary>
     /// Creates a new instance of the class and sets the default <see cref="FrameworkElement.Loaded"/> event.
     /// </summary>
     public TitleBar()
     {
-        SetValue(TemplateButtonCommandProperty, new RelayCommand<TitleBarButtonType>(OnTemplateButtonClick));
+        SetValue(TemplateButtonCommandProperty, TitleBarButtonCommand);
 
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
+    }
+
+    internal static readonly RoutedCommand TitleBarButtonCommand = new RoutedCommand("TitleBarButtonClick", typeof(TitleBar));
+
+    private static void OnTitleBarButtonCommand(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (sender is not TitleBar titleBar)
+            return;
+
+        if (e.Parameter is not TitleBarButtonType buttonType)
+            return;
+
+        titleBar.OnTemplateButtonClick(buttonType);
     }
 
     /// <inheritdoc />
@@ -567,22 +586,22 @@ public class TitleBar : System.Windows.Controls.Control
         {
             case TitleBarButtonType.Maximize
             or TitleBarButtonType.Restore:
-                RaiseEvent(new RoutedEventArgs(MaximizeClickedEvent, this));
+                // RaiseEvent(new RoutedEventArgs(MaximizeClickedEvent, this));
                 MaximizeWindow();
                 break;
 
             case TitleBarButtonType.Close:
-                RaiseEvent(new RoutedEventArgs(CloseClickedEvent, this));
+                // RaiseEvent(new RoutedEventArgs(CloseClickedEvent, this));
                 CloseWindow();
                 break;
 
             case TitleBarButtonType.Minimize:
-                RaiseEvent(new RoutedEventArgs(MinimizeClickedEvent, this));
+                // RaiseEvent(new RoutedEventArgs(MinimizeClickedEvent, this));
                 MinimizeWindow();
                 break;
 
             case TitleBarButtonType.Help:
-                RaiseEvent(new RoutedEventArgs(HelpClickedEvent, this));
+                // RaiseEvent(new RoutedEventArgs(HelpClickedEvent, this));
                 break;
         }
     }

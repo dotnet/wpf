@@ -12,6 +12,7 @@
 // If you have suggestions for the code below, please submit your changes there.
 // https://github.com/lepoco/nativemethods
 
+using Standard;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 // ReSharper disable InconsistentNaming
@@ -763,9 +764,9 @@ internal static class User32
         public int length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
         public int flags;
         public SW showCmd;
-        public WinDef.POINT ptMinPosition;
-        public WinDef.POINT ptMaxPosition;
-        public WinDef.RECT rcNormalPosition;
+        public POINT ptMinPosition;
+        public POINT ptMaxPosition;
+        public RECT rcNormalPosition;
     }
 
     /// <summary>
@@ -1445,11 +1446,11 @@ internal static class User32
     /// <summary>
     /// Retrieves the position of the mouse cursor, in screen coordinates.
     /// </summary>
-    /// <param name="lpPoint">A pointer to a <see cref="WinDef.POINT"/> structure that receives the screen coordinates of the cursor.</param>
+    /// <param name="lpPoint">A pointer to a <see cref="POINT"/> structure that receives the screen coordinates of the cursor.</param>
     /// <returns>Returns nonzero if successful or zero otherwise. To get extended error information, call <see cref="Kernel32.GetLastError"/>.</returns>
     [DllImport(Libraries.User32, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool GetCursorPos([Out] out WinDef.POINT lpPoint);
+    public static extern bool GetCursorPos([Out] out POINT lpPoint);
 
     /// <summary>
     ///
@@ -1459,7 +1460,7 @@ internal static class User32
     /// <param name="rc2"></param>
     /// <returns></returns>
     [DllImport(Libraries.User32)]
-    public static extern bool UnionRect(out WinDef.RECT rcDst, ref WinDef.RECT rc1, ref WinDef.RECT rc2);
+    public static extern bool UnionRect(out RECT rcDst, ref RECT rc1, ref RECT rc2);
 
     /// <summary>
     ///
@@ -1469,7 +1470,7 @@ internal static class User32
     /// <param name="rc2"></param>
     /// <returns></returns>
     [DllImport(Libraries.User32, SetLastError = true)]
-    public static extern bool IntersectRect(ref WinDef.RECT rcDest, ref WinDef.RECT rc1, ref WinDef.RECT rc2);
+    public static extern bool IntersectRect(ref RECT rcDest, ref RECT rc1, ref RECT rc2);
 
     /// <summary>
     ///

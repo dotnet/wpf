@@ -18,6 +18,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:PresentationFramework.Win11.Controls"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <!--
@@ -39,6 +40,9 @@
     <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
     <Color x:Key="ControlPressedColor">#FF211AA9</Color>
     <Color x:Key="GlyphColor">#FF444444</Color>
+
+    <system:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</system:String>
+    <system:String x:Key="CheckBoxIndeterminateGlyph">&#xE9AE;</system:String>
 
     <LinearGradientBrush x:Key="MenuPopupBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Offset="0" Color="{DynamicResource ControlLightColor}" />
@@ -127,7 +131,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -138,7 +142,6 @@
                         VerticalAlignment="{TemplateBinding VerticalAlignment}"
                         Background="Transparent"
                         BorderBrush="Transparent"
-                        BorderThickness="0"
                         SnapsToDevicePixels="True">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
@@ -160,6 +163,16 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource DataGridRowSelectedBackgroundThemeBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectedForegroundThemeBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource {x:Static DataGrid.FocusBorderBrushKey}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -573,14 +586,15 @@
 
                             <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
 
-                            <SymbolIcon
+                            <FontIcon
                                 x:Name="SortIcon"
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="12"
                                 Opacity="0"
-                                Symbol="TextSortAscending24" />
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xE8CB;" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SortStates">
@@ -669,8 +683,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding Border.CornerRadius}"
                         SnapsToDevicePixels="True">
-                        <PassiveScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
-                            <PassiveScrollViewer.Template>
+                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
+                            <ScrollViewer.Template>
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -732,9 +746,9 @@
                                         </Grid>
                                     </Grid>
                                 </ControlTemplate>
-                            </PassiveScrollViewer.Template>
+                            </ScrollViewer.Template>
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </PassiveScrollViewer>
+                        </ScrollViewer>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Disabled">
@@ -758,7 +772,7 @@
         </Style.Triggers>
     </Style>
 
-    <FallbackBrushConverter x:Key="FallbackBrushConverter" />
+    <controls:FallbackBrushConverter x:Key="FallbackBrushConverter" />
 
     <Color x:Key="FallbackColor">#FFFF0000</Color>
 
@@ -815,19 +829,20 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                                 <Grid>
-                                    <SymbolIcon
+                                    <FontIcon
                                         x:Name="ControlIcon"
                                         Margin="0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource CheckBoxIconSize}"
                                         FontWeight="Bold"
-                                        Symbol="Checkmark48"
+                                        FontFamily="Segoe Fluent Icons"
+                                        Glyph="{StaticResource CheckBoxCheckedGlyph}"
                                         Visibility="Collapsed">
-                                        <SymbolIcon.Foreground>
+                                        <FontIcon.Foreground>
                                             <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
-                                        </SymbolIcon.Foreground>
-                                    </SymbolIcon>
+                                        </FontIcon.Foreground>
+                                    </FontIcon>
                                 </Grid>
                             </Border>
                         </BulletDecorator.Bullet>
@@ -846,7 +861,7 @@
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="0" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Symbol" Value="Subtract16" />
+                            <Setter TargetName="ControlIcon" Property="Glyph" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background">
                                 <Setter.Value>
@@ -914,8 +929,12 @@
         x:Key="DefaultUiDataGridStyle"
         BasedOn="{StaticResource DefaultDataGridStyle}"
         TargetType="{x:Type DataGrid}">
-        <Setter Property="CheckBoxColumnEditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
-        <Setter Property="CheckBoxColumnElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
+        
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCheckBoxColumn}">
+        <Setter Property="ElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
+        <Setter Property="EditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
     </Style>
 
     <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />

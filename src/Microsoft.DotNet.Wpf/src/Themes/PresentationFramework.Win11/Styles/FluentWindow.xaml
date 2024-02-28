@@ -11,7 +11,7 @@
     xmlns:controls="clr-namespace:PresentationFramework.Win11.Controls"
 >
 
-    <Style
+    <!-- <Style
         x:Key="DefaultFluentWindowStyle"
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="{x:Type FluentWindow}">
@@ -38,14 +38,14 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter x:Name="ContentPresenter" />
                         </controls:ClientAreaBorder>
+                            <ContentPresenter x:Name="ContentPresenter" />
                     </AdornerDecorator>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultFluentWindowStyle}" TargetType="{x:Type FluentWindow}" />
+    <Style BasedOn="{StaticResource DefaultFluentWindowStyle}" TargetType="{x:Type FluentWindow}" /> -->
 
 </ResourceDictionary>

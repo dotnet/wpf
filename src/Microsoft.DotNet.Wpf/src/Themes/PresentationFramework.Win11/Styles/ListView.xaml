@@ -32,13 +32,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
                     <Grid>
-                        <PassiveScrollViewer
+                        <ScrollViewer
                             x:Name="PART_ContentHost"
                             CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter />
-                        </PassiveScrollViewer>
+                        </ScrollViewer>
                         <Rectangle
                             x:Name="PART_DisabledVisual"
                             Opacity="0"

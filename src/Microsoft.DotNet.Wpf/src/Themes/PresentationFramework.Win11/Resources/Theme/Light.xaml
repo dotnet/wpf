@@ -425,7 +425,8 @@
     <SolidColorBrush x:Key="ContextMenuForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  DataGrid  -->
-    <!--  TODO  -->
+    <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
 
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -495,8 +496,10 @@
 
     <!--  Menu  -->
     <SolidColorBrush x:Key="MenuBarBackground" Color="{StaticResource SubtleFillColorTransparent}" />
+    <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource ControlAltFillColorTertiary}" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SubtleFillColorTertiary}" />
 
     <!--  MessageDialog  -->
     <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SolidBackgroundFillColorBase}" />
@@ -549,6 +552,17 @@
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{DynamicResource SystemAccentColorPrimary}" />
+
+    <!-- RepeatButton -->
+    <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="{StaticResource ControlFillColorTertiary}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!--  Separator  -->
     <SolidColorBrush x:Key="SeparatorBorderBrush" Color="{StaticResource DividerStrokeColorDefault}" />

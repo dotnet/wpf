@@ -76,6 +76,9 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+        
+            // CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand);
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -98,9 +101,10 @@ namespace System.Windows.Controls
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
 
-            SetValue(TemplateButtonCommandProperty, new RelayCommand<string>(OnTemplateButtonClick));
-    
+            SetValue(TemplateButtonCommandProperty, ClearCommand);    
         }
+
+        internal static readonly RoutedCommand ClearCommand = new RoutedCommand("Clear", typeof(TextBox));
 
         #endregion Constructors
 
@@ -965,27 +969,6 @@ namespace System.Windows.Controls
                 return new Typography(this);
             }
         }
-        
-        /// <summary>
-        /// Property for <see cref="Icon"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Icon),
-            typeof(IconElement),
-            typeof(TextBox),
-            new PropertyMetadata(null, null, IconSourceElementConverter.ConvertToIconElement)
-        );
-
-        /// <summary>
-        /// Property for <see cref="IconPlacement"/>.
-        /// </summary>
-        public static readonly DependencyProperty IconPlacementProperty = DependencyProperty.Register(
-            nameof(IconPlacement),
-            typeof(ElementPlacement),
-            typeof(TextBox),
-            new PropertyMetadata(ElementPlacement.Left)
-        );
-
         /// <summary>
         /// Property for <see cref="PlaceholderText"/>.
         /// </summary>
@@ -996,75 +979,29 @@ namespace System.Windows.Controls
             new PropertyMetadata(String.Empty)
         );
 
-        /// <summary>
-        /// Property for <see cref="PlaceholderEnabled"/>.
-        /// </summary>
-        public static readonly DependencyProperty PlaceholderEnabledProperty = DependencyProperty.Register(
-            nameof(PlaceholderEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(true)
-        );
 
         /// <summary>
         /// Property for <see cref="ClearButtonEnabled"/>.
         /// </summary>
-        public static readonly DependencyProperty ClearButtonEnabledProperty = DependencyProperty.Register(
+        internal static readonly DependencyProperty ClearButtonEnabledProperty = DependencyProperty.Register(
             nameof(ClearButtonEnabled),
             typeof(bool),
             typeof(TextBox),
-            new PropertyMetadata(true)
-        );
-
-        /// <summary>
-        /// Property for <see cref="ShowClearButton"/>.
-        /// </summary>
-        public static readonly DependencyProperty ShowClearButtonProperty = DependencyProperty.Register(
-            nameof(ShowClearButton),
-            typeof(bool),
-            typeof(TextBox),
             new PropertyMetadata(false)
         );
 
-        /// <summary>
-        /// Property for <see cref="IsTextSelectionEnabledProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty IsTextSelectionEnabledProperty = DependencyProperty.Register(
-            nameof(IsTextSelectionEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(false)
-        );
 
         /// <summary>
         /// Property for <see cref="TemplateButtonCommand"/>.
         /// </summary>
-        public static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
             nameof(TemplateButtonCommand),
-            typeof(IRelayCommand),
+            typeof(RoutedCommand),
             typeof(TextBox),
             new PropertyMetadata(null)
         );
 
         #region Properties
-
-        /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Defines which side the icon should be placed on.
-        /// </summary>
-        public ElementPlacement IconPlacement
-        {
-            get => (ElementPlacement)GetValue(IconPlacementProperty);
-            set => SetValue(IconPlacementProperty, value);
-        }
 
         /// <summary>
         /// Gets or sets numbers pattern.
@@ -1075,46 +1012,20 @@ namespace System.Windows.Controls
             set => SetValue(PlaceholderTextProperty, value);
         }
 
-        /// <summary>
-        /// Gets or sets a value determining whether to display the placeholder.
-        /// </summary>
-        public bool PlaceholderEnabled
-        {
-            get => (bool)GetValue(PlaceholderEnabledProperty);
-            set => SetValue(PlaceholderEnabledProperty, value);
-        }
 
         /// <summary>
         /// Gets or sets a value determining whether to enable the clear button.
         /// </summary>
-        public bool ClearButtonEnabled
+        internal bool ClearButtonEnabled
         {
             get => (bool)GetValue(ClearButtonEnabledProperty);
             set => SetValue(ClearButtonEnabledProperty, value);
         }
 
         /// <summary>
-        /// Gets or sets a value determining whether to show the clear button when <see cref="TextBox"/> is focused.
-        /// </summary>
-        public bool ShowClearButton
-        {
-            get => (bool)GetValue(ShowClearButtonProperty);
-            protected set => SetValue(ShowClearButtonProperty, value);
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsTextSelectionEnabled
-        {
-            get => (bool)GetValue(IsTextSelectionEnabledProperty);
-            set => SetValue(IsTextSelectionEnabledProperty, value);
-        }
-
-        /// <summary>
         /// Command triggered after clicking the button.
         /// </summary>
-        public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
 
         #endregion
 
@@ -1125,11 +1036,18 @@ namespace System.Windows.Controls
         {
             base.OnTextChanged(e);
 
-            if (PlaceholderEnabled && Text.Length > 0)
-                PlaceholderEnabled = false;
+            if (PlaceholderText != string.Empty && Text.Length > 0)
+            {
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
+            }
+                
 
-            if (!PlaceholderEnabled && Text.Length < 1)
-                PlaceholderEnabled = true;
+            if (_placeholderText != string.Empty && Text.Length < 1)
+            {
+                PlaceholderText = _placeholderText;
+                _placeholderText = string.Empty;
+            }
 
             RevealClearButton();
         }
@@ -1153,27 +1071,47 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Reveals the clear button by <see cref="ShowClearButton"/> property.
+        /// Reveals the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
-        protected void RevealClearButton()
+        internal void RevealClearButton()
         {
-            if (ClearButtonEnabled && IsKeyboardFocusWithin)
-                ShowClearButton = Text.Length > 0;
+            if (IsKeyboardFocusWithin)
+            {
+                ClearButtonEnabled = Text.Length > 0;
+            }
         }
 
         /// <summary>
-        /// Hides the clear button by <see cref="ShowClearButton"/> property.
+        /// Hides the clear button by <see cref="ClearButtonEnabled"/> property.
         /// </summary>
-        protected void HideClearButton()
+        internal void HideClearButton()
         {
-            if (ClearButtonEnabled && !IsKeyboardFocusWithin && ShowClearButton)
-                ShowClearButton = false;
+            if (ClearButtonEnabled && !IsKeyboardFocusWithin)
+                ClearButtonEnabled = false;
         }
 
         /// <summary>
         /// Triggered when the user clicks the clear text button.
         /// </summary>
-        protected virtual void OnClearButtonClick()
+    
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute = textBox.ClearButtonEnabled
+                                    && !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
         {
             if (Text.Length > 0)
                 Text = string.Empty;
@@ -1182,9 +1120,8 @@ namespace System.Windows.Controls
         /// <summary>
         /// Triggered by clicking a button in the control template.
         /// </summary>
-        protected virtual void OnTemplateButtonClick(string parameter)
+        internal void OnTemplateButtonClick(string parameter)
         {
-
             OnClearButtonClick();
         }
         #endregion Public Properties
@@ -2159,6 +2096,8 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
+        private string _placeholderText;
 
         #endregion Private Fields
     }

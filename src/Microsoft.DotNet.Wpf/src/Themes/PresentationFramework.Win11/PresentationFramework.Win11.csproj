@@ -22,16 +22,20 @@
     <Page Include="**\*.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <!-- <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" /> -->
   </ItemGroup>
 
   <!-- Compile Items -->
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
+    <!-- <Compile Include="Controls\ClientAreaBorder.cs" /> -->
+    <Compile Include="Controls\FallbackBrushConverter.cs" />
   </ItemGroup>
-  <ItemGroup>
+
+  <!-- <ItemGroup>
     <Resource Include="Resources\Fonts\FluentSystemIcons-Filled.ttf" />
     <Resource Include="Resources\Fonts\FluentSystemIcons-Regular.ttf" />
-  </ItemGroup>
+  </ItemGroup> -->
 
   <!-- Project References -->
   <ItemGroup>

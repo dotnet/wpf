@@ -314,7 +314,8 @@
     <SolidColorBrush x:Key="ContextMenuForeground" Color="{StaticResource SystemColorWindowTextColor}" />
 
     <!--  DataGrid  -->
-    <!--  TODO  -->
+    <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="Transparent" />
@@ -384,8 +385,10 @@
 
     <!--  Menu  -->
     <SolidColorBrush x:Key="MenuBarBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
 
     <!--  MessageDialog  -->
     <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -438,6 +441,17 @@
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemColorHighlightColor}" />
+
+    <!-- RepeatButton -->
+    <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="RepeatButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RepeatButtonBorderBrushPressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  Separator  -->
     <SolidColorBrush x:Key="SeparatorBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -564,110 +578,110 @@
 
 
     <!--  Colors  -->
-    <!--  Colors copied from Default theme to match list of keys. Should not be using these keys. These are set to Red to notify that.  -->
-    <Color x:Key="TextFillColorPrimary">#FF0000</Color>
-    <Color x:Key="TextFillColorSecondary">#FF0000</Color>
-    <Color x:Key="TextFillColorTertiary">#FF0000</Color>
-    <Color x:Key="TextFillColorDisabled">#FF0000</Color>
+    <!--  Colors copied from Default theme to match list of keys. Should not be using these keys.  -->
+    <Color x:Key="TextFillColorPrimary">#3D3D3D</Color>
+    <Color x:Key="TextFillColorSecondary">#3D3D3D</Color>
+    <Color x:Key="TextFillColorTertiary">#3D3D3D</Color>
+    <Color x:Key="TextFillColorDisabled">#676767</Color>
     <Color x:Key="TextPlaceholderColor">#FF0000</Color>
-    <Color x:Key="TextFillColorInverse">#FF0000</Color>
+    <Color x:Key="TextFillColorInverse">#3D3D3D</Color>
 
-    <Color x:Key="AccentTextFillColorDisabled">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorSelectedText">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorPrimary">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorSecondary">#FF0000</Color>
-    <Color x:Key="TextOnAccentFillColorDisabled">#FF0000</Color>
+    <Color x:Key="AccentTextFillColorDisabled">#676767</Color>
+    <Color x:Key="TextOnAccentFillColorSelectedText">#3D3D3D</Color>
+    <Color x:Key="TextOnAccentFillColorPrimary">#3D3D3D</Color>
+    <Color x:Key="TextOnAccentFillColorSecondary">#3D3D3D</Color>
+    <Color x:Key="TextOnAccentFillColorDisabled">#676767</Color>
 
-    <Color x:Key="ControlFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlFillColorDisabled">#FF0000</Color>
-    <Color x:Key="ControlFillColorTransparent">#FF0000</Color>
-    <Color x:Key="ControlFillColorInputActive">#FF0000</Color>
+    <Color x:Key="ControlFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="ControlFillColorSecondary">#FFFAEF</Color>
+    <Color x:Key="ControlFillColorTertiary">#FFFAEF</Color>
+    <Color x:Key="ControlFillColorDisabled">#FFFAEF</Color>
+    <Color x:Key="ControlFillColorTransparent">Transparent</Color>
+    <Color x:Key="ControlFillColorInputActive">#FFFAEF</Color>
 
-    <Color x:Key="ControlStrongFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrongFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrongFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="ControlStrongFillColorDisabled">#FFFAEF</Color>
 
-    <Color x:Key="ControlSolidFillColorDefault">#FF0000</Color>
+    <Color x:Key="ControlSolidFillColorDefault">#FFFAEF</Color>
 
-    <Color x:Key="SubtleFillColorTransparent">#FF0000</Color>
-    <Color x:Key="SubtleFillColorSecondary">#FF0000</Color>
-    <Color x:Key="SubtleFillColorTertiary">#FF0000</Color>
-    <Color x:Key="SubtleFillColorDisabled">#FF0000</Color>
+    <Color x:Key="SubtleFillColorTransparent">Transparent</Color>
+    <Color x:Key="SubtleFillColorSecondary">#FFFAEF</Color>
+    <Color x:Key="SubtleFillColorTertiary">#FFFAEF</Color>
+    <Color x:Key="SubtleFillColorDisabled">#FFFAEF</Color>
 
-    <Color x:Key="ControlAltFillColorTransparent">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorQuarternary">#FF0000</Color>
-    <Color x:Key="ControlAltFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlAltFillColorTransparent">Transparent</Color>
+    <Color x:Key="ControlAltFillColorSecondary">#FFFAEF</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#FFFAEF</Color>
+    <Color x:Key="ControlAltFillColorQuarternary">#FFFAEF</Color>
+    <Color x:Key="ControlAltFillColorDisabled">#FFFAEF</Color>
 
-    <Color x:Key="ControlOnImageFillColorDefault">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlOnImageFillColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlOnImageFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="ControlOnImageFillColorSecondary">#FFFAEF</Color>
+    <Color x:Key="ControlOnImageFillColorTertiary">#FFFAEF</Color>
+    <Color x:Key="ControlOnImageFillColorDisabled">#FFFAEF</Color>
 
-    <Color x:Key="AccentFillColorDisabled">#FF0000</Color>
+    <Color x:Key="AccentFillColorDisabled">#FFFAEF</Color>
 
-    <Color x:Key="ControlStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorSecondary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorTertiary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentDefault">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentSecondary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentTertiary">#FF0000</Color>
-    <Color x:Key="ControlStrokeColorOnAccentDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrokeColorDefault">#202020</Color>
+    <Color x:Key="ControlStrokeColorSecondary">#202020</Color>
+    <Color x:Key="ControlStrokeColorTertiary">#202020</Color>
+    <Color x:Key="ControlStrokeColorOnAccentDefault">#202020</Color>
+    <Color x:Key="ControlStrokeColorOnAccentSecondary">#202020</Color>
+    <Color x:Key="ControlStrokeColorOnAccentTertiary">#202020</Color>
+    <Color x:Key="ControlStrokeColorOnAccentDisabled">#676767</Color>
 
-    <Color x:Key="ControlStrokeColorForStrongFillWhenOnImage">#FF0000</Color>
+    <Color x:Key="ControlStrokeColorForStrongFillWhenOnImage">#202020</Color>
 
-    <Color x:Key="CardStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="CardStrokeColorDefaultSolid">#FF0000</Color>
+    <Color x:Key="CardStrokeColorDefault">#3D3D3D</Color>
+    <Color x:Key="CardStrokeColorDefaultSolid">#3D3D3D</Color>
 
-    <Color x:Key="ControlStrongStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="ControlStrongStrokeColorDisabled">#FF0000</Color>
+    <Color x:Key="ControlStrongStrokeColorDefault">#202020</Color>
+    <Color x:Key="ControlStrongStrokeColorDisabled">#202020</Color>
 
-    <Color x:Key="SurfaceStrokeColorDefault">#FF0000</Color>
-    <Color x:Key="SurfaceStrokeColorFlyout">#FF0000</Color>
-    <Color x:Key="SurfaceStrokeColorInverse">#FF0000</Color>
+    <Color x:Key="SurfaceStrokeColorDefault">#3D3D3D</Color>
+    <Color x:Key="SurfaceStrokeColorFlyout">#3D3D3D</Color>
+    <Color x:Key="SurfaceStrokeColorInverse">#3D3D3D</Color>
 
-    <Color x:Key="DividerStrokeColorDefault">#FF0000</Color>
+    <Color x:Key="DividerStrokeColorDefault">#3D3D3D</Color>
 
-    <Color x:Key="FocusStrokeColorOuter">#FF0000</Color>
-    <Color x:Key="FocusStrokeColorInner">#FF0000</Color>
+    <Color x:Key="FocusStrokeColorOuter">#3D3D3D</Color>
+    <Color x:Key="FocusStrokeColorInner">#FFFAEF</Color>
 
-    <Color x:Key="CardBackgroundFillColorDefault">#FF0000</Color>
-    <Color x:Key="CardBackgroundFillColorSecondary">#FF0000</Color>
+    <Color x:Key="CardBackgroundFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="CardBackgroundFillColorSecondary">#FFFAEF</Color>
 
-    <Color x:Key="SmokeFillColorDefault">#FF0000</Color>
+    <Color x:Key="SmokeFillColorDefault">#FFFAEF</Color>
 
-    <Color x:Key="LayerFillColorDefault">#FF0000</Color>
-    <Color x:Key="LayerFillColorAlt">#FF0000</Color>
-    <Color x:Key="LayerOnAcrylicFillColorDefault">#FF0000</Color>
-    <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#FF0000</Color>
+    <Color x:Key="LayerFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="LayerFillColorAlt">#FFFAEF</Color>
+    <Color x:Key="LayerOnAcrylicFillColorDefault">#FFFAEF</Color>
+    <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#FFFAEF</Color>
 
     <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
-    <Color x:Key="AcrylicBackgroundFillColorDefault">#FF0000</Color>
+    <Color x:Key="AcrylicBackgroundFillColorDefault">#FFFAEF</Color>
 
     <Color x:Key="LayerOnMicaBaseAltFillColorDefault">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorSecondary">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorTertiary">#FF0000</Color>
     <Color x:Key="LayerOnMicaBaseAltFillColorTransparent">#FF0000</Color>
 
-    <Color x:Key="SolidBackgroundFillColorBase">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorSecondary">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorTertiary">#FF0000</Color>
-    <Color x:Key="SolidBackgroundFillColorQuarternary">#FF0000</Color>
+    <Color x:Key="SolidBackgroundFillColorBase">#FFFAEF</Color>
+    <Color x:Key="SolidBackgroundFillColorSecondary">#FFFAEF</Color>
+    <Color x:Key="SolidBackgroundFillColorTertiary">#FFFAEF</Color>
+    <Color x:Key="SolidBackgroundFillColorQuarternary">#FFFAEF</Color>
     <Color x:Key="SolidBackgroundFillColorTransparent">#FF0000</Color>
     <Color x:Key="SolidBackgroundFillColorBaseAlt">#FF0000</Color>
 
-    <Color x:Key="SystemFillColorSuccess">#FF0000</Color>
-    <Color x:Key="SystemFillColorCaution">#FF0000</Color>
-    <Color x:Key="SystemFillColorCritical">#FF0000</Color>
-    <Color x:Key="SystemFillColorNeutral">#FF0000</Color>
+    <Color x:Key="SystemFillColorSuccess">#3D3D3D</Color>
+    <Color x:Key="SystemFillColorCaution">#3D3D3D</Color>
+    <Color x:Key="SystemFillColorCritical">#F3D3D3DF0000</Color>
+    <Color x:Key="SystemFillColorNeutral">#3D3D3D</Color>
     <Color x:Key="SystemFillColorSolidNeutral">#FF0000</Color>
-    <Color x:Key="SystemFillColorAttentionBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorSuccessBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorCautionBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorCriticalBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorNeutralBackground">#FF0000</Color>
-    <Color x:Key="SystemFillColorSolidAttentionBackground">#FF0000</Color>
+    <Color x:Key="SystemFillColorAttentionBackground">#3D3D3D</Color>
+    <Color x:Key="SystemFillColorSuccessBackground">#FFFAEF</Color>
+    <Color x:Key="SystemFillColorCautionBackground">#FFFAEF</Color>
+    <Color x:Key="SystemFillColorCriticalBackground">#FFFAEF</Color>
+    <Color x:Key="SystemFillColorNeutralBackground">#FFFAEF</Color>
+    <Color x:Key="SystemFillColorSolidAttentionBackground">#FFFAEF</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#FF0000</Color>
 </ResourceDictionary>

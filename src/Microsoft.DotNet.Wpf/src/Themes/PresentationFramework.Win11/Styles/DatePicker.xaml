@@ -21,6 +21,7 @@
     <Thickness x:Key="DatePickerCalendarButtonPadding">0,0,0,0</Thickness>
     <system:Double x:Key="DatePickerCalendarButtonHeight">24</system:Double>
     <system:Double x:Key="DatePickerCalendarButtonIconSize">14</system:Double>
+    <system:String x:Key="CalendarGlyph">&#xE787;</system:String>
 
     <Style x:Key="DefaultDatePickerTextBoxStyle" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
@@ -130,18 +131,18 @@
                                         VerticalAlignment="Top"
                                         HorizontalContentAlignment="Center"
                                         VerticalContentAlignment="Center"
-                                        Appearance="Secondary"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         Cursor="Arrow">
                                         <!--  WPF overrides paddings for button  -->
-                                        <SymbolIcon
+                                        <FontIcon
                                             Margin="{StaticResource DatePickerCalendarButtonPadding}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
+                                            FontFamily="Segoe Fluent Icons"
                                             FontSize="{StaticResource DatePickerCalendarButtonIconSize}"
                                             Foreground="{TemplateBinding Foreground}"
-                                            Symbol="CalendarRtl24" />
+                                            Glyph="{StaticResource CalendarGlyph}" />
                                     </Button>
                                 </Grid>
                             </Border>

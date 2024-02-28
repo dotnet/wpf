@@ -7,7 +7,11 @@
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <system:String x:Key="MenuItemChevronRightGlyph">&#xE76C;</system:String>
+    <system:String x:Key="MenuItemCheckedGlyph">&#xE73E;</system:String>
 
     <Style
         x:Key="UiMenuItemScrollViewer"
@@ -233,7 +237,7 @@
                         x:Name="CheckBoxIcon"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontFamily="{DynamicResource FluentSystemIcons}"
+                        FontFamily="Segoe Fluent Icons"
                         FontSize="16"
                         Text=""
                         TextAlignment="Center" />
@@ -274,7 +278,7 @@
                 <Setter TargetName="CheckBoxIconBorder" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter TargetName="CheckBoxIcon" Property="Text" Value="&#xF294;" />
+                <Setter TargetName="CheckBoxIcon" Property="Text" Value="{StaticResource MenuItemCheckedGlyph}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground">
@@ -323,12 +327,13 @@
                         RecognizesAccessKey="True" />
 
                     <Grid Grid.Column="2">
-                        <SymbolIcon
+                        <FontIcon
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
+                            FontFamily="Segoe Fluent Icons"
                             FontSize="{TemplateBinding FontSize}"
-                            Symbol="ChevronRight20" />
+                            Glyph="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>
                 </Grid>
             </Border>
@@ -530,6 +535,9 @@
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground">
                     <Setter.Value>
@@ -593,6 +601,9 @@
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
+            </Trigger>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="IconElement" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="IconElement" Property="Margin" Value="0" />
@@ -643,7 +654,7 @@
                         x:Name="CheckBoxIcon"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontFamily="{DynamicResource FluentSystemIcons}"
+                        FontFamily="Segoe Fluent Icons"
                         FontSize="16"
                         Text=""
                         TextAlignment="Center" />
@@ -658,6 +669,7 @@
                     FontSize="16" />
 
                 <ContentPresenter
+                    x:Name="ItemSource"
                     Grid.Column="3"
                     ContentSource="Header"
                     RecognizesAccessKey="True"
@@ -678,6 +690,9 @@
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
+            </Trigger>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="IconElement" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="IconElement" Property="Margin" Value="0" />
@@ -687,7 +702,7 @@
                 <Setter TargetName="CheckBoxIconBorder" Property="Margin" Value="0,0,6,0" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter TargetName="CheckBoxIcon" Property="Text" Value="&#xF294;" />
+                <Setter TargetName="CheckBoxIcon" Property="Text" Value="{StaticResource MenuItemCheckedGlyph}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground">
@@ -739,12 +754,13 @@
                         RecognizesAccessKey="True" />
 
                     <Grid Grid.Column="3">
-                        <SymbolIcon
+                        <FontIcon
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Symbol="ChevronRight20" />
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>
                 </Grid>
             </Border>
@@ -793,6 +809,9 @@
             </Trigger>
             <Trigger Property="IsHighlighted" Value="true">
                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuBarItemBackgroundMousePointer}" />
             </Trigger>
             <!--<Trigger SourceName="Popup" Property="AllowsTransparency" Value="True">
                 <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="4" />

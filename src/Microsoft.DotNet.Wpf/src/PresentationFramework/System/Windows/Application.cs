@@ -1489,7 +1489,7 @@ namespace System.Windows
             return false;
         }
 
-        internal static bool isThemeHighContrast()
+        internal static bool IsThemeHighContrast()
         {
             string currentTheme = ThemeColorization.GetNewTheme();
 

@@ -32,8 +32,6 @@ using Microsoft.Win32;
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
-using System.Windows.Appearance;
-
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
 //you need to disable warnings 1634 and 1691. (Presharp Documentation)
@@ -1974,7 +1972,7 @@ namespace System.Windows
         /// </summary>
         protected virtual void OnBackdropTypeChanged(WindowBackdropType oldValue, WindowBackdropType newValue)
         {
-            if (Appearance.ApplicationThemeManager.GetAppTheme() == Appearance.ApplicationTheme.HighContrast)
+            if (Application.IsThemeHighContrast())
             {
                 newValue = WindowBackdropType.None;
             }

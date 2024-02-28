@@ -4,7 +4,6 @@
 // All Rights Reserved.
 
 using System.Runtime.InteropServices;
-using System.Windows.Appearance;
 using System.Windows.Interop;
 using System.Windows.Media;
 
@@ -306,7 +305,7 @@ internal static class WindowBackdrop
 
     private static Brush GetFallbackBackgroundBrush()
     {
-        if(Application.isThemeHighContrast()) 
+        if(Application.IsThemeHighContrast()) 
         {
             string currentTheme = ThemeColorization.GetNewTheme();
             if(currentTheme.Contains("hc1"))

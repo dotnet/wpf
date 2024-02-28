@@ -645,7 +645,7 @@
     <Compile Include="System\Windows\Controls\Expander.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentReader.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentScrollViewer.cs" />
-    <Compile Include="System\Windows\Controls\FluentWindow.cs" />
+    <!-- <Compile Include="System\Windows\Controls\FluentWindow.cs" /> -->
     <Compile Include="System\Windows\Controls\WindowCornerPreference.cs" />
     <Compile Include="System\Windows\Controls\Frame.cs" />
     <Compile Include="System\Windows\Controls\Grid.cs" />

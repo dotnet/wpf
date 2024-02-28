@@ -15,7 +15,7 @@ namespace System.Windows.Appearance;
 /// <summary>
 /// Applies the chosen backdrop effect to the selected window.
 /// </summary>
-public static class WindowBackdrop
+internal static class WindowBackdrop
 {
     /// <summary>
     /// Checks whether the selected backdrop type is supported on current platform.

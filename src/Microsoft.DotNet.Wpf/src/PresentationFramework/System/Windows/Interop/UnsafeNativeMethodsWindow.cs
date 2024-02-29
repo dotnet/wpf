@@ -28,9 +28,9 @@ internal static class UnsafeNativeMethodsWindow
     /// <param name="window">Selected window.</param>
     /// <param name="cornerPreference">Window corner preference.</param>
     /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowCornerPreference(Window window, WindowCornerPreference cornerPreference) =>
-        GetHandle(window, out IntPtr windowHandle)
-        && ApplyWindowCornerPreference(windowHandle, cornerPreference);
+    // public static bool ApplyWindowCornerPreference(Window window, WindowCornerPreference cornerPreference) =>
+    //     GetHandle(window, out IntPtr windowHandle)
+    //     && ApplyWindowCornerPreference(windowHandle, cornerPreference);
 
     /// <summary>
     /// Tries to set the corner preference of the selected window.
@@ -38,30 +38,30 @@ internal static class UnsafeNativeMethodsWindow
     /// <param name="handle">Selected window handle.</param>
     /// <param name="cornerPreference">Window corner preference.</param>
     /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowCornerPreference(IntPtr handle, WindowCornerPreference cornerPreference)
-    {
-        if (handle == IntPtr.Zero)
-        {
-            return false;
-        }
+    // public static bool ApplyWindowCornerPreference(IntPtr handle, WindowCornerPreference cornerPreference)
+    // {
+    //     if (handle == IntPtr.Zero)
+    //     {
+    //         return false;
+    //     }
 
-        if (!NativeMethods.IsWindow(handle))
-        {
-            return false;
-        }
+    //     if (!NativeMethods.IsWindow(handle))
+    //     {
+    //         return false;
+    //     }
 
-        int pvAttribute = (int)UnsafeReflection.Cast(cornerPreference);
+    //     int pvAttribute = (int)UnsafeReflection.Cast(cornerPreference);
 
-        // TODO: Validate HRESULT
-        _ = Dwmapi.DwmSetWindowAttribute(
-            handle,
-            Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
-            ref pvAttribute,
-            Marshal.SizeOf(typeof(int))
-        );
+    //     // TODO: Validate HRESULT
+    //     _ = Dwmapi.DwmSetWindowAttribute(
+    //         handle,
+    //         Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
+    //         ref pvAttribute,
+    //         Marshal.SizeOf(typeof(int))
+    //     );
 
-        return true;
-    }
+    //     return true;
+    // }
     /// <summary>
     /// Tries to remove ImmersiveDarkMode effect from the <see cref="Window"/>.
     /// </summary>

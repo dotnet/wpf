@@ -76,6 +76,9 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+        
+            // CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand);
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -98,9 +101,10 @@ namespace System.Windows.Controls
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
 
-            SetValue(TemplateButtonCommandProperty, new RelayCommand<string>(OnTemplateButtonClick));
-    
+            SetValue(TemplateButtonCommandProperty, ClearCommand);    
         }
+
+        internal static readonly RoutedCommand ClearCommand = new RoutedCommand("Clear", typeof(TextBox));
 
         #endregion Constructors
 
@@ -992,7 +996,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
             nameof(TemplateButtonCommand),
-            typeof(IRelayCommand),
+            typeof(RoutedCommand),
             typeof(TextBox),
             new PropertyMetadata(null)
         );
@@ -1021,7 +1025,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Command triggered after clicking the button.
         /// </summary>
-        internal IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
 
         #endregion
 
@@ -1089,7 +1093,25 @@ namespace System.Windows.Controls
         /// <summary>
         /// Triggered when the user clicks the clear text button.
         /// </summary>
-        internal void OnClearButtonClick()
+    
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute = textBox.ClearButtonEnabled
+                                    && !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
         {
             if (Text.Length > 0)
                 Text = string.Empty;

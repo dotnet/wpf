@@ -258,7 +258,9 @@
                                             FontSize="{TemplateBinding FontSize}"
                                             Foreground="{TemplateBinding Foreground}"
                                             IsReadOnly="{TemplateBinding IsReadOnly}"
-                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}" />
+                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}"
+                                            PlaceholderText = "{TemplateBinding PlaceholderText}"
+                                            />
                                         
                                         
                                     </Grid>

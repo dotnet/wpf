@@ -623,6 +623,7 @@ namespace System.Windows.Controls
                     if (Text != text)
                     {
                         SetCurrentValueInternal(TextProperty, text);
+                        UpdatePlaceholderText(text);
                     }
                 }
 
@@ -793,6 +794,7 @@ namespace System.Windows.Controls
                     if (textBoxUpdated)
                     {
                         SetCurrentValueInternal(TextProperty, newText);
+                        UpdatePlaceholderText(newText);
                     }
                     else if (EditableTextBoxSite != null)
                     {
@@ -804,6 +806,20 @@ namespace System.Windows.Controls
                     // Clear the updating flag
                     UpdatingText = false;
                 }
+            }
+        }
+
+        private void UpdatePlaceholderText(string newText)
+        {
+            if (newText!=string.Empty && PlaceholderText != string.Empty)
+            {
+                _placeholderText = PlaceholderText;
+                PlaceholderText = string.Empty;
+            }
+            if (newText==string.Empty && _placeholderText != string.Empty)
+            {
+                PlaceholderText = _placeholderText;
+                _placeholderText = string.Empty;
             }
         }
 
@@ -844,7 +860,7 @@ namespace System.Windows.Controls
             if (IsEditable)
             {
                 UpdateEditableTextBox();
-                UpdatePlaceholderText();
+                
             }
             else
             {
@@ -878,19 +894,7 @@ namespace System.Windows.Controls
         }
 
 
-        private void UpdatePlaceholderText()
-        {
-            if(UpdatingText && PlaceholderText != string.Empty)
-            {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
-            }
-            if(!UpdatingText && _placeholderText != string.Empty)
-            {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
-            }
-        }
+
         /// <summary>
         /// This function updates the selected item in the "selection box".
         /// This is called when selection changes or when the combobox

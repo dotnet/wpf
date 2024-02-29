@@ -365,20 +365,20 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets numbers pattern.
         /// </summary>
-        public string PlaceholderText
+        public object Placeholder
         {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
+            get => GetValue(PlaceholderProperty);
+            set => SetValue(PlaceholderProperty, value);
         }
 
         /// <summary>
-        /// Property for <see cref="PlaceholderText"/>.
+        /// Property for <see cref="Placeholder"/>.
         /// </summary>
-        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
-           nameof(PlaceholderText),
-           typeof(string),
+        public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
+           nameof(Placeholder),
+           typeof(object),
            typeof(PasswordBox),
-           new PropertyMetadata(String.Empty)
+           new FrameworkPropertyMetadata((object)null)
         );
 
         #endregion Public Properties
@@ -949,16 +949,16 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if(PlaceholderText != string.Empty && Password.Length > 0)
+            if(Placeholder != null && Password.Length > 0)
             {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
+                _placeholder = Placeholder;
+                Placeholder = null;
             }
 
-            if(_placeholderText != string.Empty && Password.Length == 0)
+            if(_placeholder != null && Password.Length == 0)
             {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
+                Placeholder = _placeholder;
+                _placeholder = null;
             }
 
             RaiseEvent(new RoutedEventArgs(PasswordChangedEvent));
@@ -1324,7 +1324,7 @@ namespace System.Windows.Controls
         // Border
         private Border _border;
 
-        private string _placeholderText;
+        private object _placeholder;
 
         // An element marked as ContentHostTemplateName which we assign our _renderScope as a child.
         private FrameworkElement _passwordBoxContentHost;

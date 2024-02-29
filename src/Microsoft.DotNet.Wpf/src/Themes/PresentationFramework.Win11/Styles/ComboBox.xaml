@@ -212,14 +212,11 @@
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                             IsHitTestVisible="False"
                                             TextElement.Foreground="{TemplateBinding Foreground}" />
-                                        <TextBlock
-                                            x:Name="PlaceholderTextBox"
-                                            Margin="0"
-                                            Padding="1,0"
+                                        <ContentPresenter
+                                            x:Name="PlaceholderBox"
+                                            Margin="1"
                                             VerticalAlignment="Center"
-                                            FontSize="{TemplateBinding FontSize}"
-                                            Foreground="{DynamicResource TextControlPlaceholderForeground}"
-                                            Text="{TemplateBinding PlaceholderText}" />
+                                            Content="{TemplateBinding Placeholder}" />
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="{StaticResource ComboBoxChevronMargin}">
                                         <FontIcon
@@ -259,7 +256,7 @@
                                             Foreground="{TemplateBinding Foreground}"
                                             IsReadOnly="{TemplateBinding IsReadOnly}"
                                             Style="{StaticResource DefaultComboBoxTextBoxStyle}"
-                                            PlaceholderText = "{TemplateBinding PlaceholderText}"
+                                            Placeholder = "{TemplateBinding Placeholder}"
                                             />
                                         
                                         

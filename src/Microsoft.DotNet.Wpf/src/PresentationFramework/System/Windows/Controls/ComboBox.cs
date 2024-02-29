@@ -157,22 +157,22 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Property for <see cref="PlaceholderText"/>.
+        /// Property for <see cref="Placeholder"/>.
         /// </summary>
-        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
-            nameof(PlaceholderText),
-            typeof(string),
+        public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
+            nameof(Placeholder),
+            typeof(object),
             typeof(ComboBox),
-            new PropertyMetadata(String.Empty)
+            new FrameworkPropertyMetadata((object)null)
         );
 
         /// <summary>
         /// Gets or sets numbers pattern.
         /// </summary>
-        public string PlaceholderText
+        public object Placeholder
         {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
+            get => GetValue(PlaceholderProperty);
+            set => SetValue(PlaceholderProperty, value);
         }
         private static object CoerceIsDropDownOpen(DependencyObject d, object value)
         {
@@ -623,7 +623,7 @@ namespace System.Windows.Controls
                     if (Text != text)
                     {
                         SetCurrentValueInternal(TextProperty, text);
-                        UpdatePlaceholderText(text);
+                        UpdatePlaceholder(text);
                     }
                 }
 
@@ -794,7 +794,7 @@ namespace System.Windows.Controls
                     if (textBoxUpdated)
                     {
                         SetCurrentValueInternal(TextProperty, newText);
-                        UpdatePlaceholderText(newText);
+                        UpdatePlaceholder(newText);
                     }
                     else if (EditableTextBoxSite != null)
                     {
@@ -809,17 +809,17 @@ namespace System.Windows.Controls
             }
         }
 
-        private void UpdatePlaceholderText(string newText)
+        private void UpdatePlaceholder(string newText)
         {
-            if (newText!=string.Empty && PlaceholderText != string.Empty)
+            if (newText!=string.Empty && Placeholder != null)
             {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
+                _placeholder = Placeholder;
+                Placeholder = null;
             }
-            if (newText==string.Empty && _placeholderText != string.Empty)
+            if (newText==string.Empty && _placeholder != null)
             {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
+                Placeholder = _placeholder;
+                _placeholder = null;
             }
         }
 
@@ -919,8 +919,8 @@ namespace System.Windows.Controls
                 item = contentControl.Content;
                 itemTemplate = contentControl.ContentTemplate;
                 stringFormat = contentControl.ContentStringFormat;
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
+                _placeholder = Placeholder;
+                Placeholder = string.Empty;
             }
 
             if (_clonedElement != null)
@@ -2073,7 +2073,7 @@ namespace System.Windows.Controls
         private DispatcherTimer _autoScrollTimer;
         private UIElement _clonedElement;
         private DispatcherOperation _updateTextBoxOperation;
-        private string _placeholderText;
+        private object _placeholder;
         private enum CacheBits
         {
             IsMouseOverItemsHost        = 0x01,

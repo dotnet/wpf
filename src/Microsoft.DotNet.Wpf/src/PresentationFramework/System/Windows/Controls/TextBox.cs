@@ -970,13 +970,13 @@ namespace System.Windows.Controls
             }
         }
         /// <summary>
-        /// Property for <see cref="PlaceholderText"/>.
+        /// Property for <see cref="Placeholder"/>.
         /// </summary>
-        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
-            nameof(PlaceholderText),
-            typeof(string),
+        public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
+            nameof(Placeholder),
+            typeof(object),
             typeof(TextBox),
-            new PropertyMetadata(String.Empty)
+            new FrameworkPropertyMetadata((object)null)
         );
 
 
@@ -1006,10 +1006,10 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets numbers pattern.
         /// </summary>
-        public string PlaceholderText
+        public object Placeholder
         {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
+            get => GetValue(PlaceholderProperty);
+            set => SetValue(PlaceholderProperty, value);
         }
 
 
@@ -1036,17 +1036,17 @@ namespace System.Windows.Controls
         {
             base.OnTextChanged(e);
 
-            if (PlaceholderText != string.Empty && Text.Length > 0)
+            if (Placeholder != null && Text.Length > 0)
             {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
+                _placeholder = Placeholder;
+                Placeholder = null;
             }
                 
 
-            if (_placeholderText != string.Empty && Text.Length < 1)
+            if (_placeholder != null && Text.Length < 1)
             {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
+                Placeholder = _placeholder;
+                _placeholder = null;
             }
 
             RevealClearButton();
@@ -2097,7 +2097,7 @@ namespace System.Windows.Controls
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
 
-        private string _placeholderText;
+        private object _placeholder;
 
         #endregion Private Fields
     }

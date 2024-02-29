@@ -61,7 +61,8 @@ namespace System.ComponentModel
         public static void RemoveListener(INotifyPropertyChanged source, IWeakEventListener listener, string propertyName)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op
-            ArgumentNullException.ThrowIfNull(source)
+            if (source == null)
+                throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
 

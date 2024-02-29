@@ -1390,7 +1390,7 @@ namespace System.Windows.Documents
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
-            ValidationHelper.ValidateChild(this, textElement);
+            ValidationHelper.ValidateChild(this, textElement, "textElement");
 
             if (textElement.Parent != null)
             {
@@ -2146,7 +2146,7 @@ namespace System.Windows.Documents
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
-            ValidationHelper.ValidateChild(this, uiElement);
+            ValidationHelper.ValidateChild(this, uiElement, "uiElement");
 
             if (!((TextElement)this.Parent).IsEmpty) // the parent may be InlineUIContainer or BlockUIContainer
             {

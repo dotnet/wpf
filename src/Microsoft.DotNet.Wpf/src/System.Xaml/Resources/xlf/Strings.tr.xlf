@@ -782,6 +782,11 @@
         <target state="translated">'{0}' adı tanımlayıcı için geçerli değil.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Ad boş bir dize olamaz.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">'{0}' adı bulunamadı.</target>
@@ -1205,6 +1210,16 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Doğrudan Atanabilir Düzeltmelerin tek bir adı olmalıdır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">Dize null veya boş.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

@@ -93,6 +93,7 @@ TransitiveForwardRefDirectives=Object '{0}' assigned to directive '{1}' has prop
 TypeHasNoContentProperty=Type '{0}' does not have a content property. Specify the name of the property to set, or add a ContentPropertyAttribute or TypeConverterAttribute on the type.
 GetObjectNull=Collection property '{0}'.'{1}' is null.
 NotAssignableFrom=The type '{0}' is not assignable from the type '{1}'.
+NameScopeNameNotEmptyString=Name cannot be an empty string.
 NameScopeNameNotFound=Name '{0}' was not found.
 NameScopeDuplicateNamesNotAllowed=Cannot register duplicate name '{0}' in this scope.
 NameScopeInvalidIdentifierName='{0}' name is not valid for identifier.
@@ -355,6 +356,9 @@ ExpectedLoadPermission=Expected permission of type XamlLoadPermission.
 SecurityXmlUnexpectedTag=Invalid security XML. Unexpected tag '{0}', expected '{1}'.
 SecurityXmlUnexpectedValue=Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.
 SecurityXmlMissingAttribute=Invalid security XML. Missing expected attribute '{0}'.
+
+; XamlServices
+StringIsNullOrEmpty=The string is null or empty.
 
 ; XamlTypeInvoker
 NotSupportedOnUnknownType=This operation is not supported on unknown types.

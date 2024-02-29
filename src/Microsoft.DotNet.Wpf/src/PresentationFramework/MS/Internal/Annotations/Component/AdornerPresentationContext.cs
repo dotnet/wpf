@@ -46,7 +46,8 @@ namespace MS.Internal.Annotations.Component
             _adornerLayer = adornerLayer;
             if (adorner != null)
             {
-                ArgumentNullException.ThrowIfNull(adorner.AnnotationComponent, "annotation component");
+                if (adorner.AnnotationComponent == null)
+                    throw new ArgumentNullException("annotation component");
                 if (adorner.AnnotationComponent.PresentationContext != null)
                     throw new InvalidOperationException(SR.Format(SR.ComponentAlreadyInPresentationContext, adorner.AnnotationComponent));
                 _annotationAdorner = adorner;

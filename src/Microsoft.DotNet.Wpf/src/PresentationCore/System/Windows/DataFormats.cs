@@ -54,7 +54,12 @@ namespace System.Windows
         /// </remarks>
         public static DataFormat GetDataFormat(string format)
         {
-            ArgumentException.ThrowIfNullOrEmpty(format);
+            ArgumentNullException.ThrowIfNull(format);
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
 
             // Ensures the predefined Win32 data formats into our format list.
             EnsurePredefined();

@@ -224,14 +224,14 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static WindowChromeWorker GetWindowChromeWorker(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             return (WindowChromeWorker)window.GetValue(WindowChromeWorkerProperty);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetWindowChromeWorker(Window window, WindowChromeWorker chrome)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             window.SetValue(WindowChromeWorkerProperty, chrome);
         }
 

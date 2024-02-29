@@ -782,6 +782,11 @@
         <target state="translated">Nazwa „{0}” jest nieprawidłowa dla identyfikatora.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Element Name nie może być ciągiem pustym.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">Nie odnaleziono nazwy „{0}”.</target>
@@ -1205,6 +1210,16 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Naprawy możliwe do bezpośredniego przypisania muszą mieć tylko jedną nazwę.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">Ciąg ma wartość null lub jest pusty.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

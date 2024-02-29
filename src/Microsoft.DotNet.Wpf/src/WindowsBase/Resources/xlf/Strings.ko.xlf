@@ -1077,6 +1077,11 @@
         <target state="translated">식별자에 대한 '{0}' 이름이 잘못되었습니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name은 빈 문자열일 수 없습니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Name '{0}'을(를) 찾을 수 없습니다.</target>

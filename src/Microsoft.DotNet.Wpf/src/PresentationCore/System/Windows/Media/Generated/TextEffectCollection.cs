@@ -911,56 +911,61 @@ namespace System.Windows.Media
 
             WritePreamble();
 
-            ArgumentNullException.ThrowIfNull(collection);
-
-            bool needsItemValidation = true;
-            ICollection<TextEffect> icollectionOfT = collection as ICollection<TextEffect>;
-
-            if (icollectionOfT != null)
+            if (collection != null)
             {
-                _collection = new FrugalStructList<TextEffect>(icollectionOfT);
-            }
-            else
-            {
-                ICollection icollection = collection as ICollection;
+                bool needsItemValidation = true;
+                ICollection<TextEffect> icollectionOfT = collection as ICollection<TextEffect>;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollectionOfT != null)
                 {
-                    _collection = new FrugalStructList<TextEffect>(icollection);
+                    _collection = new FrugalStructList<TextEffect>(icollectionOfT);
                 }
-                else // not a IC or IC<T> so fall back to the slower Add
-                {
-                    _collection = new FrugalStructList<TextEffect>();
+                else
+                {       
+                    ICollection icollection = collection as ICollection;
 
+                    if (icollection != null) // an IC but not and IC<T>
+                    {
+                        _collection = new FrugalStructList<TextEffect>(icollection);
+                    }
+                    else // not a IC or IC<T> so fall back to the slower Add
+                    {
+                        _collection = new FrugalStructList<TextEffect>();
+
+                        foreach (TextEffect item in collection)
+                        {
+                            if (item == null)
+                            {
+                                throw new System.ArgumentException(SR.Collection_NoNull);
+                            }
+                            TextEffect newValue = item;
+                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                            _collection.Add(newValue);
+}
+
+                        needsItemValidation = false;
+                    }
+                }
+
+                if (needsItemValidation)
+                {
                     foreach (TextEffect item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        TextEffect newValue = item;
-                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                        _collection.Add(newValue);
-                    }
-
-                    needsItemValidation = false;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
+}
                 }
-            }
 
-            if (needsItemValidation)
+
+                WritePostscript();
+            }
+            else
             {
-                foreach (TextEffect item in collection)
-                {
-                    if (item == null)
-                    {
-                        throw new System.ArgumentException(SR.Collection_NoNull);
-                    }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
-                }
+                throw new ArgumentNullException("collection");
             }
-
-
-            WritePostscript();
         }
 
         #endregion Constructors

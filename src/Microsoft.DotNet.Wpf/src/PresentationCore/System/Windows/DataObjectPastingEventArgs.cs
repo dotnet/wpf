@@ -57,7 +57,13 @@ namespace System.Windows
             : base(System.Windows.DataObject.PastingEvent, isDragDrop)
         {
             ArgumentNullException.ThrowIfNull(dataObject);
-            ArgumentException.ThrowIfNullOrEmpty(formatToApply);
+
+            ArgumentNullException.ThrowIfNull(formatToApply);
+
+            if (formatToApply == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
 
             if (!dataObject.GetDataPresent(formatToApply))
             {

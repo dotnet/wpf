@@ -244,14 +244,17 @@ namespace System.Windows.Threading
         private void Initialize(DispatcherPriority min, bool isMinInclusive, DispatcherPriority max, bool isMaxInclusive) // NOTE: should be Priority
         {
             /*
-            ArgumentNullException.ThrowIfNull(min)
+            if(min == null)
+            {
+                throw new ArgumentNullException("min");
+            }
             
             if (!min.IsValid)
             {
                 throw new ArgumentException("Invalid priority.", "min");
             }
             */
-            if (min < DispatcherPriority.Invalid || min > DispatcherPriority.Send)
+            if(min < DispatcherPriority.Invalid || min > DispatcherPriority.Send)
             {
                 // If we move to a Priority class, this exception will have to change too.
                 throw new System.ComponentModel.InvalidEnumArgumentException("min", (int)min, typeof(DispatcherPriority));
@@ -262,14 +265,17 @@ namespace System.Windows.Threading
             }
 
             /*            
-            ArgumentNullException.ThrowIfNull(max)
+            if(max == null)
+            {
+                throw new ArgumentNullException("max");
+            }
 
             if (!max.IsValid)
             {
                 throw new ArgumentException("Invalid priority.", "max");
             }
             */
-            if (max < DispatcherPriority.Invalid || max > DispatcherPriority.Send)
+            if(max < DispatcherPriority.Invalid || max > DispatcherPriority.Send)
             {
                 // If we move to a Priority class, this exception will have to change too.
                 throw new System.ComponentModel.InvalidEnumArgumentException("max", (int)max, typeof(DispatcherPriority));

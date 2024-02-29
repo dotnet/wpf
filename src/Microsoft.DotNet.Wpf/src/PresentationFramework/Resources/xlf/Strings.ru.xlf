@@ -3318,6 +3318,11 @@ Do you want to replace it?</source>
         <target state="translated">Недопустимое имя "{0}" для идентификатора.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Значение Name не может быть пустой строкой.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Имя Name "{0}" не найдено.</target>
@@ -5176,6 +5181,11 @@ Do you want to replace it?</source>
       <trans-unit id="StreamObjectDisposed">
         <source>Current stream object was closed and disposed. Cannot access a closed stream.</source>
         <target state="translated">Текущий объект потока был закрыт и ликвидирован. Невозможно получить доступ к закрытому потоку.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIdOutOfSequence">

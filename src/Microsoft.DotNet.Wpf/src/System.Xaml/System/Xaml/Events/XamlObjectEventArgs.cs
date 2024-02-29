@@ -10,8 +10,7 @@ namespace System.Xaml
     {
         public XamlObjectEventArgs(object instance)
         {
-            ArgumentNullException.ThrowIfNull(instance);
-            Instance = instance;
+            Instance = instance ?? throw new ArgumentNullException(nameof(instance));
         }
 
         internal XamlObjectEventArgs(object instance, Uri sourceBamlUri, int elementLineNumber, int elementLinePosition) :

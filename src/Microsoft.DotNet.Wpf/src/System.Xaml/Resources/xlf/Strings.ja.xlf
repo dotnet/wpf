@@ -782,6 +782,11 @@
         <target state="translated">'{0}' 名は、識別子に対して無効です。</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">名前は空の文字列にはできません。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">名前 '{0}' が見つかりませんでした。</target>
@@ -1205,6 +1210,16 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">直接割り当て可能なフィックスアップには、名前を 1 つだけ指定する必要があります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">パラメーターを長さ 0 の文字列にすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">文字列が null または空です。</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

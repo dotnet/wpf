@@ -922,58 +922,63 @@ namespace System.Windows.Media.Animation
 
             WritePreamble();
 
-            ArgumentNullException.ThrowIfNull(collection);
-
-            bool needsItemValidation = true;
-            ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
-
-            if (icollectionOfT != null)
+            if (collection != null)
             {
-                _collection = new FrugalStructList<Timeline>(icollectionOfT);
-            }
-            else
-            {
-                ICollection icollection = collection as ICollection;
+                bool needsItemValidation = true;
+                ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollectionOfT != null)
                 {
-                    _collection = new FrugalStructList<Timeline>(icollection);
+                    _collection = new FrugalStructList<Timeline>(icollectionOfT);
                 }
-                else // not a IC or IC<T> so fall back to the slower Add
-                {
-                    _collection = new FrugalStructList<Timeline>();
+                else
+                {       
+                    ICollection icollection = collection as ICollection;
 
+                    if (icollection != null) // an IC but not and IC<T>
+                    {
+                        _collection = new FrugalStructList<Timeline>(icollection);
+                    }
+                    else // not a IC or IC<T> so fall back to the slower Add
+                    {
+                        _collection = new FrugalStructList<Timeline>();
+
+                        foreach (Timeline item in collection)
+                        {
+                            if (item == null)
+                            {
+                                throw new System.ArgumentException(SR.Collection_NoNull);
+                            }
+                            Timeline newValue = item;
+                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                            _collection.Add(newValue);
+
+                        }
+
+                        needsItemValidation = false;
+                    }
+                }
+
+                if (needsItemValidation)
+                {
                     foreach (Timeline item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        Timeline newValue = item;
-                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                        _collection.Add(newValue);
+                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
                     }
-
-                    needsItemValidation = false;
                 }
-            }
 
-            if (needsItemValidation)
+
+                WritePostscript();
+            }
+            else
             {
-                foreach (Timeline item in collection)
-                {
-                    if (item == null)
-                    {
-                        throw new System.ArgumentException(SR.Collection_NoNull);
-                    }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
-
-                }
+                throw new ArgumentNullException("collection");
             }
-
-
-            WritePostscript();
         }
 
         #endregion Constructors

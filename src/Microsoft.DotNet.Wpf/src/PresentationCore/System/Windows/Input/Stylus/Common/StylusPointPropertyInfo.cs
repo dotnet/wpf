@@ -116,8 +116,10 @@ namespace System.Windows.Input
         /// </summary>
         internal static bool AreCompatible(StylusPointPropertyInfo stylusPointPropertyInfo1, StylusPointPropertyInfo stylusPointPropertyInfo2)
         {
-            ArgumentNullException.ThrowIfNull(stylusPointPropertyInfo1);
-            ArgumentNullException.ThrowIfNull(stylusPointPropertyInfo2);
+            if (stylusPointPropertyInfo1 == null || stylusPointPropertyInfo2 == null)
+            {
+                throw new ArgumentNullException("stylusPointPropertyInfo");
+            }
 
             Debug.Assert((  stylusPointPropertyInfo1.Id != StylusPointPropertyIds.X &&
                             stylusPointPropertyInfo1.Id != StylusPointPropertyIds.Y &&

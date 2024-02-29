@@ -31,15 +31,18 @@ namespace System.Xaml
 
         public NameScopeDictionary(INameScope underlyingNameScope)
         {
-            ArgumentNullException.ThrowIfNull(underlyingNameScope);
             _names = new FrugalObjectList<string>();
-            _underlyingNameScope = underlyingNameScope;
+            _underlyingNameScope = underlyingNameScope ?? throw new ArgumentNullException(nameof(underlyingNameScope));
         }
 
         public void RegisterName(string name, object scopedElement)
         {
-            ArgumentException.ThrowIfNullOrEmpty(name);
+            ArgumentNullException.ThrowIfNull(name);
+
             ArgumentNullException.ThrowIfNull(scopedElement);
+
+            if (name.Length == 0)
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (!NameValidationHelper.IsValidIdentifierName(name))
             {
@@ -76,7 +79,10 @@ namespace System.Xaml
 
         public void UnregisterName(string name)
         {
-            ArgumentException.ThrowIfNullOrEmpty(name);
+            ArgumentNullException.ThrowIfNull(name);
+
+            if (name.Length == 0)
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {
@@ -98,7 +104,10 @@ namespace System.Xaml
 
         public object FindName(string name)
         {
-            ArgumentException.ThrowIfNullOrEmpty(name);
+            ArgumentNullException.ThrowIfNull(name);
+
+            if (name.Length == 0)
+                throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
             if (_underlyingNameScope != null)
             {

@@ -667,6 +667,11 @@
         <target state="translated">L'oggetto dati deve includere almeno un formato.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataObject_EmptyFormatNotAllowed">
+        <source>Empty string is not a valid value for parameter 'format'.</source>
+        <target state="translated">Una stringa vuota non rappresenta un valore valido per il parametro 'format'.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">Percorso di destinazione del file '{0}' non valido.</target>
@@ -2982,6 +2987,11 @@
         <target state="translated">È necessario chiamare BeginFigure prima di questa API.</target>
         <note />
       </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Il parametro non può essere una stringa di lunghezza zero.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">Il numero massimo di tratti è 2.</target>
@@ -3040,6 +3050,11 @@
       <trans-unit id="Stylus_PlugInIsDuplicated">
         <source>'{0}' already exists in the collection.</source>
         <target state="translated">'{0}' già esistente nella raccolta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsNull">
+        <source>'{0}' must be non-null.</source>
+        <target state="translated">'{0}' deve essere non null.</target>
         <note />
       </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">

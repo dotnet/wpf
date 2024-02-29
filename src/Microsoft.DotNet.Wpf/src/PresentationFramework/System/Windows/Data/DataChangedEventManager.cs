@@ -52,7 +52,8 @@ namespace System.Windows.Data
         public static void RemoveListener(DataSourceProvider source, IWeakEventListener listener)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op
-            ArgumentNullException.ThrowIfNull(source);
+            if (source == null)
+                throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
 

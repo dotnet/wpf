@@ -36,10 +36,8 @@ namespace System.Xaml
 
         public XamlMember(string name, XamlType declaringType, bool isAttachable)
         {
-            ArgumentNullException.ThrowIfNull(name);
-            ArgumentNullException.ThrowIfNull(declaringType);
-            _name = name;
-            _declaringType = declaringType;
+            _name = name ?? throw new ArgumentNullException(nameof(name));
+            _declaringType = declaringType ?? throw new ArgumentNullException(nameof(declaringType));
             _memberType = isAttachable ? MemberType.Attachable : MemberType.Instance;
         }
 
@@ -111,8 +109,7 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
-            ArgumentNullException.ThrowIfNull(attachablePropertyName);
-            _name = attachablePropertyName;
+            _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
             ValidateGetter(getter, nameof(getter));
             ValidateSetter(setter, nameof(setter));
@@ -143,8 +140,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(schemaContext);
             ValidateSetter(adder, "adder");
 
-            ArgumentNullException.ThrowIfNull(attachableEventName);
-            _name = attachableEventName;
+            _name = attachableEventName ?? throw new ArgumentNullException(nameof(attachableEventName));
             _declaringType = schemaContext.GetXamlType(adder.DeclaringType);
             _reflector = reflector;
             _memberType = MemberType.Attachable;

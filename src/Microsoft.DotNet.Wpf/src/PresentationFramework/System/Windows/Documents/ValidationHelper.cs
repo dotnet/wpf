@@ -10,7 +10,6 @@ namespace System.Windows.Documents
 {
     using MS.Internal; // Invariant.Assert
     using System.ComponentModel;
-    using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Media;
 
@@ -30,15 +29,18 @@ namespace System.Windows.Documents
         // Throws an appropriate exception if a test fails.
         internal static void VerifyPosition(ITextContainer tree, ITextPointer position)
         {
-            VerifyPosition(tree, position);
+            VerifyPosition(tree, position, "position");
         }
         
         // Verifies a TextPointer is non-null and is associated with a given TextContainer.
         //
         // Throws an appropriate exception if a test fails.
-        internal static void VerifyPosition(ITextContainer container, ITextPointer position, [CallerArgumentExpression(nameof(position))] string paramName = null)
+        internal static void VerifyPosition(ITextContainer container, ITextPointer position, string paramName)
         {
-            ArgumentNullException.ThrowIfNull(position, paramName);
+            if (position == null)
+            {
+                throw new ArgumentNullException(paramName);
+            }
 
             if (position.TextContainer != container)
             {
@@ -94,11 +96,14 @@ namespace System.Windows.Documents
         // ...............................................................
 
         // Checks whether it is valid to insert the child object at passed position.
-        internal static void ValidateChild(TextPointer position, object child, [CallerArgumentExpression(nameof(child))] string paramName = null)
+        internal static void ValidateChild(TextPointer position, object child, string paramName)
         {
             Invariant.Assert(position != null);
 
-            ArgumentNullException.ThrowIfNull(child, paramName);
+            if (child == null)
+            {
+                throw new ArgumentNullException(paramName);
+            }
 
             if (!TextSchema.IsValidChild(/*position:*/position, /*childType:*/child.GetType()))
             {

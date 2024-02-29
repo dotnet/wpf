@@ -3318,6 +3318,11 @@ Chcete ho nahradit?</target>
         <target state="translated">Název {0} není platný pro identifikátor.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name nemůže být prázdný řetězec.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">{0} Name nenalezen.</target>
@@ -5176,6 +5181,11 @@ Chcete ho nahradit?</target>
       <trans-unit id="StreamObjectDisposed">
         <source>Current stream object was closed and disposed. Cannot access a closed stream.</source>
         <target state="translated">Aktuální objekt datového proudu byl právě zavřen a odstraněn. K zavřenému proudu není přístup.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">Parametr nemůže být řetězec o nulové délce.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIdOutOfSequence">

@@ -244,7 +244,13 @@ namespace System.Windows
 
         private static void RegisterParameterValidation(string name, Type propertyType, Type ownerType)
         {
-            ArgumentException.ThrowIfNullOrEmpty(name);
+            ArgumentNullException.ThrowIfNull(name);
+
+            if (name.Length == 0)
+            {
+                throw new ArgumentException(SR.StringEmpty, "name");
+            }
+
             ArgumentNullException.ThrowIfNull(ownerType);
             ArgumentNullException.ThrowIfNull(propertyType);
         }

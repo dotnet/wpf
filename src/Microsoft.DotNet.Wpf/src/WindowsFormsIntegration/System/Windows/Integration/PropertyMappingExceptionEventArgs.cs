@@ -21,7 +21,10 @@ namespace System.Windows.Forms.Integration
         public PropertyMappingExceptionEventArgs(Exception exception, string propertyName, object propertyValue) 
             : base(false, exception)
         {
-            ArgumentNullException.ThrowIfNull(exception);
+            if (exception == null)
+            {
+                throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "exception"));
+            }
             if (string.IsNullOrEmpty(propertyName))
             {
                 throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_ArgumentNullOrEmpty, "propertyName"));

@@ -1077,6 +1077,11 @@
         <target state="translated">“{0}”名称对标识符无效。</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name 不能为空字符串。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">未找到“{0}”Name。</target>

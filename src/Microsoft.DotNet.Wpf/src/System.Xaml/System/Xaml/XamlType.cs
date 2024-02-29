@@ -41,22 +41,18 @@ namespace System.Xaml
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
-            ArgumentNullException.ThrowIfNull(typeName);
-            ArgumentNullException.ThrowIfNull(schemaContext);
-            _name = typeName;
-            _schemaContext = schemaContext;
+            _name = typeName ?? throw new ArgumentNullException(nameof(typeName));
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
         }
 
         public XamlType(string unknownTypeNamespace, string unknownTypeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
             ArgumentNullException.ThrowIfNull(unknownTypeNamespace);
-            ArgumentNullException.ThrowIfNull(unknownTypeName);
-            ArgumentNullException.ThrowIfNull(schemaContext);
 
-            _name = unknownTypeName;
+            _name = unknownTypeName ?? throw new ArgumentNullException(nameof(unknownTypeName));
             _namespaces = new ReadOnlyCollection<string>(new string[] { unknownTypeNamespace });
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(typeArguments);
             _reflector = TypeReflector.UnknownReflector;
         }
@@ -74,11 +70,10 @@ namespace System.Xaml
         internal XamlType(string alias, Type underlyingType, XamlSchemaContext schemaContext, XamlTypeInvoker invoker, TypeReflector reflector)
         {
             ArgumentNullException.ThrowIfNull(underlyingType);
-            ArgumentNullException.ThrowIfNull(schemaContext);
 
             _reflector = reflector ?? new TypeReflector(underlyingType);
             _name = alias ?? GetTypeName(underlyingType);
-            _schemaContext = schemaContext;
+            _schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
             _typeArguments = GetTypeArguments(underlyingType, schemaContext);
             _underlyingType.Value = underlyingType;
             _reflector.Invoker = invoker;

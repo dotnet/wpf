@@ -102,7 +102,10 @@ namespace System.Windows.Forms.Integration
                 {
                     throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "propertyName"));
                 }
-                ArgumentNullException.ThrowIfNull(value, "translator");
+                if (value == null)
+                {
+                    throw new ArgumentNullException(string.Format(CultureInfo.CurrentCulture, SR.WFI_NullArgument, "translator"));
+                }
                 ThrowIfPropertyDoesntExistOnSource(propertyName);
                 _wrappedDictionary[propertyName] = value;    //This will replace an existing mapping, unlike Add.
                 Apply(propertyName);

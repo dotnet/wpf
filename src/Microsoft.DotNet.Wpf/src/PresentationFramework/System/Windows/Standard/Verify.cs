@@ -59,7 +59,17 @@ namespace Standard
         {
             // catch caller errors, mixing up the parameters.  Name should never be empty.
             Assert.IsNeitherNullNorEmpty(name);
-            ArgumentException.ThrowIfNullOrEmpty(value, name);
+
+            // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
+            const string errorMessage = "The parameter can not be either null or empty.";
+            if (null == value)
+            {
+                throw new ArgumentNullException(name, errorMessage);
+            }
+            if ("" == value)
+            {
+                throw new ArgumentException(errorMessage, name);
+            }
         }
 
         /// <summary>
@@ -74,7 +84,17 @@ namespace Standard
         {
             // catch caller errors, mixing up the parameters.  Name should never be empty.
             Assert.IsNeitherNullNorEmpty(name);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(value, name);
+
+            // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
+            const string errorMessage = "The parameter can not be either null or empty or consist only of white space characters.";
+            if (null == value)
+            {
+                throw new ArgumentNullException(name, errorMessage);
+            }
+            if ("" == value.Trim())
+            {
+                throw new ArgumentException(errorMessage, name);
+            }
         }
 
         /// <summary>Verifies that an argument is not null.</summary>
@@ -88,6 +108,20 @@ namespace Standard
             if (default(T).Equals(obj))
             {
                 throw new ArgumentException("The parameter must not be the default value.", name);
+            }
+        }
+
+        /// <summary>Verifies that an argument is not null.</summary>
+        /// <typeparam name="T">Type of the object to validate.  Must be a class.</typeparam>
+        /// <param name="obj">The object to validate.</param>
+        /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DebuggerStepThrough]
+        public static void IsNotNull<T>(T obj, string name) where T : class
+        {
+            if (null == obj)
+            {
+                throw new ArgumentNullException(name);
             }
         }
 
@@ -196,7 +230,7 @@ namespace Standard
         [DebuggerStepThrough]
         public static void UriIsAbsolute(Uri uri, string parameterName)
         {
-            ArgumentNullException.ThrowIfNull(uri, parameterName);
+            Verify.IsNotNull(uri, parameterName);
             if (!uri.IsAbsoluteUri)
             {
                 throw new ArgumentException("The URI must be absolute.", parameterName);
@@ -234,8 +268,8 @@ namespace Standard
         public static void TypeSupportsInterface(Type type, Type interfaceType, string parameterName)
         {
             Assert.IsNeitherNullNorEmpty(parameterName);
-            ArgumentNullException.ThrowIfNull(type);
-            ArgumentNullException.ThrowIfNull(interfaceType);
+            Verify.IsNotNull(type, "type");
+            Verify.IsNotNull(interfaceType, "interfaceType");
 
             if (type.GetInterface(interfaceType.Name) == null)
             {

@@ -667,6 +667,11 @@
         <target state="translated">데이터 개체에 최소한 하나의 서식이 있어야 합니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataObject_EmptyFormatNotAllowed">
+        <source>Empty string is not a valid value for parameter 'format'.</source>
+        <target state="translated">빈 문자열은 매개 변수 'format'에 대한 잘못된 값입니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataObject_FileDropListHasInvalidFileDropPath">
         <source>'{0}' file drop path is not valid.</source>
         <target state="translated">'{0}' 파일 드롭 경로가 잘못되었습니다.</target>
@@ -2982,6 +2987,11 @@
         <target state="translated">이 API를 수행하려면 먼저 BeginFigure를 호출해야 합니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="StrokeCollectionCountTooBig">
         <source>Maximum number of strokes is two.</source>
         <target state="translated">스트로크의 최대 수는 2입니다.</target>
@@ -3040,6 +3050,11 @@
       <trans-unit id="Stylus_PlugInIsDuplicated">
         <source>'{0}' already exists in the collection.</source>
         <target state="translated">'{0}'이(가) 컬렉션에 이미 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Stylus_PlugInIsNull">
+        <source>'{0}' must be non-null.</source>
+        <target state="translated">'{0}'은(는) null이 아니어야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="Stylus_PlugInNotExist">

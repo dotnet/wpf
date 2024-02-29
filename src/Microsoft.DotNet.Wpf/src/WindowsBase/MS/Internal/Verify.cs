@@ -40,6 +40,39 @@ namespace MS.Internal
         }
 
         /// <summary>
+        /// Ensure that an argument is neither null nor empty.
+        /// </summary>
+        /// <param name="value">The string to validate.</param>
+        /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
+        public static void IsNeitherNullNorEmpty(string value, string name)
+        {
+            // catch caller errors, mixing up the parameters.  Name should never be empty.
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
+            if (value == null)
+            {
+                throw new ArgumentNullException(name, SR.Verify_NeitherNullNorEmpty);
+            }
+            if (value == "")
+            {
+                throw new ArgumentException(SR.Verify_NeitherNullNorEmpty, name);
+            }
+        }
+
+        /// <summary>Verifies that an argument is not null.</summary>
+        /// <typeparam name="T">Type of the object to validate.  Must be a class.</typeparam>
+        /// <param name="obj">The object to validate.</param>
+        /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
+        public static void IsNotNull<T>(T obj, string name) where T : class
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(name);
+            }
+        }
+
+        /// <summary>
         /// Verifies the specified expression is true.  Throws an ArgumentException if it's not.
         /// </summary>
         /// <param name="expression">The expression to be verified as true.</param>
@@ -84,7 +117,7 @@ namespace MS.Internal
         /// <remarks>This method demands FileIOPermission(FileIOPermissionAccess.PathDiscovery)</remarks>
         public static void FileExists(string filePath, string parameterName)
         {
-            ArgumentException.ThrowIfNullOrEmpty(filePath, parameterName);
+            Verify.IsNeitherNullNorEmpty(filePath, parameterName);
 
             if (!File.Exists(filePath))
             {

@@ -35,8 +35,7 @@ namespace System.Windows.Markup
         /// </summary>
         public StaticExtension(string member)
         {
-            ArgumentNullException.ThrowIfNull(member);
-            _member = member;
+            _member = member ?? throw new ArgumentNullException(nameof(member));
         }
 
         /// <summary>
@@ -158,22 +157,14 @@ namespace System.Windows.Markup
         public string Member
         {
             get => _member;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
-                _member = value;
-            }
+            set => _member = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         [DefaultValue(null)]
         public Type MemberType
         {
             get => _memberType;
-            set
-            {
-                ArgumentNullException.ThrowIfNull(value);
-                _memberType = value;
-            }
+            set => _memberType = value ?? throw new ArgumentNullException(nameof(value));
         }
     }
 }

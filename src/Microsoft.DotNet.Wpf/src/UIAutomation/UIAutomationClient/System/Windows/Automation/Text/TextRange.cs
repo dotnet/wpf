@@ -451,7 +451,10 @@ namespace System.Windows.Automation.Text
         void ValidateRangeArgument(TextPatternRange range, string name)
         {
             // check if the argument is null
-            ArgumentNullException.ThrowIfNull(range, name);
+            if (range == null)
+            {
+                throw new ArgumentNullException(name);
+            }
 
             // check if the range comes from a different text pattern.
             if (!TextPattern.Compare(_pattern, range._pattern))

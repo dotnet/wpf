@@ -97,8 +97,7 @@ namespace System.Xaml
 
         void InitializeXamlXmlWriter(XmlWriter xmlWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
-            ArgumentNullException.ThrowIfNull(schemaContext);
-            this.schemaContext = schemaContext;
+            this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
 
             output = xmlWriter;
             this.settings = settings == null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;

@@ -53,7 +53,8 @@ namespace System.Collections.Specialized
         public static void RemoveListener(INotifyCollectionChanged source, IWeakEventListener listener)
         {
             /* for app-compat, allow RemoveListener(null, x) - it's a no-op 
-            ArgumentNullException.ThrowIfNull(source)
+            if (source == null)
+                throw new ArgumentNullException("source");
             */
             ArgumentNullException.ThrowIfNull(listener);
 

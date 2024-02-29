@@ -782,6 +782,11 @@
         <target state="translated">O nome '{0}' não é válido para o identificador.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">O nome não pode ser uma cadeia de caracteres vazia.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">O nome '{0}' não foi encontrado.</target>
@@ -1205,6 +1210,16 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Ajustes que possam ser atribuídos diretamente devem ter somente um nome.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">O parâmetro não pode ser uma cadeia de caracteres de comprimento zero.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringIsNullOrEmpty">
+        <source>The string is null or empty.</source>
+        <target state="translated">A cadeia de caracteres é nula ou vazia.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

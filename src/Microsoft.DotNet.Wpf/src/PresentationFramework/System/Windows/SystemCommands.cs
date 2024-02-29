@@ -41,25 +41,25 @@ namespace System.Windows
 
         public static void CloseWindow(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             _PostSystemCommand(window, SC.CLOSE);
         }
 
         public static void MaximizeWindow(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             _PostSystemCommand(window, SC.MAXIMIZE);
         }
 
         public static void MinimizeWindow(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             _PostSystemCommand(window, SC.MINIMIZE);
         }
 
         public static void RestoreWindow(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             _PostSystemCommand(window, SC.RESTORE);
         }
 
@@ -67,7 +67,7 @@ namespace System.Windows
         /// <param name="screenLocation">The location to display the system menu, in logical screen coordinates.</param>
         public static void ShowSystemMenu(Window window, Point screenLocation)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             DpiScale dpi = window.GetDpi();
             ShowSystemMenuPhysicalCoordinates(window, DpiHelper.LogicalPixelsToDevice(screenLocation, dpi.DpiScaleX, dpi.DpiScaleY));
         }
@@ -78,7 +78,7 @@ namespace System.Windows
             const uint TPM_LEFTBUTTON = 0x0;
             const uint TPM_RIGHTBUTTON = 0x2;
 
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             IntPtr hwnd = new WindowInteropHelper(window).Handle;
             if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
             {

@@ -93,7 +93,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static WindowChrome GetWindowChrome(Window window)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             return (WindowChrome)window.GetValue(WindowChromeProperty);
         }
 
@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetWindowChrome(Window window, WindowChrome chrome)
         {
-            ArgumentNullException.ThrowIfNull(window);
+            Verify.IsNotNull(window, "window");
             window.SetValue(WindowChromeProperty, chrome);
         }
 
@@ -115,7 +115,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static bool GetIsHitTestVisibleInChrome(IInputElement inputElement)
         {
-            ArgumentNullException.ThrowIfNull(inputElement);
+            Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetIsHitTestVisibleInChrome(IInputElement inputElement, bool hitTestVisible)
         {
-            ArgumentNullException.ThrowIfNull(inputElement);
+            Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
@@ -147,7 +147,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static ResizeGripDirection GetResizeGripDirection(IInputElement inputElement)
         {
-            ArgumentNullException.ThrowIfNull(inputElement);
+            Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
@@ -160,7 +160,7 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetResizeGripDirection(IInputElement inputElement, ResizeGripDirection direction)
         {
-            ArgumentNullException.ThrowIfNull(inputElement);
+            Verify.IsNotNull(inputElement, "inputElement");
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {

@@ -262,7 +262,10 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(position);
 
             // LocalValueEnumerator is a struct.
-            // ArgumentNullException.ThrowIfNull(values)
+            // if (values == null)
+            // {
+            //     throw new ArgumentNullException("values");
+            // }
 
             EmptyDeadPositionList();
 

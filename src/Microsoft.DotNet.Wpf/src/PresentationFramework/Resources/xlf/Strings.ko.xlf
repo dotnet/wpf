@@ -3318,6 +3318,11 @@ Do you want to replace it?</source>
         <target state="translated">식별자에 대한 '{0}' 이름이 잘못되었습니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name은 빈 문자열일 수 없습니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Name '{0}'을(를) 찾을 수 없습니다.</target>
@@ -5176,6 +5181,11 @@ Do you want to replace it?</source>
       <trans-unit id="StreamObjectDisposed">
         <source>Current stream object was closed and disposed. Cannot access a closed stream.</source>
         <target state="translated">현재 스트림 개체가 닫히고 삭제되었습니다. 닫힌 스트림에 액세스할 수 없습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="StringEmpty">
+        <source>Parameter cannot be a zero-length string.</source>
+        <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIdOutOfSequence">

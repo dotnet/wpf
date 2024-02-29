@@ -1077,6 +1077,11 @@
         <target state="translated">'{0}' 名は、識別子に対して無効です。</target>
         <note />
       </trans-unit>
+      <trans-unit id="NameScopeNameNotEmptyString">
+        <source>Name cannot be an empty string.</source>
+        <target state="translated">Name は空の文字列にできません。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Name '{0}' が見つかりません。</target>

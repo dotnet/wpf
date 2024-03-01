@@ -631,7 +631,6 @@
     <Compile Include="System\Windows\Controls\Expander.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentReader.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentScrollViewer.cs" />
-    <!-- <Compile Include="System\Windows\Controls\FluentWindow.cs" /> -->
     <Compile Include="System\Windows\Controls\Frame.cs" />
     <Compile Include="System\Windows\Controls\Grid.cs" />
     <Compile Include="System\Windows\Controls\GridSplitter.cs" />
@@ -786,9 +785,6 @@
     <Compile Include="System\Windows\Controls\TextChange.cs" />
     <Compile Include="System\Windows\Controls\TextChangedEventArgs.cs" />
     <Compile Include="System\Windows\Controls\TextRangeAdaptor.cs" />
-    <Compile Include="System\Windows\Controls\TitleBar.cs" />
-    <Compile Include="System\Windows\Controls\TitleBarButton.cs" />
-    <Compile Include="System\Windows\Controls\TitleBarButtonType.cs" />
     <Compile Include="System\Windows\Controls\TextSearch.cs" />
     <Compile Include="System\Windows\Controls\ToolBar.cs" />
     <Compile Include="System\Windows\Controls\ToolBarTray.cs" />

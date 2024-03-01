@@ -101,6 +101,7 @@ internal static class WindowBackdrop
 
         // BUG - This is causing TitleBar caption to be removed for normal windows
         //_ = UnsafeNativeMethodsWindow.RemoveWindowCaption(hWnd);
+        EnableGlassFrame(hWnd, backdropType);
 
         // 22H1
         if (!Utility.IsOSWindows11Insider1OrNewer)
@@ -223,6 +224,71 @@ internal static class WindowBackdrop
         return true;
     }
 
+    internal static bool EnableGlassFrame(System.Windows.Window window, WindowBackdropType backdropType)
+    {
+        if (window is null)
+        {
+            return false;
+        }
+
+        if (window.IsLoaded)
+        {
+            IntPtr windowHandle = new WindowInteropHelper(window).Handle;
+
+            if (windowHandle == IntPtr.Zero)
+            {
+                return false;
+            }
+            return EnableGlassFrame(windowHandle, backdropType);
+        }
+
+        window.Loaded += (sender, _) =>
+        {
+            IntPtr windowHandle =
+                new WindowInteropHelper(sender as System.Windows.Window ?? null)?.Handle ?? IntPtr.Zero;
+
+            if (windowHandle == IntPtr.Zero)
+            {
+                return;
+            }
+
+            EnableGlassFrame(windowHandle, backdropType);
+        };
+
+        return true;
+    }
+
+    private static bool EnableGlassFrame(IntPtr hWnd, WindowBackdropType backdropType)
+    {
+        if (hWnd == IntPtr.Zero)
+        {
+            return false;
+        }
+
+        if (!NativeMethods.IsWindow(hWnd))
+        {
+            return false;
+        }
+
+        if(backdropType == WindowBackdropType.Mica)
+        {
+            Window window = (Window)HwndSource.FromHwnd(hWnd).RootVisual;
+            DpiScale dpi = window.GetDpi();
+            Thickness deviceGlassThickness = Standard.DpiHelper.LogicalThicknessToDevice(new Thickness(-1), dpi.DpiScaleX, dpi.DpiScaleY);
+            var dwmMargin = new Standard.MARGINS
+            {
+                // err on the side of pushing in glass an extra pixel.
+                cxLeftWidth = (int)Math.Ceiling(deviceGlassThickness.Left),
+                cxRightWidth = (int)Math.Ceiling(deviceGlassThickness.Right),
+                cyTopHeight = (int)Math.Ceiling(deviceGlassThickness.Top),
+                cyBottomHeight = (int)Math.Ceiling(deviceGlassThickness.Bottom),
+            };                    
+            Dwmapi.DwmExtendFrameIntoClientArea(hWnd, ref dwmMargin);
+        } 
+
+        return true;
+    }
+
     private static bool ApplyDwmwWindowAttrubute(IntPtr hWnd, Dwmapi.DWMSBT dwmSbt)
     {
         if (hWnd == IntPtr.Zero)
@@ -334,4 +400,6 @@ internal static class WindowBackdrop
             return new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xFA, 0xFA));
         }
     }
+
+
 }

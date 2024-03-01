@@ -559,45 +559,6 @@ namespace System.Windows
         #region Public Properties
 
         /// <summary>
-        /// Property for <see cref="WindowBackdropType"/>.
-        /// </summary>
-        public static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
-            nameof(WindowBackdropType),
-            typeof(WindowBackdropType),
-            typeof(Window),
-            new PropertyMetadata(WindowBackdropType.None, OnBackdropTypeChanged)
-        );
-
-        /// <summary>
-        /// Property for <see cref="ExtendsContentIntoTitleBar"/>.
-        /// </summary>
-        public static readonly DependencyProperty ExtendsContentIntoTitleBarProperty =
-            DependencyProperty.Register(
-                nameof(ExtendsContentIntoTitleBar),
-                typeof(bool),
-                typeof(Window),
-                new PropertyMetadata(false, OnExtendsContentIntoTitleBarChanged)
-            );
-
-        /// <summary>
-        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
-        /// </summary>
-        public WindowBackdropType WindowBackdropType
-        {
-            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
-            set => SetValue(WindowBackdropTypeProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value that specifies whether the default title bar of the window should be hidden to create space for app content.
-        /// </summary>
-        public bool ExtendsContentIntoTitleBar
-        {
-            get => (bool)GetValue(ExtendsContentIntoTitleBarProperty);
-            set => SetValue(ExtendsContentIntoTitleBarProperty, value);
-        }
-
-        /// <summary>
         /// DependencyProperty for TaskbarItemInfo
         /// </summary>
         public static readonly DependencyProperty TaskbarItemInfoProperty = DependencyProperty.Register(
@@ -1945,97 +1906,11 @@ namespace System.Windows
         /// <param name="e"></param>
         protected virtual void OnSourceInitialized(EventArgs e)
         {
-            OnExtendsContentIntoTitleBarChanged(default, ExtendsContentIntoTitleBar);
-            OnBackdropTypeChanged(default, WindowBackdropType);
-
             VerifyContextAndObjectState();
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
 
-        /// <summary>
-        /// Private <see cref="WindowBackdropType"/> property callback.
-        /// </summary>
-        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not Window window)
-                return;
-
-            if (e.OldValue == e.NewValue)
-                return;
-
-            window.OnBackdropTypeChanged((WindowBackdropType)e.OldValue, (WindowBackdropType)e.NewValue);
-        }
-
-        /// <summary>
-        /// This virtual method is called when <see cref="WindowBackdropType"/> is changed.
-        /// </summary>
-        protected virtual void OnBackdropTypeChanged(WindowBackdropType oldValue, WindowBackdropType newValue)
-        {
-            if (Application.IsThemeHighContrast())
-            {
-                newValue = WindowBackdropType.None;
-            }
-
-            if (InteropHelper.Handle == IntPtr.Zero)
-                return;
-
-            if (newValue == WindowBackdropType.None)
-            {
-                WindowBackdrop.RemoveBackdrop(this);
-                return;
-            }
-
-            if (!ExtendsContentIntoTitleBar)
-                throw new InvalidOperationException(
-                    $"Cannot apply backdrop effect if {nameof(ExtendsContentIntoTitleBar)} is false."
-                );
-
-            if (WindowBackdrop.IsSupported(newValue) && WindowBackdrop.RemoveBackground(this))
-                WindowBackdrop.ApplyBackdrop(this, newValue);
-        }
-
-        /// <summary>
-        /// Private <see cref="ExtendsContentIntoTitleBar"/> property callback.
-        /// </summary>
-        private static void OnExtendsContentIntoTitleBarChanged(
-            DependencyObject d,
-            DependencyPropertyChangedEventArgs e
-        )
-        {
-            if (d is not Window window)
-                return;
-
-            if (e.OldValue == e.NewValue)
-                return;
-
-            window.OnExtendsContentIntoTitleBarChanged((bool)e.OldValue, (bool)e.NewValue);
-        }
-
-        /// <summary>
-        /// This virtual method is called when <see cref="ExtendsContentIntoTitleBar"/> is changed.
-        /// </summary>
-        protected virtual void OnExtendsContentIntoTitleBarChanged(bool oldValue, bool newValue)
-        {
-            WindowStyle = WindowStyle.SingleBorderWindow;
-            //AllowsTransparency = true;
-
-            WindowChrome.SetWindowChrome(
-                this,
-                new WindowChrome
-                {
-                    CaptionHeight = 0,
-                    CornerRadius = default,
-                    GlassFrameThickness = new Thickness(-1),
-                    ResizeBorderThickness = ResizeMode == ResizeMode.NoResize ? default : new Thickness(4),
-                    UseAeroCaptionButtons = false
-                }
-            );
-
-            UnsafeNativeMethodsWindow.RemoveWindowTitlebarContents(this);
-            ////WindowStyleProperty.OverrideMetadata(typeof(FluentWindow), new FrameworkPropertyMetadata(WindowStyle.SingleBorderWindow));
-            ////AllowsTransparencyProperty.OverrideMetadata(typeof(FluentWindow), new FrameworkPropertyMetadata(false));
-        }
 
         /// <summary>
         ///     This even fires when window is activated. This event is non cancelable and is

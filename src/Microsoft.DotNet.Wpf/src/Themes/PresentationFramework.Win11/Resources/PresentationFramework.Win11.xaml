@@ -72,7 +72,5 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Underline.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/UserControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Window.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/TitleBar.xaml" />
-        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/FluentWindow.xaml" /> -->
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

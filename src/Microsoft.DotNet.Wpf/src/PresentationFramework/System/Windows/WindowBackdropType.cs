@@ -6,7 +6,7 @@
 // ReSharper disable once CheckNamespace
 namespace System.Windows;
 
-public enum WindowBackdropType
+internal enum WindowBackdropType
 {
     /// <summary>
     /// No backdrop effect.

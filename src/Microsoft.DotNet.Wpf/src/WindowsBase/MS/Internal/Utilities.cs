@@ -33,7 +33,8 @@ namespace MS.Internal
         {
             get { return _osVersion >= new Version(6, 2); }
         }
-                /// <summary>
+        
+        /// <summary>
         /// Whether the operating system version is greater than or equal to 10.0* (build 10240).
         /// </summary>
         public static bool IsOSWindows10OrNewer => _osVersion.Build >= 10240;
@@ -42,6 +43,7 @@ namespace MS.Internal
         /// Whether the operating system version is greater than or equal to 10.0* (build 22000).
         /// </summary>
         public static bool IsOSWindows11OrNewer => _osVersion.Build >= 22000;
+        
         internal static bool IsCompositionEnabled
         {
             get

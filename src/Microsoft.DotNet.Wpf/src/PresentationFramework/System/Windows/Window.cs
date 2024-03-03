@@ -1911,9 +1911,8 @@ namespace System.Windows
             if (handler != null) handler(this, e);
         }
 
-
         /// <summary>
-        ///     This even fires when window is activated. This event is non cancelable and is
+        ///     This event fires when window is activated. This event is non cancelable and is
         ///     for user infromational purposes
         /// </summary>
         /// <remarks>

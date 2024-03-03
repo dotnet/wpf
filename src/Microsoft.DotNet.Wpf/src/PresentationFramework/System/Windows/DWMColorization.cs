@@ -38,7 +38,7 @@ internal static class DWMColorization
     /// </summary>
     /// <returns>Updated <see cref="System.Windows.Media.Color"/> Accent Color.</returns>
     /// <exception cref="NotImplementedException"></exception>
-    internal static Color GetNewAccentColor()
+    internal static Color GetSystemAccentColor()
     {
         var dwmValue = (Int32)Registry.GetValue(
             _dwmKey,
@@ -66,7 +66,7 @@ internal static class DWMColorization
     /// </summary>
     internal static void ApplyAccentColors()
     {
-        Color systemAccent = GetNewAccentColor();
+        Color systemAccent = GetSystemAccentColor();
 
         Color primaryAccent;
         Color secondaryAccent;

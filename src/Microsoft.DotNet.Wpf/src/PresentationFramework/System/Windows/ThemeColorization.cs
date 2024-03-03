@@ -1,7 +1,7 @@
+using Standard;
 using System.Windows.Appearance;
 using System.Windows.Media;
 using Microsoft.Win32;
-using MS.Internal;
 
 namespace System.Windows;
 
@@ -96,36 +96,36 @@ internal static class ThemeColorization
     /// </summary>
     internal static void ApplyTheme()
     {
-        string themeToApply = GetNewTheme();
+        string themeToApply = GetSystemTheme();
         
         Window currentWindow = Application.Current.MainWindow;
 
-        if (themeToApply.Contains("dark") && Utilities.IsOSWindows11OrNewer)
+        if (themeToApply.Contains("dark") && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
         }
-        else if(themeToApply.Contains("hcwhite") && Utilities.IsOSWindows11OrNewer)
+        else if(themeToApply.Contains("hcwhite") && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcwhite.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
         }
-        else if(themeToApply.Contains("hcblack") && Utilities.IsOSWindows11OrNewer)
+        else if(themeToApply.Contains("hcblack") && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcblack.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
         }
-        else if (themeToApply.Contains("hc1") && Utilities.IsOSWindows11OrNewer)
+        else if (themeToApply.Contains("hc1") && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc1.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
         }
-        else if (themeToApply.Contains("hc2") && Utilities.IsOSWindows11OrNewer)
+        else if (themeToApply.Contains("hc2") && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc2.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
         }
-        else if (Utilities.IsOSWindows11OrNewer)
+        else if (Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Light, WindowBackdropType.Mica, false);
@@ -138,16 +138,16 @@ internal static class ThemeColorization
     /// Fetches registry value
     /// </summary>
     /// <returns>string indicating the current theme</returns>
-    internal static string GetNewTheme()
+    internal static string GetSystemTheme()
     {
-        string newTheme = Registry.GetValue(
+        string systemTheme = Registry.GetValue(
             _regThemeKey,
             "CurrentTheme",
             "aero.theme"
             ) as string
             ?? String.Empty;
 
-        return newTheme;
+        return systemTheme;
     }
     #endregion
 }

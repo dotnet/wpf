@@ -1416,9 +1416,9 @@ namespace System.Windows
                     if(ThemeColorization.AppInitContainsNewTheme)
                     {
                         string currentApplicationTheme = ThemeColorization.CurrentApplicationTheme;
-                        string themeToApply = ThemeColorization.GetNewTheme();
+                        string themeToApply = ThemeColorization.GetSystemTheme();
                         Color currentApplicationAccentColor = DWMColorization.CurrentApplicationAccentColor;
-                        Color accentColorToApply = DWMColorization.GetNewAccentColor();
+                        Color accentColorToApply = DWMColorization.GetSystemAccentColor();
 
                         if (themeToApply != currentApplicationTheme || accentColorToApply != currentApplicationAccentColor)
                         {

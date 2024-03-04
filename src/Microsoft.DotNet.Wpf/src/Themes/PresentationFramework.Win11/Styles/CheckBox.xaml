@@ -86,7 +86,8 @@
                                             FontWeight="Bold"
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
                                             FontFamily="Segoe Fluent Icons"
-                                            Visibility="Collapsed">&#xE73E;</TextBlock>
+                                            Visibility="Collapsed"
+                                            Text="&#xE73E;" />
                                     </Grid>
                                 </Border>
                             </Border>

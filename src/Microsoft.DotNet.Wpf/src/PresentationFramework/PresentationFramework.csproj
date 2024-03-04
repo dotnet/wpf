@@ -1096,7 +1096,6 @@
     <Compile Include="System\Windows\EventSetterHandlerConverter.cs" />
     <Compile Include="System\Windows\EventTrigger.cs" />
     <Compile Include="System\Windows\ExitEventArgs.cs" />
-    <Compile Include="System\Windows\Extensions\ColorExtensions.cs" />
     <Compile Include="System\Windows\FigureLength.cs" />
     <Compile Include="System\Windows\FigureLengthConverter.cs" />
     <Compile Include="System\Windows\FontSizeConverter.cs" />

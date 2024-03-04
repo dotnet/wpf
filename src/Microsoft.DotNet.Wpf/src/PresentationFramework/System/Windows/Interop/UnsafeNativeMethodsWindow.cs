@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Hardware;
 using Standard;
 
 namespace System.Windows.Interop;
@@ -421,77 +420,6 @@ internal static class UnsafeNativeMethodsWindow
             ref wtaOptions,
             (uint)Marshal.SizeOf(typeof(WTA_OPTIONS))
         );
-
-        return true;
-    }
-
-    public static bool ExtendClientAreaIntoTitleBar(Window window)
-    {
-        if (window is null)
-        {
-            return false;
-        }
-
-        var windowHandle = new WindowInteropHelper(window).Handle;
-
-        return ExtendClientAreaIntoTitleBar(windowHandle);
-    }
-
-    public static bool ExtendClientAreaIntoTitleBar(IntPtr hWnd)
-    {
-        // !! EXPERIMENTAl
-
-        // NOTE:
-        // WinRt has ExtendContentIntoTitlebar, but it needs some digging
-
-        if (hWnd == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(hWnd))
-        {
-            return false;
-        }
-
-        // #1 Remove titlebar elements
-        var wtaOptions = new WTA_OPTIONS()
-        {
-            dwFlags = (WTNCA.NODRAWCAPTION | WTNCA.NODRAWICON | WTNCA.NOSYSMENU),
-            dwMask = WTNCA.VALIDBITS
-        };
-
-
-        NativeMethods.SetWindowThemeAttribute(
-                hWnd,
-                WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
-                ref wtaOptions,
-                (uint)Marshal.SizeOf(typeof(WTA_OPTIONS))
-            );
-
-        DisplayDpi windowDpi = DpiHelper.GetWindowDpi(hWnd);
-
-        // #2 Extend glass frame
-        Thickness deviceGlassThickness = DpiHelper.LogicalThicknessToDevice(
-            new Thickness(-1, -1, -1, -1),
-            windowDpi.DpiScaleX,
-            windowDpi.DpiScaleY
-        );
-
-        var dwmMargin = new MARGINS
-        {
-            // err on the side of pushing in glass an extra pixel.
-            cxLeftWidth = (int)Math.Ceiling(deviceGlassThickness.Left),
-            cxRightWidth = (int)Math.Ceiling(deviceGlassThickness.Right),
-            cyTopHeight = (int)Math.Ceiling(deviceGlassThickness.Top),
-            cyBottomHeight = (int)Math.Ceiling(deviceGlassThickness.Bottom),
-        };
-
-        // #3 Extend client area
-        Dwmapi.DwmExtendFrameIntoClientArea(hWnd, ref dwmMargin);
-
-        // #4 Clear rounding region
-        NativeMethods.SetWindowRgn(hWnd, IntPtr.Zero, NativeMethods.IsWindowVisible(hWnd));
 
         return true;
     }

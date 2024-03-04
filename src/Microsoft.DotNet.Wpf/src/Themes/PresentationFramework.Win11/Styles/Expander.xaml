@@ -3,7 +3,7 @@
     If a copy of the MIT was not distributed with this file, You can obtain one at https://opensource.org/licenses/MIT.
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
     All Rights Reserved.
-    
+
     Based on Microsoft XAML for Win UI
     Copyright (c) Microsoft Corporation. All Rights Reserved.
 -->
@@ -17,10 +17,10 @@
 
     <Thickness x:Key="ExpanderPadding">11,11,11,11</Thickness>
     <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
-    <system:Double x:Key="ExpanderChevronSize">16.0</system:Double>
+    <system:Double x:Key="ExpanderChevronSize">12.0</system:Double>
     <controls:AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
     <system:String x:Key="ExpanderChevronUpGlyph">&#xE70E;</system:String>
-    <system:String x:Key="ExpanderChevronDownGlyph">&#xE70D;</system:String>    
+    <system:String x:Key="ExpanderChevronDownGlyph">&#xE70D;</system:String>
     <system:String x:Key="ExpanderChevronLeftGlyph">&#xE76B;</system:String>
     <system:String x:Key="ExpanderChevronRightGlyph">&#xE76C;</system:String>
 
@@ -47,12 +47,13 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <FontIcon
+                <TextBlock
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
-                    Glyph="{StaticResource ExpanderChevronDownGlyph}" />
+                    HorizontalAlignment="Center"
+                    Text="{StaticResource ExpanderChevronDownGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -106,12 +107,13 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <FontIcon
+                <TextBlock
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
-                    Glyph="{StaticResource ExpanderChevronUpGlyph}" />
+                    HorizontalAlignment="Center"
+                    Text="{StaticResource ExpanderChevronUpGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -165,12 +167,13 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <FontIcon
-                    x:Name="ControlChevronIcon"
-                    FontSize="{StaticResource ExpanderChevronSize}"
-                    Foreground="{TemplateBinding Foreground}"
-                    FontFamily="Segoe Fluent Icons"
-                    Glyph="{StaticResource ExpanderChevronLeftGlyph}" />
+                    <TextBlock
+                        x:Name="ControlChevronIcon"
+                        FontSize="{StaticResource ExpanderChevronSize}"
+                        Foreground="{TemplateBinding Foreground}"
+                        FontFamily="Segoe Fluent Icons"
+                        HorizontalAlignment="Center"
+                        Text="{StaticResource ExpanderChevronLeftGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -224,12 +227,13 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                <FontIcon
+                <TextBlock
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
-                    Glyph="{StaticResource ExpanderChevronRightGlyph}" />
+                    HorizontalAlignment="Center"
+                    Text="{StaticResource ExpanderChevronRightGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -445,7 +449,7 @@
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
-                        
+
                         <!-- Left Expansion Animations -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -490,7 +494,7 @@
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
-                        
+
                         <!-- Right Expansion Animations -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -568,7 +572,7 @@
                                     TargetName="ContentPresenterBorder" />
                         </Trigger>
 
-                        <Trigger Property="ExpandDirection" 
+                        <Trigger Property="ExpandDirection"
                                  Value="Down">
                             <Setter Property="RenderTransform"
                                     Value="{DynamicResource HeightAnimation}"

@@ -34,12 +34,13 @@
                         <Grid.RenderTransform>
                             <RotateTransform Angle="0" />
                         </Grid.RenderTransform>
-                        <FontIcon
+                        <TextBlock
                             x:Name="ChevronIcon"
                             VerticalAlignment="Center"
                             FontSize="{StaticResource TreeViewItemChevronSize}"
                             FontFamily="Segoe Fluent Icons"
-                            Glyph="{StaticResource TreeViewChevronRightGlyph}" />
+                            HorizontalAlignment="Center"
+                            Text="{StaticResource TreeViewChevronRightGlyph}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">

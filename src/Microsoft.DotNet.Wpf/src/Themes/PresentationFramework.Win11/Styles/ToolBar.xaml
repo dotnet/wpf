@@ -161,12 +161,12 @@
                         CornerRadius="0,3,3,0"
                         SnapsToDevicePixels="true">
                         <Grid>
-                            <FontIcon
+                            <TextBlock
                                 Margin="0"
                                 VerticalAlignment="Bottom"
                                 Foreground="{TemplateBinding Foreground}"
                                 FontFamily="Segoe Fluent Icons"
-                                Glyph="{StaticResource ToolBarChevronDownGlyph}" />
+                                Text="{StaticResource ToolBarChevronDownGlyph}" />
                             <ContentPresenter />
                         </Grid>
                         <!--

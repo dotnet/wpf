@@ -11,7 +11,6 @@ namespace Standard
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Interop;
-    using System.Windows.Hardware;
     using System.Runtime.InteropServices;
      using MS.Internal.Interop;
     using MS.Internal.PresentationFramework;
@@ -23,78 +22,6 @@ namespace Standard
         private static Matrix _transformToDevice;
         [ThreadStatic]
         private static Matrix _transformToDip;
-
-        /// <summary>
-        /// Default DPI value.
-        /// </summary>
-        internal const int DefaultDpi = 96;
-
-        /// <summary>
-        /// Occurs when application DPI is changed.
-        /// </summary>
-        //public static event EventHandler<DpiChangedEventArgs> DpiChanged;
-
-        /// <summary>
-        /// Gets DPI of the selected <see cref="Window"/>.
-        /// </summary>
-        /// <param name="window">The window that you want to get information about.</param>
-        public static DisplayDpi GetWindowDpi(Window window)
-        {
-            if (window is null)
-            {
-                return new DisplayDpi(DefaultDpi, DefaultDpi);
-            }
-
-            return GetWindowDpi(new WindowInteropHelper(window).Handle);
-        }
-
-        /// <summary>
-        /// Gets DPI of the selected <see cref="Window"/> based on it's handle.
-        /// </summary>
-        /// <param name="windowHandle">Handle of the window that you want to get information about.</param>
-        public static DisplayDpi GetWindowDpi(IntPtr windowHandle)
-        {
-            if (windowHandle == IntPtr.Zero || !UnsafeNativeMethodsWindow.IsValidWindow(windowHandle))
-            {
-                return new DisplayDpi(DefaultDpi, DefaultDpi);
-            }
-
-            var windowDpi = (int)SafeNativeMethods.GetDpiForWindow( new HandleRef(null,windowHandle));
-
-            return new DisplayDpi(windowDpi, windowDpi);
-        }
-
-        /// <summary>
-        /// Gets the DPI values from <see cref="SystemParameters"/>.
-        /// </summary>
-        /// <returns>The DPI values from <see cref="SystemParameters"/>. If the property cannot be accessed, the default value <see langword="96"/> is returned.</returns>
-        public static DisplayDpi GetSystemDpi()
-        {
-            System.Reflection.PropertyInfo dpiXProperty = typeof(SystemParameters).GetProperty(
-                "DpiX",
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static
-            );
-
-            if (dpiXProperty == null)
-            {
-                return new DisplayDpi(DefaultDpi, DefaultDpi);
-            }
-
-            System.Reflection.PropertyInfo dpiYProperty = typeof(SystemParameters).GetProperty(
-                "Dpi",
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static
-            );
-
-            if (dpiYProperty == null)
-            {
-                return new DisplayDpi(DefaultDpi, DefaultDpi);
-            }
-
-            return new DisplayDpi(
-                (int)dpiXProperty.GetValue(null, null)!,
-                (int)dpiYProperty.GetValue(null, null)!
-            );
-        }
 
         /// <summary>
         /// Convert a point in device independent pixels (1/96") to a point in the system coordinates.

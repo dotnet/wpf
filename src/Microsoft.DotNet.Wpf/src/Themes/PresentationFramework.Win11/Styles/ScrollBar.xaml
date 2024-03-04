@@ -41,14 +41,14 @@
                         Margin="{TemplateBinding Margin}"
                         Background="{DynamicResource ScrollBarButtonBackground}"
                         CornerRadius="6">
-                        <FontIcon
+                        <TextBlock
                             Margin="0,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
                             FontFamily="Segoe Fluent Icons"
-                            Glyph="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

@@ -2513,6 +2513,21 @@ namespace System.Windows
 
             if (Utilities.IsOSWindows11OrNewer && ThemeColorization.AppInitContainsNewTheme)
             {
+                // Loading the required theme dictionary to set-up resources initially
+                string themeToApply = ThemeColorization.GetSystemTheme();
+                ResourceDictionary themeDictionary = new ResourceDictionary();
+
+                if(Application.IsThemeDark())
+                {
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/dark.xaml", UriKind.Absolute);
+                }
+                else 
+                {
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/light.xaml", UriKind.Absolute);
+                }
+
+                Application.Current.Resources.MergedDictionaries.Add(themeDictionary);
+
                 // Initializing the application window with current system theme
                 // This is one time initialization that updates the resourcedictionary and 
                 // calls WindowBackgroundManager to update its Background based on current SystemTheme

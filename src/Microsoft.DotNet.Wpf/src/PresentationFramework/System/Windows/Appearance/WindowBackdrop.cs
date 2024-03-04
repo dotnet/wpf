@@ -90,7 +90,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (Application.isThemeDark())
+        if (Application.IsThemeDark())
         {
             _ = UnsafeNativeMethodsWindow.ApplyWindowDarkMode(hWnd);
         }
@@ -391,7 +391,7 @@ internal static class WindowBackdrop
                 return new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFA, 0xEF));
             }
         }
-        if(Application.isThemeDark())
+        if(Application.IsThemeDark())
         {
             return new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
         }

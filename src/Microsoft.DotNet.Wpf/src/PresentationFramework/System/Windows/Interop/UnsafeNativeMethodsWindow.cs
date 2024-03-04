@@ -21,46 +21,6 @@ namespace System.Windows.Interop;
 internal static class UnsafeNativeMethodsWindow
 {
 
-     /// <summary>
-    /// Tries to set the <see cref="Window"/> corner preference.
-    /// </summary>
-    /// <param name="window">Selected window.</param>
-    /// <param name="cornerPreference">Window corner preference.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    // public static bool ApplyWindowCornerPreference(Window window, WindowCornerPreference cornerPreference) =>
-    //     GetHandle(window, out IntPtr windowHandle)
-    //     && ApplyWindowCornerPreference(windowHandle, cornerPreference);
-
-    /// <summary>
-    /// Tries to set the corner preference of the selected window.
-    /// </summary>
-    /// <param name="handle">Selected window handle.</param>
-    /// <param name="cornerPreference">Window corner preference.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    // public static bool ApplyWindowCornerPreference(IntPtr handle, WindowCornerPreference cornerPreference)
-    // {
-    //     if (handle == IntPtr.Zero)
-    //     {
-    //         return false;
-    //     }
-
-    //     if (!NativeMethods.IsWindow(handle))
-    //     {
-    //         return false;
-    //     }
-
-    //     int pvAttribute = (int)UnsafeReflection.Cast(cornerPreference);
-
-    //     // TODO: Validate HRESULT
-    //     _ = Dwmapi.DwmSetWindowAttribute(
-    //         handle,
-    //         Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
-    //         ref pvAttribute,
-    //         Marshal.SizeOf(typeof(int))
-    //     );
-
-    //     return true;
-    // }
     /// <summary>
     /// Tries to remove ImmersiveDarkMode effect from the <see cref="Window"/>.
     /// </summary>
@@ -94,7 +54,6 @@ internal static class UnsafeNativeMethodsWindow
             dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DMWA_USE_IMMERSIVE_DARK_MODE_OLD;
         }
 
-        // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));
 
         return true;
@@ -133,61 +92,9 @@ internal static class UnsafeNativeMethodsWindow
             dwAttribute = Dwmapi.DWMWINDOWATTRIBUTE.DMWA_USE_IMMERSIVE_DARK_MODE_OLD;
         }
 
-        // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));
 
         return true;
-    }
-
-    /// <summary>
-    /// Tries to remove titlebar from selected <see cref="Window"/>.
-    /// </summary>
-    /// <param name="window">The window to which the effect is to be applied.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool RemoveWindowTitlebarContents(Window window)
-    {
-        if (window == null)
-        {
-            return false;
-        }
-
-        if (window.IsLoaded)
-        {
-            return GetHandle(window, out IntPtr windowHandle) && RemoveWindowTitlebarContents(windowHandle);
-        }
-
-        window.Loaded += (sender, _) =>
-        {
-            GetHandle(sender as Window, out IntPtr windowHandle);
-            RemoveWindowTitlebarContents(windowHandle);
-        };
-
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to remove titlebar from selected window handle.
-    /// </summary>
-    /// <param name="handle">Window handle.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool RemoveWindowTitlebarContents(IntPtr handle)
-    {
-        if (handle == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(handle))
-        {
-            return false;
-        }
-
-        var windowStyleLong = NativeMethods.GetWindowLongPtr(handle, GWL.STYLE);
-        windowStyleLong &= ~(int)WS.SYSMENU;
-
-        var result = SetWindowLong(handle, GWL.STYLE, windowStyleLong);
-
-        return result.ToInt64() > 0x0;
     }
 
     /// <summary>
@@ -215,7 +122,6 @@ internal static class UnsafeNativeMethodsWindow
             return false;
         }
 
-        // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(
             handle,
             Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
@@ -297,7 +203,6 @@ internal static class UnsafeNativeMethodsWindow
     {
         var backdropPvAttribute = 0x1; //Enable
 
-        // TODO: Validate HRESULT
         _ = Dwmapi.DwmSetWindowAttribute(
             handle,
             Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT,
@@ -382,46 +287,6 @@ internal static class UnsafeNativeMethodsWindow
         }
 
         return GetDefaultWindowsAccentColor();
-    }
-
-    public static bool RemoveWindowCaption(Window window)
-    {
-        if (window is null)
-        {
-            return false;
-        }
-
-        var windowHandle = new WindowInteropHelper(window).Handle;
-
-        return RemoveWindowCaption(windowHandle);
-    }
-
-    public static bool RemoveWindowCaption(IntPtr hWnd)
-    {
-        if (hWnd == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(hWnd))
-        {
-            return false;
-        }
-
-        var wtaOptions = new WTA_OPTIONS()
-        {
-            dwFlags = WTNCA.NODRAWCAPTION,
-            dwMask = WTNCA.VALIDBITS
-        };
-
-        NativeMethods.SetWindowThemeAttribute(
-            hWnd,
-            WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT,
-            ref wtaOptions,
-            (uint)Marshal.SizeOf(typeof(WTA_OPTIONS))
-        );
-
-        return true;
     }
 
     /// <summary>

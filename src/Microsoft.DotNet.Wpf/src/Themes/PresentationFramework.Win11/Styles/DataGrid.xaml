@@ -21,11 +21,7 @@
     xmlns:controls="clr-namespace:PresentationFramework.Win11.Controls"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <!--
-        https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/Microsoft.Toolkit.Uwp.UI.Controls.DataGrid/DataGrid/DataGrid.xaml
-    -->
 
-    <!--  TODO  -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <system:Double x:Key="DefaultDataGridFontSize">14</system:Double>
 

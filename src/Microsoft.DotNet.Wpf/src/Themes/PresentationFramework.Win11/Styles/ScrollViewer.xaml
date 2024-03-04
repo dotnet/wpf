@@ -60,5 +60,4 @@
     </Style>
 
     <Style BasedOn="{StaticResource UiScrollViewer}" TargetType="{x:Type ScrollViewer}" />
-    <!-- <Style BasedOn="{StaticResource UiScrollViewer}" TargetType="{x:Type PassiveScrollViewer}" /> -->
 </ResourceDictionary>

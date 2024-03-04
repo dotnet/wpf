@@ -72,7 +72,7 @@ internal static class DWMColorization
         Color secondaryAccent;
         Color tertiaryAccent;
 
-        bool isDarkTheme = Application.isThemeDark();
+        bool isDarkTheme = Application.IsThemeDark();
 
         if (isDarkTheme)
         {

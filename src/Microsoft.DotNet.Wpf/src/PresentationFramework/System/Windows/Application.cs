@@ -1477,7 +1477,7 @@ namespace System.Windows
             }
         }
 
-        internal static bool isThemeDark()
+        internal static bool IsThemeDark()
         {
             var currentTheme = ThemeColorization.GetSystemTheme();
             

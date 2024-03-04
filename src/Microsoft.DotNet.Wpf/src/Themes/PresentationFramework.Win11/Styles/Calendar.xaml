@@ -358,10 +358,10 @@
                                     Focusable="False"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
                                     <Button.Content>
-                                        <FontIcon
-                                            FontFamily="Segoe Fluent Icons"
+                                        <TextBlock
                                             FontSize="8"
-                                            Glyph="{StaticResource CaretUpGlyph}" />
+                                            FontFamily="Segoe Fluent Icons"
+                                            >&#xEDDB;</TextBlock>
                                     </Button.Content>
                                 </Button>
                                 <Button
@@ -378,10 +378,10 @@
                                     Focusable="False"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
                                     <Button.Content>
-                                        <FontIcon
-                                            FontFamily="Segoe Fluent Icons"
+                                        <TextBlock
                                             FontSize="8"
-                                            Glyph="{StaticResource CaretDownGlyph}" />
+                                            FontFamily="Segoe Fluent Icons"
+                                            >&#xEDDC;</TextBlock>
                                     </Button.Content>
                                 </Button>
                             </Grid>

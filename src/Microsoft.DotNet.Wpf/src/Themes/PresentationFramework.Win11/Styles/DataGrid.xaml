@@ -586,7 +586,8 @@
 
                             <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
 
-                            <FontIcon
+                        
+                            <TextBlock
                                 x:Name="SortIcon"
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
@@ -594,7 +595,7 @@
                                 FontSize="12"
                                 Opacity="0"
                                 FontFamily="Segoe Fluent Icons"
-                                Glyph="&#xE8CB;" />
+                                Text="&#xE8CB;" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SortStates">
@@ -829,7 +830,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                                 <Grid>
-                                    <FontIcon
+                                    <TextBlock
                                         x:Name="ControlIcon"
                                         Margin="0"
                                         HorizontalAlignment="Center"
@@ -837,12 +838,12 @@
                                         FontSize="{StaticResource CheckBoxIconSize}"
                                         FontWeight="Bold"
                                         FontFamily="Segoe Fluent Icons"
-                                        Glyph="{StaticResource CheckBoxCheckedGlyph}"
+                                        Text="{StaticResource CheckBoxCheckedGlyph}"
                                         Visibility="Collapsed">
-                                        <FontIcon.Foreground>
+                                        <TextBlock.Foreground>
                                             <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
-                                        </FontIcon.Foreground>
-                                    </FontIcon>
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
                                 </Grid>
                             </Border>
                         </BulletDecorator.Bullet>
@@ -861,7 +862,7 @@
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="0" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Glyph" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
+                            <Setter TargetName="ControlIcon" Property="Text" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background">
                                 <Setter.Value>

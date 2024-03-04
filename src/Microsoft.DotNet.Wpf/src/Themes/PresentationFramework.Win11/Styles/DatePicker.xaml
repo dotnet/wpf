@@ -135,14 +135,15 @@
                                         BorderBrush="Transparent"
                                         Cursor="Arrow">
                                         <!--  WPF overrides paddings for button  -->
-                                        <FontIcon
+                                        
+                                        <TextBlock
                                             Margin="{StaticResource DatePickerCalendarButtonPadding}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             FontFamily="Segoe Fluent Icons"
                                             FontSize="{StaticResource DatePickerCalendarButtonIconSize}"
                                             Foreground="{TemplateBinding Foreground}"
-                                            Glyph="{StaticResource CalendarGlyph}" />
+                                            Text="{StaticResource CalendarGlyph}" />
                                     </Button>
                                 </Grid>
                             </Border>

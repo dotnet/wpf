@@ -327,13 +327,13 @@
                         RecognizesAccessKey="True" />
 
                     <Grid Grid.Column="2">
-                        <FontIcon
+                        <TextBlock
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
                             FontFamily="Segoe Fluent Icons"
                             FontSize="{TemplateBinding FontSize}"
-                            Glyph="{StaticResource MenuItemChevronRightGlyph}" />
+                            Text="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>
                 </Grid>
             </Border>
@@ -754,13 +754,13 @@
                         RecognizesAccessKey="True" />
 
                     <Grid Grid.Column="3">
-                        <FontIcon
+                        <TextBlock
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
                             FontSize="14"
                             FontFamily="Segoe Fluent Icons"
-                            Glyph="{StaticResource MenuItemChevronRightGlyph}" />
+                            Text="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>
                 </Grid>
             </Border>

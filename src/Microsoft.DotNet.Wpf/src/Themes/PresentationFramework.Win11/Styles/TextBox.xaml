@@ -211,8 +211,10 @@
                         >
                        
                         <Button.Content>
-                            <!-- <SymbolIcon FontSize="{TemplateBinding FontSize}" Symbol="Dismiss24" /> -->
-                            <FontIcon FontFamily="Segoe Fluent Icons" FontSize="{TemplateBinding FontSize}" Glyph="{StaticResource ClearGlyph}" />
+                            <TextBlock
+                                FontSize="{TemplateBinding FontSize}"
+                                FontFamily="Segoe Fluent Icons"
+                                >&#xE894;</TextBlock>
                         </Button.Content>
                     </Button>
 

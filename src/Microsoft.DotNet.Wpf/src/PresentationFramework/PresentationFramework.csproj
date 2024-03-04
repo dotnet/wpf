@@ -623,7 +623,6 @@
     <Compile Include="System\Windows\Controls\Expander.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentReader.cs" />
     <Compile Include="System\Windows\Controls\FlowDocumentScrollViewer.cs" />
-    <Compile Include="System\Windows\Controls\FontIconExtension.cs" />
     <Compile Include="System\Windows\Controls\Frame.cs" />
     <Compile Include="System\Windows\Controls\Grid.cs" />
     <Compile Include="System\Windows\Controls\GridSplitter.cs" />
@@ -639,15 +638,7 @@
     <Compile Include="System\Windows\Controls\GroupStyle.cs" />
     <Compile Include="System\Windows\Controls\HeaderedContentControl.cs" />
     <Compile Include="System\Windows\Controls\HeaderedItemsControl.cs" />
-    <Compile Include="System\Windows\Controls\IconElement\FontIcon.cs" />
-    <Compile Include="System\Windows\Controls\IconElement\IconElement.cs" />
-    <Compile Include="System\Windows\Controls\IconElement\IconSourceElement.cs" />
-    <Compile Include="System\Windows\Controls\IconElement\IconSourceElementConverter.cs" />
-    <Compile Include="System\Windows\Controls\IconElement\ImageIcon.cs" />
-    <Compile Include="System\Windows\Controls\IconSource\FontIconSource.cs" />
-    <Compile Include="System\Windows\Controls\IconSource\IconSource.cs" />
     <Compile Include="System\Windows\Controls\Image.cs" />
-    <Compile Include="System\Windows\Controls\ImageIconExtension.cs" />
     <Compile Include="System\Windows\Controls\InitializingNewItemEventArgs.cs" />
     <Compile Include="System\Windows\Controls\InitializingNewItemEventHandler.cs" />
     <Compile Include="System\Windows\Controls\InkCanvas.cs" />
@@ -785,7 +776,6 @@
     <Compile Include="System\Windows\Controls\TreeView.cs" />
     <Compile Include="System\Windows\Controls\TreeViewItem.cs" />
     <Compile Include="System\Windows\Controls\UIElementCollection.cs" />
-    <Compile Include="System\Windows\Controls\UiElementExtensions.cs" />
     <Compile Include="System\Windows\Controls\UserControl.cs" />
     <Compile Include="System\Windows\Controls\Validation.cs" />
     <Compile Include="System\Windows\Controls\ValidationError.cs" />

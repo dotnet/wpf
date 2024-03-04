@@ -23,7 +23,6 @@
     <system:Double x:Key="TextBoxClearButtonHeight">24</system:Double>
     <system:String x:Key="ClearGlyph">&#xE894;</system:String>
 
-    <!--  TODO: Rework TextBox ScrollViewer  -->
     <Style x:Key="DefaultTextBoxScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -43,10 +42,8 @@
     <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-        <!--  Universal WPF UI focus  -->
         <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
-        <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
         <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
         <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
@@ -283,38 +280,6 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- <ControlTemplate x:Key="DefaultUiTextBoxTextSelectionEnabledControlTemplate" TargetType="{x:Type TextBox}">
-        <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
-            <Border
-                x:Name="ContentBorder"
-                MinWidth="{TemplateBinding MinWidth}"
-                MinHeight="{TemplateBinding MinHeight}"
-                Padding="0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                CornerRadius="{TemplateBinding Border.CornerRadius}"
-                Focusable="False">
-                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <Grid Margin="{TemplateBinding Padding}">
-                        <ScrollViewer
-                            x:Name="PART_ContentHost"
-                            VerticalAlignment="Center"
-                            CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                            IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                            IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
-                            Style="{StaticResource DefaultTextBoxScrollViewerStyle}"
-                            TextElement.Foreground="{TemplateBinding Foreground}"
-                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
-                    </Grid>
-                </Grid>
-            </Border>
-        </Grid>
-    </ControlTemplate> -->
-
     <Style x:Key="DefaultUiTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
@@ -340,24 +305,9 @@
         <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-        <!-- <Setter Property="ClearButtonEnabled" Value="True" /> -->
-        <!-- <Setter Property="IconPlacement" Value="Left" /> -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template" Value="{StaticResource DefaultUiTextBoxControlTemplate}" />
-        <!-- <Style.Triggers>
-            <Trigger Property="IsTextSelectionEnabled" Value="False">
-                
-            </Trigger>
-            <Trigger Property="IsTextSelectionEnabled" Value="True">
-                <Setter Property="IsReadOnly" Value="True" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="BorderBrush" Value="Transparent" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Template" Value="{StaticResource DefaultUiTextBoxTextSelectionEnabledControlTemplate}" />
-            </Trigger>
-        </Style.Triggers> -->
     </Style>
 
     <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />

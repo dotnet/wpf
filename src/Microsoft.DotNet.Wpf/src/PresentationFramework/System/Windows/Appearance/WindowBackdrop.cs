@@ -99,8 +99,6 @@ internal static class WindowBackdrop
             _ = UnsafeNativeMethodsWindow.RemoveWindowDarkMode(hWnd);
         }
 
-        // BUG - This is causing TitleBar caption to be removed for normal windows
-        //_ = UnsafeNativeMethodsWindow.RemoveWindowCaption(hWnd);
         EnableGlassFrame(hWnd, backdropType);
 
         // 22H1
@@ -270,7 +268,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if(backdropType == WindowBackdropType.Mica)
+        if(backdropType != WindowBackdropType.None)
         {
             Window window = (Window)HwndSource.FromHwnd(hWnd).RootVisual;
             DpiScale dpi = window.GetDpi();

@@ -87,7 +87,7 @@
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
                                             FontFamily="Segoe Fluent Icons"
                                             Visibility="Collapsed"
-                                            Text="&#xE73E;" />
+                                            Text="{StaticResource CheckBoxCheckedGlyph}" />
                                     </Grid>
                                 </Border>
                             </Border>
@@ -109,7 +109,7 @@
                             <Setter Property="MinWidth" Value="30" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Text" Value="&#xE9AE;" />
+                            <Setter TargetName="ControlIcon" Property="Text" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
                             <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />

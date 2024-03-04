@@ -13,6 +13,7 @@
 // https://github.com/lepoco/nativemethods
 
 using System.Runtime.InteropServices;
+using MS.Win32;
 
 namespace System.Windows.Interop;
 
@@ -537,7 +538,7 @@ internal static class Dwmapi
     /// </summary>
     /// <param name="pfEnabled">A pointer to a value that, when this function returns successfully, receives TRUE if DWM composition is enabled; otherwise, FALSE.</param>
     /// <returns>If this function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-    [DllImport(Libraries.Dwmapi, BestFitMapping = false)]
+    [DllImport(ExternDll.DwmAPI, BestFitMapping = false)]
     public static extern int DwmIsCompositionEnabled([Out] out int pfEnabled);
 
     /// <summary>
@@ -545,7 +546,7 @@ internal static class Dwmapi
     /// </summary>
     /// <param name="hWnd">The handle to the window in which the frame will be extended into the client area.</param>
     /// <param name="pMarInset">A pointer to a MARGINS structure that describes the margins to use when extending the frame into the client area.</param>
-    [DllImport(Libraries.Dwmapi, PreserveSig = false)]
+    [DllImport(ExternDll.DwmAPI, PreserveSig = false)]
     public static extern void DwmExtendFrameIntoClientArea(
         [In] IntPtr hWnd,
         [In] ref Standard.MARGINS pMarInset
@@ -556,7 +557,7 @@ internal static class Dwmapi
     /// </summary>
     /// <param name="hWnd">The handle to the window for which the composition timing information should be retrieved.</param>
     /// <param name="pTimingInfo">A pointer to a <see cref="DWM_TIMING_INFO"/> structure that, when this function returns successfully, receives the current composition timing information for the window.</param>
-    [DllImport(Libraries.Dwmapi)]
+    [DllImport(ExternDll.DwmAPI)]
     public static extern void DwmGetCompositionTimingInfo(
         [In] IntPtr hWnd,
         [In] ref DWM_TIMING_INFO pTimingInfo
@@ -566,7 +567,7 @@ internal static class Dwmapi
     /// Called by an application to indicate that all previously provided iconic bitmaps from a window, both thumbnails and peek representations, should be refreshed.
     /// </summary>
     /// <param name="hWnd">A handle to the window or tab whose bitmaps are being invalidated through this call. This window must belong to the calling process.</param>
-    [DllImport(Libraries.Dwmapi, PreserveSig = false)]
+    [DllImport(ExternDll.DwmAPI, PreserveSig = false)]
     public static extern void DwmInvalidateIconicBitmaps([In] IntPtr hWnd);
 
     /// <summary>
@@ -575,7 +576,7 @@ internal static class Dwmapi
     /// <param name="hWnd">A handle to the window or tab. This window must belong to the calling process.</param>
     /// <param name="hbmp">A handle to the bitmap to represent the window that hwnd specifies.</param>
     /// <param name="dwSITFlags">The display options for the thumbnail.</param>
-    [DllImport(Libraries.Dwmapi, PreserveSig = false)]
+    [DllImport(ExternDll.DwmAPI, PreserveSig = false)]
     public static extern void DwmSetIconicThumbnail(
         [In] IntPtr hWnd,
         [In] IntPtr hbmp,
@@ -589,7 +590,7 @@ internal static class Dwmapi
     /// <param name="hbmp">A handle to the bitmap to represent the window that hwnd specifies.</param>
     /// <param name="pptClient">The offset of a tab window's client region (the content area inside the client window frame) from the host window's frame. This offset enables the tab window's contents to be drawn correctly in a live preview when it is drawn without its frame.</param>
     /// <param name="dwSITFlags">The display options for the live preview.</param>
-    [DllImport(Libraries.Dwmapi, PreserveSig = false)]
+    [DllImport(ExternDll.DwmAPI, PreserveSig = false)]
     public static extern int DwmSetIconicLivePreviewBitmap(
         [In] IntPtr hWnd,
         [In] IntPtr hbmp,
@@ -605,7 +606,7 @@ internal static class Dwmapi
     /// <param name="pvAttribute">A pointer to an object containing the attribute value to set.</param>
     /// <param name="cbAttribute">The size, in bytes, of the attribute value being set via the <c>pvAttribute</c> parameter.</param>
     /// <returns>If the function succeeds, it returns <c>S_OK</c>. Otherwise, it returns an <c>HRESULT</c> error code.</returns>
-    [DllImport(Libraries.Dwmapi)]
+    [DllImport(ExternDll.DwmAPI)]
     public static extern int DwmSetWindowAttribute(
         [In] IntPtr hWnd,
         [In] int dwAttribute,
@@ -621,7 +622,7 @@ internal static class Dwmapi
     /// <param name="pvAttribute">A pointer to an object containing the attribute value to set.</param>
     /// <param name="cbAttribute">The size, in bytes, of the attribute value being set via the <c>pvAttribute</c> parameter.</param>
     /// <returns>If the function succeeds, it returns <c>S_OK</c>. Otherwise, it returns an <c>HRESULT</c> error code.</returns>
-    [DllImport(Libraries.Dwmapi)]
+    [DllImport(ExternDll.DwmAPI)]
     public static extern int DwmSetWindowAttribute(
         [In] IntPtr hWnd,
         [In] DWMWINDOWATTRIBUTE dwAttribute,
@@ -637,7 +638,7 @@ internal static class Dwmapi
     /// <param name="pvAttributeValue">A pointer to a value which, when this function returns successfully, receives the current value of the attribute. The type of the retrieved value depends on the value of the dwAttribute parameter.</param>
     /// <param name="cbAttribute">The size, in bytes, of the attribute value being received via the pvAttribute parameter.</param>
     /// <returns>If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-    [DllImport(Libraries.Dwmapi)]
+    [DllImport(ExternDll.DwmAPI)]
     public static extern int DwmGetWindowAttribute(
         [In] IntPtr hWnd,
         [In] DWMWINDOWATTRIBUTE dwAttributeToGet,
@@ -653,7 +654,7 @@ internal static class Dwmapi
     /// <param name="pvAttributeValue">A pointer to a value which, when this function returns successfully, receives the current value of the attribute. The type of the retrieved value depends on the value of the dwAttribute parameter.</param>
     /// <param name="cbAttribute">The size, in bytes, of the attribute value being received via the pvAttribute parameter.</param>
     /// <returns>If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-    [DllImport(Libraries.Dwmapi)]
+    [DllImport(ExternDll.DwmAPI)]
     public static extern int DwmGetWindowAttribute(
         [In] IntPtr hWnd,
         [In] int dwAttributeToGet,
@@ -665,6 +666,6 @@ internal static class Dwmapi
     /// The feature is not included in the Microsoft documentation. Reads Desktop Window Manager (DWM) color information.
     /// </summary>
     /// <param name="dwParameters">A pointer to a reference value that will hold the color information.</param>
-    [DllImport(Libraries.Dwmapi, EntryPoint = "#127", PreserveSig = false, CharSet = CharSet.Unicode)]
+    [DllImport(ExternDll.DwmAPI, EntryPoint = "#127", PreserveSig = false, CharSet = CharSet.Unicode)]
     public static extern void DwmGetColorizationParameters([Out] out DWMCOLORIZATIONPARAMS dwParameters);
 }

@@ -39,6 +39,7 @@
                             VerticalAlignment="Center"
                             FontSize="{StaticResource TreeViewItemChevronSize}"
                             FontFamily="Segoe Fluent Icons"
+                            HorizontalAlignment="Center"
                             Text="{StaticResource TreeViewChevronRightGlyph}" />
                     </Grid>
                     <ControlTemplate.Triggers>

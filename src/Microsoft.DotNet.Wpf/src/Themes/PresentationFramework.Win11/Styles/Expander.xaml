@@ -17,7 +17,7 @@
 
     <Thickness x:Key="ExpanderPadding">11,11,11,11</Thickness>
     <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
-    <system:Double x:Key="ExpanderChevronSize">16.0</system:Double>
+    <system:Double x:Key="ExpanderChevronSize">12.0</system:Double>
     <controls:AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
     <system:String x:Key="ExpanderChevronUpGlyph">&#xE70E;</system:String>
     <system:String x:Key="ExpanderChevronDownGlyph">&#xE70D;</system:String>
@@ -47,12 +47,12 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                
                 <TextBlock
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
+                    HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronDownGlyph}" />
             </Grid>
         </Grid>
@@ -112,6 +112,7 @@
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
+                    HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronUpGlyph}" />
             </Grid>
         </Grid>
@@ -166,13 +167,13 @@
                 <Grid.RenderTransform>
                     <RotateTransform Angle="0" />
                 </Grid.RenderTransform>
-                
-                <TextBlock
-                    x:Name="ControlChevronIcon"
-                    FontSize="{StaticResource ExpanderChevronSize}"
-                    Foreground="{TemplateBinding Foreground}"
-                    FontFamily="Segoe Fluent Icons"
-                    Text="{StaticResource ExpanderChevronLeftGlyph}" />
+                    <TextBlock
+                        x:Name="ControlChevronIcon"
+                        FontSize="{StaticResource ExpanderChevronSize}"
+                        Foreground="{TemplateBinding Foreground}"
+                        FontFamily="Segoe Fluent Icons"
+                        HorizontalAlignment="Center"
+                        Text="{StaticResource ExpanderChevronLeftGlyph}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
@@ -231,6 +232,7 @@
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
                     FontFamily="Segoe Fluent Icons"
+                    HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronRightGlyph}" />
             </Grid>
         </Grid>

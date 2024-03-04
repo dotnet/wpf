@@ -1111,7 +1111,6 @@
     <Compile Include="System\Windows\Generated\FrameworkElement.cs" />
     <Compile Include="System\Windows\GridLength.cs" />
     <Compile Include="System\Windows\GridLengthConverter.cs" />
-    <Compile Include="System\Windows\Hardware\DisplayDpi.cs" />
     <Compile Include="System\Windows\HierarchicalDataTemplate.cs" />
     <Compile Include="System\Windows\IFrameworkInputElement.cs" />
     <Compile Include="System\Windows\InheritablePropertyChangeInfo.cs" />

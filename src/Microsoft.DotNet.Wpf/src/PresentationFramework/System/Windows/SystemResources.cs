@@ -1413,7 +1413,7 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
                     
-                    if(ThemeColorization.AppInitContainsNewTheme)
+                    if(ThemeColorization.Win11ThemeEnabled)
                     {
                         string currentApplicationTheme = ThemeColorization.CurrentApplicationTheme;
                         string themeToApply = ThemeColorization.GetSystemTheme();

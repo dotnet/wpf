@@ -519,7 +519,7 @@
     <SolidColorBrush x:Key="ToggleButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="ToggleButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{StaticResource SystemColorHighlightColor}" />
-    <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedDisabled" Color="{StaticResource SystemColorWindowColor}" />
     <!--<SolidColorBrush x:Key="ToggleButtonBorderBrush" Color="{StaticResource ControlElevationBorderBrush}" />-->

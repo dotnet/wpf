@@ -198,9 +198,9 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ContentBorder" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{Binding PressedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForeground}" />
                             <!-- <Setter TargetName="ControlIcon" Property="TextElement.Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}" /> -->
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">

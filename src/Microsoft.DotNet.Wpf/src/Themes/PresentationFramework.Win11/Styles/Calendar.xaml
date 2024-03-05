@@ -469,7 +469,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="12"
-                                FontWeight="SemiBold"
+                                FontWeight="Bold"
                                 Foreground="{DynamicResource CalendarViewForeground}"
                                 Text="{Binding}" />
                         </DataTemplate>

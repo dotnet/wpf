@@ -342,7 +342,7 @@
                                     BorderBrush="Transparent"
                                     Focusable="False"
                                     FontSize="14"
-                                    FontWeight="Bold"
+                                    FontWeight="SemiBold"
                                     Foreground="{DynamicResource CalendarViewForeground}" />
                                 <Button
                                     x:Name="PART_PreviousButton"

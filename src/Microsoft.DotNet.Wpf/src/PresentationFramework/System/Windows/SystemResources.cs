@@ -1422,7 +1422,7 @@ namespace System.Windows
 
                         if (themeToApply != currentApplicationTheme || accentColorToApply != currentApplicationAccentColor)
                         {
-                            DWMColorization.ApplyAccentColors();
+                            DWMColorization.UpdateAccentColors();
                             ThemeColorization.ApplyTheme();
                         }
                     }

@@ -150,4 +150,29 @@ internal static class ThemeColorization
         return systemTheme;
     }
     #endregion
+
+
+    internal static bool IsThemeDark()
+    {
+        var currentTheme = ThemeColorization.GetSystemTheme();
+        
+        if (currentTheme != null)
+        {
+            return currentTheme.Contains("dark.theme");
+        }
+
+        return false;
+    }
+
+    internal static bool IsThemeHighContrast()
+    {
+        string currentTheme = ThemeColorization.GetSystemTheme();
+
+        if(currentTheme != null)
+        {
+            return currentTheme.Contains("hc");
+        }
+
+        return false;
+    }
 }

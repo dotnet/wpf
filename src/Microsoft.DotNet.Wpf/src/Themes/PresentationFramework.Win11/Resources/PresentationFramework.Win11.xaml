@@ -12,7 +12,6 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Fonts.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Palette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/StaticColors.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Typography.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Resources/Variables.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Win11;component/Styles/Calendar.xaml" />

@@ -10,13 +10,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <!--
-        TODO:
-        Selecting the month and year / decade should be visible and active right away, but it is not {{sad pepe}}.
-        The behavior of the calendar needs to be changed but without creating a new control.
-        All this in order to use the appearance of the picker compatible with MS Office.
-    -->
-
     <system:String x:Key="CaretUpGlyph">&#xEDDB;</system:String>
     <system:String x:Key="CaretDownGlyph">&#xEDDC;</system:String>    
 

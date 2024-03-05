@@ -471,7 +471,7 @@ namespace MS.Win32
         /// 
         /// Minimum supported client: Windows 10, version 1607 (RS1)
         /// </remarks>
-        public static uint GetDpiForWindow(HandleRef hwnd)
+        internal static uint GetDpiForWindow(HandleRef hwnd)
         {
             return SafeNativeMethodsPrivate.GetDpiForWindow(hwnd);
         }

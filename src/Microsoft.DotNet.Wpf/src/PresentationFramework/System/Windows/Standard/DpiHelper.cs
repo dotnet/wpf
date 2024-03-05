@@ -10,11 +10,6 @@ namespace Standard
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Media;
-    using System.Windows.Interop;
-    using System.Runtime.InteropServices;
-     using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
 
     internal static class DpiHelper
     {

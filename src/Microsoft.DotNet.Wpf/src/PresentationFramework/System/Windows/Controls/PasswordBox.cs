@@ -362,25 +362,6 @@ namespace System.Windows.Controls
             set { SetValue(IsInactiveSelectionHighlightEnabledProperty, value); }
         }
 
-        /// <summary>
-        /// Gets or sets numbers pattern.
-        /// </summary>
-        public string PlaceholderText
-        {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="PlaceholderText"/>.
-        /// </summary>
-        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
-           nameof(PlaceholderText),
-           typeof(string),
-           typeof(PasswordBox),
-           new PropertyMetadata(String.Empty)
-        );
-
         #endregion Public Properties
 
         //------------------------------------------------------
@@ -949,18 +930,6 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if(PlaceholderText != string.Empty && Password.Length > 0)
-            {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
-            }
-
-            if(_placeholderText != string.Empty && Password.Length == 0)
-            {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
-            }
-
             RaiseEvent(new RoutedEventArgs(PasswordChangedEvent));
         }
 
@@ -1323,8 +1292,6 @@ namespace System.Windows.Controls
 
         // Border
         private Border _border;
-
-        private string _placeholderText;
 
         // An element marked as ContentHostTemplateName which we assign our _renderScope as a child.
         private FrameworkElement _passwordBoxContentHost;

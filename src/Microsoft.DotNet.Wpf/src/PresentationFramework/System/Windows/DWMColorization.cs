@@ -96,7 +96,7 @@ internal static class DWMColorization
     /// <summary>
     /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
     /// </summary>
-    internal static void ApplyAccentColors()
+    internal static void UpdateAccentColors()
     {
         Color systemAccent = GetSystemAccentColor();
 
@@ -104,7 +104,7 @@ internal static class DWMColorization
         Color secondaryAccent;
         Color tertiaryAccent;
 
-        bool isDarkTheme = Application.IsThemeDark();
+        bool isDarkTheme = ThemeColorization.IsThemeDark();
 
         IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
 

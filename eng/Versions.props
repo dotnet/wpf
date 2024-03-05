@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MajorVersion>7</MajorVersion>
     <MinorVersion>0</MinorVersion>
-    <PatchVersion>17</PatchVersion>
+    <PatchVersion>18</PatchVersion>
     <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>
     </PreReleaseVersionIteration>

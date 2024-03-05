@@ -1477,6 +1477,7 @@ namespace System.Windows
             }
         }
 
+
         /// <summary>
         /// Application Startup.
         /// </summary>

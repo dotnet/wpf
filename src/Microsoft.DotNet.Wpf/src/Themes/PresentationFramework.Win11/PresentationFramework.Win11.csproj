@@ -30,11 +30,6 @@
     <Compile Include="Controls\FallbackBrushConverter.cs" />
   </ItemGroup>
 
-  <!-- <ItemGroup>
-    <Resource Include="Resources\Fonts\FluentSystemIcons-Filled.ttf" />
-    <Resource Include="Resources\Fonts\FluentSystemIcons-Regular.ttf" />
-  </ItemGroup> -->
-
   <!-- Project References -->
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />

@@ -23,7 +23,7 @@ internal static class ThemeColorization
     /// </summary>
     private static string _currentApplicationTheme = "C:\\windows\\resources\\Themes\\aero.theme";
 
-    private static bool _appInitContainsNewTheme = false;
+    private static bool _win11ThemeEnabled = false;
 
     private static readonly string _themeDictionaryName = "PresentationFramework.Win11.xaml";
 
@@ -37,7 +37,7 @@ internal static class ThemeColorization
         {
             if(mergedDictionary.Source != null && mergedDictionary.Source.ToString().EndsWith(_themeDictionaryName))
             {
-                _appInitContainsNewTheme = true;
+                _win11ThemeEnabled = true;
                 break;
             }
         }
@@ -52,9 +52,9 @@ internal static class ThemeColorization
     // ------------------------------------------------
     #region internal Methods
 
-    internal static bool AppInitContainsNewTheme
+    internal static bool Win11ThemeEnabled
     {
-        get { return _appInitContainsNewTheme; }
+        get { return _win11ThemeEnabled; }
     }
 
     internal static string CurrentApplicationTheme
@@ -150,4 +150,29 @@ internal static class ThemeColorization
         return systemTheme;
     }
     #endregion
+
+
+    internal static bool IsThemeDark()
+    {
+        var currentTheme = ThemeColorization.GetSystemTheme();
+        
+        if (currentTheme != null)
+        {
+            return currentTheme.Contains("dark.theme");
+        }
+
+        return false;
+    }
+
+    internal static bool IsThemeHighContrast()
+    {
+        string currentTheme = ThemeColorization.GetSystemTheme();
+
+        if(currentTheme != null)
+        {
+            return currentTheme.Contains("hc");
+        }
+
+        return false;
+    }
 }

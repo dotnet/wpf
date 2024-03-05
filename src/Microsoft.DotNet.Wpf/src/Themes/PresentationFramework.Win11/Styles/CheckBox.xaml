@@ -14,13 +14,6 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework">
 
-    <!--
-        I don't see that CheckBox had combined states. Without it,
-        we cannot support both Themes and Intermediate states at the same time.
-        At the moment I think the themes are more important than IsThirdState.
-        Have to figure it out or make a new CheckBox control.
-    -->
-
     <Color x:Key="FallbackColor">#FFFF0000</Color>
 
     <Thickness x:Key="CheckBoxPadding">11,5,11,6</Thickness>
@@ -87,7 +80,7 @@
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
                                             FontFamily="Segoe Fluent Icons"
                                             Visibility="Collapsed"
-                                            Text="&#xE73E;" />
+                                            Text="{StaticResource CheckBoxCheckedGlyph}" />
                                     </Grid>
                                 </Border>
                             </Border>
@@ -109,7 +102,7 @@
                             <Setter Property="MinWidth" Value="30" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="ControlIcon" Property="Text" Value="&#xE9AE;" />
+                            <Setter TargetName="ControlIcon" Property="Text" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
                             <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
                             <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
                             <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />

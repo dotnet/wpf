@@ -2511,12 +2511,25 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Utilities.IsOSWindows11OrNewer && ThemeColorization.AppInitContainsNewTheme)
+            if (Standard.Utility.IsOSWindows11OrNewer && ThemeColorization.Win11ThemeEnabled)
             {
+                ResourceDictionary themeDictionary = new ResourceDictionary();
+
+                if(ThemeColorization.IsThemeDark())
+                {
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/dark.xaml", UriKind.Absolute);
+                }
+                else 
+                {
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/light.xaml", UriKind.Absolute);
+                }
+
+                Application.Current.Resources.MergedDictionaries.Add(themeDictionary);
+
                 // Initializing the application window with current system theme
                 // This is one time initialization that updates the resourcedictionary and 
                 // calls WindowBackgroundManager to update its Background based on current SystemTheme
-                DWMColorization.ApplyAccentColors();
+                DWMColorization.UpdateAccentColors();
                 ThemeColorization.ApplyTheme();
             }
 

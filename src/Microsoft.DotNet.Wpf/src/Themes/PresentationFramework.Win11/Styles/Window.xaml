@@ -30,10 +30,6 @@
         <Setter Property="WindowStyle" Value="SingleBorderWindow" />
         <Setter Property="AllowsTransparency" Value="False" />
         <Setter Property="ResizeMode" Value="CanResize" />
-        <!--  The Display option casues a large aliasing effect  -->
-        <!-- <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" /> -->
-        <!--  I don't know if this is always the case, but ClearType blurs the fonts a bit for me  -->
-        <!--<Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />-->
         <Setter Property="RenderOptions.BitmapScalingMode" Value="Linear" />
         <!--  Aliased breaks rounded control elements such as buttons  -->
         <Setter Property="RenderOptions.EdgeMode" Value="Unspecified" />
@@ -44,11 +40,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <AdornerDecorator>
-                        <!-- <controls:ClientAreaBorder
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        </controls:ClientAreaBorder> -->
                             <ContentPresenter x:Name="ContentPresenter" />
                     </AdornerDecorator>
                 </ControlTemplate>

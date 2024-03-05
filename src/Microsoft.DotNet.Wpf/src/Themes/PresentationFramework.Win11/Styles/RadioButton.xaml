@@ -107,51 +107,6 @@
                             TextElement.Foreground="{TemplateBinding Foreground}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- Clunky, todo
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="True" />
-                                <Condition Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.LayoutTransform).(ScaleTransform.ScaleY)"
-                                            From="1.0"
-                                            To="1.2"
-                                            Duration="00:00:00.167" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.LayoutTransform).(ScaleTransform.ScaleX)"
-                                            From="1.0"
-                                            To="1.2"
-                                            Duration="00:00:00.167" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
-                            <MultiTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.LayoutTransform).(ScaleTransform.ScaleY)"
-                                            From="1.2"
-                                            To="1.0"
-                                            Duration="00:00:00.167" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.LayoutTransform).(ScaleTransform.ScaleX)"
-                                            From="1.2"
-                                            To="1.0"
-                                            Duration="00:00:00.167" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
-                        </MultiTrigger>
-                        -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsPressed" Value="True" />

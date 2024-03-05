@@ -4,6 +4,7 @@ using System.Windows.Appearance;
 using System.Windows.Media;
 using Microsoft.Win32;
 using MS.Internal;
+using System.Runtime.InteropServices;
 
 namespace System.Windows;
 internal static class DWMColorization
@@ -31,6 +32,37 @@ internal static class DWMColorization
     internal static Color CurrentApplicationAccentColor
     {
         get { return _currentApplicationAccentColor; }
+    }
+
+    [DllImport("UXTheme.dll")]
+    private static extern int GetUserColorPreference(ref IMMERSIVE_COLOR_PREFERENCE colorPreference, bool alwaysFalse);
+
+    [DllImport("UXTheme.dll")]
+    private static extern uint GetColorFromPreference(ref IMMERSIVE_COLOR_PREFERENCE colorPreference, IMMERSIVE_COLOR_TYPE colorType, bool alwaysFalse, IMMERSIVE_HC_CACHE_MODE cacheMode);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct IMMERSIVE_COLOR_PREFERENCE
+    {
+        public uint dwColorSetIndex;
+        public uint crStartColor;
+        public uint crAccentColor;
+    }
+
+    private enum IMMERSIVE_COLOR_TYPE
+    {
+        IMCLR_SystemAccentLight1 = 5,
+        IMCLR_SystemAccentLight2 = 6,
+        IMCLR_SystemAccentLight3 = 7,
+        IMCLR_SystemAccentDark1 = 3,
+        IMCLR_SystemAccentDark2 = 2,
+        IMCLR_SystemAccentDark3 = 1,
+        IMCLR_SystemAccent = 4
+    }
+
+    private enum IMMERSIVE_HC_CACHE_MODE
+    {
+        IHCM_USE_CACHED_VALUE = 0,
+        IHCM_REFRESH = 1
     }
 
     /// <summary>
@@ -64,7 +96,7 @@ internal static class DWMColorization
     /// <summary>
     /// Computes the current Accent Colors and calls for updating of accent color values in resource dictionary
     /// </summary>
-    internal static void ApplyAccentColors()
+    internal static void UpdateAccentColors()
     {
         Color systemAccent = GetSystemAccentColor();
 
@@ -72,19 +104,48 @@ internal static class DWMColorization
         Color secondaryAccent;
         Color tertiaryAccent;
 
-        bool isDarkTheme = Application.isThemeDark();
+        bool isDarkTheme = ThemeColorization.IsThemeDark();
 
-        if (isDarkTheme)
+        IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
+
+        int err = GetUserColorPreference(ref colorPreference, false);
+
+        if(err != 0) 
         {
-            primaryAccent = UpdateColor(systemAccent, 15f, -12f);
-            secondaryAccent = UpdateColor(systemAccent, 30f, -24f);
-            tertiaryAccent = UpdateColor(systemAccent, 45f, -36f);
+            // Get Fallback Colors
+            if (isDarkTheme)
+            {
+                primaryAccent = UpdateColor(systemAccent, 15f, -12f);
+                secondaryAccent = UpdateColor(systemAccent, 30f, -24f);
+                tertiaryAccent = UpdateColor(systemAccent, 45f, -36f);
+            }
+            else
+            {
+                primaryAccent = UpdateColorBrightness(systemAccent, -5f);
+                secondaryAccent = UpdateColorBrightness(systemAccent, -10f);
+                tertiaryAccent = UpdateColorBrightness(systemAccent, -15f);
+            }
         }
         else
         {
-            primaryAccent = UpdateColorBrightness(systemAccent, -5f);
-            secondaryAccent = UpdateColorBrightness(systemAccent, -10f);
-            tertiaryAccent = UpdateColorBrightness(systemAccent, -15f);
+            uint Accent1, Accent2, Accent3;
+
+            if (isDarkTheme)
+            {
+                Accent1 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark1, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent2 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark2, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent3 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark3, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+            }
+            else
+            {
+                Accent1 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight1, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent2 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight2, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent3 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight3, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+            }
+
+            primaryAccent = Color.FromArgb(0xff, (byte)Accent1, (byte)(Accent1 >> 8), (byte)(Accent1 >> 16));
+            secondaryAccent = Color.FromArgb(0xff, (byte)Accent2, (byte)(Accent2 >> 8), (byte)(Accent2 >> 16));
+            tertiaryAccent = Color.FromArgb(0xff, (byte)Accent3, (byte)(Accent3 >> 8), (byte)(Accent3 >> 16));
         }
 
         UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);

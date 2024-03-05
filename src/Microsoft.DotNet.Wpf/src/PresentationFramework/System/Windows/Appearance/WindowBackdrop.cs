@@ -90,7 +90,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if (Application.isThemeDark())
+        if (ThemeColorization.IsThemeDark())
         {
             _ = UnsafeNativeMethodsWindow.ApplyWindowDarkMode(hWnd);
         }
@@ -99,8 +99,6 @@ internal static class WindowBackdrop
             _ = UnsafeNativeMethodsWindow.RemoveWindowDarkMode(hWnd);
         }
 
-        // BUG - This is causing TitleBar caption to be removed for normal windows
-        //_ = UnsafeNativeMethodsWindow.RemoveWindowCaption(hWnd);
         EnableGlassFrame(hWnd, backdropType);
 
         // 22H1
@@ -270,7 +268,7 @@ internal static class WindowBackdrop
             return false;
         }
 
-        if(backdropType == WindowBackdropType.Mica)
+        if(backdropType != WindowBackdropType.None)
         {
             Window window = (Window)HwndSource.FromHwnd(hWnd).RootVisual;
             DpiScale dpi = window.GetDpi();
@@ -371,7 +369,7 @@ internal static class WindowBackdrop
 
     private static Brush GetFallbackBackgroundBrush()
     {
-        if(Application.IsThemeHighContrast()) 
+        if(ThemeColorization.IsThemeHighContrast()) 
         {
             string currentTheme = ThemeColorization.GetSystemTheme();
             if(currentTheme.Contains("hc1"))
@@ -391,7 +389,8 @@ internal static class WindowBackdrop
                 return new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFA, 0xEF));
             }
         }
-        if(Application.isThemeDark())
+        
+        if(ThemeColorization.IsThemeDark())
         {
             return new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
         }

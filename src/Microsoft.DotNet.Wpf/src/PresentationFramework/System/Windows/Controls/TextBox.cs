@@ -969,27 +969,6 @@ namespace System.Windows.Controls
                 return new Typography(this);
             }
         }
-        /// <summary>
-        /// Property for <see cref="PlaceholderText"/>.
-        /// </summary>
-        public static readonly DependencyProperty PlaceholderTextProperty = DependencyProperty.Register(
-            nameof(PlaceholderText),
-            typeof(string),
-            typeof(TextBox),
-            new PropertyMetadata(String.Empty)
-        );
-
-
-        /// <summary>
-        /// Property for <see cref="ClearButtonEnabled"/>.
-        /// </summary>
-        internal static readonly DependencyProperty ClearButtonEnabledProperty = DependencyProperty.Register(
-            nameof(ClearButtonEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(false)
-        );
-
 
         /// <summary>
         /// Property for <see cref="TemplateButtonCommand"/>.
@@ -1004,96 +983,15 @@ namespace System.Windows.Controls
         #region Properties
 
         /// <summary>
-        /// Gets or sets numbers pattern.
-        /// </summary>
-        public string PlaceholderText
-        {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
-        }
-
-
-        /// <summary>
-        /// Gets or sets a value determining whether to enable the clear button.
-        /// </summary>
-        internal bool ClearButtonEnabled
-        {
-            get => (bool)GetValue(ClearButtonEnabledProperty);
-            set => SetValue(ClearButtonEnabledProperty, value);
-        }
-
-        /// <summary>
         /// Command triggered after clicking the button.
         /// </summary>
         internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
 
         #endregion
 
-
-
-        /// <inheritdoc />
-        protected override void OnTextChanged(TextChangedEventArgs e)
-        {
-            base.OnTextChanged(e);
-
-            if (PlaceholderText != string.Empty && Text.Length > 0)
-            {
-                _placeholderText = PlaceholderText;
-                PlaceholderText = string.Empty;
-            }
-                
-
-            if (_placeholderText != string.Empty && Text.Length < 1)
-            {
-                PlaceholderText = _placeholderText;
-                _placeholderText = string.Empty;
-            }
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            CaretIndex = Text.Length;
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnLostFocus(RoutedEventArgs e)
-        {
-            base.OnLostFocus(e);
-
-            HideClearButton();
-        }
-
-        /// <summary>
-        /// Reveals the clear button by <see cref="ClearButtonEnabled"/> property.
-        /// </summary>
-        internal void RevealClearButton()
-        {
-            if (IsKeyboardFocusWithin)
-            {
-                ClearButtonEnabled = Text.Length > 0;
-            }
-        }
-
-        /// <summary>
-        /// Hides the clear button by <see cref="ClearButtonEnabled"/> property.
-        /// </summary>
-        internal void HideClearButton()
-        {
-            if (ClearButtonEnabled && !IsKeyboardFocusWithin)
-                ClearButtonEnabled = false;
-        }
-
         /// <summary>
         /// Triggered when the user clicks the clear text button.
         /// </summary>
-    
         private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
         {
             if (target is TextBox textBox)
@@ -1104,8 +1002,7 @@ namespace System.Windows.Controls
         {
             if (target is TextBox textBox)
             {
-                args.CanExecute = textBox.ClearButtonEnabled
-                                    && !textBox.IsReadOnly
+                args.CanExecute =  !textBox.IsReadOnly
                                     && textBox.IsEnabled
                                     && textBox.Text.Length > 0;
             }
@@ -2097,7 +1994,6 @@ namespace System.Windows.Controls
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
 
-        private string _placeholderText;
 
         #endregion Private Fields
     }

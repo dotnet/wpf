@@ -1127,10 +1127,8 @@
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />
     <Compile Include="System\Windows\Interop\IProgressPage.cs" />
-    <Compile Include="System\Windows\Interop\Libraries.cs" />
     <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
     <Compile Include="System\Windows\Interop\UnsafeReflection.cs" />
-    <Compile Include="System\Windows\Interop\User32.cs" />
     <Compile Include="System\Windows\Interop\WindowInteropHelper.cs" />
     <Compile Include="System\Windows\IWindowService.cs" />
     <Compile Include="System\Windows\LengthConverter.cs" />

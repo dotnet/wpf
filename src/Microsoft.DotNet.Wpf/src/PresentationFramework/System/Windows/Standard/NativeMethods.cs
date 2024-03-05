@@ -2633,24 +2633,6 @@ namespace Standard
         [DllImport("user32.dll")]
         public static extern int GetWindowCompositionAttribute([In] IntPtr hWnd,[In, Out] ref WINCOMPATTRDATA data);
 
-/// <summary>
-//     /// Returns the dots per inch (dpi) value for the specified window.
-//     /// </summary>
-//     /// <param name="hWnd">The window that you want to get information about.</param>
-//     /// <returns>The DPI for the window, which depends on the DPI_AWARENESS of the window.</returns>
-//     [DllImport(Libraries.User32, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Winapi)]
-//     public static extern uint GetDpiForWindow([In] IntPtr hWnd);
-
-//     /// <summary>
-//     /// Returns the dots per inch (dpi) value for the specified window.
-//     /// </summary>
-//     /// <param name="hwnd">The window that you want to get information about.</param>
-//     /// <returns>The DPI for the window, which depends on the DPI_AWARENESS of the window.</returns>
-//     [DllImport(Libraries.User32, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Winapi)]
-//     public static extern uint GetDpiForWindow([In] HandleRef hwnd);
-
-
-
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);

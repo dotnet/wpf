@@ -57,7 +57,7 @@
 
     <Color x:Key="ControlAltFillColorTransparent">#00FFFFFF</Color>
     <Color x:Key="ControlAltFillColorSecondary">#19000000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#0BFFFFFF</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#FF373737</Color>
     <Color x:Key="ControlAltFillColorQuarternary">#12FFFFFF</Color>
     <Color x:Key="ControlAltFillColorDisabled">#00FFFFFF</Color>
 
@@ -487,7 +487,9 @@
     <!--  ListBox  -->
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.9" />
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource ControlAltFillColorTertiary}" />
 
     <!--  ListView  -->
     <SolidColorBrush x:Key="ListViewItemForeground" Color="{StaticResource TextFillColorPrimary}" />

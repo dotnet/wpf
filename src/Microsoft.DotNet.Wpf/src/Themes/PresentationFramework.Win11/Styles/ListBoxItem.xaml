@@ -35,6 +35,20 @@
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource ListBoxItemSelectedForegroundThemeBrush}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ListBoxItemUnselectedBackgroundPointerOverThemeBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundPointerOverThemeBrush}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

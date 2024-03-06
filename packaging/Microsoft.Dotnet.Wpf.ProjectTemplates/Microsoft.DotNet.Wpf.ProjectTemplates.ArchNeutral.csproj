@@ -25,18 +25,4 @@
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
     <PackagingContent Include="content\**\*" SubFolder="root\%(RecursiveDir)" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackagingContent Remove="content\WpfCustomControlLibrary-CSharp\net5.0\Themes\Generic.xaml" />
-    <PackagingContent Remove="content\WpfCustomControlLibrary-CSharp\net6.0\Themes\Generic.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="content\WpfCustomControlLibrary-CSharp\net5.0\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="content\WpfCustomControlLibrary-CSharp\net6.0\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
 </Project>

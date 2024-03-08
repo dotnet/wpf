@@ -161,6 +161,7 @@
                                 <Condition Property="IsEnabled" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Foreground" Value="{DynamicResource RadioButtonForegroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource RadioButtonBackgroundDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseStrokeDisabled}" />
                         </MultiTrigger>
@@ -170,7 +171,7 @@
                                 <Condition Property="IsEnabled" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Foreground" Value="{DynamicResource RadioButtonForegroundDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource RadioButtonForegroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource RadioButtonBackgroundDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokeDisabled}" />
                             <Setter TargetName="CheckGlyph" Property="Opacity" Value="0.7" />

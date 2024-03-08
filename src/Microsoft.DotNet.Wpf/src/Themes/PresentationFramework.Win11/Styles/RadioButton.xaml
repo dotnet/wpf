@@ -141,8 +141,19 @@
                                 <Condition Property="IsEnabled" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillPointerOver}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPointerOver}" />
                             <!--<Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePointerOver}" />-->
                             <Setter TargetName="PressedCheckGlyph" Property="Background" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePointerOver}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True" />
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPressed}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPressed}" />
+                            <Setter TargetName="PressedCheckGlyph" Property="Background" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedStrokePressed}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -162,8 +173,6 @@
                             <Setter Property="Foreground" Value="{DynamicResource RadioButtonForegroundDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillDisabled}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokeDisabled}" />
-
-
                             <Setter TargetName="CheckGlyph" Property="Opacity" Value="0.7" />
                             <Setter TargetName="CheckOuterEllipse" Property="Opacity" Value="0.7" />
                         </MultiTrigger>

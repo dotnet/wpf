@@ -14,7 +14,7 @@
     >
 
     <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
-    <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
+    <Thickness x:Key="ButtonBorderThemeThickness">0,0,0,1</Thickness>
     <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
 
     <Style x:Key="DefaultUiButtonStyle" TargetType="{x:Type ButtonBase}">
@@ -23,7 +23,7 @@
         <!--  Universal WPF UI focus  -->
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorSecondaryBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
         <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -48,35 +48,40 @@
                         VerticalAlignment="{TemplateBinding VerticalAlignment}"
                         Background="{TemplateBinding Background}"
                         CornerRadius="{TemplateBinding Border.CornerRadius}">
-                        <Border
-                            Padding="{TemplateBinding Padding}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
+                        <Border x:Name="InnerBorder1"
+                            BorderThickness="1,1,1,0"
+                            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                             CornerRadius="{TemplateBinding Border.CornerRadius}">
-                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                            <Border x:Name="InnerBorder2"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Border.CornerRadius}">
+                                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- <ContentPresenter
-                                    x:Name="ControlIcon"
-                                    Grid.Column="0"
-                                    Margin="{StaticResource ButtonIconMargin}"
-                                    VerticalAlignment="Center"
-                                    Content="{TemplateBinding Icon}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    Focusable="False"
-                                    TextElement.FontSize="{TemplateBinding FontSize}"
-                                    TextElement.Foreground="{TemplateBinding Foreground}" /> -->
+                                    <!-- <ContentPresenter
+                                        x:Name="ControlIcon"
+                                        Grid.Column="0"
+                                        Margin="{StaticResource ButtonIconMargin}"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        Focusable="False"
+                                        TextElement.FontSize="{TemplateBinding FontSize}"
+                                        TextElement.Foreground="{TemplateBinding Foreground}" /> -->
 
-                                <ContentPresenter
-                                    x:Name="ContentPresenter"
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Content="{TemplateBinding Content}"
-                                    TextElement.Foreground="{TemplateBinding Foreground}" />
-                            </Grid>
+                                    <ContentPresenter
+                                        x:Name="ContentPresenter"
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}"
+                                        TextElement.Foreground="{TemplateBinding Foreground}" />
+                                </Grid>
+                            </Border>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -95,6 +100,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
+                            <Setter TargetName="InnerBorder2" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
                             <!-- <Setter TargetName="ControlIcon" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPressed}" /> -->
                         </MultiTrigger>

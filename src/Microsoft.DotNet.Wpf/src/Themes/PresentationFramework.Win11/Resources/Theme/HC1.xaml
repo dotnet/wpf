@@ -436,6 +436,9 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedStrokePressed" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedFillPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedFillPressed" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFill" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPressed" Color="{StaticResource SystemColorHighlightTextColor}" />

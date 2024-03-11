@@ -547,6 +547,9 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource SystemAccentColorPrimary}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource SystemAccentColorPrimary}" Opacity="0.9" />
     <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedStrokePressed" Color="{DynamicResource SystemAccentColorPrimary}" Opacity="0.8" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedFillPointerOver" Color="{DynamicResource SystemAccentColorPrimary}" Opacity="0.9" />
+    <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedFillPressed" Color="{DynamicResource SystemAccentColorPrimary}" Opacity="0.8" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFill" Color="{StaticResource ControlAltFillColorSecondary}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />

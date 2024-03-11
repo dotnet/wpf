@@ -47,41 +47,38 @@
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}"
                         Background="{TemplateBinding Background}"
+                        BorderThickness="1,1,1,0"
+                        BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                         CornerRadius="{TemplateBinding Border.CornerRadius}">
-                        <Border x:Name="InnerBorder1"
-                            BorderThickness="1,1,1,0"
-                            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                        <Border x:Name="InnerBorder"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding Border.CornerRadius}">
-                            <Border x:Name="InnerBorder2"
-                                Padding="{TemplateBinding Padding}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Border.CornerRadius}">
-                                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                                    <!-- <ContentPresenter
-                                        x:Name="ControlIcon"
-                                        Grid.Column="0"
-                                        Margin="{StaticResource ButtonIconMargin}"
-                                        VerticalAlignment="Center"
-                                        Content="{TemplateBinding Icon}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        Focusable="False"
-                                        TextElement.FontSize="{TemplateBinding FontSize}"
-                                        TextElement.Foreground="{TemplateBinding Foreground}" /> -->
+                                <!-- <ContentPresenter
+                                    x:Name="ControlIcon"
+                                    Grid.Column="0"
+                                    Margin="{StaticResource ButtonIconMargin}"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Icon}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Focusable="False"
+                                    TextElement.FontSize="{TemplateBinding FontSize}"
+                                    TextElement.Foreground="{TemplateBinding Foreground}" /> -->
 
-                                    <ContentPresenter
-                                        x:Name="ContentPresenter"
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Content="{TemplateBinding Content}"
-                                        TextElement.Foreground="{TemplateBinding Foreground}" />
-                                </Grid>
-                            </Border>
+                                <ContentPresenter
+                                    x:Name="ContentPresenter"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}"
+                                    TextElement.Foreground="{TemplateBinding Foreground}" />
+                            </Grid>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -100,7 +97,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundPressed}" />
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPressed}" />
-                            <Setter TargetName="InnerBorder2" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+                            <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPressed}" />
                             <!-- <Setter TargetName="ControlIcon" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPressed}" /> -->
                         </MultiTrigger>

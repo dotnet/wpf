@@ -269,6 +269,7 @@
     <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{StaticResource SystemColorButtonTextColor}" />

@@ -14,7 +14,7 @@ namespace System.Windows
     ///
     /// </summary>
     [FriendAccessAllowed] // Built into Base, used by Core and Framework
-    internal class UncommonField<T>
+    public class UncommonField<T>
     {
         /// <summary>
         ///     Create a new UncommonField.

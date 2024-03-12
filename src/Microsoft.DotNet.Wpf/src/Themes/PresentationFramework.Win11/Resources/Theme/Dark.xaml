@@ -327,7 +327,7 @@
     <SolidColorBrush x:Key="BreadcrumbBarCurrentNormalForegroundBrush" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  Button  -->
-    <SolidColorBrush x:Key="AccentButtonBackground" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="AccentButtonBackground" Color="{DynamicResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.9" />
     <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.8" />
     <!--<SolidColorBrush x:Key="AccentButtonBackgroundDisabled" ResourceKey="AccentFillColorDisabledBrush" />-->

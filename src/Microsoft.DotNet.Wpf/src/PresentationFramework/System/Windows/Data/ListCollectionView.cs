@@ -2930,7 +2930,7 @@ namespace System.Windows.Data
         // SortDescription was added/removed, refresh CollectionView
         private void SortDescriptionsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (IsAddingNew || IsEditingItem)
+            if ((IsAddingNew || IsEditingItem) && e.Action != NotifyCollectionChangedAction.Reset)
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Sorting"));
 
             // adding to SortDescriptions overrides custom sort

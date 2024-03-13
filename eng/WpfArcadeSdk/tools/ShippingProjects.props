@@ -28,7 +28,7 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      FluentWindows;
+      PresentationFramework.FluentWindows;
       WindowsFormsIntegration;
       PenImc;
       wpfgfx;
@@ -99,7 +99,7 @@
       PresentationFramework.Classic-ref;
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale-ref;
-      FluentWindows-ref;
+      PresentationFramework.FluentWindows-ref;
       PresentationUI-ref;
       System.Printing-ref;
       System.Windows.Controls.Ribbon-ref;

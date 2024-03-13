@@ -454,8 +454,8 @@ src\Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj
 src\Themes\PresentationFramework.Luna\ref\PresentationFramework.Luna-ref.csproj
 src\Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj
 src\Themes\PresentationFramework.Royale\ref\PresentationFramework.Royale-ref.csproj
-src\Themes\FluentWindows\FluentWindows.csproj
-src\Themes\FluentWindows\ref\FluentWindows-ref.csproj
+src\Themes\PresentationFramework.FluentWindows\PresentationFramework.FluentWindows.csproj
+src\Themes\PresentationFramework.FluentWindows\ref\PresentationFramework.FluentWindows-ref.csproj
 src\UIAutomation\UIAutomationClient\UIAutomationClient.csproj
 src\UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj
 src\UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj

@@ -37,7 +37,7 @@
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)Themes\FluentWindows\ref\FluentWindows-ref.csproj">
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.FluentWindows\ref\PresentationFramework.FluentWindows-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

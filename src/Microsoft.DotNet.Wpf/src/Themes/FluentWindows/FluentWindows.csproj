@@ -1,4 +1,4 @@
-<!-- PresentationFramework.Win11 -->
+<!-- FluentWindows -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -6,8 +6,8 @@
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
 
-    <!-- THEME_WIN11 #DEFINE is used in KnownTypeHelper.cs -->
-    <DefineConstants>$(DefineConstants);THEME_WIN11</DefineConstants>
+    <!-- THEME_FLUENTWINDOWS #DEFINE is used in KnownTypeHelper.cs -->
+    <DefineConstants>$(DefineConstants);THEME_FLUENTWINDOWS</DefineConstants>
     <!-- Explicitly include source files to compile -->
     <EnableDefaultItems>false</EnableDefaultItems>
 
@@ -37,7 +37,7 @@
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Win11\ref\PresentationFramework.Win11-ref.csproj">
+    <ProjectReference Include="$(WpfSourceDir)Themes\FluentWindows\ref\FluentWindows-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
@@ -70,7 +70,7 @@
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
 
-    <!-- Additional references beyond the minimal set for PresentationFramework.Win11 -->
+    <!-- Additional references beyond the minimal set for FluentWindows -->
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Collections.Concurrent" />
   </ItemGroup>

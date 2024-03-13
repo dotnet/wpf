@@ -37,7 +37,7 @@ using System.Windows.Markup;
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkSystemCore)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkSystemXml)]
 [assembly:InternalsVisibleTo(BuildInfo.SystemWindowsControlsRibbon)]
-[assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkWin11)]
+[assembly:InternalsVisibleTo(BuildInfo.FluentWindows)]
 [assembly:DependencyAttribute("mscorlib,", LoadHint.Always)]
 [assembly:DependencyAttribute("System,", LoadHint.Always)]
 [assembly:DependencyAttribute("WindowsBase,", LoadHint.Always)]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace PresentationFramework.Win11.Controls
+namespace FluentWindows.Controls
 {
     internal class AnimationFactorToValueConverter : IMultiValueConverter
     {

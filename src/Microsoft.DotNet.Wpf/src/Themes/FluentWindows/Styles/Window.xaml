@@ -8,7 +8,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:PresentationFramework.Win11.Controls">
+    xmlns:controls="clr-namespace:FluentWindows.Controls">
     <!--
         SingleBorderWindow preserves the animations and scaling properly.
         By default, the navigation buttons will be hidden by the background.

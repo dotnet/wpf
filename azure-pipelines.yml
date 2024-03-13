@@ -50,8 +50,8 @@ extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
     pool:
-      name: Azure-Pipelines-1ESPT-ExDShared
-      image: windows-2022
+      name: NetCore1ESPool-Internal
+      image: 1es-windows-2022-pt
       os: windows
     customBuildTags:
     - ES365AIMigrationTooling

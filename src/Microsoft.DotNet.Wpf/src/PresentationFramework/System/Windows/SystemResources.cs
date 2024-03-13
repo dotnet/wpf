@@ -1413,7 +1413,7 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
                     
-                    if(ThemeColorization.Win11ThemeEnabled)
+                    if(ThemeColorization.IsFluentWindowsThemeEnabled)
                     {
                         ThemeColorization.UpdateApplicationTheme();
                     }

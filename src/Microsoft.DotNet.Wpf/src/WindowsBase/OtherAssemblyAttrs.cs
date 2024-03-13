@@ -28,7 +28,7 @@ using System.Windows.Markup;
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkAero2)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkAeroLite)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkClassic)]
-[assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkWin11)]
+[assembly:InternalsVisibleTo(BuildInfo.FluentWindows)]
 [assembly:InternalsVisibleTo(BuildInfo.ReachFramework)]
 [assembly:InternalsVisibleTo(BuildInfo.SystemWindowsPresentation)]
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkSystemCore)]

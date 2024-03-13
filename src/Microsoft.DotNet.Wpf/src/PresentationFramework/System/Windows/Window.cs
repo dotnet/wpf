@@ -2511,17 +2511,17 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows11OrNewer && ThemeColorization.Win11ThemeEnabled)
+            if (Standard.Utility.IsOSWindows11OrNewer && ThemeColorization.IsFluentWindowsThemeEnabled)
             {
                 ResourceDictionary themeDictionary = new ResourceDictionary();
 
                 if(ThemeColorization.IsThemeDark())
                 {
-                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/dark.xaml", UriKind.Absolute);
+                    themeDictionary.Source = new Uri("pack://application:,,,/FluentWindows;component/resources/theme/dark.xaml", UriKind.Absolute);
                 }
                 else 
                 {
-                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.Win11;component/resources/theme/light.xaml", UriKind.Absolute);
+                    themeDictionary.Source = new Uri("pack://application:,,,/FluentWindows;component/resources/theme/light.xaml", UriKind.Absolute);
                 }
 
                 Application.Current.Resources.MergedDictionaries.Add(themeDictionary);

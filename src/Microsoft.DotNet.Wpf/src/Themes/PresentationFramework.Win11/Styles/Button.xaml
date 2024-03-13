@@ -104,6 +104,7 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundDisabled}" />
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushDisabled}" />
+                            <Setter TargetName="InnerBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
                             <!-- <Setter TargetName="ControlIcon" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundDisabled}" /> -->
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
                         </Trigger>

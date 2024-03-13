@@ -1415,16 +1415,7 @@ namespace System.Windows
                     
                     if(ThemeColorization.Win11ThemeEnabled)
                     {
-                        string currentApplicationTheme = ThemeColorization.CurrentApplicationTheme;
-                        string themeToApply = ThemeColorization.GetSystemTheme();
-                        Color currentApplicationAccentColor = DWMColorization.CurrentApplicationAccentColor;
-                        Color accentColorToApply = DWMColorization.GetSystemAccentColor();
-
-                        if (themeToApply != currentApplicationTheme || accentColorToApply != currentApplicationAccentColor)
-                        {
-                            DWMColorization.UpdateAccentColors();
-                            ThemeColorization.ApplyTheme();
-                        }
+                        ThemeColorization.UpdateApplicationTheme();
                     }
                     break;
 

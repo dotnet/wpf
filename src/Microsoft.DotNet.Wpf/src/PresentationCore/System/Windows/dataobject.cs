@@ -1684,12 +1684,25 @@ namespace System.Windows
                 using (binaryWriter = new BinaryWriter(stream))
                 {
                     binaryWriter.Write(_serializedObjectID);
+                    bool success = false;
+                    try
+                    {
+                        success = BinaryFormatWriter.TryWriteFrameworkObject(stream,data);
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException())
+                    {
+                        // Being extra cautious here, but the Try method above should never throw in normal circumstances.
+                        Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
+                    }
 
-                    formatter = new BinaryFormatter();
-
-                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                    formatter.Serialize(stream, data);
-                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    if(!success)
+                    {
+                        //Using Binary formatter
+                        formatter = new BinaryFormatter();
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                        formatter.Serialize(stream, data);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    }
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -3046,8 +3059,24 @@ namespace System.Windows
 
                 if (isSerializedObject)
                 {
-                    BinaryFormatter formatter;
 
+                    long startPosition = stream.Position;
+                    try
+                    {
+                        if (new BinaryFormattedObject(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
+                        {
+                            return val;
+                        }
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException()) 
+                    {
+                        // Couldn't parse for some reason, let the BinaryFormatter try to handle it.
+                        
+                    }
+
+                    // Using Binary formatter
+                    stream.Position = startPosition;
+                    BinaryFormatter formatter;
                     formatter = new BinaryFormatter();
                     if (restrictDeserialization)
                     {

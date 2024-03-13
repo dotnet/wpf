@@ -18,10 +18,14 @@ internal static class ThemeColorization
     /// </summary>
     private static readonly string _regThemeKey = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes";
 
+    private static readonly string _appThemeKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
+
     /// <summary>
     /// Static member indicating theme which is currently applied.
     /// </summary>
     private static string _currentApplicationTheme = "C:\\windows\\resources\\Themes\\aero.theme";
+
+    private static string _currentAppsTheme = "Light";
 
     private static bool _win11ThemeEnabled = false;
 
@@ -56,10 +60,20 @@ internal static class ThemeColorization
     {
         get { return _win11ThemeEnabled; }
     }
-
-    internal static string CurrentApplicationTheme
+    
+    internal static void UpdateApplicationTheme()
     {
-        get { return _currentApplicationTheme; }
+        string themeToApply = GetSystemTheme();
+        string appsThemeToApply = GetAppsTheme();
+
+        Color currentApplicationAccentColor = DWMColorization.CurrentApplicationAccentColor;
+        Color accentColorToApply = DWMColorization.GetSystemAccentColor();
+
+        if (themeToApply != _currentApplicationTheme || accentColorToApply != currentApplicationAccentColor || appsThemeToApply != _currentAppsTheme)
+        {
+            DWMColorization.UpdateAccentColors();
+            ApplyTheme();
+        }
     }
 
     /// <summary>
@@ -97,33 +111,36 @@ internal static class ThemeColorization
     internal static void ApplyTheme()
     {
         string themeToApply = GetSystemTheme();
-        
+
         Window currentWindow = Application.Current.MainWindow;
 
-        if (themeToApply.Contains("dark") && Utility.IsOSWindows11OrNewer)
+        if (IsThemeDark() && Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
         }
-        else if(themeToApply.Contains("hcwhite") && Utility.IsOSWindows11OrNewer)
+        else if(IsThemeHighContrast() && Utility.IsOSWindows11OrNewer) 
         {
-            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcwhite.xaml", UriKind.Absolute));
-            WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
-        }
-        else if(themeToApply.Contains("hcblack") && Utility.IsOSWindows11OrNewer)
-        {
-            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcblack.xaml", UriKind.Absolute));
-            WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
-        }
-        else if (themeToApply.Contains("hc1") && Utility.IsOSWindows11OrNewer)
-        {
-            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc1.xaml", UriKind.Absolute));
-            WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
-        }
-        else if (themeToApply.Contains("hc2") && Utility.IsOSWindows11OrNewer)
-        {
-            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc2.xaml", UriKind.Absolute));
-            WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
+            if(themeToApply.Contains("hcwhite"))
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcwhite.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
+            }
+            else if(themeToApply.Contains("hcblack"))
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hcblack.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
+            }
+            else if (themeToApply.Contains("hc1"))
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc1.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
+            }
+            else
+            {
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.Win11;component/Resources/Theme/" + "hc2.xaml", UriKind.Absolute));
+                WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
+            }
         }
         else if (Utility.IsOSWindows11OrNewer)
         {
@@ -132,6 +149,7 @@ internal static class ThemeColorization
         }
 
         _currentApplicationTheme = themeToApply;
+        _currentAppsTheme = GetAppsTheme();
     }
 
     /// <summary>
@@ -149,19 +167,20 @@ internal static class ThemeColorization
 
         return systemTheme;
     }
+
+    internal static string GetAppsTheme()
+    {
+        return IsThemeDark() ? "Dark" : "Light";
+    }
     #endregion
 
 
     internal static bool IsThemeDark()
     {
-        var currentTheme = ThemeColorization.GetSystemTheme();
-        
-        if (currentTheme != null)
-        {
-            return currentTheme.Contains("dark.theme");
-        }
-
-        return false;
+        return Registry.GetValue(
+            _appThemeKey, 
+            "AppsUseLightTheme", 
+            null) as int? == 0 ? true : false;
     }
 
     internal static bool IsThemeHighContrast()

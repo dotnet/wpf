@@ -121,8 +121,8 @@ The following assemblies are being produced today:
     |   PresentationFramework.pdb 
     |   PresentationFramework.Royale.dll
     |   PresentationFramework.Royale.pdb
-    |   FluentWindows.dll
-    |   FluentWindows.pdb
+    |   PresentationFramework.FluentWindows.dll
+    |   PresentationFramework.FluentWindows.pdb
     |   PresentationUI.dll
     |   PresentationUI.pdb
     |   ReachFramework.dll

@@ -60,7 +60,7 @@ internal static class WindowBackdrop
         window.Loaded += (sender, _) =>
         {
             IntPtr windowHandle =
-                new WindowInteropHelper(sender as System.Windows.Window ?? null)?.Handle ?? IntPtr.Zero;
+                new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
 
             if (windowHandle == IntPtr.Zero)
             {
@@ -78,7 +78,7 @@ internal static class WindowBackdrop
     /// </summary>
     /// <param name="hWnd">Window handle.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    internal static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
+    private static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -159,11 +159,6 @@ internal static class WindowBackdrop
 
         _ = RestoreContentBackground(hWnd);
 
-        if (hWnd == IntPtr.Zero)
-        {
-            return false;
-        }
-
         if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
@@ -243,7 +238,7 @@ internal static class WindowBackdrop
         window.Loaded += (sender, _) =>
         {
             IntPtr windowHandle =
-                new WindowInteropHelper(sender as System.Windows.Window ?? null)?.Handle ?? IntPtr.Zero;
+                new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
 
             if (windowHandle == IntPtr.Zero)
             {

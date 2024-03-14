@@ -682,6 +682,11 @@
         <target state="translated">'{0}'에 최소한 하나의 파일 드롭 경로가 있어야 합니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataObject_FileGroupIsEmpty">
+        <source>'{0}' must contain at least one file.</source>
+        <target state="new">'{0}' must contain at least one file.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataObject_NotImplementedEnumFormatEtc">
         <source>'{0}' dwDirection parameter value is not supported.</source>
         <target state="translated">'{0}' dwDirection 매개 변수 값이 지원되지 않습니다.</target>
@@ -1025,6 +1030,16 @@
       <trans-unit id="FileFormatExceptionWithFileName">
         <source>'{0}' file does not conform to the expected file format specification.</source>
         <target state="translated">'{0}' 파일이 필요한 파일 형식 사양에 맞지 않습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_DescriptorNotFound">
+        <source>The given file descriptor is not present in the file group.</source>
+        <target state="new">The given file descriptor is not present in the file group.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_ReadOnly">
+        <source>A received FileGroup object cannot be modified.</source>
+        <target state="new">A received FileGroup object cannot be modified.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFoundExceptionWithFileName">

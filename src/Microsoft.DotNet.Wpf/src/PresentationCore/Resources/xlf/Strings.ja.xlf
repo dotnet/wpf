@@ -682,6 +682,11 @@
         <target state="translated">'{0}' には、最低 1 つのファイル ドロップ パスを含む必要があります。</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataObject_FileGroupIsEmpty">
+        <source>'{0}' must contain at least one file.</source>
+        <target state="new">'{0}' must contain at least one file.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataObject_NotImplementedEnumFormatEtc">
         <source>'{0}' dwDirection parameter value is not supported.</source>
         <target state="translated">'{0}' dwDirection パラメーター値はサポートされていません。</target>
@@ -1025,6 +1030,16 @@
       <trans-unit id="FileFormatExceptionWithFileName">
         <source>'{0}' file does not conform to the expected file format specification.</source>
         <target state="translated">'{0}' ファイルは、予測されるファイル形式の仕様に準拠していません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_DescriptorNotFound">
+        <source>The given file descriptor is not present in the file group.</source>
+        <target state="new">The given file descriptor is not present in the file group.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="FileGroup_ReadOnly">
+        <source>A received FileGroup object cannot be modified.</source>
+        <target state="new">A received FileGroup object cannot be modified.</target>
         <note />
       </trans-unit>
       <trans-unit id="FileNotFoundExceptionWithFileName">

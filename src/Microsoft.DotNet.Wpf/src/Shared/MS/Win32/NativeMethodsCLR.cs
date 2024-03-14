@@ -7259,6 +7259,37 @@ namespace MS.Win32 {
             /// </summary>
             MDT_DEFAULT = MDT_EFFECTIVE_DPI
         }
+
+        // FILEDESCRIPTOR.dwFlags
+        public const uint
+        FD_CLSID = 0x00000001,
+        FD_SIZEPOINT = 0x00000002,
+        FD_ATTRIBUTES = 0x00000004,
+        FD_CREATETIME = 0x00000008,
+        FD_ACCESSTIME = 0x00000010,
+        FD_WRITESTIME = 0x00000020,
+        FD_FILESIZE = 0x00000040,
+        FD_PROGRESSUI = 0x00004000,
+        FD_LINKUI = 0x00008000,
+        FD_UNICODE = 0x80000000;
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public class FILEDESCRIPTOR {
+            public FILEDESCRIPTOR() {
+            }
+            public uint dwFlags;
+            public Guid clsid;
+            public SIZE sizel;
+            public POINT pointl;
+            public FileAttributes dwFileAttributes;
+            public long ftCreationTime;
+            public long ftLastAccessTime;
+            public long ftLastWriteTime;
+            public int nFileSizeHigh;
+            public int nFileSizeLow;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=MAX_PATH)]
+            public string cFileName;
+        }
     }
 }
 

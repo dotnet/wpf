@@ -71,6 +71,7 @@ namespace System.Windows
         public static bool ContainsAudio() { throw null; }
         public static bool ContainsData(string format) { throw null; }
         public static bool ContainsFileDropList() { throw null; }
+        public static bool ContainsFileGroup() { throw null; }
         public static bool ContainsImage() { throw null; }
         public static bool ContainsText() { throw null; }
         public static bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
@@ -79,6 +80,7 @@ namespace System.Windows
         public static object GetData(string format) { throw null; }
         public static System.Windows.IDataObject GetDataObject() { throw null; }
         public static System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
+        public static System.Windows.FileGroup GetFileGroup() { throw null; }
         public static System.Windows.Media.Imaging.BitmapSource GetImage() { throw null; }
         public static string GetText() { throw null; }
         public static string GetText(System.Windows.TextDataFormat format) { throw null; }
@@ -89,6 +91,7 @@ namespace System.Windows
         public static void SetDataObject(object data) { }
         public static void SetDataObject(object data, bool copy) { }
         public static void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
+        public static void SetFileGroup(System.Windows.FileGroup group) { }
         public static void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public static void SetText(string text) { }
         public static void SetText(string text, System.Windows.TextDataFormat format) { }
@@ -468,10 +471,12 @@ namespace System.Windows
         public static readonly string WaveAudio;
         public static readonly string Xaml;
         public static readonly string XamlPackage;
+        public static readonly string FileContents;
+        public static readonly string FileGroupDescriptor;
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
-    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject
+    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObjectWithIndex, System.Windows.IDataObject
     {
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
@@ -486,17 +491,21 @@ namespace System.Windows
         public static void AddSettingDataHandler(System.Windows.DependencyObject element, System.Windows.DataObjectSettingDataEventHandler handler) { }
         public bool ContainsAudio() { throw null; }
         public bool ContainsFileDropList() { throw null; }
+        public bool ContainsFileGroup() { throw null; }
         public bool ContainsImage() { throw null; }
         public bool ContainsText() { throw null; }
         public bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public System.IO.Stream GetAudioStream() { throw null; }
         public object GetData(string format) { throw null; }
         public object GetData(string format, bool autoConvert) { throw null; }
+        public object GetData(string format, bool autoConvert, int index) { throw null; }
         public object GetData(System.Type format) { throw null; }
         public bool GetDataPresent(string format) { throw null; }
         public bool GetDataPresent(string format, bool autoConvert) { throw null; }
+        public bool GetDataPresent(string format, bool autoConvert, int index) { throw null; }
         public bool GetDataPresent(System.Type format) { throw null; }
         public System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
+        public System.Windows.FileGroup GetFileGroup() { throw null; }
         public string[] GetFormats() { throw null; }
         public string[] GetFormats(bool autoConvert) { throw null; }
         public System.Windows.Media.Imaging.BitmapSource GetImage() { throw null; }
@@ -510,8 +519,10 @@ namespace System.Windows
         public void SetData(object data) { }
         public void SetData(string format, object data) { }
         public void SetData(string format, object data, bool autoConvert) { }
+        public void SetData(string format, object data, bool autoConvert, int index) { }
         public void SetData(System.Type format, object data) { }
         public void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
+        public void SetFileGroup(System.Windows.FileGroup group) { }
         public void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public void SetText(string textData) { }
         public void SetText(string textData, System.Windows.TextDataFormat format) { }
@@ -710,6 +721,35 @@ namespace System.Windows
         public object PopBranchNode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public void PushBranchNode(object node, object source) { }
+    }
+    public partial class FileDescriptor
+    {
+        public FileDescriptor(string filename) { }
+        public System.Guid? Clsid { get { throw null; } set { } }
+        public System.DateTime? CreationTime { get { throw null; } set { } }
+        public System.IO.FileAttributes? FileAttributes { get { throw null; } set { } }
+        public string FileName  { get { throw null; } }
+        public long? FileSize  { get { throw null; } set { } }
+        public static FileDescriptor FromFile(string path) { throw null; }
+        public System.Windows.Int32Rect? Icon { get { throw null; } set { } }
+        public bool IsDirectory { get { throw null; } }
+        public System.DateTime? LastAccessTime { get { throw null; } set { } }
+        public System.DateTime? LastWriteTime { get { throw null; } set { } }
+    }
+    public partial class FileGroup : System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<System.Windows.FileDescriptor, System.IO.Stream>>
+    {
+        public FileGroup() { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public void Add(string filename, byte[] data) { }
+        public void Add(string filename, System.IO.Stream stream) { }
+        public void Add(System.Windows.FileDescriptor descriptor, System.IO.Stream stream) { }
+        public System.Collections.Generic.IReadOnlyList<System.Windows.FileDescriptor> FileDescriptors { get { throw null; } }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<FileDescriptor, System.IO.Stream>> GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public System.IO.Stream GetFileContents(System.Windows.FileDescriptor descriptor) { throw null; }
+        public System.IO.Stream GetFileContents(int index) { throw null; }
+        System.Collections.Generic.KeyValuePair<System.Windows.FileDescriptor, System.IO.Stream> System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<System.Windows.FileDescriptor, System.IO.Stream>>.this[int index] { get { throw null; } }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
     public enum FlowDirection
@@ -974,6 +1014,12 @@ namespace System.Windows
         void SetData(string format, object data);
         void SetData(string format, object data, bool autoConvert);
         void SetData(System.Type format, object data);
+    }
+    public partial interface IDataObjectWithIndex : System.Windows.IDataObject
+    {
+        object GetData(string format, bool autoConvert, int index);
+        bool GetDataPresent(string format, bool autoConvert, int index);
+        void SetData(string format, object data, bool autoConvert, int index);
     }
     public partial interface IInputElement
     {

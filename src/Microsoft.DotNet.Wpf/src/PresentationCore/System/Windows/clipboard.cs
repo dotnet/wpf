@@ -14,6 +14,7 @@
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.PresentationCore;                        // SecurityHelper
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Security;
@@ -103,6 +104,14 @@ namespace System.Windows
         public static bool ContainsFileDropList()
         {
             return ContainsDataInternal(DataFormats.FileDrop);
+        }
+
+        /// <summary>
+        /// Return true if Clipboard contains the file drop list format. Otherwise, return false.
+        /// </summary>
+        public static bool ContainsFileGroup()
+        {
+            return ContainsDataInternal(DataFormats.FileGroupDescriptor);
         }
 
         /// <summary>
@@ -203,6 +212,24 @@ namespace System.Windows
             }
 
             return fileDropListCollection;
+        }
+
+        /// <summary>
+        /// Get the file group from Clipboard.
+        /// </summary>
+        public static FileGroup GetFileGroup()
+        {
+            IDataObjectWithIndex dataObject = GetDataObject() as IDataObjectWithIndex;
+            if (dataObject != null)
+            {
+                IEnumerable<FileDescriptor> descriptor = dataObject.GetData(DataFormats.FileGroupDescriptor) as IEnumerable<FileDescriptor>;
+                if (descriptor != null)
+                {
+                    return new FileGroup(dataObject, descriptor);
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -310,6 +337,26 @@ namespace System.Windows
             fileDropList.CopyTo(fileDropListStrings, 0);
 
             SetDataInternal(DataFormats.FileDrop, fileDropListStrings);
+        }
+
+        /// <summary>
+        /// Set the file group data to Clipboard.
+        /// </summary>
+        public static void SetFileGroup(FileGroup fileGroup)
+        {
+            if (fileGroup == null)
+            {
+                throw new ArgumentNullException(nameof(fileGroup));
+            }
+
+            if (fileGroup.Count == 0)
+            {
+                throw new ArgumentException(SR.Format(SR.DataObject_FileGroupIsEmpty, fileGroup));
+            }
+
+            DataObject dataObject = new DataObject();
+            dataObject.SetFileGroup(fileGroup);
+            CriticalSetDataObject(dataObject, /*copy*/false);
         }
 
         /// <summary>

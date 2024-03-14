@@ -122,5 +122,48 @@ namespace System.Windows
      }
 
     #endregion IDataObject interface
+
+    /// <summary>
+    /// Provides a format-independent mechanism for transferring data, supporting multi-part data.
+    /// </summary>
+    public interface IDataObjectWithIndex : IDataObject
+    {
+        /// <summary>
+        /// Retrieves the data associated with the specified data 
+        /// format, using autoConvert to determine whether to convert the data to the
+        /// format. 
+        /// </summary>
+        /// <param name="format">The format of the data to retrieve.</param>
+        /// <param name="autoConvert">true to convert the data to the specified format; 
+        /// otherwise, false.</param>
+        /// <param name="index">Part of the data. The most common value is -1, which
+        /// identifies all of the data.</param>
+        object GetData(string format, bool autoConvert, int index);
+
+        /// <summary>
+        /// Determines whether data stored in this instance is 
+        /// associated with the specified format, using autoConvert to determine whether to
+        /// convert the data to the format.
+        /// </summary>
+        /// <param name="format">The format for which to check.</param>
+        /// <param name="autoConvert">true to determine whether data stored in this instance 
+        /// can be converted.</param>
+        /// <param name="index">Part of the data. The most common value is -1, which
+        /// identifies all of the data.</param>
+        bool GetDataPresent(string format, bool autoConvert, int index);
+
+        /// <summary>
+        /// Stores the specified data and its associated format in 
+        /// this instance, using autoConvert to specify whether the data 
+        /// can be converted to another format.
+        /// </summary>
+        /// <param name="format">The format associated with the data.</param>
+        /// <param name="data">The data to store.</param>
+        /// <param name="autoConvert">true to allow the data to be converted to another format;
+        /// Otherwise, false.</param>
+        /// <param name="index">Part of the data. The most common value is -1, which
+        /// identifies all of the data.</param>
+        void SetData(string format, object data, bool autoConvert, int index);
+    }
 }
 

@@ -17,6 +17,7 @@ namespace System.Windows
     using System;
     using MS.Win32;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -43,7 +44,7 @@ namespace System.Windows
     /// <summary>
     /// Implements a basic data transfer mechanism.
     /// </summary>
-    public sealed class DataObject : IDataObject, IComDataObject
+    public sealed class DataObject : IDataObjectWithIndex, IDataObject, IComDataObject
     {
         //------------------------------------------------------
         //
@@ -176,6 +177,36 @@ namespace System.Windows
         /// format, using an automated conversion parameter to determine whether to convert
         /// the data to the format.
         /// </summary>
+        public object GetData(string format, bool autoConvert, int index)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                return innerData.GetData(format, autoConvert, index);
+            }
+
+            if (index != -1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            return _innerData.GetData(format, autoConvert);
+        }
+
+        /// <summary>
+        /// Retrieves the data associated with the specified data
+        /// format, using an automated conversion parameter to determine whether to convert
+        /// the data to the format.
+        /// </summary>
         public object GetData(string format, bool autoConvert)
         {
             ArgumentNullException.ThrowIfNull(format);
@@ -232,7 +263,7 @@ namespace System.Windows
         /// associated with the specified format, using an automatic conversion
         /// parameter to determine whether to convert the data to the format.
         /// </summary>
-        public bool GetDataPresent(string format, bool autoConvert)
+        public bool GetDataPresent(string format, bool autoConvert, int index)
         {
             bool dataPresent;
 
@@ -243,8 +274,38 @@ namespace System.Windows
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                return innerData.GetDataPresent(format, autoConvert, index);
+            }
+
+            if (index != -1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
             dataPresent = _innerData.GetDataPresent(format, autoConvert);
             return dataPresent;
+        }
+
+        /// <summary>
+        /// Determines whether data stored in this instance is
+        /// associated with the specified format, using an automatic conversion
+        /// parameter to determine whether to convert the data to the format.
+        /// </summary>
+        public bool GetDataPresent(string format, bool autoConvert)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            return GetDataPresent(format, autoConvert, -1);
         }
 
         /// <summary>
@@ -261,7 +322,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
             }
 
-            return GetDataPresent(format, true);
+            return GetDataPresent(format, true, -1);
         }
 
         /// <summary>
@@ -346,6 +407,41 @@ namespace System.Windows
             _innerData.SetData(format, data, autoConvert);
         }
 
+        /// <summary>
+        /// Stores the specified data and its associated format in
+        /// this instance, using the automatic conversion parameter
+        /// to specify whether the
+        /// data can be converted to another format.
+        /// </summary>
+        /// <remarks>
+        ///     Callers must have UIPermission(UIPermissionClipboard.AllClipboard) to call this API.
+        /// </remarks>
+        [FriendAccessAllowed]
+        public void SetData(string format, Object data, bool autoConvert, int index)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException("format");
+            }
+
+            if (format == string.Empty)
+            {
+                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            }
+
+            if (_innerData is IDataObjectWithIndex innerData)
+            {
+                innerData.SetData(format, data, autoConvert, index);
+                return;
+            }
+
+            if (index != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            _innerData.SetData(format, data, autoConvert);
+        }
 
         /// <summary>
         /// Return true if DataObject contains the audio data. Otherwise, return false.
@@ -361,6 +457,14 @@ namespace System.Windows
         public bool ContainsFileDropList()
         {
             return GetDataPresent(DataFormats.FileDrop, /*autoConvert*/false);
+        }
+
+        /// <summary>
+        /// Return tru if DataObject contains the file descriptor. Otherwise, return false.
+        /// </summary>
+        public bool ContainsFileGroup()
+        {
+            return GetDataPresent(DataFormats.FileGroupDescriptor, /*autoConvert*/false);
         }
 
         /// <summary>
@@ -417,6 +521,20 @@ namespace System.Windows
             }
 
             return fileDropListCollection;
+        }
+
+        /// <summary>
+        /// Gets file descriptor list.
+        /// </summary>
+        public FileGroup GetFileGroup()
+        {
+            IEnumerable<FileDescriptor> descriptor = GetData(DataFormats.FileGroupDescriptor, /*autoConvert*/false) as IEnumerable<FileDescriptor>;
+            if (descriptor != null)
+            {
+                return new FileGroup(this, descriptor);
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -507,6 +625,28 @@ namespace System.Windows
             fileDropList.CopyTo(fileDropListStrings, 0);
 
             SetData(DataFormats.FileDrop, fileDropListStrings, /*audoConvert*/true);
+        }
+
+        /// <summary>
+        /// Set the file group data.
+        /// </summary>
+        public void SetFileGroup(FileGroup fileGroup)
+        {
+            if (fileGroup == null)
+            {
+                throw new ArgumentNullException(nameof(fileGroup));
+            }
+
+            if (fileGroup.Count == 0)
+            {
+                throw new ArgumentException(SR.Format(SR.DataObject_FileGroupIsEmpty, fileGroup));
+            }
+
+            for (int i = 0; i < fileGroup.Count; i++)
+            {
+                SetData(DataFormats.FileContents, fileGroup.GetFileContents(i), /*autoConvert*/false, i);
+            }
+            SetData(DataFormats.FileGroupDescriptor, fileGroup.FileDescriptors, /*autoConvert*/false);
         }
 
         /// <summary>
@@ -1436,7 +1576,7 @@ namespace System.Windows
                 {
                     object data;
 
-                    data = GetData(format);
+                    data = GetData(format, true, formatetc.lindex);
 
                     // set the default result with DV_E_TYMED.
                     hr = DV_E_TYMED;
@@ -1497,6 +1637,17 @@ namespace System.Windows
             else if (IsFormatEqual(format, DataFormats.FileDrop))
             {
                 hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
+            }
+            else if (IsFormatEqual(format, DataFormats.FileGroupDescriptor))
+            {
+                if (data is FileGroup group)
+                {
+                    hr = SaveFileGroupDescriptorToHandle(medium.unionmember, group.FileDescriptors, doNotReallocate);
+                }
+                else if (data is IReadOnlyCollection<FileDescriptor> descriptors)
+                {
+                    hr = SaveFileGroupDescriptorToHandle(medium.unionmember, descriptors, doNotReallocate);
+                }
             }
             else if (IsFormatEqual(format, DataFormats.FileName))
             {
@@ -1575,22 +1726,21 @@ namespace System.Windows
 
             try
             {
-                // If the format is ISF, we should copy the data from the managed stream to the COM IStream object.
-                if ( format == System.Windows.Ink.StrokeCollection.InkSerializedFormat )
+                if (data is byte[] buffer)
                 {
-                    Stream inkStream = data as Stream;
-
-                    if ( inkStream != null )
+                    istream.Write(buffer, buffer.Length, IntPtr.Zero);
+                    hr = NativeMethods.S_OK;
+                }
+                else if (data is Stream stream)
+                {
+                    stream.Position = 0;
+                    buffer = new byte[MaxBufferSize];
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        IntPtr size = (IntPtr)inkStream.Length;
-
-                        byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
-                        inkStream.Position = 0;
-                        inkStream.Read(buffer, 0, NativeMethods.IntPtrToInt32(size));
-
-                        istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
-                        hr = NativeMethods.S_OK;
+                        istream.Write(buffer, read, IntPtr.Zero);
                     }
+                    hr = NativeMethods.S_OK;
                 }
             }
             finally
@@ -1874,6 +2024,81 @@ namespace System.Windows
                 unsafe
                 {
                     *(char*)currentPtr = '\0';
+                }
+            }
+            finally
+            {
+                Win32GlobalUnlock(new HandleRef(this, handle));
+            }
+
+            return NativeMethods.S_OK;
+        }
+
+        private int SaveFileGroupDescriptorToHandle(IntPtr handle, IReadOnlyCollection<FileDescriptor> descriptors, bool doNotReallocate)
+        {
+            IntPtr currentPtr;
+            IntPtr basePtr;
+            Int32 sizeInBytes;
+            Int32 entrySize;
+
+            if (descriptors == null || descriptors.Count < 1)
+            {
+                return NativeMethods.S_OK;
+            }
+
+            if (handle == IntPtr.Zero)
+            {
+                return (NativeMethods.E_INVALIDARG);
+            }
+
+            if (Marshal.SystemDefaultCharSize == 1)
+            {
+                Invariant.Assert(false, "Expected the system default char size to be 2 for Unicode systems.");
+                return (NativeMethods.E_INVALIDARG);
+            }
+
+            entrySize = Marshal.SizeOf<NativeMethods.FILEDESCRIPTOR>();
+            sizeInBytes = FILEGROUPDESCRIPTORBASESIZE + entrySize * descriptors.Count;
+
+            int hr = EnsureMemoryCapacity(ref handle, sizeInBytes, doNotReallocate);
+            if (NativeMethods.Failed(hr))
+            {
+                return hr;
+            }
+
+            basePtr = Win32GlobalLock(new HandleRef(this, handle));
+
+            try
+            {
+                currentPtr = basePtr;
+                Marshal.WriteInt32(currentPtr, descriptors.Count);
+
+                currentPtr += sizeof(Int32);
+
+                foreach (FileDescriptor descriptor in descriptors)
+                {
+                    NativeMethods.FILEDESCRIPTOR fd = new NativeMethods.FILEDESCRIPTOR();
+                    fd.cFileName = descriptor.FileName;
+                    if (descriptor.Clsid is Guid clsid) { fd.clsid = clsid; fd.dwFlags |= NativeMethods.FD_CLSID; }
+                    if (descriptor.Icon is Int32Rect rect)
+                    {
+                        fd.sizel.cx = rect.Width; fd.sizel.cy = rect.Height;
+                        fd.pointl.x = rect.X; fd.pointl.y = rect.Y;
+                        fd.dwFlags |= NativeMethods.FD_CLSID;
+                    }
+                    if (descriptor.FileAttributes is FileAttributes attribs) { fd.dwFileAttributes = attribs; fd.dwFlags |= NativeMethods.FD_ATTRIBUTES; }
+                    if (descriptor.CreationTime is DateTime creation) { fd.ftCreationTime = creation.ToFileTime(); fd.dwFlags |= NativeMethods.FD_CREATETIME; }
+                    if (descriptor.LastAccessTime is DateTime access) { fd.ftLastAccessTime = access.ToFileTime(); fd.dwFlags |= NativeMethods.FD_ACCESSTIME; }
+                    if (descriptor.LastWriteTime is DateTime write) { fd.ftLastWriteTime = write.ToFileTime(); fd.dwFlags |= NativeMethods.FD_WRITESTIME; }
+                    if (descriptor.FileSize is long size)
+                    {
+                        fd.nFileSizeHigh = (int)(size >> 32);
+                        fd.nFileSizeLow = (int)size;
+                        fd.dwFlags |= NativeMethods.FD_FILESIZE;
+                    }
+
+                    Marshal.StructureToPtr(fd, currentPtr, /*fDeleteOld*/false);
+                    currentPtr += entrySize;
                 }
             }
             finally
@@ -2218,6 +2443,12 @@ namespace System.Windows
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
         private const int FILEDROPBASESIZE   = 20;
 
+        // Const integer base size of the file group descriptor
+        private const int FILEGROUPDESCRIPTORBASESIZE = 4;
+
+        // The largest multiple of 4096 that is still smaller than the large object heap threshold (85K).
+        private const int MaxBufferSize = 81920;
+
         // Allowed type medium.
         private static readonly TYMED[] ALLOWED_TYMEDS = new TYMED[]
         {
@@ -2390,7 +2621,7 @@ namespace System.Windows
         /// OLE Converter.  This class embodies the nastiness required to convert from our
         /// managed types to standard OLE clipboard formats.
         /// </summary>
-        private class OleConverter : IDataObject
+        private class OleConverter : IDataObjectWithIndex
         {
             //------------------------------------------------------
             //
@@ -2430,7 +2661,12 @@ namespace System.Windows
 
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
+            }
+
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public bool GetDataPresent(string format)
@@ -2445,7 +2681,12 @@ namespace System.Windows
 
             public bool GetDataPresent(string format, bool autoConvert)
             {
-                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetDataPresent(format, autoConvert, -1);
+            }
+
+            public bool GetDataPresent(string format, bool autoConvert, int index)
+            {
+                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public string[] GetFormats()
@@ -2542,7 +2783,12 @@ namespace System.Windows
 
             public void SetData(string format, Object data, bool autoConvert)
             {
-                SetData(format, data, true, DVASPECT.DVASPECT_CONTENT, 0);
+                SetData(format, data, true, 0);
+            }
+
+            public void SetData(string format, Object data, bool autoConvert, int index)
+            {
+                SetData(format, data, true, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             #endregion Public Methods
@@ -2686,13 +2932,14 @@ namespace System.Windows
 
                 formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
                 formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc.lindex = -1; // Clipboard's QueryGetData supports -1 only
                 formatetc.tymed = TYMED.TYMED_ISTREAM;
 
                 object outData = null;
 
                 if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
                 {
+                    formatetc.lindex = index;
                     GetDataInner(ref formatetc, out medium);
                     try
                     {
@@ -2790,6 +3037,10 @@ namespace System.Windows
                     else if (IsFormatEqual(format, DataFormats.FileNameW))
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
+                    }
+                    else if (IsFormatEqual(format, DataFormats.FileGroupDescriptor))
+                    {
+                        data = ReadFileGroupDescriptorFromHandle(hglobal);
                     }
                     else if (IsFormatEqual(format, typeof(BitmapSource).FullName))
                     {
@@ -3126,6 +3377,44 @@ namespace System.Windows
                 return files;
             }
 
+            private FileDescriptor[] ReadFileGroupDescriptorFromHandle(IntPtr handle)
+            {
+                IntPtr ptr;
+
+                FileDescriptor[] descriptors = null;
+
+                ptr = Win32GlobalLock(new HandleRef(this, handle));
+                try
+                {
+                    int count = Marshal.ReadInt32(ptr);
+                    ptr += sizeof(int);
+                    int entrySize = Marshal.SizeOf(typeof(NativeMethods.FILEDESCRIPTOR));
+
+                    descriptors = new FileDescriptor[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        NativeMethods.FILEDESCRIPTOR fd = Marshal.PtrToStructure<NativeMethods.FILEDESCRIPTOR>(ptr + i * entrySize);
+
+                        FileDescriptor descriptor = new FileDescriptor(fd.cFileName);
+                        if ((fd.dwFlags & NativeMethods.FD_CLSID) != 0) descriptor.Clsid = fd.clsid;
+                        if ((fd.dwFlags & NativeMethods.FD_SIZEPOINT) != 0) descriptor.Icon = new Int32Rect(fd.pointl.x, fd.pointl.y, fd.sizel.cx, fd.sizel.cy);
+                        if ((fd.dwFlags & NativeMethods.FD_ATTRIBUTES) != 0) descriptor.FileAttributes = fd.dwFileAttributes;
+                        if ((fd.dwFlags & NativeMethods.FD_CREATETIME) != 0) descriptor.CreationTime = DateTime.FromFileTime(fd.ftCreationTime);
+                        if ((fd.dwFlags & NativeMethods.FD_ACCESSTIME) != 0) descriptor.LastAccessTime = DateTime.FromFileTime(fd.ftLastAccessTime);
+                        if ((fd.dwFlags & NativeMethods.FD_WRITESTIME) != 0) descriptor.LastWriteTime = DateTime.FromFileTime(fd.ftLastWriteTime);
+                        if ((fd.dwFlags & NativeMethods.FD_FILESIZE) != 0) descriptor.FileSize = fd.nFileSizeHigh << 32 | fd.nFileSizeLow;
+
+                        descriptors[i] = descriptor;
+                    }
+                }
+                finally
+                {
+                    Win32GlobalUnlock(new HandleRef(this, handle));
+                }
+
+                return descriptors;
+            }
+
             /// <summary>
             /// Creates a string from the data stored in handle. If
             /// unicode is set to true, then the string is assume to be unicode,
@@ -3294,7 +3583,7 @@ namespace System.Windows
         /// <summary>
         /// DataStore
         /// </summary>
-        private class DataStore : IDataObject
+        private class DataStore : IDataObjectWithIndex
         {
             //------------------------------------------------------
             //
@@ -3330,7 +3619,12 @@ namespace System.Windows
 
             public Object GetData(string format, bool autoConvert)
             {
-                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetData(format, autoConvert, -1);
+            }
+
+            public Object GetData(string format, bool autoConvert, int index)
+            {
+                return GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public bool GetDataPresent(string format)
@@ -3345,7 +3639,12 @@ namespace System.Windows
 
             public bool GetDataPresent(string format, bool autoConvert)
             {
-                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+                return GetDataPresent(format, autoConvert, -1);
+            }
+
+            public bool GetDataPresent(string format, bool autoConvert, int index)
+            {
+                return GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             public string[] GetFormats()
@@ -3461,6 +3760,11 @@ namespace System.Windows
 
             public void SetData(string format, Object data, bool autoConvert)
             {
+                SetData(format, data, autoConvert, 0);
+            }
+
+            public void SetData(string format, Object data, bool autoConvert, int index)
+            {
                 // We do not have proper support for Dibs, so if the user explicitly asked
                 // for Dib and provided a Bitmap object we can't convert.  Instead, publish as an HBITMAP
                 // and let the system provide the conversion for us.
@@ -3473,7 +3777,7 @@ namespace System.Windows
                     }
                 }
 
-                SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, 0);
+                SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, index);
             }
 
             #endregion Public Methods

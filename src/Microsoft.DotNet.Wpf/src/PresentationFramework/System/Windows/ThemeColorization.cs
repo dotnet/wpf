@@ -116,35 +116,35 @@ internal static class ThemeColorization
 
         if (IsThemeDark() && Utility.IsOSWindows11OrNewer)
         {
-            UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
+            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
         }
         else if(IsThemeHighContrast() && Utility.IsOSWindows11OrNewer) 
         {
             if(themeToApply.Contains("hcwhite"))
             {
-                UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "hcwhite.xaml", UriKind.Absolute));
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "hcwhite.xaml", UriKind.Absolute));
                 WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
             }
             else if(themeToApply.Contains("hcblack"))
             {
-                UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "hcblack.xaml", UriKind.Absolute));
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "hcblack.xaml", UriKind.Absolute));
                 WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
             }
             else if (themeToApply.Contains("hc1"))
             {
-                UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "hc1.xaml", UriKind.Absolute));
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "hc1.xaml", UriKind.Absolute));
                 WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
             }
             else
             {
-                UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "hc2.xaml", UriKind.Absolute));
+                UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "hc2.xaml", UriKind.Absolute));
                 WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.HighContrast, WindowBackdropType.None, false);
             }
         }
         else if (Utility.IsOSWindows11OrNewer)
         {
-            UpdateApplicationResources(new Uri("pack://application:,,,/FluentWindows;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
+            UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "light.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Light, WindowBackdropType.Mica, false);
         }
 

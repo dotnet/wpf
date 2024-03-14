@@ -2517,11 +2517,11 @@ namespace System.Windows
 
                 if(ThemeColorization.IsThemeDark())
                 {
-                    themeDictionary.Source = new Uri("pack://application:,,,/FluentWindows;component/resources/theme/dark.xaml", UriKind.Absolute);
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/resources/theme/dark.xaml", UriKind.Absolute);
                 }
                 else 
                 {
-                    themeDictionary.Source = new Uri("pack://application:,,,/FluentWindows;component/resources/theme/light.xaml", UriKind.Absolute);
+                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/resources/theme/light.xaml", UriKind.Absolute);
                 }
 
                 Application.Current.Resources.MergedDictionaries.Add(themeDictionary);

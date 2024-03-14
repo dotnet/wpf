@@ -214,46 +214,6 @@ internal static class UnsafeNativeMethodsWindow
     }
 
     /// <summary>
-    /// Tries to apply legacy Acrylic effect for the selected <see cref="Window"/>.
-    /// </summary>
-    /// <param name="window">The window to which the effect is to be applied.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowLegacyAcrylicEffect(Window window) =>
-        GetHandle(window, out IntPtr windowHandle) && ApplyWindowLegacyAcrylicEffect(windowHandle);
-
-    /// <summary>
-    /// Tries to apply legacy Acrylic effect for the selected <see cref="Window"/>.
-    /// </summary>
-    /// <param name="handle">Window handle</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowLegacyAcrylicEffect(IntPtr handle)
-    {
-        var accentPolicy = new ACCENT_POLICY
-        {
-            nAccentState = ACCENT_STATE.ACCENT_ENABLE_ACRYLICBLURBEHIND,
-            nColor = 0x990000 & 0xFFFFFF
-        };
-
-        var accentStructSize = Marshal.SizeOf(accentPolicy);
-        var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-
-        Marshal.StructureToPtr(accentPolicy, accentPtr, false);
-
-        var data = new WINCOMPATTRDATA
-        {
-            Attribute = WCA.WCA_ACCENT_POLICY,
-            SizeOfData = accentStructSize,
-            Data = accentPtr
-        };
-
-        _ = NativeMethods.SetWindowCompositionAttribute(handle, ref data);
-
-        Marshal.FreeHGlobal(accentPtr);
-
-        return true;
-    }
-
-    /// <summary>
     /// Tries to get currently selected Window accent color.
     /// </summary>
     public static Color GetDwmColor()

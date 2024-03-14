@@ -23,7 +23,7 @@ internal static class ThemeColorization
     /// <summary>
     /// Static member indicating theme which is currently applied.
     /// </summary>
-    private static string _currentApplicationTheme = "C:\\windows\\resources\\Themes\\aero.theme";
+    private static string _currentApplicationTheme;
 
     private static string _currentAppsTheme = "Light";
 
@@ -45,6 +45,8 @@ internal static class ThemeColorization
                 break;
             }
         }
+
+        _currentApplicationTheme = GetSystemTheme();
     }
 
     #endregion

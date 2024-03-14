@@ -224,12 +224,12 @@ jobs:
           CleanTargetFolder: true
           OverWrite: true
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
-      - task: PublishPipelineArtifact@1
+      - task: 1ES.PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX64'
           targetPath: '$(System.DefaultWorkingDirectory)\Results\'
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
-      - task: PublishPipelineArtifact@1
+      - task: 1ES.PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX86'
           targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'

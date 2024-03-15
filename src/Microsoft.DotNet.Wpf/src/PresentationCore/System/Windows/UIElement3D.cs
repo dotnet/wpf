@@ -592,7 +592,7 @@ namespace System.Windows
                 return true;
             }
 
-            if (Focusable && IsEnabled)
+            if (Focusable && (IsEnabled || FocusableWhenNotEnabled))
             {
                 // If we cannot set keyboard focus then set the logical focus only
                 // Find element's FocusScope and set its FocusedElement if not already set
@@ -1188,6 +1188,51 @@ namespace System.Windows
 
         //*********************************************************************
         #endregion Focusable Property
+        //*********************************************************************
+
+        //*********************************************************************
+        #region FocusableWhenNotEnabled Property
+        //*********************************************************************
+
+        /// <summary>
+        ///     The DependencyProperty for the FocusableWhenNotEnabled property.
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty FocusableWhenNotEnabledProperty =
+            UIElement.FocusableWhenNotEnabledProperty.AddOwner(
+                typeof(UIElement3D),
+                new UIPropertyMetadata(
+                    BooleanBoxes.FalseBox, // default value
+                    new PropertyChangedCallback(OnFocusableWhenNotEnabledChanged)));
+
+        /// <summary>
+        ///     Gettor and Settor for FocusableWhenNotEnabled Property
+        /// </summary>
+        public bool FocusableWhenNotEnabled
+        {
+            get { return (bool)GetValue(FocusableWhenNotEnabledProperty); }
+            set { SetValue(FocusableWhenNotEnabledProperty, BooleanBoxes.Box(value)); }
+        }
+
+        /// <summary>
+        ///     FocusableWhenNotEnabledChanged event
+        /// </summary>
+        public event DependencyPropertyChangedEventHandler FocusableWhenNotEnabledChanged
+        {
+            add { EventHandlersStoreAdd(UIElement.FocusableWhenNotEnabledChangedKey, value); }
+            remove { EventHandlersStoreRemove(UIElement.FocusableWhenNotEnabledChangedKey, value); }
+        }
+
+        private static void OnFocusableWhenNotEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UIElement3D uie = (UIElement3D)d;
+
+            // Raise the public changed event.
+            uie.RaiseDependencyPropertyChanged(UIElement.FocusableWhenNotEnabledChangedKey, e);
+        }
+
+        //*********************************************************************
+        #endregion FocusableWhenNotEnabled Property
         //*********************************************************************
 
         /// <summary>

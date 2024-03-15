@@ -1,43 +1,27 @@
 # This is a simple wrapper for eng/pipeline.yml to get around the limitation of
 # user-defined variables not being available in yaml template expressions.
 
-# Parameters ARE available in template expressions, and parameters can have default values,
-# so they can be used to control yaml flow.
-#
-
+# Parameters ARE available in template expressions, and parameters can have default values
 variables:
-    # clean the local repo on the build agents
-  - name: Build.Repository.Clean
+# clean the local repo on the build agents
+- name: Build.Repository.Clean
+  value: true
+- name: _DotNetArtifactsCategory
+  value: WINDOWSDESKTOP
+- name: _DotNetValidationArtifactsCategory
+  value: WINDOWSDESKTOP
+- ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
+  - name: PostBuildSign
+    value: false
+- ${{ else }}:
+  - name: PostBuildSign
     value: true
-  - name: _DotNetArtifactsCategory
-    value: WINDOWSDESKTOP
-  - name: _DotNetValidationArtifactsCategory
-    value: WINDOWSDESKTOP
-  - ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
-    - name: PostBuildSign
-      value: false
-  - ${{ else }}:
-    - name: PostBuildSign
-      value: true
-  
-  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    - group: DotNet-Wpf-SDLValidation-Params
-
-
-# This is set in the pipeline directly 
-# When set to false, CI tests will not be enabled in builds. 
-#
-# _ContinuousIntegrationTestsEnabled: false
-
-# Setting batch to true, triggers one build at a time.
-# if there is a push while a build in progress, it will wait,
-# until the running build finishes, and produce a build with all the changes
-#
-# only trigger ci builds for the master and release branches
+- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+  - group: DotNet-Wpf-SDLValidation-Params
 trigger:
-  batch: true 
+  batch: true
   branches:
-    include: 
+    include:
     - main
     - release/*
     - internal/release/*
@@ -45,48 +29,39 @@ trigger:
   paths:
     exclude:
     - Documentation/*
-
-pr:
-  autoCancel: true
-  branches:
-    include:
-    - main
-    - release/* 
-    - experimental/*
-    - feature/win11theming/staging
-    - feature/win11theming/release
-  paths:
-    exclude:
-    - Documentation/*
-
-# Call the pipeline.yml template, which does the real work
-stages:
-- stage: build
-  displayName: Build 
-  jobs:
-  - template: /eng/pipeline.yml
-    parameters:
-      ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-        runAsPublic: false
-
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: eng\common\templates\post-build\post-build.yml
-    parameters:
-      publishingInfraVersion: 3
-      enableSymbolValidation: false
-      enableSigningValidation: false
-      enableNugetValidation: false
-      enableSourceLinkValidation: false
-      # This is to enable SDL runs part of Post-Build Validation Stage
-      SDLValidationParameters:
-        enable: false
-        params: ' -SourceToolsList @("policheck","credscan")
-        -TsaInstanceURL $(_TsaInstanceURL)
-        -TsaProjectName $(_TsaProjectName)
-        -TsaNotificationEmail $(_TsaNotificationEmail)
-        -TsaCodebaseAdmin $(_TsaCodebaseAdmin)
-        -TsaBugAreaPath $(_TsaBugAreaPath)
-        -TsaIterationPath $(_TsaIterationPath)
-        -TsaRepositoryName "wpf"
-        -TsaCodebaseName "wpf"
-        -TsaPublish $True'
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    featureFlags:
+      autoBaseline: true
+    pool:
+      name: NetCore1ESPool-Internal
+      image: 1es-windows-2022-pt
+      os: windows
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: build
+      displayName: Build
+      jobs:
+      - template: /eng/pipeline.yml@self
+        parameters:
+          ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+            runAsPublic: false
+    - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+      - template: /eng/common/templates-official/post-build/post-build.yml@self
+        parameters:
+          publishingInfraVersion: 3
+          enableSymbolValidation: false
+          enableSigningValidation: false
+          enableNugetValidation: false
+          enableSourceLinkValidation: false
+          SDLValidationParameters:
+            enable: false
+            params: ' -SourceToolsList @("policheck","credscan") -TsaInstanceURL $(_TsaInstanceURL) -TsaProjectName $(_TsaProjectName) -TsaNotificationEmail $(_TsaNotificationEmail) -TsaCodebaseAdmin $(_TsaCodebaseAdmin) -TsaBugAreaPath $(_TsaBugAreaPath) -TsaIterationPath $(_TsaIterationPath) -TsaRepositoryName "wpf" -TsaCodebaseName "wpf" -TsaPublish $True'

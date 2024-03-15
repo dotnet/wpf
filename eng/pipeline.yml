@@ -2,21 +2,17 @@
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
 #
 # 
-
 parameters:
-  # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
-  # Defaults to true
   runAsPublic: true
   repoName: dotnet/wpf
-
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-  - template: /eng/common/templates/job/onelocbuild.yml
+  - template: /eng/common/templates-official/job/onelocbuild.yml@self
     parameters:
       MirrorRepo: wpf
       LclSource: lclFilesfromPackage
       LclPackageId: 'LCL-JUNO-PROD-WPF'
-- template: /eng/common/templates/jobs/jobs.yml
+- template: /eng/common/templates-official/jobs/jobs.yml@self
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
@@ -36,14 +32,10 @@ jobs:
           name: NetCore1ESPool-Internal
           demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
-
     jobs:
     - job: Windows_NT
-      timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+      timeoutInMinutes: 120 # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool:
-        # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
-        # Will eventually change this to two BYOC pools.
-        # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
         ${{ if eq(variables['System.TeamProject'], 'public') }}:
           name: NetCore-Public
           demands: ImageOverride -equals windows.vs2022preview.amd64.Open
@@ -51,78 +43,72 @@ jobs:
           name: NetCore1ESPool-Internal
           demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
-        - name: Codeql.Enabled
-          value: true
-        # needed for signing
-        - name: _TeamName
-          value: DotNetCore
+      - name: Codeql.Enabled
+        value: true
+      - name: _TeamName
+        value: DotNetCore
+      - name: _SignType
+        value: real
+      - name: _SignArgs
+        value: ''
+      - name: _PublishArgs
+        value: ''
+      - name: _OfficialBuildIdArgs
+        value: ''
+      - name: _Platform
+        value: x86
+      - name: _PlatformArgs
+        value: /p:Platform=$(_Platform)
+      - name: _PublicBuildPipeline # We will run Helix tests when building in the open, but do not repeat when building and publishing again using the internal build-pipeline
+        value: true
+      - name: _TestHelixAgentPool
+        value: 'Windows.10.Amd64.ClientRS5.Open' #Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
+      - name: _HelixStagingDir
+        value: $(BUILD.STAGINGDIRECTORY)\helix\functests
+      - name: _HelixSource
+        value: ${{ parameters.repoName }}/$(Build.SourceBranch)
+      - name: _HelixToken
+        value: ''
+      - name: _HelixCreator
+        value: ${{ parameters.repoName }}
+      - name: _programfilesx86
+        value: ${Env:ProgramFiles(x86)}/dotnet
+      - name: _programfiles
+        value: ${Env:ProgramFiles}/dotnet
+      - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+        - name: _InternalRuntimeDownloadArgs
+          value: ''
+      - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        - group: DotNetBuilds storage account read tokens
+        - group: AzureDevOps-Artifact-Feeds-Pats
+        - name: _InternalRuntimeDownloadArgs
+          value: >-
+            /p:DotNetRuntimeSourceFeed=https://dotnetbuilds.blob.core.windows.net/internal /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
+      - ${{ if eq(parameters.runAsPublic, 'false') }}:
+      # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
         - name: _SignType
           value: real
-        - name: _SignArgs
-          value: ''
-        - name: _PublishArgs
-          value: ''
-        - name: _OfficialBuildIdArgs
-          value: ''
-        - name: _Platform
-          value: x86
-        - name: _PlatformArgs
-          value: /p:Platform=$(_Platform)
-        - name: _PublicBuildPipeline  # We will run Helix tests when building in the open, but do not repeat when building and publishing again using the internal build-pipeline
-          value: true
-        - name: _TestHelixAgentPool
-          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
-        - name: _HelixStagingDir
-          value: $(BUILD.STAGINGDIRECTORY)\helix\functests
-        - name: _HelixSource
-          value: ${{ parameters.repoName }}/$(Build.SourceBranch)
-        - name: _HelixToken
-          value: ''
-        - name: _HelixCreator
-          value: ${{ parameters.repoName }}
-        - name: _programfilesx86
-          value: ${Env:ProgramFiles(x86)}/dotnet          
-        - name: _programfiles
-          value:  ${Env:ProgramFiles}/dotnet
-        - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
-          - name: _InternalRuntimeDownloadArgs
-            value: ''
-        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNetBuilds storage account read tokens
-          - group: AzureDevOps-Artifact-Feeds-Pats
-          - name: _InternalRuntimeDownloadArgs
-            value: >-
-              /p:DotNetRuntimeSourceFeed=https://dotnetbuilds.blob.core.windows.net/internal
-              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
-
-
-        # Override some values if we're building internally
-        - ${{ if eq(parameters.runAsPublic, 'false') }}:
-          # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
-          - name: _SignType
-            value: real
-          - group: DotNet-HelixApi-Access
+        - group: DotNet-HelixApi-Access
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
           # like in the job matrix below (see Build_Debug)
-          - name: _SignArgs
-            value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
-          - name: _PublishArgs
-            value: /p:DotNetPublishUsingPipelines=true
-          - name: _OfficialBuildIdArgs
-            value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
-          - name: _PublicBuildPipeline
-            value: false
-          - name: _HelixSource
-            value: official/${{ parameters.repoName }}/$(Build.SourceBranch)
-          - name: _HelixToken
-            value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
-          - name: _HelixCreator
-            value: '' #if _HelixToken is set, Creator must be empty
-          - name: _TestHelixAgentPool
-            value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
-
+        - name: _SignArgs
+          value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
+        - name: _PublishArgs
+          value: /p:DotNetPublishUsingPipelines=true
+        - name: _OfficialBuildIdArgs
+          value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
+        - name: _PublicBuildPipeline
+          value: false
+        - name: _HelixSource
+          value: official/${{ parameters.repoName }}/$(Build.SourceBranch)
+        - name: _HelixToken
+          value: '$(HelixApiAccessToken)'
+        - name: _HelixCreator
+          value: ''
+        - name: _TestHelixAgentPool
+          value: 'Windows.10.Amd64.ClientRS5'
       strategy:
         matrix:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
@@ -144,8 +130,6 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_arm64:
               _BuildConfig: Debug
-              # override some variables for debug
-              # _SignType has to be real for package publishing to succeed - do not override to test.
               _Platform: arm64
           Build_Release_arm64:
             _BuildConfig: Release
@@ -153,11 +137,8 @@ jobs:
       steps:
       - checkout: self
         clean: true
-
-      # Set VSO Variable(s)
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
-
       - ${{ if ne(variables['System.TeamProject'], 'public') }}:
         - task: PowerShell@2
           displayName: Setup Private Feeds Credentials
@@ -166,80 +147,57 @@ jobs:
             arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
-
-      # Use utility script to run script command dependent on agent OS.
-      - script: eng\scripts\cibuild.cmd
-          -configuration $(_BuildConfig) 
-          -prepareMachine
-          $(_PublishArgs)
-          $(_SignArgs)
-          $(_OfficialBuildIdArgs)
-          $(_PlatformArgs)
-          $(_InternalRuntimeDownloadArgs)
+      # Use utility script to run script command dependent on agent OS
+      - script: eng\scripts\cibuild.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
-        # This condition should be kept in sync with the condition for 'Run DRTs' step 
+         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
         #   When building on a Helix pipeline, only build Release configs
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
-
-      - script: eng\scripts\ciunittest.cmd
-          -configuration $(_BuildConfig) 
-          -prepareMachine
-          $(_PublishArgs)
-          $(_SignArgs)
-          $(_OfficialBuildIdArgs)
-          $(_PlatformArgs)
-          $(_InternalRuntimeDownloadArgs)
+      - script: eng\scripts\ciunittest.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
-
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:
           testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml' 
+          testResultsFiles: '*.xml'
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
-
+        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
       - task: PowerShell@2
         displayName: Install .NET Core
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
           condition: eq(variables['_Platform'], 'x64')
-      
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
         condition: eq(variables['_Platform'], 'x86')
-  
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
         condition: eq(variables['_Platform'], 'x64')
-     
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x86')  
-
+        condition: eq(variables['_Platform'], 'x86')
       - task: PowerShell@2
         displayName: Replace WPF binaries
         inputs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:
@@ -252,7 +210,6 @@ jobs:
           checkDownloadedFiles: true
           artifactName: Tests.$(_BuildConfig).$(_Platform).zip
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
       - task: ExtractFiles@1
         displayName: Extract Test Bins
         inputs:
@@ -261,7 +218,6 @@ jobs:
           cleanDestinationFolder: true
           overwriteExistingFiles: true
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-
       - task: PowerShell@2
         displayName: Run Tests
         inputs:
@@ -269,7 +225,6 @@ jobs:
           script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-      
       - task: CopyFiles@2
         inputs:
           SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
@@ -278,7 +233,6 @@ jobs:
           CleanTargetFolder: true
           OverWrite: true
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
-        
       - task: CopyFiles@2
         inputs:
           SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
@@ -287,19 +241,16 @@ jobs:
           CleanTargetFolder: true
           OverWrite: true
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
-
-      - task: PublishPipelineArtifact@1
+      - task: 1ES.PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX64'
-          targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
+          targetPath: '$(System.DefaultWorkingDirectory)\Results\'
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
-
-      - task: PublishPipelineArtifact@1
+      - task: 1ES.PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX86'
           targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
-          
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'XUnit'

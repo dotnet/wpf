@@ -104,7 +104,10 @@ namespace System.Windows.Automation.Peers
 
                 foreach (var item in parent.Items)
                 {
-                    if (item is Separator)
+                    // ItemAutomationPeer.GetSizeOfSetFromItemsControl excludes invisible UI elements
+                    // from its count, so we only exclude separators that are visible. Otherwise, we would
+                    // double count invisible separators, leading to a lower count than expected.
+                    if (item is Separator { Visibility: Visibility.Visible })
                     {
                         sizeOfSet -= 1;
                     }
@@ -126,21 +129,25 @@ namespace System.Windows.Automation.Peers
         override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
-            
+
             if (positionInSet == AutomationProperties.AutomationPositionInSetDefault)
             {
                 MenuItem owner = (MenuItem)Owner;
                 ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(owner);
 
                 positionInSet = ItemAutomationPeer.GetPositionInSetFromItemsControl(parent, owner);
-                
+
                 foreach (var item in parent.Items)
                 {
                     if (item == owner)
                     {
                         break;
                     }
-                    if (item is Separator)
+
+                    // ItemAutomationPeer.GetPositionInSetFromItemsControl excludes invisible UI elements
+                    // from its count, so we only exclude separators that are visible. Otherwise, we would
+                    // double count invisible separators, leading to a lower position than expected.
+                    if (item is Separator { Visibility: Visibility.Visible })
                     {
                         positionInSet -= 1;
                     }

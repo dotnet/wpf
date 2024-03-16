@@ -57,7 +57,8 @@ internal static class WindowBackdrop
             return ApplyBackdrop(windowHandle, backdropType);
         }
 
-        window.Loaded += (sender, _) =>
+        RoutedEventHandler loadedHandler = null;
+        loadedHandler = (sender, _) =>
         {
             IntPtr windowHandle =
                 new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
@@ -68,7 +69,10 @@ internal static class WindowBackdrop
             }
 
             ApplyBackdrop(windowHandle, backdropType);
+            window.Loaded -= loadedHandler;
         };
+
+        window.Loaded += loadedHandler;
 
         return true;
     }
@@ -235,7 +239,8 @@ internal static class WindowBackdrop
             return EnableGlassFrame(windowHandle, backdropType);
         }
 
-        window.Loaded += (sender, _) =>
+        RoutedEventHandler loadedHandler = null;
+        loadedHandler = (sender, _) =>
         {
             IntPtr windowHandle =
                 new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
@@ -246,7 +251,10 @@ internal static class WindowBackdrop
             }
 
             EnableGlassFrame(windowHandle, backdropType);
+            window.Loaded -= loadedHandler;
         };
+
+        window.Loaded += loadedHandler;
 
         return true;
     }

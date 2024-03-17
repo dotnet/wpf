@@ -7,12 +7,12 @@ using MS.Internal;
 using System.Runtime.InteropServices;
 
 namespace System.Windows;
-internal static class DWMColorization
+internal static class DwmColorization
 {
     /// <summary>
-    /// Maximum <see cref="Byte"/> size with the current <see cref="Single"/> precision.
+    /// Maximum <see cref="byte"/> size with the current <see cref="Single"/> precision.
     /// </summary>
-    private static readonly float _byteMax = (float)Byte.MaxValue;
+    private const float _byteMax = (float)byte.MaxValue;
 
     /// <summary>
     /// The maximum value of the background HSV brightness after which the text on the accent will be turned dark.

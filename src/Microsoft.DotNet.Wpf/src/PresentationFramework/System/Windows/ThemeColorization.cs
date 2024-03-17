@@ -68,12 +68,12 @@ internal static class ThemeColorization
         string themeToApply = GetSystemTheme();
         string appsThemeToApply = GetAppsTheme();
 
-        Color currentApplicationAccentColor = DWMColorization.CurrentApplicationAccentColor;
-        Color accentColorToApply = DWMColorization.GetSystemAccentColor();
+        Color currentApplicationAccentColor = DwmColorization.CurrentApplicationAccentColor;
+        Color accentColorToApply = DwmColorization.GetSystemAccentColor();
 
         if (themeToApply != _currentApplicationTheme || accentColorToApply != currentApplicationAccentColor || appsThemeToApply != _currentAppsTheme)
         {
-            DWMColorization.UpdateAccentColors();
+            DwmColorization.UpdateAccentColors();
             ApplyTheme();
         }
     }
@@ -85,8 +85,7 @@ internal static class ThemeColorization
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="newDictionary"/> is null.</exception>
     internal static void UpdateApplicationResources(Uri dictionaryUri)
     {
-        if (dictionaryUri == null)
-        throw new ArgumentNullException(nameof(dictionaryUri));
+        ArgumentNullException.ThrowIfNull(dictionaryUri, nameof(dictionaryUri));
 
         ResourceDictionary newDictionary = new ResourceDictionary();
         newDictionary.Source = dictionaryUri;

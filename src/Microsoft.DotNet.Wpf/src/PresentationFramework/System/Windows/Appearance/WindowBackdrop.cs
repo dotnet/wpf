@@ -364,7 +364,7 @@ internal static class WindowBackdrop
 
     private static Brush GetFallbackBackgroundBrush()
     {
-        if(ThemeColorization.IsThemeHighContrast()) 
+        if(SystemParameters.HighContrast)
         {
             string currentTheme = ThemeColorization.GetSystemTheme();
             if(currentTheme.Contains("hc1"))

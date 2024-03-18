@@ -178,10 +178,20 @@ internal static class ThemeColorization
 
     internal static bool IsThemeDark()
     {
-        return Registry.GetValue(
-            _appThemeKey, 
-            "AppsUseLightTheme", 
-            null) as int? == 0 ? true : false;
+        var appsUseLightTheme = Registry.GetValue(
+                                _appThemeKey,
+                                "AppsUseLightTheme",
+                                null) as int?;
+
+        if (appsUseLightTheme == null)
+        {
+            return Registry.GetValue(
+                _appThemeKey,
+                "SystemUsesLightTheme",
+                null) as int? == 0 ? true : false;
+        }
+
+        return appsUseLightTheme == 0 ? true : false;
     }
 
     internal static bool IsThemeHighContrast()

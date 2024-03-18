@@ -76,8 +76,7 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
-        
-            // CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand);
+            
             CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 

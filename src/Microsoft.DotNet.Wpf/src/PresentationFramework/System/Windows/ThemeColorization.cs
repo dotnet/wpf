@@ -120,7 +120,7 @@ internal static class ThemeColorization
             UpdateApplicationResources(new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + "dark.xaml", UriKind.Absolute));
             WindowBackgroundManager.UpdateBackground(currentWindow, ApplicationTheme.Dark, WindowBackdropType.Mica, false);
         }
-        else if(IsThemeHighContrast() && Utility.IsOSWindows11OrNewer) 
+        else if(SystemParameters.HighContrast && Utility.IsOSWindows11OrNewer)
         {
             if(themeToApply.Contains("hcwhite"))
             {
@@ -192,17 +192,5 @@ internal static class ThemeColorization
         }
 
         return appsUseLightTheme == 0 ? true : false;
-    }
-
-    internal static bool IsThemeHighContrast()
-    {
-        string currentTheme = ThemeColorization.GetSystemTheme();
-
-        if(currentTheme != null)
-        {
-            return currentTheme.Contains("hc");
-        }
-
-        return false;
     }
 }

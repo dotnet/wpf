@@ -37,6 +37,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        Margin="-2"
                         CornerRadius="16">
                         <Ellipse
                             x:Name="Ellipse"
@@ -55,9 +56,9 @@
     <ControlTemplate x:Key="UiHorizontalSlider" TargetType="{x:Type Slider}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="14" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="14" />
             </Grid.RowDefinitions>
             <TickBar
                 x:Name="TopTick"
@@ -75,7 +76,7 @@
                 Background="{DynamicResource SliderTrackFill}"
                 BorderThickness="0"
                 CornerRadius="2" />
-            <Track x:Name="PART_Track" Grid.Row="1">
+            <Track x:Name="PART_Track" Grid.Row="0" Grid.RowSpan="3">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
@@ -117,9 +118,9 @@
     <ControlTemplate x:Key="UiVerticalSlider" TargetType="{x:Type Slider}">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="14" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="14" />
             </Grid.ColumnDefinitions>
             <TickBar
                 x:Name="TopTick"
@@ -137,7 +138,7 @@
                 BorderThickness="0"
                 CornerRadius="2" />
 
-            <Track x:Name="PART_Track" Grid.Column="1">
+            <Track x:Name="PART_Track" Grid.Column="0" Grid.ColumnSpan="3">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
@@ -182,11 +183,9 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinWidth" Value="104" />
-                <Setter Property="MinHeight" Value="21" />
                 <Setter Property="Template" Value="{StaticResource UiHorizontalSlider}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="MinWidth" Value="21" />
                 <Setter Property="MinHeight" Value="104" />
                 <Setter Property="Template" Value="{StaticResource UiVerticalSlider}" />
             </Trigger>

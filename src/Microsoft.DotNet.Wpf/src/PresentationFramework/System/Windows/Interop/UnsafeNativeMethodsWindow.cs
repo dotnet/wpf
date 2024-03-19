@@ -115,7 +115,7 @@ internal static class UnsafeNativeMethodsWindow
             return false;
         }
 
-        var backdropPvAttribute = (int)UnsafeReflection.Cast(backgroundType);
+        var backdropPvAttribute = (int)ConvertWindowBackdropToDWMSBT(backgroundType);
 
         if (backdropPvAttribute == (int)Dwmapi.DWMSBT.DWMSBT_DISABLE)
         {
@@ -130,6 +130,18 @@ internal static class UnsafeNativeMethodsWindow
         );
 
         return true;
+    }
+
+    public static Dwmapi.DWMSBT ConvertWindowBackdropToDWMSBT(WindowBackdropType backgroundType)
+    {
+        return backgroundType switch
+        {
+            WindowBackdropType.Auto => Dwmapi.DWMSBT.DWMSBT_AUTO,
+            WindowBackdropType.Mica => Dwmapi.DWMSBT.DWMSBT_MAINWINDOW,
+            WindowBackdropType.Acrylic => Dwmapi.DWMSBT.DWMSBT_TRANSIENTWINDOW,
+            WindowBackdropType.Tabbed => Dwmapi.DWMSBT.DWMSBT_TABBEDWINDOW,
+            _ => Dwmapi.DWMSBT.DWMSBT_DISABLE
+        };
     }
 
     /// <summary>
@@ -153,7 +165,7 @@ internal static class UnsafeNativeMethodsWindow
             Marshal.SizeOf(typeof(int))
         );
 
-        return pvAttribute == (int)UnsafeReflection.Cast(backdropType);
+        return pvAttribute == (int)ConvertWindowBackdropToDWMSBT(backdropType);
     }
 
     /// <summary>

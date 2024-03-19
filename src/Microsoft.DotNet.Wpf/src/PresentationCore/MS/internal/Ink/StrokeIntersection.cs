@@ -96,10 +96,7 @@ namespace System.Windows.Ink
         /// </summary>
         public override string ToString()
         {
-            return "{"  + StrokeFIndices.GetStringRepresentation(_hitSegment.BeginFIndex) + ","
-                        + StrokeFIndices.GetStringRepresentation(_inSegment.BeginFIndex)  + ","
-                        + StrokeFIndices.GetStringRepresentation(_inSegment.EndFIndex)    + ","
-                        + StrokeFIndices.GetStringRepresentation(_hitSegment.EndFIndex)   + "}";
+            return $"{{{StrokeFIndices.GetStringRepresentation(_hitSegment.BeginFIndex)},{StrokeFIndices.GetStringRepresentation(_inSegment.BeginFIndex)},{StrokeFIndices.GetStringRepresentation(_inSegment.EndFIndex)},{StrokeFIndices.GetStringRepresentation(_hitSegment.EndFIndex)}}}";
         }
 
 

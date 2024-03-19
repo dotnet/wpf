@@ -954,7 +954,7 @@ namespace System.Windows.Media
 
             if (fillRule != FillRule.EvenOdd)
             {
-                return "F1" + figuresString;
+                return $"F1{figuresString}";
             }
             else
             {

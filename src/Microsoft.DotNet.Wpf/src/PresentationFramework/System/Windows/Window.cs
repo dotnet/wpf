@@ -3036,12 +3036,6 @@ namespace System.Windows
         //----------------------------------------------
         #region Internal Properties
 
-        private WindowInteropHelper _interopHelper = null;
-
-        internal WindowInteropHelper InteropHelper
-        {
-            get => _interopHelper ??= new WindowInteropHelper(this);
-        }
 
         internal bool HwndCreatedButNotShown
         {

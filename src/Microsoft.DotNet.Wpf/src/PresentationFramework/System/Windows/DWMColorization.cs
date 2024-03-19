@@ -79,14 +79,7 @@ internal static class DwmColorization
 
         ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
 
-        if (dwmValue is Int32 x)
-        {
-            systemAccentByteValue = ParseDWordColor(x);
-        }
-        else
-        {
-            throw new NotImplementedException();
-        }
+        systemAccentByteValue = ParseDWordColor(dwmValue);
 
         Color newAccentColor = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
 

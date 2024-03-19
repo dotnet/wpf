@@ -9,8 +9,6 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Accent.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/DefaultContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/DefaultFocusVisualStyle.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Palette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/StaticColors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Variables.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/Button.xaml" />

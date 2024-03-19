@@ -95,10 +95,11 @@ namespace MS.Win32
             // Register will fail if the string gets over 255 in length.
             // So limit each part to a reasonable amount.
             string appName;
-            if(null != AppDomain.CurrentDomain.FriendlyName && 128 <= AppDomain.CurrentDomain.FriendlyName.Length)
-                appName = AppDomain.CurrentDomain.FriendlyName.Substring(0, 128);
+            var currentDomainFriendlyName = AppDomain.CurrentDomain.FriendlyName;
+            if (null != currentDomainFriendlyName && 128 <= currentDomainFriendlyName.Length)
+                appName = currentDomainFriendlyName[..128];
             else
-                appName = AppDomain.CurrentDomain.FriendlyName;
+                appName = currentDomainFriendlyName;
 
             string threadName;
             if(null != Thread.CurrentThread.Name && 64 <= Thread.CurrentThread.Name.Length)

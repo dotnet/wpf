@@ -1052,22 +1052,45 @@ namespace Standard
     internal enum DWMWA
     {
         NCRENDERING_ENABLED = 1,
-        NCRENDERING_POLICY,
-        TRANSITIONS_FORCEDISABLED,
-        ALLOW_NCPAINT,
-        CAPTION_BUTTON_BOUNDS,
-        NONCLIENT_RTL_LAYOUT,
-        FORCE_ICONIC_REPRESENTATION,
-        FLIP3D_POLICY,
-        EXTENDED_FRAME_BOUNDS,
+        NCRENDERING_POLICY = 2,
+        TRANSITIONS_FORCEDISABLED = 3,
+        ALLOW_NCPAINT = 4,
+        CAPTION_BUTTON_BOUNDS = 5,
+        NONCLIENT_RTL_LAYOUT = 6,
+        FORCE_ICONIC_REPRESENTATION = 7,
+        FLIP3D_POLICY = 8,
+        EXTENDED_FRAME_BOUNDS = 9,
+        HAS_ICONIC_BITMAP = 10,
+        DISALLOW_PEEK = 11,
+        EXCLUDED_FROM_PEEK = 12,
+        CLOAK = 13,
+        CLOAKED = 14,
+        FREEZE_REPRESENTATION = 15,
+        PASSIVE_UPDATE_MODE = 16,
+        USE_HOSTBACKDROPBRUSH = 17,
+        USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
+        USE_IMMERSIVE_DARK_MODE = 20,
+        WINDOW_CORNER_PREFERENCE = 33,
+        BORDER_COLOR = 34,
+        CAPTION_COLOR = 35,
+        TEXT_COLOR = 36,
+        VISIBLE_FRAME_BORDER_THICKNESS = 37,
+        SYSTEMBACKDROP_TYPE = 38,
 
-        // New to Windows 7:
+        // TODO : Should this be removed ? 
+        MICA_EFFECT = 1029
+    }
 
-        HAS_ICONIC_BITMAP,
-        DISALLOW_PEEK,
-        EXCLUDED_FROM_PEEK,
-
-        // LAST
+    /// <summary>
+    /// DWM_SYSTEMBACKDROP_TYPE.  DWMSBT_*
+    /// </summary>
+    internal enum DWMSBT : uint
+    {
+        DWMSBT_AUTO = 0,
+        DWMSBT_NONE = 1,
+        DWMSBT_MAINWINDOW = 2,
+        DWMSBT_TRANSIENTWINDOW = 3,
+        DWMSBT_TABBEDWINDOW = 4
     }
 
     /// <summary>
@@ -2543,6 +2566,15 @@ namespace Standard
         
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
+        public static extern int DwmGetWindowAttribute(
+            IntPtr hWnd,
+            DWMWA dwAttributeToGet,
+            ref int pvAttributeValue,
+            int cbAttribute
+        );
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -2594,6 +2626,15 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
         private static extern void _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
+        public static extern int DwmSetWindowAttribute(
+            IntPtr hwnd,
+            DWMWA dwAttribute,
+            ref int pvAttribute,
+            int cbAttribute
+        );
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)

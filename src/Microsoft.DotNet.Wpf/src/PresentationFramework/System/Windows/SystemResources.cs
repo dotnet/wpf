@@ -2034,7 +2034,7 @@ namespace System.Windows
         #endregion Properties
     }
 
-    internal class DeferredResourceReferenceList : IEnumerable
+    internal class DeferredResourceReferenceList
     {
         private readonly object _syncRoot = new();
         private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
@@ -2131,28 +2131,5 @@ namespace System.Windows
                 }
             }
         }
-
-        public IEnumerator GetEnumerator()
-        {
-            lock (_syncRoot)
-            {
-                var list = new List<DeferredResourceReference>(_entries.Count);
-
-                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
-                {
-                    if (entry.Value.TryGetTarget(out var deferredResourceReference))
-                    {
-                        list.Add(deferredResourceReference);
-                    }
-                }
-
-                return list.GetEnumerator();
-            }
-        }
     }
 }
-
-
-
-
-

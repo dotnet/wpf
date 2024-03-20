@@ -401,7 +401,7 @@ namespace System.Windows.Documents
                     {
                         _threadManager.Value.Deactivate();
                     }
-                    Marshal.ReleaseComObject(_threadManager.Value);
+                    ((IDisposable)_threadManager.Value).Dispose();
                 }
                 _threadManager = null;
             }

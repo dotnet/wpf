@@ -1122,7 +1122,6 @@
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
-    <Compile Include="System\Windows\Interop\Dwapi.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />

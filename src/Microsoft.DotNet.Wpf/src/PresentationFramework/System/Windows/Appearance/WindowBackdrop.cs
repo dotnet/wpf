@@ -115,19 +115,19 @@ internal static class WindowBackdrop
         switch (backdropType)
         {
             case WindowBackdropType.Auto:
-                return ApplyDwmWindowAttrubute(hWnd, Dwmapi.DWMSBT.DWMSBT_AUTO);
+                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_AUTO);
 
             case WindowBackdropType.Mica:
-                return ApplyDwmWindowAttrubute(hWnd, Dwmapi.DWMSBT.DWMSBT_MAINWINDOW);
+                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_MAINWINDOW);
 
             case WindowBackdropType.Acrylic:
-                return ApplyDwmWindowAttrubute(hWnd, Dwmapi.DWMSBT.DWMSBT_TRANSIENTWINDOW);
+                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW);
 
             case WindowBackdropType.Tabbed:
-                return ApplyDwmWindowAttrubute(hWnd, Dwmapi.DWMSBT.DWMSBT_TABBEDWINDOW);
+                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_TABBEDWINDOW);
         }
 
-        return ApplyDwmWindowAttrubute(hWnd, Dwmapi.DWMSBT.DWMSBT_DISABLE);
+        return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_NONE);
     }
 
     /// <summary>
@@ -165,18 +165,18 @@ internal static class WindowBackdrop
         }
 
         var pvAttribute = 0; // Disable
-        var backdropPvAttribute = (int)Dwmapi.DWMSBT.DWMSBT_DISABLE;
+        var backdropPvAttribute = (int)Standard.DWMSBT.DWMSBT_NONE;
 
-        _ = Dwmapi.DwmSetWindowAttribute(
+        _ = NativeMethods.DwmSetWindowAttribute(
             hWnd,
-            Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT,
+            Standard.DWMWA.MICA_EFFECT,
             ref pvAttribute,
             Marshal.SizeOf(typeof(int))
         );
 
-        _ = Dwmapi.DwmSetWindowAttribute(
+        _ = NativeMethods.DwmSetWindowAttribute(
             hWnd,
-            Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
+            Standard.DWMWA.SYSTEMBACKDROP_TYPE,
             ref backdropPvAttribute,
             Marshal.SizeOf(typeof(int))
         );
@@ -276,13 +276,13 @@ internal static class WindowBackdrop
                 cyTopHeight = (int)Math.Ceiling(deviceGlassThickness.Top),
                 cyBottomHeight = (int)Math.Ceiling(deviceGlassThickness.Bottom),
             };                    
-            Dwmapi.DwmExtendFrameIntoClientArea(hWnd, ref dwmMargin);
+            NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref dwmMargin);
         } 
 
         return true;
     }
 
-    private static bool ApplyDwmWindowAttrubute(IntPtr hWnd, Dwmapi.DWMSBT dwmSbt)
+    private static bool ApplyDwmWindowAttrubute(IntPtr hWnd, Standard.DWMSBT dwmSbt)
     {
         if (hWnd == IntPtr.Zero)
         {
@@ -296,9 +296,9 @@ internal static class WindowBackdrop
 
         var backdropPvAttribute = (int)dwmSbt;
 
-        var dwmApiResult = Dwmapi.DwmSetWindowAttribute(
+        var dwmApiResult = NativeMethods.DwmSetWindowAttribute(
             hWnd,
-            Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
+            Standard.DWMWA.SYSTEMBACKDROP_TYPE,
             ref backdropPvAttribute,
             Marshal.SizeOf(typeof(int))
         );
@@ -311,9 +311,9 @@ internal static class WindowBackdrop
         var backdropPvAttribute = 1; //Enable
 
         // TODO: Validate HRESULT
-        var dwmApiResult = Dwmapi.DwmSetWindowAttribute(
+        var dwmApiResult = NativeMethods.DwmSetWindowAttribute(
             hWnd,
-            Dwmapi.DWMWINDOWATTRIBUTE.DWMWA_MICA_EFFECT,
+            Standard.DWMWA.MICA_EFFECT,
             ref backdropPvAttribute,
             Marshal.SizeOf(typeof(int))
         );

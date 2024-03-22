@@ -1068,7 +1068,6 @@ namespace Standard
         FREEZE_REPRESENTATION = 15,
         PASSIVE_UPDATE_MODE = 16,
         USE_HOSTBACKDROPBRUSH = 17,
-        USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
         USE_IMMERSIVE_DARK_MODE = 20,
         WINDOW_CORNER_PREFERENCE = 33,
         BORDER_COLOR = 34,
@@ -1076,9 +1075,6 @@ namespace Standard
         TEXT_COLOR = 36,
         VISIBLE_FRAME_BORDER_THICKNESS = 37,
         SYSTEMBACKDROP_TYPE = 38,
-
-        // TODO : Should this be removed ? 
-        MICA_EFFECT = 1029
     }
 
     /// <summary>
@@ -2575,7 +2571,7 @@ namespace Standard
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]

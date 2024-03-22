@@ -32,25 +32,14 @@ internal static class UnsafeNativeMethodsWindow
     /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
     public static bool RemoveWindowDarkMode(IntPtr handle)
     {
-        if (handle == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(handle))
+        if (handle == IntPtr.Zero || !NativeMethods.IsWindow(handle))
         {
             return false;
         }
 
         var pvAttribute = 0x0; // Disable
-        var dwAttribute = DWMWA.USE_IMMERSIVE_DARK_MODE;
 
-        if (!Utility.IsOSWindows11Insider1OrNewer)
-        {
-            dwAttribute = DWMWA.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
-        }
-
-        _ = NativeMethods.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+        _ = NativeMethods.DwmSetWindowAttribute(handle, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
 
         return true;
     }
@@ -70,25 +59,14 @@ internal static class UnsafeNativeMethodsWindow
     /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
     public static bool ApplyWindowDarkMode(IntPtr handle)
     {
-        if (handle == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(handle))
+        if (handle == IntPtr.Zero || !NativeMethods.IsWindow(handle))
         {
             return false;
         }
 
         var pvAttribute = 0x1; // Enable
-        var dwAttribute = DWMWA.USE_IMMERSIVE_DARK_MODE;
 
-        if (!Utility.IsOSWindows11Insider1OrNewer)
-        {
-            dwAttribute = DWMWA.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
-        }
-
-        _ = NativeMethods.DwmSetWindowAttribute(handle, dwAttribute, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+        _ = NativeMethods.DwmSetWindowAttribute(handle, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
 
         return true;
     }
@@ -101,12 +79,7 @@ internal static class UnsafeNativeMethodsWindow
     /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
     public static bool ApplyWindowBackdrop(IntPtr handle, WindowBackdropType backgroundType)
     {
-        if (handle == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(handle))
+        if (handle == IntPtr.Zero || !NativeMethods.IsWindow(handle))
         {
             return false;
         }

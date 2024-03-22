@@ -47,27 +47,12 @@ internal static class WindowBackdrop
 
         if (window.IsLoaded)
         {
-            IntPtr windowHandle = new WindowInteropHelper(window).Handle;
-
-            if (windowHandle == IntPtr.Zero)
-            {
-                return false;
-            }
-
-            return ApplyBackdrop(windowHandle, backdropType);
+            return ApplyBackdropCore(window, backdropType);
         }
 
         window.Loaded += (sender, _) =>
         {
-            IntPtr windowHandle =
-                new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
-
-            if (windowHandle == IntPtr.Zero)
-            {
-                return;
-            }
-
-            ApplyBackdrop(windowHandle, backdropType);
+            ApplyBackdropCore(sender as System.Windows.Window, backdropType);
         };
 
         return true;
@@ -78,39 +63,16 @@ internal static class WindowBackdrop
     /// </summary>
     /// <param name="hWnd">Window handle.</param>
     /// <returns><see langword="true"/> if the operation was successfull, otherwise <see langword="false"/>.</returns>
-    private static bool ApplyBackdrop(IntPtr hWnd, WindowBackdropType backdropType)
+    private static bool ApplyBackdropCore(System.Windows.Window window, WindowBackdropType backdropType)
     {
-        if (hWnd == IntPtr.Zero)
+        IntPtr hWnd = new WindowInteropHelper(window).Handle;
+
+        if (hWnd == IntPtr.Zero || !IsSupported(backdropType))
         {
             return false;
         }
 
-        if (!NativeMethods.IsWindow(hWnd))
-        {
-            return false;
-        }
-
-        if (ThemeColorization.IsThemeDark())
-        {
-            _ = UnsafeNativeMethodsWindow.ApplyWindowDarkMode(hWnd);
-        }
-        else
-        {
-            _ = UnsafeNativeMethodsWindow.RemoveWindowDarkMode(hWnd);
-        }
-
-        EnableGlassFrame(hWnd, backdropType);
-
-        // 22H1
-        if (!Utility.IsOSWindows11Insider1OrNewer)
-        {
-            if (backdropType != WindowBackdropType.None)
-            {
-                return ApplyLegacyMicaBackdrop(hWnd);
-            }
-
-            return false;
-        }
+        UpdateGlassFrame(hWnd, backdropType);
 
         switch (backdropType)
         {
@@ -159,29 +121,16 @@ internal static class WindowBackdrop
 
         _ = RestoreContentBackground(hWnd);
 
-        if (!NativeMethods.IsWindow(hWnd))
-        {
-            return false;
-        }
-
-        var pvAttribute = 0; // Disable
         var backdropPvAttribute = (int)Standard.DWMSBT.DWMSBT_NONE;
 
-        _ = NativeMethods.DwmSetWindowAttribute(
-            hWnd,
-            Standard.DWMWA.MICA_EFFECT,
-            ref pvAttribute,
-            Marshal.SizeOf(typeof(int))
-        );
-
-        _ = NativeMethods.DwmSetWindowAttribute(
+        var dwmApiResult = NativeMethods.DwmSetWindowAttribute(
             hWnd,
             Standard.DWMWA.SYSTEMBACKDROP_TYPE,
             ref backdropPvAttribute,
             Marshal.SizeOf(typeof(int))
         );
 
-        return true;
+        return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
     }
 
     /// <summary>
@@ -217,79 +166,27 @@ internal static class WindowBackdrop
         return true;
     }
 
-    internal static bool EnableGlassFrame(System.Windows.Window window, WindowBackdropType backdropType)
-    {
-        if (window is null)
-        {
-            return false;
-        }
-
-        if (window.IsLoaded)
-        {
-            IntPtr windowHandle = new WindowInteropHelper(window).Handle;
-
-            if (windowHandle == IntPtr.Zero)
-            {
-                return false;
-            }
-            return EnableGlassFrame(windowHandle, backdropType);
-        }
-
-        window.Loaded += (sender, _) =>
-        {
-            IntPtr windowHandle =
-                new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
-
-            if (windowHandle == IntPtr.Zero)
-            {
-                return;
-            }
-
-            EnableGlassFrame(windowHandle, backdropType);
-        };
-
-        return true;
-    }
-
-    private static bool EnableGlassFrame(IntPtr hWnd, WindowBackdropType backdropType)
+    private static bool UpdateGlassFrame(IntPtr hWnd, WindowBackdropType backdropType)
     {
         if (hWnd == IntPtr.Zero)
         {
             return false;
         }
 
-        if (!NativeMethods.IsWindow(hWnd))
-        {
-            return false;
-        }
-
+        MARGINS margins = new MARGINS();
         if(backdropType != WindowBackdropType.None)
         {
-            Window window = (Window)HwndSource.FromHwnd(hWnd).RootVisual;
-            DpiScale dpi = window.GetDpi();
-            Thickness deviceGlassThickness = Standard.DpiHelper.LogicalThicknessToDevice(new Thickness(-1), dpi.DpiScaleX, dpi.DpiScaleY);
-            var dwmMargin = new Standard.MARGINS
-            {
-                // err on the side of pushing in glass an extra pixel.
-                cxLeftWidth = (int)Math.Ceiling(deviceGlassThickness.Left),
-                cxRightWidth = (int)Math.Ceiling(deviceGlassThickness.Right),
-                cyTopHeight = (int)Math.Ceiling(deviceGlassThickness.Top),
-                cyBottomHeight = (int)Math.Ceiling(deviceGlassThickness.Bottom),
-            };                    
-            NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref dwmMargin);
-        } 
+            margins = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };                    
+        }
 
-        return true;
+        var dwmApiResult = NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref margins);
+
+        return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
     }
 
     private static bool ApplyDwmWindowAttrubute(IntPtr hWnd, Standard.DWMSBT dwmSbt)
     {
         if (hWnd == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }
@@ -306,29 +203,9 @@ internal static class WindowBackdrop
         return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
     }
 
-    private static bool ApplyLegacyMicaBackdrop(IntPtr hWnd)
-    {
-        var backdropPvAttribute = 1; //Enable
-
-        // TODO: Validate HRESULT
-        var dwmApiResult = NativeMethods.DwmSetWindowAttribute(
-            hWnd,
-            Standard.DWMWA.MICA_EFFECT,
-            ref backdropPvAttribute,
-            Marshal.SizeOf(typeof(int))
-        );
-
-        return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
-    }
-
     private static bool RestoreContentBackground(IntPtr hWnd)
     {
         if (hWnd == IntPtr.Zero)
-        {
-            return false;
-        }
-
-        if (!NativeMethods.IsWindow(hWnd))
         {
             return false;
         }
@@ -346,7 +223,7 @@ internal static class WindowBackdrop
             var backgroundBrush = window.Resources["ApplicationBackgroundBrush"];
 
             // Manual fallback
-            if (backgroundBrush is not SolidColorBrush)
+            if (backgroundBrush is not Brush)
             {
                 backgroundBrush = GetFallbackBackgroundBrush();
             }
@@ -389,6 +266,5 @@ internal static class WindowBackdrop
             return new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xFA, 0xFA));
         }
     }
-
 
 }

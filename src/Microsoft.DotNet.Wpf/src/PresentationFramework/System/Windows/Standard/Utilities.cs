@@ -30,7 +30,6 @@ namespace Standard
     internal static partial class Utility
     {
         private static readonly Version _osVersion = Environment.OSVersion.Version;
-        private static readonly Version _presentationFrameworkVersion = Assembly.GetAssembly(typeof(Window)).GetName().Version;
 
         /// <summary>Convert a native integer that represent a color with an alpha channel into a Color struct.</summary>
         /// <param name="color">The integer that represents the color.  Its bits are of the format 0xAARRGGBB.</param>
@@ -114,10 +113,7 @@ namespace Standard
         /// There are a few specific bugs in Window in 3.5SP1 and below that require workarounds
         /// when handling WM_NCCALCSIZE on the HWND.
         /// </remarks>
-        public static bool IsPresentationFrameworkVersionLessThan4
-        {
-            get { return _presentationFrameworkVersion < new Version(4, 0); }
-        }
+        public static bool IsPresentationFrameworkVersionLessThan4 => false;
 
         public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
         {

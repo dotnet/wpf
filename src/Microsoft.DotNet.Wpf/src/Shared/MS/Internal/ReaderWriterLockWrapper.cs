@@ -6,19 +6,14 @@
 //
 //
 // Description:
-// Wrapper that allows a ReaderWriterLock to work with C#'s using() clause
+// Wrapper that allows a ReaderWriterLockSlim to work with C#'s using() clause
 //
 //
 //
 //
-
-
 
 using System;
-using System.Runtime.ConstrainedExecution;
-using System.Security;
 using System.Threading;
-using System.Windows.Threading;
 using MS.Internal.WindowsBase;
 
 namespace MS.Internal
@@ -35,7 +30,7 @@ namespace MS.Internal
     // !!! It is the caller's responsibility to obey this rule. !!!
     // ------------------------
     [FriendAccessAllowed] // Built into Base, used by Core and Framework.
-    internal class ReaderWriterLockWrapper
+    internal sealed class ReaderWriterLockWrapper
     {
         //------------------------------------------------------
         //
@@ -55,26 +50,8 @@ namespace MS.Internal
             // RequerySuggested), and it could also happen in user code.
             _rwLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
             _defaultSynchronizationContext = new NonPumpingSynchronizationContext();
-            Initialize(!MS.Internal.BaseAppContextSwitches.EnableWeakEventMemoryImprovements);
-        }
-
-        private void Initialize(bool useLegacyMemoryBehavior)
-        {
-            if (useLegacyMemoryBehavior)
-            {
-                _awr = new AutoWriterRelease(this);
-                _arr = new AutoReaderRelease(this);
-            }
-            else
-            {
-                _awrc = new AutoWriterReleaseClass(this);
-                _arrc = new AutoReaderReleaseClass(this);
-
-                _enterReadAction = _rwLock.EnterReadLock;
-                _exitReadAction = _rwLock.ExitReadLock;
-                _enterWriteAction = _rwLock.EnterWriteLock;
-                _exitWriteAction = _rwLock.ExitWriteLock;
-            }
+            _writerRelease = new AutoWriterRelease(this);
+            _readerRelease = new AutoReaderRelease(this);
         }
 
         #endregion Constructors
@@ -91,16 +68,8 @@ namespace MS.Internal
         {
             get
             {
-                if (!MS.Internal.BaseAppContextSwitches.EnableWeakEventMemoryImprovements)
-                {
-                    CallWithNonPumpingWait(()=>{_rwLock.EnterWriteLock();});
-                    return _awr;
-                }
-                else
-                {
-                    CallWithNonPumpingWait(_enterWriteAction);
-                    return _awrc;
-                }
+                CallWithNonPumpingWait(static rwls => rwls.EnterWriteLock(), _rwLock);
+                return _writerRelease;
             }
         }
 
@@ -108,16 +77,8 @@ namespace MS.Internal
         {
             get
             {
-                if (!MS.Internal.BaseAppContextSwitches.EnableWeakEventMemoryImprovements)
-                {
-                    CallWithNonPumpingWait(()=>{_rwLock.EnterReadLock();});
-                    return _arr;
-                }
-                else
-                {
-                    CallWithNonPumpingWait(_enterReadAction);
-                    return _arrc;
-                }
+                CallWithNonPumpingWait(static rwls => rwls.EnterReadLock(), _rwLock);
+                return _readerRelease;
             }
         }
 
@@ -132,30 +93,12 @@ namespace MS.Internal
         #region Private Methods
 
         // called when AutoWriterRelease is disposed
-        private void ReleaseWriterLock()
-        {
-            CallWithNonPumpingWait(()=>{_rwLock.ExitWriteLock();});
-        }
+        private void ReleaseWriterLock() => CallWithNonPumpingWait(static rwls => rwls.ExitWriteLock(), _rwLock);
 
         // called when AutoReaderRelease is disposed
-        private void ReleaseReaderLock()
-        {
-            CallWithNonPumpingWait(()=>{_rwLock.ExitReadLock();});
-        }
+        private void ReleaseReaderLock() => CallWithNonPumpingWait(static rwls => rwls.ExitReadLock(), _rwLock);
 
-        // called when AutoWriterRelease is disposed
-        private void ReleaseWriterLock2()
-        {
-            CallWithNonPumpingWait(_exitWriteAction);
-        }
-
-        // called when AutoReaderRelease is disposed
-        private void ReleaseReaderLock2()
-        {
-            CallWithNonPumpingWait(_exitReadAction);
-        }
-
-        private void CallWithNonPumpingWait(Action callback)
+        private void CallWithNonPumpingWait(Action<ReaderWriterLockSlim> callback, ReaderWriterLockSlim rwls)
         {
             SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
             NonPumpingSynchronizationContext nonPumpingSynchronizationContext =
@@ -175,7 +118,7 @@ namespace MS.Internal
                 SynchronizationContext.SetSynchronizationContext(nonPumpingSynchronizationContext);
 
                 // invoke the callback
-                callback();
+                callback(rwls);
             }
             finally
             {
@@ -200,15 +143,9 @@ namespace MS.Internal
 
         #region Private Fields
 
-        private ReaderWriterLockSlim _rwLock;
-        private AutoReaderRelease _arr;
-        private AutoWriterRelease _awr;
-        private AutoReaderReleaseClass _arrc;
-        private AutoWriterReleaseClass _awrc;
-        private Action _enterReadAction;
-        private Action _exitReadAction;
-        private Action _enterWriteAction;
-        private Action _exitWriteAction;
+        private readonly ReaderWriterLockSlim _rwLock;
+        private readonly AutoReaderRelease _readerRelease;
+        private readonly AutoWriterRelease _writerRelease;
         private NonPumpingSynchronizationContext _defaultSynchronizationContext;
 
         #endregion Private Fields
@@ -221,64 +158,22 @@ namespace MS.Internal
 
         #region Private Classes & Structs
 
-        private struct AutoWriterRelease : IDisposable
+        private sealed class AutoWriterRelease : IDisposable
         {
-            public AutoWriterRelease(ReaderWriterLockWrapper wrapper)
-            {
-                _wrapper = wrapper;
-            }
+            public AutoWriterRelease(ReaderWriterLockWrapper wrapper) => _wrapper = wrapper;
 
-            public void Dispose()
-            {
-                _wrapper.ReleaseWriterLock();
-            }
+            public void Dispose() => _wrapper.ReleaseWriterLock();
 
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
-        private struct AutoReaderRelease : IDisposable
+        private sealed class AutoReaderRelease : IDisposable
         {
-            public AutoReaderRelease(ReaderWriterLockWrapper wrapper)
-            {
-                _wrapper = wrapper;
-            }
+            public AutoReaderRelease(ReaderWriterLockWrapper wrapper) => _wrapper = wrapper;
 
-            public void Dispose()
-            {
-                _wrapper.ReleaseReaderLock();
-            }
+            public void Dispose() => _wrapper.ReleaseReaderLock();
 
-            private ReaderWriterLockWrapper _wrapper;
-        }
-
-        private class AutoWriterReleaseClass : IDisposable
-        {
-            public AutoWriterReleaseClass(ReaderWriterLockWrapper wrapper)
-            {
-                _wrapper = wrapper;
-            }
-
-            public void Dispose()
-            {
-                _wrapper.ReleaseWriterLock2();
-            }
-
-            private ReaderWriterLockWrapper _wrapper;
-        }
-
-        private class AutoReaderReleaseClass : IDisposable
-        {
-            public AutoReaderReleaseClass(ReaderWriterLockWrapper wrapper)
-            {
-                _wrapper = wrapper;
-            }
-
-            public void Dispose()
-            {
-                _wrapper.ReleaseReaderLock2();
-            }
-
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
         // This SynchronizationContext waits without pumping messages, like
@@ -286,7 +181,7 @@ namespace MS.Internal
         // avoids re-entrancy that leads to deadlock
         // It delegates all other functionality to its Parent (the context it
         // replaced), although if used properly those methods should never be called.
-        private class NonPumpingSynchronizationContext : SynchronizationContext
+        private sealed class NonPumpingSynchronizationContext : SynchronizationContext
         {
             public NonPumpingSynchronizationContext()
             {

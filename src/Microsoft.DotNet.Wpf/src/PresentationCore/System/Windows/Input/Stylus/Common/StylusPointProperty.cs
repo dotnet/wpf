@@ -97,11 +97,7 @@ namespace System.Windows.Input
         /// </summary>
         public override string ToString()
         {
-            return "{Id=" +
-                StylusPointPropertyIds.GetStringRepresentation(_id) +
-                ", IsButton=" +
-                _isButton.ToString(CultureInfo.InvariantCulture) +
-                "}";
+            return $"{{Id={StylusPointPropertyIds.GetStringRepresentation(_id)}, IsButton={_isButton.ToString(CultureInfo.InvariantCulture)}}}";
         }
     }
 }

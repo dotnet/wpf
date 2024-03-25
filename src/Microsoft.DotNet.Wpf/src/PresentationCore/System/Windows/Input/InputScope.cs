@@ -28,7 +28,7 @@ namespace System.Windows.Input
     ///</summary>
     /// <speclink>http://avalon/Cicero/Specifications/Stylable%20InputScope.mht</speclink>
 
-    [TypeConverter("System.Windows.Input.InputScopeConverter, PresentationCore, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Input.InputScopeConverter, PresentationCore, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     public class InputScope
     {
         ///<summary>
@@ -111,7 +111,7 @@ namespace System.Windows.Input
     /// form a list
     ///</summary>
     [ContentProperty("NameValue")]
-    [TypeConverter("System.Windows.Input.InputScopeNameConverter, PresentationCore, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Input.InputScopeNameConverter, PresentationCore, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     public class InputScopeName : IAddChild
     {
         // NOTE: this is a class rather than a simple string so that we can add more hint information

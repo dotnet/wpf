@@ -103,7 +103,7 @@ namespace System.Windows.Media
         /// </returns>
         internal override string ConvertToString(string format, IFormatProvider provider)
         {
-            return "L" + ((IFormattable)Point).ToString(format, provider);
+            return $"L{((IFormattable)Point).ToString(format, provider)}";
         }
     }
 }

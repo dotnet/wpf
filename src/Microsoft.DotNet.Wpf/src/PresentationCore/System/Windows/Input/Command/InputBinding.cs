@@ -64,7 +64,7 @@ namespace System.Windows.Input
         /// <summary>
         /// Command Object associated
         /// </summary>
-        [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.Input.CommandConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
         public ICommand Command
         {

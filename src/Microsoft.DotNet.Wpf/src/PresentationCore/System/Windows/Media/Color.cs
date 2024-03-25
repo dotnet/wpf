@@ -265,8 +265,8 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// Creates a string representation of this object based on the format string 
-        /// and IFormatProvider passed in.  
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
         /// If the provider is null, the CurrentCulture is used.
         /// See the documentation for IFormattable for more information.
         /// </summary>
@@ -303,14 +303,13 @@ namespace System.Windows.Media
                 String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
 
                 var sb = new StringBuilder();
-                sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
-                sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i= 0; i< nativeColorValue.GetLength(0); ++i )
+                sb.Append(provider, $"{Parsers.s_ContextColor}{uriString} {scRgbColor.a:R}{separator}");
+                for (int i= 0; i< nativeColorValue.Length; ++i )
                 {
-                    sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
+                    sb.Append(provider, $"{nativeColorValue[i]:R}");
                     if (i< nativeColorValue.GetLength(0)-1 )
                     {
-                        sb.AppendFormat(provider,"{0}",separator);
+                        sb.Append(provider, $"{separator}");
                     }
                 }
                 return sb.ToString();
@@ -418,7 +417,7 @@ namespace System.Windows.Media
             {
                 Color c1 = new Color();
                 c1.context = color1.context;
-                
+
                 #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)

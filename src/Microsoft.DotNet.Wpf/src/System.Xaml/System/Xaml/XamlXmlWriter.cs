@@ -626,7 +626,7 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : prefix + ":" + typeName;
+            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
 
             // save the subscript
             string subscript;
@@ -812,7 +812,7 @@ namespace System.Xaml
 
                 XamlType xamlType = property.IsAttachable ? property.DeclaringType : type;
                 string prefix = property.IsAttachable || property.IsDirective ? writer.FindPrefix(property.GetXamlNamespaces(), out ns) : writer.FindPrefix(type.GetXamlNamespaces(), out ns);
-                string local = (property.IsDirective) ? property.Name : GetTypeName(xamlType) + "." + property.Name;
+                string local = (property.IsDirective) ? property.Name : $"{GetTypeName(xamlType)}.{property.Name}";
                 writer.output.WriteStartElement(prefix, local, ns);
             }
 
@@ -846,7 +846,7 @@ namespace System.Xaml
                     }
                     else
                     {
-                        local = GetTypeName(property.DeclaringType) + "." + property.Name;
+                        local = $"{GetTypeName(property.DeclaringType)}.{property.Name}";
                     }
                     WriteStartAttribute(writer, prefix, local, ns);
                 }
@@ -1540,7 +1540,7 @@ namespace System.Xaml
                 WriteMemberAsAttribute(writer);
                 if (!writer.deferredValueIsME && StringStartsWithCurly(writer.deferredValue))
                 {
-                    writer.output.WriteValue("{}" + writer.deferredValue);
+                    writer.output.WriteValue($"{{}}{writer.deferredValue}");
                 }
                 else
                 {

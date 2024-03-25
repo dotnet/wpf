@@ -12,8 +12,7 @@ namespace System.Xaml.Schema
     {
         public static string GetUri(string clrNs, string assemblyName)
         {
-            return string.Format(TypeConverterHelper.InvariantEnglishUS, KnownStrings.UriClrNamespace + ":{0};" +
-                KnownStrings.UriAssembly + "={1}", clrNs, assemblyName);
+            return $"{KnownStrings.UriClrNamespace}:{clrNs};{KnownStrings.UriAssembly}={assemblyName}";
         }
 
         public static bool TryParseUri(string uriInput, out string clrNs, out string assemblyName)

@@ -94,10 +94,5 @@ namespace System.Xaml.MS.Impl
         {
             return src.StartsWith(target, StringComparison.Ordinal);
         }
-
-        public static string Fmt(string formatString, params object[] otherArgs)
-        {
-            return string.Format(TypeConverterHelper.InvariantEnglishUS, formatString, otherArgs);
-        }
     }
 }

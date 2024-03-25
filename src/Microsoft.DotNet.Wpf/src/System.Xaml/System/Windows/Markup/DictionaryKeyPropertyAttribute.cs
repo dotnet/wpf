@@ -10,11 +10,11 @@ namespace System.Windows.Markup
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public sealed class DictionaryKeyPropertyAttribute : Attribute
     {
-        public DictionaryKeyPropertyAttribute(string name)
+        public DictionaryKeyPropertyAttribute(string? name)
         {
             Name = name;
         }
 
-        public string Name { get; }
+        public string? Name { get; }
     }
 }

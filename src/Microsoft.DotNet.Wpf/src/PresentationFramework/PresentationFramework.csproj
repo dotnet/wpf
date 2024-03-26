@@ -1089,7 +1089,7 @@
     <Compile Include="System\Windows\Documents\XamlToRtfWriter.cs" />
     <Compile Include="System\Windows\Documents\XPSS0ValidatingLoader.cs" />
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
-    <Compile Include="System\Windows\DWMColorization.cs" />
+    <Compile Include="System\Windows\DwmColorization.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
@@ -1122,13 +1122,11 @@
     <Compile Include="System\Windows\Input\KeyboardNavigation.cs" />
     <Compile Include="System\Windows\Interop\ActiveXHost.cs" />
     <Compile Include="System\Windows\Interop\BrowserInteropHelper.cs" />
-    <Compile Include="System\Windows\Interop\Dwapi.cs" />
     <Compile Include="System\Windows\Interop\DynamicScriptObject.cs" />
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />
     <Compile Include="System\Windows\Interop\IProgressPage.cs" />
     <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
-    <Compile Include="System\Windows\Interop\UnsafeReflection.cs" />
     <Compile Include="System\Windows\Interop\WindowInteropHelper.cs" />
     <Compile Include="System\Windows\IWindowService.cs" />
     <Compile Include="System\Windows\LengthConverter.cs" />

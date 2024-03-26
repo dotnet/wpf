@@ -138,8 +138,8 @@
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale;
       PresentationFramework.Royale-ref;
-      FluentWindows;
-      FluentWindows-ref;
+      PresentationFramework.FluentWindows;
+      PresentationFramework.FluentWindows-ref;
       PresentationUI;
       ReachFramework;
       ReachFramework-ref;

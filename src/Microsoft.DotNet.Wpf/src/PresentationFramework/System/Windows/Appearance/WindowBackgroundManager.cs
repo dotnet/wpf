@@ -5,6 +5,7 @@
 
 using System.Windows.Controls;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Standard;
 
 namespace System.Windows.Appearance;
@@ -75,21 +76,22 @@ internal static class WindowBackgroundManager
             return;
         }
 
-        _ = WindowBackdrop.RemoveBackdrop(window);
+        if(Utility.IsOSWindows11Insider1OrNewer && window.AllowsTransparency == false)
+        {
+            _ = WindowBackdrop.RemoveBackdrop(window);
 
-        if (applicationTheme == ApplicationTheme.HighContrast)
-        {
-            backdrop = WindowBackdropType.None;
-        }
-        else
-        {
-            if(Utility.IsOSWindows11OrNewer)
+            if (applicationTheme == ApplicationTheme.HighContrast)
             {
-               _ = WindowBackdrop.RemoveBackground(window);
+                backdrop = WindowBackdropType.None;
             }
+            else
+            {
+                _ = WindowBackdrop.RemoveBackground(window);
+            }
+
+            _ = WindowBackdrop.ApplyBackdrop(window, backdrop); 
         }
 
-        _ = WindowBackdrop.ApplyBackdrop(window, backdrop);
         if (applicationTheme is ApplicationTheme.Dark)
         {
             ApplyDarkThemeToWindow(window);
@@ -97,23 +99,6 @@ internal static class WindowBackgroundManager
         else
         {
             RemoveDarkThemeFromWindow(window);
-        }
-
-        foreach (var subWindow in window.OwnedWindows)
-        {
-            if (subWindow is Window windowSubWindow)
-            {
-                _ = WindowBackdrop.ApplyBackdrop(windowSubWindow, backdrop);
-
-                if (applicationTheme is ApplicationTheme.Dark)
-                {
-                    ApplyDarkThemeToWindow(windowSubWindow);
-                }
-                else
-                {
-                    RemoveDarkThemeFromWindow(windowSubWindow);
-                }
-            }
         }
     }
 }

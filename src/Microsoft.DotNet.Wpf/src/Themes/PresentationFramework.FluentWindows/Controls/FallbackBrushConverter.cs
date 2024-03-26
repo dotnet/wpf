@@ -18,21 +18,13 @@ namespace FluentWindows.Controls
                 return brush;
             }
 
-            if (value is Color)
+            if (value is Color color)
             {
-                return new SolidColorBrush((Color)value);
+                return new SolidColorBrush(color);
             }
 
             // We draw red to visibly see an invalid bind in the UI.
-            return new SolidColorBrush(
-                new Color
-                {
-                    A = 255,
-                    R = 255,
-                    G = 0,
-                    B = 0
-                }
-            );
+            return Brushes.Red;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

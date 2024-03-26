@@ -50,10 +50,22 @@ internal static class WindowBackdrop
             return ApplyBackdropCore(window, backdropType);
         }
 
-        window.Loaded += (sender, _) =>
+        RoutedEventHandler loadedHandler = null;
+        loadedHandler = (sender, _) =>
         {
+            IntPtr windowHandle =
+                new WindowInteropHelper(sender as System.Windows.Window)?.Handle ?? IntPtr.Zero;
+
+            if (windowHandle == IntPtr.Zero)
+            {
+                return;
+            }
+
             ApplyBackdropCore(sender as System.Windows.Window, backdropType);
+            window.Loaded -= loadedHandler;
         };
+
+        window.Loaded += loadedHandler;
 
         return true;
     }

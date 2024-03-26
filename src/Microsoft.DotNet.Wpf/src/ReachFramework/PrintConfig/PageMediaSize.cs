@@ -90,8 +90,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this non-custom page media size.</returns>
         public override string ToString()
         {
-            return Value.ToString() + ": " + MediaSizeWidth.ToString(CultureInfo.CurrentCulture) +
-                   " x " + MediaSizeHeight.ToString(CultureInfo.CurrentCulture);
+            return $"{Value}: {MediaSizeWidth} x {MediaSizeHeight}";
         }
 
         #endregion Public Methods
@@ -533,9 +532,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this page media size setting.</returns>
         public override string ToString()
         {
-            return Value.ToString() +
-                   ": MediaSizeWidth=" + MediaSizeWidth.ToString(CultureInfo.CurrentCulture) +
-                   ", MediaSizeHeight=" + MediaSizeHeight.ToString(CultureInfo.CurrentCulture);
+            return $"{Value}: MediaSizeWidth={MediaSizeWidth}, MediaSizeHeight={MediaSizeHeight}";
         }
 
         #endregion Public Methods

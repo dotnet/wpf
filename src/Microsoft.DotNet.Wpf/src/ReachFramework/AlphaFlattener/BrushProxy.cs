@@ -390,12 +390,12 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else if (_brushList != null)
             {
-                str = str + "BrushList[" + _brushList.Count + "]";
+                str = $"{str}BrushList[{_brushList.Count}]";
             }
 
             if (_opacityMask != null)
             {
-                str = str + "^" + _opacityMask.ToString();
+                str = $"{str}^{_opacityMask}";
             }
 
             return str;
@@ -674,10 +674,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return IsDrawingOpaque(GetDrawingPrimitive(), new RectangleGeometry(vb), Matrix.Identity);
             }
 
-            if (_brush != null)
-            {
-                Debug.Assert(false, "IsOpaque(" + _brush.GetType() + ") not handled");
-            }
+            Debug.Assert(_brush == null, $"IsOpaque({_brush.GetType()}) not handled");
 
             if ((_brushList != null) && (_brushList.Count != 0))
             {
@@ -770,10 +767,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return _image.IsTransparent();
             }
 
-            if (_brush != null)
-            {
-                Debug.Assert(false, "IsTransparent not handled " + _brush.GetType());
-            }
+            Debug.Assert(_brush == null, $"IsTransparent not handled {_brush.GetType()}");
 
             return false;
         }
@@ -2992,13 +2986,13 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     return null;
                 }
-        
+
                 if(treeWalkProgress.IsTreeWalkInProgress(bcb))
                 {
                     // A visual tree cycle has been detected while reducing vb, calling flattener.VisualWalk on bcb.Target will cause infinite recursion
                     return null;
                 }
-                                
+
                 //
                 // Convert from BitmapCacheBrush to DrawingBrush to reduce the number of brush types
                 // we need to handle.  This will render the BitmapCacheBrush like a VisualBrush (i.e. as vector content)
@@ -3016,15 +3010,15 @@ namespace Microsoft.Internal.AlphaFlattener
                     // Mark the brush to avoid cycles in the visual tree
                     treeWalkProgress.EnterTreeWalk(bcb);
                     Visual visual = bcb.Target;
-                    try 
+                    try
                     {
                         VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress);
                         flattener.VisualWalk(visual);
                     }
-                    finally 
+                    finally
                     {
                         treeWalkProgress.ExitTreeWalk(bcb);
-                    }                    
+                    }
 
                     // Get Visual descendant bounds with clipping taken into consideration.
                     Rect visualBounds = VisualTreeHelper.GetDescendantBounds(visual);
@@ -3047,7 +3041,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         new RectangleGeometry(visualBounds)
                         );
 
-                    context.Pop();                        
+                    context.Pop();
                 }
 
                 DrawingBrush drawingBrush = Utility.CreateNonInheritingDrawingBrush(drawing);
@@ -3059,7 +3053,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 return drawingBrush;
             }
-            
+
             VisualBrush vb = brush as VisualBrush;
 
             if (vb != null)
@@ -3070,13 +3064,13 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     return null;
                 }
-        
+
                 if(treeWalkProgress.IsTreeWalkInProgress(vb))
                 {
                     // A visual tree cycle has been detected while reducing vb, calling flattener.VisualWalk on its vb,Visual will cause infinite recursion
                     return null;
                 }
-                                
+
                 //
                 // Convert from VisualBrush to DrawingBrush to reduce the number of brush types
                 // we need to handle.
@@ -3110,16 +3104,16 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     // Mark the visual brush to avoid cycles in the visual tree
                     treeWalkProgress.EnterTreeWalk(vb);
-                    try 
+                    try
                     {
                         VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress);
                         flattener.InheritedTransformHint = visualToWorldTransformHint;
                         flattener.VisualWalk(vb.Visual);
                     }
-                    finally 
+                    finally
                     {
                         treeWalkProgress.ExitTreeWalk(vb);
-                    }                    
+                    }
 
                     // Get Visual descendant bounds with clipping taken into consideration.
                     Rect visualBounds = VisualTreeHelper.GetDescendantBounds(vb.Visual);
@@ -3142,7 +3136,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         new RectangleGeometry(visualBounds)
                         );
 
-                    context.Pop();                        
+                    context.Pop();
                 }
 
                 DrawingBrush drawingBrush = Utility.CreateNonInheritingDrawingBrush(drawing);

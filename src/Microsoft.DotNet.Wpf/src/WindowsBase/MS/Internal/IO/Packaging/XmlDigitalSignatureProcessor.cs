@@ -787,7 +787,7 @@ namespace MS.Internal.IO.Packaging
 
                 // add reference from SignedInfo to Package object tag
                 Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue));
-                objectReference.Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object";
+                objectReference.Type = $"{XTable.Get(XTable.ID.W3CSignatureNamespaceRoot)}Object";
                 objectReference.DigestMethod = _hashAlgorithmName;
                 _signedXml.AddReference(objectReference);
 

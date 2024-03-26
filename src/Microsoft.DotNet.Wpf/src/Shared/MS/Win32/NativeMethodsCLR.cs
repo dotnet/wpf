@@ -3006,7 +3006,7 @@ namespace MS.Win32 {
             }
 #if DEBUG
             public override string ToString() {
-                return "{x=" + x + ", y=" + y + "}";
+                return $"{{x={x}, y={y}}}";
             }
 #endif
         }
@@ -4041,7 +4041,7 @@ namespace MS.Win32 {
 //            }
 
             public override string ToString() {
-                return "Left = " + left + " Top " + top + " Right = " + right + " Bottom = " + bottom;
+                return $"Left = {left} Top {top} Right = {right} Bottom = {bottom}";
             }
         }
 

@@ -120,7 +120,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             _ownsPackage = true;
-            
+
             _uri = new Uri(path, UriKind.RelativeOrAbsolute);
             //
             //The URI has to be absolute
@@ -129,7 +129,7 @@ namespace System.Windows.Xps.Packaging
             //
             if( !_uri.IsAbsoluteUri)
             {
-                _uri = new Uri( new Uri(Directory.GetCurrentDirectory()+"/"), path );
+                _uri = new Uri( new Uri($"{Directory.GetCurrentDirectory()}/"), path );
             }
 
             Package package =  PackageStore.GetPackage( _uri );
@@ -157,8 +157,8 @@ namespace System.Windows.Xps.Packaging
                                           (packageAccess== FileAccess.Read) ?  FileShare.Read: FileShare.None
                                           );
                 }
-                    
-                AddPackageToCache( _uri, package );               
+
+                AddPackageToCache( _uri, package );
             }
             else
             {
@@ -313,7 +313,7 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
             }
-            
+
             //Do not compress image Content Types
             CompressionOption compressionOption = _compressionOption;
 
@@ -408,7 +408,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Generate a unique part Uri
             //
-            String uniqueUri = "/Resources/" + Guid.NewGuid().ToString() + XpsS0Markup.ObfuscatedFontExt;
+            String uniqueUri = $"/Resources/{Guid.NewGuid()}{XpsS0Markup.ObfuscatedFontExt}";
             System.Uri partUri = PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
 
             PackagePart metroPart = _metroPackage.CreatePart(partUri,
@@ -483,7 +483,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         /// <summary>
-        /// This method writes an empty print ticket part  and adds a relationship 
+        /// This method writes an empty print ticket part  and adds a relationship
         /// associate the print ticket part with the specified Metro part. It only
         /// does so when the document is streaming.
         /// </summary>
@@ -627,8 +627,8 @@ namespace System.Windows.Xps.Packaging
 
             if (propertiesPartRelationship != null)
             {
-                Uri propertiesPartUri = 
-                    PackUriHelper.ResolvePartUri(propertiesPartRelationship.SourceUri, 
+                Uri propertiesPartUri =
+                    PackUriHelper.ResolvePartUri(propertiesPartRelationship.SourceUri,
                                                  propertiesPartRelationship.TargetUri);
 
                 if (package.PartExists(propertiesPartUri))
@@ -732,12 +732,12 @@ namespace System.Windows.Xps.Packaging
             if( oldThumbnail != null )
             {
                 throw new XpsPackagingException(SR.ReachPackaging_AlreadyHasThumbnail);
-            }    
+            }
             if( !( imageType == XpsImageType.JpegImageType ||
                     imageType == XpsImageType.PngImageType ) )
             {
                 throw new XpsPackagingException(SR.ReachPackaging_UnsupportedThumbnailImageType);
-            }   
+            }
             newThumbnail = new XpsThumbnail(this,
                                         parent,
                                         GenerateUniquePart(ImageTypeToString(imageType))
@@ -931,14 +931,13 @@ namespace System.Windows.Xps.Packaging
         {
             string docContentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
              int docCounter = 0;
- 
+
             if (_contentTypes.ContainsKey(docContentKey))
             {
                 docCounter = _contentTypes[docContentKey]-1;
             }
 
-            return new Uri("/Documents/" + docCounter + "/Structure/DocStructure.struct",
-                           UriKind.Relative);
+            return new Uri($"/Documents/{docCounter}/Structure/DocStructure.struct", UriKind.Relative);
       }
 
         /// <summary>
@@ -954,14 +953,13 @@ namespace System.Windows.Xps.Packaging
         {
             string docContentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
              int docCounter = 0;
- 
+
             if (_contentTypes.ContainsKey(docContentKey))
             {
                 docCounter = _contentTypes[docContentKey]-1;
             }
 
-            return new Uri("/Documents/" + docCounter + "/Structure/Fragments/"+pageNumber+".frag",
-                           UriKind.Relative);
+            return new Uri($"/Documents/{docCounter}/Structure/Fragments/{pageNumber}.frag", UriKind.Relative);
       }
         #region Private methods
 
@@ -992,7 +990,7 @@ namespace System.Windows.Xps.Packaging
             _metroPackage = metroPackage;
             _compressionOption = compressionOption;
             _streaming = streaming;
- 
+
 
             _contentTypes = new Dictionary<string, int>(11);
             _cachedParts = new Dictionary<Uri, PackagePart>(11);
@@ -1018,23 +1016,23 @@ namespace System.Windows.Xps.Packaging
         {
             ArgumentNullException.ThrowIfNull(relatedPart);
             string uniqueUri = "";
-            
+
             if( relatedPart is XpsFixedDocumentSequenceReaderWriter )
             {
-               uniqueUri = "/MetaData/Job_PT.xml"; 
+               uniqueUri = "/MetaData/Job_PT.xml";
             }
             else if( relatedPart is XpsFixedDocumentReaderWriter )
             {
                 XpsFixedDocumentReaderWriter doc = relatedPart as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Document_PT.xml"; 
+                uniqueUri = $"/Documents/{doc.DocumentNumber}/Document_PT.xml";
             }
             else if( relatedPart is XpsFixedPageReaderWriter )
             {
                 XpsFixedPageReaderWriter page = relatedPart as XpsFixedPageReaderWriter;
                 XpsFixedDocumentReaderWriter doc = (relatedPart as XpsFixedPageReaderWriter).Parent as XpsFixedDocumentReaderWriter;
-                uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + page.PageNumber+ "_PT.xml"; 
+                uniqueUri = $"/Documents/{doc.DocumentNumber}/Page{page.PageNumber}_PT.xml";
             }
-                
+
             return PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
        }
 
@@ -1061,7 +1059,7 @@ namespace System.Windows.Xps.Packaging
             {
                 string contentKey = GetContentCounterKey(XpsS0Markup.FixedDocumentContentType);
                 int docNumber = _contentTypes[contentKey] - 1;
-                uniqueUri = "/Documents/" + docNumber + "/Document_PT.xml";
+                uniqueUri = $"/Documents/{docNumber}/Document_PT.xml";
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedPageContentType))
             {
@@ -1069,12 +1067,12 @@ namespace System.Windows.Xps.Packaging
                 string pageContentKey = GetContentCounterKey(XpsS0Markup.FixedPageContentType);
                 int docNumber = _contentTypes[documentContentKey] - 1;
                 int pageNumber = _contentTypes[pageContentKey] - 1;
-                uniqueUri = "/Documents/" + docNumber + "/Page" + pageNumber + "_PT.xml";
+                uniqueUri = $"/Documents/{docNumber}/Page{pageNumber}_PT.xml";
             }
 
             return PackUriHelper.CreatePartUri(new Uri(uniqueUri, UriKind.Relative));
         }
-            
+
 
         /// <summary>
         /// Generates a unique Uri based on the content-type
@@ -1106,59 +1104,49 @@ namespace System.Windows.Xps.Packaging
 
             if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.DocumentSequenceContentType))
             {
-                 uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "{0}.fdseq",
-                                          new object[] { contentKey });
+                 uniqueUri = $"{contentKey}.fdseq";
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedDocumentContentType))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Documents/{0}/FixedDocument.fdoc",
-                                          new object[] {  counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Documents/{counter}/FixedDocument.fdoc");
                 string pageContentKey = GetContentCounterKey(XpsS0Markup.FixedPageContentType);
                 _contentTypes[pageContentKey] = 1;
             }
             else if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.FixedPageContentType))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Documents/{0}/Pages/{1}.fpage",
-                                          new object[] { docCounter, counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Documents/{docCounter}/Pages/{counter}.fpage");
             }
             else if (contentKey.Equals("Dictionary", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.dict",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.dict");
             }
             else if (contentKey.Equals("Font", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.ttf",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.ttf");
             }
             else if (contentKey.Equals("ColorContext", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.icc",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.icc");
             }
             else if (contentKey.Equals("ResourceDictionary", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.dict",
-                                          new object[] { uniqueName });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.dict");
             }
             else if (contentKey.Equals("Image", StringComparison.OrdinalIgnoreCase))
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/Resources/{0}.{1}",
-                                          new object[] { uniqueName, LookupImageExtension(contentType) });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/Resources/{uniqueName}.{LookupImageExtension(contentType)}");
             }
             else
             {
-                uniqueUri = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                                          "/{0}s/{0}_{1}.xaml",
-                                          new object[] { contentKey, counter });
+                uniqueUri = string.Create(System.Globalization.CultureInfo.InvariantCulture,
+                                          $"/{contentKey}s/{contentKey}_{counter}.xaml");
             }
 
             //
@@ -1237,7 +1225,7 @@ namespace System.Windows.Xps.Packaging
                 else
                 {
                     key = contentType.SubTypeComponent;
-                }                
+                }
             }
 
             //
@@ -1300,7 +1288,7 @@ namespace System.Windows.Xps.Packaging
                 reference = _packageCache[uri];
 
                 reference -= 1;
-                
+
                 if(reference > 0 )
                 {
                     _packageCache[uri] = reference;
@@ -1338,7 +1326,7 @@ namespace System.Windows.Xps.Packaging
 
         internal static Dictionary<Uri, int>    _packageCache;
         internal static Object                  _globalLock;
-        
+
         #endregion Private data
 
         #region IDisposable implementation
@@ -1391,9 +1379,9 @@ namespace System.Windows.Xps.Packaging
             {
                 extention = XpsS0Markup.WdpExtension;
             }
-            return extention;                
+            return extention;
         }
-        
+
         #endregion Private static methods
 
         #region Internal static data
@@ -1434,7 +1422,7 @@ namespace System.Windows.Xps.Packaging
 
             if (startingPartRelationship != null)
             {
-                Uri startPartUri = PackUriHelper.ResolvePartUri(startingPartRelationship.SourceUri, 
+                Uri startPartUri = PackUriHelper.ResolvePartUri(startingPartRelationship.SourceUri,
                                                                 startingPartRelationship.TargetUri);
 
                 if (package.PartExists(startPartUri))
@@ -1533,7 +1521,7 @@ namespace System.Windows.Xps.Packaging
 
             Uri relativeUri = baseUri.MakeRelativeUri(fileUri);
             Uri unescapedUri = new Uri(relativeUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped), UriKind.RelativeOrAbsolute);
-            
+
             return unescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
         }
         public
@@ -1564,11 +1552,11 @@ namespace System.Windows.Xps.Packaging
                 case XpsImageType.JpegImageType:
                     imageContentType = XpsS0Markup.JpgContentType;
                     break;
-                    
+
                 case XpsImageType.PngImageType:
                     imageContentType = XpsS0Markup.PngContentType;
                     break;
-                    
+
                 case XpsImageType.TiffImageType:
                     imageContentType = XpsS0Markup.TifContentType;
                     break;

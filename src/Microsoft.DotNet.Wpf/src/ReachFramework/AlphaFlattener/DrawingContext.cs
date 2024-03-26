@@ -37,10 +37,10 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Constructors
 
         public DisplayListDrawingContext(
-                    Flattener  flattener, 
-                    double     opacity, 
-                    BrushProxy opacityMask, 
-                    Matrix     trans, 
+                    Flattener  flattener,
+                    double     opacity,
+                    BrushProxy opacityMask,
+                    Matrix     trans,
                     Geometry   clip)
         {
             _flattener   = flattener;
@@ -162,7 +162,7 @@ namespace Microsoft.Internal.AlphaFlattener
             ip.DstRect   = dest;
             ip.Clip      = clip;
             ip.Transform = trans * _transform;
-            
+
             ip.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(ip);
         }
@@ -184,7 +184,7 @@ namespace Microsoft.Internal.AlphaFlattener
             gp.Clip      = clip;
             gp.Transform = trans * _transform;
             gp.Brush     = foreground;
-            
+
             gp.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(gp);
 
@@ -195,7 +195,7 @@ namespace Microsoft.Internal.AlphaFlattener
     }
 
     /// <summary>
-    /// Implement of IProxyDrawingContext on white background. 
+    /// Implement of IProxyDrawingContext on white background.
     ///   1) BrushProxy/PenProxy is broken down to Avalon Brush/Pen.
     ///   2) All transparency as blended with white.
     ///   3) Output is sent to ILegacyDevice interfiace.
@@ -455,7 +455,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     break;
                 }
             }
-            
+
             radial.OpacityMask = saveMask;
             radial.Opacity     = saveOpacity;
 
@@ -548,10 +548,10 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             if (Configuration.Verbose >= 2)
             {
-                Debug.WriteLine("FillGeometry not implemented " + one + " " + two);
+                Debug.WriteLine($"FillGeometry not implemented {one} {two}");
             }
 #endif
-   
+
             return false;
         }
 
@@ -616,13 +616,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
                 _seq++;
-                _dc.Comment("-> DrawImage(raster) " + _seq);  		
+                _dc.Comment($"-> DrawImage(raster) {_seq}");
 #endif
 
                 _dc.DrawImage(id, null, bounds);
 
 #if DEBUG
-                _dc.Comment("<- DrawImage(raster) " + _seq);  		
+                _dc.Comment($"<- DrawImage(raster) {_seq}");
 #endif
 
                 _dc.PopClip();
@@ -776,7 +776,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     if (brush != null)
                     {
-                        // DrawingBrush is always rasterized onward from this stage. 
+                        // DrawingBrush is always rasterized onward from this stage.
                         // Avoid the cost of creating new DrawingBrush in GetRealBrush during costing
                         if ((brush.Brush != null) && (brush.Brush is DrawingBrush))
                         {
@@ -796,11 +796,11 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         b = brush.GetRealBrush();
                     }
-                
+
 #if DEBUG
                     _seq++;
 
-                    _dc.Comment("-> DrawGeometry " + _seq + ' ' + _comment);
+                    _dc.Comment($"-> DrawGeometry {_seq} {_comment}");
 #endif
                     if (p == null)
                     {
@@ -812,11 +812,11 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 
 #if DEBUG
-                    _dc.Comment("<- DrawGeometry" + _seq + ' ' + _comment);
+                    _dc.Comment($"<- DrawGeometry{_seq} {_comment}");
 
                     if (Configuration.Verbose >= 2)
                     {
-                        Console.WriteLine("  DrawGeometry(" + _comment + ")");
+                        Console.WriteLine($"  DrawGeometry({_comment})");
                     }
 #endif
                 }
@@ -887,14 +887,14 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             image.BlendOverColor(Colors.White, 1.0, false);
-            
+
             // BitmapSource img = image.GetImage();
-            
+
             if (clip != null)
             {
                 _dc.PushClip(clip);
             }
-                        
+
             if (! trans.IsIdentity)
             {
                 _dc.PushTransform(trans);
@@ -902,17 +902,17 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
             _seq ++;
-            _dc.Comment("-> DrawImage " + _seq);
+            _dc.Comment($"-> DrawImage {_seq}");
 #endif
-            
+
             _dc.DrawImage(image.Image, image.Buffer, dest);
 
 #if DEBUG
-            _dc.Comment("<- DrawImage " + _seq);
+            _dc.Comment($"<- DrawImage {_seq}");
 
             if (Configuration.Verbose >= 2)
             {
-                Console.WriteLine("  DrawImage(" + _comment + ")");
+                Console.WriteLine($"  DrawImage({_comment})");
             }
 #endif
 
@@ -939,12 +939,12 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return false;
             }
-            
+
             if (clip != null)
             {
                 _dc.PushClip(clip);
             }
-            
+
             if (!trans.IsIdentity)
             {
                 _dc.PushTransform(trans);
@@ -952,17 +952,17 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
             _seq ++;
-            _dc.Comment("-> DrawGlyphRun " + _seq);  		
+            _dc.Comment($"-> DrawGlyphRun {_seq}");
 #endif
 
             _dc.DrawGlyphRun(b, glyphrun);
 
 #if DEBUG
-            _dc.Comment("<- DrawGlyphRun " + _seq);  		
+            _dc.Comment($"<- DrawGlyphRun {_seq}");
 
             if (Configuration.Verbose >= 2)
             {
-                Console.WriteLine("  DrawGlyphRun(" + _comment + ")");
+                Console.WriteLine($"  DrawGlyphRun({_comment})");
             }
 #endif
 

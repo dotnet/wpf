@@ -242,7 +242,7 @@ namespace System.IO.Compression
             private void EnsureState(State requiredState)
             {
                 if (InitializationState != requiredState)
-                    throw new InvalidOperationException("InitializationState != " + requiredState.ToString());
+                    throw new InvalidOperationException($"InitializationState != {requiredState}");
             }
 
 

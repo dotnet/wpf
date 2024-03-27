@@ -33,7 +33,6 @@ internal static class DwmColorization
     [StructLayout(LayoutKind.Sequential)]
     private struct IMMERSIVE_COLOR_PREFERENCE
     {
-        public uint dwColorSetIndex;
         public uint crStartColor;
         public uint crAccentColor;
     }
@@ -65,11 +64,11 @@ internal static class DwmColorization
         var dwmValue = (Int32)Registry.GetValue(
             _dwmKey,
             "AccentColor",
-            null);
+            -2852864);
 
-        ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
+        // ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
 
-        systemAccentByteValue = ParseDWordColor(dwmValue);
+        ByteColor systemAccentByteValue = ParseDWordColor(dwmValue);
 
         Color newAccentColor = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
 

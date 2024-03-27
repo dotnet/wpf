@@ -2,19 +2,21 @@
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
 #
 # 
+
 parameters:
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
   # Defaults to true
   runAsPublic: true
   repoName: dotnet/wpf
+
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-  - template: /eng/common/templates-official/job/onelocbuild.yml@self
+  - template: /eng/common/templates/job/onelocbuild.yml
     parameters:
       MirrorRepo: wpf
       LclSource: lclFilesfromPackage
       LclPackageId: 'LCL-JUNO-PROD-WPF'
-- template: /eng/common/templates-official/jobs/jobs.yml@self
+- template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
@@ -27,18 +29,27 @@ jobs:
       condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
       binlogPath: artifacts/log/Debug/x86/Build.binlog
       pool:
-        name: NetCore1ESPool-Internal
-        demands: ImageOverride -equals windows.vs2022preview.amd64
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: NetCore-Svc-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: NetCore1ESPool-Svc-Internal
+          demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
+
     jobs:
     - job: Windows_NT
-      timeoutInMinutes: 120 # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+      timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
       pool:
-        # For internal jobs use the internal pool.
+        # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
         # Will eventually change this to two BYOC pools.
         # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-        name: NetCore1ESPool-Internal
-        demands: ImageOverride -equals windows.vs2022preview.amd64
+        ${{ if eq(variables['System.TeamProject'], 'public') }}:
+          name: NetCore-Svc-Public
+          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
+        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          name: NetCore1ESPool-Svc-Internal
+          demands: ImageOverride -equals windows.vs2022preview.amd64
       variables:
         # needed for signing
         - name: _TeamName
@@ -140,6 +151,7 @@ jobs:
       # Set VSO Variable(s)
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
+
       - ${{ if ne(variables['System.TeamProject'], 'public') }}:
         - task: PowerShell@2
           displayName: Setup Private Feeds Credentials
@@ -148,8 +160,16 @@ jobs:
             arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
-      # Use utility script to run script command dependent on agent OS
-      - script: eng\common\cibuild.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
+
+      # Use utility script to run script command dependent on agent OS.
+      - script: eng\common\cibuild.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 

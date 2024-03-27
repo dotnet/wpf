@@ -25,10 +25,10 @@ internal static class DwmColorization
     }
 
     [DllImport("UXTheme.dll")]
-    private static extern int GetUserColorPreference(ref IMMERSIVE_COLOR_PREFERENCE colorPreference, bool alwaysFalse);
+    private static extern int GetUserColorPreference(in IMMERSIVE_COLOR_PREFERENCE colorPreference, bool alwaysFalse);
 
     [DllImport("UXTheme.dll")]
-    private static extern uint GetColorFromPreference(ref IMMERSIVE_COLOR_PREFERENCE colorPreference, IMMERSIVE_COLOR_TYPE colorType, bool alwaysFalse, IMMERSIVE_HC_CACHE_MODE cacheMode);
+    private static extern uint GetColorFromPreference(in IMMERSIVE_COLOR_PREFERENCE colorPreference, IMMERSIVE_COLOR_TYPE colorType, bool isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE cacheMode);
 
     [StructLayout(LayoutKind.Sequential)]
     private struct IMMERSIVE_COLOR_PREFERENCE
@@ -87,10 +87,11 @@ internal static class DwmColorization
         Color tertiaryAccent;
 
         bool isDarkTheme = ThemeColorization.IsThemeDark();
+        bool isHighContrastEnabled = SystemParameters.HighContrast;
 
         IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
 
-        int err = GetUserColorPreference(ref colorPreference, false);
+        int err = GetUserColorPreference(in colorPreference, false);
 
         if(err != 0) 
         {
@@ -102,15 +103,15 @@ internal static class DwmColorization
 
             if (isDarkTheme)
             {
-                Accent1 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark1, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent2 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark2, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent3 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark3, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent1 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark1, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent2 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark2, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent3 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark3, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
             }
             else
             {
-                Accent1 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight1, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent2 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight2, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent3 = GetColorFromPreference(ref colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight3, false, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent1 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight1, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent2 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight2, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
+                Accent3 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight3, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
             }
 
             primaryAccent = Color.FromArgb(0xff, (byte)Accent1, (byte)(Accent1 >> 8), (byte)(Accent1 >> 16));

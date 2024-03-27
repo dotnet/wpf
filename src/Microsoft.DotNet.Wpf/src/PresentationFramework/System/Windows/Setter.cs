@@ -161,6 +161,7 @@ namespace System.Windows
         /// </summary>
         [System.Windows.Markup.DependsOn("Property")]
         [System.Windows.Markup.DependsOn("TargetName")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)] // Not localizable by-default
         [TypeConverter(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
         public object Value

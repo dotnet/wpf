@@ -712,14 +712,6 @@ namespace System.Windows.Markup
                     _inEventSetter = true;
 #endif
                 }
-                else if ((depth == 2 && _setterElementEncountered) ||
-                         (depth == 3 && _setterPropertyEncountered))
-                {
-                    ThrowException(nameof(SR.ParserNoSetterChild),
-                                   xamlElementStartNode.TypeFullName,
-                                   xamlElementStartNode.LineNumber,
-                                   xamlElementStartNode.LinePosition);
-                }
             }
 
             // Handle custom serializers within the style section by creating an instance

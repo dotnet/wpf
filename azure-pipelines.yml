@@ -17,11 +17,8 @@ variables:
     value: WINDOWSDESKTOP
   - name: PostBuildSign
     value: true
-  
-  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    - group: DotNet-Wpf-SDLValidation-Params
-
-
+- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+  - group: DotNet-Wpf-SDLValidation-Params
 # This is set in the pipeline directly 
 # When set to false, CI tests will not be enabled in builds. 
 #
@@ -33,9 +30,9 @@ variables:
 #
 # only trigger ci builds for the master and release branches
 trigger:
-  batch: true 
+  batch: true
   branches:
-    include: 
+    include:
     - main
     - release/3.*
     - release/5.*
@@ -46,55 +43,39 @@ trigger:
   paths:
     exclude:
     - Documentation/*
-
-pr:
-  autoCancel: true
-  branches:
-    include:
-    - main
-    - release/3.* 
-    - internal/release/3.*
-    - release/5.*
-    - release/6.*
-    - experimental/*
-  paths:
-    exclude:
-    - Documentation/*
-
-# Call the pipeline.yml template, which does the real work
-stages:
-- stage: build
-  displayName: Build 
-  jobs:
-  - template: /eng/pipeline.yml
-    parameters:
-      enablePublishUsingPipelines: $(_PublishUsingPipelines)
-      ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-        # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
-        pool:
-          name: NetCore1ESPool-Svc-Internal
-          demands: ImageOverride -equals windows.vs2019.amd64
-        # runAsPublic is used in expressions, which can't read from user-defined variables
-        runAsPublic: false
-
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: eng\common\templates\post-build\post-build.yml
-    parameters:
-      publishingInfraVersion: 3
-      enableSymbolValidation: false
-      enableSigningValidation: false
-      enableNugetValidation: false
-      enableSourceLinkValidation: false
-      # This is to enable SDL runs part of Post-Build Validation Stage
-      SDLValidationParameters:
-        enable: false
-        params: ' -SourceToolsList @("policheck","credscan")
-        -TsaInstanceURL $(_TsaInstanceURL)
-        -TsaProjectName $(_TsaProjectName)
-        -TsaNotificationEmail $(_TsaNotificationEmail)
-        -TsaCodebaseAdmin $(_TsaCodebaseAdmin)
-        -TsaBugAreaPath $(_TsaBugAreaPath)
-        -TsaIterationPath $(_TsaIterationPath)
-        -TsaRepositoryName "wpf"
-        -TsaCodebaseName "wpf"
-        -TsaPublish $True'
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    featureFlags:
+      autoBaseline: true
+    pool:
+      name: NetCore1ESPool-Internal
+      image: 1es-windows-2022-pt
+      os: windows
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: build
+      displayName: Build
+      jobs:
+      - template: /eng/pipeline.yml@self
+        parameters:
+          ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+            runAsPublic: false
+    - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+      - template: /eng/common/templates-official/post-build/post-build.yml@self
+        parameters:
+          publishingInfraVersion: 3
+          enableSymbolValidation: false
+          enableSigningValidation: false
+          enableNugetValidation: false
+          enableSourceLinkValidation: false
+          SDLValidationParameters:
+            enable: false
+            params: ' -SourceToolsList @("policheck","credscan") -TsaInstanceURL $(_TsaInstanceURL) -TsaProjectName $(_TsaProjectName) -TsaNotificationEmail $(_TsaNotificationEmail) -TsaCodebaseAdmin $(_TsaCodebaseAdmin) -TsaBugAreaPath $(_TsaBugAreaPath) -TsaIterationPath $(_TsaIterationPath) -TsaRepositoryName "wpf" -TsaCodebaseName "wpf" -TsaPublish $True'

@@ -160,10 +160,11 @@ namespace System.Windows.Ink
         internal ExtendedPropertiesChangedEventArgs(ExtendedProperty oldProperty,
                                                     ExtendedProperty newProperty)
         {
-            if ( oldProperty == null && newProperty == null )
+            if (newProperty == null)
             {
-                throw new ArgumentNullException("oldProperty");
+                ArgumentNullException.ThrowIfNull(oldProperty);
             }
+
             _oldProperty = oldProperty;
             _newProperty = newProperty;
         }

@@ -483,11 +483,7 @@ namespace System.Windows.Documents
         internal string AddImage(Image image)
         {
             ArgumentNullException.ThrowIfNull(image);
-
-            if (image.Source == null)
-            {
-                throw new ArgumentNullException("image.Source");
-            }
+            ArgumentNullException.ThrowIfNull(image.Source, "image.Source");
 
             if (string.IsNullOrEmpty(image.Source.ToString()))
             {

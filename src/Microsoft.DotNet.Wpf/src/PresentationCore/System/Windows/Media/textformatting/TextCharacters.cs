@@ -118,16 +118,8 @@ namespace System.Windows.Media.TextFormatting
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
             ArgumentNullException.ThrowIfNull(textRunProperties);
-
-            if (textRunProperties.Typeface == null)
-            {
-                throw new ArgumentNullException("textRunProperties.Typeface");
-            }
-
-            if (textRunProperties.CultureInfo == null)
-            {
-                throw new ArgumentNullException("textRunProperties.CultureInfo");
-            }
+            ArgumentNullException.ThrowIfNull(textRunProperties.Typeface, "textRunProperties.Typeface");
+            ArgumentNullException.ThrowIfNull(textRunProperties.CultureInfo, "textRunProperties.CultureInfo");
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRunProperties.FontRenderingEmSize, "textRunProperties.FontRenderingEmSize");
 
@@ -191,10 +183,7 @@ namespace System.Windows.Media.TextFormatting
             bool                        isSideways
             )
         {
-            if (characterBufferReference.CharacterBuffer == null)
-            {
-                throw new ArgumentNullException("characterBufferReference.CharacterBuffer");
-            }
+            ArgumentNullException.ThrowIfNull(characterBufferReference.CharacterBuffer, "characterBufferReference.CharacterBuffer");
             
             int offsetToFirstChar = characterBufferReference.OffsetToFirstChar - _characterBufferReference.OffsetToFirstChar;
 

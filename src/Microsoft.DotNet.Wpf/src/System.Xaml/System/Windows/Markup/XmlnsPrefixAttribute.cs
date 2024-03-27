@@ -37,8 +37,10 @@ namespace System.Windows.Markup
         /// <param name="prefix">recommended prefix</param>
         public XmlnsPrefixAttribute(string xmlNamespace, string prefix)
         {
-            XmlNamespace = xmlNamespace ?? throw new ArgumentNullException(nameof(xmlNamespace));
-            Prefix= prefix ?? throw new ArgumentNullException(nameof(prefix));
+            ArgumentNullException.ThrowIfNull(xmlNamespace);
+            ArgumentNullException.ThrowIfNull(prefix);
+            XmlNamespace = xmlNamespace;
+            Prefix = prefix;
         }
 
         /// <summary>

@@ -138,13 +138,7 @@ namespace System.Xaml
 
         public static void Save(String fileName, object instance)
         {
-            ArgumentNullException.ThrowIfNull(fileName);
-            //
-            // At this point it can only be empty
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentException(SR.StringIsNullOrEmpty, nameof(fileName));
-            }
+            ArgumentException.ThrowIfNullOrEmpty(fileName);
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 Save(writer, instance);

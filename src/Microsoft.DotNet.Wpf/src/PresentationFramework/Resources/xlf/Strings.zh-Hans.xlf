@@ -3318,11 +3318,6 @@ Do you want to replace it?</source>
         <target state="translated">“{0}”名称对标识符无效。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Name 不能为空字符串。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">未找到“{0}”Name。</target>
@@ -5181,11 +5176,6 @@ Do you want to replace it?</source>
       <trans-unit id="StreamObjectDisposed">
         <source>Current stream object was closed and disposed. Cannot access a closed stream.</source>
         <target state="translated">当前流属性对象已关闭并且已释放。无法访问已关闭的流。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">参数不能为零长度的字符串。</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIdOutOfSequence">

@@ -782,11 +782,6 @@
         <target state="translated">Der Name "{0}" ist für den Bezeichner ungültig.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Name darf keine leere Zeichenfolge sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">Der Name "{0}" wurde nicht gefunden.</target>
@@ -1210,16 +1205,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">Direkt zuweisbare Fixups dürfen nur einen Namen besitzen.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Der Parameter darf keine Zeichenfolge mit der Länge Null sein.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Die Zeichenfolge ist NULL oder leer.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

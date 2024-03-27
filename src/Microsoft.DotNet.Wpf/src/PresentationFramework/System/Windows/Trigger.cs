@@ -287,10 +287,7 @@ namespace System.Windows
         public static void ReceiveTypeConverter(object targetObject, XamlSetTypeConverterEventArgs eventArgs)
         {
             Trigger trigger = targetObject as Trigger;
-            if (trigger == null)
-            {
-                throw new ArgumentNullException("targetObject");
-            }
+            ArgumentNullException.ThrowIfNull(trigger, nameof(targetObject));
             ArgumentNullException.ThrowIfNull(eventArgs);
 
             if (eventArgs.Member.Name == "Property")

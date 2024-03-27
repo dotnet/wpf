@@ -1340,10 +1340,7 @@ namespace System.Windows.Xps.Serialization
         AcquireStreamForLinkTargets(
             )
         {
-            if (_currentFixedPageWriter == null)
-            {
-                throw new ArgumentNullException("CurrentFixedPageWriter");
-            }
+            ArgumentNullException.ThrowIfNull(_currentFixedPageWriter, "CurrentFixedPageWriter");
             return ((XpsFixedPageReaderWriter)_currentFixedPageWriter).LinkTargetStream;
         }
 

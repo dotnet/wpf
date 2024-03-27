@@ -11,12 +11,12 @@ parameters:
 
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-  - template: /eng/common/templates-official/job/onelocbuild.yml@self
+  - template: /eng/common/templates/job/onelocbuild.yml
     parameters:
       MirrorRepo: wpf
       LclSource: lclFilesfromPackage
       LclPackageId: 'LCL-JUNO-PROD-WPF'
-- template: /eng/common/templates-official/jobs/jobs.yml@self
+- template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
@@ -181,16 +181,3 @@ jobs:
         env:
           HelixSource: $(_HelixSource)
           HelixType: 'tests/drt'
-          HelixBuild: $(Build.BuildNumber)
-          HelixTargetQueues: $(_TestHelixAgentPool)
-          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
-          Creator: $(_HelixCreator)
-          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        # This condition should be kept in sync with the condition for cibuild.cmd step with displayName: "Windows Build / Publish"
-        # Only run ...
-        # ...When building on a Helix pipeline, only build Release configs
-        #
-        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
-        #
-        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
-

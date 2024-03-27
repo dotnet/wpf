@@ -86,6 +86,7 @@ namespace System.Windows.Input
                 MouseAction mouseAction = MouseAction.None;
                 switch (mouseActionToken)
                 {
+                    case "NONE"             : mouseAction = MouseAction.None; break;
                     case "LEFTCLICK"        : mouseAction = MouseAction.LeftClick; break;
                     case "RIGHTCLICK"       : mouseAction = MouseAction.RightClick; break;
                     case "MIDDLECLICK"      : mouseAction = MouseAction.MiddleClick; break;

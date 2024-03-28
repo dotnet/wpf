@@ -10,11 +10,6 @@ namespace System.Windows;
 internal static class DwmColorization
 {
     /// <summary>
-    /// The registry path containing colorization information.
-    /// </summary>
-    private static readonly string _dwmKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\DWM";
-
-    /// <summary>
     /// The Accent Color that is currently applied to the application.
     /// </summary>
     private static Color _currentApplicationAccentColor = Color.FromArgb(255, 0, 120, 212);
@@ -55,24 +50,27 @@ internal static class DwmColorization
     }
 
     /// <summary>
-    /// Computes the accent color from value in the registry key.
+    /// Gets the system accent color.
     /// </summary>
     /// <returns>Updated <see cref="System.Windows.Media.Color"/> Accent Color.</returns>
-    /// <exception cref="NotImplementedException"></exception>
     internal static Color GetSystemAccentColor()
     {
-        var dwmValue = (Int32)Registry.GetValue(
-            _dwmKey,
-            "AccentColor",
-            -2852864);
+        bool isHighContrastEnabled = SystemParameters.HighContrast;
 
-        // ByteColor systemAccentByteValue  = new ByteColor(0xff, 0x00, 0x78, 0xd4); // Initializing the accent to default blue value
+        IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
 
-        ByteColor systemAccentByteValue = ParseDWordColor(dwmValue);
+        int err = GetUserColorPreference(in colorPreference, false);
 
-        Color newAccentColor = Color.FromArgb(systemAccentByteValue.A, systemAccentByteValue.R, systemAccentByteValue.G, systemAccentByteValue.B);
+        if (err != 0)
+        {
+            return Color.FromArgb(255, 0, 120, 212);
+        }
+        else
+        {
+            uint AccentColor = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccent, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
 
-        return newAccentColor;
+            return Color.FromArgb(0xff, (byte)AccentColor, (byte)(AccentColor >> 8), (byte)(AccentColor >> 16));
+        }
     }
 
     /// <summary>

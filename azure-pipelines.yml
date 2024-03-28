@@ -17,8 +17,8 @@ variables:
     value: WINDOWSDESKTOP
   - name: PostBuildSign
     value: true
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-  - group: DotNet-Wpf-SDLValidation-Params
+  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
+    - group: DotNet-Wpf-SDLValidation-Params
 # This is set in the pipeline directly 
 # When set to false, CI tests will not be enabled in builds. 
 #

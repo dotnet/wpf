@@ -181,3 +181,16 @@ jobs:
         env:
           HelixSource: $(_HelixSource)
           HelixType: 'tests/drt'
+          HelixBuild: $(Build.BuildNumber)
+          HelixTargetQueues: $(_TestHelixAgentPool)
+          HelixAccessToken: $(_HelixToken)              # only defined for internal CI
+          Creator: $(_HelixCreator)
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+        # This condition should be kept in sync with the condition for cibuild.cmd step with displayName: "Windows Build / Publish"
+        # Only run ...
+        # ...When building on a Helix pipeline, only build Release configs
+        #
+        #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
+        #
+        condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
+        

@@ -89,19 +89,19 @@ internal static class WindowBackdrop
         switch (backdropType)
         {
             case WindowBackdropType.Auto:
-                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_AUTO);
+                return ApplyDwmWindowAttribute(hWnd, Standard.DWMSBT.DWMSBT_AUTO);
 
             case WindowBackdropType.Mica:
-                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_MAINWINDOW);
+                return ApplyDwmWindowAttribute(hWnd, Standard.DWMSBT.DWMSBT_MAINWINDOW);
 
             case WindowBackdropType.Acrylic:
-                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW);
+                return ApplyDwmWindowAttribute(hWnd, Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW);
 
             case WindowBackdropType.Tabbed:
-                return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_TABBEDWINDOW);
+                return ApplyDwmWindowAttribute(hWnd, Standard.DWMSBT.DWMSBT_TABBEDWINDOW);
         }
 
-        return ApplyDwmWindowAttrubute(hWnd, Standard.DWMSBT.DWMSBT_NONE);
+        return ApplyDwmWindowAttribute(hWnd, Standard.DWMSBT.DWMSBT_NONE);
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ internal static class WindowBackdrop
         return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
     }
 
-    private static bool ApplyDwmWindowAttrubute(IntPtr hWnd, Standard.DWMSBT dwmSbt)
+    private static bool ApplyDwmWindowAttribute(IntPtr hWnd, Standard.DWMSBT dwmSbt)
     {
         if (hWnd == IntPtr.Zero)
         {

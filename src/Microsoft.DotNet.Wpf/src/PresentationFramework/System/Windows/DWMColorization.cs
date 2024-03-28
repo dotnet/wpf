@@ -56,14 +56,14 @@ internal static class DwmColorization
     internal static Color GetSystemAccentColor()
     {
         bool isHighContrastEnabled = SystemParameters.HighContrast;
-
+      
         IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
 
         int err = GetUserColorPreference(in colorPreference, false);
 
         if (err != 0)
         {
-            return Color.FromArgb(255, 0, 120, 212);
+            return Color.FromArgb(0xff, 0x00, 0x78, 0xd4);
         }
         else
         {
@@ -238,11 +238,11 @@ internal static class DwmColorization
     }
 
     /// <summary>
-    /// Converts the color of type Int32 to type ByteColor
+    /// Converts the color of type Int32 to type Color
     /// </summary>
-    /// <param name="color">The Int32 color to be converted to corresponding ByteColor</param>
-    /// <returns>Corresponding <see cref="System.Windows.ByteColor"/></returns>
-    private static ByteColor ParseDWordColor(Int32 color)
+    /// <param name="color">The Int32 color to be converted to corresponding Color</param>
+    /// <returns>Corresponding <see cref="Color"/></returns>
+    private static Color ParseDWordColor(Int32 color)
     {
         Byte
             a = (byte)((color >> 24) & 0xFF),
@@ -250,9 +250,7 @@ internal static class DwmColorization
             g = (byte)((color >> 8) & 0xFF),
             r = (byte)((color >> 0) & 0xFF);
 
-        ByteColor current = new ByteColor(a, r, g, b);
-
-        return current;
+        return Color.FromArgb(a, r, g, b);
     }
 
     /// <summary>

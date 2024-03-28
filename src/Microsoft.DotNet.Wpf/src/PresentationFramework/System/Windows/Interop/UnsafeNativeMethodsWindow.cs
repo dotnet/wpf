@@ -16,59 +16,18 @@ namespace System.Windows.Interop;
 /// </summary>
 internal static class UnsafeNativeMethodsWindow
 {
+    public static bool ApplyUseImmersiveDarkMode(Window window, bool useImmersiveDarkMode) =>
+        GetHandle(window, out IntPtr windowHandle) && ApplyUseImmersiveDarkMode(windowHandle, useImmersiveDarkMode);
 
-    /// <summary>
-    /// Tries to remove ImmersiveDarkMode effect from the <see cref="Window"/>.
-    /// </summary>
-    /// <param name="window">The window to which the effect is to be applied.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool RemoveWindowDarkMode(Window window) =>
-        GetHandle(window, out IntPtr windowHandle) && RemoveWindowDarkMode(windowHandle);
-
-    /// <summary>
-    /// Tries to remove ImmersiveDarkMode effect from the window handle.
-    /// </summary>
-    /// <param name="handle">Window handle.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool RemoveWindowDarkMode(IntPtr handle)
+    public static bool ApplyUseImmersiveDarkMode(IntPtr handle, bool useImmersiveDarkMode)
     {
         if (handle == IntPtr.Zero || !NativeMethods.IsWindow(handle))
         {
             return false;
         }
 
-        var pvAttribute = 0x0; // Disable
-
-        _ = NativeMethods.DwmSetWindowAttribute(handle, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
-
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to apply ImmersiveDarkMode effect for the <see cref="Window"/>.
-    /// </summary>
-    /// <param name="window">The window to which the effect is to be applied.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowDarkMode(Window window) =>
-        GetHandle(window, out IntPtr windowHandle) && ApplyWindowDarkMode(windowHandle);
-
-    /// <summary>
-    /// Tries to apply ImmersiveDarkMode effect for the window handle.
-    /// </summary>
-    /// <param name="handle">Window handle.</param>
-    /// <returns><see langword="true"/> if invocation of native Windows function succeeds.</returns>
-    public static bool ApplyWindowDarkMode(IntPtr handle)
-    {
-        if (handle == IntPtr.Zero || !NativeMethods.IsWindow(handle))
-        {
-            return false;
-        }
-
-        var pvAttribute = 0x1; // Enable
-
-        _ = NativeMethods.DwmSetWindowAttribute(handle, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
-
-        return true;
+        var dwmResult = NativeMethods.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useImmersiveDarkMode);
+        return dwmResult == HRESULT.S_OK;
     }
 
     /// <summary>
@@ -84,21 +43,12 @@ internal static class UnsafeNativeMethodsWindow
             return false;
         }
 
-        var backdropPvAttribute = (int)ConvertWindowBackdropToDWMSBT(backgroundType);
+        var backdropPvAttribute = ConvertWindowBackdropToDWMSBT(backgroundType);
 
-        if (backdropPvAttribute == (int)Standard.DWMSBT.DWMSBT_NONE)
-        {
-            return false;
-        }
+        var dwmResult = NativeMethods.DwmSetWindowAttributeSystemBackdropType(
+            handle, backdropPvAttribute);
 
-        _ = NativeMethods.DwmSetWindowAttribute(
-            handle,
-            DWMWA.SYSTEMBACKDROP_TYPE,
-            ref backdropPvAttribute,
-            Marshal.SizeOf(typeof(int))
-        );
-
-        return true;
+        return dwmResult == HRESULT.S_OK;
     }
 
     public static Standard.DWMSBT ConvertWindowBackdropToDWMSBT(WindowBackdropType backgroundType)
@@ -106,9 +56,9 @@ internal static class UnsafeNativeMethodsWindow
         return backgroundType switch
         {
             WindowBackdropType.Auto => Standard.DWMSBT.DWMSBT_AUTO,
-            WindowBackdropType.Mica => Standard.DWMSBT.DWMSBT_MAINWINDOW,
-            WindowBackdropType.Acrylic => Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW,
-            WindowBackdropType.Tabbed => Standard.DWMSBT.DWMSBT_TABBEDWINDOW,
+            WindowBackdropType.MainWindow => Standard.DWMSBT.DWMSBT_MAINWINDOW,
+            WindowBackdropType.TransientWindow => Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW,
+            WindowBackdropType.TabbedWindow => Standard.DWMSBT.DWMSBT_TABBEDWINDOW,
             _ => Standard.DWMSBT.DWMSBT_NONE
         };
     }

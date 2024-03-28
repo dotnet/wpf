@@ -2621,16 +2621,23 @@ namespace Standard
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
-        private static extern void _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
+        private static extern HRESULT _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
-        public static extern int DwmSetWindowAttribute(
-            IntPtr hwnd,
-            DWMWA dwAttribute,
-            ref int pvAttribute,
-            int cbAttribute
-        );
+        public static HRESULT DwmSetWindowAttributeSystemBackdropType(IntPtr hwnd, DWMSBT dwBackdropType)
+        {
+            Assert.IsTrue(Utility.IsOSWindows11Insider1OrNewer);
+            var dwmWindowAttribute = (int)dwBackdropType;
+            return _DwmSetWindowAttribute(hwnd, DWMWA.SYSTEMBACKDROP_TYPE, ref dwmWindowAttribute, Marshal.SizeOf(typeof(int)));
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static HRESULT DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
+        {
+            Assert.IsTrue(Utility.IsOSWindows11Insider1OrNewer);
+            var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
+            return _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+        }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)

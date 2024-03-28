@@ -2032,22 +2032,6 @@ namespace System.Windows
 
         #endregion Properties
     }
-
-    internal struct ByteColor
-    {
-        internal byte A { get; set; }
-        internal byte R { get; set; }
-        internal byte G { get; set; }
-        internal byte B { get; set; }
-
-        internal ByteColor(byte a, byte r, byte g, byte b)
-        {
-            A = a;
-            R = r;
-            G = g;
-            B = b;
-        }
-    }
 }
 
 

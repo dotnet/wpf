@@ -141,46 +141,6 @@ namespace System.Windows.Controls
             DependencyProperty.Register("CanUserResizeColumns", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnNotifyColumnAndColumnHeaderPropertyChanged)));
 
         /// <summary>
-        /// A style to apply to all checkbox column in the DataGrid
-        /// </summary>
-        internal Style CheckBoxColumnElementStyle
-        {
-            get => (Style)GetValue(CheckBoxColumnElementStyleProperty);
-            set => SetValue(CheckBoxColumnElementStyleProperty, value);
-        }
-
-        /// <summary>
-        /// A style to apply to all checkbox column in the DataGrid
-        /// </summary>
-        internal Style CheckBoxColumnEditingElementStyle
-        {
-            get => (Style)GetValue(CheckBoxColumnEditingElementStyleProperty);
-            set => SetValue(CheckBoxColumnEditingElementStyleProperty, value);
-        }
-
-        /// <summary>
-        /// The DependencyProperty that represents the <see cref="CheckBoxColumnElementStyle"/> property.
-        /// </summary>
-        internal static readonly DependencyProperty CheckBoxColumnElementStyleProperty =
-            DependencyProperty.Register(
-                nameof(CheckBoxColumnElementStyle),
-                typeof(Style),
-                typeof(DataGrid),
-                new FrameworkPropertyMetadata(null)
-            );
-
-        /// <summary>
-        /// The DependencyProperty that represents the <see cref="CheckBoxColumnEditingElementStyle"/> property.
-        /// </summary>
-        internal static readonly DependencyProperty CheckBoxColumnEditingElementStyleProperty =
-            DependencyProperty.Register(
-                nameof(CheckBoxColumnEditingElementStyle),
-                typeof(Style),
-                typeof(DataGrid),
-                new FrameworkPropertyMetadata(null)
-            );
-
-        /// <summary>
         ///     Specifies the width of the header and cells within all the columns.
         /// </summary>
         public DataGridLength ColumnWidth
@@ -256,49 +216,6 @@ namespace System.Windows.Controls
         {
             double value = (double)v;
             return !(value < 0d || double.IsNaN(value));
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            Columns.CollectionChanged += ColumnsOnCollectionChanged;
-
-            UpdateColumnElementStyles();
-
-            base.OnInitialized(e);
-        }
-
-        private void ColumnsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdateColumnElementStyles();
-        }
-
-        private void UpdateColumnElementStyles()
-        {
-            foreach (var singleColumn in Columns)
-                UpdateSingleColumn(singleColumn);
-        }
-
-        private void UpdateSingleColumn(DataGridColumn dataGridColumn)
-        {
-            if (dataGridColumn is DataGridCheckBoxColumn checkBoxColumn)
-            {
-                if (checkBoxColumn.ReadLocalValue(DataGridCheckBoxColumn.ElementStyleProperty)
-                    == DependencyProperty.UnsetValue)
-                    BindingOperations.SetBinding(checkBoxColumn,
-                        DataGridCheckBoxColumn.ElementStyleProperty,
-                        new Binding { Path = new PropertyPath(CheckBoxColumnElementStyleProperty), Source = this });
-
-                if (checkBoxColumn.ReadLocalValue(DataGridCheckBoxColumn.EditingElementStyleProperty)
-                    == DependencyProperty.UnsetValue)
-                    BindingOperations.SetBinding(checkBoxColumn,
-                        DataGridCheckBoxColumn.EditingElementStyleProperty,
-                        new Binding
-                        {
-                            Path = new PropertyPath(CheckBoxColumnEditingElementStyleProperty),
-                            Source = this
-                        }
-                    );
-            }
         }
 
         /// <summary>

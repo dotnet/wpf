@@ -130,14 +130,14 @@ internal static class ThemeColorization
     {
         var themeToApply = GetSystemTheme();
         var resourceUri = GetApplicationThemeUri(themeToApply, out ApplicationTheme applicationTheme);
-        var backdrop = applicationTheme == ApplicationTheme.HighContrast ? WindowBackdropType.None : WindowBackdropType.Mica;
+        var backdrop = applicationTheme == ApplicationTheme.HighContrast ? WindowBackdropType.None : WindowBackdropType.MainWindow;
         
         if(Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(resourceUri);
             foreach (Window window in Application.Current.Windows)
             {        
-                WindowBackgroundManager.UpdateBackground(window, applicationTheme, WindowBackdropType.Mica, false);
+                WindowBackgroundManager.UpdateBackground(window, applicationTheme, WindowBackdropType.MainWindow, false);
             }
         }
 
@@ -188,12 +188,12 @@ internal static class ThemeColorization
     {
         var themeToApply = GetSystemTheme();
         var resourceUri = GetApplicationThemeUri(themeToApply, out ApplicationTheme applicationTheme);
-        var backdrop = applicationTheme == ApplicationTheme.HighContrast ? WindowBackdropType.None : WindowBackdropType.Mica;
+        var backdrop = applicationTheme == ApplicationTheme.HighContrast ? WindowBackdropType.None : WindowBackdropType.MainWindow;
         
         if(Utility.IsOSWindows11OrNewer)
         {
             UpdateApplicationResources(resourceUri);
-            WindowBackgroundManager.UpdateBackground(window, applicationTheme, WindowBackdropType.Mica, false);
+            WindowBackgroundManager.UpdateBackground(window, applicationTheme, WindowBackdropType.MainWindow, false);
         }    
 
         _currentApplicationTheme = themeToApply;

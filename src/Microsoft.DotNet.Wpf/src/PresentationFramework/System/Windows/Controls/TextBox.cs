@@ -77,7 +77,7 @@ namespace System.Windows.Controls
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
             
-            CommandHelpers.RegisterCommandHandler(typeof(TextBox), TextBox.ClearCommand, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -100,10 +100,7 @@ namespace System.Windows.Controls
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
 
-            SetValue(TemplateButtonCommandProperty, ClearCommand);    
         }
-
-        internal static readonly RoutedCommand ClearCommand = new RoutedCommand("Clear", typeof(TextBox));
 
         #endregion Constructors
 
@@ -976,7 +973,7 @@ namespace System.Windows.Controls
             nameof(TemplateButtonCommand),
             typeof(RoutedCommand),
             typeof(TextBox),
-            new PropertyMetadata(null)
+            new PropertyMetadata(EditingCommands.Clear)
         );
 
         #region Properties
@@ -1013,13 +1010,6 @@ namespace System.Windows.Controls
                 Text = string.Empty;
         }
 
-        /// <summary>
-        /// Triggered by clicking a button in the control template.
-        /// </summary>
-        internal void OnTemplateButtonClick(string parameter)
-        {
-            OnClearButtonClick();
-        }
         #endregion Public Properties
 
         //------------------------------------------------------

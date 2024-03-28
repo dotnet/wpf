@@ -37,10 +37,10 @@ internal static class WindowBackgroundManager
 
         if (window.IsLoaded)
         {
-            _ = UnsafeNativeMethodsWindow.ApplyWindowDarkMode(window);
+            _ = UnsafeNativeMethodsWindow.ApplyUseImmersiveDarkMode(window, true);
         }
 
-        window.Loaded += (sender, _) => UnsafeNativeMethodsWindow.ApplyWindowDarkMode(sender as Window);
+        window.Loaded += (sender, _) => UnsafeNativeMethodsWindow.ApplyUseImmersiveDarkMode(sender as Window, true);
     }
 
     /// <summary>
@@ -55,10 +55,10 @@ internal static class WindowBackgroundManager
 
         if (window.IsLoaded)
         {
-            _ = UnsafeNativeMethodsWindow.RemoveWindowDarkMode(window);
+            _ = UnsafeNativeMethodsWindow.ApplyUseImmersiveDarkMode(window, false);
         }
 
-        window.Loaded += (sender, _) => UnsafeNativeMethodsWindow.RemoveWindowDarkMode(sender as Window);
+        window.Loaded += (sender, _) => UnsafeNativeMethodsWindow.ApplyUseImmersiveDarkMode(sender as Window, false);
     }
 
     /// <summary>

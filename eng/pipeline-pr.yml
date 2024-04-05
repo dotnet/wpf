@@ -11,12 +11,12 @@ parameters:
 
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-  - template: /eng/common/templates-official/job/onelocbuild.yml@self
+  - template: /eng/common/templates/job/onelocbuild.yml
     parameters:
       MirrorRepo: wpf
       LclSource: lclFilesfromPackage
       LclPackageId: 'LCL-JUNO-PROD-WPF'
-- template: /eng/common/templates-official/jobs/jobs.yml@self
+- template: /eng/common/templates/jobs/jobs.yml
   parameters:
     enableMicrobuild: true
     enablePublishBuildArtifacts: true
@@ -193,4 +193,4 @@ jobs:
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         #
         condition: and(succeeded(), eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))
-
+        

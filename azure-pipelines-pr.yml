@@ -63,12 +63,12 @@ pr:
     exclude:
     - Documentation/*
 
-# Call the pipeline.yml template, which does the real work
+# Call the pipeline-pr.yml template, which does the real work
 stages:
 - stage: build
   displayName: Build 
   jobs:
-  - template: /eng/pipeline.yml
+  - template: /eng/pipeline-pr.yml
     parameters:
       ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
         runAsPublic: false

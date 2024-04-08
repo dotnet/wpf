@@ -11,8 +11,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    xmlns:Controls="clr-namespace:System.Windows.Controls">
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <Thickness x:Key="TextBoxBorderThemeThickness">1,1,1,1</Thickness>
     <Thickness x:Key="TextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>

@@ -11,8 +11,7 @@
         <Setter Property="Foreground" Value="{DynamicResource ProgressBarForeground}" />
         <Setter Property="Background" Value="{DynamicResource ProgressBarBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ProgressBarBorderBrush}" />
-        <Setter Property="Height" Value="6" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Height" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">

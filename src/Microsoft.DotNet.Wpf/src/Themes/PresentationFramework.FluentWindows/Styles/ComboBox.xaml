@@ -265,7 +265,7 @@
                                         Padding="0,4,0,6"
                                         Background="{DynamicResource ComboBoxDropDownBackground}"
                                         BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
-                                        BorderThickness="1"
+                                        BorderThickness="1.5"
                                         CornerRadius="{DynamicResource PopupCornerRadius}"
                                         SnapsToDevicePixels="True">
                                         <!--Will revist this code while doing performance evaluation for dynamic resources.-->

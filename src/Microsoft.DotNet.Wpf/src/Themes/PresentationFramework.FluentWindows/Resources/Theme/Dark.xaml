@@ -411,7 +411,7 @@
     <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource TextFillColorSecondary}" />
     <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-    <SolidColorBrush x:Key="ComboBoxItemPillFillBrush" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="ComboBoxItemPillFillBrush" Color="{DynamicResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="{StaticResource SubtleFillColorSecondary}" />
     <SolidColorBrush x:Key="ComboBoxItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ComboBoxItemForegroundSelected" Color="{StaticResource TextFillColorPrimary}" />
@@ -534,7 +534,7 @@
     <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  ProgressBar  -->
-    <SolidColorBrush x:Key="ProgressBarForeground" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="ProgressBarForeground" Color="{DynamicResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="ProgressBarBackground" Color="{StaticResource ControlStrongStrokeColorDefault}" />
     <SolidColorBrush x:Key="ProgressBarBorderBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="ProgressBarIndeterminateBackground" Color="{DynamicResource ControlFillColorTransparent}" />
@@ -548,7 +548,7 @@
     <SolidColorBrush x:Key="RadioButtonForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="RadioButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
     <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.9" />
     <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{StaticResource TextOnAccentFillColorPrimary}" />
     <SolidColorBrush x:Key="RadioButtonCheckOuterEllipseCheckedStrokePressed" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.8" />

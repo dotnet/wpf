@@ -100,7 +100,7 @@ jobs:
         - ${{ if eq(parameters.runAsPublic, 'false') }}:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _SignType
-            value: real
+            value: test
           - group: DotNet-HelixApi-Access
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 

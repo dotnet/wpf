@@ -9,7 +9,9 @@
 //  Description:
 //      CHybridSurfaceRenderTarget implementation
 //
-//      This object creates the hyper render target with sw and hw.
+//      This object creates the hybrid render target.
+//      Which means it automatically creates HW or SW based on MilRTInitialization::Flags
+//      and fallback to SW if HW is not available.
 //
 
 #include "precomp.hpp"
@@ -27,6 +29,7 @@ HRESULT
 CHybridSurfaceRenderTarget::Create(
     __in_ecount_opt(1) CDisplaySet const *pDisplaySet,
     MilRTInitialization::Flags dwFlags,
+    FLOAT dpiX, FLOAT dpiY,
     __deref_out_ecount(1) CHybridSurfaceRenderTarget **ppRenderTarget
     ) 
 {
@@ -74,7 +77,9 @@ CHybridSurfaceRenderTarget::Create(
         *ppRenderTarget = new CHybridSurfaceRenderTarget(
             pD3DDevice,
             D3DPresentParams,
-            associatedDisplay
+            associatedDisplay,
+            dpiX,
+            dpiY
             );
 
         IFCOOM(*ppRenderTarget);
@@ -119,7 +124,8 @@ CHybridSurfaceRenderTarget::HrFindInterface(
 CHybridSurfaceRenderTarget::CHybridSurfaceRenderTarget(
     __inout_ecount(1) CD3DDeviceLevel1 *pD3DDevice,
     __in_ecount(1) D3DPRESENT_PARAMETERS const &D3DPresentParams,
-    DisplayId associatedDisplay
+    DisplayId associatedDisplay,
+    FLOAT dpiX, FLOAT dpiY
     ) :
     CHwSurfaceRenderTarget(
         pD3DDevice,
@@ -127,7 +133,9 @@ CHybridSurfaceRenderTarget::CHybridSurfaceRenderTarget(
         D3DPresentParams.BackBufferFormat,
         associatedDisplay
     )
-{ }
+{
+    m_DeviceTransform.Scale(dpiX, dpiY);
+}
 
 //+----------------------------------------------------------------------------
 //

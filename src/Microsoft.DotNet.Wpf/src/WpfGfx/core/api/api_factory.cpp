@@ -285,17 +285,21 @@ CMILFactory::CreateBitmapRenderTarget(
         }
     }
 
+    CHybridSurfaceRenderTarget *pRenderTarget = NULL;
     if (SUCCEEDED(hr))
     {
         CDisplaySet const *pDisplaySet = NULL; 
-        GetCurrentDisplaySet(&pDisplaySet);  // pDisplaySet can be NULL
+        GetCurrentDisplaySet(&pDisplaySet);  // pDisplaySet can be NULL so we dont need to get hr
 
-        CHybridSurfaceRenderTarget *pRenderTarget = NULL;
         MIL_THR(CHybridSurfaceRenderTarget::Create(
             pDisplaySet,
             dwFlags,
+            dpiX,
+            dpiY,
             OUT &pRenderTarget));
-
+    }
+    if (SUCCEEDED(hr))
+    {
         IntermediateRTUsage rtUsage;
         rtUsage.flags = IntermediateRTUsage::ForBlending;
         rtUsage.wrapMode = MilBitmapWrapMode::Extend;
@@ -305,6 +309,8 @@ CMILFactory::CreateBitmapRenderTarget(
                 rtUsage,
                 dwFlags,
                 ppIRenderTargetBitmap));
+                
+        pRenderTarget->Release();
     }
 
     API_CHECK(hr);

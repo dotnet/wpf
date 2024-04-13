@@ -9,7 +9,9 @@ MtExtern(CHybridSurfaceRenderTarget);
 //  Class: CHybridSurfaceRenderTarget
 //
 //  Description:
-//      This object creates the hyper render target with sw and hw.
+//      This object creates the hybrid render target.
+//      Which means it automatically creates HW or SW based on MilRTInitialization::Flags
+//      and fallback to SW if HW is not available.
 //
 //------------------------------------------------------------------------------
 class CHybridSurfaceRenderTarget :
@@ -21,6 +23,7 @@ public:
     static HRESULT Create(
         __in_ecount(1) CDisplaySet const *pDisplaySet,
         MilRTInitialization::Flags dwFlags,
+        FLOAT dpiX, FLOAT dpiY,
         __deref_out_ecount(1) CHybridSurfaceRenderTarget **ppRenderTarget
         );
 
@@ -39,7 +42,8 @@ private:
     CHybridSurfaceRenderTarget(
         __inout_ecount(1) CD3DDeviceLevel1 *pD3DDevice,
         __in_ecount(1) D3DPRESENT_PARAMETERS const &D3DPresentParams,
-        DisplayId associatedDisplay
+        DisplayId associatedDisplay,
+        FLOAT dpiX, FLOAT dpiY
         );
 
 protected:

@@ -9,53 +9,74 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:FluentWindows.Controls">
-    <!--
-        SingleBorderWindow preserves the animations and scaling properly.
-        By default, the navigation buttons will be hidden by the background.
-        If we use Mica, we hide them manually.
-    -->
+
+    <ControlTemplate x:Key="WindowTemplateKey"
+                     TargetType="{x:Type Window}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <AdornerDecorator>
+                    <ContentPresenter/>
+                </AdornerDecorator>
+
+                <ResizeGrip x:Name="WindowResizeGrip"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Visibility="Collapsed"
+                            IsTabStop="false"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <!-- There may be perf implications b/c of the following conditions.  We may cause
+                     an extra layout to happen when WindowState changes to Minimized and ResizeMode
+                     is set to CanResizeWithGrip.
+                     NavigationWindow's style requires the ResizeMode condition tag even though
+                     Window's style already takes care of this condition.
+                     -->
+                <MultiTrigger.Conditions>
+                    <Condition Property="Window.ResizeMode"
+                               Value="CanResizeWithGrip"/>
+                    <Condition Property="Window.WindowState"
+                               Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="WindowResizeGrip"
+                        Property="Visibility"
+                        Value="Visible"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource WindowForeground}" />
-        <Setter Property="Height" Value="600" />
-        <Setter Property="MinHeight" Value="320" />
-        <Setter Property="Width" Value="1100" />
-        <Setter Property="MinWidth" Value="460" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
-        <Setter Property="AllowsTransparency" Value="False" />
-        <Setter Property="ResizeMode" Value="CanResize" />
-        <Setter Property="RenderOptions.BitmapScalingMode" Value="Linear" />
-        <!--  Aliased breaks rounded control elements such as buttons  -->
-        <Setter Property="RenderOptions.EdgeMode" Value="Unspecified" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <AdornerDecorator>
-                            <ContentPresenter x:Name="ContentPresenter" />
-                    </AdornerDecorator>
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <AdornerDecorator>
+                                <ContentPresenter x:Name="ContentPresenter" />
+                        </AdornerDecorator>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="WindowState" Value="Normal">
-                <Setter Property="ResizeMode" Value="CanResize" />
-            </Trigger>
-            <Trigger Property="WindowState" Value="Maximized">
-                <Setter Property="ResizeMode" Value="NoResize" />
-                <Setter Property="Topmost" Value="False" />
+            <Trigger Property="Window.ResizeMode"
+                     Value="CanResizeWithGrip">
+                <Setter Property="Template"
+                        Value="{StaticResource WindowTemplateKey}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BackdropDisabledWindowStyle" BasedOn="{StaticResource DefaultWindowStyle}" TargetType="{x:Type Window}" >
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+    </Style>
 
     <Style BasedOn="{StaticResource DefaultWindowStyle}" TargetType="{x:Type Window}" />
 

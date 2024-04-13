@@ -35,7 +35,7 @@ namespace System.Windows.Controls
                 if (_defaultElementStyle == null)
                 {
                     Style baseStyle = null;
-                    if (ThemeColorization.IsFluentWindowsThemeEnabled)
+                    if (ThemeManager.IsFluentWindowsThemeEnabled)
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }
@@ -67,7 +67,7 @@ namespace System.Windows.Controls
                 if (_defaultEditingElementStyle == null)
                 {
                     Style baseStyle = null;
-                    if (ThemeColorization.IsFluentWindowsThemeEnabled)
+                    if (ThemeManager.IsFluentWindowsThemeEnabled)
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }

@@ -129,6 +129,19 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(ItemAutomationPeerKeepsItsItemAliveSwitchName, ref _ItemAutomationPeerKeepsItsItemAlive);
             }
         }
+    
+    
+        // Switch to opt-out FluentWindows theme Window Backdrop feature
+        internal const string DisableFluentWindowsThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentWindowsThemeWindowBackdrop";
+        private static int _DisableFluentWindowsThemeWindowBackdrop;
+        public static bool DisableFluentWindowsThemeWindowBackdrop
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableFluentWindowsThemeWindowBackdropSwitchName, ref _DisableFluentWindowsThemeWindowBackdrop);
+            }
+        }
     }
 
 #pragma warning restore 436

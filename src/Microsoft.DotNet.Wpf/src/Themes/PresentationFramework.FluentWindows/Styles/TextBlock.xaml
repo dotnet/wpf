@@ -10,26 +10,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <Style TargetType="{x:Type TextBlock}">
-
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
-
-        <!--  The Display option causes a large aliasing effect  -->
-        <!--<Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />-->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
     </Style>
-
-    <DataTemplate DataType="{x:Type sys:String}">
-        <TextBlock Text="{Binding}">
-            <TextBlock.Resources>
-                <Style TargetType="{x:Type TextBlock}"/>
-            </TextBlock.Resources>
-        </TextBlock>
-    </DataTemplate>
-
 </ResourceDictionary>

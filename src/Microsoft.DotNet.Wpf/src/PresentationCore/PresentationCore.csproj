@@ -306,6 +306,8 @@
     <Compile Include="MS\Internal\TextFormatting\ThousandthOfEmRealPoints.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPane.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\InputPaneRcw.cs" />
+    <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\UISettings.cs" />
+    <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\UISettingsRcw.cs" />
     <Compile Include="MS\Internal\WindowsRuntime\Windows\UI\ViewManagement\NativeMethods.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPenimc.cs" />
     <Compile Include="MS\Win32\UnsafeNativeMethodsPointer.cs" />

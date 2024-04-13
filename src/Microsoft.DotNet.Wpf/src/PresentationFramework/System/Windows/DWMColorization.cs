@@ -5,48 +5,34 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using MS.Internal;
 using System.Runtime.InteropServices;
+using MS.Internal.WindowsRuntime.Windows.UI.ViewManagement;
 
 namespace System.Windows;
 internal static class DwmColorization
 {
-    /// <summary>
-    /// The Accent Color that is currently applied to the application.
-    /// </summary>
-    private static Color _currentApplicationAccentColor = Color.FromArgb(255, 0, 120, 212);
+    private static Color _currentApplicationAccentColor = Color.FromArgb(0xff, 0x00, 0x78, 0xd4);
 
+    private static UISettings _uiSettings = null;
+
+    /// <summary>
+    ///     Gets the current application accent color.
+    /// </summary>
     internal static Color CurrentApplicationAccentColor
     {
         get { return _currentApplicationAccentColor; }
     }
 
-    [DllImport("UXTheme.dll")]
-    private static extern int GetUserColorPreference(in IMMERSIVE_COLOR_PREFERENCE colorPreference, bool alwaysFalse);
-
-    [DllImport("UXTheme.dll")]
-    private static extern uint GetColorFromPreference(in IMMERSIVE_COLOR_PREFERENCE colorPreference, IMMERSIVE_COLOR_TYPE colorType, bool isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE cacheMode);
-
-    [StructLayout(LayoutKind.Sequential)]
-    private struct IMMERSIVE_COLOR_PREFERENCE
+    internal static UISettings _UISettings
     {
-        public uint crStartColor;
-        public uint crAccentColor;
-    }
+        get
+        {
+            if (_uiSettings == null)
+            {
+                _uiSettings = new UISettings();
+            }
 
-    private enum IMMERSIVE_COLOR_TYPE
-    {
-        IMCLR_SystemAccentLight1 = 5,
-        IMCLR_SystemAccentLight2 = 6,
-        IMCLR_SystemAccentLight3 = 7,
-        IMCLR_SystemAccentDark1 = 3,
-        IMCLR_SystemAccentDark2 = 2,
-        IMCLR_SystemAccentDark3 = 1,
-        IMCLR_SystemAccent = 4
-    }
-
-    private enum IMMERSIVE_HC_CACHE_MODE
-    {
-        IHCM_USE_CACHED_VALUE = 0,
-        IHCM_REFRESH = 1
+            return _uiSettings;
+        }
     }
 
     /// <summary>
@@ -55,22 +41,8 @@ internal static class DwmColorization
     /// <returns>Updated <see cref="System.Windows.Media.Color"/> Accent Color.</returns>
     internal static Color GetSystemAccentColor()
     {
-        bool isHighContrastEnabled = SystemParameters.HighContrast;
-      
-        IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
-
-        int err = GetUserColorPreference(in colorPreference, false);
-
-        if (err != 0)
-        {
-            return Color.FromArgb(0xff, 0x00, 0x78, 0xd4);
-        }
-        else
-        {
-            uint AccentColor = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccent, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-
-            return Color.FromArgb(0xff, (byte)AccentColor, (byte)(AccentColor >> 8), (byte)(AccentColor >> 16));
-        }
+        _UISettings.TryGetColorValue(UISettingsRCW.UIColorType.Accent, out Color systemAccent);
+        return systemAccent;
     }
 
     /// <summary>
@@ -79,46 +51,29 @@ internal static class DwmColorization
     internal static void UpdateAccentColors()
     {
         Color systemAccent = GetSystemAccentColor();
+        Color primaryAccent, secondaryAccent, tertiaryAccent;
 
-        Color primaryAccent;
-        Color secondaryAccent;
-        Color tertiaryAccent;
-
-        bool isDarkTheme = ThemeColorization.IsThemeDark();
-        bool isHighContrastEnabled = SystemParameters.HighContrast;
-
-        IMMERSIVE_COLOR_PREFERENCE colorPreference = new IMMERSIVE_COLOR_PREFERENCE();
-
-        int err = GetUserColorPreference(in colorPreference, false);
-
-        if(err != 0) 
+        if (systemAccent != _currentApplicationAccentColor)
         {
-            primaryAccent = secondaryAccent = tertiaryAccent = systemAccent;
+            _UISettings.TryUpdateAccentColors();
+        }
+
+        if (ThemeManager.IsSystemThemeLight())
+        {
+            // In light mode, we use darker shades of the accent color
+            primaryAccent = _UISettings.AccentDark1;
+            secondaryAccent = _UISettings.AccentDark2;
+            tertiaryAccent = _UISettings.AccentDark3;
         }
         else
         {
-            uint Accent1, Accent2, Accent3;
-
-            if (isDarkTheme)
-            {
-                Accent1 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark1, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent2 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark2, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent3 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentDark3, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-            }
-            else
-            {
-                Accent1 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight1, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent2 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight2, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-                Accent3 = GetColorFromPreference(in colorPreference, IMMERSIVE_COLOR_TYPE.IMCLR_SystemAccentLight3, isHighContrastEnabled, IMMERSIVE_HC_CACHE_MODE.IHCM_REFRESH);
-            }
-
-            primaryAccent = Color.FromArgb(0xff, (byte)Accent1, (byte)(Accent1 >> 8), (byte)(Accent1 >> 16));
-            secondaryAccent = Color.FromArgb(0xff, (byte)Accent2, (byte)(Accent2 >> 8), (byte)(Accent2 >> 16));
-            tertiaryAccent = Color.FromArgb(0xff, (byte)Accent3, (byte)(Accent3 >> 8), (byte)(Accent3 >> 16));
+            // In dark mode, we use lighter shades of the accent color
+            primaryAccent = _UISettings.AccentLight1;
+            secondaryAccent = _UISettings.AccentLight2;
+            tertiaryAccent = _UISettings.AccentLight3;
         }
 
         UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
-
         _currentApplicationAccentColor = systemAccent;
     }
 
@@ -147,77 +102,45 @@ internal static class DwmColorization
             .WriteLine("INFO | SystemAccentColorTertiary: " + tertiaryAccent, "System.Windows.Accent");
 #endif
 
-        if (ThemeColorization.IsThemeDark())
+        if (!ThemeManager.IsSystemThemeLight())
         {
 #if DEBUG
             System.Diagnostics.Debug.WriteLine("INFO | Text on accent is DARK", "System.Windows.Accent");
 #endif
-            Application.Current.Resources["TextOnAccentFillColorPrimary"] = Color.FromArgb(
-                0xFF,
-                0x00,
-                0x00,
-                0x00
-            );
-            Application.Current.Resources["TextOnAccentFillColorSecondary"] = Color.FromArgb(
-                0x80,
-                0x00,
-                0x00,
-                0x00
-            );
-            Application.Current.Resources["TextOnAccentFillColorDisabled"] = Color.FromArgb(
-                0x77,
-                0x00,
-                0x00,
-                0x00
-            );
-            Application.Current.Resources["TextOnAccentFillColorSelectedText"] = Color.FromArgb(
-                0x00,
-                0x00,
-                0x00,
-                0x00
-            );
-            Application.Current.Resources["AccentTextFillColorDisabled"] = Color.FromArgb(
-                0x5D,
-                0x00,
-                0x00,
-                0x00
-            );
+            Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
+                    Color.FromArgb( 0xFF, 0x00, 0x00, 0x00);
+            
+            Application.Current.Resources["TextOnAccentFillColorSecondary"] = 
+                    Color.FromArgb( 0x80, 0x00, 0x00, 0x00);
+            
+            Application.Current.Resources["TextOnAccentFillColorDisabled"] = 
+                    Color.FromArgb( 0x77, 0x00, 0x00, 0x00);
+            
+            Application.Current.Resources["TextOnAccentFillColorSelectedText"] = 
+                    Color.FromArgb( 0x00, 0x00, 0x00, 0x00);
+            
+            Application.Current.Resources["AccentTextFillColorDisabled"] = 
+                    Color.FromArgb( 0x5D, 0x00, 0x00, 0x00);
         }
         else
         {
 #if DEBUG
             System.Diagnostics.Debug.WriteLine("INFO | Text on accent is LIGHT", "System.Windows.Accent");
 #endif
-            Application.Current.Resources["TextOnAccentFillColorPrimary"] = Color.FromArgb(
-                0xFF,
-                0xFF,
-                0xFF,
-                0xFF
-            );
-            Application.Current.Resources["TextOnAccentFillColorSecondary"] = Color.FromArgb(
-                0x80,
-                0xFF,
-                0xFF,
-                0xFF
-            );
-            Application.Current.Resources["TextOnAccentFillColorDisabled"] = Color.FromArgb(
-                0x87,
-                0xFF,
-                0xFF,
-                0xFF
-            );
-            Application.Current.Resources["TextOnAccentFillColorSelectedText"] = Color.FromArgb(
-                0xFF,
-                0xFF,
-                0xFF,
-                0xFF
-            );
-            Application.Current.Resources["AccentTextFillColorDisabled"] = Color.FromArgb(
-                0x5D,
-                0xFF,
-                0xFF,
-                0xFF
-            );
+            Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
+                    Color.FromArgb( 0xFF, 0xFF, 0xFF, 0xFF);
+            
+            Application.Current.Resources["TextOnAccentFillColorSecondary"] = 
+                    Color.FromArgb( 0x80, 0xFF, 0xFF, 0xFF);
+            
+            Application.Current.Resources["TextOnAccentFillColorDisabled"] = 
+                    Color.FromArgb( 0x87, 0xFF, 0xFF, 0xFF);
+            
+            Application.Current.Resources["TextOnAccentFillColorSelectedText"] = 
+                    Color.FromArgb( 0xFF, 0xFF, 0xFF, 0xFF);
+            
+            Application.Current.Resources["AccentTextFillColorDisabled"] = 
+                    Color.FromArgb( 0x5D, 0xFF, 0xFF, 0xFF);
         }
 
         Application.Current.Resources["SystemAccentColor"] = systemAccent;
@@ -238,38 +161,12 @@ internal static class DwmColorization
     }
 
     /// <summary>
-    /// Converts the color of type Int32 to type Color
-    /// </summary>
-    /// <param name="color">The Int32 color to be converted to corresponding Color</param>
-    /// <returns>Corresponding <see cref="Color"/></returns>
-    private static Color ParseDWordColor(Int32 color)
-    {
-        Byte
-            a = (byte)((color >> 24) & 0xFF),
-            b = (byte)((color >> 16) & 0xFF),
-            g = (byte)((color >> 8) & 0xFF),
-            r = (byte)((color >> 0) & 0xFF);
-
-        return Color.FromArgb(a, r, g, b);
-    }
-
-    /// <summary>
-    /// Creates a <see cref="SolidColorBrush"/> from a <see cref="System.Windows.Media.Color"/>.
-    /// </summary>
-    /// <param name="color">Input color.</param>
-    /// <returns>Brush converted to color.</returns>
-    private static SolidColorBrush ToBrush(Color color)
-    {
-        return new SolidColorBrush(color);
-    }
-
-    /// <summary>
     /// Creates a <see cref="SolidColorBrush"/> from a <see cref="System.Windows.Media.Color"/> with defined brush opacity.
     /// </summary>
     /// <param name="color">Input color.</param>
     /// <param name="opacity">Degree of opacity.</param>
     /// <returns>Brush converted to color with modified opacity.</returns>
-    private static SolidColorBrush ToBrush(Color color, double opacity)
+    private static SolidColorBrush ToBrush(Color color, double opacity = 1.0)
     {
         return new SolidColorBrush { Color = color, Opacity = opacity };
     }

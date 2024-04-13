@@ -419,9 +419,7 @@
     <Compile Include="System\Windows\Annotations\Storage\AnnotationStore.cs" />
     <Compile Include="System\Windows\Annotations\Storage\StoreContentChangedEventArgs.cs" />
     <Compile Include="System\Windows\Annotations\Storage\XmlStreamStore.cs" />
-    <Compile Include="System\Windows\Appearance\ApplicationTheme.cs" />
-    <Compile Include="System\Windows\Appearance\WindowBackdrop.cs" />
-    <Compile Include="System\Windows\Appearance\WindowBackgroundManager.cs" />
+    <Compile Include="System\Windows\Appearance\WindowBackdropManager.cs" />
     <Compile Include="System\Windows\Application.cs" />
     <Compile Include="System\Windows\AttachedPropertyBrowsableForChildrenAttribute.cs" />
     <Compile Include="System\Windows\Automation\Peers\ButtonAutomationPeer.cs" />
@@ -1126,7 +1124,6 @@
     <Compile Include="System\Windows\Interop\HwndHost.cs" />
     <Compile Include="System\Windows\Interop\IErrorPage.cs" />
     <Compile Include="System\Windows\Interop\IProgressPage.cs" />
-    <Compile Include="System\Windows\Interop\UnsafeNativeMethodsWindow.cs" />
     <Compile Include="System\Windows\Interop\WindowInteropHelper.cs" />
     <Compile Include="System\Windows\IWindowService.cs" />
     <Compile Include="System\Windows\LengthConverter.cs" />
@@ -1344,7 +1341,7 @@
     <Compile Include="System\Windows\TemplatePartAttribute.cs" />
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
-    <Compile Include="System\Windows\ThemeColorization.cs" />
+    <Compile Include="System\Windows\ThemeManager.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />
     <Compile Include="System\Windows\Thickness.cs" />

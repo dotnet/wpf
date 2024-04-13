@@ -1907,6 +1907,10 @@ namespace System.Windows
         protected virtual void OnSourceInitialized(EventArgs e)
         {
             VerifyContextAndObjectState();
+
+            // Setting WindowBackdrop 
+            WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
+
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
@@ -2511,26 +2515,10 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows11OrNewer && ThemeColorization.IsFluentWindowsThemeEnabled)
+            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentWindowsThemeEnabled)
             {
-                ResourceDictionary themeDictionary = new ResourceDictionary();
-
-                if(ThemeColorization.IsThemeDark())
-                {
-                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/resources/theme/dark.xaml", UriKind.Absolute);
-                }
-                else 
-                {
-                    themeDictionary.Source = new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/resources/theme/light.xaml", UriKind.Absolute);
-                }
-
-                ThemeColorization.AddThemeDictionary(themeDictionary);
-
-                // Initializing the application window with current system theme
-                // This is one time initialization that updates the resourcedictionary and 
-                // calls WindowBackgroundManager to update its Background based on current SystemTheme
-                DwmColorization.UpdateAccentColors();
-                ThemeColorization.ApplyTheme(this);
+                ThemeManager.InitializeFluentWindowsTheme();
+                ThemeManager.ApplySystemTheme(this, true);
             }
 
             // Sub classes can have different intialization. RBW does very minimalistic
@@ -3035,6 +3023,41 @@ namespace System.Windows
         //
         //----------------------------------------------
         #region Internal Properties
+
+        /// <summary>
+        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
+        /// </summary>
+        internal WindowBackdropType WindowBackdropType
+        {
+            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
+            set => SetValue(WindowBackdropTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="WindowBackdropType"/>.
+        /// </summary>
+        internal static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
+            nameof(WindowBackdropType),
+            typeof(WindowBackdropType),
+            typeof(Window),
+            new PropertyMetadata(
+                WindowBackdropType.MainWindow, 
+                new PropertyChangedCallback(OnBackdropTypeChanged)));
+
+        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not Window window)
+            {
+                return;
+            }
+
+            if (e.OldValue == e.NewValue)
+            {
+                return;
+            }
+
+            WindowBackdropManager.SetBackdrop(window, (WindowBackdropType)e.NewValue);
+        }
 
 
         internal bool HwndCreatedButNotShown
@@ -3554,6 +3577,19 @@ namespace System.Windows
                 else
                 {
                     App.NonAppWindowsInternal.Add(this);
+                }
+            }
+
+            // TODO : Remove when FluentWindows theme is enabled by default
+            if (ThemeManager.IsFluentWindowsThemeEnabled)
+            {
+                if(WindowBackdropManager.IsBackdropEnabled)
+                {
+                    SetResourceReference(StyleProperty, typeof(Window));
+                }
+                else
+                {
+                    SetResourceReference(StyleProperty, "BackdropDisabledWindowStyle");
                 }
             }
         }

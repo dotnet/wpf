@@ -14,7 +14,7 @@
     <system:String x:Key="MenuItemCheckedGlyph">&#xE73E;</system:String>
 
     <Style
-        x:Key="UiMenuItemScrollViewer"
+        x:Key="MenuItemScrollViewerStyle"
         BasedOn="{StaticResource {x:Type ScrollViewer}}"
         TargetType="{x:Type ScrollViewer}">
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
@@ -104,7 +104,7 @@
                             <Border.RenderTransform>
                                 <TranslateTransform />
                             </Border.RenderTransform>
-                            <ScrollViewer CanContentScroll="True" Style="{StaticResource UiMenuItemScrollViewer}">
+                            <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </ScrollViewer>
                             <Border.Effect>
@@ -361,7 +361,7 @@
                         <Border.RenderTransform>
                             <TranslateTransform />
                         </Border.RenderTransform>
-                        <ScrollViewer CanContentScroll="True" Style="{StaticResource UiMenuItemScrollViewer}">
+                        <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>
                         <Border.Effect>
@@ -420,7 +420,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="UiMenuItem" TargetType="{x:Type MenuItem}">
+    <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="True" />
@@ -447,7 +447,7 @@
     -->
 
     <!--  TopLevelHeader  -->
-    <ControlTemplate x:Key="WpfUiMenuItemTopLevelHeaderTemplateKey" TargetType="{x:Type MenuItem}">
+    <ControlTemplate x:Key="WpfDefaultMenuItemStyleTopLevelHeaderTemplateKey" TargetType="{x:Type MenuItem}">
         <Border
             x:Name="Border"
             Margin="4"
@@ -508,7 +508,7 @@
                             <Border.RenderTransform>
                                 <TranslateTransform />
                             </Border.RenderTransform>
-                            <ScrollViewer CanContentScroll="True" Style="{StaticResource UiMenuItemScrollViewer}">
+                            <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </ScrollViewer>
                             <Border.Effect>
@@ -567,7 +567,7 @@
     </ControlTemplate>
 
     <!--  TopLevelItem  -->
-    <ControlTemplate x:Key="WpfUiMenuItemTopLevelItemTemplateKey" TargetType="{x:Type MenuItem}">
+    <ControlTemplate x:Key="WpfDefaultMenuItemStyleTopLevelItemTemplateKey" TargetType="{x:Type MenuItem}">
         <Border
             x:Name="Border"
             Margin="4"
@@ -623,7 +623,7 @@
     </ControlTemplate>
 
     <!--  SubmenuItem  -->
-    <ControlTemplate x:Key="WpfUiMenuItemSubmenuItemTemplateKey" TargetType="{x:Type MenuItem}">
+    <ControlTemplate x:Key="WpfDefaultMenuItemStyleSubmenuItemTemplateKey" TargetType="{x:Type MenuItem}">
         <Border
             x:Name="Border"
             Margin="4,1,4,1"
@@ -718,7 +718,7 @@
     </ControlTemplate>
 
     <!--  SubItem with Subitems  -->
-    <ControlTemplate x:Key="WpfUiMenuItemSubmenuHeaderTemplateKey" TargetType="{x:Type MenuItem}">
+    <ControlTemplate x:Key="WpfDefaultMenuItemStyleSubmenuHeaderTemplateKey" TargetType="{x:Type MenuItem}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -788,7 +788,7 @@
                         <Border.RenderTransform>
                             <TranslateTransform />
                         </Border.RenderTransform>
-                        <ScrollViewer CanContentScroll="True" Style="{StaticResource UiMenuItemScrollViewer}">
+                        <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>
                         <Border.Effect>
@@ -851,30 +851,30 @@
     </ControlTemplate>
 
     <!--  MenuItem Style  -->
-    <Style x:Key="WpfUiMenuItem" TargetType="{x:Type MenuItem}">
+    <Style x:Key="WpfDefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="True" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
-                <Setter Property="Template" Value="{StaticResource WpfUiMenuItemTopLevelHeaderTemplateKey}" />
+                <Setter Property="Template" Value="{StaticResource WpfDefaultMenuItemStyleTopLevelHeaderTemplateKey}" />
                 <Setter Property="Grid.IsSharedSizeScope" Value="True" />
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Template" Value="{StaticResource WpfUiMenuItemTopLevelItemTemplateKey}" />
+                <Setter Property="Template" Value="{StaticResource WpfDefaultMenuItemStyleTopLevelItemTemplateKey}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuHeader">
-                <Setter Property="Template" Value="{StaticResource WpfUiMenuItemSubmenuHeaderTemplateKey}" />
+                <Setter Property="Template" Value="{StaticResource WpfDefaultMenuItemStyleSubmenuHeaderTemplateKey}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
-                <Setter Property="Template" Value="{StaticResource WpfUiMenuItemSubmenuItemTemplateKey}" />
+                <Setter Property="Template" Value="{StaticResource WpfDefaultMenuItemStyleSubmenuItemTemplateKey}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style BasedOn="{StaticResource WpfUiMenuItem}" TargetType="{x:Type MenuItem}" />
+    <Style BasedOn="{StaticResource WpfDefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
 
-    <!--<Style x:Key="{x:Type MenuItem}" BasedOn="{StaticResource UiMenuItem}" TargetType="{x:Type MenuItem}" />-->
+    <!--<Style x:Key="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />-->
 
 </ResourceDictionary>

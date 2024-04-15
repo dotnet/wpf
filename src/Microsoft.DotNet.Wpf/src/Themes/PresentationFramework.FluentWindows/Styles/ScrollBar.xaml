@@ -22,7 +22,7 @@
     <system:String x:Key="CaretLeftGlyph">&#xEDD9;</system:String>
     <system:String x:Key="CaretRightGlyph">&#xEDDA;</system:String>
 
-    <Style x:Key="UiScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="ScrollBarLineButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="Foreground" Value="{DynamicResource ScrollBarButtonArrowForeground}" />
         <Setter Property="Width" Value="{StaticResource LineButtonWidth}" />
         <Setter Property="Height" Value="{StaticResource LineButtonHeight}" />
@@ -83,7 +83,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="UiScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="False" />
@@ -97,7 +97,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="UiScrollBarThumb" TargetType="{x:Type Thumb}">
+    <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFill}" />
         <Setter Property="Border.CornerRadius" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -117,7 +117,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="UiVerticalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="VerticalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition MaxHeight="14" />
@@ -139,14 +139,14 @@
                 Command="ScrollBar.LineUpCommand"
                 Content="{StaticResource CaretUpGlyph}"
                 Opacity="0"
-                Style="{StaticResource UiScrollBarLineButton}" />
+                Style="{StaticResource ScrollBarLineButtonStyle}" />
             <Track
                 x:Name="PART_Track"
                 Grid.Row="1"
                 Width="6"
                 IsDirectionReversed="True">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource UiScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <!--
@@ -155,10 +155,10 @@
                     <Thumb
                         Margin="0"
                         Padding="0"
-                        Style="{StaticResource UiScrollBarThumb}" />
+                        Style="{StaticResource ScrollBarThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource UiScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton
@@ -168,7 +168,7 @@
                 Command="ScrollBar.LineDownCommand"
                 Content="{StaticResource CaretDownGlyph}"
                 Opacity="0"
-                Style="{StaticResource UiScrollBarLineButton}" />
+                Style="{StaticResource ScrollBarLineButtonStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -236,7 +236,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="UiHorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="18" />
@@ -259,7 +259,7 @@
                 Command="ScrollBar.LineLeftCommand"
                 Content="{StaticResource CaretLeftGlyph}"
                 Opacity="0"
-                Style="{StaticResource UiScrollBarLineButton}" />
+                Style="{StaticResource ScrollBarLineButtonStyle}" />
             <Track
                 x:Name="PART_Track"
                 Grid.Column="1"
@@ -267,16 +267,16 @@
                 VerticalAlignment="Center"
                 IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource UiScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb
                         Margin="0"
                         Padding="0"
-                        Style="{StaticResource UiScrollBarThumb}" />
+                        Style="{StaticResource ScrollBarThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource UiScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton
@@ -286,7 +286,7 @@
                 Command="ScrollBar.LineRightCommand"
                 Content="{StaticResource CaretRightGlyph}"
                 Opacity="0"
-                Style="{StaticResource UiScrollBarLineButton}" />
+                Style="{StaticResource ScrollBarLineButtonStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -354,7 +354,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="UiScrollBar" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="DefaultScrollBarStyle" TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -364,16 +364,16 @@
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto" />
                 <Setter Property="Height" Value="14" />
-                <Setter Property="Template" Value="{StaticResource UiHorizontalScrollBar}" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBarTemplate}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Width" Value="14" />
                 <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{StaticResource UiVerticalScrollBar}" />
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBarTemplate}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style BasedOn="{StaticResource UiScrollBar}" TargetType="{x:Type ScrollBar}" />
+    <Style BasedOn="{StaticResource DefaultScrollBarStyle}" TargetType="{x:Type ScrollBar}" />
 
 </ResourceDictionary>

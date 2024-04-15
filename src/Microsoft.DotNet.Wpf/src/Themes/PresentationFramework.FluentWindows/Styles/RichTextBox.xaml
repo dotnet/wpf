@@ -62,14 +62,6 @@
         </Setter>
     </Style>
 
-    <Style
-        x:Key="DefaultUiRichTextBoxStyle"
-        BasedOn="{StaticResource DefaultRichTextBoxStyle}"
-        TargetType="{x:Type RichTextBox}">
-
-    </Style>
-
-    <!-- <Style BasedOn="{StaticResource DefaultRichTextBoxStyle}" TargetType="{x:Type RichTextBox}" /> -->
-    <Style BasedOn="{StaticResource DefaultUiRichTextBoxStyle}" TargetType="{x:Type RichTextBox}" />
+    <Style BasedOn="{StaticResource DefaultRichTextBoxStyle}" TargetType="{x:Type RichTextBox}" />
 
 </ResourceDictionary>

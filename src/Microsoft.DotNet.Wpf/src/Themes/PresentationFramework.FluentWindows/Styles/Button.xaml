@@ -17,7 +17,7 @@
     <Thickness x:Key="ButtonBorderThemeThickness">0,0,0,1</Thickness>
     <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
 
-    <Style x:Key="DefaultUiButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="DefaultButtonStyle" TargetType="{x:Type ButtonBase}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
@@ -124,7 +124,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultAccentUiButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="DefaultAccentButtonStyle" TargetType="{x:Type Button}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
@@ -200,7 +200,7 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type ButtonBase}" />
-    <Style BasedOn="{StaticResource DefaultUiButtonStyle}" TargetType="{x:Type Button}" />
+    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type ButtonBase}" />
+    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}" />
 
 </ResourceDictionary>

@@ -133,7 +133,7 @@
     </Style>
 
 
-    <ControlTemplate x:Key="DefaultUiTextBoxControlTemplate" TargetType="{x:Type TextBox}">
+    <ControlTemplate x:Key="DefaultTextBoxControlTemplate" TargetType="{x:Type TextBox}">
         <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
             <Border
                 x:Name="ContentBorder"
@@ -252,7 +252,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="DefaultUiTextBoxStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI ContextMenu  -->
@@ -277,10 +277,10 @@
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Template" Value="{StaticResource DefaultUiTextBoxControlTemplate}" />
+        <Setter Property="Template" Value="{StaticResource DefaultTextBoxControlTemplate}" />
     </Style>
 
     <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />
-    <Style BasedOn="{StaticResource DefaultUiTextBoxStyle}" TargetType="{x:Type TextBox}" />
+    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="{x:Type TextBox}" />
 
 </ResourceDictionary>

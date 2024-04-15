@@ -8,7 +8,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <Style x:Key="UiSliderButtonStyle" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -22,7 +22,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="UiSliderThumbStyle" TargetType="{x:Type Thumb}">
+    <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Height" Value="20" />
         <Setter Property="Width" Value="20" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -101,7 +101,7 @@
     </Style>
 
     <!--  Template when the orientation of the Slider is Horizontal.  -->
-    <ControlTemplate x:Key="UiHorizontalSlider" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="HorizontalSliderTemplate" TargetType="{x:Type Slider}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="14" />
@@ -134,13 +134,13 @@
                 Visibility="Collapsed" />
             <Track x:Name="PART_Track" Grid.Row="0" Grid.RowSpan="3">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
+                    <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb x:Name="Thumb" Style="{StaticResource UiSliderThumbStyle}" />
+                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
+                    <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>    
         </Grid>
@@ -163,7 +163,7 @@
     </ControlTemplate>
 
     <!--  Template when the orientation of the Slider is Vertical.  -->
-    <ControlTemplate x:Key="UiVerticalSlider" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="VerticalSliderTemplate" TargetType="{x:Type Slider}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="14" />
@@ -196,13 +196,13 @@
 
             <Track x:Name="PART_Track" Grid.Column="0" Grid.ColumnSpan="3">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
+                    <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb x:Name="Thumb" Style="{StaticResource UiSliderThumbStyle}" />
+                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource UiSliderButtonStyle}" />
+                    <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
@@ -231,11 +231,11 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinWidth" Value="104" />
-                <Setter Property="Template" Value="{StaticResource UiHorizontalSlider}" />
+                <Setter Property="Template" Value="{StaticResource HorizontalSliderTemplate}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="MinHeight" Value="104" />
-                <Setter Property="Template" Value="{StaticResource UiVerticalSlider}" />
+                <Setter Property="Template" Value="{StaticResource VerticalSliderTemplate}" />
             </Trigger>
         </Style.Triggers>
     </Style>

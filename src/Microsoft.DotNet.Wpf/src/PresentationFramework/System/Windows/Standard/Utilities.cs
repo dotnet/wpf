@@ -118,19 +118,15 @@ namespace Standard
         public static bool IsOSWindows10OrNewer => _osVersion.Build >= 10240;
 
         /// <summary>
-        /// Whether the operating system version is greater than or equal to 10.0* (build 22000).
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22000).
         /// </summary>
         public static bool IsOSWindows11OrNewer => _osVersion.Build >= 22000;
 
         /// <summary>
-        /// Whether the operating system version is greater than or equal to 10.0* (build 22523).
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22621).
         /// </summary>
-        public static bool IsOSWindows11Insider1OrNewer => _osVersion.Build >= 22523;
+        public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
 
-        /// <summary>
-        /// Whether the operating system version is greater than or equal to 10.0* (build 22557).
-        /// </summary>
-        public static bool IsOSWindows11Insider2OrNewer => _osVersion.Build >= 22557;
 
         /// <summary>
         /// Is this using WPF4?

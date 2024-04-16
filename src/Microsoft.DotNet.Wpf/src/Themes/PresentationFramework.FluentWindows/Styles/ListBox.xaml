@@ -11,6 +11,7 @@
     xmlns:controls="clr-namespace:System.Windows;assembly=PresentationFramework">
 
     <Style x:Key="DefaultListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource ListBoxBackground}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderThickness" Value="0" />
@@ -33,7 +34,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <Grid>
+                    <Grid Background="{TemplateBinding Background }">
                         <ScrollViewer
                             x:Name="PART_ContentHost"
                             CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"

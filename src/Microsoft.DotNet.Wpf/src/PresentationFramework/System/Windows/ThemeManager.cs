@@ -212,6 +212,9 @@ internal static class ThemeManager
 
     #region Internal Properties
 
+    // TODO : Find a better way to deal with different default font sizes for different themes.
+    internal static double DefaultFluentWindowsThemeFontSize => 14;
+
     internal static bool IsFluentWindowsThemeEnabled => _isFluentWindowsThemeEnabled;
 
     #endregion

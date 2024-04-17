@@ -40,7 +40,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/Slider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/StatusBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/TabControl.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/TextBlock.xaml" />
+        <!-- <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/TextBlock.xaml" /> -->
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.FluentWindows;component/Styles/ToolBar.xaml" />

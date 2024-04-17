@@ -140,7 +140,7 @@
                                             Margin="{StaticResource DatePickerCalendarButtonPadding}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="{DynamicResource SegoeFluentIcons}"
                                             FontSize="{StaticResource DatePickerCalendarButtonIconSize}"
                                             Foreground="{TemplateBinding Foreground}"
                                             Text="{StaticResource CalendarGlyph}" />

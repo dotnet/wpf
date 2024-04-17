@@ -78,7 +78,7 @@
                                             FontSize="{StaticResource CheckBoxIconSize}"
                                             FontWeight="Bold"
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="{DynamicResource SegoeFluentIcons}"
                                             Visibility="Collapsed"
                                             Text="{StaticResource CheckBoxCheckedGlyph}" />
                                     </Grid>

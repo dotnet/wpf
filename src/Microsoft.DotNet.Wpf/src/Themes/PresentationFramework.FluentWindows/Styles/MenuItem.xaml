@@ -232,7 +232,7 @@
                         x:Name="CheckBoxIcon"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{DynamicResource SegoeFluentIcons}"
                         FontSize="16"
                         Text=""
                         TextAlignment="Center" />
@@ -326,7 +326,7 @@
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{DynamicResource SegoeFluentIcons}"
                             FontSize="{TemplateBinding FontSize}"
                             Text="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>

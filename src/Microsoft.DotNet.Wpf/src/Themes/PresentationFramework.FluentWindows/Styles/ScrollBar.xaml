@@ -47,7 +47,7 @@
                             VerticalAlignment="Center"
                             FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{DynamicResource SegoeFluentIcons}"
                             Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     </Border>
                     <ControlTemplate.Triggers>

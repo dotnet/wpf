@@ -188,7 +188,7 @@
                         <Button.Content>
                             <TextBlock
                                 FontSize="{TemplateBinding FontSize}"
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="{DynamicResource SegoeFluentIcons}"
                                 >&#xE894;</TextBlock>
                         </Button.Content>
                     </Button>

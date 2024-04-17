@@ -353,7 +353,7 @@
                                     <Button.Content>
                                         <TextBlock
                                             FontSize="8"
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="{DynamicResource SegoeFluentIcons}"
                                             >&#xEDDB;</TextBlock>
                                     </Button.Content>
                                 </Button>
@@ -373,7 +373,7 @@
                                     <Button.Content>
                                         <TextBlock
                                             FontSize="8"
-                                            FontFamily="Segoe Fluent Icons"
+                                            FontFamily="{DynamicResource SegoeFluentIcons}"
                                             >&#xEDDC;</TextBlock>
                                     </Button.Content>
                                 </Button>

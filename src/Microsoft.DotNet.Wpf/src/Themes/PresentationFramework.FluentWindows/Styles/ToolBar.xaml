@@ -165,7 +165,7 @@
                                 Margin="0"
                                 VerticalAlignment="Bottom"
                                 Foreground="{TemplateBinding Foreground}"
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="{DynamicResource SegoeFluentIcons}"
                                 Text="{StaticResource ToolBarChevronDownGlyph}" />
                             <ContentPresenter />
                         </Grid>

@@ -1066,7 +1066,6 @@ namespace System.Windows.Markup
         ScrollViewer_Content,
         Section_Blocks,
         Selector_Items,
-        Setter_Value,
         SingleAnimationUsingKeyFrames_KeyFrames,
         SizeAnimationUsingKeyFrames_KeyFrames,
         Span_Inlines,
@@ -1108,7 +1107,8 @@ namespace System.Windows.Markup
         XmlDataProvider_XmlSerializer,
         MaxProperty,
         TextBox_IsReadOnly,
-        RichTextBox_IsReadOnly
+        RichTextBox_IsReadOnly,
+        Setter_Value
     }
 
 #if !BAMLDASM

@@ -36,7 +36,7 @@ namespace System.Windows.Input
             }
             else
             {
-                string localName = command.Name + "Command";
+                string localName = $"{command.Name}Command";
                 Type ownerType = command.OwnerType;
                 string typeName = ownerType.Name;
 
@@ -87,7 +87,7 @@ namespace System.Windows.Input
                             throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
                         }
 
-                        return typeSerializer.ConvertToString(command.OwnerType, context) + "." + command.Name + "Command";
+                        return $"{typeSerializer.ConvertToString(command.OwnerType, context)}.{command.Name}Command";
                     }
                 }
             }

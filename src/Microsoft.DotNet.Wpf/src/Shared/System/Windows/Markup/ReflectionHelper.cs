@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 //
 //
 //
@@ -50,16 +52,16 @@ namespace System.Xaml
         // System.Reflection.MetadataLoadContext instance
         private static MetadataLoadContext _metadataLoadContext = null;
 
-        // MetadataLoadContext Assembly cache 
-        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null; 
-        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null; 
+        // MetadataLoadContext Assembly cache
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null;
+        private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null;
 
         // The local assembly that contains the baml.
         private static string _localAssemblyName = string.Empty;
 
         internal static void Initialize(IEnumerable<string> assemblyPaths)
-        { 
-            // System.Reflection.MetadataLoadContext Assembly cache 
+        {
+            // System.Reflection.MetadataLoadContext Assembly cache
             _cachedMetadataLoadContextAssemblies = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             _cachedMetadataLoadContextAssembliesByNameNoExtension = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             _metadataLoadContext = new MetadataLoadContext(new PathAssemblyResolver(assemblyPaths), MscorlibReflectionAssemblyName);
@@ -168,7 +170,7 @@ namespace System.Xaml
         {
 #if PBTCOMPILER
             Assembly reflectionAssembly = LoadAssembly(assemblyName, null);
-    
+
             if (reflectionAssembly != null)
             {
                 type = reflectionAssembly.GetType(type.FullName);
@@ -209,7 +211,7 @@ namespace System.Xaml
                 return ictp.GetCustomType();
         }
 #endif
-        
+
 #endregion Type
 
         #region Attributes
@@ -534,13 +536,13 @@ namespace System.Xaml
         // For a given assembly name and its full path, Reflection-Only load the assembly directly
         // from the file in disk or load the file to memory and then create assembly instance from
         // memory buffer data.
-        // 
+        //
         private static Assembly ReflectionOnlyLoadAssembly(string assemblyName, string fullPathToAssembly)
         {
-            Assembly assembly = null; 
+            Assembly assembly = null;
 
-            // If the assembly path is empty, try to load assembly by name. LoadFromAssemblyName 
-            // will result in a MetadataLoadContext.Resolve event that will contain more information about the 
+            // If the assembly path is empty, try to load assembly by name. LoadFromAssemblyName
+            // will result in a MetadataLoadContext.Resolve event that will contain more information about the
             // requested assembly.
             if (String.IsNullOrEmpty(fullPathToAssembly))
             {

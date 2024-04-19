@@ -2522,21 +2522,6 @@
         <target state="translated">ページ番号は負の数にできません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">パラメーター値は、'{0}' と '{1}' の間である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">パラメーター値は、有限である必要があります。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">パラメーター値は、数値である必要があります。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' 文字列の解析中に無効なフォーム '{0}' が見つかりました。</target>

@@ -744,7 +744,7 @@ namespace System.Windows
                         // parens didn't hold an integer "(abc)" - value is (uninterpreted) paren string
                         // [this could be considered an error, but the original code
                         // treated it like this, so to preserve compatibility...]
-                        args[i].value = "(" + paramList[i].parenString + ")";
+                        args[i].value = $"({paramList[i].parenString})";
                     }
                 }
                 else
@@ -770,7 +770,7 @@ namespace System.Windows
                         // parens didn't hold a type name "(abc)xyz" - value is (uninterpreted) string
                         // [this could be considered an error, but the original code
                         // treated it like this, so to preserve compatibility...]
-                        args[i].value = "(" + paramList[i].parenString + ")" + paramList[i].valueString;
+                        args[i].value = $"({paramList[i].parenString}){paramList[i].valueString}";
                     }
                 }
             }

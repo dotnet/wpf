@@ -147,9 +147,6 @@
   <data name="ReferenceIsNull" xml:space="preserve">
     <value>Value cannot be null. Object reference: '{0}'.</value>
   </data>
-  <data name="ParameterMustBeBetween" xml:space="preserve">
-    <value>The parameter value must be between '{0}' and '{1}'.</value>
-  </data>
   <data name="Freezable_UnregisteredHandler" xml:space="preserve">
     <value>Handler has not been registered with this event.</value>
   </data>

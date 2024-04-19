@@ -2,6 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#if !SYSTEM_XAML
+#nullable disable
+#pragma warning disable CS8632
+#endif
+
 // Description:
 //   This attribute is placed on a class to identify the property that will
 //   function as an Name for the given class
@@ -32,7 +37,7 @@ namespace System.Windows.Markup
         /// <summary/>
         public RuntimeNamePropertyAttribute(string name)
         {
-            _name = name;
+            Name = name;
         }
 
         /// <summary>
@@ -40,15 +45,7 @@ namespace System.Windows.Markup
         /// the class, this property needs to be of type string and have
         /// both get and set access
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        private string _name;
+        public string Name { get; }
     }
 #endif
 

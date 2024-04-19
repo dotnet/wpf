@@ -1006,12 +1006,12 @@ namespace System.Windows.Controls
             {
                 case DatePickerFormat.Short:
                     {
-                        return string.Format(CultureInfo.CurrentCulture, d.ToString(dtfi.ShortDatePattern, dtfi));
+                        return d.ToString(dtfi.ShortDatePattern, dtfi);
                     }
 
                 case DatePickerFormat.Long:
                     {
-                        return string.Format(CultureInfo.CurrentCulture, d.ToString(dtfi.LongDatePattern, dtfi));
+                        return d.ToString(dtfi.LongDatePattern, dtfi);
                     }
             }
 

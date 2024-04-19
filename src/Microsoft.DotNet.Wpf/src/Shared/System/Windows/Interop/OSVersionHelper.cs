@@ -37,7 +37,7 @@ namespace Microsoft.Internal.Interop
     /// <summary>
     /// DevDiv:1158540
     /// Adding wrapper around OSVersionHelper native code.  This is linked into PresentationNative so we just PInvoke it from there.
-    /// 
+    ///
     /// To add a new OS:
     ///     Make sure you have followed the instructions in OperatingSystemVersion.cs to get here
     ///     Add appropriate PInvoke to your new Is{OSName}OrGreater function
@@ -261,7 +261,7 @@ namespace Microsoft.Internal.Interop
                     return IsOsWindowsXPSP2OrGreater;
             }
 
-            throw new ArgumentException(string.Format("{0} is not a valid OS!", osVer.ToString()), "osVer");
+            throw new ArgumentException($"{osVer} is not a valid OS!", nameof(osVer));
         }
 
         internal static OperatingSystemVersion GetOsVersion()

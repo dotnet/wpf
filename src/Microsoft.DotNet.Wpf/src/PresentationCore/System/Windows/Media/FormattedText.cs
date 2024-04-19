@@ -292,9 +292,7 @@ namespace System.Windows.Media
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(emSize);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(emSize, MaxFontEmSize);
-
-            if (double.IsNaN(emSize))
-                throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);
+            ArgumentOutOfRangeException.ThrowIfEqual(emSize, double.NaN);
         }
 
         private static void ValidateFlowDirection(FlowDirection flowDirection, string parameterName)
@@ -305,8 +303,8 @@ namespace System.Windows.Media
 
         private int ValidateRange(int startIndex, int count)
         {
-            if (startIndex < 0 || startIndex > _text.Length)
-                throw new ArgumentOutOfRangeException("startIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startIndex, _text.Length);
 
             int limit = startIndex + count;
 

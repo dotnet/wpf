@@ -164,7 +164,7 @@ namespace System.Windows.Markup
 
                 if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                 {
-                    localElementFullName = namespaceMaps[0].ClrNamespace + "." + xamlUnknownTagStartNode.Value;
+                    localElementFullName = $"{namespaceMaps[0].ClrNamespace}.{xamlUnknownTagStartNode.Value}";
                 }
             }
             else if (IsLocalPass1)
@@ -285,7 +285,7 @@ namespace System.Windows.Markup
                     {
                         if (namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                         {
-                            localTagFullName = namespaceMaps[0].ClrNamespace + "." + ownerTagName;
+                            localTagFullName = $"{namespaceMaps[0].ClrNamespace}.{ownerTagName}";
                         }
                     }
                     else
@@ -303,7 +303,7 @@ namespace System.Windows.Markup
                             namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownAttributeNode.XmlNamespace);
                             if (namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly)
                             {
-                                localTagFullName = namespaceMaps[0].ClrNamespace + "." + ownerTagName;
+                                localTagFullName = $"{namespaceMaps[0].ClrNamespace}.{ownerTagName}";
                             }
                             else
                             {

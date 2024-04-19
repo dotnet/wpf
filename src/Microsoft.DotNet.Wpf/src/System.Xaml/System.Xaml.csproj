@@ -2,11 +2,12 @@
   <PropertyGroup>
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
-    
+
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
     <EnableAnalyzers>true</EnableAnalyzers>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

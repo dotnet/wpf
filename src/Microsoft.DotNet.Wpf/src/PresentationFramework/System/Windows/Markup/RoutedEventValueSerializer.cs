@@ -32,7 +32,7 @@ namespace System.Windows.Markup
                 ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
                 if (typeSerializer != null)
                 {
-                    return typeSerializer.ConvertToString(routedEvent.OwnerType, context) + "." + routedEvent.Name;
+                    return $"{typeSerializer.ConvertToString(routedEvent.OwnerType, context)}.{routedEvent.Name}";
                 }
             }
             return base.ConvertToString(value, context);

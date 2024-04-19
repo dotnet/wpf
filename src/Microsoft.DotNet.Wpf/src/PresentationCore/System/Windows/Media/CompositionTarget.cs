@@ -532,10 +532,7 @@ namespace System.Windows.Media
         internal void VerifyAPIReadOnly()
         {
             VerifyAccess();
-            if (_isDisposed)
-            {
-                throw new System.ObjectDisposedException("CompositionTarget");
-            }
+            ObjectDisposedException.ThrowIf(_isDisposed, typeof(CompositionTarget));
         }
 
         /// <summary>
@@ -544,10 +541,7 @@ namespace System.Windows.Media
         internal void VerifyAPIReadWrite()
         {
             VerifyAccess();
-            if (_isDisposed)
-            {
-                throw new System.ObjectDisposedException("CompositionTarget");
-            }
+            ObjectDisposedException.ThrowIf(_isDisposed, typeof(CompositionTarget));
 
             MediaContext.From(Dispatcher).VerifyWriteAccess();
         }

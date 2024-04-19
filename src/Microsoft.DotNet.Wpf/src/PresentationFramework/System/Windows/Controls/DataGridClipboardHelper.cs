@@ -15,10 +15,6 @@ namespace System.Windows.Controls
 {
     internal static class DataGridClipboardHelper
     {
-        private const string DATAGRIDVIEW_htmlPrefix = "Version:1.0\r\nStartHTML:00000097\r\nEndHTML:{0}\r\nStartFragment:00000133\r\nEndFragment:{1}\r\n";
-        private const string DATAGRIDVIEW_htmlStartFragment = "<HTML>\r\n<BODY>\r\n<!--StartFragment-->";
-        private const string DATAGRIDVIEW_htmlEndFragment = "\r\n<!--EndFragment-->\r\n</BODY>\r\n</HTML>";
-                
         internal static void FormatCell(object cellValue, bool firstCell, bool lastCell, StringBuilder sb, string format)
         {
             bool csv = string.Equals(format, DataFormats.CommaSeparatedValue, StringComparison.OrdinalIgnoreCase);
@@ -36,7 +32,7 @@ namespace System.Windows.Controls
                     }
                 }
 
-                if (lastCell) 
+                if (lastCell)
                 {
                     // Last cell
                     sb.Append('\r');
@@ -49,7 +45,7 @@ namespace System.Windows.Controls
             }
             else if (string.Equals(format, DataFormats.Html, StringComparison.OrdinalIgnoreCase))
             {
-                if (firstCell) 
+                if (firstCell)
                 {
                     // First cell - append start of row
                     sb.Append("<TR>");
@@ -66,14 +62,14 @@ namespace System.Windows.Controls
                 }
 
                 sb.Append("</TD>"); // End cell
-                if (lastCell) 
+                if (lastCell)
                 {
                     // Last cell - append end of row
                     sb.Append("</TR>");
                 }
             }
         }
-                
+
         internal static void GetClipboardContentForHtml(StringBuilder content)
         {
             const int bytecountPrefixContext = 135; // Byte count of context before the content in the HTML format
@@ -83,15 +79,41 @@ namespace System.Windows.Controls
 
             // The character set supported by the clipboard is Unicode in its UTF-8 encoding.
             // There are characters in Asian languages which require more than 2 bytes for encoding into UTF-8
-            // Marshal.SystemDefaultCharSize is 2 and would not be appropriate in all cases. We have to explicitly calculate the number of bytes.  
+            // Marshal.SystemDefaultCharSize is 2 and would not be appropriate in all cases. We have to explicitly calculate the number of bytes.
             byte[] sourceBytes = Encoding.Unicode.GetBytes(content.ToString());
             byte[] destinationBytes = InternalEncoding.Convert(Encoding.Unicode, Encoding.UTF8, sourceBytes);
 
             int bytecountEndOfFragment = bytecountPrefixContext + destinationBytes.Length;
             int bytecountEndOfHtml = bytecountEndOfFragment + bytecountSuffixContext;
-            string prefix = string.Format(CultureInfo.InvariantCulture, DATAGRIDVIEW_htmlPrefix, bytecountEndOfHtml.ToString("00000000", CultureInfo.InvariantCulture), bytecountEndOfFragment.ToString("00000000", CultureInfo.InvariantCulture)) + DATAGRIDVIEW_htmlStartFragment;
+            string prefix = string.Create(CultureInfo.InvariantCulture,
+                $"""
+                 Version:1.0
+
+                 StartHTML:00000097
+
+                 EndHTML:{bytecountEndOfHtml:00000000}
+
+                 StartFragment:00000133
+
+                 EndFragment:{bytecountEndOfFragment:00000000}
+
+                 <HTML>
+
+                 <BODY>
+
+                 <!--StartFragment-->
+                 """);
             content.Insert(0, prefix);
-            content.Append(DATAGRIDVIEW_htmlEndFragment);
+            content.Append(
+                """
+
+
+                <!--EndFragment-->
+
+                </BODY>
+
+                </HTML>
+                """);
         }
 
         private static void FormatPlainText(string s, bool csv, TextWriter output, ref bool escapeApplied)

@@ -60,8 +60,9 @@ namespace MS.Internal.FontCache
             Debug.Assert(stream.Position == 0);
             unsafe { _pointer = stream.PositionPointer; }
             long length = stream.Length;
-            if (length < 0 || length > int.MaxValue)
-                throw new ArgumentOutOfRangeException();
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(length, int.MaxValue);
+
             _size = (int)length;
         }
 

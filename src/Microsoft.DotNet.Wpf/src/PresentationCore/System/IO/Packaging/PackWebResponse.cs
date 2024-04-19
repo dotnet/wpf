@@ -758,8 +758,7 @@ namespace System.IO.Packaging
         private void CheckDisposed()
         {
             // no need to lock here because only Close() sets this variable and we are not ThreadSafe
-            if (_disposed)
-                throw new ObjectDisposedException("PackWebResponse");
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PackWebResponse));
         }
 
         /// <summary>

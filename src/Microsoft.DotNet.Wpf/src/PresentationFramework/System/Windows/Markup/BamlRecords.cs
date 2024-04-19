@@ -309,7 +309,7 @@ namespace System.Windows.Markup
         StaticResourceEnd,          // 49
 
         /// <summary>
-        /// BamlRecord that carries an identifier for a StaticResourceExtension 
+        /// BamlRecord that carries an identifier for a StaticResourceExtension
         /// within the header of a deferred section.
         /// </summary>
         StaticResourceId,           // 50
@@ -341,7 +341,7 @@ namespace System.Windows.Markup
         OptimizedStaticResource,      // 55
 
         /// <summary>
-        /// BamlPropertyRecord that carries an identifier for a StaticResourceExtension 
+        /// BamlPropertyRecord that carries an identifier for a StaticResourceExtension
         /// within the header of a deferred section.
         /// </summary>
         PropertyWithStaticResourceId, // 56
@@ -519,7 +519,7 @@ namespace System.Windows.Markup
         internal BamlRecord CloneRecord(BamlRecord record)
         {
             BamlRecord newRecord;
-            
+
             switch (record.RecordType)
             {
                 case BamlRecordType.ElementStart:
@@ -532,7 +532,7 @@ namespace System.Windows.Markup
                         newRecord = new BamlElementStartRecord();
                     }
                     break;
-                    
+
                 case BamlRecordType.PropertyCustom:
                     if (record is BamlPropertyCustomWriteInfoRecord)
                     {
@@ -543,14 +543,14 @@ namespace System.Windows.Markup
                         newRecord = new BamlPropertyCustomRecord();
                     }
                     break;
-            
+
                 default:
                     newRecord = AllocateRecord(record.RecordType);
                     break;
             }
 
             record.Copy(newRecord);
-            
+
             return newRecord;
         }
 #endif
@@ -673,7 +673,7 @@ namespace System.Windows.Markup
                     break;
                 case BamlRecordType.PresentationOptionsAttribute:
                     record = new BamlPresentationOptionsAttributeRecord();
-                    break;                    
+                    break;
                 case BamlRecordType.KeyElementStart:
                     record = new BamlKeyElementStartRecord();
                     break;
@@ -926,7 +926,7 @@ namespace System.Windows.Markup
             }
         }
 
-#if !PBTCOMPILER        
+#if !PBTCOMPILER
         // (See comment on IsPinned.)
         internal void Unpin()
         {
@@ -941,7 +941,7 @@ namespace System.Windows.Markup
             record._flags = _flags;
             record._nextRecord = _nextRecord;
         }
-        
+
 #endif
 
 
@@ -953,7 +953,7 @@ namespace System.Windows.Markup
         // Internal flags for efficient storage
         // NOTE: bits here are used by sub-classes also.
         // This BitVector32 field is shared by subclasses to save working set.  Sharing flags like this
-        // is easier in e.g. FrameworkElement, where the class hierarchy is linear, but can be bug-prone otherwise.  To make the 
+        // is easier in e.g. FrameworkElement, where the class hierarchy is linear, but can be bug-prone otherwise.  To make the
         // code less fragile, each class abstractly provides it's last section to subclasses(LastFlagsSection), which they can
         // use in their call to CreateSection.
 
@@ -981,7 +981,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}", RecordType);
+            return string.Create(CultureInfo.InvariantCulture, $"{RecordType}");
         }
 
         protected static string GetTypeName(int typeId)
@@ -1125,7 +1125,7 @@ namespace System.Windows.Markup
             newRecord._recordSize = _recordSize;
         }
 #endif
-        
+
 #endregion Methods
 
 #region Properties
@@ -1342,11 +1342,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _assemblyIdLowSection
             = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _assemblyIdHighSection
             = BitVector32.CreateSection( (short)0xff, _assemblyIdLowSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -1445,7 +1445,7 @@ namespace System.Windows.Markup
 #endif
     }
 
-    // Common interface implemented by BamlRecords that 
+    // Common interface implemented by BamlRecords that
     // use optimized storage for MarkupExtensions.
     internal interface IOptimizedMarkupExtension
     {
@@ -1612,11 +1612,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _sharedSection
             = BitVector32.CreateSection( 1, BamlElementStartRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _sharedSetSection
             = BitVector32.CreateSection( 1, _sharedSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -1770,11 +1770,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _sharedSection
             = BitVector32.CreateSection( 1, BamlStringValueRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _sharedSetSection
             = BitVector32.CreateSection( 1,  _sharedSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -1801,7 +1801,7 @@ namespace System.Windows.Markup
             get { return _valuePositionPosition; }
             set { _valuePositionPosition = value; }
         }
-        
+
         internal Int16 ValueId
         {
             get { return _valueId; }
@@ -1921,9 +1921,8 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} nameId({1}) is '{2}' usage={3}",
-                                 RecordType, NameId, Name, AttributeUsage);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} nameId({NameId}) is '{Name}' usage={AttributeUsage}");
         }
 #endif
 
@@ -2000,9 +1999,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} nameId({1}) is '{2}' ",
-                                 RecordType, NameId, Name);
+            return string.Create(CultureInfo.InvariantCulture, $"{RecordType} nameId({NameId}) is '{Name}'");
         }
 #endif
 
@@ -2011,7 +2008,7 @@ namespace System.Windows.Markup
         Int16  _nameId;
 #endregion Data
 
-    }    
+    }
 
     //
     // BamlPropertyComplexStartRecord is for Complex DependencyProperty declarations
@@ -2069,9 +2066,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} attr({1})",
-                                 RecordType, _attributeId);
+            return string.Create(CultureInfo.InvariantCulture, $"{RecordType} attr({_attributeId})");
         }
 #endif
 
@@ -2317,9 +2312,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} attr({1}) <== '{2}'",
-                                 RecordType, _attributeId, Value);
+            return string.Create(CultureInfo.InvariantCulture, $"{RecordType} attr({_attributeId}) <== '{Value}'");
         }
 #endif
 
@@ -2400,7 +2393,7 @@ namespace System.Windows.Markup
         public short ExtensionTypeId
         {
             get { return _extensionTypeId; }
-            set 
+            set
             {
                 // we shouldn't ever be intruding on the flags portion of the ExtensionTypeId
                 Debug.Assert(value <= ExtensionIdMask);
@@ -2408,8 +2401,8 @@ namespace System.Windows.Markup
             }
         }
 
-        // For StaticExtension: AttributeId of a member 
-        // For TemplateBindingExtension: AttributeId of a DependencyProperty 
+        // For StaticExtension: AttributeId of a member
+        // For TemplateBindingExtension: AttributeId of a DependencyProperty
         // For a DynamicResourceExtension:
         //      StringId if the value is a string
         //      TypeId if the value is a TypeExtension
@@ -2456,9 +2449,8 @@ namespace System.Windows.Markup
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} attr({1}) extn({2}) valueId({3})",
-                                 RecordType, _attributeId, _extensionTypeId, _valueId);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} attr({_attributeId}) extn({_extensionTypeId}) valueId({_valueId})");
         }
 #endif
 
@@ -2515,7 +2507,7 @@ namespace System.Windows.Markup
                 {
                     bamlBinaryWriter.Write(ValueMemberName);
                 }
-                
+
                 return;
             }
 
@@ -2613,7 +2605,7 @@ namespace System.Windows.Markup
             else if (SerializerType == typeof(XamlPathDataSerializer))
             {
                 XamlSerializer serializer = new XamlPathDataSerializer();
-                
+
                 // If we custom serialize this particular value at this point, then see
                 // if it can convert.
                 // NOTE:  This is sensitive to changes in the BamlRecordWriter and
@@ -2642,7 +2634,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-        // The KnownProperty Id of the Value, if it is a property and can be converted into one, 
+        // The KnownProperty Id of the Value, if it is a property and can be converted into one,
         // or the TypeId of the owner of the property value
         internal short ValueId
         {
@@ -2711,13 +2703,13 @@ namespace System.Windows.Markup
         {
             AttributeId      = bamlBinaryReader.ReadInt16();
             short serializerTypeId = bamlBinaryReader.ReadInt16();
-            
+
             IsValueTypeId = (serializerTypeId & TypeIdValueMask) == TypeIdValueMask;
             if (IsValueTypeId)
             {
                 serializerTypeId &= (short)(~TypeIdValueMask);
             }
-            
+
             SerializerTypeId = serializerTypeId;
 
             ValueObjectSet  = false;
@@ -2775,7 +2767,7 @@ namespace System.Windows.Markup
                     return _valueObject;
 
                 case (short)KnownElements.BooleanConverter:
-                    
+
                     byte boolByte = reader.ReadByte();
                     _valueObject = boolByte == 1;
                     break;
@@ -2809,7 +2801,7 @@ namespace System.Windows.Markup
 
                 case (short)KnownElements.XamlInt32CollectionSerializer:
 
-                    _valueObject = XamlInt32CollectionSerializer.StaticConvertCustomBinaryToObject(reader); 
+                    _valueObject = XamlInt32CollectionSerializer.StaticConvertCustomBinaryToObject(reader);
                     break;
 
                 default:
@@ -2820,7 +2812,7 @@ namespace System.Windows.Markup
             ValueObjectSet = true;
             return _valueObject;
         }
-        
+
         internal override void Copy(BamlRecord record)
         {
             base.Copy(record);
@@ -2830,7 +2822,7 @@ namespace System.Windows.Markup
             newRecord._attributeId = _attributeId;
             newRecord._serializerTypeId = _serializerTypeId;
         }
-        
+
 #endif
 
 #endregion Methods
@@ -3298,7 +3290,7 @@ namespace System.Windows.Markup
                 _flags[_isInjected] = value ? 1 : 0;
             }
         }
-        
+
         internal override Int32 RecordSize
         {
             get { return 3; }
@@ -3310,9 +3302,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} typeId={1}",
-                                 RecordType, GetTypeName(TypeId));
+            return string.Create(CultureInfo.InvariantCulture, $"{RecordType} typeId={GetTypeName(TypeId)}");
         }
 #endif
 
@@ -3323,7 +3313,7 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _typeIdLowSection
             = BitVector32.CreateSection( (short)0xff, BamlRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _typeIdHighSection
             = BitVector32.CreateSection( (short)0xff, _typeIdLowSection );
 
@@ -3333,7 +3323,7 @@ namespace System.Windows.Markup
         private static BitVector32.Section _isInjected
             = BitVector32.CreateSection( 1, _useTypeConverter );
 
-        
+
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -3351,7 +3341,7 @@ namespace System.Windows.Markup
     //
     //  This is currently internal, used only for templates.  The original intent for this record was that
     //  it become the new design for named objects; any object with an x:Name set, would have that name
-    //  incorporated into the element start record.  But that design did not happen, instead the 
+    //  incorporated into the element start record.  But that design did not happen, instead the
     //  property attribute are re-ordered such that the name always immediately follows the element
     //  start record.  So this should be removed, and the template code updated accordingly.  (And in fact,
     //  the template design should be updated so as not to be reliant on naming, as that is too fragile.)
@@ -3379,7 +3369,7 @@ namespace System.Windows.Markup
                 bamlBinaryWriter.Write(RuntimeName);
             }
         }
-        
+
 #if !PBTCOMPILER
         internal override void Copy(BamlRecord record)
         {
@@ -3389,7 +3379,7 @@ namespace System.Windows.Markup
             newRecord._isTemplateChild = _isTemplateChild;
             newRecord._runtimeName = _runtimeName;
         }
-#endif        
+#endif
 
 #endregion Methods
 
@@ -3403,7 +3393,7 @@ namespace System.Windows.Markup
 
         // This flag is used by templates to indicate that an ElementStart
         // record is for an object that will be a template child.  We had to add
-        // this to allow some validation during template application.  This isn't 
+        // this to allow some validation during template application.  This isn't
         // a good solution, because we shouldn't have this record understanding
         // template children.  But the long-term plan is to break the template design
         // away from a dependence on names, at which point this whole BamlNamedElementStartRecord
@@ -3465,7 +3455,7 @@ namespace System.Windows.Markup
             bamlBinaryWriter.Write(contentSize);
             bamlBinaryWriter.Seek((int)(-ContentSizeSize-deltaPosition), SeekOrigin.Current);
         }
-        
+
 #if !PBTCOMPILER
         internal override void Copy(BamlRecord record)
         {
@@ -3476,7 +3466,7 @@ namespace System.Windows.Markup
             newRecord._contentSizePosition = _contentSizePosition;
             newRecord._valuesBuffer = _valuesBuffer;
         }
-#endif        
+#endif
 
 #endregion Methods
 
@@ -3504,12 +3494,12 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
 
         /// <summary>
-        /// For the case of a ResourceDictionary inside template content, we read 
-        /// the dictionary values into a byte array while creating the template 
-        /// content. Later during template instantiation when the dictionary instance 
-        /// is created we use this buffer to create a memory stream so that the 
-        /// ResourceDictionary can use it to RealizeDeferredContent. This is required 
-        /// because at template instantiation time we do not have a stream to work with. 
+        /// For the case of a ResourceDictionary inside template content, we read
+        /// the dictionary values into a byte array while creating the template
+        /// content. Later during template instantiation when the dictionary instance
+        /// is created we use this buffer to create a memory stream so that the
+        /// ResourceDictionary can use it to RealizeDeferredContent. This is required
+        /// because at template instantiation time we do not have a stream to work with.
         /// The reader operates on a linked list of BamlRecords.
         /// </summary>
         internal byte[] ValuesBuffer
@@ -3548,10 +3538,10 @@ namespace System.Windows.Markup
     //
     //  BamlStaticResourceStartRecord
     //
-    //  This record marks the start of a StaticResourceExtension within the header for a deferred section. 
+    //  This record marks the start of a StaticResourceExtension within the header for a deferred section.
     //
     //+----------------------------------------------------------------------------------------------------------------
-    
+
     internal class BamlStaticResourceStartRecord : BamlElementStartRecord
     {
 #region Properties
@@ -3568,10 +3558,10 @@ namespace System.Windows.Markup
     //
     //  BamlStaticResourceEndRecord
     //
-    //  This record marks the end of a StaticResourceExtension within the header for a deferred section. 
+    //  This record marks the end of a StaticResourceExtension within the header for a deferred section.
     //
     //+----------------------------------------------------------------------------------------------------------------
-    
+
     internal class BamlStaticResourceEndRecord : BamlElementEndRecord
     {
 #region Properties
@@ -3588,10 +3578,10 @@ namespace System.Windows.Markup
     //
     //  BamlOptimizedStaticResourceRecord
     //
-    //  This record represents an optimized StaticResourceExtension within the header for a deferred section. 
+    //  This record represents an optimized StaticResourceExtension within the header for a deferred section.
     //
     //+----------------------------------------------------------------------------------------------------------------
-    
+
     internal class BamlOptimizedStaticResourceRecord : BamlRecord, IOptimizedMarkupExtension
     {
 #region Methods
@@ -3696,16 +3686,15 @@ namespace System.Windows.Markup
         {
             get { return _isValueStaticExtensionSection; }
         }
-    
+
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} extn(StaticResourceExtension) valueId({1})",
-                                 RecordType, _valueId);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} extn(StaticResourceExtension) valueId({_valueId})");
         }
 #endif
-    
+
 #endregion Data
 
 
@@ -3718,7 +3707,7 @@ namespace System.Windows.Markup
     //  This BamlRecord is an identifier for a StaticResourceExtension within the header for a deferred section.
     //
     //+----------------------------------------------------------------------------------------------------------------
-    
+
     internal class BamlStaticResourceIdRecord : BamlRecord
     {
 #region Methods
@@ -3776,13 +3765,12 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} staticResourceId({1})",
-                                 RecordType, StaticResourceId);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} staticResourceId({StaticResourceId})");
         }
 #endif
 
-        
+
 #endregion Data
 
     }
@@ -3791,11 +3779,11 @@ namespace System.Windows.Markup
     //
     //  BamlPropertyWithStaticResourceIdRecord
     //
-    //  This BamlRecord represents a BamlPropertyRecord with a StaticResourceId as place holder for 
+    //  This BamlRecord represents a BamlPropertyRecord with a StaticResourceId as place holder for
     //  a StaticResourceExtension within a deferred section.
     //
     //+----------------------------------------------------------------------------------------------------------------
-    
+
     internal class BamlPropertyWithStaticResourceIdRecord : BamlStaticResourceIdRecord
     {
 #region Methods
@@ -3838,7 +3826,7 @@ namespace System.Windows.Markup
             get { return 4; }
             set { Debug.Assert(value == -1, "Wrong size set for complex prop record"); }
         }
-        
+
         // Id of the property whose value is the simple SR
         internal short AttributeId
         {
@@ -3855,12 +3843,11 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} attr({1}) staticResourceId({2})",
-                                 RecordType, AttributeId, StaticResourceId);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} attr({AttributeId}) staticResourceId({StaticResourceId})");
         }
 #endif
-        
+
 #endregion Data
 
     }
@@ -3883,7 +3870,7 @@ namespace System.Windows.Markup
     internal class BamlTextWithIdRecord : BamlTextRecord
     {
 #region Methods
-        
+
 #if !PBTCOMPILER
         internal override void  LoadRecordData(BinaryReader bamlBinaryReader)
         {
@@ -4239,11 +4226,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _assemblyIdLowSection
             = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _assemblyIdHighSection
             = BitVector32.CreateSection( (short)0xff, _assemblyIdLowSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -4367,8 +4354,8 @@ namespace System.Windows.Markup
         internal short AssemblyId
         {
             get { return _assemblyId; }
-            set 
-            { 
+            set
+            {
                 // Make sure we don't intrude on the Flags portion of the assembly ID
                 if (_assemblyId > 0x0FFF)
                 {
@@ -4452,11 +4439,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _typeIdLowSection
             = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _typeIdHighSection
             = BitVector32.CreateSection( (short)0xff, _typeIdLowSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -4934,11 +4921,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _isInternalSection
             = BitVector32.CreateSection( 1, BamlVariableSizedRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _attributeUsageSection
             = BitVector32.CreateSection( 3, _isInternalSection );
-        
-#if !PBTCOMPILER        
+
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -4951,9 +4938,8 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} owner={1} attr({2}) is '{3}'",
-                                 RecordType, GetTypeName(OwnerTypeId), AttributeId, _name);
+            return string.Create(CultureInfo.InvariantCulture,
+                                 $"{RecordType} owner={GetTypeName(OwnerTypeId)} attr({AttributeId}) is '{_name}'");
         }
 #endif
 
@@ -5060,9 +5046,8 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} stringId({1}='{2}'",
-                                 RecordType, StringId, _value);
+            return string.Create(CultureInfo.InvariantCulture,
+                                 $"{RecordType} stringId({StringId}='{_value}'");
         }
 #endif
 
@@ -5075,11 +5060,11 @@ namespace System.Windows.Markup
 
         private static BitVector32.Section _stringIdLowSection
             = BitVector32.CreateSection( (short)0xff, BamlVariableSizedRecord.LastFlagsSection );
-        
+
         private static BitVector32.Section _stringIdHighSection
             = BitVector32.CreateSection( (short)0xff, _stringIdLowSection );
 
-#if !PBTCOMPILER        
+#if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
         internal new static BitVector32.Section LastFlagsSection
         {
@@ -5215,8 +5200,8 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} LineNum={1} Pos={2}", RecordType, LineNumber, LinePosition);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} LineNum={LineNumber} Pos={LinePosition}");
         }
 #endif
     }
@@ -5276,8 +5261,8 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                                 "{0} LinePos={1}", RecordType, LinePosition);
+            return string.Create(CultureInfo.InvariantCulture,
+                $"{RecordType} LinePos={LinePosition}");
         }
 #endif
     }

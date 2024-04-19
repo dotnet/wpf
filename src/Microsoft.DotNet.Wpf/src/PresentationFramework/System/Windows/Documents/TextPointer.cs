@@ -1486,7 +1486,7 @@ namespace System.Windows.Documents
         public override string ToString()
         {
 #if DEBUG
-            return "TextPointer Id=" + _debugId + " NodeId=" + _node.DebugId + " Edge=" + this.Edge;
+            return $"TextPointer Id={_debugId} NodeId={_node.DebugId} Edge={this.Edge}";
 #else
             return base.ToString();
 #endif // DEBUG

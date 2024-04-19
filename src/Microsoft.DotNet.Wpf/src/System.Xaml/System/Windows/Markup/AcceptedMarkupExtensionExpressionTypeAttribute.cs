@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Windows.Markup
 {
     [Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
@@ -11,7 +13,7 @@ namespace System.Windows.Markup
         public Type Type { get; set; }
 
         public AcceptedMarkupExtensionExpressionTypeAttribute(Type type)
-	    {
+        {
             Type = type;
         }
     }

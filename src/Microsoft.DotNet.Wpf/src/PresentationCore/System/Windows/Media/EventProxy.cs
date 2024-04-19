@@ -80,18 +80,6 @@ namespace System.Windows.Media
 
         #endregion
 
-        #region Verify
-
-        private void Verify()
-        {
-            if (target == null)
-            {
-                throw new System.ObjectDisposedException("EventProxyWrapper");
-            }
-        }
-
-        #endregion
-
         #region Public methods
 
         public int RaiseEvent(byte[] buffer, uint cb)
@@ -99,7 +87,7 @@ namespace System.Windows.Media
 #pragma warning disable 6500
             try
             {
-                Verify();
+                ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
                 IInvokable invokable = (IInvokable)target.Target;
                 if (invokable != null)
                 {

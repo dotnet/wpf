@@ -31,9 +31,9 @@ namespace MS.Internal.IO.Packaging
 
     /// <summary>
     /// The class that supports content extraction from XAML files for indexing purposes.
-    /// Note: It would be nice to have fixed page content extractor look for flow elements in a fixed page. 
-    /// This however, is not really doable: FixedPageContentExtractor is XSLT-based, not reader-based. 
-    /// It cannot do anything more efficiently than what XamlFilter is currently doing. 
+    /// Note: It would be nice to have fixed page content extractor look for flow elements in a fixed page.
+    /// This however, is not really doable: FixedPageContentExtractor is XSLT-based, not reader-based.
+    /// It cannot do anything more efficiently than what XamlFilter is currently doing.
     /// The "flow pass" on a DOM reader for a fixed page does not entail any redundant IO or DOM building.
     /// </summary>
     internal partial class XamlFilter : IManagedFilter
@@ -42,12 +42,12 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// The following enumeration makes it easier to keep track of the filter's multi-modal behavior.
         ///
-        /// Each state implements a distinct method for collecting the next content unit, as follows: 
+        /// Each state implements a distinct method for collecting the next content unit, as follows:
         ///
         ///  Uninitialized         Return appropriate errors from GetChunk and GetText.
         ///  FindNextUnit          Standard mode. Return content as it is discovered in markup.
         ///  UseContentExtractor   Retrieve content from a FixedPageContentExtractor object (expected to
-        ///                        perform adjacency analysis). 
+        ///                        perform adjacency analysis).
         ///  FindNextFlowUnit      Look for content in markup ignoring fixed-format markup (second pass over a
         ///                        fixed page).
         ///  EndOfStream           Return appropriate errors from GetChunk and GetText.
@@ -58,17 +58,17 @@ namespace MS.Internal.IO.Packaging
         ///     state            |   transition     |     action                           |     next state
         ///    --------          |  ------------    |    --------                          |    ------------
         ///  Uninitialized       | constructor      | create an XML reader                 | FindNextUnit
-        ///                      |                  |                                      |       
+        ///                      |                  |                                      |
         ///  FindNextUnit        | end of reader    | clean up                             | EndOfStream
-        ///                      |                  |                                      |       
+        ///                      |                  |                                      |
         ///  FindNextUnit        | FixedPage tag    | create FixedPageContentExtractor,    | UseContentExtractor
-        ///                      |                  | save a DOM of the FixedPage          |  
-        ///                      |                  |                                      |              
+        ///                      |                  | save a DOM of the FixedPage          |
+        ///                      |                  |                                      |
         ///  UseContentExtractor | end of extractor | create sub-reader from FixedPage DOM,| FindNextFlowUnit
-        ///                      |                  | save top-level reader                | 
-        ///                      |                  |                                      |              
+        ///                      |                  | save top-level reader                |
+        ///                      |                  |                                      |
         ///  FindNextFlowUnit    | end of reader    | restore top-level reader             | FindNextUnit
-        ///                      |                  |                                      |              
+        ///                      |                  |                                      |
         ///
         /// </summary>
         internal enum FilterState
@@ -91,7 +91,7 @@ namespace MS.Internal.IO.Packaging
             Title   =1,
             Content =2
         };
-       
+
     #endregion Nested Types
 
     #region Internal Constructors
@@ -101,7 +101,7 @@ namespace MS.Internal.IO.Packaging
         /// Constructor. Does initialization.
         /// </summary>
         /// <param name="stream">xaml stream to filter</param>
-        internal XamlFilter(Stream stream) 
+        internal XamlFilter(Stream stream)
         {
 #if TRACE
             System.Diagnostics.Trace.TraceInformation("New Xaml filter created.");
@@ -132,7 +132,7 @@ namespace MS.Internal.IO.Packaging
             _filterState = FilterState.Uninitialized;
 
             // Initialize current ID.
-            _currentChunkID = 0; 
+            _currentChunkID = 0;
 
             // Initialize the content model dictionary.
             // Note: Hashtable is not IDisposable.
@@ -162,7 +162,7 @@ namespace MS.Internal.IO.Packaging
         /// IPropertyStorage on the Xaml part.</returns>
         /// <remarks>Input parameters are ignored because this filter never returns any property value.</remarks>
         public IFILTER_FLAGS Init(
-            IFILTER_INIT grfFlags,    // IFILTER_INIT value     
+            IFILTER_INIT grfFlags,    // IFILTER_INIT value
             ManagedFullPropSpec[] aAttributes)    // restrict responses to the specified attributes
         {
             //
@@ -176,7 +176,7 @@ namespace MS.Internal.IO.Packaging
             if (aAttributes != null && aAttributes.Length > 0)
             {
                 _filterContents = false;
-            
+
                 for (int i = 0; i < aAttributes.Length; i++)
                 {
                     if (aAttributes[i].Guid == IndexingFilterMarshaler.PSGUID_STORAGE
@@ -190,7 +190,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // The only flag in grfFlags that makes sense to honor is IFILTER_INIT_CANON_PARAGRAPHS
-            _returnCanonicalParagraphBreaks = 
+            _returnCanonicalParagraphBreaks =
                 ((grfFlags & IFILTER_INIT.IFILTER_INIT_CANON_PARAGRAPHS) != 0);
 
             // Return zero value to indicate that the client code should not take any special steps
@@ -248,7 +248,7 @@ namespace MS.Internal.IO.Packaging
                 // Return FILTER_E_UNKNOWNFORMAT for ill-formed documents.
                 throw new COMException(xmlException.Message, (int)FilterErrorCode.FILTER_E_UNKNOWNFORMAT);
             }
-            
+
             if (contentUnit == null)
             {
                 // Update text information.
@@ -265,7 +265,7 @@ namespace MS.Internal.IO.Packaging
             _currentContent = contentUnit.Text;
 
             // Record the fact that GetText hasn't been called on this chunk.
-            _countOfCharactersReturned = 0;  
+            _countOfCharactersReturned = 0;
 
             return contentUnit;
         }
@@ -326,14 +326,14 @@ namespace MS.Internal.IO.Packaging
             string result = "";
             for (int i = 0; i < length; ++i)
             {
-                result += string.Format("{0}: [{1} -> {2}]\n", i, keyList[i], valueList[i]);
+                result += $"{i}: [{keyList[i]} -> {valueList[i]}]\n";
             }
             return result;
         }
     #endif
 
         ///<summary>Return the next text chunk, or null at end of stream.</summary>
-        internal IndexingContentUnit NextContentUnit() 
+        internal IndexingContentUnit NextContentUnit()
         {
             // Loop until we are able to return some content or encounter an end of file.
             IndexingContentUnit nextContentUnit = null;
@@ -397,7 +397,7 @@ namespace MS.Internal.IO.Packaging
 
                 switch (_xamlReader.NodeType)
                 {
-                    // If current token is a text element, 
+                    // If current token is a text element,
                     //    if it can be part of its parent's content, return a chunk;
                     //    else, skip.
                     case XmlNodeType.Text:
@@ -417,7 +417,7 @@ namespace MS.Internal.IO.Packaging
                     case XmlNodeType.EndElement:
                         nextContentUnit = HandleElementEnd();
                         continue;
-                
+
                         // Default action is to ignore current token and look further.
                         // Note that non-significant whitespace is handled here.
                     default:
@@ -435,7 +435,7 @@ namespace MS.Internal.IO.Packaging
         {
             // Invoke init function that is generated at build time.
             InitElementDictionary();
-        } 
+        }
     #endregion Internal Methods
 
     #region Private Methods
@@ -452,7 +452,7 @@ namespace MS.Internal.IO.Packaging
                 if (_returnCanonicalParagraphBreaks)
                     text = _paragraphSeparator + text;
             }
-            
+
             if (_indexingContentUnit == null)
             {
                 _indexingContentUnit = new IndexingContentUnit(text, AllocateChunkID(), breakType, _propSpec, lcid);
@@ -480,7 +480,7 @@ namespace MS.Internal.IO.Packaging
         }
 
         ///<summary>
-        /// If current token is a text element, 
+        /// If current token is a text element,
         ///    assume it can be part of its parent's content and return a chunk.
         ///</summary>
         ///<remarks>
@@ -500,7 +500,7 @@ namespace MS.Internal.IO.Packaging
                 _xamlReader.Read(); // Move past data just processed.
                 return result;
             }
-            else 
+            else
             {
                 // Bad Xaml (no top-level element). The Xaml filter should at some point raise an exception.
                 // Just to be safe, ignore all content when in this state.
@@ -553,16 +553,16 @@ namespace MS.Internal.IO.Packaging
                         elementIsIndexable,
                         TopOfStack().IsInline,
                         String.Empty,            // has potential text content, but no content property
-                        null));                  // no title property                      
-                _xamlReader.Read(); 
+                        null));                  // no title property
+                _xamlReader.Read();
                 return null;
             }
 
             // Handle fixed-format markup in a special way (because assumptions for building
             // content descriptors don't work for these and they require actions beyond what
             // is stated in content descriptors).
-            // Note: The elementFullyHandled boolean is required as the nextUnit returned can 
-            // be null in both cases - when element is fully handled and when its not.             
+            // Note: The elementFullyHandled boolean is required as the nextUnit returned can
+            // be null in both cases - when element is fully handled and when its not.
             bool elementFullyHandled;
             IndexingContentUnit nextUnit = HandleFixedFormatTag(elementFullName, out elementFullyHandled);
             if (elementFullyHandled)
@@ -575,7 +575,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // Obtain a content descriptor for the current element.
-            ContentDescriptor   elementDescriptor = 
+            ContentDescriptor   elementDescriptor =
                 (ContentDescriptor) _xamlElementContentDescriptorDictionary[elementFullName];
             if (elementDescriptor == null)
             {
@@ -763,10 +763,10 @@ namespace MS.Internal.IO.Packaging
                 SkipCurrentElement();
                 return null;
             }
-            _expectingBlockStart = true; 
+            _expectingBlockStart = true;
             // Read Lcid at current position and advance reader to next element before returning.
             uint lcid = GetCurrentLcid();
-            SkipCurrentElement(); 
+            SkipCurrentElement();
             return BuildIndexingContentUnit(textContent, lcid);
         }
 
@@ -830,7 +830,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_xamlReader != null)
             {
-                _xamlReader.Close();                
+                _xamlReader.Close();
             }
         }
 
@@ -851,11 +851,11 @@ namespace MS.Internal.IO.Packaging
                 if (_lcidDictionary.ContainsKey(languageString))
                     return _lcidDictionary[languageString];
                 else
-                {  
+                {
                     CultureInfo cultureInfo = new CultureInfo(languageString);
                     _lcidDictionary.Add(languageString, (uint)cultureInfo.LCID);
                     return (uint)cultureInfo.LCID;
-                }            
+                }
         }
 
         private string GetLanguageString()
@@ -891,14 +891,14 @@ namespace MS.Internal.IO.Packaging
 
         /// <remarks>
         /// 0 is an illegal value, so this function never returns 0.
-        /// After the counter reaches UInt32.MaxValue we assert, since such a 
-        /// high number for chunks is most likely an indicator of some other 
+        /// After the counter reaches UInt32.MaxValue we assert, since such a
+        /// high number for chunks is most likely an indicator of some other
         /// problem in the system/code.
         /// </remarks>
         private uint AllocateChunkID()
         {
             Invariant.Assert(_currentChunkID <= UInt32.MaxValue);
-            
+
             ++_currentChunkID;
 
             return _currentChunkID;
@@ -926,7 +926,7 @@ namespace MS.Internal.IO.Packaging
                     value = _xamlReader.Value;
                     break;
                 }
-                
+
                 // Advance reader.
                 attributeFound = _xamlReader.MoveToNextAttribute();
             }
@@ -934,8 +934,8 @@ namespace MS.Internal.IO.Packaging
             _xamlReader.MoveToElement();
             return value;
         }
-        
-            
+
+
 
     #region Context Stack Accessors
 

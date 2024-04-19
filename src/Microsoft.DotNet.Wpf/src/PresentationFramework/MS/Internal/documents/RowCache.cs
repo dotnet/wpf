@@ -243,10 +243,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRow(int index)
         {
-            if (index < 0 || index > _rowCache.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, _rowCache.Count);
 
             return _rowCache[index];
         }
@@ -259,10 +257,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRowForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             return _rowCache[GetRowIndexForPageNumber(pageNumber)];
         }
@@ -275,10 +271,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row index</returns>
         public int GetRowIndexForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             //Search our cache for the row that contains the page.
             //NOTE: Future perf item:
@@ -307,10 +301,8 @@ namespace MS.Internal.Documents
         /// <returns>The index of the row that lives at the offset.</returns>
         public int GetRowIndexForVerticalOffset(double offset)
         {
-            if (offset < 0 || offset > ExtentHeight)
-            {
-                throw new ArgumentOutOfRangeException("offset");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, ExtentHeight);
 
             //If we have no rows we'll return 0 (the top of the non-existent document)
             if (_rowCache.Count == 0)
@@ -511,10 +503,9 @@ namespace MS.Internal.Documents
             }
 
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            //Throw exception for illegal values
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
             ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
@@ -651,10 +642,8 @@ namespace MS.Internal.Documents
         private int RecalcRowsForDynamicPageSizes(int pivotPage, int columns)
         {
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
             ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
@@ -808,10 +797,8 @@ namespace MS.Internal.Documents
         private int RecalcRowsForFixedPageSizes(int startPage, int columns)
         {
             //Throw exception for illegal values
-            if (startPage < 0 || startPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(startPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
             ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);

@@ -962,10 +962,7 @@ namespace System.Windows.Xps.Packaging
 
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("XpsDocument");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(XpsDocument));
         }
 
         #region INode implementation

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -36,7 +38,7 @@ namespace System.Xaml.Schema
                 return XamlCollectionKind.Array;
             }
 
-            // Dictionaries and Collections must implement IEnumerable or have method 
+            // Dictionaries and Collections must implement IEnumerable or have method
             // GetEnumerator() where return type is assignable to IEnumerator
             bool isIEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
             if (!isIEnumerable && LookupEnumeratorMethod(type) == null)
@@ -344,7 +346,7 @@ namespace System.Xaml.Schema
 
         private static MethodInfo GetPublicMethod(Type type, string name, int argCount)
         {
-            foreach (MemberInfo mi in type.GetMember(name, MemberTypes.Method, 
+            foreach (MemberInfo mi in type.GetMember(name, MemberTypes.Method,
                 BindingFlags.Instance | BindingFlags.Public))
             {
                 MethodInfo method = (MethodInfo)mi;

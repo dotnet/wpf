@@ -238,10 +238,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
 
@@ -264,10 +262,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             int line;
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
@@ -297,10 +293,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointerStart = GetStartPositionOfLine(lineIndex);
             TextPointer textPointerEnd = GetEndPositionOfLine(lineIndex);
@@ -375,10 +369,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
             Rect rect;
@@ -405,10 +397,8 @@ namespace System.Windows.Controls
                 return null; // sentinel value
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             startOfLine = GetStartPositionOfLine(lineIndex);
             endOfLine = GetEndPositionOfLine(lineIndex);
@@ -444,10 +434,8 @@ namespace System.Windows.Controls
         /// <returns>leading or trailing edge rectangle of the given character, or Rect.Empty if no layout information is available.</returns>
         public Rect GetRectFromCharacterIndex(int charIndex, bool trailingEdge)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             // Start by moving to an insertion position in backward direction.
             // This ensures that when the character at charIndex is part of a surrogate pair or multi-byte character,
@@ -490,10 +478,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public SpellingError GetSpellingError(int charIndex)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
             SpellingError spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, LogicalDirection.Forward);
@@ -563,10 +549,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public int GetNextSpellingErrorCharacterIndex(int charIndex, LogicalDirection direction)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             if (this.TextContainer.SymbolCount == 0)
             {

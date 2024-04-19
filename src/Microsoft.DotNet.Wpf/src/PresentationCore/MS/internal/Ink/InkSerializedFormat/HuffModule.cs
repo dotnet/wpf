@@ -35,20 +35,15 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         internal HuffCodec GetDefCodec(uint index)
         {
-            HuffCodec huffCodec = null;
-            if (AlgoModule.DefaultBAACount > index)
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, AlgoModule.DefaultBAACount);
+
+            HuffCodec huffCodec = _defaultHuffCodecs[index];
+            if (huffCodec == null)
             {
-                huffCodec = _defaultHuffCodecs[index];
-                if (huffCodec == null)
-                {
-                    huffCodec = new HuffCodec(index);
-                    _defaultHuffCodecs[index] = huffCodec;
-                }
+                huffCodec = new HuffCodec(index);
+                _defaultHuffCodecs[index] = huffCodec;
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+
             return huffCodec;
         }
 

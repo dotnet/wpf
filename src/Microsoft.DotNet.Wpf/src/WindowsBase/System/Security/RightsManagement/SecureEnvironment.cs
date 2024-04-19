@@ -368,8 +368,7 @@ namespace System.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            if (_clientSession == null)
-                throw new ObjectDisposedException("SecureEnvironment");
+            ObjectDisposedException.ThrowIf(_clientSession == null, typeof(SecureEnvironment));
         }
 
         private ContentUser _user;

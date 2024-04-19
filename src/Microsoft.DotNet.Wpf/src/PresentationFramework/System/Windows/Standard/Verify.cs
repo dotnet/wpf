@@ -145,7 +145,7 @@ namespace Standard
         {
             if (null == obj)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The property {0} cannot be null at this time.", name));
+                throw new InvalidOperationException($"The property {name} cannot be null at this time.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Standard
         {
             if (null != obj)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The property {0} must be null at this time.", name));
+                throw new InvalidOperationException($"The property {name} must be null at this time.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Standard
         {
             if (value < lowerBoundInclusive || value >= upperBoundExclusive)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The integer value must be bounded with [{0}, {1})", lowerBoundInclusive, upperBoundExclusive), parameterName);
+                throw new ArgumentException(string.Create(CultureInfo.InvariantCulture, $"The integer value must be bounded with [{lowerBoundInclusive}, {upperBoundExclusive})"), parameterName);
             }
         }
 
@@ -284,7 +284,7 @@ namespace Standard
             Verify.IsNeitherNullNorEmpty(filePath, parameterName);
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No file exists at \"{0}\"", filePath), parameterName);
+                throw new ArgumentException($"No file exists at \"{filePath}\"", parameterName);
             }
         }
 
@@ -308,7 +308,7 @@ namespace Standard
 
             if (!isImplemented)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The parameter must implement interface {0}.", interfaceType.ToString()), parameterName);
+                throw new ArgumentException($"The parameter must implement interface {interfaceType}.", parameterName);
             }
         }
     }

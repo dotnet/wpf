@@ -10,13 +10,13 @@ namespace System.Xaml
 {
     internal class EventConverter : TypeConverter
     {
-        // CanConvertTo and ConvertTo are not implemented here because it is not possible to convert 
-        // an event/delegate to string in the general case, because 
+        // CanConvertTo and ConvertTo are not implemented here because it is not possible to convert
+        // an event/delegate to string in the general case, because
         // 1. an event's getter is private.
         // 2. we currently do not have a syntax for writing down a multi-cast delegate
         // 3. we currently do not have a syntax to write down a method not on the root object.
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
             if (sourceType == typeof(string))
             {
@@ -25,14 +25,11 @@ namespace System.Xaml
             return base.CanConvertFrom(context, sourceType);
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            string valueString = value as string;
-            if (valueString != null)
+            if (value is string valueString)
             {
-                object rootObject = null;
-                Type delegateType = null;
-                GetRootObjectAndDelegateType(context, out rootObject, out delegateType);
+                GetRootObjectAndDelegateType(context, out object? rootObject, out Type? delegateType);
 
                 if (rootObject != null && delegateType != null)
                 {
@@ -42,24 +39,24 @@ namespace System.Xaml
             return base.ConvertFrom(context, culture, value);
         }
 
-        internal static void GetRootObjectAndDelegateType(ITypeDescriptorContext context, out object rootObject, out Type delegateType)
+        internal static void GetRootObjectAndDelegateType(ITypeDescriptorContext? context, out object? rootObject, out Type? delegateType)
         {
-            rootObject = null; 
+            rootObject = null;
             delegateType = null;
 
-            if (context == null) 
+            if (context == null)
             {
-                return; 
+                return;
             }
 
-            IRootObjectProvider rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
+            IRootObjectProvider? rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
             if (rootObjectService == null)
             {
                 return;
             }
             rootObject = rootObjectService.RootObject;
 
-            IDestinationTypeProvider targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
+            IDestinationTypeProvider? targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
             if (targetService == null)
             {
                 return;

@@ -173,7 +173,7 @@ namespace System.Windows.Markup
             // Add mapping to the table keyed by assembly and clrnamespace
             string upperAssemblyName = assemblyName.ToUpper(
                                               TypeConverterHelper.InvariantEnglishUS);
-            String fullName = clrNamespace + "#" + upperAssemblyName;
+            String fullName = $"{clrNamespace}#{upperAssemblyName}";
 
             _piReverseTable[fullName] = xmlNamespace;
 
@@ -559,7 +559,7 @@ namespace System.Windows.Markup
                     ||
                     propType.Assembly.FullName == "WindowsBase" )
                 {
-                    Debug.WriteLine( "Reflected for type converter on " + propType.Name + "." + propName );
+                    Debug.WriteLine($"Reflected for type converter on {propType.Name}.{propName}");
                 }
                 #endif
             }
@@ -791,7 +791,7 @@ namespace System.Windows.Markup
             infoRecord = null;
             if (MapTable != null)
             {
-                string fullName = owner.IsGenericType ? owner.Namespace + "." + owner.Name : owner.FullName;
+                string fullName = owner.IsGenericType ? $"{owner.Namespace}.{owner.Name}" : owner.FullName;
                 object key = MapTable.GetAttributeInfoKey(fullName, propName);
                 infoRecord = MapTable.GetHashTableData(key) as BamlAttributeInfoRecord;
 
@@ -1289,7 +1289,7 @@ namespace System.Windows.Markup
                         if (isEvent)
                         {
                             // See if attached event first
-                            memberInfo = objectType.GetMethod("Add" + localName + "Handler",
+                            memberInfo = objectType.GetMethod($"Add{localName}Handler",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1310,7 +1310,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, false))
                                     {
-                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", objectType.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{objectType.Name}.{localName}", "Add Handler method");
                                     }
 #endif
                                 }
@@ -1333,7 +1333,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, objectType.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, $"{objectType.Name}.{localName}");
                                     }
 
 #if PBTCOMPILER
@@ -1344,7 +1344,7 @@ namespace System.Windows.Markup
                                         // check to make sure that the public type is accessible\allowed.
                                         if (!IsAllowedEvent(ei, false))
                                         {
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
                                         }
                                     }
                                     else
@@ -1356,7 +1356,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", objectType.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1368,7 +1368,7 @@ namespace System.Windows.Markup
                         else
                         {
                             // See if attached property first - start from a Setter
-                            memberInfo = objectType.GetMethod("Set" + localName,
+                            memberInfo = objectType.GetMethod($"Set{localName}",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1379,7 +1379,7 @@ namespace System.Windows.Markup
                             // Try read-only case (Getter only)
                             if (memberInfo == null)
                             {
-                                memberInfo = objectType.GetMethod("Get" + localName,
+                                memberInfo = objectType.GetMethod($"Get{localName}",
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
@@ -1392,7 +1392,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, false))
                             {
-                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", objectType.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{objectType.Name}.{localName}", "Set method");
                             }
 #endif
 
@@ -1410,7 +1410,7 @@ namespace System.Windows.Markup
                                         !objectType.IsAssignableFrom(owner))
                                     {
                                         ThrowException(nameof(SR.ParserAttachedPropInheritError),
-                                                       String.Format(CultureInfo.CurrentCulture, "{0}.{1}", objectType.Name, localName),
+                                                       $"{objectType.Name}.{localName}",
                                                        owner.Name);
                                     }
                                 }
@@ -1450,7 +1450,7 @@ namespace System.Windows.Markup
                         if (isEvent)
                         {
                             // See if attached event first
-                            memberInfo = baseType.GetMethod("Add" + localName + "Handler",
+                            memberInfo = baseType.GetMethod($"Add{localName}Handler",
                                 defaultBinding | BindingFlags.Static | BindingFlags.FlattenHierarchy);
 
                             // Make sure that we found a method of the right signature.
@@ -1469,7 +1469,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                     if (tryInternal && memberInfo != null && !IsAllowedMethod(mi, true))
                                     {
-                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", owner.Name + "." + localName, "Add Handler method");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "bubbling event", $"{owner.Name}.{localName}", "Add Handler method");
                                     }
 #endif
                                 }
@@ -1490,7 +1490,7 @@ namespace System.Windows.Markup
                                     if (!ReflectionHelper.IsPublicType(ei.EventHandlerType))
 #endif
                                     {
-                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, owner.Name + "." + localName);
+                                        ThrowException(nameof(SR.ParserEventDelegateTypeNotAccessible), ei.EventHandlerType.FullName, $"{owner.Name}.{localName}");
                                     }
 
 #if PBTCOMPILER
@@ -1502,7 +1502,7 @@ namespace System.Windows.Markup
                                         // since that would have all ready been done in the caller of this fucntion.
                                         if (!IsAllowedEvent(ei, true))
                                         {
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
                                         }
                                     }
                                     else
@@ -1514,7 +1514,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", owner.Name + "." + localName, "add");
+                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1526,7 +1526,7 @@ namespace System.Windows.Markup
                         else
                         {
                             // See if attached property first - start from a Setter
-                            memberInfo = baseType.GetMethod("Set" + localName,
+                            memberInfo = baseType.GetMethod($"Set{localName}",
                                 defaultBinding |
                                 BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
@@ -1537,7 +1537,7 @@ namespace System.Windows.Markup
                             // Try read-only case (Getter only)
                             if (memberInfo == null)
                             {
-                                memberInfo = baseType.GetMethod("Get" + localName,
+                                memberInfo = baseType.GetMethod($"Get{localName}",
                                     defaultBinding |
                                     BindingFlags.Static |
                                     BindingFlags.FlattenHierarchy);
@@ -1550,7 +1550,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             if (tryInternal && memberInfo != null && !IsAllowedMethod(memberInfo as MethodInfo, true))
                             {
-                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", owner.Name + "." + localName, "Set method");
+                                ThrowException(nameof(SR.ParserCantSetAttribute), "attached property", $"{owner.Name}.{localName}", "Set method");
                             }
 #endif
 
@@ -2214,7 +2214,7 @@ namespace System.Windows.Markup
                             Assembly assy = ReflectionHelper.LoadAssembly(usd.AssemblyName, null);
                             if (assy != null)
                             {
-                                string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", usd.ClrNamespace, typeName);
+                                string fullTypeName = $"{usd.ClrNamespace}.{typeName}";
                                 Type t = assy.GetType(fullTypeName);
                                 if (t != null)
                                     return t;
@@ -2234,7 +2234,7 @@ namespace System.Windows.Markup
                 Assembly assy = namespaces[i].Assembly;
                 if (assy != null)
                 {
-                    string fullTypeName = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1}", namespaces[i].ClrNamespace, typeName);
+                    string fullTypeName = $"{namespaces[i].ClrNamespace}.{typeName}";
                     Type t = assy.GetType(fullTypeName);
                     if (t != null)
                     {
@@ -2317,7 +2317,7 @@ namespace System.Windows.Markup
             }
 
             Debug.Assert(memberName != null);
-            string fieldName = memberName + "Property";
+            string fieldName = $"{memberName}Property";
             MemberInfo memberInfo = GetStaticMemberInfo(targetType, fieldName, true);
             Debug.Assert(memberInfo != null);
 
@@ -2414,7 +2414,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != localName,"null value passed for localName");
 
             // check if object is in the Hash.
-            String hashString = xmlNamespace + ":" + localName;
+            String hashString = $"{xmlNamespace}:{localName}";
 
             TypeAndSerializer typeAndSerializer =
                  _typeLookupFromXmlHashtable[hashString] as TypeAndSerializer;
@@ -2453,7 +2453,7 @@ namespace System.Windows.Markup
             Debug.Assert(null != localName,"null value passed for localName");
 
             // check if object is in the Hash.
-            String hashString = xmlNamespace + ":" + localName;
+            String hashString = $"{xmlNamespace}:{localName}";
 
             TypeAndSerializer typeAndSerializer =
                 _typeLookupFromXmlHashtable[hashString] as TypeAndSerializer;
@@ -2638,7 +2638,7 @@ namespace System.Windows.Markup
                     // Type loads may fail if all the prerequisite assemblies haven't been loaded
                     // yet.  In this case, try one more time after loaded all assemblies that the
                     // compiler may have told the XamlTypeMapper about.
-                    string fullTypeName = namespaceMap.ClrNamespace + "." + localName;
+                    string fullTypeName = $"{namespaceMap.ClrNamespace}.{localName}";
                     try
                     {
                         type = assembly.GetType(fullTypeName);
@@ -2736,7 +2736,7 @@ namespace System.Windows.Markup
                 return null;
             }
 
-            Type ithType = a.GetType(GeneratedNamespace + "." + GeneratedInternalTypeHelperClassName);
+            Type ithType = a.GetType($"{GeneratedNamespace}.{GeneratedInternalTypeHelperClassName}");
             if (ithType == null)
             {
                 // if GITH is not found, try to see if a root namespace was implicitly added to it.
@@ -2746,7 +2746,7 @@ namespace System.Windows.Markup
                 if (rnsa != null)
                 {
                     string rootNamespace = rnsa.Namespace;
-                    ithType = a.GetType(rootNamespace + "." + GeneratedNamespace + "." + GeneratedInternalTypeHelperClassName);
+                    ithType = a.GetType($"{rootNamespace}.{GeneratedNamespace}.{GeneratedInternalTypeHelperClassName}");
                 }
             }
 
@@ -3387,7 +3387,7 @@ namespace System.Windows.Markup
             string upperAssemblyName = assemblyFullName.ToUpper(
                                               TypeConverterHelper.InvariantEnglishUS);
 
-            String fullName = clrNamespaceFullName + "#" + upperAssemblyName;
+            String fullName = $"{clrNamespaceFullName}#{upperAssemblyName}";
 
             String ret;
 

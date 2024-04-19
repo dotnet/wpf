@@ -261,8 +261,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
         private void CheckDisposed()
         {
-            if (_disposed)
-                throw new ObjectDisposedException("Stream");
+            ObjectDisposedException.ThrowIf(_disposed, typeof(Stream));
         }
     }
 }

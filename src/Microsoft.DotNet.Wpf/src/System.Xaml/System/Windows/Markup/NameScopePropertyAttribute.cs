@@ -10,17 +10,17 @@ namespace System.Windows.Markup
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public sealed class NameScopePropertyAttribute : Attribute
     {
-        public NameScopePropertyAttribute (string name)
+        public NameScopePropertyAttribute(string name)
         {
             Name = name;
         }
 
-        public NameScopePropertyAttribute (string name, Type type) : this(name)
+        public NameScopePropertyAttribute(string name, Type? type) : this(name)
         {
             Type = type;
         }
 
         public string Name { get; }
-        public Type Type { get; }
+        public Type? Type { get; }
     }
 }

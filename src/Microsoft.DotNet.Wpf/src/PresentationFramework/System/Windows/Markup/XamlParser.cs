@@ -241,9 +241,9 @@ namespace System.Windows.Markup
                             lineNumber = xamlNode.LineNumber;
                             linePosition = xamlNode.LinePosition;
                         }
-                        newMessage = e.Message + " " + SR.Format(SR.ParserLineAndOffset,
-                                                  lineNumber.ToString(CultureInfo.CurrentCulture),
-                                                  linePosition.ToString(CultureInfo.CurrentCulture));
+                        newMessage = $"{e.Message} {SR.Format(SR.ParserLineAndOffset,
+                            lineNumber.ToString(CultureInfo.CurrentCulture),
+                            linePosition.ToString(CultureInfo.CurrentCulture))}";
                     }
                     XamlParseException parseException = new XamlParseException(newMessage, lineNumber, linePosition, e);
                     ParseError(parseException);

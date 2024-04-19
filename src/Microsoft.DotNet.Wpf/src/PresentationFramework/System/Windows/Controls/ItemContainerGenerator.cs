@@ -116,7 +116,7 @@ namespace System.Windows.Controls
                             if (label == null || label.Length == 0)
                                 label = Host.GetHashCode().ToString(CultureInfo.InvariantCulture);
                             EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info,
-                                                                 String.Format(CultureInfo.InvariantCulture, "ItemContainerGenerator for {0} {1} - {2} items", Host.GetType().Name, label, _itemsGenerated));
+                                                                 string.Create(CultureInfo.InvariantCulture, $"ItemContainerGenerator for {Host.GetType().Name} {label} - {_itemsGenerated} items"));
                         }
 #if GENERATOR_TRACE
                         _timer.End();
@@ -1075,7 +1075,7 @@ namespace System.Windows.Controls
                 sb.AppendLine(SR.Generator_Readme2);                          // The following differences...
                 foreach (string s in errors)
                 {
-                    sb.AppendFormat(enUS, "  {0}", s);
+                    sb.Append(enUS, $"  {s}");
                     sb.AppendLine();
                 }
                 sb.AppendLine();
@@ -1083,7 +1083,7 @@ namespace System.Windows.Controls
                 sb.AppendLine(SR.Generator_Readme3);                          // The following sources...
                 foreach (string s in sources)
                 {
-                    sb.AppendFormat(enUS, "  {0}", s);
+                    sb.Append(enUS, $"  {s}");
                     sb.AppendLine();
                 }
                 sb.AppendLine(SR.Generator_Readme4);                          // Starred sources are considered more likely
@@ -2333,7 +2333,7 @@ namespace System.Windows.Controls
             // TreeView virtualization requires that we call ClearContainer before setting
             // the DataContext to "Disconnected".  This gives the TreeViewItems a chance
             // to save "Item values" in the look-aside table, before that table is
-            // discarded.  
+            // discarded.
             host.ClearContainerForItem(container, item);
 
             if (container != item)

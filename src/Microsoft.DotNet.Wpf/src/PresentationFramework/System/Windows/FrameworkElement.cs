@@ -1995,7 +1995,7 @@ namespace System.Windows
 #region EventTracing
                         if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                         {
-                            string TypeAndName = String.Format(CultureInfo.InvariantCulture, "[{0}]{1}({2})",GetType().Name,dp.Name,base.GetHashCode());
+                            string TypeAndName = string.Create(CultureInfo.InvariantCulture, $"[{GetType().Name}]{dp.Name}({base.GetHashCode()})");
                             EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                 EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
                                                                 base.GetHashCode(), TypeAndName ); // base.GetHashCode() to avoid calling a virtual, which FxCop doesn't like.
@@ -4326,11 +4326,11 @@ namespace System.Windows
                 {
                     // Related: WPF popup windows appear in wrong place when
                     // windows is in Medium DPI and a search box changes height
-                    // 
+                    //
                     // ScrollViewer and ScrollContentPresenter depend on rounding their
                     // measurements in a consistent way.  Round the margins first - if we
                     // round the result of (size-margin), the answer might round up or
-                    // down depending on size. 
+                    // down depending on size.
                     marginWidth = RoundLayoutValue(marginWidth, dpi.DpiScaleX);
                     marginHeight = RoundLayoutValue(marginHeight, dpi.DpiScaleY);
                 }

@@ -491,8 +491,6 @@ namespace MS.Internal
         /// <returns></returns>
         private static int GetLengthOfParameterValue(ReadOnlySpan<char> s, int startIndex)
         {
-            Debug.Assert(s != null);
-
             int length;
             
             //if the parameter value does not start with a '"' then,

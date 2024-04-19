@@ -108,6 +108,27 @@ namespace Standard
         }
 
         /// <summary>
+        /// Whether the operating system version is greater than or equal to 6.2.
+        /// </summary>
+        public static bool IsOSWindows8OrNewer => _osVersion >= new Version(6, 2);
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 10.0* (build 10240).
+        /// </summary>
+        public static bool IsOSWindows10OrNewer => _osVersion.Build >= 10240;
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22000).
+        /// </summary>
+        public static bool IsOSWindows11OrNewer => _osVersion.Build >= 22000;
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22621).
+        /// </summary>
+        public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
+
+
+        /// <summary>
         /// Is this using WPF4?
         /// </summary>
         /// <remarks>

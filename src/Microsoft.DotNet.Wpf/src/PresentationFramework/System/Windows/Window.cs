@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +27,7 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
+using Microsoft.Win32;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
@@ -1905,12 +1907,16 @@ namespace System.Windows
         protected virtual void OnSourceInitialized(EventArgs e)
         {
             VerifyContextAndObjectState();
+
+            // Setting WindowBackdrop 
+            WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
+
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
 
         /// <summary>
-        ///     This even fires when window is activated. This event is non cancelable and is
+        ///     This event fires when window is activated. This event is non cancelable and is
         ///     for user infromational purposes
         /// </summary>
         /// <remarks>
@@ -2509,6 +2515,12 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
+            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentThemeEnabled)
+            {
+                ThemeManager.InitializeFluentTheme();
+                ThemeManager.ApplySystemTheme(this, true);
+            }
+
             // Sub classes can have different intialization. RBW does very minimalistic
             // stuff in its override
             SetupInitialState(requestedTop, requestedLeft, requestedWidth, requestedHeight);
@@ -3011,6 +3023,42 @@ namespace System.Windows
         //
         //----------------------------------------------
         #region Internal Properties
+
+        /// <summary>
+        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
+        /// </summary>
+        internal WindowBackdropType WindowBackdropType
+        {
+            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
+            set => SetValue(WindowBackdropTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="WindowBackdropType"/>.
+        /// </summary>
+        internal static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
+            nameof(WindowBackdropType),
+            typeof(WindowBackdropType),
+            typeof(Window),
+            new PropertyMetadata(
+                WindowBackdropType.MainWindow, 
+                new PropertyChangedCallback(OnBackdropTypeChanged)));
+
+        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not Window window)
+            {
+                return;
+            }
+
+            if (e.OldValue == e.NewValue)
+            {
+                return;
+            }
+
+            WindowBackdropManager.SetBackdrop(window, (WindowBackdropType)e.NewValue);
+        }
+
 
         internal bool HwndCreatedButNotShown
         {
@@ -3529,6 +3577,19 @@ namespace System.Windows
                 else
                 {
                     App.NonAppWindowsInternal.Add(this);
+                }
+            }
+
+            // TODO : Remove when Fluent theme is enabled by default
+            if (ThemeManager.IsFluentThemeEnabled)
+            {
+                if(WindowBackdropManager.IsBackdropEnabled)
+                {
+                    SetResourceReference(StyleProperty, typeof(Window));
+                }
+                else
+                {
+                    SetResourceReference(StyleProperty, "BackdropDisabledWindowStyle");
                 }
             }
         }
@@ -7800,8 +7861,6 @@ namespace System.Windows
 
         #endregion DTypeThemeStyleKey
     }
-
-
 
     #region Enums
 

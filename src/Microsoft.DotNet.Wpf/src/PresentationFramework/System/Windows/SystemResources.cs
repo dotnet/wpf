@@ -28,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Resources;
+using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -53,7 +54,6 @@ namespace System.Windows
         // ------------------------------------------------
 
         #region Methods
-
         /// <summary>
         ///     Returns a resource for the given key type from the system resources collection.
         /// </summary>
@@ -1412,6 +1412,11 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
+                    
+                    if(ThemeManager.IsFluentThemeEnabled)
+                    {
+                        ThemeManager.ApplySystemTheme();
+                    }
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:
@@ -2027,8 +2032,8 @@ namespace System.Windows
 
         #endregion Properties
     }
-
 }
+
 
 
 

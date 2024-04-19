@@ -63,7 +63,7 @@ namespace System.Windows.Controls
             PasswordCharProperty.OverrideMetadata(typeof(PasswordBox),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPasswordCharChanged)));
 
-            // Declaree listener for Padding property
+            // Declare listener for Padding property
             Control.PaddingProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPaddingChanged)));
 
@@ -854,7 +854,7 @@ namespace System.Windows.Controls
             // PasswordBox only accepts plain text, so change TextEditor's default to that.
             _textEditor.AcceptsRichContent = false;
 
-            // PasswordBox does not accetps tabs.
+            // PasswordBox does not accepts tabs.
             _textEditor.AcceptsTab = false;
         }
 

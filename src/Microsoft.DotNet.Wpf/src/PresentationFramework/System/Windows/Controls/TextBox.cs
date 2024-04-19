@@ -76,6 +76,8 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+            
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -97,6 +99,7 @@ namespace System.Windows.Controls
 
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
+
         }
 
         #endregion Constructors
@@ -945,6 +948,50 @@ namespace System.Windows.Controls
             {
                 return new Typography(this);
             }
+        }
+
+        /// <summary>
+        /// Property for <see cref="TemplateButtonCommand"/>.
+        /// </summary>
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+            nameof(TemplateButtonCommand),
+            typeof(RoutedCommand),
+            typeof(TextBox),
+            new PropertyMetadata(EditingCommands.Clear)
+        );
+
+        #region Properties
+
+        /// <summary>
+        /// Command triggered after clicking the button.
+        /// </summary>
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
+
+        #endregion
+
+        /// <summary>
+        /// Triggered when the user clicks the clear text button.
+        /// </summary>
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute =  !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
+        {
+            if (Text.Length > 0)
+                Text = string.Empty;
         }
 
         #endregion Public Properties
@@ -1919,6 +1966,7 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
 
         #endregion Private Fields
     }

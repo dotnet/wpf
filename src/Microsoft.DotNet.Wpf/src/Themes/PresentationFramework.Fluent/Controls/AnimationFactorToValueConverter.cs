@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace FluentWindows.Controls
+namespace Fluent.Controls
 {
     internal class AnimationFactorToValueConverter : IMultiValueConverter
     {

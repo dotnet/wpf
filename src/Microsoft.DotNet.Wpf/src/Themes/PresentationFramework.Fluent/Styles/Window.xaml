@@ -8,7 +8,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:FluentWindows.Controls">
+    xmlns:controls="clr-namespace:Fluent.Controls">
 
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Window}">

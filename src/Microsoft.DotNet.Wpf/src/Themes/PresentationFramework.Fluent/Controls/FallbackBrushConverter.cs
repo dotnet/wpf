@@ -7,7 +7,7 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Media;
 
-namespace FluentWindows.Controls
+namespace Fluent.Controls
 {
     internal class FallbackBrushConverter : IValueConverter
     {

@@ -131,15 +131,15 @@ namespace MS.Internal
         }
     
     
-        // Switch to opt-out FluentWindows theme Window Backdrop feature
-        internal const string DisableFluentWindowsThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentWindowsThemeWindowBackdrop";
-        private static int _DisableFluentWindowsThemeWindowBackdrop;
-        public static bool DisableFluentWindowsThemeWindowBackdrop
+        // Switch to opt-out Fluent theme Window Backdrop feature
+        internal const string DisableFluentThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop";
+        private static int _DisableFluentThemeWindowBackdrop;
+        public static bool DisableFluentThemeWindowBackdrop
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return LocalAppContext.GetCachedSwitchValue(DisableFluentWindowsThemeWindowBackdropSwitchName, ref _DisableFluentWindowsThemeWindowBackdrop);
+                return LocalAppContext.GetCachedSwitchValue(DisableFluentThemeWindowBackdropSwitchName, ref _DisableFluentThemeWindowBackdrop);
             }
         }
     }

@@ -249,9 +249,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xaml.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests\System.Xaml.Tests.csproj", "{B2F2A89C-55C9-41B1-A645-0948609BD8BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.FluentWindows", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.FluentWindows\PresentationFramework.FluentWindows.csproj", "{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluent", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj", "{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.FluentWindows-ref", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.FluentWindows\ref\PresentationFramework.FluentWindows-ref.csproj", "{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluent-ref", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj", "{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

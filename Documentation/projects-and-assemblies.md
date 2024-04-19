@@ -121,8 +121,8 @@ The following assemblies are being produced today:
     |   PresentationFramework.pdb 
     |   PresentationFramework.Royale.dll
     |   PresentationFramework.Royale.pdb
-    |   PresentationFramework.FluentWindows.dll
-    |   PresentationFramework.FluentWindows.pdb
+    |   PresentationFramework.Fluent.dll
+    |   PresentationFramework.Fluent.pdb
     |   PresentationUI.dll
     |   PresentationUI.pdb
     |   ReachFramework.dll
@@ -454,8 +454,8 @@ src\Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj
 src\Themes\PresentationFramework.Luna\ref\PresentationFramework.Luna-ref.csproj
 src\Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj
 src\Themes\PresentationFramework.Royale\ref\PresentationFramework.Royale-ref.csproj
-src\Themes\PresentationFramework.FluentWindows\PresentationFramework.FluentWindows.csproj
-src\Themes\PresentationFramework.FluentWindows\ref\PresentationFramework.FluentWindows-ref.csproj
+src\Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj
+src\Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj
 src\UIAutomation\UIAutomationClient\UIAutomationClient.csproj
 src\UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj
 src\UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj

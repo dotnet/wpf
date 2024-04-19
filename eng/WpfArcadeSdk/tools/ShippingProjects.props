@@ -28,7 +28,7 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
-      PresentationFramework.FluentWindows;
+      PresentationFramework.Fluent;
       WindowsFormsIntegration;
       PenImc;
       wpfgfx;
@@ -99,7 +99,7 @@
       PresentationFramework.Classic-ref;
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale-ref;
-      PresentationFramework.FluentWindows-ref;
+      PresentationFramework.Fluent-ref;
       PresentationUI-ref;
       System.Printing-ref;
       System.Windows.Controls.Ribbon-ref;
@@ -138,8 +138,8 @@
       PresentationFramework.Luna-ref;
       PresentationFramework.Royale;
       PresentationFramework.Royale-ref;
-      PresentationFramework.FluentWindows;
-      PresentationFramework.FluentWindows-ref;
+      PresentationFramework.Fluent;
+      PresentationFramework.Fluent-ref;
       PresentationUI;
       ReachFramework;
       ReachFramework-ref;

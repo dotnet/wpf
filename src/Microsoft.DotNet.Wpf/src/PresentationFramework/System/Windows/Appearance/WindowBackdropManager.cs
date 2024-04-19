@@ -133,8 +133,8 @@ internal static class WindowBackdropManager
     #region Internal Properties
 
     internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
-                                                                        ThemeManager.IsFluentWindowsThemeEnabled &&
-                                                                        !FrameworkAppContextSwitches.DisableFluentWindowsThemeWindowBackdrop;
+                                                                        ThemeManager.IsFluentThemeEnabled &&
+                                                                        !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;
 

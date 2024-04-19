@@ -2515,9 +2515,9 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentWindowsThemeEnabled)
+            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentThemeEnabled)
             {
-                ThemeManager.InitializeFluentWindowsTheme();
+                ThemeManager.InitializeFluentTheme();
                 ThemeManager.ApplySystemTheme(this, true);
             }
 
@@ -3580,8 +3580,8 @@ namespace System.Windows
                 }
             }
 
-            // TODO : Remove when FluentWindows theme is enabled by default
-            if (ThemeManager.IsFluentWindowsThemeEnabled)
+            // TODO : Remove when Fluent theme is enabled by default
+            if (ThemeManager.IsFluentThemeEnabled)
             {
                 if(WindowBackdropManager.IsBackdropEnabled)
                 {

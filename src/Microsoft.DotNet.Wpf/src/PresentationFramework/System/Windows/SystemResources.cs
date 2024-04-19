@@ -1413,7 +1413,7 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
                     
-                    if(ThemeManager.IsFluentWindowsThemeEnabled)
+                    if(ThemeManager.IsFluentThemeEnabled)
                     {
                         ThemeManager.ApplySystemTheme();
                     }

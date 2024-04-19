@@ -15,14 +15,14 @@ internal static class ThemeManager
 
     static ThemeManager()
     {
-        // TODO : Temprorary way of checking if setting FluentWindows theme enabled flag. Provide a property for theme switch.
+        // TODO : Temprorary way of checking if setting Fluent theme enabled flag. Provide a property for theme switch.
         if (Application.Current != null)
         {
             foreach (ResourceDictionary mergedDictionary in Application.Current.Resources.MergedDictionaries)
             {
-                if (mergedDictionary.Source != null && mergedDictionary.Source.ToString().EndsWith("FluentWindows.xaml"))
+                if (mergedDictionary.Source != null && mergedDictionary.Source.ToString().EndsWith("Fluent.xaml"))
                 {
-                    _isFluentWindowsThemeEnabled = true;
+                    _isFluentThemeEnabled = true;
                     break;
                 }
             }
@@ -33,9 +33,9 @@ internal static class ThemeManager
 
     #region Internal Methods
 
-    internal static void InitializeFluentWindowsTheme()
+    internal static void InitializeFluentTheme()
     {
-        if(IsFluentWindowsThemeEnabled && !_isFluentWindowsThemeInitialized)
+        if(IsFluentThemeEnabled && !_isFluentThemeInitialized)
         {
             _currentApplicationTheme = GetSystemTheme();
             _currentUseLightMode = IsSystemThemeLight();
@@ -44,7 +44,7 @@ internal static class ThemeManager
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = themeColorResourceUri });
 
             DwmColorization.UpdateAccentColors();
-            _isFluentWindowsThemeInitialized = true;
+            _isFluentThemeInitialized = true;
         }
     }
 
@@ -183,7 +183,7 @@ internal static class ThemeManager
     }
 
     /// <summary>
-    ///  Update the FluentWindows theme resources with the values in new dictionary.
+    ///  Update the Fluent theme resources with the values in new dictionary.
     /// </summary>
     /// <param name="dictionaryUri"></param>
     private static void AddOrUpdateThemeResources(Uri dictionaryUri)
@@ -212,10 +212,9 @@ internal static class ThemeManager
 
     #region Internal Properties
 
+    internal static bool IsFluentThemeEnabled => _isFluentThemeEnabled;
     // TODO : Find a better way to deal with different default font sizes for different themes.
-    internal static double DefaultFluentWindowsThemeFontSize => 14;
-
-    internal static bool IsFluentWindowsThemeEnabled => _isFluentWindowsThemeEnabled;
+    internal static double DefaultFluentThemeFontSize => 14;
 
     #endregion
 
@@ -236,7 +235,7 @@ internal static class ThemeManager
             };
         }
 
-        return new Uri("pack://application:,,,/PresentationFramework.FluentWindows;component/Resources/Theme/" + themeColorFileName, UriKind.Absolute);
+        return new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/" + themeColorFileName, UriKind.Absolute);
     }
 
     #endregion
@@ -251,9 +250,9 @@ internal static class ThemeManager
 
     private static bool _currentUseLightMode = true;
 
-    private static bool _isFluentWindowsThemeEnabled = false;
+    private static bool _isFluentThemeEnabled = false;
 
-    private static bool _isFluentWindowsThemeInitialized = false;
+    private static bool _isFluentThemeInitialized = false;
 
     #endregion
 }

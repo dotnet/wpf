@@ -1,33 +1,23 @@
-<!-- FluentWindows -->
+<!-- Fluent -->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>Fluent</AssemblyName>
+    <PackageId>Fluent-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
+
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
 
-    <!-- THEME_FLUENTWINDOWS #DEFINE is used in KnownTypeHelper.cs -->
-    <DefineConstants>$(DefineConstants);THEME_FLUENTWINDOWS</DefineConstants>
-    <!-- Explicitly include source files to compile -->
-    <EnableDefaultItems>false</EnableDefaultItems>
+    <!-- THEME_Fluent #DEFINE is used in KnownTypeHelper.cs -->
+    <DefineConstants>$(DefineConstants);THEME_Fluent</DefineConstants>
 
-    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll -->
-    <InternalMarkupCompilation>true</InternalMarkupCompilation>
-    <NoInternalTypeHelper>true</NoInternalTypeHelper>
-    <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
-  <!-- Compile Targets -->
   <ItemGroup>
-    <Page Include="**\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <!-- Compile Items -->
-  <ItemGroup>
-    <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
-    <Compile Include="Controls\FallbackBrushConverter.cs" />
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
   </ItemGroup>
 
   <!-- Project References -->
@@ -37,9 +27,6 @@
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.FluentWindows\ref\PresentationFramework.FluentWindows-ref.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
 
   <!-- Minimal set of .NET core references -->
@@ -60,6 +47,7 @@
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.ObjectModel" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
+    <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
     <NetCoreReference Include="System.Security.Cryptography" />
@@ -70,14 +58,9 @@
     <NetCoreReference Include="System.Threading.Thread" />
     <NetCoreReference Include="System.Threading.ThreadPool" />
 
-    <!-- Additional references beyond the minimal set for FluentWindows -->
+    <!-- Additional references beyond the minimal set for Fluent -->
     <NetCoreReference Include="System.ComponentModel.TypeConverter" />
     <NetCoreReference Include="System.Collections.Concurrent" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Styles\Menu.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 
 </Project>

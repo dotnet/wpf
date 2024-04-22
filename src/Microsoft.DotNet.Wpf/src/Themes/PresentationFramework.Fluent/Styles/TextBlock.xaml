@@ -9,8 +9,38 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="FontSize" Value="14" />
-    </Style>
+  <sys:Double x:Key="CaptionTextBlockFontSize">12</sys:Double>
+  <sys:Double x:Key="BodyTextBlockFontSize">14</sys:Double>
+  <sys:Double x:Key="SubtitleTextBlockFontSize">20</sys:Double>
+  <sys:Double x:Key="TitleTextBlockFontSize">28</sys:Double>
+  <sys:Double x:Key="TitleLargeTextBlockFontSize">40</sys:Double>
+  <sys:Double x:Key="DisplayTextBlockFontSize">68</sys:Double>
+
+  <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+    <Setter Property="FontSize" Value="{StaticResource BodyTextBlockFontSize}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="LineStackingStrategy" Value="MaxHeight" />
+  </Style>
+  <Style x:Key="CaptionTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontSize" Value="{StaticResource CaptionTextBlockFontSize}" />
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+  <Style x:Key="BodyTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontWeight" Value="Normal" />
+  </Style>
+  <Style x:Key="BodyStrongTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+  <Style x:Key="SubtitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontSize" Value="{StaticResource SubtitleTextBlockFontSize}" />
+  </Style>
+  <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontSize" Value="{StaticResource TitleTextBlockFontSize}" />
+  </Style>
+  <Style x:Key="TitleLargeTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontSize" Value="{StaticResource TitleLargeTextBlockFontSize}" />
+  </Style>
+  <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="FontSize" Value="{StaticResource DisplayTextBlockFontSize}" />
+  </Style>
 </ResourceDictionary>

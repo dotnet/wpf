@@ -358,6 +358,14 @@ namespace System.Windows.Automation.Peers
                     if (child is UIElement { Visibility: not Visibility.Visible })
                     {
                         position -= 1;
+                        continue;
+                    }
+
+                    var container = itemsControl.ItemContainerGenerator.ContainerFromItem(child);
+                    if (container == null || container is UIElement { Visibility: not Visibility.Visible })
+                    {
+                        position -= 1;
+                        continue;
                     }
                 }
             }
@@ -385,6 +393,14 @@ namespace System.Windows.Automation.Peers
                     if (child is UIElement { Visibility: not Visibility.Visible })
                     {
                         size -= 1;
+                        continue;
+                    }
+
+                    var container = itemsControl.ItemContainerGenerator.ContainerFromItem(child);
+                    if (container == null || container is UIElement { Visibility: not Visibility.Visible })
+                    {
+                        size -= 1;
+                        continue;
                     }
                 }
             }

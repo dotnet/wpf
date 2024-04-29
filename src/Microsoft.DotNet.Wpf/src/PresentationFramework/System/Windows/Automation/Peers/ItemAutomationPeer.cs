@@ -343,7 +343,7 @@ namespace System.Windows.Automation.Peers
             if (itemsControl.IsGrouping)
             {
                 int sizeOfGroup;
-                position = FindPositionInGroup(itemCollection.Groups, position, out sizeOfGroup);
+                position = FindPositionInGroup(itemsControl,itemCollection.Groups, position, out sizeOfGroup);
             }
             else
             {
@@ -381,7 +381,7 @@ namespace System.Windows.Automation.Peers
             if (itemsControl.IsGrouping)
             {
                 int position = itemCollection.IndexOf(item);
-                FindPositionInGroup(itemCollection.Groups, position, out size);
+                FindPositionInGroup(itemsControl,itemCollection.Groups, position, out size);
             }
             else
             {
@@ -416,11 +416,13 @@ namespace System.Windows.Automation.Peers
         /// <param name="position">The position of the item in the flattened item collection</param>
         /// <param name="sizeOfGroup">out parameter to return the size of the group we found</param>
         /// <returns>The position of the item relative to the found group</returns>
-        private static int FindPositionInGroup(ReadOnlyObservableCollection<object> collection, int position, out int sizeOfGroup)
+        private static int FindPositionInGroup(ItemsControl itemsControl,ReadOnlyObservableCollection<object> collection, int position, out int sizeOfGroup)
         {
             CollectionViewGroupInternal currentGroup = null;
             ReadOnlyObservableCollection<object> newCollection = null;
             sizeOfGroup = AutomationProperties.AutomationSizeOfSetDefault;
+            int nonVisible = 0;
+            int count = 0;
             do
             {
                 newCollection = null;
@@ -437,6 +439,34 @@ namespace System.Windows.Automation.Peers
                         else
                         {
                             newCollection = currentGroup.Items;
+                        }                 
+                        foreach (var child in group.Items)
+                        {
+                            
+
+                            if (child is UIElement { Visibility: not Visibility.Visible })
+                            {
+                                sizeOfGroup -= 1;
+                                if(count < position)
+                                {
+                                    nonVisible++;
+                                }
+                                count++;
+                                continue;
+                            }
+
+                            var container = itemsControl.ItemContainerGenerator.ContainerFromItem(child);
+                            if (container == null || container is UIElement { Visibility: not Visibility.Visible })
+                            {
+                                sizeOfGroup -= 1;
+                                if(count < position)
+                                {
+                                    nonVisible++;
+                                }
+                                count++;
+                                continue;
+                            }
+                            count++;
                         }
                         break;
                     }
@@ -447,7 +477,7 @@ namespace System.Windows.Automation.Peers
                 }
             } while ((collection = newCollection) != null);
 
-            return position;
+            return position - nonVisible;
         }
 
         ///

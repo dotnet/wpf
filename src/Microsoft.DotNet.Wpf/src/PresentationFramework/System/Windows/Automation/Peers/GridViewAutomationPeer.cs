@@ -195,7 +195,26 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         int IGridProvider.RowCount
         {
-            get { return _listview.Items.Count; }
+            get 
+            { 
+                int rowcount = _listview.Items.Count;
+                foreach(var item in _listview.Items)
+                {
+                    if (item is UIElement { Visibility: not Visibility.Visible })
+                    {
+                        rowcount -= 1;
+                        continue;
+                    }
+        
+                    var container = _listview.ItemContainerGenerator.ContainerFromItem(item);
+                    if (container == null || container is UIElement { Visibility: not Visibility.Visible })
+                    {
+                        rowcount -= 1;
+                        continue;
+                    }
+                }
+                return rowcount;
+            }
         }
 
         /// <summary>

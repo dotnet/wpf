@@ -1739,8 +1739,9 @@ namespace System.Windows
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    _keyOrValue = value;
                     RemoveFromDictionary();
+                    // Update after removal from dictionary as we need the key for proper removal
+                    _keyOrValue = value;
                 }
 
                 // Freeze if this value originated from a style or template
@@ -2032,9 +2033,103 @@ namespace System.Windows
 
         #endregion Properties
     }
+
+    internal class DeferredResourceReferenceList
+    {
+        private readonly object _syncRoot = new();
+        private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
+        private int _potentiallyDeadEntryCount = 0;
+
+        public void AddOrSet(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries[deferredResourceReference.Key] = new WeakReference<DeferredResourceReference>(deferredResourceReference);
+            }
+        }
+
+        public void Remove(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries.Remove(deferredResourceReference.Key);
+            }
+        }
+
+        internal DeferredResourceReference Get(object resourceKey)
+        {
+            lock (_syncRoot)
+            {
+                _entries.TryGetValue(resourceKey, out var weakReference);
+
+                if (weakReference is null)
+                {
+                    return null;
+                }
+
+                if (weakReference.TryGetTarget(out var deferredResourceReference))
+                {
+                    return deferredResourceReference;
+                }
+                else
+                {
+                    ++_potentiallyDeadEntryCount;
+                }
+            }
+
+            PurgeIfRequired();
+
+            return null;
+        }
+
+        internal void ChangeDictionary(ResourceDictionary resourceDictionary)
+        {
+            lock (_syncRoot)
+            {
+                foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
+                {
+                    if (weakReference.TryGetTarget(out var deferredResourceReference))
+                    {
+                        deferredResourceReference.Dictionary = resourceDictionary;
+                    }
+                    else
+                    {
+                        ++_potentiallyDeadEntryCount;
+                    }
+                }
+            }
+
+            PurgeIfRequired();
+        }
+
+        private void PurgeIfRequired()
+        {
+            if (_potentiallyDeadEntryCount > 25)
+            {
+                Purge();
+            }
+        }
+
+        private void Purge()
+        {
+            lock (_syncRoot)
+            {
+                List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
+                _potentiallyDeadEntryCount = 0;
+
+                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
+                {
+                    if (entry.Value.TryGetTarget(out _) == false)
+                    {
+                        deadKeys.Add(entry.Key);
+                    }
+                }
+
+                foreach (object deadKey in deadKeys)
+                {
+                    _entries.Remove(deadKey);
+                }
+            }
+        }
+    }
 }
-
-
-
-
-

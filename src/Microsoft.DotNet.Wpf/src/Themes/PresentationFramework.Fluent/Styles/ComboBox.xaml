@@ -246,7 +246,8 @@
                                             FontSize="{TemplateBinding FontSize}"
                                             Foreground="{TemplateBinding Foreground}"
                                             IsReadOnly="{TemplateBinding IsReadOnly}"
-                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}" />
+                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}"
+                                            AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" />
                                     </Grid>
                                 </Grid>
                                 <Popup

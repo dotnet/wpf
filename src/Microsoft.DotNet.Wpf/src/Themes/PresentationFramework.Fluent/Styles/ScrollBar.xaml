@@ -139,6 +139,7 @@
                 Command="ScrollBar.LineUpCommand"
                 Content="{StaticResource CaretUpGlyph}"
                 Opacity="0"
+                AutomationProperties.Name="Scroll Up"
                 Style="{StaticResource ScrollBarLineButtonStyle}" />
             <Track
                 x:Name="PART_Track"
@@ -168,6 +169,7 @@
                 Command="ScrollBar.LineDownCommand"
                 Content="{StaticResource CaretDownGlyph}"
                 Opacity="0"
+                AutomationProperties.Name="Scroll Down"
                 Style="{StaticResource ScrollBarLineButtonStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -259,6 +261,7 @@
                 Command="ScrollBar.LineLeftCommand"
                 Content="{StaticResource CaretLeftGlyph}"
                 Opacity="0"
+                AutomationProperties.Name="Scroll Left"
                 Style="{StaticResource ScrollBarLineButtonStyle}" />
             <Track
                 x:Name="PART_Track"
@@ -286,6 +289,7 @@
                 Command="ScrollBar.LineRightCommand"
                 Content="{StaticResource CaretRightGlyph}"
                 Opacity="0"
+                AutomationProperties.Name="Scroll Right"
                 Style="{StaticResource ScrollBarLineButtonStyle}" />
         </Grid>
         <ControlTemplate.Triggers>

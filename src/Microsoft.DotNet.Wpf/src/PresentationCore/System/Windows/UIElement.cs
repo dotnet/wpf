@@ -1885,7 +1885,6 @@ namespace System.Windows
         /// <summary>
         ///     Adds a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
             ArgumentNullException.ThrowIfNull(d);
@@ -1922,7 +1921,6 @@ namespace System.Windows
         /// <summary>
         ///     Removes a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
             ArgumentNullException.ThrowIfNull(d);
@@ -2379,7 +2377,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)
@@ -3133,7 +3130,6 @@ namespace System.Windows
         /// Opens the DrawingVisual for rendering. The returned DrawingContext can be used to
         /// render into the DrawingVisual.
         /// </summary>
-        [FriendAccessAllowed]
         internal DrawingContext RenderOpen()
         {
             return new VisualDrawingContext(this);
@@ -4105,7 +4101,6 @@ namespace System.Windows
         /// <param name="value"></param>
         /// To keep PersistId from being serialized the set has been removed from the property and a separate
         /// set method has been created.
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void SetPersistId(int value)
         {
             _persistId = value;
@@ -4128,7 +4123,6 @@ namespace System.Windows
         internal Rect PreviousArrangeRect
         {
             //  called from PresentationFramework!System.Windows.Controls.Primitives.LayoutInformation.GetLayoutSlot()
-            [FriendAccessAllowed]
             get
             {
                 return _finalRect;

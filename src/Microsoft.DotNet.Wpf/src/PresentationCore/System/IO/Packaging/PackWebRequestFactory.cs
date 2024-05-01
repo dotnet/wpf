@@ -136,7 +136,6 @@ namespace System.IO.Packaging
         // However, these two functions regress 700k working set in System.dll and System.xml.dll
         //  which is mostly for logging and config.
         // This helper function provides a way to bypass the regression
-        [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
             if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))

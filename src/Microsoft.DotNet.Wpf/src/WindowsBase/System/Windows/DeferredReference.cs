@@ -10,7 +10,6 @@
 
 namespace System.Windows
 {
-    using MS.Internal.WindowsBase;  // FriendAccessAllowed
 
     // Proxy object passed to the property system to delay load values.
     //
@@ -23,7 +22,6 @@ namespace System.Windows
     // and also to CoerceValue callbacks on the owner class only.  THEREFORE,
     // IT IS CRITICAL THAT WE NEVER ASSIGN A DEFERREDREFERENCE INSTANCE
     // TO A NON-INTERNAL CLASS.
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal abstract class DeferredReference
     {
         //------------------------------------------------------

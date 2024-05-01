@@ -63,7 +63,6 @@ using MS.Internal.AppModel;
     // a FontCache service, but over time other parts of WPF might
     // have started to depend on this, so we leave it as-is for 
     // compat. 
-    [FriendAccessAllowed] 
 #endif
 
 

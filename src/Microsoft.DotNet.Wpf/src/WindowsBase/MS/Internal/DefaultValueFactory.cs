@@ -7,7 +7,6 @@
 // Description: Abstract base class for all default value factories
 //
 
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
 using System;
 using System.Windows;
 
@@ -28,7 +27,6 @@ namespace MS.Internal
     // This is done by simply creating a new instance of the default value type in 
     // the call to CreateDefaultValue.  
     // </summary>
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     internal abstract class DefaultValueFactory
     {
         /// <summary>

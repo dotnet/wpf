@@ -358,7 +358,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if (IsKeyboardFocusWithin)

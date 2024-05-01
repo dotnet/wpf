@@ -9,11 +9,8 @@ using System.Windows.Automation.Provider;
 
 using System.Security;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal.Automation
 {
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class InteropAutomationProvider: IRawElementProviderFragmentRoot
     {
         #region Constructors

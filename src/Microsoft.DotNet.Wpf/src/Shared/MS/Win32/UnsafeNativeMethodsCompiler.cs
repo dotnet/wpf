@@ -16,9 +16,6 @@ namespace MS.Win32.Compile
     // Keep unsafe native methods used by Compiler related classes.
     // It can be shared by PresentationBuildTasks and PresentationFramework
     //
-#if !PBTCOMPILER
-    [MS.Internal.PresentationCore.FriendAccessAllowed] // Used by both PBT and PresentationFramework
-#endif
     internal static partial class UnsafeNativeMethods {
 
         //------------------------------------------------------

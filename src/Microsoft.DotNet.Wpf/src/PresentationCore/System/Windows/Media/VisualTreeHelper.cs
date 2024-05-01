@@ -15,7 +15,6 @@ using System.Collections;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Media;
-using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
 
@@ -47,7 +46,6 @@ namespace System.Windows.Media
         /// <remarks>
 		/// This could be considered to be made public
 		/// </remarks>
-        [FriendAccessAllowed]
         internal static bool IsVisualType(DependencyObject reference)
         {
             return (reference is Visual) || (reference is Visual3D);
@@ -151,7 +149,6 @@ namespace System.Windows.Media
         /// It is also different in that null is allowed as an argument, in which case
         /// it returns null.
         /// </summary>
-        [FriendAccessAllowed]
         internal static DependencyObject GetParentInternal(DependencyObject reference)
         {
             Visual visual;
@@ -446,7 +443,6 @@ namespace System.Windows.Media
 
         /// <summary>
         /// </summary>
-        [FriendAccessAllowed]
         internal static HitTestResult HitTest(Visual reference, Point point, bool include2DOn3D)
         {
             CheckVisualReferenceArgument(reference);

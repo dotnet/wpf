@@ -60,7 +60,6 @@ namespace System.Windows
         ///     Helper method for the public FromSystemType call but without
         ///     the expensive IsAssignableFrom parameter validation.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static DependencyObjectType FromSystemTypeInternal(Type systemType)
         {
             Debug.Assert(systemType != null && typeof(DependencyObject).IsAssignableFrom(systemType), "Invalid systemType argument");

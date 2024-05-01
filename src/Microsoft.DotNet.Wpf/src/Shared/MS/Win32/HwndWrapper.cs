@@ -22,7 +22,6 @@ using System.Globalization; // CultureInfo.InvariantCulture
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
@@ -31,7 +30,6 @@ using MS.Internal.YourAssemblyName;
 
 namespace MS.Win32
 {
-    [FriendAccessAllowed]
     internal class HwndWrapper : DispatcherObject, IDisposable
     {
         static HwndWrapper()

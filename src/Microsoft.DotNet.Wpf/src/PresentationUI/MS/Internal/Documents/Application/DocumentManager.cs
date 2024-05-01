@@ -11,8 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security;
 
-using MS.Internal.PresentationUI;
-
 namespace MS.Internal.Documents.Application
 {
 /// <summary>
@@ -34,7 +32,6 @@ namespace MS.Internal.Documents.Application
 /// 
 /// Example: FileController should never see RightsDocument.
 /// </remarks>
-[FriendAccessAllowed]
 internal sealed class DocumentManager 
     : ChainOfResponsiblity<IDocumentController, Document>
 {

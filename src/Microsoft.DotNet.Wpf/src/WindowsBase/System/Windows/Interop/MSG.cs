@@ -7,8 +7,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
-using MS.Internal.WindowsBase;
-    
+
 namespace System.Windows.Interop
 {
     /// <summary>
@@ -41,7 +40,6 @@ namespace System.Windows.Interop
     [Serializable]
     public struct MSG
     {
-        [FriendAccessAllowed] // Built into Base, used by Core or Framework.
         internal MSG(IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, int time, int pt_x, int pt_y)
         {
             _hwnd = hwnd;

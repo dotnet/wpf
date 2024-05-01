@@ -50,7 +50,7 @@ using System;
 using System.Collections.Generic;   // For Dictionary<string, string>
 using System.Text;                  // For StringBuilder
 using System.Windows;               // For Exception strings - SR
-using MS.Internal.WindowsBase;      // For FriendAccessAllowed
+using MS.Internal.WindowsBase;
 using System.Diagnostics;           // For Debug.Assert
 
 namespace MS.Internal
@@ -58,7 +58,6 @@ namespace MS.Internal
     /// <summary>
     /// Content Type class
     /// </summary>
-    [FriendAccessAllowed]
     internal sealed class ContentType
     {       
         //------------------------------------------------------

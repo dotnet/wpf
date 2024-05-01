@@ -25,9 +25,6 @@ namespace MS.Utility
     *****************************************************************************
     \***************************************************************************/
 
-    using MS.Internal.PresentationCore;
-
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class DTypeMap
     {
     

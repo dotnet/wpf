@@ -5,7 +5,6 @@
 // Description: This is a wrapper for DocumentPropertiesDialog, which caches the values which
 //              are displayed in the Dialog, and controls security access.
 
-using MS.Internal.PresentationUI;           // For CriticalDataForSet
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -20,7 +19,6 @@ namespace MS.Internal.Documents.Application
     /// <summary>
     /// Singleton wrapper class for the DocumentPropertiesDialog.
     /// </summary>
-    [FriendAccessAllowed]
     internal sealed class DocumentProperties
     {
         //------------------------------------------------------

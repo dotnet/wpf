@@ -25,14 +25,11 @@
 
 using System;
 
-using MS.Internal.WindowsBase;
-
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     #region ContainerFlags enumeration
 
     /// <summary></summary>
-    [FriendAccessAllowed] // Built into Base, used by Framework.
     [Flags]
     internal enum ContainerFlags
     {

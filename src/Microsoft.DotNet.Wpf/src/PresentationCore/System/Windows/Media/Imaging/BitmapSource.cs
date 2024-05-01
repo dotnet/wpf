@@ -24,7 +24,6 @@ using MS.Win32;
 using System.IO.Packaging;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SR = MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
 {
@@ -647,7 +646,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         unsafe internal void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             ReadPreamble();

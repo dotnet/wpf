@@ -33,7 +33,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CulturePreservingExecutionContext.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\DoubleUtil.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\HashHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Invariant.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MatrixUtil.cs" />

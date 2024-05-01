@@ -15,7 +15,6 @@ using System.IO;
 using System.Security;
 using System.Security.AccessControl;
 using System.Windows.TrustUI;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents.Application
 {

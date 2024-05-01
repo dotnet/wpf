@@ -129,7 +129,6 @@ namespace System.Windows.Navigation
 
         static internal Uri SiteOfOriginBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _siteOfOriginBaseUri;
@@ -138,7 +137,6 @@ namespace System.Windows.Navigation
 
         static internal Uri PackAppBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _packAppBaseUri;
@@ -172,7 +170,6 @@ namespace System.Windows.Navigation
         // assembly name matches the text string in the first segment. otherwise, this method
         // would return EntryAssembly in the AppDomain.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyAndPartNameFromPackAppUri(Uri uri, out Assembly assembly, out string partName)
         {
             // The input Uri is assumed to be a valid absolute pack application Uri.
@@ -206,7 +203,6 @@ namespace System.Windows.Navigation
 
         //
         //
-        [FriendAccessAllowed]
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
@@ -243,7 +239,6 @@ namespace System.Windows.Navigation
         //
         // Return assembly Name, Version, Key and package Part from a relative Uri.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
             Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
@@ -331,7 +326,6 @@ namespace System.Windows.Navigation
             } // end of if fHasComponent
         }
 
-        [FriendAccessAllowed]
         static internal bool IsComponentEntryAssembly(string component)
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
@@ -358,13 +352,11 @@ namespace System.Windows.Navigation
             return false;
         }
                 
-        [FriendAccessAllowed]
         static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             return new Uri(baseUri, orgUri);
         }
 
-        [FriendAccessAllowed]
         static internal Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
@@ -379,7 +371,6 @@ namespace System.Windows.Navigation
             return sUri;
         }
 
-        [FriendAccessAllowed]
         static internal Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
         {
             Invariant.Assert(packUri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(packUri.Scheme, PackAppBaseUri.Scheme));
@@ -400,7 +391,6 @@ namespace System.Windows.Navigation
         // object will not correctly resolve relative Uris in some cases.  This method
         // detects and fixes this by constructing a new Uri with an original string
         // that contains the scheme file://.
-        [FriendAccessAllowed]
         static internal Uri FixFileUri(Uri uri)
         {
             if (uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, Uri.UriSchemeFile) &&
@@ -414,12 +404,10 @@ namespace System.Windows.Navigation
 
         static internal Uri BaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _baseUri.Value;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This setter should only be called from Framework through
@@ -438,7 +426,6 @@ namespace System.Windows.Navigation
                 }
                 return _resourceAssembly;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This should only be called from Framework through Application.ResourceAssembly setter.

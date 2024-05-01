@@ -24,14 +24,11 @@ using System.Windows;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 
-using MS.Internal.PresentationCore;
-
 namespace System.Windows.Media
 {
     /// <summary>
     ///
     /// </summary>
-    [FriendAccessAllowed]   // used by System.Printing.dll
     internal class GlyphsSerializer
     {
         #region public methods

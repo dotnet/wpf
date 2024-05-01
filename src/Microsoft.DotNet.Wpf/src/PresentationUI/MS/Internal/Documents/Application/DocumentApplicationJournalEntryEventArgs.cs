@@ -4,8 +4,6 @@
 
 // Description: Used as a custom journal entry for changes in the DocumentApplication's UI state.
 
-using MS.Internal.PresentationUI;   // For FriendAccessAllowed
-
 using System;
 using System.Runtime.Serialization;
 using System.Windows;
@@ -17,7 +15,6 @@ namespace MS.Internal.Documents.Application
     /// <summary>
     /// SignatureStatusEventArgs, object used when firing SigStatus change.
     /// </summary>
-    [FriendAccessAllowed]
     internal class DocumentApplicationJournalEntryEventArgs : EventArgs
     {
 

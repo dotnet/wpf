@@ -20,7 +20,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-using MS.Internal.PresentationCore;
 using MS.Internal.Media3D;
 using SR = MS.Internal.PresentationCore.SR;
 
@@ -1227,7 +1226,6 @@ namespace MS.Internal.Media3D
         /// </summary>        
         internal override Transform AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 return null;

@@ -189,7 +189,6 @@ namespace System.Printing
     /// <summary>
     /// PrintTicketManager class that supports PrintTicket and PrintCapabilities functions.
     /// </summary>
-    [MS.Internal.ReachFramework.FriendAccessAllowed]
     internal class PrintTicketManager : IDisposable
     {
         #region Constructors

@@ -11,7 +11,6 @@
 
 using System.Windows;
 using System.Windows.Media.Media3D;
-using MS.Internal.PresentationCore; 
 using System;
 using System.IO; 
 using MS.Internal.Media; 
@@ -23,7 +22,6 @@ namespace System.Windows.Media
         ///<summary>
         /// Deserialize this object from BAML
         ///</summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static object DeserializeFrom(BinaryReader reader)
         {
             // Get the size.

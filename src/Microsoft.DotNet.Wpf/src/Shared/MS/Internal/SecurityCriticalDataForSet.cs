@@ -15,32 +15,12 @@
 using System ;
 using System.Security ;
 
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif PRESENTATIONUI
-    using MS.Internal.PresentationUI;
-#elif UIAUTOMATIONTYPES
-    using MS.Internal.UIAutomationTypes;
-#elif DRT
-    using MS.Internal.Drt;
-#elif SYSTEM_XAML
-    using MS.Internal.WindowsBase;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-using MS.Internal.YourAssemblyName;
-#endif
-
 #if SYSTEM_XAML
 namespace MS.Internal.Xaml
 #else
 namespace MS.Internal
 #endif
 {
-    [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
     [Serializable]
     internal struct SecurityCriticalDataForSet<T>
     {

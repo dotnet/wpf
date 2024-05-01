@@ -31,13 +31,11 @@ namespace MS.Win32
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
     using MS.Internal.YourAssemblyName;
 #endif
 
     using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
-    [FriendAccessAllowed]
     internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode, SetLastError=true, EntryPoint="GetTempFileName")]

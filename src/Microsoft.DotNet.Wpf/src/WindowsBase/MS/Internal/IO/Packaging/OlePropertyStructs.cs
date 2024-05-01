@@ -15,7 +15,6 @@
 using System;
 using System.Runtime.InteropServices;
 
-using MS.Internal.WindowsBase;        // for FriendAccessAllowedAttribute
 
 namespace MS.Internal.IO.Packaging
 {
@@ -85,7 +84,6 @@ namespace MS.Internal.IO.Packaging
     /// } PROPVARIANT;
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct PROPVARIANT
     {
         /// <summary>
@@ -118,7 +116,6 @@ namespace MS.Internal.IO.Packaging
     /// enumeration for all legal types of a PROPVARIANT
     /// </summary>
     /// <remarks>add definitions as needed</remarks>
-    [FriendAccessAllowed]
     internal enum VARTYPE : short
     {
         /// <summary>
@@ -157,7 +154,6 @@ namespace MS.Internal.IO.Packaging
     ///     managed equivalent types.
     /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
-    [FriendAccessAllowed]
     internal struct PropVariantUnion
     {
         /// <summary>
@@ -487,7 +483,6 @@ namespace MS.Internal.IO.Packaging
     /// CY, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct CY
     {
         public uint Lo;
@@ -498,7 +493,6 @@ namespace MS.Internal.IO.Packaging
     /// BSTRBLOB, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct BSTRBLOB
     {
         public uint cbSize;
@@ -509,7 +503,6 @@ namespace MS.Internal.IO.Packaging
     /// BLOB, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct BLOB
     {
         public uint cbSize;
@@ -520,7 +513,6 @@ namespace MS.Internal.IO.Packaging
     /// CArray, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct CArray
     {
         public uint cElems;
@@ -535,7 +527,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Selector for union
     /// </summary>
-    [FriendAccessAllowed]
     internal enum PropSpecType : int
     {
         /// <summary>
@@ -552,7 +543,6 @@ namespace MS.Internal.IO.Packaging
     /// Explicitly packed union
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    [FriendAccessAllowed]
     internal struct PROPSPECunion
     {
         /// <summary>
@@ -582,7 +572,6 @@ namespace MS.Internal.IO.Packaging
     /// } PROPSPEC;
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct PROPSPEC
     {
         /// <summary>
@@ -603,7 +592,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Format identifiers.
     /// </summary>
-    [FriendAccessAllowed]
     internal static class FormatId
     {
         /// <summary>
@@ -627,7 +615,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Property identifiers.
     /// </summary>
-    [FriendAccessAllowed]
     internal static class PropertyId
     {
         /// <summary>

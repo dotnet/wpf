@@ -176,12 +176,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_anyoneUserInstance.Value == null)
+                if (_anyoneUserInstance == null)
                 {
-                    _anyoneUserInstance.Value = CreateUser(AnyoneUser);
+                    _anyoneUserInstance = CreateUser(AnyoneUser);
                 }
 
-                return _anyoneUserInstance.Value;
+                return _anyoneUserInstance;
             }
         }
 
@@ -195,7 +195,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// The Anyone user as a RightsManagementUser.
         /// </summary>
-        private static SecurityCriticalDataForSet<RightsManagementUser> _anyoneUserInstance;
+        private static RightsManagementUser _anyoneUserInstance;
 
         private int _hashCode;
 

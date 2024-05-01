@@ -31,8 +31,8 @@ namespace MS.Internal
     {
         static AssemblyFilter()
         {
-            _disallowedListExtracted = new SecurityCriticalDataForSet<bool>(false);
-            _assemblyList = new SecurityCriticalDataForSet<System.Collections.Generic.List<string>>(new System.Collections.Generic.List<string>());
+            _disallowedListExtracted = false;
+            _assemblyList = new System.Collections.Generic.List<string>();
         }
 
         internal void FilterCallback(Object sender, AssemblyLoadEventArgs args)
@@ -58,13 +58,13 @@ namespace MS.Internal
         {
             bool retVal = false;
             // if the list disallowed list is not populated populate it once
-            if (_disallowedListExtracted.Value == false)
+            if (_disallowedListExtracted == false)
             {
                 // hit the registry one time and read 
                 ExtractDisallowedRegistryList();
-                _disallowedListExtracted.Value = true;
+                _disallowedListExtracted = true;
             }
-            if (_assemblyList.Value.Contains(assemblyToCheck))
+            if (_assemblyList.Contains(assemblyToCheck))
             {
                 retVal = true;
             }
@@ -91,18 +91,18 @@ namespace MS.Internal
                     // if there exists a value and it is 1 add to hash table
                     if ((keyValue != null) && (int)(keyValue) == 1)
                     {
-                        if (!_assemblyList.Value.Contains(assemblyName))
+                        if (!_assemblyList.Contains(assemblyName))
                         {
-                            _assemblyList.Value.Add(assemblyName.ToLower(System.Globalization.CultureInfo.InvariantCulture).Trim());
+                            _assemblyList.Add(assemblyName.ToLower(System.Globalization.CultureInfo.InvariantCulture).Trim());
                         }
                     }
                 }
             }
         }
 
-        static SecurityCriticalDataForSet<System.Collections.Generic.List<string>> _assemblyList;
+        static System.Collections.Generic.List<string> _assemblyList;
 
-        static SecurityCriticalDataForSet<bool> _disallowedListExtracted;
+        static bool _disallowedListExtracted;
 
         static readonly object _lock = new object();
 

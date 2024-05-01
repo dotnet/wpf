@@ -688,11 +688,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _navigatingToAboutBlank.Value;
+                return _navigatingToAboutBlank;
             }
             set
             {
-                _navigatingToAboutBlank.Value = value;
+                _navigatingToAboutBlank = value;
             }
         }
 
@@ -704,11 +704,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _lastNavigation.Value;
+                return _lastNavigation;
             }
             set
             {
-                _lastNavigation.Value = value;
+                _lastNavigation = value;
             }
         }
 
@@ -989,16 +989,16 @@ namespace System.Windows.Controls
         // Reference to the native ActiveX control's IWebBrowser2
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
-        private UnsafeNativeMethods.IWebBrowser2                 _axIWebBrowser2;
+        private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
 
-        WebOCHostingAdaptor                                     _hostingAdaptor;
+        WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
-        private ConnectionPointCookie                           _cookie;
-        private object                                           _objectForScripting;
-        private Stream                                           _documentStream;
+        private ConnectionPointCookie             _cookie;
+        private object                            _objectForScripting;
+        private Stream                            _documentStream;
 
-        private SecurityCriticalDataForSet<bool>                    _navigatingToAboutBlank;
+        private bool                              _navigatingToAboutBlank;
 
         /// <summary>
         /// TFS  - Launching a navigation from the Navigating event handler causes reentrancy.
@@ -1007,7 +1007,7 @@ namespace System.Windows.Controls
         /// we shouldn't clean up the shared state touched by the last navigation (see WebBrowserEvent's
         /// BeforeNavigate2 method), so that the newly started navigation can continue.
         /// </summary>
-        private SecurityCriticalDataForSet<Guid>                    _lastNavigation;
+        private Guid                              _lastNavigation;
 
         #endregion Private Fields
 

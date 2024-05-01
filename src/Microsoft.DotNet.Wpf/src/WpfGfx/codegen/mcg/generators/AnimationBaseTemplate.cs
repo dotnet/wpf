@@ -79,14 +79,14 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 // requiring that they be split across two namespaces.
                 switch (instance.ModuleName)
                 {
-                    case @"Core\CSharp":
+                    case @"PresentationCore":
                         moduleReference = "using MS.Internal.PresentationCore;";
                         sridReference = 
                             [[inline]]
                                 using SR=MS.Internal.PresentationCore.SR;
                             [[/inline]];
                         break;
-                    case "Framework":
+                    case "PresentationFramework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
                         break;
                     default:

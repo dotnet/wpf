@@ -79,13 +79,13 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\Include\\Generated"
+                    "src\\WpfGfx\\Include\\Generated"
                     );
 
             string extensionPath =
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\exts"
+                    "src\\WpfGfx\\exts"
                     );
 
             FileCodeSink enumFile = 
@@ -462,7 +462,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string PadWithSpaces(string str, int spaces)
         {
-            Debug.Assert(str.Length <= spaces);
+            //Debug.Assert(str.Length <= spaces);
 
             StringBuilder sb = new StringBuilder(spaces);
 

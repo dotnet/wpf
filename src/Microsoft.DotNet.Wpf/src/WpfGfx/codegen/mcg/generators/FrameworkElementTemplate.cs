@@ -83,7 +83,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Collections;
                             using System.Diagnostics;
                             using System.Security;
-                            using System.Security.Permissions;
                             using System.Windows.Controls;
                             using System.Windows.Diagnostics;
                             using System.Windows.Media;
@@ -462,13 +461,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                     // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
                                     //  tree node is.
-                                    /// <SecurityNote>
-                                    ///     Critical: This code calls into PresentationSource.OnAncestorChanged which is link demand protected
-                                    ///     it does so only for content elements and not for FEs. But if called externally and configured
-                                    ///     inappropriately it can be used to change the tree
-                                    ///     TreatAsSafe: This does not let you get at the presentationsource which is what we do not want to expose
-                                    /// </SecurityNote>
-                                    [SecurityCritical,SecurityTreatAsSafe]
                                         internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
                                     {
                                         // Cache the IsSelfInheritanceParent flag

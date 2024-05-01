@@ -1351,19 +1351,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                     //------------------------------------------------------
                                     //
-                                    //  Internal Fields
-                                    //
-                                    //------------------------------------------------------
-
-                                    #region Internal Fields
-
-                                    // Optimization, to avoid calling FromSystemType too often
-                                    internal new static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof([[instance.ClassName]]));
-
-                                    #endregion Internal Fields
-
-                                    //------------------------------------------------------
-                                    //
                                     //  Private Fields
                                     //
                                     //------------------------------------------------------

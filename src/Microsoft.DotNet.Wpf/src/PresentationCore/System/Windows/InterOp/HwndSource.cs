@@ -16,7 +16,6 @@ using MS.Win32;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -938,7 +937,6 @@ namespace System.Windows.Interop
 
         internal IntPtr CriticalHandle
         {
-            [FriendAccessAllowed]
             get
             {
                 if (null != _hwndWrapper)

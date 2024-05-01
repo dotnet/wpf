@@ -9,8 +9,6 @@
 using System;
 using System.Security;
 
-using MS.Internal.PresentationUI;
-
 namespace MS.Internal.Documents.Application
 {
 /// <summary>
@@ -31,7 +29,6 @@ namespace MS.Internal.Documents.Application
 /// As such we need them to create this 'token' which will will use as the only
 /// source of authoritative information for which files we are manipulating.
 /// </remarks>
-[FriendAccessAllowed]
 internal sealed class CriticalFileToken
 {
     #region Constructors

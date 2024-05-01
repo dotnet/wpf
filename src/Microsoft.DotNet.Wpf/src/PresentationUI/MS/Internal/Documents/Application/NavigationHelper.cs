@@ -5,12 +5,12 @@
 // Description: 
 //  NavigationHelper is an internal utility class for Mongoose to deal
 //  with Uri navigations.
+
 using System;
 using System.Security;
 using System.Windows.Interop;
 using System.Windows.TrustUI;
 using MS.Internal;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents.Application
 {
@@ -77,7 +77,6 @@ namespace MS.Internal.Documents.Application
         /// If we are going to add more functionality a IBrowserService interface
         /// of some type should be defined and set vs many delegates.
         /// </remarks>
-        [FriendAccessAllowed]
         internal static NavigateDelegate Navigate
         {
             get

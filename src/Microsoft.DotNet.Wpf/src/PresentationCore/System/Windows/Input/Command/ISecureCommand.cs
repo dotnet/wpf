@@ -26,7 +26,6 @@ namespace System.Windows.Input
     /// then be asserted when the command is invoked in a user
     /// interactive (trusted) way.
     ///</summary>
-    [FriendAccessAllowed]
     [TypeConverter("System.Windows.Input.CommandConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     internal interface ISecureCommand : ICommand
     {

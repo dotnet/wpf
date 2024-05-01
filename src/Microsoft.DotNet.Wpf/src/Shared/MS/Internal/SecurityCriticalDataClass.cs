@@ -27,13 +27,11 @@ using System.Security ;
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
 namespace MS.Internal 
 {
-    [FriendAccessAllowed]
     internal class SecurityCriticalDataClass<T>
     {
         internal SecurityCriticalDataClass(T value) 

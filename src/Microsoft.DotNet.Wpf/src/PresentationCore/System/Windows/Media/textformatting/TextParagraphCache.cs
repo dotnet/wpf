@@ -22,7 +22,6 @@ using System.Windows.Media;
 
 using MS.Internal;
 using MS.Internal.TextFormatting;
-using MS.Internal.PresentationCore;
 using SR = MS.Internal.PresentationCore.SR;
 
 
@@ -37,7 +36,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
     public sealed class TextParagraphCache : IDisposable
 #else
-    [FriendAccessAllowed]
     internal sealed class TextParagraphCache : IDisposable
 #endif
     {

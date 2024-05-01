@@ -15,7 +15,6 @@ using System.Diagnostics;
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
@@ -30,7 +29,6 @@ namespace MS.Internal
     ///   cache then the list is copied before it is modified and the readonly list is
     ///   released from the cache.
     /// </summary>
-    [FriendAccessAllowed]
     internal class CopyOnWriteList
     {
         public CopyOnWriteList() : this(null)

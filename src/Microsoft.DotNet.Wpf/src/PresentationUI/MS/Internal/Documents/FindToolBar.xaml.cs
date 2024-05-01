@@ -23,12 +23,9 @@ using System.Text;
 using System.Globalization;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
-
 
 namespace MS.Internal.Documents
 {
-    [FriendAccessAllowed]
     internal partial class FindToolBar
     {
         //------------------------------------------------------

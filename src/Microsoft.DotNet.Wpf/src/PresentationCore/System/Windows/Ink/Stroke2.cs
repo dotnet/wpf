@@ -509,7 +509,6 @@ namespace System.Windows.Ink
         /// so we can assume the correct opacity has already been pushed on dc. The flag drawAsHollow is set
         /// to true when this function is called from Renderer and this.IsSelected == true.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void DrawInternal(DrawingContext dc, DrawingAttributes DrawingAttributes, bool drawAsHollow)
         {
             if (drawAsHollow == true)
@@ -538,7 +537,6 @@ namespace System.Windows.Ink
         /// <summary>
         /// Used by Inkcanvas to draw selected stroke as hollow.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal bool IsSelected
         {
             get { return _isSelected; }

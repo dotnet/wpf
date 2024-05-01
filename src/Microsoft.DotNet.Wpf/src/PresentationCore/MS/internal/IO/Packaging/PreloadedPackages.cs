@@ -30,7 +30,6 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {
         //------------------------------------------------------

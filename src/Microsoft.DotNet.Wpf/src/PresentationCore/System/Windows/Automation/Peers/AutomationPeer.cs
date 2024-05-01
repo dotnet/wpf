@@ -19,7 +19,6 @@ using System.Windows.Automation.Provider;
 using MS.Internal;
 using MS.Internal.Automation;
 using MS.Internal.Media;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 
 using SR=MS.Internal.PresentationCore.SR;
@@ -1535,7 +1534,6 @@ namespace System.Windows.Automation.Peers
         }
 
         //
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal virtual InteropAutomationProvider GetInteropChild()
         {
             return null;
@@ -2033,7 +2031,6 @@ namespace System.Windows.Automation.Peers
         /// Is it possible that they turn around and reenter asking for new value while in event handler?
         //  If yes, we'll serve old value
         ///</remarks>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void UpdateSubtree()
         {
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);

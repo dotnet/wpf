@@ -19,7 +19,6 @@ namespace MS.Internal
     /// <summary>
     /// Exposes the CultureInfo for the culture the platform is localized to.
     /// </summary>    
-    [FriendAccessAllowed]
     internal static class PlatformCulture
     {
         /// <summary>

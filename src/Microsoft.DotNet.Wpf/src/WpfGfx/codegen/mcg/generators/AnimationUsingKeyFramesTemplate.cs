@@ -299,10 +299,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         WritePreamble();
 
-                                        if (child == null)
-                                        {
-                                            throw new ArgumentNullException("child");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(child);
 
                                         AddChild(child);
 
@@ -343,10 +340,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// null.</exception>
                                     void IAddChild.AddText(string childText)
                                     {
-                                        if (childText == null)
-                                        {
-                                            throw new ArgumentNullException("childText");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(childText);
 
                                         AddText(childText);
                                     }
@@ -612,10 +606,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         set
                                         {
-                                            if (value == null)
-                                            {
-                                                throw new ArgumentNullException("value");
-                                            }
+                                            ArgumentNullException.ThrowIfNull(value);
                                             
                                             WritePreamble();
                                             
@@ -819,7 +810,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         
                                         int maxKeyFrameIndex = keyFrameCount - 1;
-                                        ArrayList unspecifiedBlocks = new ArrayList();
+                                        List<KeyTimeBlock> unspecifiedBlocks = new List<KeyTimeBlock>();
                                         bool hasPacedKeyTimes = false;
                                         
                                         //
@@ -931,7 +922,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         
                                         for (int j = 0; j < unspecifiedBlocks.Count; j++)
                                         {
-                                            KeyTimeBlock block = (KeyTimeBlock)unspecifiedBlocks[j];
+                                            KeyTimeBlock block = unspecifiedBlocks[j];
 
                                             TimeSpan blockBeginTime = TimeSpan.Zero;
                                             

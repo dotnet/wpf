@@ -109,10 +109,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;
@@ -123,10 +120,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     internal [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;

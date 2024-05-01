@@ -293,14 +293,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     nullCheck = 
                         [[inline]]
                             // Verify that object arguments are non-null since we are a value type
-                            if (defaultOriginValue == null)
-                            {
-                                throw new ArgumentNullException("defaultOriginValue");
-                            }
-                            if (defaultDestinationValue == null)
-                            {
-                                throw new ArgumentNullException("defaultDestinationValue");
-                            }
+                            ArgumentNullException.ThrowIfNull(defaultOriginValue);
+                            ArgumentNullException.ThrowIfNull(defaultDestinationValue);
                         [[/inline]];
                 }
 
@@ -321,10 +315,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     ReadPreamble();
                     
-                    if (animationClock == null)
-                    {
-                        throw new ArgumentNullException("animationClock");
-                    }
+                    ArgumentNullException.ThrowIfNull(animationClock);
                     
                     if (animationClock.CurrentState == ClockState.Stopped)
                     {

@@ -251,10 +251,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (e == null)
-                        {
-                            throw new ArgumentNullException("e");
-                        }
+                        ArgumentNullException.ThrowIfNull(e);
                         e.ClearUserInitiated();
 
                         UIElement.RaiseEventImpl(this, e);
@@ -266,10 +263,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     internal void RaiseEvent(RoutedEventArgs args, bool trusted)
                     {
-                        if (args == null)
-                        {
-                            throw new ArgumentNullException("args");
-                        }
+                        ArgumentNullException.ThrowIfNull(args);
 
                         if (trusted)
                         {
@@ -285,10 +279,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     internal void RaiseTrustedEvent(RoutedEventArgs args)
                     {
-                        if (args == null)
-                        {
-                            throw new ArgumentNullException("args");
-                        }
+                        ArgumentNullException.ThrowIfNull(args);
 
                         // Try/finally to ensure that UserInitiated bit is cleared.
                         args.MarkAsUserInitiated();
@@ -388,15 +379,9 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (routedEvent == null)
-                        {
-                            throw new ArgumentNullException("routedEvent");
-                        }
+                        ArgumentNullException.ThrowIfNull(routedEvent);
 
-                        if (handler == null)
-                        {
-                            throw new ArgumentNullException("handler");
-                        }
+                        ArgumentNullException.ThrowIfNull(handler);
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
@@ -449,15 +434,9 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        if (routedEvent == null)
-                        {
-                            throw new ArgumentNullException("routedEvent");
-                        }
+                        ArgumentNullException.ThrowIfNull(routedEvent);
 
-                        if (handler == null)
-                        {
-                            throw new ArgumentNullException("handler");
-                        }
+                        ArgumentNullException.ThrowIfNull(handler);
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
@@ -516,14 +495,8 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
                     {
-                        if (route == null)
-                        {
-                            throw new ArgumentNullException("route");
-                        }
-                        if (e == null)
-                        {
-                            throw new ArgumentNullException("e");
-                        }
+                        ArgumentNullException.ThrowIfNull(route);
+                        ArgumentNullException.ThrowIfNull(e);
 
                         // Get class listeners for this [[element.Name]]
                         RoutedEventHandlerInfoList classListeners =

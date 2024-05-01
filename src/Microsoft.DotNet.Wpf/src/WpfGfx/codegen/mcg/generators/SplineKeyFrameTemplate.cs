@@ -138,10 +138,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                 public Spline[[instance.TypeName]]KeyFrame([[instance.TypeName]] value, KeyTime keyTime, KeySpline keySpline)
                                     : this()
                                 {
-                                    if (keySpline == null)
-                                    {
-                                        throw new ArgumentNullException("keySpline");
-                                    }
+                                    ArgumentNullException.ThrowIfNull(keySpline);
                                                 
                                     Value = value;
                                     KeyTime = keyTime;
@@ -213,10 +210,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
                                     set
                                     {
-                                        if (value == null)
-                                        {
-                                            throw new ArgumentNullException("value");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(value);
                                         SetValue(KeySplineProperty, value);
                                     }
                                 }

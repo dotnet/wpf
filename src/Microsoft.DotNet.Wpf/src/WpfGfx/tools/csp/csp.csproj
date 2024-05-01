@@ -5,7 +5,7 @@
     <AssemblyName>csp</AssemblyName>
     <OutputType>exe</OutputType>
     <PlatformTarget>x86</PlatformTarget>
-	<EnableDefaultItems>false</EnableDefaultItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
     <StartupObject>MS.Internal.Csp.MainClass</StartupObject>
   </PropertyGroup>
 

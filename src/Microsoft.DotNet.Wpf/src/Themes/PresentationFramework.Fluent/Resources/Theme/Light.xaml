@@ -148,6 +148,11 @@
     <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="{StaticResource TextOnAccentFillColorSecondary}" />
     <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="{StaticResource TextOnAccentFillColorDisabled}" />
 
+    <!--  ClearButton  -->
+    <SolidColorBrush x:Key="ClearButtonForegroundPressed" Color="{StaticResource TextFillColorTertiary}" />
+    <SolidColorBrush x:Key="ClearButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="ClearButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
+
     <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="{StaticResource ControlFillColorDefault}" />
     <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="{StaticResource ControlFillColorSecondary}" />
     <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="{StaticResource ControlFillColorTertiary}" />

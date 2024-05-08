@@ -621,6 +621,11 @@
 
     <!--  ThumbRate  -->
     <SolidColorBrush x:Key="ThumbRateForeground" Color="{DynamicResource SystemAccentColorPrimary}" />
+    
+    <!--  ClearButton  -->
+    <SolidColorBrush x:Key="ClearButtonForegroundPressed" Color="{StaticResource TextFillColorTertiary}" />
+    <SolidColorBrush x:Key="ClearButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="ClearButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
 
     <!--  TimePicker  -->
     <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource ControlFillColorTertiary}" />

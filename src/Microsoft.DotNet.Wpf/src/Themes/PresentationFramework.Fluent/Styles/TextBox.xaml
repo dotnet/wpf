@@ -17,8 +17,9 @@
     <Thickness x:Key="TextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
     <Thickness x:Key="TextBoxLeftIconMargin">10,0,0,0</Thickness>
     <Thickness x:Key="TextBoxRightIconMargin">0,0,10,0</Thickness>
-    <Thickness x:Key="TextBoxClearButtonMargin">0,0,4,0</Thickness>
-    <Thickness x:Key="TextBoxClearButtonPadding">0,0,0,0</Thickness>
+    <Thickness x:Key="TextBoxClearButtonMargin">0,4,4,4</Thickness>
+    <Thickness x:Key="TextBoxClearButtonPadding">0,0,-2,0</Thickness>
+    <system:Double x:Key="TextBoxIconFontSize">12</system:Double>
     <system:Double x:Key="TextBoxClearButtonHeight">24</system:Double>
     <system:String x:Key="ClearGlyph">&#xE894;</system:String>
 
@@ -187,9 +188,9 @@
                        
                         <Button.Content>
                             <TextBlock
-                                FontSize="{TemplateBinding FontSize}"
+                                FontSize="{StaticResource TextBoxIconFontSize}"
                                 FontFamily="{DynamicResource SegoeFluentIcons}"
-                                >&#xE894;</TextBlock>
+                                Text="{StaticResource ClearGlyph}" />
                         </Button.Content>
                     </Button>
                 </Grid>
@@ -223,15 +224,26 @@
                 <Setter TargetName="ClearButton" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="ClearButton" Property="Margin" Value="0" />
             </Trigger>
-           
-                        
+                                   
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsEnabled" Value="True" />
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsFocused" Value="False" />
                 </MultiTrigger.Conditions>
+                <Setter TargetName="ClearButton" Property="Foreground" Value="{DynamicResource ClearButtonForegroundPressed}" /> 
+                <Setter TargetName="ClearButton" Property="Background" Value="{DynamicResource ClearButtonBackgroundPressed}" /> 
                 <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
+            </MultiTrigger>
+            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ClearButton}" Value="True">
+                <Setter TargetName="ClearButton" Property="Background" Value="{DynamicResource ClearButtonBackgroundPointerOver}" />
+            </DataTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="True" />
+                    <Condition Property="IsMouseOver" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="ClearButton" Property="Background" Value="Transparent" /> 
             </MultiTrigger>
             <Trigger Property="IsReadOnly" Value="True">
                 <Setter TargetName="ClearButton" Property="Visibility" Value="Collapsed" />

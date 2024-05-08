@@ -72,6 +72,8 @@
     <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+    
+    <SolidColorBrush x:Key="ClearButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
 
     <SolidColorBrush x:Key="ControlAltFillColorTransparentBrush" Color="Transparent" />
     <SolidColorBrush x:Key="ControlAltFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />

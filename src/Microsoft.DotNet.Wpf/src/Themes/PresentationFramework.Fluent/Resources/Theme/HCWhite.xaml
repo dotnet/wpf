@@ -47,6 +47,8 @@
     <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextPlaceholderColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextFillColorInverseBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    
+    <SolidColorBrush x:Key="ClearButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
 
     <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 

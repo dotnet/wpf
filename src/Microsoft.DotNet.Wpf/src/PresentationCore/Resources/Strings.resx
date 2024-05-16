@@ -532,6 +532,9 @@
   <data name="DataObject_FileDropListIsEmpty" xml:space="preserve">
     <value>'{0}' must contain at least one file drop path.</value>
   </data>
+  <data name="DataObject_FileGroupIsEmpty" xml:space="preserve">
+    <value>'{0}' must contain at least one file.</value>
+  </data>
   <data name="DataObject_NotImplementedEnumFormatEtc" xml:space="preserve">
     <value>'{0}' dwDirection parameter value is not supported.</value>
   </data>
@@ -744,6 +747,12 @@
   </data>
   <data name="FileFormatExceptionWithFileName" xml:space="preserve">
     <value>'{0}' file does not conform to the expected file format specification.</value>
+  </data>
+  <data name="FileGroup_ReadOnly" xml:space="preserve">
+    <value>A received FileGroup object cannot be modified.</value>
+  </data>
+  <data name="FileGroup_DescriptorNotFound" xml:space="preserve">
+    <value>The given file descriptor is not present in the file group.</value>
   </data>
   <data name="FileNotFoundExceptionWithFileName" xml:space="preserve">
     <value>Cannot find file '{0}'.</value>

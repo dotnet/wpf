@@ -353,6 +353,8 @@
     <Compile Include="System\Windows\EventPrivateKey.cs" />
     <Compile Include="System\Windows\EventRoute.cs" />
     <Compile Include="System\Windows\EventRouteFactory.cs" />
+    <Compile Include="System\Windows\FileDescriptor.cs" />
+    <Compile Include="System\Windows\FileGroup.cs" />
     <Compile Include="System\Windows\FocusWithinProperty.cs" />
     <Compile Include="System\Windows\FontStretch.cs" />
     <Compile Include="System\Windows\FontStretchConverter.cs" />

@@ -21,26 +21,26 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>9.0.0-preview.4.24266.8</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>9.0.0-preview.4.24267.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.0-preview.4.24266.14</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>9.0.0-preview.4.24266.14</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>9.0.0-preview.4.24266.14</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>9.0.0-preview.4.24266.14</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>9.0.0-preview.4.24266.14</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>9.0.0-preview.4.24266.14</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>9.0.0-preview.4.24266.14</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>9.0.0-preview.4.24266.8</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>9.0.0-preview.4.24266.14</SystemDirectoryServicesVersion>
-    <SystemIOPackagingVersion>9.0.0-preview.4.24266.14</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.4.24266.14</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.0-preview.4.24266.19</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>9.0.0-preview.4.24266.19</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>9.0.0-preview.4.24266.19</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>9.0.0-preview.4.24266.19</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>9.0.0-preview.4.24266.19</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>9.0.0-preview.4.24266.19</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>9.0.0-preview.4.24266.19</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>9.0.0-preview.4.24267.1</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>9.0.0-preview.4.24266.19</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>9.0.0-preview.4.24266.19</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.4.24266.19</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>9.0.0-preview.4.24266.14</SystemResourcesExtensionsVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>9.0.0-preview.4.24266.14</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>9.0.0-preview.4.24266.14</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>9.0.0-preview.4.24266.14</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>9.0.0-preview.4.24266.19</SystemResourcesExtensionsVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>9.0.0-preview.4.24266.19</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>9.0.0-preview.4.24266.19</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>9.0.0-preview.4.24266.19</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

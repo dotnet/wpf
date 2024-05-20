@@ -48,7 +48,7 @@ extends:
       autoBaseline: true
     pool:
       name: NetCore1ESPool-Internal
-      image: 1es-windows-2022-pt
+      image: 1es-windows-2022
       os: windows
     customBuildTags:
     - ES365AIMigrationTooling

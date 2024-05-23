@@ -7989,6 +7989,18 @@ namespace System.Windows
     }
     #endregion Enums
 
+    #region Public Fields
+    
+    /// <summary>
+    ///     Is the window closing
+    /// </summary>
+    public bool IsClosing
+    {
+        get=>_isClosing;
+    }
+
+    #endregion
+
     internal class SingleChildEnumerator : IEnumerator
     {
         internal SingleChildEnumerator(object Child)

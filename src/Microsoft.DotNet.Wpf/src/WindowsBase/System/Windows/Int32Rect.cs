@@ -81,16 +81,10 @@ namespace System.Windows
         {
             ArgumentOutOfRangeException.ThrowIfNegative(_x, paramName);
             ArgumentOutOfRangeException.ThrowIfNegative(_y, paramName);
-
-            if (_width < 0 || _width > width)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, width));
-            }
-
-            if (_height < 0 || _height > height)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, height));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(_width, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_height, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_width, width, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_height, height, paramName);
         }
 
         private readonly static Int32Rect s_empty = new Int32Rect(0,0,0,0);

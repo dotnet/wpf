@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
@@ -21,7 +23,7 @@ namespace System.Xaml.Schema
 
             // xmlns:foo="clr-namespace:System.Windows;assembly=myassemblyname"
             // xmlns:bar="clr-namespace:MyAppsNs"
-            // xmlns:spam="clr-namespace:MyAppsNs;assembly="  
+            // xmlns:spam="clr-namespace:MyAppsNs;assembly="
 
             int colonIdx = KS.IndexOf(uriInput, ':');
             if (colonIdx == -1)

@@ -5,9 +5,9 @@
 //
 // Description:
 //     ContentLocatorPart represents a set of name/value pairs that identify a
-//     piece of data within a certain context.  The names and values are 
+//     piece of data within a certain context.  The names and values are
 //     strings.
-//   
+//
 //     Spec: Simplifying Store Cache Model.doc
 //
 
@@ -45,7 +45,7 @@ namespace System.Windows.Annotations
         /// <param name="partType">fully qualified locator part's type</param>
         /// <exception cref="ArgumentNullException">partType is null</exception>
         /// <exception cref="ArgumentException">partType.Namespace or partType.Name is null or empty string</exception>
-        public ContentLocatorPart(XmlQualifiedName partType) 
+        public ContentLocatorPart(XmlQualifiedName partType)
         {
             ArgumentNullException.ThrowIfNull(partType);
             if (String.IsNullOrEmpty(partType.Name))
@@ -135,7 +135,7 @@ namespace System.Windows.Annotations
 
         /// <summary>
         ///     Create a deep clone of this ContentLocatorPart.  The returned ContentLocatorPart
-        ///     is equal to this ContentLocatorPart. 
+        ///     is equal to this ContentLocatorPart.
         /// </summary>
         /// <returns>a deep clone of this ContentLocatorPart; never returns null</returns>
         public object Clone()
@@ -149,9 +149,9 @@ namespace System.Windows.Annotations
 
             return newPart;
         }
-        
+
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Public Operators
@@ -171,7 +171,7 @@ namespace System.Windows.Annotations
         #region Public Properties
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public IDictionary<string, string> NameValuePairs
         {
@@ -179,10 +179,10 @@ namespace System.Windows.Annotations
             {
                 return _nameValues;
             }
-        }      
+        }
 
         /// <summary>
-        ///     Returns the ContentLocatorPart's type name. 
+        ///     Returns the ContentLocatorPart's type name.
         /// </summary>
         /// <value>qualified type name for this ContentLocatorPart</value>
         public XmlQualifiedName PartType
@@ -204,7 +204,7 @@ namespace System.Windows.Annotations
         #region Public Events
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
@@ -224,7 +224,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Determines if a locator part matches this locator part.  Matches is
         /// different from equals because a locator part may be defined to match
-        /// a range of locator parts, not just exact replicas. 
+        /// a range of locator parts, not just exact replicas.
         /// </summary>
         internal bool Matches(ContentLocatorPart part)
         {
@@ -264,7 +264,7 @@ namespace System.Windows.Annotations
                     return true;
                 }
 
-                // Take care of the special case of no content to match to 
+                // Take care of the special case of no content to match to
                 if (desiredStartOffset == int.MinValue)
                 {
                     return false;
@@ -279,7 +279,7 @@ namespace System.Windows.Annotations
                 return false;
             }
 
-            return this.Equals(part);            
+            return this.Equals(part);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace System.Windows.Annotations
             bool overlaps = false;
             string overlapsString;
 
-            _nameValues.TryGetValue(TextSelectionProcessor.IncludeOverlaps, out overlapsString);            
+            _nameValues.TryGetValue(TextSelectionProcessor.IncludeOverlaps, out overlapsString);
 
             if (Boolean.TryParse(overlapsString, out overlaps) && overlaps)
             {
@@ -318,7 +318,7 @@ namespace System.Windows.Annotations
         //
         //------------------------------------------------------
 
-        #region Internal Properties        
+        #region Internal Properties
 
         /// <summary>
         /// </summary>
@@ -362,10 +362,10 @@ namespace System.Windows.Annotations
         /// <param name="namespaceManager">namespace manager used to look up prefixes</param>
         private string GetOverlapQueryFragment(XmlNamespaceManager namespaceManager)
         {
-            string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace); 
+            string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             string prefix = namespaceManager.LookupPrefix(this.PartType.Namespace);
             string res = prefix == null ? "" : (prefix + ":");
-            res += TextSelectionProcessor.CharacterRangeElementName.Name + "/" + corePrefix + ":"+AnnotationXmlConstants.Elements.Item;
+            res += $"{TextSelectionProcessor.CharacterRangeElementName.Name}/{corePrefix}:{AnnotationXmlConstants.Elements.Item}";
 
             int startOffset;
             int endOffset;
@@ -376,9 +376,7 @@ namespace System.Windows.Annotations
 
             // Note: this will never match if offsetStr == 0.  Which makes sense - there
             // is no content to get anchors for.
-            res += "[starts-with(@" + AnnotationXmlConstants.Attributes.ItemName + ", \"" + TextSelectionProcessor.SegmentAttribute + "\") and " +
-                    " ((substring-before(@" + AnnotationXmlConstants.Attributes.ItemValue + ",\",\") >= " + startStr + " and substring-before(@" + AnnotationXmlConstants.Attributes.ItemValue + ",\",\") <= " + endStr + ") or " +
-                    "  (substring-before(@" + AnnotationXmlConstants.Attributes.ItemValue + ",\",\") < " + startStr + " and substring-after(@" + AnnotationXmlConstants.Attributes.ItemValue + ",\",\") >= " + startStr + "))]";
+            res += $"[starts-with(@{AnnotationXmlConstants.Attributes.ItemName}, \"{TextSelectionProcessor.SegmentAttribute}\") and  ((substring-before(@{AnnotationXmlConstants.Attributes.ItemValue},\",\") >= {startStr} and substring-before(@{AnnotationXmlConstants.Attributes.ItemValue},\",\") <= {endStr}) or   (substring-before(@{AnnotationXmlConstants.Attributes.ItemValue},\",\") < {startStr} and substring-after(@{AnnotationXmlConstants.Attributes.ItemValue},\",\") >= {startStr}))]";
 
             return res;
         }
@@ -391,7 +389,7 @@ namespace System.Windows.Annotations
         /// <param name="namespaceManager">namespaceManager used to generate the XPath fragment</param>
         private string GetExactQueryFragment(XmlNamespaceManager namespaceManager)
         {
-            string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace); 
+            string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             string prefix = namespaceManager.LookupPrefix(this.PartType.Namespace);
             string res = prefix == null ? "" : (prefix + ":");
             res += this.PartType.Name;
@@ -402,14 +400,14 @@ namespace System.Windows.Annotations
             {
                 if (and)
                 {
-                    res += "/parent::*/" + corePrefix + ":" + AnnotationXmlConstants.Elements.Item + "[";
+                    res += $"/parent::*/{corePrefix}:{AnnotationXmlConstants.Elements.Item}[";
                 }
                 else
                 {
                     and = true;
-                    res += "/" + corePrefix + ":" + AnnotationXmlConstants.Elements.Item + "[";
+                    res += $"/{corePrefix}:{AnnotationXmlConstants.Elements.Item}[";
                 }
-                res += "@" + AnnotationXmlConstants.Attributes.ItemName + "=\"" + k_v.Key + "\" and @" + AnnotationXmlConstants.Attributes.ItemValue + "=\"" + k_v.Value + "\"]";
+                res += $"@{AnnotationXmlConstants.Attributes.ItemName}=\"{k_v.Key}\" and @{AnnotationXmlConstants.Attributes.ItemValue}=\"{k_v.Value}\"]";
             }
 
             if (and)
@@ -427,7 +425,7 @@ namespace System.Windows.Annotations
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
 
         /// <summary>

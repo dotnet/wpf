@@ -2690,12 +2690,8 @@ namespace MS.Internal.Documents
         private double GetHorizontalOffsetForPage(RowInfo row, int pageNumber)
         {
             ArgumentNullException.ThrowIfNull(row);
-
-            if (pageNumber < row.FirstPage ||
-                pageNumber > row.FirstPage + row.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(pageNumber, row.FirstPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, row.FirstPage + row.PageCount);
 
             //Rows are centered if the content has varying page sizes,
             //Left-aligned otherwise.

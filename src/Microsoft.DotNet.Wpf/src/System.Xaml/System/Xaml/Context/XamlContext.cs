@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -87,7 +89,7 @@ namespace MS.Internal.Xaml
             }
             XamlType rootTagType = tagIsRoot ? tagType : null;
 
-            // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag 
+            // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag
             // type since there is no way to specify generic syntax in dotted property notation
             // If that fails, then we fall back to the non-generic case below.
             bool ownerTypeMatchesGenericTagType = false;
@@ -251,7 +253,7 @@ namespace MS.Internal.Xaml
             return GetXamlType(typeName, returnUnknownTypesOnFailure, false);
         }
 
-        internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure, 
+        internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure,
             bool skipVisibilityCheck)
         {
             Debug.Assert(typeName != null, "typeName cannot be null and should have been checked before now");
@@ -292,7 +294,7 @@ namespace MS.Internal.Xaml
             }
         }
 
-        private string ResolveXamlNameNS(XamlName name) 
+        private string ResolveXamlNameNS(XamlName name)
         {
             return name.Namespace ?? FindNamespaceByPrefix(name.Prefix);
         }

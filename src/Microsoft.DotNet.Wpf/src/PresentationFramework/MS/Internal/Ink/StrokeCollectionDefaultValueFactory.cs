@@ -25,7 +25,7 @@ namespace MS.Internal.Ink
         ///     Returns an "immutable" default value. Since we can't make the default value
         ///     read only we'll return a new one every time.
         /// </summary>
-        internal override object DefaultValue 
+        internal override object DefaultValue
         {
             get
             {
@@ -38,8 +38,8 @@ namespace MS.Internal.Ink
         /// </summary>
         internal override object CreateDefaultValue(DependencyObject owner, DependencyProperty property)
         {
-            Debug.Assert(property.PropertyType == typeof(StrokeCollection), 
-                string.Format(System.Globalization.CultureInfo.InvariantCulture, "The DependencyProperty {0} has to be type of StrokeCollection.", property));
+            Debug.Assert(property.PropertyType == typeof(StrokeCollection),
+                $"The DependencyProperty {property} has to be type of StrokeCollection.");
 
             // Instantiate our default value instance.
             StrokeCollection defaultValue = new StrokeCollection();
@@ -82,12 +82,12 @@ namespace MS.Internal.Ink
 
                 // The current instance will be promoted to the local value other than the default value.
                 // Then we could just remove our handlers to stop tracking.
-                value.StrokesChanged -= 
+                value.StrokesChanged -=
                     new StrokeCollectionChangedEventHandler(OnStrokeCollectionChanged<StrokeCollectionChangedEventArgs>);
                 value.PropertyDataChanged -=
                     new PropertyDataChangedEventHandler(OnStrokeCollectionChanged<PropertyDataChangedEventArgs>);
 
-                // 
+                //
                 // We only promote the value when there is no local value set yet.
                 if ( _owner.ReadLocalValue(_dependencyProperty) == DependencyProperty.UnsetValue )
                 {

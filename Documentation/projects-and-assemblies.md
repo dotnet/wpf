@@ -118,11 +118,11 @@ The following assemblies are being produced today:
     |   PresentationFramework.dll
     |   PresentationFramework.Luna.dll
     |   PresentationFramework.Luna.pdb
-    |   PresentationFramework.pdb
+    |   PresentationFramework.pdb 
     |   PresentationFramework.Royale.dll
     |   PresentationFramework.Royale.pdb
-    |   PresentationFramework.Win11.dll
-    |   PresentationFramework.Win11.pdb
+    |   PresentationFramework.Fluent.dll
+    |   PresentationFramework.Fluent.pdb
     |   PresentationUI.dll
     |   PresentationUI.pdb
     |   ReachFramework.dll
@@ -454,8 +454,8 @@ src\Themes\PresentationFramework.Luna\PresentationFramework.Luna.csproj
 src\Themes\PresentationFramework.Luna\ref\PresentationFramework.Luna-ref.csproj
 src\Themes\PresentationFramework.Royale\PresentationFramework.Royale.csproj
 src\Themes\PresentationFramework.Royale\ref\PresentationFramework.Royale-ref.csproj
-src\Themes\PresentationFramework.Win11\PresentationFramework.Win11.csproj
-src\Themes\PresentationFramework.Win11\ref\PresentationFramework.Win11-ref.csproj
+src\Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj
+src\Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj
 src\UIAutomation\UIAutomationClient\UIAutomationClient.csproj
 src\UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj
 src\UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj

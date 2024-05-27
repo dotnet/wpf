@@ -732,9 +732,8 @@ namespace MS.Internal.Data
                     lock (s_Sync)
                     {
                         dp = DependencyProperty.RegisterAttached(
-                            String.Format(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
-                                            "LiveSortingTargetProperty{0}",
-                                            s_dpList.Count),
+                            string.Create(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
+                                            $"LiveSortingTargetProperty{s_dpList.Count}"),
                             typeof(object),
                             typeof(LiveShapingList));
 

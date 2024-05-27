@@ -55,7 +55,7 @@ namespace System.Windows.Interop
     ///     host an ActiveX control. Currently the support is limited to
     ///     windowed controls. This class provides a technology bridge
     ///     between unmanaged ActiveXControls and Avalon framework.
-    ///     
+    ///
     ///     The only reason we expose this class public in ArrowHead without public OM
     ///     is for the WebBrowser control. The WebBrowser class derives from ActiveXHost, and
     ///     we are exposing the WebBrowser class in ArrowHead. This class does not have public
@@ -157,13 +157,13 @@ namespace System.Windows.Interop
 
             //The above call should have set this interface
             Invariant.Assert(_axOleInPlaceActiveObject != null, "InPlace activation of ActiveX control failed");
-            
+
             if (ControlHandle.Handle == IntPtr.Zero)
             {
                 IntPtr inplaceWindow = IntPtr.Zero;
                 _axOleInPlaceActiveObject.GetWindow(out inplaceWindow);
                 AttachWindow(inplaceWindow);
-            }                        
+            }
 
             return _axWindow;
         }
@@ -520,7 +520,7 @@ namespace System.Windows.Interop
                                          this.ParentHandle.Handle,
                                          _bounds);
 
-            Debug.Assert(hr == NativeMethods.S_OK, String.Format(CultureInfo.CurrentCulture, "DoVerb call failed for verb 0x{0:X}", verb));
+            Debug.Assert(hr == NativeMethods.S_OK, $"DoVerb call failed for verb 0x{verb:X}");
             return hr == NativeMethods.S_OK;
         }
 

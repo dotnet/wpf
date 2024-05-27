@@ -269,8 +269,7 @@ namespace MS.Internal.IO.Packaging
         /// <remarks>Pre-condition that lock has been acquired.</remarks>
         private void CheckDisposed()
         {
-            if (_baseStream == null)
-                throw new ObjectDisposedException("Stream");
+            ObjectDisposedException.ThrowIf(_baseStream is null, typeof(Stream));
         }
 
         //------------------------------------------------------

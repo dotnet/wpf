@@ -321,7 +321,7 @@ namespace System.Windows.Documents
             foreach (TextPositionPair range in ranges)
             {
                 Debug.Assert(range.first != null && range.second != null);
-                text = text + TextRangeBase.GetTextInternal(range.first, range.second) + "\r\n"; //CRLF
+                text = $"{text}{TextRangeBase.GetTextInternal(range.first, range.second)}\r\n"; //CRLF
             }
 
             return text;

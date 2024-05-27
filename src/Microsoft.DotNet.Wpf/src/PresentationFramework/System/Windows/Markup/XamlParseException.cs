@@ -454,7 +454,7 @@ namespace System.Windows.Markup
                                                         currentXamlObjectIds,
                                                         objectType);
 
-            message = message + "  " + contextMessage;
+            message = $"{message}  {contextMessage}";
 
 #endif
 

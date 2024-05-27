@@ -131,10 +131,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="index"></param>
         internal void ScrollIntoView(int index)
         {
-            if (index < 0 || index >= Items.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Items.Count);
 
             if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {

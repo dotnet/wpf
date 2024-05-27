@@ -65,6 +65,7 @@
     <NetCoreReference Include="System.Diagnostics.TraceSource" />
     <NetCoreReference Include="System.Drawing" />
     <NetCoreReference Include="System.Drawing.Primitives" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime" />
     <NetCoreReference Include="System.Runtime.Extensions" />

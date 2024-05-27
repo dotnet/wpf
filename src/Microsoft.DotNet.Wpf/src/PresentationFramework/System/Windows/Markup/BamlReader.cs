@@ -827,9 +827,9 @@ namespace System.Windows.Markup
             info.AssemblyName = string.Empty;
             info.Prefix = "xmlns";
             info.LocalName = bamlRecord.Prefix == null ? string.Empty : bamlRecord.Prefix;
-            info.Name = (bamlRecord.Prefix == null || bamlRecord.Prefix == string.Empty) ?
+            info.Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
                                           "xmlns" :
-                                          "xmlns:" + bamlRecord.Prefix;
+                                          $"xmlns:{bamlRecord.Prefix}";
             info.RecordType = BamlRecordType.XmlnsProperty;
 
             AddToPropertyInfoCollection(info);
@@ -1050,7 +1050,7 @@ namespace System.Windows.Markup
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
                 declaringType = declaringType == null ? _propertyDP.OwnerType : declaringType;
-                info.Value = declaringType.Name + "." + _propertyDP.Name;
+                info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,
                                                                              declaringType.Assembly.FullName);
@@ -1058,7 +1058,7 @@ namespace System.Windows.Markup
                 string prefix = GetXmlnsPrefix(xmlns);
                 if (prefix != string.Empty)
                 {
-                    info.Value = prefix + ":" + info.Value;
+                    info.Value = $"{prefix}:{info.Value}";
                 }
 
                 if (!_propertyDP.PropertyType.IsEnum)
@@ -1297,7 +1297,7 @@ namespace System.Windows.Markup
                         string typeExtensionName;
                         if (typeExtensionPrefix != string.Empty)
                         {
-                            typeExtensionName = "{" + typeExtensionPrefix + ":Type ";
+                            typeExtensionName = $"{{{typeExtensionPrefix}:Type ";
                         }
                         else
                         {
@@ -1312,11 +1312,11 @@ namespace System.Windows.Markup
                         GetAssemblyAndPrefixAndXmlns(typeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
-                            typeName = typeExtensionName + prefix + ":" + typeName + "}";
+                            typeName = $"{typeExtensionName}{prefix}:{typeName}}}";
                         }
                         else
                         {
-                            typeName = typeExtensionName + typeName + "}";
+                            typeName = $"{typeExtensionName}{typeName}}}";
                         }
 
                         // Add information to the key list to indicate we have a x:Key
@@ -1432,11 +1432,11 @@ namespace System.Windows.Markup
             GetAssemblyAndPrefixAndXmlns(typeInfo, out assemblyName, out prefix, out xmlNamespace);
             if (prefix != string.Empty)
             {
-                markupString = "{" + prefix + ":" + markupString + " ";
+                markupString = $"{{{prefix}:{markupString} ";
             }
             else
             {
-                markupString = "{" + markupString + " ";
+                markupString = $"{{{markupString} ";
             }
 
             bool notDone = true;
@@ -1498,7 +1498,7 @@ namespace System.Windows.Markup
                         {
                             markupString += ", ";
                         }
-                        markupString += nodeInfo.LocalName + "=";
+                        markupString += $"{nodeInfo.LocalName}=";
                         readProperty.Push(true);
                         break;
 
@@ -1556,11 +1556,11 @@ namespace System.Windows.Markup
                         GetAssemblyAndPrefixAndXmlns(elementTypeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
-                            markupString += "{" + prefix + ":" + typename + " ";
+                            markupString += $"{{{prefix}:{typename} ";
                         }
                         else
                         {
-                            markupString = "{" + typename + " ";
+                            markupString = $"{{{typename} ";
                         }
                         break;
 
@@ -1607,7 +1607,7 @@ namespace System.Windows.Markup
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1619,7 +1619,7 @@ namespace System.Windows.Markup
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1632,7 +1632,7 @@ namespace System.Windows.Markup
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1646,7 +1646,7 @@ namespace System.Windows.Markup
                             {
                                 markupString += ", ";
                             }
-                            markupString += attributeName + "=" + value;
+                            markupString += $"{attributeName}={value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1660,7 +1660,7 @@ namespace System.Windows.Markup
                             {
                                 markupString += ", ";
                             }
-                            markupString += attributeName + "=" + value;
+                            markupString += $"{attributeName}={value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -2349,7 +2349,7 @@ namespace System.Windows.Markup
 
             // Fill node info record with this data.
             nodeInfo.LocalName = attrInfo.Name;
-            nodeInfo.Name = typeInfo.TypeFullName + "." + nodeInfo.LocalName;
+            nodeInfo.Name = $"{typeInfo.TypeFullName}.{nodeInfo.LocalName}";
             string assembly, prefix, namespaceUri;
             GetAssemblyAndPrefixAndXmlns(typeInfo, out assembly, out prefix, out namespaceUri);
             nodeInfo.AssemblyName = assembly;
@@ -2411,10 +2411,10 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
 
-            valueString += "." + propName + "}";
+            valueString += $".{propName}}}";
             return valueString;
         }
 
@@ -2428,7 +2428,7 @@ namespace System.Windows.Markup
 
             if (extensionPrefix != string.Empty)
             {
-                valueString = "{" + extensionPrefix + ":Static ";
+                valueString = $"{{{extensionPrefix}:Static ";
             }
             else
             {
@@ -2486,10 +2486,10 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
 
-            valueString += "." + propName + "}";
+            valueString += $".{propName}}}";
             return valueString;
         }
 
@@ -2500,11 +2500,11 @@ namespace System.Windows.Markup
 
             if (!string.IsNullOrEmpty(extensionPrefix))
             {
-                valueString = "{" + extensionPrefix + ":" + extensionName + " ";
+                valueString = $"{{{extensionPrefix}:{extensionName} ";
             }
             else
             {
-                valueString = "{" + extensionName + " ";
+                valueString = $"{{{extensionName} ";
             }
 
             return valueString;
@@ -2528,7 +2528,7 @@ namespace System.Windows.Markup
                 valueString = MapTable.GetStringFromStringId(memberId);
             }
 
-            return valueString + "}";
+            return $"{valueString}}}";
         }
 
         private string GetExtensionValueString(IOptimizedMarkupExtension optimizedMarkupExtensionRecord)
@@ -2577,7 +2577,7 @@ namespace System.Windows.Markup
             string valueString;
             if (typeExtensionPrefix != string.Empty)
             {
-                valueString = "{" + typeExtensionPrefix + ":Type ";
+                valueString = $"{{{typeExtensionPrefix}:Type ";
             }
             else
             {
@@ -2597,7 +2597,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
             valueString +="}";
 
@@ -2666,7 +2666,7 @@ namespace System.Windows.Markup
         // store the all XmlNs UIRs that map to each CLRNamespace + AssemblyName
         private void SetXmlNamespace(string clrNamespace, string assemblyFullName, string xmlNs)
         {
-            String fullName = clrNamespace + "#" + assemblyFullName;
+            String fullName = $"{clrNamespace}#{assemblyFullName}";
             List<String> list;
             if(_reverseXmlnsTable.ContainsKey(fullName))
             {
@@ -2684,7 +2684,7 @@ namespace System.Windows.Markup
         // Retrieve the XmlNs UIRs that map to a CLRNamespace + AssemblyName
         private List<String> GetXmlNamespaceList(string clrNamespace, string assemblyFullName)
         {
-            String fullName = clrNamespace + "#" + assemblyFullName;
+            String fullName = $"{clrNamespace}#{assemblyFullName}";
             List<String> xmlnsList=null;
 
             if (_reverseXmlnsTable.ContainsKey(fullName))

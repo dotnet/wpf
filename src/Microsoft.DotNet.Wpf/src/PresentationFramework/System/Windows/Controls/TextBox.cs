@@ -76,6 +76,8 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+            
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -97,9 +99,6 @@ namespace System.Windows.Controls
 
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
-
-            SetValue(TemplateButtonCommandProperty, new RelayCommand<string>(OnTemplateButtonClick));
-    
         }
 
         #endregion Constructors
@@ -238,10 +237,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
 
@@ -264,10 +261,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             int line;
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
@@ -297,10 +292,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointerStart = GetStartPositionOfLine(lineIndex);
             TextPointer textPointerEnd = GetEndPositionOfLine(lineIndex);
@@ -375,10 +368,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
             Rect rect;
@@ -405,10 +396,8 @@ namespace System.Windows.Controls
                 return null; // sentinel value
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             startOfLine = GetStartPositionOfLine(lineIndex);
             endOfLine = GetEndPositionOfLine(lineIndex);
@@ -444,10 +433,8 @@ namespace System.Windows.Controls
         /// <returns>leading or trailing edge rectangle of the given character, or Rect.Empty if no layout information is available.</returns>
         public Rect GetRectFromCharacterIndex(int charIndex, bool trailingEdge)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             // Start by moving to an insertion position in backward direction.
             // This ensures that when the character at charIndex is part of a surrogate pair or multi-byte character,
@@ -490,10 +477,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public SpellingError GetSpellingError(int charIndex)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
             SpellingError spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, LogicalDirection.Forward);
@@ -563,10 +548,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public int GetNextSpellingErrorCharacterIndex(int charIndex, LogicalDirection direction)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             if (this.TextContainer.SymbolCount == 0)
             {
@@ -1017,176 +1000,49 @@ namespace System.Windows.Controls
         );
 
         /// <summary>
-        /// Property for <see cref="ShowClearButton"/>.
-        /// </summary>
-        public static readonly DependencyProperty ShowClearButtonProperty = DependencyProperty.Register(
-            nameof(ShowClearButton),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(false)
-        );
-
-        /// <summary>
-        /// Property for <see cref="IsTextSelectionEnabledProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty IsTextSelectionEnabledProperty = DependencyProperty.Register(
-            nameof(IsTextSelectionEnabled),
-            typeof(bool),
-            typeof(TextBox),
-            new PropertyMetadata(false)
-        );
-
-        /// <summary>
         /// Property for <see cref="TemplateButtonCommand"/>.
         /// </summary>
-        public static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
             nameof(TemplateButtonCommand),
-            typeof(IRelayCommand),
+            typeof(RoutedCommand),
             typeof(TextBox),
-            new PropertyMetadata(null)
+            new PropertyMetadata(EditingCommands.Clear)
         );
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets displayed <see cref="IconElement"/>.
-        /// </summary>
-        public IconElement Icon
-        {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Defines which side the icon should be placed on.
-        /// </summary>
-        public ElementPlacement IconPlacement
-        {
-            get => (ElementPlacement)GetValue(IconPlacementProperty);
-            set => SetValue(IconPlacementProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets numbers pattern.
-        /// </summary>
-        public string PlaceholderText
-        {
-            get => (string)GetValue(PlaceholderTextProperty);
-            set => SetValue(PlaceholderTextProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to display the placeholder.
-        /// </summary>
-        public bool PlaceholderEnabled
-        {
-            get => (bool)GetValue(PlaceholderEnabledProperty);
-            set => SetValue(PlaceholderEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to enable the clear button.
-        /// </summary>
-        public bool ClearButtonEnabled
-        {
-            get => (bool)GetValue(ClearButtonEnabledProperty);
-            set => SetValue(ClearButtonEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value determining whether to show the clear button when <see cref="TextBox"/> is focused.
-        /// </summary>
-        public bool ShowClearButton
-        {
-            get => (bool)GetValue(ShowClearButtonProperty);
-            protected set => SetValue(ShowClearButtonProperty, value);
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public bool IsTextSelectionEnabled
-        {
-            get => (bool)GetValue(IsTextSelectionEnabledProperty);
-            set => SetValue(IsTextSelectionEnabledProperty, value);
-        }
-
-        /// <summary>
         /// Command triggered after clicking the button.
         /// </summary>
-        public IRelayCommand TemplateButtonCommand => (IRelayCommand)GetValue(TemplateButtonCommandProperty);
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
 
         #endregion
-
-
-
-        /// <inheritdoc />
-        protected override void OnTextChanged(TextChangedEventArgs e)
-        {
-            base.OnTextChanged(e);
-
-            if (PlaceholderEnabled && Text.Length > 0)
-                PlaceholderEnabled = false;
-
-            if (!PlaceholderEnabled && Text.Length < 1)
-                PlaceholderEnabled = true;
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            CaretIndex = Text.Length;
-
-            RevealClearButton();
-        }
-
-        /// <inheritdoc />
-        protected override void OnLostFocus(RoutedEventArgs e)
-        {
-            base.OnLostFocus(e);
-
-            HideClearButton();
-        }
-
-        /// <summary>
-        /// Reveals the clear button by <see cref="ShowClearButton"/> property.
-        /// </summary>
-        protected void RevealClearButton()
-        {
-            if (ClearButtonEnabled && IsKeyboardFocusWithin)
-                ShowClearButton = Text.Length > 0;
-        }
-
-        /// <summary>
-        /// Hides the clear button by <see cref="ShowClearButton"/> property.
-        /// </summary>
-        protected void HideClearButton()
-        {
-            if (ClearButtonEnabled && !IsKeyboardFocusWithin && ShowClearButton)
-                ShowClearButton = false;
-        }
 
         /// <summary>
         /// Triggered when the user clicks the clear text button.
         /// </summary>
-        protected virtual void OnClearButtonClick()
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute =  !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
         {
             if (Text.Length > 0)
                 Text = string.Empty;
         }
 
-        /// <summary>
-        /// Triggered by clicking a button in the control template.
-        /// </summary>
-        protected virtual void OnTemplateButtonClick(string parameter)
-        {
-
-            OnClearButtonClick();
-        }
         #endregion Public Properties
 
         //------------------------------------------------------
@@ -2159,6 +2015,7 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
 
         #endregion Private Fields
     }

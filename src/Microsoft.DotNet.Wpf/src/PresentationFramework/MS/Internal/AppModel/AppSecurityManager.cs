@@ -172,7 +172,7 @@ namespace MS.Internal.AppModel
                 // The headers we pass in to IWebBrowser2.Navigate must
                 // be terminated with a \r\n because the browser then
                 // concatenates its own headers on to the end of that string.
-                referer = RefererHeader + referer + "\r\n";
+                referer = $"{RefererHeader}{referer}\r\n";
             }
 
             return referer;

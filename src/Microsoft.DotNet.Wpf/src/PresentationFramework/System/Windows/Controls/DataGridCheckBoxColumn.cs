@@ -34,7 +34,13 @@ namespace System.Windows.Controls
             {
                 if (_defaultElementStyle == null)
                 {
-                    Style style = new Style(typeof(CheckBox));
+                    Style baseStyle = null;
+                    if (ThemeManager.IsFluentThemeEnabled)
+                    {
+                        baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
+                    }
+                    
+                    Style style = new Style(typeof(CheckBox), baseStyle);
 
                     // When not in edit mode, the end-user should not be able to toggle the state
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
@@ -60,7 +66,13 @@ namespace System.Windows.Controls
             {
                 if (_defaultEditingElementStyle == null)
                 {
-                    Style style = new Style(typeof(CheckBox));
+                    Style baseStyle = null;
+                    if (ThemeManager.IsFluentThemeEnabled)
+                    {
+                        baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
+                    }
+                    
+                    Style style = new Style(typeof(CheckBox), baseStyle);
 
                     style.Setters.Add(new Setter(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center));
                     style.Setters.Add(new Setter(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Top));

@@ -557,7 +557,7 @@ namespace MS.Internal.Controls.StickyNote
                 case XmlToken.Text:
                 case XmlToken.Ink:
                     {
-                        s_xmlTokeFullNames.Add(token, AnnotationXmlConstants.Prefixes.BaseSchemaPrefix + ":" + xmlName);
+                        s_xmlTokeFullNames.Add(token, $"{AnnotationXmlConstants.Prefixes.BaseSchemaPrefix}:{xmlName}");
                     }
                     break;
 

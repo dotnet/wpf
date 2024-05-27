@@ -516,10 +516,8 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (count > UndoCount || count <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, UndoCount);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
 
             if (State != UndoState.Normal)
             {
@@ -583,10 +581,8 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.UndoServiceDisabled);
             }
 
-            if (count > RedoStack.Count || count <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, RedoStack.Count);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
 
             if (State != UndoState.Normal)
             {

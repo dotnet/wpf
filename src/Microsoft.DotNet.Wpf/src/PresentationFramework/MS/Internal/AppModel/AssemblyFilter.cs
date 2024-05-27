@@ -86,7 +86,7 @@ namespace MS.Internal
                 // dictionary
                 foreach (string assemblyName in disallowedAssemblies)
                 {
-                    featureKey = Registry.LocalMachine.OpenSubKey(KILL_BIT_REGISTRY_LOCATION + @"\" + assemblyName);
+                    featureKey = Registry.LocalMachine.OpenSubKey($@"{KILL_BIT_REGISTRY_LOCATION}\{assemblyName}");
                     object keyValue = featureKey.GetValue(SUBKEY_VALUE);
                     // if there exists a value and it is 1 add to hash table
                     if ((keyValue != null) && (int)(keyValue) == 1)

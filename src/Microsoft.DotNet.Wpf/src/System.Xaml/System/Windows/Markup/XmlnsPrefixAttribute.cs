@@ -8,8 +8,8 @@ namespace System.Windows.Markup
 {
     /// <summary>
     /// This attribute allows an assembly to recommend a prefix to be used when writing elements and
-    /// attributes in a xaml file. 
-    /// 
+    /// attributes in a xaml file.
+    ///
     /// For a WinFX assembly, it can set the attributes as follows:
     ///
     /// <code>
@@ -17,8 +17,8 @@ namespace System.Windows.Markup
     /// [assembly:XmlnsDefinition("http://schemas.fabrikam.com/mynamespace", "fabrikam.myproduct.mycategory2")]
     /// [assembly:XmlnsPrefix("http://schemas.fabrikam.com/mynamespace", "myns")]
     /// </code>
-    /// 
-    /// If fabrikam.myproduct.mycategory namespace in this assembly contains a UIElement such as "MyButton", the 
+    ///
+    /// If fabrikam.myproduct.mycategory namespace in this assembly contains a UIElement such as "MyButton", the
     /// xaml file could use it like below:
     ///   <code>
     ///   &lt;Page xmlns:myns="http://schemas.fabrikam.com/mynamespace" .... &gt;

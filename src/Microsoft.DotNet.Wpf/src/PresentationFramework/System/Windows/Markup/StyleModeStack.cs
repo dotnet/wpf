@@ -48,7 +48,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                Debug.Assert(Depth >= 0, "StyleModeStack's depth was " + Depth + ", should be >= 0");
+                Debug.Assert(Depth >= 0, $"StyleModeStack's depth was {Depth}, should be >= 0");
                 return _stack.Peek();
             }
         }
@@ -65,7 +65,7 @@ namespace System.Windows.Markup
         
         internal StyleMode Pop()
         {
-            Debug.Assert(Depth >= 0, "StyleMode::Pop() with depth of " + Depth + ", should be >= 0");
+            Debug.Assert(Depth >= 0, $"StyleMode::Pop() with depth of {Depth}, should be >= 0");
             return _stack.Pop();
         }
         

@@ -5,8 +5,8 @@
 //
 //
 // Description:
-//     TextSelectionProcessor uses TextAnchors to represent portions 
-//     of text that are anchors.  It produces locator parts that 
+//     TextSelectionProcessor uses TextAnchors to represent portions
+//     of text that are anchors.  It produces locator parts that
 //     represent these TextAnchors and can generate TextAnchors from
 //     the locator parts.
 //     Spec: Anchoring Namespace Spec.doc
@@ -32,11 +32,11 @@ using MS.Internal.Documents;
 namespace MS.Internal.Annotations.Anchoring
 {
     /// <summary>
-    ///     TextSelectionProcessor uses TextAnchors to represent portions 
-    ///     of text that are anchors.  It produces locator parts that 
+    ///     TextSelectionProcessor uses TextAnchors to represent portions
+    ///     of text that are anchors.  It produces locator parts that
     ///     represent these TextAnchors and can generate TextAnchors from
     ///     the locator parts.
-    /// </summary>  
+    /// </summary>
     internal sealed class TextSelectionProcessor : SelectionProcessor
     {
         //------------------------------------------------------
@@ -62,18 +62,18 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //------------------------------------------------------
 
-        #region Public Methods     
+        #region Public Methods
 
         /// <summary>
         ///     Merges the two anchors into one, if possible.
         /// </summary>
         /// <param name="anchor1">anchor to merge </param>
         /// <param name="anchor2">other anchor to merge </param>
-        /// <param name="newAnchor">new anchor that contains the data from both 
+        /// <param name="newAnchor">new anchor that contains the data from both
         /// anchor1 and anchor2</param>
-        /// <returns>true if the anchors were merged, false otherwise 
+        /// <returns>true if the anchors were merged, false otherwise
         /// </returns>
-        /// <exception cref="ArgumentNullException">anchor1 or anchor2 are 
+        /// <exception cref="ArgumentNullException">anchor1 or anchor2 are
         /// null</exception>
         public override bool MergeSelections(Object anchor1, Object anchor2, out Object newAnchor)
         {
@@ -85,7 +85,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Gets the tree elements spanned by the selection.
         /// </summary>
         /// <param name="selection">the selection to examine</param>
-        /// <returns>a list of elements spanned by the selection; never returns 
+        /// <returns>a list of elements spanned by the selection; never returns
         /// null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
@@ -125,9 +125,9 @@ namespace MS.Internal.Annotations.Anchoring
         ///     of 'startNode' spanned by 'selection'.
         /// </summary>
         /// <param name="selection">the selection that is being processed</param>
-        /// <param name="startNode">the node the locator parts should be in the 
+        /// <param name="startNode">the node the locator parts should be in the
         /// context of</param>
-        /// <returns>one or more locator parts representing the portion of 'startNode' spanned 
+        /// <returns>one or more locator parts representing the portion of 'startNode' spanned
         /// by 'selection'</returns>
         /// <exception cref="ArgumentNullException">startNode or selection is null</exception>
         /// <exception cref="ArgumentException">selection is of the wrong type</exception>
@@ -179,19 +179,19 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        ///     Creates a selection object spanning the portion of 'startNode' 
+        ///     Creates a selection object spanning the portion of 'startNode'
         ///     specified by 'locatorPart'.
         /// </summary>
         /// <param name="locatorPart">locator part specifying data to be spanned</param>
-        /// <param name="startNode">the node to be spanned by the created 
+        /// <param name="startNode">the node to be spanned by the created
         /// selection</param>
         /// <param name="attachmentLevel">set to AttachmentLevel.Full if the entire range of text
         /// was resolved, otherwise set to StartPortion, MiddlePortion, or EndPortion based on
         /// which part of the range was resolved</param>
-        /// <returns>a selection spanning the portion of 'startNode' specified by     
+        /// <returns>a selection spanning the portion of 'startNode' specified by
         /// 'locatorPart', null if selection described by locator part could not be
         /// recreated</returns>
-        /// <exception cref="ArgumentNullException">locatorPart or startNode are 
+        /// <exception cref="ArgumentNullException">locatorPart or startNode are
         /// null</exception>
         /// <exception cref="ArgumentException">locatorPart is of the incorrect type</exception>
         public override Object ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out AttachmentLevel attachmentLevel)
@@ -200,9 +200,9 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (CharacterRangeElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
-            // First we extract the offset and length of the 
+            // First we extract the offset and length of the
             // text range from the locator part.
             int startOffset = 0;
             int endOffset = 0;
@@ -220,7 +220,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 GetLocatorPartSegmentValues(locatorPart, i, out startOffset, out endOffset);
 
-                // Now we grab the TextRange so we can create a selection.  
+                // Now we grab the TextRange so we can create a selection.
                 // TextBox doesn't expose its internal TextRange so we use
                 // its API for creating and getting the selection.
                 ITextPointer elementStart;
@@ -325,12 +325,12 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //  Public Events
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
         //------------------------------------------------------
         //
         //  Internal Properties
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
         #region Internal Properties
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //  Internal Methods
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
 
         #region Internal Methods
 
@@ -486,7 +486,7 @@ namespace MS.Internal.Annotations.Anchoring
 
         /// <summary>
         ///     Returns ITextPointers positioned at the start and end of an element
-        ///     that contains text.  
+        ///     that contains text.
         /// </summary>
         private bool GetNodesStartAndEnd(DependencyObject startNode, out ITextPointer start, out ITextPointer end)
         {
@@ -518,7 +518,7 @@ namespace MS.Internal.Annotations.Anchoring
 
 
         /// <summary>
-        /// Gets start and end offset for a text segment but clamps those values to the start and end 
+        /// Gets start and end offset for a text segment but clamps those values to the start and end
         /// of a given element.  This way if a large text range is being resolved on a node that only contains
         /// a portion of the text range (such as a paragraph) the result only includes the content in that node.
         /// </summary>

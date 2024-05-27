@@ -219,7 +219,7 @@ namespace MS.Internal.Documents
                     menuItem.InputGestureText = inputGestureText;
                 }
 
-                menuItem.Name = "ViewerContextMenu_" + command.Name; // does not require localization
+                menuItem.Name = $"ViewerContextMenu_{command.Name}"; // does not require localization
                 this.Items.Add(menuItem);
             }
         }

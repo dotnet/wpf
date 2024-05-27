@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +15,7 @@ using System.Xaml.Schema;
 namespace MS.Internal.Xaml.Context
 {
     // Graph of unresolved forward references, and the objects that depend on them.
-    // The nodes are objects and names. The edges (NameFixupTokens) are dependencies from an object to 
+    // The nodes are objects and names. The edges (NameFixupTokens) are dependencies from an object to
     // a set of unresolved names, or from an object to another object that has unresolved dependencies.
     internal class NameFixupGraph
     {
@@ -56,7 +58,7 @@ namespace MS.Internal.Xaml.Context
             // Need to special case a deferred ProvideValue at the root, because it has no parent
             if (fixupToken.Target.Property == null)
             {
-                Debug.Assert(fixupToken.Target.Instance == null && 
+                Debug.Assert(fixupToken.Target.Instance == null &&
                     fixupToken.Target.InstanceType == null &&
                     fixupToken.FixupType == FixupType.MarkupExtensionFirstRun);
                 Debug.Assert(_deferredRootProvideValue == null);
@@ -91,7 +93,7 @@ namespace MS.Internal.Xaml.Context
                 foreach (string name in fixupToken.NeededNames)
                 {
                     AddToMultiDict(_dependenciesByName, name, fixupToken);
-                }   
+                }
             }
         }
 
@@ -182,7 +184,7 @@ namespace MS.Internal.Xaml.Context
                 while (i < nameDependencies.Count)
                 {
                     token = nameDependencies[i];
-                    
+
                     // The same name can occur in multiple namescopes, so we need to make sure that
                     // this named object is visible in the scope of the token.
                     object resolvedName = token.ResolveName(name);
@@ -420,7 +422,7 @@ namespace MS.Internal.Xaml.Context
             }
             alreadyTraversed.Add(inEdge);
             FrugalObjectList<NameFixupToken> outEdges;
-            if (inEdge.ReferencedObject == null || 
+            if (inEdge.ReferencedObject == null ||
                 !_dependenciesByParentObject.TryGetValue(inEdge.ReferencedObject, out outEdges))
             {
                 // No dependencies, we're done with this subgraph

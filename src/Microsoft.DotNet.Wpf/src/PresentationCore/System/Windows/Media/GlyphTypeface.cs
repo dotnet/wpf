@@ -1829,10 +1829,9 @@ namespace System.Windows.Media
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
                 // is 0 the index is not allowed to be equal or greater than the length
                 // (from the MSDN ICollection docs)
-                if (arrayIndex < 0 || arrayIndex >= array.Length || (arrayIndex + Count) > array.Length)
-                {
-                    throw new ArgumentOutOfRangeException("arrayIndex");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(arrayIndex, array.Length);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - Count);
 
                 for (ushort i = 0; i < Count; ++i)
                     array[arrayIndex + i] = new KeyValuePair<ushort, double>(i, this[i]);
@@ -1915,10 +1914,9 @@ namespace System.Windows.Media
                     // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
                     // is 0 the index is not allowed to be equal or greater than the length
                     // (from the MSDN ICollection docs)
-                    if (arrayIndex < 0 || arrayIndex >= array.Length || (arrayIndex + Count) > array.Length)
-                    {
-                        throw new ArgumentOutOfRangeException("arrayIndex");
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+                    ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(arrayIndex, array.Length);
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - Count);
 
                     for (ushort i = 0; i < Count; ++i)
                         array[arrayIndex + i] = _glyphIndexer[i];

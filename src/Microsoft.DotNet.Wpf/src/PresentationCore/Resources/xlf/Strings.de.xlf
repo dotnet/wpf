@@ -2522,21 +2522,6 @@
         <target state="translated">Die Seitenzahl kann nicht negativ sein.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Der Parameterwert muss zwischen "{0}" und "{1}" liegen.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Der Parameterwert muss endlich sein.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">Der Parameterwert muss eine Zahl sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Beim Analysieren der Zeichenfolge "{1}" wurde die ungültige Form "{0}" gefunden.</target>

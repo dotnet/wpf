@@ -76,7 +76,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            return base.ToString() + ", FolderName: " + FolderName;
+            return $"{base.ToString()}, FolderName: {FolderName}";
         }
 
         #endregion Public Methods

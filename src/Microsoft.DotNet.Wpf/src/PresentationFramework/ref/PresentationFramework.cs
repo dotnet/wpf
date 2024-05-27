@@ -11505,7 +11505,7 @@ namespace System.Windows.Markup
         public static readonly System.Windows.DependencyProperty XmlSpaceProperty;
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
-        public static string GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
+        public static System.Collections.Hashtable GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
@@ -11516,7 +11516,7 @@ namespace System.Windows.Markup
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
         public static string GetXmlSpace(System.Windows.DependencyObject dependencyObject) { throw null; }
-        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, string value) { }
+        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, System.Collections.Hashtable value) { }
         public static void SetXmlnsDefinition(System.Windows.DependencyObject dependencyObject, string value) { }
         public static void SetXmlnsDictionary(System.Windows.DependencyObject dependencyObject, System.Windows.Markup.XmlnsDictionary value) { }
         public static void SetXmlSpace(System.Windows.DependencyObject dependencyObject, string value) { }

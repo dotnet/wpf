@@ -1693,8 +1693,8 @@ namespace System.Windows.Controls
         /// <param name="itemIndex">index into the children of this panel</param>
         private void BringContainerIntoView(ItemsControl itemsControl, int itemIndex)
         {
-            if (itemIndex < 0 || itemIndex >= ItemCount)
-                throw new ArgumentOutOfRangeException("itemIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(itemIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(itemIndex, ItemCount);
 
             UIElement child;
             IItemContainerGenerator generator = Generator;
@@ -6590,8 +6590,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                string name = (container == null) ? "null" : container.GetType().Name;
-                Debug.Assert(false, "Unexpected container type: " + name);
+                Debug.Fail($"Unexpected container type: {((container == null) ? "null" : container.GetType().Name)}");
             }
 
             return null;
@@ -12823,8 +12822,7 @@ namespace System.Windows.Controls
 
             public override string ToString()
             {
-                return String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4}",
-                    OpDepth, VDepth, ItemIndex, Op, Detail);
+                return string.Create(CultureInfo.InvariantCulture, $"{OpDepth} {VDepth} {ItemIndex} {Op} {Detail}");
             }
 
             internal void Write(BinaryWriter writer)
@@ -12986,8 +12984,7 @@ namespace System.Windows.Controls
 
             public override string ToString()
             {
-                return String.Format(CultureInfo.InvariantCulture, "{0} ds: {1} ar: {2} in: {3}",
-                    _itemIndex, _desiredSize, _arrangeRect, _inset);
+                return string.Create(CultureInfo.InvariantCulture, $"{_itemIndex} ds: {_desiredSize} ar: {_arrangeRect} in: {_inset}");
             }
         }
 
@@ -13060,7 +13057,7 @@ namespace System.Windows.Controls
             else if (vsp == this)
             {
                 ItemContainerGenerator g = Generator as ItemContainerGenerator;
-                return String.Format(CultureInfo.InvariantCulture, "{0}", g.IndexFromContainer(container, returnLocalIndex:true));
+                return string.Create(CultureInfo.InvariantCulture, $"{g.IndexFromContainer(container, returnLocalIndex:true)}");
             }
             else
             {
@@ -13069,12 +13066,11 @@ namespace System.Windows.Controls
                 DependencyObject parentContainer = ItemsControl.ContainerFromElement(null, vsp);
                 if (parentContainer == null)
                 {
-                    return String.Format(CultureInfo.InvariantCulture, "{0}", localIndex);
+                    return string.Create(CultureInfo.InvariantCulture, $"{localIndex}");
                 }
                 else
                 {
-                    return String.Format(CultureInfo.InvariantCulture, "{0}.{1}",
-                        ContainerPath(parentContainer), localIndex);
+                    return string.Create(CultureInfo.InvariantCulture, $"{ContainerPath(parentContainer)}.{localIndex}");
                 }
             }
         }

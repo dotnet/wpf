@@ -55,11 +55,7 @@ namespace System.Windows.Documents
         /// </summary>
         public override string ToString()
         {
-            return  "FTP"
-                    + DebugId + " "
-                    +  (this._isFrozen? "NV " : "PO ")
-                    +  _flowPosition.ToString()
-                    +  " " + this._gravity;
+            return $"FTP{DebugId} {(this._isFrozen ? "NV " : "PO ")}{_flowPosition} {this._gravity}";
         }
 #endif // DEBUG
 

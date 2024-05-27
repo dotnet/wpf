@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -498,7 +500,7 @@ namespace System.Xaml
             MethodInfo setter = Setter;
             if (setter != null)
             {
-                return MemberReflector.GenericArgumentsAreVisibleTo(setter, accessingAssembly, SchemaContext) && 
+                return MemberReflector.GenericArgumentsAreVisibleTo(setter, accessingAssembly, SchemaContext) &&
                     (MemberReflector.IsInternalVisibleTo(setter, accessingAssembly, SchemaContext) ||
                     MemberReflector.IsProtectedVisibleTo(setter, accessingType, SchemaContext));
             }
@@ -833,7 +835,7 @@ namespace System.Xaml
                     ICustomAttributeProvider attrProvider = LookupCustomAttributeProvider();
                     if (attrProvider == null)
                     {
-                        // Set the member that _reflector will use. Note this also ensures that 
+                        // Set the member that _reflector will use. Note this also ensures that
                         // _underlyingMember is initialized, so it's safe to access the field directly below.
                         _reflector.UnderlyingMember = UnderlyingMember;
                     }
@@ -863,8 +865,8 @@ namespace System.Xaml
             if (!_reflector.DefaultValueIsSet)
             {
                 DefaultValueAttribute defaultValueAttrib = null;
-                // Unlike other component-model attributes, DefaultValueAttribute is unsealed, and the 
-                // Value property is virtual. So we cannot reliably process DefaultValueAttribute in ROL. 
+                // Unlike other component-model attributes, DefaultValueAttribute is unsealed, and the
+                // Value property is virtual. So we cannot reliably process DefaultValueAttribute in ROL.
                 // The DefaultValue property is internal and is only called from XamlObjectReader, so it
                 // is safe to use live reflection.
                 if (AreAttributesAvailable)

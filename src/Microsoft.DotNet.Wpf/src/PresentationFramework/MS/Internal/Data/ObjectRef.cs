@@ -283,8 +283,7 @@ namespace MS.Internal.Data
 
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture,
-                    "ElementName={0}", _name);
+            return $"ElementName={_name}";
         }
 
         internal override string Identify()
@@ -336,15 +335,11 @@ namespace MS.Internal.Data
             switch (_relativeSource.Mode)
             {
                 case RelativeSourceMode.FindAncestor:
-                    s = String.Format(CultureInfo.InvariantCulture,
-                        "RelativeSource {0}, AncestorType='{1}', AncestorLevel='{2}'",
-                        _relativeSource.Mode,
-                        _relativeSource.AncestorType,
-                        _relativeSource.AncestorLevel);
+                    s = string.Create(CultureInfo.InvariantCulture,
+                        $"RelativeSource {_relativeSource.Mode}, AncestorType='{_relativeSource.AncestorType}', AncestorLevel='{_relativeSource.AncestorLevel}'");
                     break;
                 default:
-                    s = String.Format(CultureInfo.InvariantCulture,
-                        "RelativeSource {0}", _relativeSource.Mode);
+                    s = string.Create(CultureInfo.InvariantCulture, $"RelativeSource {_relativeSource.Mode}");
                     break;
             }
 
@@ -453,8 +448,8 @@ namespace MS.Internal.Data
 
         internal override string Identify()
         {
-            return String.Format(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
-                "RelativeSource ({0})", _relativeSource.Mode);
+            return string.Create(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
+                $"RelativeSource ({_relativeSource.Mode})");
         }
 
         //------------------------------------------------------

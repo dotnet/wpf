@@ -145,10 +145,7 @@ namespace System.Windows.Baml2006
 
         override public bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("Baml2006Reader");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(Baml2006Reader));
             if (IsEof)
             {
                 return false;
@@ -2024,8 +2021,8 @@ namespace System.Windows.Baml2006
 
         private string Logic_GetFullyQualifiedNameForMember(Int16 propertyId)
         {
-            return Logic_GetFullyQualifiedNameForType(BamlSchemaContext.GetPropertyDeclaringType(propertyId)) + "." +
-                BamlSchemaContext.GetPropertyName(propertyId, false);
+            return
+                $"{Logic_GetFullyQualifiedNameForType(BamlSchemaContext.GetPropertyDeclaringType(propertyId))}.{BamlSchemaContext.GetPropertyName(propertyId, false)}";
         }
 
         private string Logic_GetFullyQualifiedNameForType(XamlType type)
@@ -2048,7 +2045,7 @@ namespace System.Windows.Baml2006
                         }
                         else
                         {
-                            return prefix + ":" + type.Name;
+                            return $"{prefix}:{type.Name}";
                         }
                     }
                 }
@@ -2056,7 +2053,7 @@ namespace System.Windows.Baml2006
                 currentFrame = (Baml2006ReaderFrame)currentFrame.Previous;
             }
 
-            throw new InvalidOperationException("Could not find prefix for type: " + type.Name);
+            throw new InvalidOperationException($"Could not find prefix for type: {type.Name}");
         } 
 
         private string Logic_GetFullXmlns(string uriInput)
@@ -2074,7 +2071,7 @@ namespace System.Windows.Baml2006
                         // We need to append local assembly
 
                         return uriInput + ((_settings.LocalAssembly != null)
-                                                ? string.Concat(";assembly=", GetAssemblyNameForNamespace(_settings.LocalAssembly))
+                                                ? $";assembly={GetAssemblyNameForNamespace(_settings.LocalAssembly)}"
                                                 : String.Empty);
                     }
                     else
@@ -2607,7 +2604,7 @@ namespace System.Windows.Baml2006
                             XamlType declaringType = BamlSchemaContext.GetXamlType(reader.ReadInt16());
                             string propertyName = reader.ReadString();
 
-                            return Logic_GetFullyQualifiedNameForType(declaringType) + "." + propertyName;
+                            return $"{Logic_GetFullyQualifiedNameForType(declaringType)}.{propertyName}";
                         }
                     }
 
@@ -2652,7 +2649,7 @@ namespace System.Windows.Baml2006
                     {
                         System.Windows.SystemResourceKeyID keyId = (System.Windows.SystemResourceKeyID)valueId;
                         XamlType type = _context.SchemaContext.GetXamlType(System.Windows.Markup.SystemKeyConverter.GetSystemClassType(keyId));
-                        currentText = Logic_GetFullyQualifiedNameForType(type) + ".";
+                        currentText = $"{Logic_GetFullyQualifiedNameForType(type)}.";
 
                         if (isKey)
                         {

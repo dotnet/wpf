@@ -57,7 +57,7 @@ namespace System.Windows.Documents
             
             for (int i = 0; i < _semanticBoxes.Count; i++)
             {
-                _semanticBoxes[i].Render(dc, label + " " + i.ToString(),debugVisual);
+                _semanticBoxes[i].Render(dc, $"{label} {i}",debugVisual);
             }
         }
 #endif
@@ -100,7 +100,8 @@ namespace System.Windows.Documents
                                         _RTLCount++;
                                     }
                                     else
-                                    {                                        _LTRCount++;
+                                    {
+                                        _LTRCount++;
                                     }
                                 }
                                 return true;

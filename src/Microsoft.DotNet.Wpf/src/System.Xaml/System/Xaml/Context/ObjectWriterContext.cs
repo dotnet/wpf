@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,7 +28,7 @@ namespace MS.Internal.Xaml.Context
         XamlObjectWriterSettings _settings;
         List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
-        public ObjectWriterContext(XamlSavedContext savedContext, 
+        public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
             : base(savedContext.SchemaContext)
         {
@@ -63,7 +65,7 @@ namespace MS.Internal.Xaml.Context
                 }
 
                 // Push an extra frame to ensure that the template NameScope is
-                // not part of the saved context.  Otherwise, the namescope 
+                // not part of the saved context.  Otherwise, the namescope
                 // will hold things alive as long as the template is alive
                 _stack.PushScope();
                 _savedDepth = _stack.Depth;
@@ -269,7 +271,7 @@ namespace MS.Internal.Xaml.Context
 
         // ----- methods to support the Service Providers
 
-        internal ServiceProviderContext ServiceProviderContext    
+        internal ServiceProviderContext ServiceProviderContext
         {
             get
             {
@@ -489,7 +491,7 @@ namespace MS.Internal.Xaml.Context
         {
             _stack.PopScope();
         }
-        
+
         /// <summary>
         /// Total depth of the stack SavedDepth+LiveDepth
         /// </summary>
@@ -660,7 +662,7 @@ namespace MS.Internal.Xaml.Context
         {
             get { return _settings != null ? _settings.SourceBamlUri : null; }
         }
-        
+
         // This specifically stores the start line number for a start object for consistency
         public int LineNumber_StartObject { get; set; }
 
@@ -893,7 +895,7 @@ namespace MS.Internal.Xaml.Context
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
                 }
             }
-            
+
             // If the root instance isn't a name scope
             // then perhaps it designated a property as the name scope.
             if (nameScopeDictionary == null)
@@ -929,7 +931,7 @@ namespace MS.Internal.Xaml.Context
                 }
             }
 
-            if (nameScopeDictionary == null && _settings != null 
+            if (nameScopeDictionary == null && _settings != null
                 && _settings.RegisterNamesOnExternalNamescope)
             {
                 ObjectWriterFrame frameZero = (ObjectWriterFrame)rootFrame.Previous;
@@ -961,7 +963,7 @@ namespace MS.Internal.Xaml.Context
             }
 
             // Clone the stack
-            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);            
+            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);
             XamlSavedContext savedContext = new XamlSavedContext(savedContextType, this, newStack);
             return savedContext;
         }
@@ -1090,7 +1092,7 @@ namespace MS.Internal.Xaml.Context
 
             public event EventHandler OnNameScopeInitializationComplete
             {
-                // at this point all name scopes have been completed, and we will 
+                // at this point all name scopes have been completed, and we will
                 // not raise any event for subscriptions that come after this.
                 add
                 {

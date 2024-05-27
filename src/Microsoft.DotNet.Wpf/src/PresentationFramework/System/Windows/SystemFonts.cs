@@ -425,6 +425,11 @@ namespace System.Windows
         {
             get
             {
+                // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
+                if(ThemeManager.IsFluentThemeEnabled)
+                {
+                    return ThemeManager.DefaultFluentThemeFontSize;
+                }
                 return ConvertFontHeight(SystemParameters.NonClientMetrics.lfMessageFont.lfHeight);
             }
         }

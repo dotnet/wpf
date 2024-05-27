@@ -378,7 +378,7 @@ namespace MS.Internal.AppModel
                             s += "u";
                             break;
                         default:
-                            Invariant.Assert(false, "Invalid JournalEntryType: " + journal[i].EntryType);
+                            Invariant.Assert(false, $"Invalid JournalEntryType: {journal[i].EntryType}");
                             break;
                     }
                 }

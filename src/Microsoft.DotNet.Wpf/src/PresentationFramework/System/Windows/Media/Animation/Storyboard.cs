@@ -574,7 +574,7 @@ public class Storyboard : ParallelTimeline
         object mappedObject = clockMappings[mappingKey];
 
         Debug.Assert( mappedObject == null || mappedObject is AnimationClock || mappedObject is List<AnimationClock>,
-            "Internal error - clockMappings table contains an unexpected object " + ((mappedObject == null ) ? "" : mappedObject.GetType().ToString()) );
+            $"Internal error - clockMappings table contains an unexpected object {((mappedObject == null) ? "" : mappedObject.GetType().ToString())}");
 
         if( mappedObject == null )
         {
@@ -615,7 +615,7 @@ public class Storyboard : ParallelTimeline
             List<AnimationClock> clockList;
 
             Debug.Assert( value is AnimationClock || value is List<AnimationClock> ,
-                "Internal error - clockMappings table contains unexpected object of type" + value.GetType() );
+                $"Internal error - clockMappings table contains unexpected object of type{value.GetType()}");
 
             if( value is AnimationClock )
             {

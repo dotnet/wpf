@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -971,10 +973,7 @@ namespace System.Xaml
 
         private void ThrowIfDisposed()
         {
-            if(IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlObjectWriter");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlObjectWriter));
         }
 
         public XAML3.INameScope RootNameScope

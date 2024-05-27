@@ -750,7 +750,7 @@ namespace MS.Internal
             if (stringFormat.IndexOf('{') < 0)
             {
                 // convenience syntax - build a composite format string with one parameter
-                stringFormat = @"{0:" + stringFormat + @"}";
+                stringFormat = $@"{{0:{stringFormat}}}";
             }
 
             return stringFormat;

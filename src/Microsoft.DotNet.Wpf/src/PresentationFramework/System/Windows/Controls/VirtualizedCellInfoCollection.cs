@@ -383,12 +383,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ((index >= 0) && (index < Count))
-                {
-                    return GetCellInfoFromIndex(_owner, _regions, index);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Count);
 
-                throw new ArgumentOutOfRangeException("index");
+                return GetCellInfoFromIndex(_owner, _regions, index);
             }
 
             set

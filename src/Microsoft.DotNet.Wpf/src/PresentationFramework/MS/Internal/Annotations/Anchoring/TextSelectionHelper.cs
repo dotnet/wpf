@@ -79,10 +79,10 @@ namespace MS.Internal.Annotations.Anchoring
             TextAnchor secondAnchor = anchor2 as TextAnchor;
 
             if ((anchor1 != null) && (firstAnchor == null))
-                throw new ArgumentException(SR.WrongSelectionType, "anchor1: type = " + anchor1.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"anchor1: type = {anchor1.GetType()}");
 
             if ((anchor2 != null) && (secondAnchor == null))
-                throw new ArgumentException(SR.WrongSelectionType, "Anchor2: type = " + anchor2.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"Anchor2: type = {anchor2.GetType()}");
 
             if (firstAnchor == null)
             {

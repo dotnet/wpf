@@ -413,10 +413,7 @@ namespace System.Windows.Xps.Packaging
         AddFixedPage(
             )
         {
-            if (null == _metroPart || null == CurrentXpsManager.MetroPackage)
-            {
-                throw new ObjectDisposedException("XpsFixedDocumentReaderWriter");
-            }
+            ObjectDisposedException.ThrowIf(_metroPart is null || CurrentXpsManager.MetroPackage is null, typeof(XpsFixedDocumentReaderWriter));
 
             //
             // Only one page can be created/written at a time.

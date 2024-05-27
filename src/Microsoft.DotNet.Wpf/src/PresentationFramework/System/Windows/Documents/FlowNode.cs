@@ -5,29 +5,29 @@
 //
 // Description:
 //      FlowNode represents a structural node for a flow document. They
-//      are inserted into a content flow backing store content flow their 
-//      relative orders signal the content flow order. 
+//      are inserted into a content flow backing store content flow their
+//      relative orders signal the content flow order.
 //
 
 namespace System.Windows.Documents
 {
     using System;
     using System.Diagnostics;
-    
+
     //=====================================================================
     /// <summary>
-    /// FlowNode represents a structural node in the Flow Order of a fixed document. 
-    /// They are inserted into a content flow backing store (the Flow Order) to 
-    /// represent a flow order view of the fixed document.  Their relative position 
-    /// in the Flow Order indicates their relative reading order. 
-    /// 
-    /// A FlowNode is identified by its ScopeId and is compared by its relative position
-    /// in the Flow Order (Fp). 
+    /// FlowNode represents a structural node in the Flow Order of a fixed document.
+    /// They are inserted into a content flow backing store (the Flow Order) to
+    /// represent a flow order view of the fixed document.  Their relative position
+    /// in the Flow Order indicates their relative reading order.
     ///
-    /// Content structure and scope can be deduced from the Flow Order. 
+    /// A FlowNode is identified by its ScopeId and is compared by its relative position
+    /// in the Flow Order (Fp).
+    ///
+    /// Content structure and scope can be deduced from the Flow Order.
     /// For instance
     ///     S1 S2 R2 E2 E1
-    /// would indicate element 1 (S1-E1) is the parent of element 2 (S1-E2) 
+    /// would indicate element 1 (S1-E1) is the parent of element 2 (S1-E2)
     /// </summary>
     internal sealed class FlowNode : IComparable
     {
@@ -64,7 +64,7 @@ namespace System.Windows.Documents
         // Public Methods
         //
         //---------------------------------------------------------------------
-          
+
         #region Public Methods
 
         // force object comparision
@@ -145,7 +145,7 @@ namespace System.Windows.Documents
         public override string ToString()
         {
             int page = -1;
-            
+
             switch (_type)
             {
                 case FlowNodeType.Boundary:
@@ -177,9 +177,9 @@ namespace System.Windows.Documents
                 default:
                     break;
             }
-            
-            
-            return String.Format("Pg{0}-nCp{1}-Id{2}-Tp{3}", page, _fp, _scopeId, System.Enum.GetName(typeof(FlowNodeType), _type));
+
+
+            return $"Pg{page}-nCp{_fp}-Id{_scopeId}-Tp{System.Enum.GetName(_type)}";
         }
 #endif
         #endregion Public Methods
@@ -232,7 +232,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Internal Properties
-        // Get/Set position within flow order 
+        // Get/Set position within flow order
         internal int Fp
         {
             get
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
         }
 
 
-        // Get/Set the cookie associated with this position. 
+        // Get/Set the cookie associated with this position.
         // Higher level protocol decides what to put inside
         // the cookie
         internal object Cookie
@@ -290,7 +290,7 @@ namespace System.Windows.Documents
 
         #endregion Internal Properties
 
- 
+
         //--------------------------------------------------------------------
         //
         // Private Fields

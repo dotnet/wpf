@@ -5,7 +5,7 @@
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
-    <PreReleaseVersionIteration>5</PreReleaseVersionIteration>
+    <PreReleaseVersionIteration>6</PreReleaseVersionIteration>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
     <!--
       Set assembly version to align with major and minor version, as for the patches and revisions should be manually
@@ -49,7 +49,7 @@
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>9.0.0-beta.24266.1</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>9.0.0-beta.24272.5</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>
@@ -107,6 +107,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>9.0.0-preview.5.24223.1</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>9.0.0-preview.6.24273.3</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

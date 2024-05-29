@@ -1,36 +1,18 @@
-name: Locker - Lock stale issues and PRs
-on:
-  schedule:
-    - cron: '0 9 * * *' # Once per day, early morning PT
+name: .NET Core
 
-  workflow_dispatch:
-    # Manual triggering through the GitHub UI, API, or CLI
-    inputs:
-      daysSinceClose:
-        required: true
-        default: "30"
-      daysSinceUpdate:
-        required: true
-        default: "30"
-
-permissions:
-  issues: write
-  pull-requests: write
+on: [push]
 
 jobs:
-  main:
-    runs-on: ubuntu-latest
+  build:
+
+    runs-on: windows-latest
+
     steps:
-      - name: Checkout Actions
-        uses: actions/checkout@v4
-        with:
-          repository: "microsoft/vscode-github-triage-actions"
-          path: ./actions
-          ref: cd16cd2aad6ba2da74bb6c6f7293adddd579a90e # locker action commit sha
-      - name: Install Actions
-        run: npm install --production --prefix ./actions
-      - name: Run Locker
-        uses: ./actions/locker
-        with:
-          daysSinceClose:  ${{ fromJson(inputs.daysSinceClose  || 30) }}
-          daysSinceUpdate: ${{ fromJson(inputs.daysSinceUpdate || 30) }}
+    - uses: actions/checkout@v1
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+      
+    - name: Build
+      run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86

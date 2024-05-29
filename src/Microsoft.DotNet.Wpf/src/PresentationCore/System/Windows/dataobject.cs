@@ -1586,9 +1586,23 @@ namespace System.Windows
 
                         byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
                         inkStream.Position = 0;
-                        #pragma warning disable CA2022
-                        inkStream.Read(buffer, 0, NativeMethods.IntPtrToInt32(size));
-                        #pragma warning restore CA2022
+#if NET7_0_OR_GREATER
+                inkStream.ReadExactly(buffer, 0, NativeMethods.IntPtrToInt32(size));
+#else
+                int readCount =  NativeMethods.IntPtrToInt32(size);
+                int totalRead = 0;
+                while(totalRead < readCount)
+                {
+                    int read = inkStream.Read(bytes, totalRead, readCount - totalRead);
+                    if (read <= 0)
+                    {
+                        throw new EndOfStreamException();
+                    }
+                    totalRead += read;
+                }
+                
+#endif
+
                         istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
                         hr = NativeMethods.S_OK;
                     }
@@ -1726,9 +1740,22 @@ namespace System.Windows
 
                 bytes = new byte[NativeMethods.IntPtrToInt32(size)];
                 stream.Position = 0;
-                #pragma warning disable CA2022
-                stream.Read(bytes, 0, NativeMethods.IntPtrToInt32(size));
-                #pragma warning restore CA2022
+#if NET7_0_OR_GREATER
+                stream.ReadExactly(bytes, 0, NativeMethods.IntPtrToInt32(size));
+#else
+                int readCount =  NativeMethods.IntPtrToInt32(size);
+                int totalRead = 0;
+                while(totalRead < readCount)
+                {
+                    int read = stream.Read(bytes, totalRead, readCount - totalRead);
+                    if (read <= 0)
+                    {
+                        throw new EndOfStreamException();
+                    }
+                    totalRead += read;
+                }
+                
+#endif
                 Marshal.Copy(bytes, 0, ptr, NativeMethods.IntPtrToInt32(size));
             }
             finally

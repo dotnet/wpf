@@ -189,8 +189,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
 
                     byte[] data = new byte[ropSize];
+                    #pragma warning disable CA2022
                     stream.Read (data, 0, (int)ropSize);
-
+                    #pragma warning restore CA2022
                     if (data != null && data.Length > 0)
                     {
                         //data[0] holds the allowable values of 0-255

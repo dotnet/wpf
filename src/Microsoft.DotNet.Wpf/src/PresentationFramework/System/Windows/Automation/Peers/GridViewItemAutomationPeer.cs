@@ -76,7 +76,7 @@ namespace System.Windows.Automation.Peers
                             }
                             else if (ele is TextBlock)
                             {
-                                peer = new GridViewCellAutomationPeer((TextBlock)block, _listviewAP);
+                                peer = new GridViewCellAutomationPeer((TextBlock)ele, _listviewAP);
                             }
                             else
                             {

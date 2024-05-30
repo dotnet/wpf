@@ -96,8 +96,8 @@ namespace System.Windows.Automation.Peers
 
         internal int Row
         {
-            get => _row;
-            set => _row = value;
+            get { return _row; }
+            set { _row = value; }
         }
 
         #region ITableItem
@@ -197,7 +197,7 @@ namespace System.Windows.Automation.Peers
 
         #region Private Fields
 
-        private readonly ListViewAutomationPeer _listviewAP;
+        private ListViewAutomationPeer _listviewAP;
         private int _column;
         private int _row;
 

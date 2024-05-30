@@ -61,7 +61,7 @@ namespace System.Windows.Automation.Peers
                     Hashtable oldChildren = _dataChildren; //cache the old ones for possible reuse
                     _dataChildren = new Hashtable(rowPresenter.ActualCells.Count);
 
-                    List<AutomationPeer> list = new();
+                    List<AutomationPeer> list = new List<AutomationPeer>();
                     int row = listview.ItemContainerGenerator.IndexFromContainer(lvi);
                     int column = 0;
 
@@ -70,11 +70,11 @@ namespace System.Windows.Automation.Peers
                         GridViewCellAutomationPeer peer = (oldChildren == null ? null : (GridViewCellAutomationPeer)oldChildren[ele]);
                         if (peer == null)
                         {
-                            if (ele is ContentPresenter presenter)
+                            if (ele is ContentPresenter)
                             {
-                                peer = new GridViewCellAutomationPeer(presenter, _listviewAP);
+                                peer = new GridViewCellAutomationPeer((ContentPresenter)ele, _listviewAP);
                             }
-                            else if (ele is TextBlock block)
+                            else if (ele is TextBlock)
                             {
                                 peer = new GridViewCellAutomationPeer(block, _listviewAP);
                             }
@@ -88,8 +88,8 @@ namespace System.Windows.Automation.Peers
                         if (_dataChildren[ele] == null)
                         {
                             //Set Cell's row and column
-                            peer.Row = row;
                             peer.Column = column;
+                            peer.Row = row;
                             list.Add(peer);
                             _dataChildren.Add(ele, peer);
                             column++;

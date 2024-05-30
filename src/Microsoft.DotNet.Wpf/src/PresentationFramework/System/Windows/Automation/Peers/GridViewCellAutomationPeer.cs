@@ -25,19 +25,23 @@ namespace System.Windows.Automation.Peers
     public class GridViewCellAutomationPeer : FrameworkElementAutomationPeer, ITableItemProvider
     {
         ///
-        internal GridViewCellAutomationPeer(ContentPresenter owner, ListViewAutomationPeer parent)
+        internal GridViewCellAutomationPeer(ContentPresenter owner, ListViewAutomationPeer parent, object item)
             : base(owner)
         {
             Invariant.Assert(parent != null);
+            Invariant.Assert(item != null);
             _listviewAP = parent;
+            _item = item;
         }
 
         ///
-        internal GridViewCellAutomationPeer(TextBlock owner, ListViewAutomationPeer parent)
+        internal GridViewCellAutomationPeer(TextBlock owner, ListViewAutomationPeer parent, object item)
             : base(owner)
         {
             Invariant.Assert(parent != null);
+            Invariant.Assert(item != null);
             _listviewAP = parent;
+            _item = item;
         }
 
         ///
@@ -88,6 +92,13 @@ namespace System.Windows.Automation.Peers
             }
         }
 
+        private int RetrieveCurrentRowForItem()
+        {   //ListViewAutomationPeer.Owner is guranteed to not be null, should be safe
+            _row ??= ((ListView)_listviewAP.Owner).Items.IndexOf(_item);
+
+            return _row.Value;
+        }
+
         internal int Column
         {
             get { return _column; }
@@ -96,8 +107,7 @@ namespace System.Windows.Automation.Peers
 
         internal int Row
         {
-            get { return _row; }
-            set { _row = value; }
+            get => RetrieveCurrentRowForItem();
         }
 
         #region ITableItem
@@ -197,9 +207,10 @@ namespace System.Windows.Automation.Peers
 
         #region Private Fields
 
-        private ListViewAutomationPeer _listviewAP;
+        private readonly ListViewAutomationPeer _listviewAP;
+        private readonly object _item;
         private int _column;
-        private int _row;
+        private int? _row;
 
         #endregion
     }

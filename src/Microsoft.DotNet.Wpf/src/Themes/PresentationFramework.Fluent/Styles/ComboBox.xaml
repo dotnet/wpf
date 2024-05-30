@@ -22,7 +22,8 @@
     <Thickness x:Key="ComboBoxItemContentMargin">10,8,8,8</Thickness>
     <system:Double x:Key="ComboBoxChevronSize">11.0</system:Double>
     <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
-    <system:String x:Key="ComboBoxChevronDownGlyph">&#xE70D;</system:String>    
+    <system:String x:Key="ComboBoxChevronDownGlyph">&#xE70D;</system:String>
+    <system:Double x:Key="ChevronIconHeight">24</system:Double>
 
     <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Focus by parent element  -->
@@ -208,20 +209,27 @@
                                             IsHitTestVisible="False"
                                             TextElement.Foreground="{TemplateBinding Foreground}" />
                                     </Grid>
-                                    <Grid Grid.Column="1" Margin="{StaticResource ComboBoxChevronMargin}">
-                                        <TextBlock
-                                            x:Name="ChevronIcon"
-                                            Margin="0"
-                                            VerticalAlignment="Center"
-                                            FontSize="{StaticResource ComboBoxChevronSize}"
-                                            Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"
-                                            RenderTransformOrigin="0.5, 0.5"
-                                            FontFamily="{DynamicResource SegoeFluentIcons}"
-                                            Text ="{StaticResource ComboBoxChevronDownGlyph}">
-                                            <TextBlock.RenderTransform>
-                                                <RotateTransform Angle="0" />
-                                            </TextBlock.RenderTransform>
-                                        </TextBlock>
+                                    <Grid Grid.Column="1" 
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center"
+                                        Margin="{StaticResource ComboBoxChevronMargin}">
+                                        <Border 
+                                            x:Name="ChevronBorder"
+                                            CornerRadius="4"
+                                            Width="{StaticResource ChevronIconHeight}" 
+                                            Height="{StaticResource ChevronIconHeight}" 
+                                            VerticalAlignment="Center" 
+                                            HorizontalAlignment="Center">
+                                            <TextBlock
+                                                x:Name="ChevronIcon"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                TextAlignment="Center"
+                                                FontSize="{StaticResource ComboBoxChevronSize}"
+                                                Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"                                            
+                                                FontFamily="{DynamicResource SegoeFluentIcons}"
+                                                Text ="{StaticResource ComboBoxChevronDownGlyph}" />
+                                        </Border>
                                     </Grid>
                                     <Grid
                                         Grid.Column="0"
@@ -301,42 +309,6 @@
                             Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsDropDownOpen" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ChevronIcon"
-                                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(RotateTransform.Angle)"
-                                            From="0"
-                                            To="180"
-                                            Duration="00:00:00.167" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="DropDownBorder"
-                                            Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.Y)"
-                                            From="-90"
-                                            To="0"
-                                            Duration="00:00:00.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ChevronIcon"
-                                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(RotateTransform.Angle)"
-                                            From="180"
-                                            To="0"
-                                            Duration="00:00:00.167" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="{StaticResource ComboBoxPopupMinHeight}" />
                         </Trigger>
@@ -357,8 +329,17 @@
                                 <Condition Property="IsKeyboardFocusWithin" Value="True" />
                                 <Condition Property="IsEditable" Value="True" />
                             </MultiTrigger.Conditions>
+                            <Setter TargetName="ChevronBorder" Property="Background" Value="{DynamicResource ChevronIconBackgroundPressed}" />
+                            <Setter TargetName="ChevronIcon" Property="Foreground" Value="{DynamicResource ChevronIconForegroundPressed}" />
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ComboBoxBackgroundFocused}" />
                             <Setter TargetName="AccentBorder" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ChevronBorder" Property="Background" Value="Transparent" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -366,6 +347,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsKeyboardFocusWithin" Value="False" />
                             </MultiTrigger.Conditions>
+                            <Setter TargetName="ChevronBorder" Property="Background" Value="{DynamicResource ChevronIconBackgroundPointerOver}" />
                             <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ComboBoxBackgroundPointerOver}" />
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">

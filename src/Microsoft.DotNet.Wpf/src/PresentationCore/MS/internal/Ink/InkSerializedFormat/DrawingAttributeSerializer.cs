@@ -189,22 +189,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
 
                     byte[] data = new byte[ropSize];
-#if NET7_0_OR_GREATER
-                stream.ReadExactly(data, 0, (int)ropSize);
-#else
-                int readCount =  (int)ropSize;
-                int totalRead = 0;
-                while(totalRead < readCount)
-                {
-                    int read = stream.Read(data, totalRead, readCount - totalRead);
-                    if (read <= 0)
-                    {
-                        throw new EndOfStreamException();
-                    }
-                    totalRead += read;
-                }
-                
-#endif
+                    stream.ReadExactly(data);
 
                     if (data != null && data.Length > 0)
                     {

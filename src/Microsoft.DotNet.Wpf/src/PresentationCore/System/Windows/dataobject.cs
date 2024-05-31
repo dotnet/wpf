@@ -1586,7 +1586,7 @@ namespace System.Windows
 
                         byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
                         inkStream.Position = 0;
-                        inkStream.Read(buffer, 0, NativeMethods.IntPtrToInt32(size));
+                        inkStream.ReadExactly(buffer);
 
                         istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
                         hr = NativeMethods.S_OK;
@@ -1725,7 +1725,7 @@ namespace System.Windows
 
                 bytes = new byte[NativeMethods.IntPtrToInt32(size)];
                 stream.Position = 0;
-                stream.Read(bytes, 0, NativeMethods.IntPtrToInt32(size));
+                stream.ReadExactly(bytes);
                 Marshal.Copy(bytes, 0, ptr, NativeMethods.IntPtrToInt32(size));
             }
             finally

@@ -38,17 +38,13 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>
-        /// Gets an object with the Windows Clipboard numeric
-        /// ID and name for the specified ID.
+        /// Gets the data format with the Windows Clipboard numeric ID and name for the specified ID.
         /// </summary>
         public static DataFormat GetDataFormat(int id) => InternalGetDataFormat(id);
 
         /// <summary>
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified data format.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static DataFormat GetDataFormat(string format)
         {
             ArgumentNullException.ThrowIfNull(format);
@@ -380,7 +376,7 @@ namespace System.Windows
 
                 // This is the format to store trust boundary information. Essentially this is accompalished by storing 
                 // the permission set of the source application where the content comes from. During paste we compare this to
-                // the permissio set of the target application.
+                // the permission set of the target application.
                 int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
                 if (applicationTrustFormatId != 0)
                     _formatList.Add(new(ApplicationTrust, applicationTrustFormatId));

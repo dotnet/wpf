@@ -17,6 +17,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using MS.Internal.PresentationCore;
+using System.Windows.Ink;
 using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace System.Windows
@@ -51,9 +52,6 @@ namespace System.Windows
 
             if (format == string.Empty)
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-
-            // Ensures the predefined Win32 data formats into our format list.
-            EnsurePredefined();
 
             // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
@@ -300,9 +298,6 @@ namespace System.Windows
         /// </summary>
         private static DataFormat InternalGetDataFormat(int id)
         {
-            // Ensures the predefined Win32 data formats into our format list.
-            EnsurePredefined();
-
             // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
             {
@@ -341,51 +336,44 @@ namespace System.Windows
         /// Ensures that the Win32 predefined formats are setup in our format list.  This
         /// is called anytime we need to search the list
         /// </summary>
-        private static void EnsurePredefined()
+        static DataFormats()
         {
-            // Lock the data format list to obtain the mutual-exclusion.
-            lock (_formatListlock)
+            // Create format list for the default formats.
+            _formatList = new List<DataFormat>(19)
             {
-                if (_formatList is not null)
-                    return;
+                new(DataFormats.UnicodeText, NativeMethods.CF_UNICODETEXT),
+                new(DataFormats.Text, NativeMethods.CF_TEXT),
+                new(DataFormats.Bitmap, NativeMethods.CF_BITMAP),
+                new(DataFormats.MetafilePicture, NativeMethods.CF_METAFILEPICT),
+                new(DataFormats.EnhancedMetafile, NativeMethods.CF_ENHMETAFILE),
+                new(DataFormats.Dif, NativeMethods.CF_DIF),
+                new(DataFormats.Tiff, NativeMethods.CF_TIFF),
+                new(DataFormats.OemText, NativeMethods.CF_OEMTEXT),
+                new(DataFormats.Dib, NativeMethods.CF_DIB),
+                new(DataFormats.Palette, NativeMethods.CF_PALETTE),
+                new(DataFormats.PenData, NativeMethods.CF_PENDATA),
+                new(DataFormats.Riff, NativeMethods.CF_RIFF),
+                new(DataFormats.WaveAudio, NativeMethods.CF_WAVE),
+                new(DataFormats.SymbolicLink, NativeMethods.CF_SYLK),
+                new(DataFormats.FileDrop, NativeMethods.CF_HDROP),
+                new(DataFormats.Locale, NativeMethods.CF_LOCALE)
+            };
 
-                // Create format list for the default formats.
-                _formatList = new List<DataFormat>(19)
-                {
-                    new(UnicodeText, NativeMethods.CF_UNICODETEXT),
-                    new(Text, NativeMethods.CF_TEXT),
-                    new(Bitmap, NativeMethods.CF_BITMAP),
-                    new(MetafilePicture, NativeMethods.CF_METAFILEPICT),
-                    new(EnhancedMetafile, NativeMethods.CF_ENHMETAFILE),
-                    new(Dif, NativeMethods.CF_DIF),
-                    new(Tiff, NativeMethods.CF_TIFF),
-                    new(OemText, NativeMethods.CF_OEMTEXT),
-                    new(Dib, NativeMethods.CF_DIB),
-                    new(Palette, NativeMethods.CF_PALETTE),
-                    new(PenData, NativeMethods.CF_PENDATA),
-                    new(Riff, NativeMethods.CF_RIFF),
-                    new(WaveAudio, NativeMethods.CF_WAVE),
-                    new(SymbolicLink, NativeMethods.CF_SYLK),
-                    new(FileDrop, NativeMethods.CF_HDROP),
-                    new(Locale, NativeMethods.CF_LOCALE)
-                };
+            int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.Xaml);
+            if (xamlFormatId != 0)
+                _formatList.Add(new(DataFormats.Xaml, xamlFormatId));
 
-                int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Xaml);
-                if (xamlFormatId != 0)
-                    _formatList.Add(new(Xaml, xamlFormatId));
+            // This is the format to store trust boundary information. Essentially this is accompalished by storing 
+            // the permission set of the source application where the content comes from. During paste we compare this to
+            // the permission set of the target application.
+            int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
+            if (applicationTrustFormatId != 0)
+                _formatList.Add(new(DataFormats.ApplicationTrust, applicationTrustFormatId));
 
-                // This is the format to store trust boundary information. Essentially this is accompalished by storing 
-                // the permission set of the source application where the content comes from. During paste we compare this to
-                // the permission set of the target application.
-                int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
-                if (applicationTrustFormatId != 0)
-                    _formatList.Add(new(ApplicationTrust, applicationTrustFormatId));
-
-                // RegisterClipboardFormat returns 0 on failure
-                int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Ink.StrokeCollection.InkSerializedFormat);
-                if (inkServicesFrameworkFormatId != 0)
-                    _formatList.Add(new(Ink.StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
-            }
+            // RegisterClipboardFormat returns 0 on failure
+            int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(StrokeCollection.InkSerializedFormat);
+            if (inkServicesFrameworkFormatId != 0)
+                _formatList.Add(new(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
         }
 
         #endregion Private Methods
@@ -399,7 +387,7 @@ namespace System.Windows
         #region Private Fields
 
         // The registered data format list.
-        private static List<DataFormat> _formatList;
+        private static readonly List<DataFormat> _formatList;
 
         // This object is for locking the _formatList to access safe in the multi-thread.
         private static readonly object _formatListlock = new();

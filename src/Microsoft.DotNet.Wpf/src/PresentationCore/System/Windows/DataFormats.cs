@@ -62,16 +62,6 @@ namespace System.Windows
             // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
             {
-                // It is much faster to do a case sensitive search here. So do
-                // the case sensitive compare first, then the expensive one.
-                for (int i = 0; i < _formatList.Count; i++)
-                {
-                    DataFormat formatItem = _formatList[i];
-
-                    if (formatItem.Name.Equals(format))
-                        return formatItem;
-                }
-
                 for (int i = 0; i < _formatList.Count; i++)
                 {
                     DataFormat formatItem = _formatList[i];
@@ -317,7 +307,7 @@ namespace System.Windows
             // Ensures the predefined Win32 data formats into our format list.
             EnsurePredefined();
 
-            // Lock the data format list to obtains the mutual-exclusion.
+            // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
             {
                 DataFormat formatItem;
@@ -357,7 +347,7 @@ namespace System.Windows
         /// </summary>
         private static void EnsurePredefined()
         {
-            // Lock the data format list to obtains the mutual-exclusion.
+            // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
             {
                 if (_formatList is not null)

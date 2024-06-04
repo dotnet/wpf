@@ -11,13 +11,13 @@
 //
 
 using MS.Win32;
-using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using MS.Internal.PresentationCore;
-using SecurityHelper=MS.Internal.SecurityHelper;
+using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace System.Windows
 {
@@ -41,10 +41,7 @@ namespace System.Windows
         /// Gets an object with the Windows Clipboard numeric
         /// ID and name for the specified ID.
         /// </summary>
-        public static DataFormat GetDataFormat(int id)
-        {
-            return InternalGetDataFormat(id);
-        }
+        public static DataFormat GetDataFormat(int id) => InternalGetDataFormat(id);
 
         /// <summary>
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified data format.
@@ -57,57 +54,43 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(format);
 
             if (format == string.Empty)
-            {
                 throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-            }
 
             // Ensures the predefined Win32 data formats into our format list.
             EnsurePredefined();
 
-            // Lock the data format list to obtains the mutual-exclusion.
+            // Lock the data format list to obtain the mutual-exclusion.
             lock (_formatListlock)
             {
-                int formatId;
-                int index;
-
-                // It is much faster to do a case sensitive search here.  So do
+                // It is much faster to do a case sensitive search here. So do
                 // the case sensitive compare first, then the expensive one.
-                //
-                for (int n = 0; n < _formatList.Count; n++)
+                for (int i = 0; i < _formatList.Count; i++)
                 {
-                    DataFormat formatItem;
-
-                    formatItem = (DataFormat)_formatList[n];
+                    DataFormat formatItem = _formatList[i];
 
                     if (formatItem.Name.Equals(format))
-                    {
                         return formatItem;
-                    }
                 }
 
-                for (int n = 0; n < _formatList.Count; n++)
+                for (int i = 0; i < _formatList.Count; i++)
                 {
-                    DataFormat formatItem;
+                    DataFormat formatItem = _formatList[i];
 
-                    formatItem = (DataFormat)_formatList[n];
-
-                    if (string.Equals(formatItem.Name, format, StringComparison.OrdinalIgnoreCase))
-                    {
+                    if (formatItem.Name.Equals(format, StringComparison.OrdinalIgnoreCase))
                         return formatItem;
-                    }
                 }
 
-                // Reigster the this format string.
-                formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
+                // Register this format string
+                int formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
 
                 if (formatId == 0)
-                {
                     throw new System.ComponentModel.Win32Exception();
-                }
 
-                index = _formatList.Add(new DataFormat(format, formatId));
+                // Create a new format and store it
+                DataFormat newFormat = new(format, formatId);
+                _formatList.Add(newFormat);
 
-                return (DataFormat)_formatList[index];
+                return newFormat;
             }
         }
 
@@ -289,59 +272,31 @@ namespace System.Windows
         /// <summary>
         /// Convert TextDataFormat to Dataformats.
         /// </summary>
-        internal static string ConvertToDataFormats(TextDataFormat textDataformat)
+        internal static string ConvertToDataFormats(TextDataFormat textDataformat) => textDataformat switch
         {
-            string dataFormat = DataFormats.UnicodeText;
-
-            switch (textDataformat)
-            {
-                case TextDataFormat.Text:
-                    dataFormat = DataFormats.Text;
-                    break;
-
-                case TextDataFormat.UnicodeText:
-                    dataFormat = DataFormats.UnicodeText;
-                    break;
-
-                case TextDataFormat.Rtf:
-                    dataFormat = DataFormats.Rtf;
-                    break;
-
-                case TextDataFormat.Html:
-                    dataFormat = DataFormats.Html;
-                    break;
-
-                case TextDataFormat.CommaSeparatedValue:
-                    dataFormat = DataFormats.CommaSeparatedValue;
-                    break;
-
-                case TextDataFormat.Xaml:
-                    dataFormat = DataFormats.Xaml;
-                    break;
-            }
-
-            return dataFormat;
-        }
+            TextDataFormat.Text => DataFormats.Text,
+            TextDataFormat.UnicodeText => DataFormats.UnicodeText,
+            TextDataFormat.Rtf => DataFormats.Rtf,
+            TextDataFormat.Html => DataFormats.Html,
+            TextDataFormat.CommaSeparatedValue => DataFormats.CommaSeparatedValue,
+            TextDataFormat.Xaml => DataFormats.Xaml,
+            _ => DataFormats.UnicodeText
+        };
 
         /// <summary>
         /// Validate the text data format.
         /// </summary>
-        internal static bool IsValidTextDataFormat(TextDataFormat textDataFormat)
+        ///
+        internal static bool IsValidTextDataFormat(TextDataFormat textDataFormat) => textDataFormat switch
         {
-            if (textDataFormat == TextDataFormat.Text ||
-                textDataFormat == TextDataFormat.UnicodeText ||
-                textDataFormat == TextDataFormat.Rtf ||
-                textDataFormat == TextDataFormat.Html ||
-                textDataFormat == TextDataFormat.CommaSeparatedValue ||
-                textDataFormat == TextDataFormat.Xaml)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+            TextDataFormat.Text => true,
+            TextDataFormat.UnicodeText => true,
+            TextDataFormat.Rtf => true,
+            TextDataFormat.Html => true,
+            TextDataFormat.CommaSeparatedValue => true,
+            TextDataFormat.Xaml => true,
+            _ => false
+        };
 
         #endregion Internal Methods
 
@@ -367,18 +322,15 @@ namespace System.Windows
             {
                 DataFormat formatItem;
                 StringBuilder sb;
-                int index;
 
-                for (int n = 0; n < _formatList.Count; n++)
+                for (int i = 0; i < _formatList.Count; i++)
                 {
-                    formatItem = (DataFormat)_formatList[n];
+                    formatItem = _formatList[i];
 
                     // OLE FORMATETC defined CLIPFORMAT as the unsigned short, so we should ignore
                     // high 2bytes to find the matched CLIPFORMAT ID. 
                     if ((formatItem.Id & 0x0000ffff) == (id & 0x0000ffff))
-                    {
                         return formatItem;
-                    }
                 }
 
                 sb = new StringBuilder(NativeMethods.MAX_PATH);
@@ -387,13 +339,15 @@ namespace System.Windows
                 // so we should play it safe.
                 if (UnsafeNativeMethods.GetClipboardFormatName(id, sb, sb.Capacity) == 0)
                 {
-                    sb.Length = 0;
+                    sb.Length = 0; // Same as Clear()
                     sb.Append("Format").Append(id);
                 }
 
-                index = _formatList.Add(new DataFormat(sb.ToString(), id));
+                // Create a new format and store it
+                formatItem = new(sb.ToString(), id);
+                _formatList.Add(formatItem);
 
-                return (DataFormat)_formatList[index];
+                return formatItem;
             }
         }
 
@@ -406,50 +360,45 @@ namespace System.Windows
             // Lock the data format list to obtains the mutual-exclusion.
             lock (_formatListlock)
             {
-                if (_formatList == null)
+                if (_formatList is not null)
+                    return;
+
+                // Create format list for the default formats.
+                _formatList = new List<DataFormat>(19)
                 {
-                    // Create format list for the default formats.
-                    _formatList = new ArrayList(19);
+                    new(UnicodeText, NativeMethods.CF_UNICODETEXT),
+                    new(Text, NativeMethods.CF_TEXT),
+                    new(Bitmap, NativeMethods.CF_BITMAP),
+                    new(MetafilePicture, NativeMethods.CF_METAFILEPICT),
+                    new(EnhancedMetafile, NativeMethods.CF_ENHMETAFILE),
+                    new(Dif, NativeMethods.CF_DIF),
+                    new(Tiff, NativeMethods.CF_TIFF),
+                    new(OemText, NativeMethods.CF_OEMTEXT),
+                    new(Dib, NativeMethods.CF_DIB),
+                    new(Palette, NativeMethods.CF_PALETTE),
+                    new(PenData, NativeMethods.CF_PENDATA),
+                    new(Riff, NativeMethods.CF_RIFF),
+                    new(WaveAudio, NativeMethods.CF_WAVE),
+                    new(SymbolicLink, NativeMethods.CF_SYLK),
+                    new(FileDrop, NativeMethods.CF_HDROP),
+                    new(Locale, NativeMethods.CF_LOCALE)
+                };
 
-                    _formatList.Add(new DataFormat(UnicodeText, NativeMethods.CF_UNICODETEXT));
-                    _formatList.Add(new DataFormat(Text, NativeMethods.CF_TEXT));
-                    _formatList.Add(new DataFormat(Bitmap, NativeMethods.CF_BITMAP));
-                    _formatList.Add(new DataFormat(MetafilePicture, NativeMethods.CF_METAFILEPICT));
-                    _formatList.Add(new DataFormat(EnhancedMetafile, NativeMethods.CF_ENHMETAFILE));
-                    _formatList.Add(new DataFormat(Dif, NativeMethods.CF_DIF));
-                    _formatList.Add(new DataFormat(Tiff, NativeMethods.CF_TIFF));
-                    _formatList.Add(new DataFormat(OemText, NativeMethods.CF_OEMTEXT));
-                    _formatList.Add(new DataFormat(Dib, NativeMethods.CF_DIB));
-                    _formatList.Add(new DataFormat(Palette, NativeMethods.CF_PALETTE));
-                    _formatList.Add(new DataFormat(PenData, NativeMethods.CF_PENDATA));
-                    _formatList.Add(new DataFormat(Riff, NativeMethods.CF_RIFF));
-                    _formatList.Add(new DataFormat(WaveAudio, NativeMethods.CF_WAVE));
-                    _formatList.Add(new DataFormat(SymbolicLink, NativeMethods.CF_SYLK));
-                    _formatList.Add(new DataFormat(FileDrop, NativeMethods.CF_HDROP));
-                    _formatList.Add(new DataFormat(Locale, NativeMethods.CF_LOCALE));
-                    int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Xaml);
-                    if (xamlFormatId != 0)
-                    {
-                        _formatList.Add(new DataFormat(Xaml,xamlFormatId));
-                    }
+                int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Xaml);
+                if (xamlFormatId != 0)
+                    _formatList.Add(new(Xaml, xamlFormatId));
 
-                    // This is the format to store trust boundary information. Essentially this is accompalished by storing 
-                    // the permission set of the source application where the content comes from. During paste we compare this to
-                    // the permissio set of the target application.
-                    int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
-                    if (applicationTrustFormatId != 0)
-                    {
-                        _formatList.Add(new DataFormat(ApplicationTrust, applicationTrustFormatId));
-                    }
-                    // RegisterClipboardFormat returns 0 on failure
-                    int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(System.Windows.Ink.StrokeCollection.InkSerializedFormat);
+                // This is the format to store trust boundary information. Essentially this is accompalished by storing 
+                // the permission set of the source application where the content comes from. During paste we compare this to
+                // the permissio set of the target application.
+                int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
+                if (applicationTrustFormatId != 0)
+                    _formatList.Add(new(ApplicationTrust, applicationTrustFormatId));
 
-                    if (inkServicesFrameworkFormatId != 0)
-                    {
-                        _formatList.Add(new DataFormat(System.Windows.Ink.StrokeCollection.InkSerializedFormat,
-                                                        inkServicesFrameworkFormatId));
-                    }
-}
+                // RegisterClipboardFormat returns 0 on failure
+                int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Ink.StrokeCollection.InkSerializedFormat);
+                if (inkServicesFrameworkFormatId != 0)
+                    _formatList.Add(new(Ink.StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
             }
         }
 
@@ -464,10 +413,10 @@ namespace System.Windows
         #region Private Fields
 
         // The registered data format list.
-        private static ArrayList _formatList;
+        private static List<DataFormat> _formatList;
 
         // This object is for locking the _formatList to access safe in the multi-thread.
-        private static readonly Object _formatListlock = new Object();
+        private static readonly object _formatListlock = new();
 
         #endregion Private Fields
     }

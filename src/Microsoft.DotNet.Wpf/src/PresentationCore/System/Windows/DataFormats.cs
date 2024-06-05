@@ -41,42 +41,12 @@ namespace System.Windows
         /// <summary>
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified ID.
         /// </summary>
-        public static DataFormat GetDataFormat(int id) => InternalGetDataFormat(id);
+        public static DataFormat GetDataFormat(int id) => DataFormatsImpl.GetDataFormat(id);
 
         /// <summary>
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified data format.
         /// </summary>
-        public static DataFormat GetDataFormat(string format)
-        {
-            ArgumentNullException.ThrowIfNull(format);
-
-            if (format == string.Empty)
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-
-            // Lock the data format list to obtain the mutual-exclusion.
-            lock (_formatListlock)
-            {
-                for (int i = 0; i < _formatList.Count; i++)
-                {
-                    DataFormat formatItem = _formatList[i];
-
-                    if (formatItem.Name.Equals(format, StringComparison.OrdinalIgnoreCase))
-                        return formatItem;
-                }
-
-                // Register this format string
-                int formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
-
-                if (formatId == 0)
-                    throw new System.ComponentModel.Win32Exception();
-
-                // Create a new format and store it
-                DataFormat newFormat = new(format, formatId);
-                _formatList.Add(newFormat);
-
-                return newFormat;
-            }
-        }
+        public static DataFormat GetDataFormat(string format) => DataFormatsImpl.GetDataFormat(format);
 
         #endregion Public Methods
 
@@ -286,113 +256,174 @@ namespace System.Windows
 
         //------------------------------------------------------
         //
-        //  Private Methods
+        //  Data Formats Implementation
         //
         //------------------------------------------------------
 
-        #region Private Methods
+        #region Data Formats Implementation Class
 
         /// <summary>
-        /// Allows a the new format name to be specified if the requested format is not
-        /// in the list
+        /// Static class containing the internal format list and associated lookup methods.
         /// </summary>
-        private static DataFormat InternalGetDataFormat(int id)
+        private static class DataFormatsImpl
         {
-            // Lock the data format list to obtain the mutual-exclusion.
-            lock (_formatListlock)
+            //------------------------------------------------------
+            //
+            //  Static constructor
+            //
+            //------------------------------------------------------
+
+            #region Static constructor
+
+            /// <summary>
+            /// Ensures that the Win32 predefined formats are setup in our format list.
+            /// This is called anytime we need to search the list.
+            /// </summary>
+            static DataFormatsImpl()
             {
-                DataFormat formatItem;
-                StringBuilder sb;
-
-                for (int i = 0; i < _formatList.Count; i++)
+                // Create format list for the default formats.
+                formatList = new List<DataFormat>(19)
                 {
-                    formatItem = _formatList[i];
+                    new(DataFormats.UnicodeText, NativeMethods.CF_UNICODETEXT),
+                    new(DataFormats.Text, NativeMethods.CF_TEXT),
+                    new(DataFormats.Bitmap, NativeMethods.CF_BITMAP),
+                    new(DataFormats.MetafilePicture, NativeMethods.CF_METAFILEPICT),
+                    new(DataFormats.EnhancedMetafile, NativeMethods.CF_ENHMETAFILE),
+                    new(DataFormats.Dif, NativeMethods.CF_DIF),
+                    new(DataFormats.Tiff, NativeMethods.CF_TIFF),
+                    new(DataFormats.OemText, NativeMethods.CF_OEMTEXT),
+                    new(DataFormats.Dib, NativeMethods.CF_DIB),
+                    new(DataFormats.Palette, NativeMethods.CF_PALETTE),
+                    new(DataFormats.PenData, NativeMethods.CF_PENDATA),
+                    new(DataFormats.Riff, NativeMethods.CF_RIFF),
+                    new(DataFormats.WaveAudio, NativeMethods.CF_WAVE),
+                    new(DataFormats.SymbolicLink, NativeMethods.CF_SYLK),
+                    new(DataFormats.FileDrop, NativeMethods.CF_HDROP),
+                    new(DataFormats.Locale, NativeMethods.CF_LOCALE)
+                };
 
-                    // OLE FORMATETC defined CLIPFORMAT as the unsigned short, so we should ignore
-                    // high 2bytes to find the matched CLIPFORMAT ID. 
-                    if ((formatItem.Id & 0x0000ffff) == (id & 0x0000ffff))
-                        return formatItem;
-                }
+                int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.Xaml);
+                if (xamlFormatId != 0)
+                    formatList.Add(new(DataFormats.Xaml, xamlFormatId));
 
-                sb = new StringBuilder(NativeMethods.MAX_PATH);
+                // This is the format to store trust boundary information. Essentially this is accompalished by storing 
+                // the permission set of the source application where the content comes from. During paste we compare this to
+                // the permission set of the target application.
+                int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
+                if (applicationTrustFormatId != 0)
+                    formatList.Add(new(DataFormats.ApplicationTrust, applicationTrustFormatId));
 
-                // This can happen if windows adds a standard format that we don't know about,
-                // so we should play it safe.
-                if (UnsafeNativeMethods.GetClipboardFormatName(id, sb, sb.Capacity) == 0)
-                {
-                    sb.Length = 0; // Same as Clear()
-                    sb.Append("Format").Append(id);
-                }
-
-                // Create a new format and store it
-                formatItem = new(sb.ToString(), id);
-                _formatList.Add(formatItem);
-
-                return formatItem;
+                // RegisterClipboardFormat returns 0 on failure
+                int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(StrokeCollection.InkSerializedFormat);
+                if (inkServicesFrameworkFormatId != 0)
+                    formatList.Add(new(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
             }
-        }
 
-        /// <summary>
-        /// Ensures that the Win32 predefined formats are setup in our format list.  This
-        /// is called anytime we need to search the list
-        /// </summary>
-        static DataFormats()
-        {
-            // Create format list for the default formats.
-            _formatList = new List<DataFormat>(19)
+            #endregion Static Constructor
+
+            //------------------------------------------------------
+            //
+            //  Private Methods
+            //
+            //------------------------------------------------------
+
+            #region Private Methods
+
+            /// <summary>
+            /// Allows a new format name to be specified if the requested format is not in the list.
+            /// </summary>
+            public static DataFormat GetDataFormat(int id)
             {
-                new(DataFormats.UnicodeText, NativeMethods.CF_UNICODETEXT),
-                new(DataFormats.Text, NativeMethods.CF_TEXT),
-                new(DataFormats.Bitmap, NativeMethods.CF_BITMAP),
-                new(DataFormats.MetafilePicture, NativeMethods.CF_METAFILEPICT),
-                new(DataFormats.EnhancedMetafile, NativeMethods.CF_ENHMETAFILE),
-                new(DataFormats.Dif, NativeMethods.CF_DIF),
-                new(DataFormats.Tiff, NativeMethods.CF_TIFF),
-                new(DataFormats.OemText, NativeMethods.CF_OEMTEXT),
-                new(DataFormats.Dib, NativeMethods.CF_DIB),
-                new(DataFormats.Palette, NativeMethods.CF_PALETTE),
-                new(DataFormats.PenData, NativeMethods.CF_PENDATA),
-                new(DataFormats.Riff, NativeMethods.CF_RIFF),
-                new(DataFormats.WaveAudio, NativeMethods.CF_WAVE),
-                new(DataFormats.SymbolicLink, NativeMethods.CF_SYLK),
-                new(DataFormats.FileDrop, NativeMethods.CF_HDROP),
-                new(DataFormats.Locale, NativeMethods.CF_LOCALE)
-            };
+                // Lock the data format list to obtain the mutual-exclusion.
+                lock (_formatListlock)
+                {
+                    DataFormat formatItem;
+                    StringBuilder sb;
 
-            int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.Xaml);
-            if (xamlFormatId != 0)
-                _formatList.Add(new(DataFormats.Xaml, xamlFormatId));
+                    for (int i = 0; i < formatList.Count; i++)
+                    {
+                        formatItem = formatList[i];
 
-            // This is the format to store trust boundary information. Essentially this is accompalished by storing 
-            // the permission set of the source application where the content comes from. During paste we compare this to
-            // the permission set of the target application.
-            int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
-            if (applicationTrustFormatId != 0)
-                _formatList.Add(new(DataFormats.ApplicationTrust, applicationTrustFormatId));
+                        // OLE FORMATETC defined CLIPFORMAT as the unsigned short, so we should ignore
+                        // high 2bytes to find the matched CLIPFORMAT ID. 
+                        if ((formatItem.Id & 0x0000ffff) == (id & 0x0000ffff))
+                            return formatItem;
+                    }
 
-            // RegisterClipboardFormat returns 0 on failure
-            int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(StrokeCollection.InkSerializedFormat);
-            if (inkServicesFrameworkFormatId != 0)
-                _formatList.Add(new(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
+                    sb = new StringBuilder(NativeMethods.MAX_PATH);
+
+                    // This can happen if windows adds a standard format that we don't know about,
+                    // so we should play it safe.
+                    if (UnsafeNativeMethods.GetClipboardFormatName(id, sb, sb.Capacity) == 0)
+                    {
+                        sb.Length = 0; // Same as Clear()
+                        sb.Append("Format").Append(id);
+                    }
+
+                    // Create a new format and store it
+                    formatItem = new(sb.ToString(), id);
+                    formatList.Add(formatItem);
+
+                    return formatItem;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a data format using its name or attempts to register a new one if it doesn't exist.
+            /// </summary>
+            public static DataFormat GetDataFormat(string format)
+            {
+                ArgumentNullException.ThrowIfNull(format);
+
+                if (format == string.Empty)
+                    throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+
+                // Lock the data format list to obtain the mutual-exclusion.
+                lock (_formatListlock)
+                {
+                    for (int i = 0; i < formatList.Count; i++)
+                    {
+                        DataFormat formatItem = formatList[i];
+
+                        if (formatItem.Name.Equals(format, StringComparison.OrdinalIgnoreCase))
+                            return formatItem;
+                    }
+
+                    // Register this format string
+                    int formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
+
+                    if (formatId == 0)
+                        throw new System.ComponentModel.Win32Exception();
+
+                    // Create a new format and store it
+                    DataFormat newFormat = new(format, formatId);
+                    formatList.Add(newFormat);
+
+                    return newFormat;
+                }
+            }
+
+            #endregion Private Methods
+
+            //------------------------------------------------------
+            //
+            //  Private Fields
+            //
+            //------------------------------------------------------
+
+            #region Private Fields
+
+            // The registered data format list.
+            private static readonly List<DataFormat> formatList;
+            // This object is for locking the _formatList to access safe in the multi-thread.
+            private static readonly object _formatListlock = new();
+
+            #endregion Private Fields
+
         }
 
-        #endregion Private Methods
+        #endregion Data Formats Implementation Class
 
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        // The registered data format list.
-        private static readonly List<DataFormat> _formatList;
-
-        // This object is for locking the _formatList to access safe in the multi-thread.
-        private static readonly object _formatListlock = new();
-
-        #endregion Private Fields
     }
 
     #endregion DataFormats class

@@ -85,7 +85,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
 
-            HttpRequestCacheLevel level = (HttpRequestCacheLevel)Enum.Parse(typeof(HttpRequestCacheLevel), s, true);
+            HttpRequestCacheLevel level = Enum.Parse<HttpRequestCacheLevel>(s, true);
             
             return new HttpRequestCachePolicy(level);
         }

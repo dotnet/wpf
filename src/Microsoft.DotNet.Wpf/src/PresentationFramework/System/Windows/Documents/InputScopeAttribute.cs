@@ -62,7 +62,7 @@ namespace System.Windows.Documents
                 count = _inputScope.Names.Count;
                 try 
                 {
-                    ppinputscopes = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(Int32)) * count);
+                    ppinputscopes = Marshal.AllocCoTaskMem(sizeof(Int32) * count);
                 }
                 catch (OutOfMemoryException)
                 {
@@ -72,12 +72,12 @@ namespace System.Windows.Documents
                 for (int i = 0; i < count; i++)
                 {
                     Marshal.WriteInt32(ppinputscopes, offset, (Int32)((InputScopeName)_inputScope.Names[i]).NameValue);
-                    offset += Marshal.SizeOf(typeof(Int32));
+                    offset += sizeof(Int32);
                 }
             }
             else
             {
-                ppinputscopes = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(Int32)) * 1);
+                ppinputscopes = Marshal.AllocCoTaskMem(sizeof(Int32) * 1);
                 Marshal.WriteInt32(ppinputscopes, (Int32)InputScopeNameValue.Default);
                 count = 1;
             }
@@ -90,7 +90,7 @@ namespace System.Windows.Documents
             count = _inputScope == null ? 0 : _inputScope.PhraseList.Count;
             try
             {
-                ppbstrPhrases = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(IntPtr))*count);
+                ppbstrPhrases = Marshal.AllocCoTaskMem(IntPtr.Size * count);
             }
             catch (OutOfMemoryException)
             {
@@ -111,13 +111,13 @@ namespace System.Windows.Documents
                     for (int j=0; j < i; j++)
                     {
                         Marshal.FreeBSTR(Marshal.ReadIntPtr(ppbstrPhrases,  offset));
-                        offset += Marshal.SizeOf(typeof(IntPtr));
+                        offset += IntPtr.Size;
                     }
                     throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
                 }
 
                 Marshal.WriteIntPtr(ppbstrPhrases , offset, pbstr);
-                offset += Marshal.SizeOf(typeof(IntPtr));
+                offset += IntPtr.Size;
             }
              
             return  count > 0 ? NativeMethods.S_OK : NativeMethods.S_FALSE;

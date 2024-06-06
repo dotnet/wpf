@@ -34,13 +34,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// </summary>
     static internal class ContainerUtilities
     {
-        static private readonly Int32 _int16Size = SizeOfInt16();
-        static private readonly Int32 _int32Size = SizeOfInt32();
+        static private readonly Int32 _int16Size = sizeof(Int16);
+        static private readonly Int32 _int32Size = sizeof(Int32);
         static private readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
 
 
 #if !PBTCOMPILER
-        static private readonly Int32 _int64Size = SizeOfInt64();
+        static private readonly Int32 _int64Size = sizeof(Int64);
 
         /// Used by ConvertBackSlashPathToStringArrayPath and 
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.
@@ -272,29 +272,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 throw new ArgumentNullException(testStringIdentifier);
         }
 
-#if !PBTCOMPILER
-
-#endif        
-        private static int SizeOfInt16()
-        {
-            return Marshal.SizeOf(typeof(Int16));
-        }
-        
-#if !PBTCOMPILER
-
-#endif        
-        private static int SizeOfInt32()
-        {
-            return Marshal.SizeOf(typeof(Int32));
-        }
-        
-#if !PBTCOMPILER
-        private static int SizeOfInt64()
-        {
-            return Marshal.SizeOf(typeof(Int64));
-        }
-#endif
-        
 #if !PBTCOMPILER
         /// <summary>
         ///     Interprets a single string by treating it as a set of names

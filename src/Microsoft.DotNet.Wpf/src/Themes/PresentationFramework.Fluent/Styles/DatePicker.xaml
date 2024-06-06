@@ -30,6 +30,7 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}" />
         <Setter Property="Foreground">
             <Setter.Value>
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
@@ -133,6 +134,7 @@
                                         VerticalContentAlignment="Center"
                                         Background="Transparent"
                                         BorderBrush="Transparent"
+                                        AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"
                                         Cursor="Arrow">
                                         <!--  WPF overrides paddings for button  -->
                                         

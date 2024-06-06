@@ -35,7 +35,7 @@
     <Color x:Key="TextOnAccentFillColorSelectedText">#FFFFFF</Color>
     <Color x:Key="TextOnAccentFillColorPrimary">#000000</Color>
     <Color x:Key="TextOnAccentFillColorSecondary">#80000000</Color>
-    <Color x:Key="TextOnAccentFillColorDisabled">#87FFFFFF</Color>
+    <Color x:Key="TextOnAccentFillColorDisabled">#77000000</Color>
 
     <Color x:Key="ControlFillColorDefault">#0FFFFFFF</Color>
     <Color x:Key="ControlFillColorSecondary">#15FFFFFF</Color>
@@ -57,7 +57,7 @@
 
     <Color x:Key="ControlAltFillColorTransparent">#00FFFFFF</Color>
     <Color x:Key="ControlAltFillColorSecondary">#19000000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#0BFFFFFF</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#FF373737</Color>
     <Color x:Key="ControlAltFillColorQuarternary">#12FFFFFF</Color>
     <Color x:Key="ControlAltFillColorDisabled">#00FFFFFF</Color>
 
@@ -236,33 +236,6 @@
     <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
-
-    <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="{StaticResource SystemAccentColorTertiary}" />
-    <SolidColorBrush x:Key="AccentTextFillColorSecondaryBrush" Color="{StaticResource SystemAccentColorTertiary}" />
-    <SolidColorBrush x:Key="AccentTextFillColorTertiaryBrush" Color="{StaticResource SystemAccentColorSecondary}" />
-
-    <SolidColorBrush x:Key="AccentFillColorSelectedTextBackgroundBrush" Color="{StaticResource SystemAccentColor}" />
-
-    <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="{StaticResource SystemAccentColorSecondary}" />
-    <SolidColorBrush
-        x:Key="AccentFillColorSecondaryBrush"
-        Opacity="0.9"
-        Color="{StaticResource SystemAccentColorSecondary}" />
-    <SolidColorBrush
-        x:Key="AccentFillColorTertiaryBrush"
-        Opacity="0.8"
-        Color="{StaticResource SystemAccentColorSecondary}" />
-
-    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColorSecondary}" />
-    
-    <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorButtonTextColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorHighlightColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="#FF00FF"/>
-    <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="#FF00FF"/>
 
     <!--  Elevation border brushes  -->
 

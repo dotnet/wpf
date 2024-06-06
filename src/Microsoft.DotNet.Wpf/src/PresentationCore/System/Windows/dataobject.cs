@@ -17,6 +17,7 @@ namespace System.Windows
     using System;
     using MS.Win32;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -1263,27 +1264,21 @@ namespace System.Windows
         /// <summary>
         /// Retrieves a list of distinct strings from the array.
         /// </summary>
-        private static string[] GetDistinctStrings(string[] formats)
+        private static string[] GetDistinctStrings(List<string> formats)
         {
-            ArrayList distinct;
-            string[] distinctStrings;
+            List<string> distinct = [];
 
-            distinct = new ArrayList();
-            for (int i=0; i<formats.Length; i++)
+            for (int i = 0; i < formats.Count; i++)
             {
-                string formatString;
+                string formatString = formats[i];
 
-                formatString = formats[i];
                 if (!distinct.Contains(formatString))
                 {
                     distinct.Add(formatString);
                 }
             }
 
-            distinctStrings = new string[distinct.Count];
-            distinct.CopyTo(distinctStrings, 0);
-
-            return distinctStrings;
+            return distinct.ToArray();
         }
 
         /// <summary>
@@ -2467,25 +2462,15 @@ namespace System.Windows
 
             public string[] GetFormats(bool autoConvert)
             {
+                IEnumFORMATETC enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
+                List<string> formats = [];
 
-                IEnumFORMATETC enumFORMATETC;
-                ArrayList formats;
-                string[] temp;
-
-                enumFORMATETC = null;
-                formats = new ArrayList();
-
-                enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
-
-                if (enumFORMATETC != null)
+                if (enumFORMATETC is not null)
                 {
-                    FORMATETC []formatetc;
-                    int[] retrieved;
+                    FORMATETC[] formatetc = [new FORMATETC()];
+                    int[] retrieved = [1];
 
                     enumFORMATETC.Reset();
-
-                    formatetc = new FORMATETC[] { new FORMATETC() };
-                    retrieved = new int[] {1};
 
                     while (retrieved[0] > 0)
                     {
@@ -2493,15 +2478,13 @@ namespace System.Windows
 
                         if (enumFORMATETC.Next(1, formatetc, retrieved) == NativeMethods.S_OK && retrieved[0] > 0)
                         {
-                            string name;
+                            string name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
 
-                            name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
                             if (autoConvert)
                             {
-                                string[] mappedFormats;
+                                string[] mappedFormats = GetMappedFormats(name);
 
-                                mappedFormats = GetMappedFormats(name);
-                                for (int i=0; i<mappedFormats.Length; i++)
+                                for (int i = 0; i < mappedFormats.Length; i++)
                                 {
                                     formats.Add(mappedFormats[i]);
                                 }
@@ -2525,9 +2508,7 @@ namespace System.Windows
                     }
                 }
 
-                temp = new string[formats.Count];
-                formats.CopyTo(temp, 0);
-                return GetDistinctStrings(temp);
+                return GetDistinctStrings(formats);
             }
 
             public void SetData(string format, Object data)
@@ -3370,10 +3351,7 @@ namespace System.Windows
 
                 if (autoConvert)
                 {
-                    ArrayList formats;
-                    string[] temp;
-
-                    formats = new ArrayList();
+                    List<string> formats = [];
 
                     for (int baseFormatIndex = 0; baseFormatIndex < baseVar.Length; baseFormatIndex++)
                     {
@@ -3424,15 +3402,13 @@ namespace System.Windows
                         else
                         {
                              if (!serializationCheckFailedForThisFunction)
-                            {
+                             {
                                 formats.Add(baseVar[baseFormatIndex]);
-                            }
+                             }
                         }
                     }
 
-                    temp = new string[formats.Count];
-                    formats.CopyTo(temp, 0);
-                    baseVar = GetDistinctStrings(temp);
+                    baseVar = GetDistinctStrings(formats);
                 }
 
                 return baseVar;

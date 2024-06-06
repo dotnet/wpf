@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
@@ -130,11 +131,8 @@ namespace System.Windows.Input
                 EnsureInputProcessorProfile();
 
                 if (_ipp == null)
-                {
-                    ArrayList al = new ArrayList();
-                    al.Add(CurrentInputLanguage);
-                    return al;
-                }
+                    return new List<CultureInfo>(1) { CurrentInputLanguage };
+
                 return _ipp.InputLanguageList;
              }
         }

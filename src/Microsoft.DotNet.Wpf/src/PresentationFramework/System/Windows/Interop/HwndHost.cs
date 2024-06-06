@@ -1053,7 +1053,7 @@ namespace System.Windows.Interop
                 (idWindowProcess == UnsafeNativeMethods.GetProcessIdOfThread(hCurrentThread)))
 #else
             if ((idWindowThread == SafeNativeMethods.GetCurrentThreadId()) &&
-                (idWindowProcess == SafeNativeMethods.GetCurrentProcessId()))
+                (idWindowProcess == Environment.ProcessId))
 #endif
             {
                 _hwndSubclass = new HwndSubclass(_hwndSubclassHook);

@@ -167,9 +167,8 @@ namespace MS.Internal.Ink
 
         #region ArePointsInLasso
         /// <summary>Copy-pasted Platform's Lasso.Contains(...)</summary>
-        public bool ArePointsInLasso(Point[] points, int percentIntersect)
+        public bool ArePointsInLasso(Span<Point> points, int percentIntersect)
         {
-            System.Diagnostics.Debug.Assert(null != points);
             System.Diagnostics.Debug.Assert((0 <= percentIntersect) && (100 >= percentIntersect));
 
             // Find out how many of the points need to be inside the lasso to satisfy the percentIntersect.
@@ -185,9 +184,9 @@ namespace MS.Internal.Ink
             // If the no of such segments is odd then the point is within the lasso otherwise not.
             int countPointsInLasso = 0;
 
-            foreach (Point point in points)
+            foreach (ref Point point in points)
             {
-                if (true == Contains(point))
+                if (true == Contains(in point))
                 {
                     countPointsInLasso++;
                     if (countPointsInLasso == marginCount)
@@ -198,8 +197,8 @@ namespace MS.Internal.Ink
             return (countPointsInLasso == marginCount);
         }
 
-        /// <summary>TBS</summary>
-        private bool Contains(Point point)
+        /// <summary>Checks whether supplied point is inside.</summary>
+        private bool Contains(ref readonly Point point)
         {
             if (false == _boundingBox.Contains(point))
             {

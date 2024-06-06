@@ -353,7 +353,7 @@ namespace MS.Internal.FontFace
 
             if (!foundOsSection)
             {
-                Fail(string.Format("No FontFamily element found in FontFamilyCollection that matches current OS or greater: {0}", OSVersionHelper.GetOsVersion().ToString()));
+                Fail($"No FontFamily element found in FontFamilyCollection that matches current OS or greater: {OSVersionHelper.GetOsVersion()}");
             }
         }
 

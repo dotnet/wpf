@@ -788,7 +788,7 @@ namespace MS.Internal.Ink.GestureRecognition
         }
 
         private const string GestureRecognizerPath = @"SOFTWARE\MICROSOFT\TPG\SYSTEM RECOGNIZERS\{BED9A940-7D48-48E3-9A68-F4887A5A1B2E}";
-        private const string GestureRecognizerFullPath = "HKEY_LOCAL_MACHINE" + @"\" + GestureRecognizerPath;
+        private const string GestureRecognizerFullPath = $@"HKEY_LOCAL_MACHINE\{GestureRecognizerPath}";
         private const string GestureRecognizerValueName = "RECOGNIZER DLL";
         private const string GestureRecognizerGuid = "{BED9A940-7D48-48E3-9A68-F4887A5A1B2E}";
         

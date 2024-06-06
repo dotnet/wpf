@@ -131,13 +131,13 @@ namespace System.Windows.Ink
             }
             else if (Value is string)
             {
-                val = "\"" + Value.ToString() + "\"";
+                val = $"\"{Value}\"";
             }
             else
             {
                 val = Value.ToString();
             }
-            return KnownIds.ConvertToString(Id) + "," + val;
+            return $"{KnownIds.ConvertToString(Id)},{val}";
         }
 
         /// <summary>

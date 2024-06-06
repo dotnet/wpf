@@ -253,12 +253,12 @@ namespace System.Windows.Media
             // the format is ... [(CharacterClusterSize[:GlyphClusterSize])] GlyphIndex ...
             if (glyphsInCluster != 1)
             {
-                _indicesStringBuider.AppendFormat(CultureInfo.InvariantCulture, "({0}:{1})", charactersInCluster, glyphsInCluster);
+                _indicesStringBuider.Append(CultureInfo.InvariantCulture, $"({charactersInCluster}:{glyphsInCluster})");
             }
             else
             {
                 if (charactersInCluster != 1)
-                    _indicesStringBuider.AppendFormat(CultureInfo.InvariantCulture, "({0})", charactersInCluster);
+                    _indicesStringBuider.Append(CultureInfo.InvariantCulture, $"({charactersInCluster})");
                 else
                 {
                     // 1:1 cluster, we can omit (n:m) specification and possibly deduce some
@@ -315,13 +315,13 @@ namespace System.Windows.Media
                     mask >>= 1;
                 else
                 {
-                    sb.AppendFormat("{0:x1}", accumulatedValue);
+                    sb.Append($"{accumulatedValue:x1}");
                     accumulatedValue = 0;
                     mask = 0x8;
                 }
             }
             if (mask != 0x8)
-                sb.AppendFormat("{0:x1}", accumulatedValue);
+                sb.Append($"{accumulatedValue:x1}");
 
             Debug.Assert(caretStopStringLength == sb.ToString().Length);
 

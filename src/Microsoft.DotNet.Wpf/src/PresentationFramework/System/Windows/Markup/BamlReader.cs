@@ -2446,9 +2446,9 @@ namespace System.Windows.Markup
 
                 memberId = SystemResourceKey.GetSystemResourceKeyIdFromBamlId(memberId, out isKey);
 
-                if (Enum.IsDefined(typeof(SystemResourceKeyID), (int)memberId))
+                SystemResourceKeyID keyId = (SystemResourceKeyID)memberId;
+                if (Enum.IsDefined(keyId))
                 {
-                    SystemResourceKeyID keyId = (SystemResourceKeyID)memberId;
                     typeName = SystemKeyConverter.GetSystemClassName(keyId);
 
                     if (isKey)

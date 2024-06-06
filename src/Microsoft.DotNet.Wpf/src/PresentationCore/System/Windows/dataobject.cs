@@ -1266,7 +1266,7 @@ namespace System.Windows
         /// </summary>
         private static string[] GetDistinctStrings(List<string> formats)
         {
-            List<string> distinct = [];
+            List<string> distinct = new(formats.Count);
 
             for (int i = 0; i < formats.Count; i++)
             {

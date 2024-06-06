@@ -79,7 +79,6 @@ jobs:
         - name: _InternalRuntimeDownloadArgs
           value: ''
       - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-        - group: DotNetBuilds storage account read tokens
         - group: AzureDevOps-Artifact-Feeds-Pats
         - name: _InternalRuntimeDownloadArgs
           value: >-
@@ -139,15 +138,10 @@ jobs:
         clean: true
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
-      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
-        - task: PowerShell@2
-          displayName: Setup Private Feeds Credentials
-          inputs:
-            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
-            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
-          env:
-            Token: $(dn-bot-dnceng-artifact-feeds-rw)
-        - task: NuGetAuthenticate@1
+      
+      - template: /eng/common/templates-official/steps/enable-internal-sources.yml
+      - template: /eng/common/templates-official/steps/enable-internal-runtimes.yml
+      
       # Use utility script to run script command dependent on agent OS
       - script: eng\scripts\cibuild.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish

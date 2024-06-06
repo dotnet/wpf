@@ -3617,13 +3617,13 @@ namespace System.Windows
 
                 if (datalist == null)
                 {
-                    datalist = (DataStoreEntry[])Array.CreateInstance(typeof(DataStoreEntry), 1);
+                    datalist = new DataStoreEntry[1];
                 }
                 else
                 {
                     DataStoreEntry[] newlist;
 
-                    newlist = (DataStoreEntry[])Array.CreateInstance(typeof(DataStoreEntry), datalist.Length + 1);
+                    newlist = new DataStoreEntry[datalist.Length + 1];
                     datalist.CopyTo(newlist, 1);
                     datalist = newlist;
                 }

@@ -148,7 +148,7 @@ namespace WinRT
             try
             {
                 var length = array.Length;
-                m._array = Marshal.AllocCoTaskMem(length * Marshal.SizeOf<IntPtr>());
+                m._array = Marshal.AllocCoTaskMem(length * IntPtr.Size);
                 m._marshalers = new MarshalString[length];
                 var elements = (IntPtr*)m._array.ToPointer();
                 for (int i = 0; i < length; i++)
@@ -215,7 +215,7 @@ namespace WinRT
             try
             {
                 var length = array.Length;
-                data = Marshal.AllocCoTaskMem(length * Marshal.SizeOf<IntPtr>());
+                data = Marshal.AllocCoTaskMem(length * IntPtr.Size);
                 var elements = (IntPtr*)data;
                 for (i = 0; i < length; i++)
                 {

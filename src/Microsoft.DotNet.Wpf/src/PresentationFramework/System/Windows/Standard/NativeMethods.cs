@@ -2403,7 +2403,7 @@ namespace Standard
 
                 for (int i = 0; i < numArgs; i++)
                 {
-                    IntPtr currArg = Marshal.ReadIntPtr(argv, i * Marshal.SizeOf(typeof(IntPtr)));
+                    IntPtr currArg = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
                     result[i] = Marshal.PtrToStringUni(currArg);
                 }
 
@@ -2628,7 +2628,7 @@ namespace Standard
         {
             Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
             var dwmWindowAttribute = (int)dwBackdropType;
-            return _DwmSetWindowAttribute(hwnd, DWMWA.SYSTEMBACKDROP_TYPE, ref dwmWindowAttribute, Marshal.SizeOf(typeof(int)));
+            return _DwmSetWindowAttribute(hwnd, DWMWA.SYSTEMBACKDROP_TYPE, ref dwmWindowAttribute, sizeof(int));
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -2636,7 +2636,7 @@ namespace Standard
         {
             Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
             var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
-            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, sizeof(int));
             return dwmResult == HRESULT.S_OK;
         }
 

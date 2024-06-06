@@ -153,7 +153,7 @@ namespace MS.Internal.AutomationProxies
                 // Local process is running in native mode
 
                 // Check the machine bitness.
-                if (Marshal.SizeOf(hwnd) == sizeof(int))
+                if (IntPtr.Size == sizeof(int))
                 {
                     // The machine bitness is 32-bit.
 
@@ -1512,7 +1512,7 @@ namespace MS.Internal.AutomationProxies
                     // NtQueryInformationProcess is available for use in Windows 2000 and Windows XP.
                     // It may be altered or unavailable in subsequent versions. Applications should use the alternate functions
                     ulong infoWOW64 = 0;
-                    int status = UnsafeNativeMethods.NtQueryInformationProcess(hProcess, UnsafeNativeMethods.ProcessWow64Information, ref infoWOW64, Marshal.SizeOf(typeof(ulong)), null);
+                    int status = UnsafeNativeMethods.NtQueryInformationProcess(hProcess, UnsafeNativeMethods.ProcessWow64Information, ref infoWOW64, sizeof(ulong), null);
                     if (NT_ERROR(status))
                     {
                         // Query failed. Assume not running under WOW64.

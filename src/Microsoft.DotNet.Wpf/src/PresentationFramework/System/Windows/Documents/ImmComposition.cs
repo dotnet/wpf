@@ -430,7 +430,7 @@ namespace System.Windows.Documents
                 size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_RESULTSTR, IntPtr.Zero, 0);
                 if (size > 0)
                 {
-                    result = new char[size / Marshal.SizeOf(typeof(short))];
+                    result = new char[size / sizeof(short)];
 
                     // 3rd param is out and contains actual result of this call.
                     // suppress Presharp 6031.
@@ -447,7 +447,7 @@ namespace System.Windows.Documents
                 size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPSTR, IntPtr.Zero, 0);
                 if (size > 0)
                 {
-                    composition = new char[size / Marshal.SizeOf(typeof(short))];
+                    composition = new char[size / sizeof(short)];
                     // 3rd param is out and contains actual result of this call.
                     // suppress Presharp 6031.
 #pragma warning suppress 6031
@@ -477,7 +477,7 @@ namespace System.Windows.Documents
                         size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPATTR, IntPtr.Zero, 0);
                         if (size > 0)
                         {
-                            attributes = new byte[size / Marshal.SizeOf(typeof(byte))];
+                            attributes = new byte[size / sizeof(byte)];
                             // 3rd param is out and contains actual result of this call.
                             // suppress Presharp 6031.
 #pragma warning suppress 6031
@@ -1349,7 +1349,7 @@ namespace System.Windows.Documents
 
             string target = range.Text;
 
-            int requestSize = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING)) + (target.Length * Marshal.SizeOf(typeof(short))) + ((_maxSrounding + 1) * Marshal.SizeOf(typeof(short)) * 2);
+            int requestSize = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING)) + (target.Length * sizeof(short)) + ((_maxSrounding + 1) * sizeof(short) * 2);
             IntPtr lret = new IntPtr(requestSize);
 
             if (lParam != IntPtr.Zero)
@@ -1365,9 +1365,9 @@ namespace System.Windows.Documents
                 reconv.dwStrLen = surrounding.Length;                                         // in char count
                 reconv.dwStrOffset = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING));   // in byte count
                 reconv.dwCompStrLen = target.Length;                                          // in char count
-                reconv.dwCompStrOffset = offsetStart * Marshal.SizeOf(typeof(short));         // in byte count
+                reconv.dwCompStrOffset = offsetStart * sizeof(short);                         // in byte count
                 reconv.dwTargetStrLen = target.Length;                                        // in char count
-                reconv.dwTargetStrOffset = offsetStart * Marshal.SizeOf(typeof(short));       // in byte count
+                reconv.dwTargetStrOffset = offsetStart * sizeof(short);                       // in byte count
 
                 if (!fDocFeed)
                 {
@@ -1543,7 +1543,7 @@ namespace System.Windows.Documents
                 ITextPointer start = range.Start.CreatePointer(LogicalDirection.Backward);
 
                 // Move the start point to new  dwCompStrOffset.
-                start = MoveToNextCharPos(start, (reconv.dwCompStrOffset - _reconv.dwCompStrOffset) / Marshal.SizeOf(typeof(short)));
+                start = MoveToNextCharPos(start, (reconv.dwCompStrOffset - _reconv.dwCompStrOffset) / sizeof(short));
                 // Create the end position and move this as dwCompStrLen.
                 ITextPointer end = start.CreatePointer(LogicalDirection.Forward);
                 end = MoveToNextCharPos(end, reconv.dwCompStrLen);

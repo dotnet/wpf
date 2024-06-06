@@ -593,10 +593,10 @@ namespace MS.Internal.Ink
             Debug.Assert(!_disableLasso && _lassoHelper == null, "StartLasso is called unexpectedly.");
 
             if ( InkCanvas.ClearSelectionRaiseSelectionChanging() // If user cancels clearing the selection, we shouldn't initiate Lasso.
-                                                                 // 
-                                                                 // If the active editng mode is no longer as Select, we shouldn't activate LassoSelectionBehavior.
-                                                                 // Note the order really matters here. This checking has to be done 
-                                                                 // after ClearSelectionRaiseSelectionChanging is invoked.
+                // 
+                // If the active editng mode is no longer as Select, we shouldn't activate LassoSelectionBehavior.
+                // Note the order really matters here. This checking has to be done 
+                // after ClearSelectionRaiseSelectionChanging is invoked.
                 && EditingCoordinator.ActiveEditingMode == InkCanvasEditingMode.Select )
             {
                 //

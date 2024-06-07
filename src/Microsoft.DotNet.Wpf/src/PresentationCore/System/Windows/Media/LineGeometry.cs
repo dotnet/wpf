@@ -144,7 +144,7 @@ namespace System.Windows.Media
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
                 
-                fixed (byte* pTypes = GetTypeList()) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -184,8 +184,6 @@ namespace System.Windows.Media
         {
             return 0.0;
         }
-
-        private static ReadOnlySpan<byte> GetTypeList() => LineTypes;
 
         private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
 

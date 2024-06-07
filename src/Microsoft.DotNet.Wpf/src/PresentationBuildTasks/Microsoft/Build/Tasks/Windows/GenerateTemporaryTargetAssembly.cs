@@ -820,7 +820,7 @@ namespace Microsoft.Build.Tasks.Windows
                     XmlNode previousNodeImportProps = null;
                     XmlNode previousNodeImportTargets = null;
 
-                    foreach (string sdk in sdks.Split(_semicolonChar).Select(i => i.Trim()))
+                    foreach (string sdk in sdks.Split(SemicolonChar).Select(i => i.Trim()))
                     {
                         //  <Project Sdk="Microsoft.NET.Sdk">
                         //  <Project Sdk="My.Custom.Sdk/1.0.0">
@@ -952,7 +952,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private const string WPFTMP = "wpftmp";
 
-        private static readonly char[] _semicolonChar = new char[] { ';' };
+        private const char SemicolonChar = ';';
 
         #endregion Private Fields
 

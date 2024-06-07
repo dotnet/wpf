@@ -118,7 +118,7 @@ namespace System.Windows.Media
                     pPoints[0] = pt1;
                     pPoints[1] = pt2;
 
-                    fixed (byte *pTypes = LineGeometry.s_lineTypes)
+                    fixed (byte *pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         return Geometry.GetBoundsHelper(
                             pen, 
@@ -144,7 +144,7 @@ namespace System.Windows.Media
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
                 
-                fixed (byte* pTypes = GetTypeList())
+                fixed (byte* pTypes = GetTypeList()) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -185,13 +185,13 @@ namespace System.Windows.Media
             return 0.0;
         }
 
-        private byte[] GetTypeList() { return s_lineTypes; }
+        private static ReadOnlySpan<byte> GetTypeList() => LineTypes;
 
-        private static byte[] s_lineTypes = new byte[] { (byte)MILCoreSegFlags.SegTypeLine };
+        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
 
-        private uint GetPointCount() { return c_pointCount; }
+        private static uint GetPointCount() { return c_pointCount; }
 
-        private uint GetSegmentCount() { return c_segmentCount; }
+        private static uint GetSegmentCount() { return c_segmentCount; }
 
         /// <summary>
         /// GetAsPathGeometry - return a PathGeometry version of this Geometry

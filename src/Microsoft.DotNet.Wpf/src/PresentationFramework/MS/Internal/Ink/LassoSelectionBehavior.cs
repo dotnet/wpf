@@ -369,7 +369,7 @@ namespace MS.Internal.Ink
             ElementCornerPoints elementPoints = GetTransformedElementCornerPoints(parent, uiElement);
             if (elementPoints.Set != false)
             {
-                Span<Point> points = GeneratePointGrid(elementPoints);
+                ReadOnlySpan<Point> points = GeneratePointGrid(elementPoints);
 
                 //
                 // perform hit testing against our lasso
@@ -427,7 +427,7 @@ namespace MS.Internal.Ink
         /// Private helper that will generate a grid of points 5 px apart given the elements bounding points
         /// this works with any affline transformed points
         /// </summary>
-        private Span<Point> GeneratePointGrid(ElementCornerPoints elementPoints)
+        private ReadOnlySpan<Point> GeneratePointGrid(ElementCornerPoints elementPoints)
         {
             if (!elementPoints.Set)
                 return Span<Point>.Empty;

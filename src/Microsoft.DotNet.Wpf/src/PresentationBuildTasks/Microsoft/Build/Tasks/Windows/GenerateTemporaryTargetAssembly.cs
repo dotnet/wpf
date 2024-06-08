@@ -952,7 +952,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private const string WPFTMP = "wpftmp";
 
-        private const char SemicolonChar = ';';
+        private static ReadOnlySpan<char> SemicolonChar => [';'];
 
         #endregion Private Fields
 

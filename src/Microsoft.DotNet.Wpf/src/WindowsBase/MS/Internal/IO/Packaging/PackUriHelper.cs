@@ -591,7 +591,7 @@ namespace MS.Internal.IO.Packaging
                                                                                                          false /*computeIsRelationship*/,
                                                                                                          true /*IsRelationship*/);
 
-            private const char ForwardSlashSeparator = '/';
+            private static ReadOnlySpan<char> ForwardSlashSeparator => ['/'];
 
             #endregion Private Methods
             

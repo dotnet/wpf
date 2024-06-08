@@ -118,7 +118,7 @@ namespace System.Windows.Media
                     pPoints[0] = pt1;
                     pPoints[1] = pt2;
 
-                    fixed (byte *pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         return Geometry.GetBoundsHelper(
                             pen, 
@@ -140,7 +140,7 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point *pPoints = stackalloc Point[2];
+                Point* pPoints = stackalloc Point[2];
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
                 

@@ -220,10 +220,10 @@ namespace System.Windows.Media
                     // We've checked that rect isn't empty above
                     Invariant.Assert(pointCount != 0);
 
-                    Point * pPoints = stackalloc Point[(int)pointCount];
+                    Point* pPoints = stackalloc Point[(int)pointCount];
                     RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
 
-                    fixed (byte *pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         boundingRect = Geometry.GetBoundsHelper(
                             pen,
@@ -259,7 +259,7 @@ namespace System.Windows.Media
             
             unsafe
             {
-                Point *pPoints = stackalloc Point[(int)pointCount];
+                Point* pPoints = stackalloc Point[(int)pointCount];
                 RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
 
                 fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs

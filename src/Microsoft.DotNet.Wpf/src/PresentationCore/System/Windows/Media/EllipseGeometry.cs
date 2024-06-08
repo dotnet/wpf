@@ -179,10 +179,10 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Point * pPoints = stackalloc Point[(int)c_pointCount];
+                    Point* pPoints = stackalloc Point[(int)c_pointCount];
                     EllipseGeometry.GetPointList(pPoints, c_pointCount, center, radiusX, radiusY);
 
-                    fixed (byte *pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         rect = Geometry.GetBoundsHelper(
                             pen, 
@@ -206,7 +206,7 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point *pPoints = stackalloc Point[(int)GetPointCount()];
+                Point* pPoints = stackalloc Point[(int)GetPointCount()];
                 EllipseGeometry.GetPointList(pPoints, GetPointCount(), Center, RadiusX, RadiusY);
 
                 fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs

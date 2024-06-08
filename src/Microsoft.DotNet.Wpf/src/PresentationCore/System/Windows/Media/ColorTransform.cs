@@ -106,52 +106,30 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
-        internal void Translate(float[] srcValue, float[] dstValue)
+        internal unsafe void Translate(float[] srcValue, float[] dstValue)
         {
-            // 3. create Win32 unmanaged profile handle from memory source profile using OpenColorProfileW
-            IntPtr[] pProfiles = new IntPtr[2];
+            // Transform colors using TranslateColors
+            const UInt32 NumColors = 1;
 
-            IntPtr paInputColors = IntPtr.Zero;
-            IntPtr paOutputColors = IntPtr.Zero;
+            // There's no SkipLocalsInit, will be all zeroes
+            long* paInputColors = stackalloc long[64 / sizeof(long)];
+            long* paOutputColors = stackalloc long[64 / sizeof(long)];
 
-            try
+            long inputColor = ICM2Color(srcValue);
+            paInputColors[0] = inputColor;
+
+            _colorTransformHelper.TranslateColors((nint)paInputColors, NumColors, _inputColorType, (nint)paOutputColors, _outputColorType);
+
+            long outputColor = paOutputColors[0];
+            for (int i = 0; i < dstValue.Length; i++)
             {
-                // 6. transform colors using TranslateColors
-                UInt32 numColors = 1;
-                long inputColor = ICM2Color(srcValue);
-                paInputColors = Marshal.AllocHGlobal(64);
+                UInt32 result = 0x0000ffff & (UInt32)(outputColor >> (16 * i));
+                float a = (result & 0x7fffffff) / (float)0x10000;
 
-                Marshal.WriteInt64(paInputColors, inputColor);
-
-                paOutputColors = Marshal.AllocHGlobal(64);
-                long outputColor = 0;
-
-                Marshal.WriteInt64(paOutputColors, outputColor);
-
-                _colorTransformHelper.TranslateColors(
-                    (IntPtr)paInputColors,
-                    numColors,
-                    _inputColorType,
-                    (IntPtr)paOutputColors,
-                    _outputColorType
-                    );
-
-                outputColor = Marshal.ReadInt64(paOutputColors);
-                for (int i = 0; i < dstValue.GetLength(0); i++)
-                {
-                    UInt32 result = 0x0000ffff & (UInt32)(outputColor >> (16 * i));
-                    float a = (result & 0x7fffffff) / (float)(0x10000);
-
-                    if (result < 0)
-                        dstValue[i] = -a;
-                    else
-                        dstValue[i] = a;
-                }
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(paInputColors);
-                Marshal.FreeHGlobal(paOutputColors);
+                if (result < 0)
+                    dstValue[i] = -a;
+                else
+                    dstValue[i] = a;
             }
         }
 
@@ -174,17 +152,17 @@ namespace System.Windows.Media
         {
             long colorValue;
 
-            if (srcValue.GetLength(0) < 3 || srcValue.GetLength(0) > 8)
+            if (srcValue.Length < 3 || srcValue.Length > 8)
             {
                 throw new NotSupportedException(); // Only support color spaces with 3,4,5,6,7,8 channels
             }
 
-            if (srcValue.GetLength(0) <= 4)
+            if (srcValue.Length <= 4)
             {
-                UInt16[] channel = new UInt16[4];
+                Span<UInt16> channel = stackalloc UInt16[4];
 
                 channel[0] = channel[1] = channel[2] = channel[3] = 0;
-                for (int i = 0; i < srcValue.GetLength(0); i++)
+                for (int i = 0; i < srcValue.Length; i++)
                 {
                     if (srcValue[i] >= 1.0)// this fails for values above 1.0 and below 0.0
                     {
@@ -204,11 +182,11 @@ namespace System.Windows.Media
             }
             else
             {
-                byte[] channel = new byte[8];
+                Span<byte> channel = stackalloc byte[8];
 
                 channel[0] = channel[1] = channel[2] = channel[3] =
                         channel[4] = channel[5] = channel[6] = channel[7] = 0;
-                for (int i = 0; i < srcValue.GetLength(0); i++)
+                for (int i = 0; i < srcValue.Length; i++)
                 {
                     if (srcValue[i] >= 1.0)// this fails for values above 1.0 and below 0.0
                     {
@@ -244,9 +222,9 @@ namespace System.Windows.Media
 
         private ColorTransformHelper _colorTransformHelper;
 
-        private UInt32 _inputColorType;
+        private readonly UInt32 _inputColorType;
 
-        private UInt32 _outputColorType;
+        private readonly UInt32 _outputColorType;
 
         #endregion
     }

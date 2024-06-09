@@ -106,7 +106,7 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
-        internal unsafe void Translate(float[] srcValue, float[] dstValue)
+        internal unsafe void Translate(Span<float> srcValue, Span<float> dstValue)
         {
             // Transform colors using TranslateColors
             const UInt32 NumColors = 1;
@@ -148,7 +148,7 @@ namespace System.Windows.Media
             _colorTransformHelper = new ColorTransformHelper();
         }
 
-        private long ICM2Color(float[] srcValue)
+        private long ICM2Color(Span<float> srcValue)
         {
             long colorValue;
 

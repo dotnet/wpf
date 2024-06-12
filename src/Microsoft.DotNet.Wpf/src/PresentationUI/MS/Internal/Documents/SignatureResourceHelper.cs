@@ -165,7 +165,7 @@ namespace MS.Internal.Documents
                 {
                     // Determine resource name.
                     string resourceName = "PUISignatureStatus"
-                        + Enum.GetName(typeof(SignatureStatus), sigStatus)
+                        + Enum.GetName(sigStatus)
                         + "BrushKey";
 
                     // Acquire reference to the brush.

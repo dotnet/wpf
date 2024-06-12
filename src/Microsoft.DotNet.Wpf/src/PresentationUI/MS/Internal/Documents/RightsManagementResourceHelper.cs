@@ -138,7 +138,7 @@ namespace MS.Internal.Documents
                 {
                     // Determine resource name.
                     string resourceName = "PUIRMStatus"
-                        + Enum.GetName(typeof(RightsManagementStatus), status)
+                        + Enum.GetName(status)
                         + "BrushKey";
 
                     // Acquire reference to the brush.

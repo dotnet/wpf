@@ -157,7 +157,7 @@ namespace System.Windows.Documents.Tracing
                         NumCallsMeasured = new Dictionary<Actions, long>()
                     };
 
-                    foreach (Actions a in Enum.GetValues(typeof(Actions)))
+                    foreach (Actions a in Enum.GetValues<Actions>())
                     {
                         instanceInfo.CumulativeCallTime100Ns.Add(a, 0);
                         instanceInfo.NumCallsMeasured.Add(a, 0);

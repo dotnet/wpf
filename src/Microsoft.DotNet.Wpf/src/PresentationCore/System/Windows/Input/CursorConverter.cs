@@ -115,7 +115,7 @@ namespace System.Windows.Input
                 {
                     if (text.LastIndexOf('.') == -1)
                     {
-                        CursorType ct = (CursorType)Enum.Parse(typeof(CursorType), text);
+                        CursorType ct = Enum.Parse<CursorType>(text);
 
                         switch (ct)
                         {

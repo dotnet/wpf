@@ -3120,7 +3120,7 @@ namespace System.Windows.Controls.Primitives
 
             internal Matrix GetTransformToDevice()
             {
-                CompositionTarget ct = _window.Value.CompositionTarget;
+                CompositionTarget ct = _window?.Value.CompositionTarget;
                 if (ct != null && !ct.IsDisposed)
                 {
                     return ct.TransformToDevice;
@@ -3570,6 +3570,13 @@ namespace System.Windows.Controls.Primitives
                         var screenOrigin = popup._secHelper.ClientToScreen(rootVisual, ptPlacementTargetOrigin);
                         return new NativeMethods.POINT((int)screenOrigin.X, (int)screenOrigin.Y);
                     }
+                }
+                else
+                {
+                    // GetPlacementTargetInterestPoints already returns points in screen-coordinate
+                    Point[] placementTargetInterestPoints = popup.GetPlacementTargetInterestPoints(popup.PlacementInternal);
+                    Point center = placementTargetInterestPoints[(int)InterestPoint.TopLeft];
+                    return new NativeMethods.POINT((int)center.X, (int)center.Y);
                 }
 
                 return null;

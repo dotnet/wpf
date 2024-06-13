@@ -5769,13 +5769,15 @@ To automatically copy the files, set the environment variable
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA" />
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5" />
 
+    <SolidColorBrush x:Key="TextBox.Normal.Foreground" Color="#FF00FFF0" />
+
     <!--=================================================================
         TextBoxBase
     ==================================================================-->
     <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBox.Normal.Foreground}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>

@@ -380,6 +380,9 @@ dotnet_diagnostic.CA1725.severity = suggestion
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = suggestion
 
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = suggestion
+
 # CA2244: Do not duplicate indexed element initializations
 dotnet_diagnostic.CA2244.severity = suggestion
 

@@ -10,7 +10,7 @@
 #------------------------------------------------------------------------------
 
 # set to 0 to disable replacing keys with short string for the checked in version
-$optimizeKeys = 1;
+$optimizeKeys = 0;
 
 # set to 0 to disable replacing keys with short string
 # Currently disabled because Automation relies on template Names

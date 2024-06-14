@@ -1,6 +1,6 @@
 {
   "tools": {
-    "dotnet": "9.0.100-preview.4.24267.66",
+    "dotnet": "9.0.100-preview.5.24307.3",
     "runtimes": {
       "dotnet": [
         "2.1.7",
@@ -12,11 +12,11 @@
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "9.0.0-beta.24312.1",
-    "Microsoft.DotNet.Helix.Sdk": "9.0.0-beta.24312.1"
+    "Microsoft.DotNet.Arcade.Sdk": "9.0.0-beta.24313.4",
+    "Microsoft.DotNet.Helix.Sdk": "9.0.0-beta.24313.4"
   },
   "sdk": {
-    "version": "9.0.100-preview.4.24267.66"
+    "version": "9.0.100-preview.5.24307.3"
   },
   "native-tools": {
     "strawberry-perl": "5.38.0.1",

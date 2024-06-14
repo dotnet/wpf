@@ -38,6 +38,7 @@ namespace System.Windows.Xps.Packaging
                 _xpsOMFactory = _packageTarget.GetXpsOMFactory();
 
                 _xpsPartResources = _xpsOMFactory.CreatePartResources();
+                _discardableResourceParts = _xpsOMFactory.CreatePartUriCollection();
 
             }
             catch (COMException)
@@ -65,7 +66,9 @@ namespace System.Windows.Xps.Packaging
                 try
                 {
                     IOpcPartUri partUri = GenerateIOpcPartUri(XpsS0Markup.DocumentSequenceContentType);
-                    _currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, null);
+                    IOpcPartUri discardControlPartUri = GenerateIOpcPartUri(XpsS0Markup.DiscardContentType);
+                    _currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, discardControlPartUri);
+                    //_currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, null);
                     if (_printQueue != null)
                     {
                         ((PrintQueue)_printQueue).XpsOMPackageWriter = _currentFixedDocumentSequenceWriter;
@@ -516,6 +519,7 @@ namespace System.Windows.Xps.Packaging
             {
                 if (resourceStreamCacheItem.Release() == 0)
                 {
+                    ReleaseFontResource(resourceStreamCacheItem.XpsResourceStream.Uri);
                     resourceStreamCacheItem.XpsResourceStream.Stream.Dispose();
                     resourceStreamCacheItem.XpsResourceStream.Initialize();
                     _fontsCache.Remove(resourceId);
@@ -524,6 +528,31 @@ namespace System.Windows.Xps.Packaging
             else
             {
                 throw new XpsSerializationException(SR.ReachSerialization_CannotReleaseXmlWriter);
+            }
+        }
+
+        /// <SecurityNote>
+        /// Critical: Calls into COM
+        /// Safe: Does not expose critical resources to the caller
+        /// </SecurityNote>
+        [SecuritySafeCritical]
+        void ReleaseFontResource(Uri uri)
+        {
+            IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();
+            IOpcPartUri partUri = GenerateIOpcPartUri(uri);
+            IXpsOMFontResource fontResourceToRemove = fontCollection.GetByPartName(partUri);
+            _discardableResourceParts.Append(partUri);
+            if (fontResourceToRemove != null)
+            {
+                for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
+                {
+                    IXpsOMFontResource fontResource = fontCollection.GetAt(i);
+                    if (fontResource == fontResourceToRemove)
+                    {
+                        fontCollection.RemoveAt(i);
+                        break;
+                    }
+                }
             }
         }
 
@@ -860,7 +889,13 @@ namespace System.Windows.Xps.Packaging
                 SetHyperlinkTargetsForCurrentPage();
 
                 XPS_SIZE xpsSize = new XPS_SIZE() { width = (float)_currentPageSize.Width, height = (float)_currentPageSize.Height };
-                _currentFixedDocumentSequenceWriter.AddPage(_currentFixedPageWriter, xpsSize, null, null, printTicketResource, null);
+                //_currentFixedDocumentSequenceWriter.AddPage(_currentFixedPageWriter, xpsSize, null, null, printTicketResource, null);
+                _currentFixedDocumentSequenceWriter.AddPage(_currentFixedPageWriter, xpsSize, _discardableResourceParts, null, printTicketResource, null);
+
+                while (_discardableResourceParts.GetCount() > 0)
+                {
+                    _discardableResourceParts.RemoveAt(0);
+                }               
             }
             catch (COMException)
             {
@@ -906,6 +941,7 @@ namespace System.Windows.Xps.Packaging
         private IXpsOMPartResources _xpsPartResources;
         private IXpsOMPackageWriter _currentFixedDocumentSequenceWriter;
         private IXpsOMPage _currentFixedPageWriter;
+        private IXpsOMPartUriCollection _discardableResourceParts;
         private XPS_IMAGE_TYPE _currentImageType;
 
         // Writer reference counts

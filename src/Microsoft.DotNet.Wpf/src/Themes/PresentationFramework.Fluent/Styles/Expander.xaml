@@ -308,7 +308,8 @@
                                 BorderThickness="1"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                             <ToggleButton
-                                        x:Name="ExpanderToggleButton"
+                                        x:Name="HeaderSite"
+                                        AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
                                         Margin="0"
                                         Padding="{TemplateBinding Padding}"
                                         HorizontalAlignment="Stretch"
@@ -550,7 +551,7 @@
                                     TargetName="ToggleButtonBorder"/>
                             <Setter Property="Template"
                                     Value="{StaticResource DefaultExpanderToggleButtonRightStyle}"
-                                    TargetName="ExpanderToggleButton"/>
+                                    TargetName="HeaderSite"/>
                             <Setter Property="RenderTransform"
                                     Value="{DynamicResource WidthAnimation}"
                                     TargetName="ContentPresenterBorder" />
@@ -566,7 +567,7 @@
                                     TargetName="ToggleButtonBorder"/>
                             <Setter Property="Template"
                                     Value="{StaticResource DefaultExpanderToggleButtonUpStyle}"
-                                    TargetName="ExpanderToggleButton"/>
+                                    TargetName="HeaderSite"/>
                             <Setter Property="RenderTransform"
                                     Value="{DynamicResource HeightAnimation}"
                                     TargetName="ContentPresenterBorder" />
@@ -589,7 +590,7 @@
                                     TargetName="ToggleButtonBorder"/>
                             <Setter Property="Template"
                                     Value="{StaticResource DefaultExpanderToggleButtonLeftStyle}"
-                                    TargetName="ExpanderToggleButton"/>
+                                    TargetName="HeaderSite"/>
                             <Setter Property="RenderTransform"
                                     Value="{DynamicResource WidthAnimation}"
                                     TargetName="ContentPresenterBorder" />
@@ -598,12 +599,12 @@
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
-                            <Setter TargetName="ExpanderToggleButton" Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
-                            <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderDisabledBorderBrush}" />
+                            <Setter TargetName="HeaderSite" Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+                            <Setter TargetName="HeaderSite" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderDisabledBorderBrush}" />
                         </Trigger>
 
-                        <Trigger SourceName="ExpanderToggleButton" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderPointerOverBrush}" />
+                        <Trigger SourceName="HeaderSite" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HeaderSite" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderPointerOverBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

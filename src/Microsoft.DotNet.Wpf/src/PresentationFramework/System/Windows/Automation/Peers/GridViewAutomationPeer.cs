@@ -207,7 +207,7 @@ namespace System.Windows.Automation.Peers
                     }
         
                     var container = _listview.ItemContainerGenerator.ContainerFromItem(item);
-                    if (container == null || container is UIElement { Visibility: not Visibility.Visible })
+                    if (container is UIElement { Visibility: not Visibility.Visible })
                     {
                         rowcount -= 1;
                         continue;

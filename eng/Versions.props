@@ -38,6 +38,7 @@
     <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.6.24318.5</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
     <SystemResourcesExtensionsVersion>9.0.0-preview.6.24318.5</SystemResourcesExtensionsVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>9.0.0-preview.6.24318.5</SystemRuntimeSerializationFormattersPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>9.0.0-preview.6.24318.5</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>9.0.0-preview.6.24318.5</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>9.0.0-preview.6.24318.5</SystemWindowsExtensionsPackageVersion>

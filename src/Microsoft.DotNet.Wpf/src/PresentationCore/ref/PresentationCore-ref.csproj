@@ -50,7 +50,6 @@
     <NetCoreReference Include="System.Runtime.CompilerServices.VisualC" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Threading" />
@@ -63,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>

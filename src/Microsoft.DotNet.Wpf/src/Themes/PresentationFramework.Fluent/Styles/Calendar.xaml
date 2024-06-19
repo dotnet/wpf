@@ -10,10 +10,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <system:String x:Key="CaretUpGlyph">&#xEDDB;</system:String>
-    <system:String x:Key="CaretDownGlyph">&#xEDDC;</system:String>    
-
-
     <!--  HINT: Day button style  -->
     <Style x:Key="DefaultCalendarDayButtonStyle" TargetType="CalendarDayButton">
         <Setter Property="MinWidth" Value="30" />

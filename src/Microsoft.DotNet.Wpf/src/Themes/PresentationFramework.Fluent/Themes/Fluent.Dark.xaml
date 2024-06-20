@@ -689,7 +689,7 @@
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
@@ -732,7 +732,7 @@
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
@@ -955,7 +955,7 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CalendarItem}">
@@ -1100,7 +1100,7 @@
     <Setter Property="MinWidth" Value="120" />
     <Setter Property="MinHeight" Value="32" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -1228,7 +1228,7 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBox}">
@@ -1247,7 +1247,7 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Border.CornerRadius" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -1268,7 +1268,7 @@
     <Setter Property="Padding" Value="{StaticResource ComboBoxItemContentMargin}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ComboBoxItem}">
@@ -1322,7 +1322,7 @@
     <!--  WPF doesn't like centering, the animation is ugly and the mouse button sometimes clicks right away.  -->
     <Setter Property="Popup.Placement" Value="Bottom" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -1450,7 +1450,7 @@
     <Setter Property="Grid.IsSharedSizeScope" Value="True" />
     <Setter Property="Popup.PopupAnimation" Value="None" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ContextMenu}">
@@ -1511,7 +1511,7 @@
   <!--  END REMOVE COLORS  -->
   <Style x:Key="DefaultDataGridCheckBoxColumnCellStyle" TargetType="{x:Type DataGridColumn}" />
   <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
@@ -1563,7 +1563,7 @@
     <Setter Property="VerticalContentAlignment" Value="Stretch" />
     <Setter Property="MinHeight" Value="32" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -1608,7 +1608,7 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
     <Setter Property="ValidationErrorTemplate">
       <Setter.Value>
@@ -1644,7 +1644,7 @@
     <Setter Property="Height" Value="8" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Cursor" Value="SizeNS" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Thumb}">
@@ -1657,7 +1657,7 @@
   <Style x:Key="DefaultDataGridRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
@@ -1714,7 +1714,7 @@
     <Setter Property="Width" Value="8" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Cursor" Value="SizeWE" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Thumb}">
@@ -1734,7 +1734,7 @@
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="SeparatorBrush" Value="{DynamicResource ControlFillColorDefault}" />
     <Setter Property="IsTabStop" Value="False" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
@@ -1751,7 +1751,7 @@
   </Style>
   <!--  Style and template for the DataGridColumnHeadersPresenter.  -->
   <Style x:Key="DefaultDataGridColumnHeadersPresenterStyle" TargetType="{x:Type DataGridColumnHeadersPresenter}">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGridColumnHeadersPresenter}">
@@ -1764,7 +1764,7 @@
     </Setter>
   </Style>
   <Style x:Key="DefaultDataGridCellsPresenterStyle" TargetType="{x:Type DataGridCellsPresenter}">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGridColumnHeadersPresenter}">
@@ -1779,7 +1779,7 @@
   <Style x:Key="DefaultDragIndicatorStyleStyle" TargetType="{x:Type Control}">
     <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
     <Setter Property="Background" Value="Transparent" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <!--  DataGridColumnFloatingHeader  is  internal  -->
@@ -1858,7 +1858,7 @@
     <Setter Property="CellStyle" Value="{StaticResource DefaultDataGridCellStyle}" />
     <Setter Property="ColumnHeaderStyle" Value="{StaticResource DefaultDataGridColumnHeaderStyle}" />
     <Setter Property="DragIndicatorStyle" Value="{StaticResource DefaultDragIndicatorStyleStyle}" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DataGrid}">
@@ -1949,7 +1949,7 @@
     <Setter Property="MinWidth" Value="120" />
     <Setter Property="MinHeight" Value="32" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -2068,7 +2068,7 @@
       </Setter.Value>
     </Setter>
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
@@ -2105,7 +2105,7 @@
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -2349,7 +2349,7 @@
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="IsExpanded" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Expander}">
@@ -2596,7 +2596,7 @@
     <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
     <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Standard" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="ItemsPanel">
       <Setter.Value>
         <ItemsPanelTemplate>
@@ -2630,7 +2630,7 @@
     <Setter Property="Padding" Value="12" />
     <Setter Property="Border.CornerRadius" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -2673,7 +2673,7 @@
     <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
     <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Standard" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="ItemsPanel">
       <Setter.Value>
         <ItemsPanelTemplate>
@@ -2713,7 +2713,7 @@
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="Margin" Value="0,0,0,2" />
     <Setter Property="Padding" Value="4" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -2745,7 +2745,7 @@
     <Setter Property="Background" Value="{DynamicResource MenuBarBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource MenuBarForeground}" />
     <Setter Property="Focusable" Value="False" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
@@ -2770,7 +2770,7 @@
     <Setter Property="Margin" Value="0,1,0,1" />
     <Setter Property="BorderThickness" Value="1,1,0,0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Separator}">
@@ -3000,7 +3000,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Style.Triggers>
       <Trigger Property="Role" Value="TopLevelHeader">
         <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}" />
@@ -3029,7 +3029,7 @@
     <!-- <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" /> -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Page}">
@@ -3073,7 +3073,7 @@
     <Setter Property="PasswordChar" Value="●" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type PasswordBox}">
@@ -3127,7 +3127,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource ProgressBarBorderBrush}" />
     <Setter Property="Height" Value="4" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ProgressBar}">
@@ -3211,7 +3211,7 @@
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RadioButton}">
@@ -3330,7 +3330,7 @@
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -3370,7 +3370,7 @@
     <Setter Property="Padding" Value="6,4" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RichTextBox}">
@@ -3410,7 +3410,7 @@
     <Setter Property="FontSize" Value="11" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Focusable" Value="False" />
     <Setter Property="Template">
       <Setter.Value>
@@ -3442,7 +3442,7 @@
   </Style>
   <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="true" />
+    
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="Template">
@@ -3457,7 +3457,7 @@
     <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFill}" />
     <Setter Property="Border.CornerRadius" Value="4" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="Template">
@@ -3570,7 +3570,7 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">
         <Setter Property="Width" Value="Auto" />
@@ -3589,7 +3589,7 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -3620,7 +3620,7 @@
     <Setter Property="BorderThickness" Value="1,1,0,0" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Separator}">
@@ -3633,7 +3633,7 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -3645,7 +3645,7 @@
   <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
     <Setter Property="Height" Value="20" />
     <Setter Property="Width" Value="20" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="Background" Value="{DynamicResource SliderThumbBackground}" />
     <Setter Property="BorderThickness" Value="1" />
@@ -3790,7 +3790,7 @@
   <Style TargetType="{x:Type Slider}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">
         <Setter Property="MinWidth" Value="104" />
@@ -3808,7 +3808,7 @@
     <Setter Property="Margin" Value="6,0" />
     <Setter Property="BorderThickness" Value="1,1,0,0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Separator}">
@@ -3909,7 +3909,7 @@
     <Setter Property="Foreground" Value="{DynamicResource TabViewForeground}" />
     <Setter Property="Background" Value="{DynamicResource TabViewBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TabViewBorderBrush}" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template" Value="{StaticResource DefaultTopTabControlStyle}" />
     <Style.Triggers>
@@ -3934,7 +3934,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4037,7 +4037,7 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -4072,7 +4072,7 @@
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -4204,7 +4204,7 @@
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template" Value="{StaticResource DefaultTextBoxControlTemplate}" />
   </Style>
   <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />
@@ -4229,7 +4229,7 @@
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -4313,7 +4313,7 @@
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -4351,7 +4351,7 @@
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="AllowDrop" Value="True" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBox}">
@@ -4364,7 +4364,7 @@
   </Style>
   <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Cursor" Value="SizeAll" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4395,7 +4395,7 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -4419,7 +4419,7 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToolBar}">
@@ -4470,7 +4470,7 @@
     <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ToolTip">
@@ -4502,7 +4502,7 @@
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4541,7 +4541,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Focusable" Value="False" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4585,7 +4585,7 @@
     <Setter Property="FontSize" Value="{StaticResource TreeViewItemFontSize}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="IsTabStop" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4689,7 +4689,7 @@
   <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Foreground" Value="{DynamicResource WindowForeground}" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Window}">

@@ -5,6 +5,8 @@ using Microsoft.Win32;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Interop;
+using MS.Internal;
+using HRESULT = Standard.HRESULT;
 
 namespace System.Windows;
 
@@ -20,12 +22,21 @@ internal static class ThemeManager
         {
             foreach (ResourceDictionary mergedDictionary in Application.Current.Resources.MergedDictionaries)
             {
-                if (mergedDictionary.Source != null && mergedDictionary.Source.ToString().EndsWith("Fluent.xaml"))
+                if (mergedDictionary.Source != null)
                 {
-                    _isFluentThemeEnabled = true;
-                    break;
+                    string source = mergedDictionary.Source.ToString();
+                    if(source.EndsWith("Fluent.xaml") || source.EndsWith("Fluent.Light.xaml") || source.EndsWith("Fluent.Dark.xaml"))
+                    {
+                        _isFluentThemeEnabled = true;
+                        break;
+                    }
                 }
             }
+        }
+
+        if (FrameworkAppContextSwitches.EnableFluentTheme)
+        {
+            _isFluentThemeEnabled = true;
         }
     }
 

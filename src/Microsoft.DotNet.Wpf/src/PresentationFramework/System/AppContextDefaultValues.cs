@@ -73,6 +73,8 @@ namespace System
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.AppendLocalAssemblyVersionForSourceUriSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElementSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.ItemAutomationPeerKeepsItsItemAliveSwitchName, false);
+
+            LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.EnableFluentThemeSwitchName, true);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableFluentThemeWindowBackdropSwitchName, false);
 
             // UseAdornerForTextboxSelectionRenderingSwitchName is always true, i.e., disabled by default. 

@@ -297,6 +297,13 @@ namespace MS.Win32
 #endif
 
                 themeColor = themeColorSB.ToString();
+
+                if (FrameworkAppContextSwitches.EnableFluentTheme)
+                {
+                    themeName = "Fluent";
+                    themeColor = ThemeManager.IsSystemThemeLight() ? "Light" : "Dark";
+                }
+
             }
             else
             {

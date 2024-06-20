@@ -142,6 +142,19 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(DisableFluentThemeWindowBackdropSwitchName, ref _DisableFluentThemeWindowBackdrop);
             }
         }
+
+
+        // Switch to enable Fluent theme in WPF
+        internal const string EnableFluentThemeSwitchName = "Switch.System.Windows.Appearance.EnableFluentTheme";
+        private static int _EnableFluentTheme;
+        public static bool EnableFluentTheme
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(EnableFluentThemeSwitchName, ref _EnableFluentTheme);
+            }
+        }
     }
 
 #pragma warning restore 436

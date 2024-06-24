@@ -38,7 +38,7 @@ namespace System.Windows
     [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
     public abstract class TriggerBase : DependencyObject
     {
-        internal TriggerBase()
+        public TriggerBase()
         {
         }
 
@@ -371,7 +371,7 @@ namespace System.Windows
         }
 
         // evaluate the current state of the trigger
-        internal virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
+        public virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
             Debug.Assert( false,
                 "This method was written to handle Trigger, MultiTrigger, DataTrigger, and MultiDataTrigger.  It looks like a new trigger type was added - please add support as appropriate.");
@@ -380,7 +380,7 @@ namespace System.Windows
         }
 
         // Collection of TriggerConditions
-        internal TriggerCondition[] TriggerConditions
+        public TriggerCondition[] TriggerConditions
         {
             get { return _triggerConditions; }
             set { _triggerConditions = value; }

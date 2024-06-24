@@ -339,7 +339,7 @@ namespace System.Windows.Input
             else
             {
                 // Get the string representation fo the cursor type enumeration.
-                return Enum.GetName(typeof(CursorType), _cursorType);
+                return Enum.GetName(_cursorType);
             }
         }
 

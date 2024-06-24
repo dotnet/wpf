@@ -540,18 +540,18 @@ namespace System.Windows.Xps.Packaging
             IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();
             IOpcPartUri partUri = GenerateIOpcPartUri(uri);
             IXpsOMFontResource fontResourceToRemove = fontCollection.GetByPartName(partUri);
-                _discardableResourceParts.Append(partUri);
-                if (fontResourceToRemove != null)
+            _discardableResourceParts.Append(partUri);
+            if (fontResourceToRemove != null)
+            {
+                for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
                 {
-                    for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
+                    IXpsOMFontResource fontResource = fontCollection.GetAt(i);
+                    if (fontResource == fontResourceToRemove)
                     {
-                        IXpsOMFontResource fontResource = fontCollection.GetAt(i);
-                        if (fontResource == fontResourceToRemove)
-                        {
-                            _currentFixedDocumentSequenceWriter.AddResource(fontResource);
-                            fontCollection.RemoveAt(i);
-                            break;
-                        }
+                        _currentFixedDocumentSequenceWriter.AddResource(fontResource);
+                        fontCollection.RemoveAt(i);
+                        break;
+                    }
                 }
             }
         }

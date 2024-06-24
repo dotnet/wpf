@@ -68,7 +68,6 @@ namespace System.Windows.Xps.Packaging
                     IOpcPartUri partUri = GenerateIOpcPartUri(XpsS0Markup.DocumentSequenceContentType);
                     IOpcPartUri discardControlPartUri = GenerateIOpcPartUri(XpsS0Markup.DiscardContentType);
                     _currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, discardControlPartUri);
-                    //_currentFixedDocumentSequenceWriter = _packageTarget.GetXpsOMPackageWriter(partUri, null);
                     if (_printQueue != null)
                     {
                         ((PrintQueue)_printQueue).XpsOMPackageWriter = _currentFixedDocumentSequenceWriter;
@@ -541,17 +540,18 @@ namespace System.Windows.Xps.Packaging
             IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();
             IOpcPartUri partUri = GenerateIOpcPartUri(uri);
             IXpsOMFontResource fontResourceToRemove = fontCollection.GetByPartName(partUri);
-            _discardableResourceParts.Append(partUri);
-            if (fontResourceToRemove != null)
-            {
-                for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
+                _discardableResourceParts.Append(partUri);
+                if (fontResourceToRemove != null)
                 {
-                    IXpsOMFontResource fontResource = fontCollection.GetAt(i);
-                    if (fontResource == fontResourceToRemove)
+                    for (uint i = 0, n = fontCollection.GetCount(); i < n; ++i)
                     {
-                        fontCollection.RemoveAt(i);
-                        break;
-                    }
+                        IXpsOMFontResource fontResource = fontCollection.GetAt(i);
+                        if (fontResource == fontResourceToRemove)
+                        {
+                            _currentFixedDocumentSequenceWriter.AddResource(fontResource);
+                            fontCollection.RemoveAt(i);
+                            break;
+                        }
                 }
             }
         }
@@ -889,7 +889,6 @@ namespace System.Windows.Xps.Packaging
                 SetHyperlinkTargetsForCurrentPage();
 
                 XPS_SIZE xpsSize = new XPS_SIZE() { width = (float)_currentPageSize.Width, height = (float)_currentPageSize.Height };
-                //_currentFixedDocumentSequenceWriter.AddPage(_currentFixedPageWriter, xpsSize, null, null, printTicketResource, null);
                 _currentFixedDocumentSequenceWriter.AddPage(_currentFixedPageWriter, xpsSize, _discardableResourceParts, null, printTicketResource, null);
 
                 while (_discardableResourceParts.GetCount() > 0)

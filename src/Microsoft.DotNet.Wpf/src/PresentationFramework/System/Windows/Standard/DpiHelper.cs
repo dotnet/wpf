@@ -13,11 +13,6 @@ namespace Standard
 
     internal static class DpiHelper
     {
-        [ThreadStatic]
-        private static Matrix _transformToDevice;
-        [ThreadStatic]
-        private static Matrix _transformToDip;
-
         /// <summary>
         /// Convert a point in device independent pixels (1/96") to a point in the system coordinates.
         /// </summary>
@@ -25,9 +20,9 @@ namespace Standard
         /// <returns>Returns the parameter converted to the system's coordinates.</returns>
         public static Point LogicalPixelsToDevice(Point logicalPoint, double dpiScaleX, double dpiScaleY)
         {
-            _transformToDevice = Matrix.Identity;
-            _transformToDevice.Scale(dpiScaleX, dpiScaleY);
-            return _transformToDevice.Transform(logicalPoint);
+            var transformToDevice = Matrix.Identity;
+            transformToDevice.Scale(dpiScaleX, dpiScaleY);
+            return transformToDevice.Transform(logicalPoint);
         }
 
         /// <summary>
@@ -37,9 +32,9 @@ namespace Standard
         /// <returns>Returns the parameter converted to the device independent coordinate system.</returns>
         public static Point DevicePixelsToLogical(Point devicePoint, double dpiScaleX, double dpiScaleY)
         {
-            _transformToDip = Matrix.Identity;
-            _transformToDip.Scale(1d / dpiScaleX, 1d / dpiScaleY);
-            return _transformToDip.Transform(devicePoint);
+            var transformToDip = Matrix.Identity;
+            transformToDip.Scale(1d / dpiScaleX, 1d / dpiScaleY);
+            return transformToDip.Transform(devicePoint);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

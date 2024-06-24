@@ -103,7 +103,7 @@ namespace System.Windows.Input
                     
                 if (!stringSource.Equals(String.Empty))
                 {
-                    nameValue = (InputScopeNameValue)Enum.Parse(typeof(InputScopeNameValue), stringSource);
+                    nameValue = Enum.Parse<InputScopeNameValue>(stringSource);
                 }
             }
             

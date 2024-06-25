@@ -87,12 +87,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_freezeDirective == null)
-                {
-                    _freezeDirective = new System.Xaml.XamlDirective(XamlReaderHelper.PresentationOptionsNamespaceURI, XamlReaderHelper.PresentationOptionsFreeze);
-                }
-
-                return _freezeDirective;
+                return _freezeDirective ??= new System.Xaml.XamlDirective(XamlReaderHelper.PresentationOptionsNamespaceURI, XamlReaderHelper.PresentationOptionsFreeze);
             }
         }
         private static System.Xaml.XamlDirective _freezeDirective;

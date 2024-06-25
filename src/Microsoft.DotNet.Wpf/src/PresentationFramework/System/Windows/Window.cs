@@ -1900,7 +1900,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnSourceInitialized(...) for
+        ///     the event. If you override this method - you need to call base.OnSourceInitialized(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1922,7 +1922,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnActivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1940,7 +1940,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnDeactivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnDeactivated(EventArgs e)
@@ -1958,7 +1958,7 @@ namespace System.Windows
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers
         ///     that subclass the event. If you override this method - you need to call
-        ///     Base.OnClosed(...) for the corresponding event to be raised.
+        ///     base.OnStateChanged(...) for the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnStateChanged(EventArgs e)
         {
@@ -1974,7 +1974,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnLocationChanged(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnLocationChanged(EventArgs e)
@@ -1992,7 +1992,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosing(...) for
+        ///     the event. If you override this method - you need to call base.OnClosing(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosing(CancelEventArgs e)
@@ -2009,7 +2009,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnClosed(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosed(EventArgs e)

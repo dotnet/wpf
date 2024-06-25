@@ -296,10 +296,8 @@ namespace System.Windows.Input
         /// <param name="stylusPointDescription2">stylusPointDescription2</param>
         public static bool AreCompatible(StylusPointDescription stylusPointDescription1, StylusPointDescription stylusPointDescription2)
         {
-            if (stylusPointDescription1 == null || stylusPointDescription2 == null)
-            {
-                throw new ArgumentNullException("stylusPointDescription");
-            }
+            ArgumentNullException.ThrowIfNull(stylusPointDescription1);
+            ArgumentNullException.ThrowIfNull(stylusPointDescription2);
 
             #pragma warning disable 6506 // if a StylusPointDescription is not null, then _stylusPointPropertyInfos is not null.
             //

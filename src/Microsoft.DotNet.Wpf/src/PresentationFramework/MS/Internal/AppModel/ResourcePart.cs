@@ -44,10 +44,7 @@ namespace MS.Internal.AppModel
         public ResourcePart(Package container, Uri uri, string name, ResourceManagerWrapper rmWrapper) :
             base(container, uri)
         {
-            if (rmWrapper == null)
-            {
-                throw new ArgumentNullException("rmWrapper");
-            }
+            ArgumentNullException.ThrowIfNull(rmWrapper);
 
             _rmWrapper.Value = rmWrapper;
             _name = name;

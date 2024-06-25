@@ -1674,9 +1674,6 @@
   <data name="SplashScreenIsLoading" xml:space="preserve">
     <value>Please wait while the application opens</value>
   </data>
-  <data name="NameScopeNameNotEmptyString" xml:space="preserve">
-    <value>Name cannot be an empty string.</value>
-  </data>
   <data name="NameScopeNameNotFound" xml:space="preserve">
     <value>'{0}' Name is not found.</value>
   </data>

@@ -3318,11 +3318,6 @@ Voulez-vous le remplacer ?</target>
         <target state="translated">Nom '{0}' non valide pour l'identificateur.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Name ne peut pas être une chaîne vide.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>'{0}' Name is not found.</source>
         <target state="translated">Name '{0}' introuvable.</target>
@@ -5181,11 +5176,6 @@ Voulez-vous le remplacer ?</target>
       <trans-unit id="StreamObjectDisposed">
         <source>Current stream object was closed and disposed. Cannot access a closed stream.</source>
         <target state="translated">L'objet de flux en cours a été fermé et libéré. Impossible d'accéder à un flux fermé.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Le paramètre ne peut pas être une chaîne nulle.</target>
         <note />
       </trans-unit>
       <trans-unit id="StringIdOutOfSequence">

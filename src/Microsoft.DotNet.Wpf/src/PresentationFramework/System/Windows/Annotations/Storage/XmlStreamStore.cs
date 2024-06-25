@@ -239,9 +239,7 @@ namespace System.Windows.Annotations.Storage
         {
             // First we generate the XPath expression
             ArgumentNullException.ThrowIfNull(anchorLocator);
-
-            if (anchorLocator.Parts == null)
-                throw new ArgumentNullException("anchorLocator.Parts");
+            ArgumentNullException.ThrowIfNull(anchorLocator.Parts, "anchorLocator.Parts");
 
             //fire trace event
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.GetAnnotationByLocBegin);

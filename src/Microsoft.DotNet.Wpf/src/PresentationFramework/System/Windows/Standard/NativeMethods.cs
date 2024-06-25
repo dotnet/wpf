@@ -1576,8 +1576,8 @@ namespace Standard
         public SafeConnectionPointCookie(IConnectionPointContainer target, object sink, Guid eventId)
             : base(true)
         {
-            Verify.IsNotNull(target, "target");
-            Verify.IsNotNull(sink, "sink");
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(sink);
             Verify.IsNotDefault(eventId, "eventId");
 
             handle = IntPtr.Zero;

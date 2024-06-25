@@ -1792,7 +1792,7 @@ namespace System.Xaml
             {
                 string typestring = context.ConvertXamlTypeToString(context.LocalAssemblyAwareGetXamlType(type));
 
-                return typestring + "." + methodName;
+                return $"{typestring}.{methodName}";
             }
 
             static ObjectMarkupInfo ForArray(Array value, SerializerContext context)

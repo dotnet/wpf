@@ -105,7 +105,7 @@ namespace System.Xaml.Schema
                 {
                     return ((ConstructorArgumentAttribute)attributes[0]).ArgumentName;
                 }
-                Debug.Fail("Unexpected attribute type requested: " + attributeType.Name);
+                Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
             try
@@ -149,7 +149,7 @@ namespace System.Xaml.Schema
                     return new ReadOnlyDictionary<char, char>(bracketCharacterAttributeList);
                 }
 
-                Debug.Fail("Unexpected attribute type requested: " + attributeType.Name);
+                Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
 
@@ -180,7 +180,7 @@ namespace System.Xaml.Schema
                     bool result = ((UsableDuringInitializationAttribute)attributes[0]).Usable;
                     return (T)(object)result;
                 }
-                Debug.Fail("Unexpected attribute type requested: " + attributeType.Name);
+                Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
             try
@@ -221,7 +221,7 @@ namespace System.Xaml.Schema
                 {
                     return ((ValueSerializerAttribute)attributes[0]).ValueSerializerType;
                 }
-                Debug.Fail("Unexpected attribute type requested: " + attributeType.Name);
+                Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
             }
             try
@@ -301,7 +301,7 @@ namespace System.Xaml.Schema
                     return result;
                 }
 
-                Debug.Fail("Unexpected attribute type requested: " + attributeType.Name);
+                Debug.Fail($"Unexpected attribute type requested: {attributeType.Name}");
                 return null;
 
             }

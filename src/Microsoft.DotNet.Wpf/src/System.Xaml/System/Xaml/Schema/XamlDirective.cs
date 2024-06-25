@@ -80,7 +80,7 @@ namespace System.Xaml
         {
             if (_xamlNamespaces.Count > 0)
             {
-                return "{" + _xamlNamespaces[0] + "}" + Name;
+                return $"{{{_xamlNamespaces[0]}}}{Name}";
             }
             else
             {

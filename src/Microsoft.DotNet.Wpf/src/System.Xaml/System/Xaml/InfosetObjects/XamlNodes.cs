@@ -115,7 +115,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", NodeType);
+            string str = NodeType.ToString(TypeConverterHelper.InvariantEnglishUS);
             switch(NodeType)
             {
             case XamlNodeType.StartObject:
@@ -150,7 +150,7 @@ namespace System.Xaml
                     break;
 
                 case InternalNodeType.LineInfo:
-                    str += "LineInfo: " + LineInfo.ToString();
+                    str += $"LineInfo: {LineInfo}";
                     break;
                 }
                 break;

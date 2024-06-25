@@ -90,13 +90,13 @@ namespace MS.Internal.Xaml.Runtime
                     throw;
                 }
 
-                string qMethodName = type.ToString() + "." + methodName;
+                string qMethodName = $"{type}.{methodName}";
                 throw CreateException(SR.Format(SR.MethodInvocation, qMethodName), UnwrapTargetInvocationException(e));
             }
 
             if (instance == null)
             {
-                string qMethodName = type.ToString() + "." + methodName;
+                string qMethodName = $"{type}.{methodName}";
                 throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
             }
             return instance;

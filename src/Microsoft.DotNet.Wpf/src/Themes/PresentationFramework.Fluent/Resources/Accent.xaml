@@ -40,7 +40,8 @@
         x:Key="AccentFillColorTertiaryBrush"
         Opacity="0.8"
         Color="{StaticResource SystemAccentColorPrimary}" />
-    <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource AccentFillColorDisabled}" />
+    
+    <!-- <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource AccentFillColorDisabled}" /> -->
 
 
     <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />

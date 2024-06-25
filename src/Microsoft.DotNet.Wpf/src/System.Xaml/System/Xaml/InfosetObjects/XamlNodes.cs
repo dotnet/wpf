@@ -64,18 +64,9 @@ namespace System.Xaml
 #if DEBUG
             switch(nodeType)
             {
-            case XamlNodeType.StartObject:
-                Debug.Assert(data is XamlType, "XamlNode ctor, StartObject data is not a XamlType");
-                break;
-
-            case XamlNodeType.StartMember:
-                Debug.Assert(data is XamlMember, "XamlNode ctor, StartMember data is not a XamlMember");
-                break;
-
             case XamlNodeType.NamespaceDeclaration:
-                Debug.Assert(data is NamespaceDeclaration, "XamlNode ctor, NamespaceDeclaration data is not a NamespaceDeclaration");
-                break;
-
+            case XamlNodeType.StartObject:
+            case XamlNodeType.StartMember:
             case XamlNodeType.Value:
                 // can be anything;
                 break;

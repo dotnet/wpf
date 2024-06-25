@@ -21,7 +21,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return string.IsNullOrEmpty(Prefix) ?
                     Name :
-                    Prefix + ":" + Name;
+                    $"{Prefix}:{Name}";
             }
         }
 

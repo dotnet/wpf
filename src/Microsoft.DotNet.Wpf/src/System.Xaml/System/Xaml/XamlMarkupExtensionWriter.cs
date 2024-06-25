@@ -412,7 +412,7 @@ namespace System.Xaml
                 {
                     writer.sb.Append(Delimiter);
                     WritePrefix(writer, writer.LookupPrefix(property));
-                    string local = property.DeclaringType.Name + "." + property.Name;
+                    string local = $"{property.DeclaringType.Name}.{property.Name}";
                     writer.sb.Append(local);
                 }
                 else

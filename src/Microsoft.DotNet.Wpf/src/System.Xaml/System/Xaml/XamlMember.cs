@@ -339,7 +339,7 @@ namespace System.Xaml
         public override string ToString()
         {
             Debug.Assert(_declaringType != null, "XamlDirective should not call base.ToString");
-            return _declaringType.ToString() + "." + Name;
+            return $"{_declaringType}.{Name}";
         }
 
         public IList<XamlMember> DependsOn

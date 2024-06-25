@@ -126,7 +126,7 @@ namespace MS.Internal.Xaml.Parser
                 uri = Value;
                 definingPrefix = !Name.IsDotted
                     ? Name.Name
-                    : Name.OwnerName + "." + Name.Name;
+                    : $"{Name.OwnerName}.{Name.Name}";
                 return true;
             }
             // case where:  xmlns="ValueUri"

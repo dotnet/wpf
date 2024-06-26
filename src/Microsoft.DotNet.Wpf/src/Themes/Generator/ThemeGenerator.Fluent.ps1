@@ -1,7 +1,32 @@
 [CmdletBinding(PositionalBinding=$false)]
 Param(
-    [string][Alias('c')]$themeColor = "Light"
+    [string][Alias('c')]$themeColor = "Light",
+    [switch] $defaultMode
 )
+
+function Remove-OverridesDefaultStyle($xaml) {
+    $xaml.ResourceDictionary.Style.ForEach({
+        $_.Setter.ForEach({
+            if ($_.Property -eq "OverridesDefaultStyle") {
+                $_.ParentNode.RemoveChild($_) > $null
+            }
+        })
+    })
+}
+
+function Convert-DynamicResourceToStaticResource($xaml) {
+    foreach ($node in $xaml.ChildNodes) {
+        if ($node.HasChildNodes) {
+            Convert-DynamicResourceToStaticResource $node
+        }
+
+        if ($node.HasAttributes) {
+            foreach ($attr in $node.Attributes) {
+                $attr.Value = $attr.Value -replace "DynamicResource", "StaticResource"
+            }
+        }
+    }
+}
 
 $currentDir = Get-Location
 $fluentThemeDir = Join-Path $currentDir "..\PresentationFramework.Fluent\"
@@ -38,6 +63,9 @@ foreach ($file in Get-ChildItem $styleFilesDir -Filter "*.xaml") {
     $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
 }
 
-# $combinedXaml += '</ResourceDictionary>'
+if ($defaultMode) {
+    Remove-OverridesDefaultStyle $combinedXaml
+    Convert-DynamicResourceToStaticResource $combinedXaml.ResourceDictionary
+}
 
 ([xml]$combinedXaml).Save($outFilePath)

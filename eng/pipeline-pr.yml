@@ -1,7 +1,7 @@
 #
-# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos.
 #
-# 
+#
 
 parameters:
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
@@ -81,14 +81,13 @@ jobs:
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
         - name: _programfilesx86
-          value: ${Env:ProgramFiles(x86)}/dotnet          
+          value: ${Env:ProgramFiles(x86)}/dotnet
         - name: _programfiles
           value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
@@ -103,7 +102,7 @@ jobs:
             value: real
           - group: DotNet-HelixApi-Access
 
-          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
+          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
           # like in the job matrix below (see Build_Debug)
           - name: _SignArgs
@@ -167,9 +166,11 @@ jobs:
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
 
+      - template: /eng/common/templates-official/steps/enable-internal-runtimes.yml
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\scripts\cibuild.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
@@ -177,15 +178,15 @@ jobs:
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
-        # This condition should be kept in sync with the condition for 'Run DRTs' step 
-        #   When building on a regular pipeline (!_HelixPipeline), build as usual 
+        # This condition should be kept in sync with the condition for 'Run DRTs' step
+        #   When building on a regular pipeline (!_HelixPipeline), build as usual
         #   When building on a Helix pipeline, only build Release configs
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
       - script: eng\scripts\ciunittest.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
@@ -199,11 +200,11 @@ jobs:
         displayName: Publish XUnit Test Results
         inputs:
           testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml' 
+          testResultsFiles: '*.xml'
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
 
       - task: PowerShell@2
         displayName: Install .NET Core
@@ -211,27 +212,27 @@ jobs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
           condition: eq(variables['_Platform'], 'x64')
-      
+
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
         condition: eq(variables['_Platform'], 'x86')
-  
+
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
         condition: eq(variables['_Platform'], 'x64')
-     
+
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
           arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x86')  
+        condition: eq(variables['_Platform'], 'x86')
 
       - task: PowerShell@2
         displayName: Replace WPF binaries
@@ -269,7 +270,7 @@ jobs:
           script: '.\CIRunDrts.cmd'
           workingDirectory: '$(System.ArtifactsDirectory)\testbins'
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
-      
+
       - task: CopyFiles@2
         inputs:
           SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
@@ -278,7 +279,7 @@ jobs:
           CleanTargetFolder: true
           OverWrite: true
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
-        
+
       - task: CopyFiles@2
         inputs:
           SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
@@ -291,7 +292,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         inputs:
           artifactName: 'TestResultsX64'
-          targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
+          targetPath: '$(System.DefaultWorkingDirectory)\Results\'
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
 
       - task: PublishPipelineArtifact@1
@@ -299,7 +300,7 @@ jobs:
           artifactName: 'TestResultsX86'
           targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
         condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
-          
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'XUnit'

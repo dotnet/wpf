@@ -1,7 +1,7 @@
 #
-# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos.
 #
-# 
+#
 parameters:
   runAsPublic: true
   repoName: dotnet/wpf
@@ -82,7 +82,6 @@ jobs:
         - name: _InternalRuntimeDownloadArgs
           value: ''
       - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-        - group: DotNetBuilds storage account read tokens
         - group: AzureDevOps-Artifact-Feeds-Pats
         - name: _InternalRuntimeDownloadArgs
           value: >-
@@ -93,7 +92,7 @@ jobs:
           value: real
         - group: DotNet-HelixApi-Access
 
-          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
+          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
           # like in the job matrix below (see Build_Debug)
         - name: _SignArgs
@@ -154,11 +153,14 @@ jobs:
             arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
+
+      - template: /eng/common/templates-official/steps/enable-internal-runtimes.yml
+
       # Use utility script to run script command dependent on agent OS
       - script: eng\scripts\cibuild.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
-        # This condition should be kept in sync with the condition for 'Run DRTs' step 
-        #   When building on a regular pipeline (!_HelixPipeline), build as usual 
+        # This condition should be kept in sync with the condition for 'Run DRTs' step
+        #   When building on a regular pipeline (!_HelixPipeline), build as usual
         #   When building on a Helix pipeline, only build Release configs
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
@@ -174,7 +176,7 @@ jobs:
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+        condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
 
       - task: PowerShell@2
         displayName: Install .NET Core

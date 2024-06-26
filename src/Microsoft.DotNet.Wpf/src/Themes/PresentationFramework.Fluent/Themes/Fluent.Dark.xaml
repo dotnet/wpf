@@ -973,12 +973,12 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="False" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" />
-                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="False" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="False" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
                   </Button.Content>
                 </Button>
-                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="False" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="False" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
                   </Button.Content>
@@ -2355,7 +2355,7 @@
         <ControlTemplate TargetType="{x:Type Expander}">
           <DockPanel>
             <Border x:Name="ToggleButtonBorder" DockPanel.Dock="Top" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{TemplateBinding Border.CornerRadius}">
-              <ToggleButton x:Name="ExpanderToggleButton" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" />
+              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" />
             </Border>
             <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
@@ -2537,13 +2537,13 @@
             <Trigger Property="ExpandDirection" Value="Right">
               <Setter Property="DockPanel.Dock" Value="Right" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Left" TargetName="ToggleButtonBorder" />
-              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonRightStyle}" TargetName="ExpanderToggleButton" />
+              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonRightStyle}" TargetName="HeaderSite" />
               <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimation}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Up">
               <Setter Property="DockPanel.Dock" Value="Top" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Bottom" TargetName="ToggleButtonBorder" />
-              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonUpStyle}" TargetName="ExpanderToggleButton" />
+              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonUpStyle}" TargetName="HeaderSite" />
               <Setter Property="RenderTransform" Value="{DynamicResource HeightAnimation}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Down">
@@ -2552,16 +2552,16 @@
             <Trigger Property="ExpandDirection" Value="Left">
               <Setter Property="DockPanel.Dock" Value="Left" TargetName="ContentPresenterGrid" />
               <Setter Property="DockPanel.Dock" Value="Right" TargetName="ToggleButtonBorder" />
-              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonLeftStyle}" TargetName="ExpanderToggleButton" />
+              <Setter Property="Template" Value="{StaticResource DefaultExpanderToggleButtonLeftStyle}" TargetName="HeaderSite" />
               <Setter Property="RenderTransform" Value="{DynamicResource WidthAnimation}" TargetName="ContentPresenterBorder" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
-              <Setter TargetName="ExpanderToggleButton" Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
-              <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderDisabledBorderBrush}" />
+              <Setter TargetName="HeaderSite" Property="Foreground" Value="{DynamicResource ExpanderHeaderDisabledForeground}" />
+              <Setter TargetName="HeaderSite" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderDisabledBorderBrush}" />
             </Trigger>
-            <Trigger SourceName="ExpanderToggleButton" Property="IsMouseOver" Value="True">
-              <Setter TargetName="ExpanderToggleButton" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderPointerOverBrush}" />
+            <Trigger SourceName="HeaderSite" Property="IsMouseOver" Value="True">
+              <Setter TargetName="HeaderSite" Property="BorderBrush" Value="{DynamicResource ExpanderHeaderBorderPointerOverBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -3603,7 +3603,7 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}">
-              <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" />
+              <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" />
             </Grid>
             <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Row="0" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{TemplateBinding VerticalOffset}" />
             <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{TemplateBinding HorizontalOffset}" />

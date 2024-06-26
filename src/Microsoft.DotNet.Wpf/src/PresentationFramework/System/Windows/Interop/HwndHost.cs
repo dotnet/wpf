@@ -939,7 +939,7 @@ namespace System.Windows.Interop
                 HwndSource hwndSource = source as HwndSource ;
                 if(hwndSource != null)
                 {
-                    hwndParent = hwndSource.CriticalHandle;
+                    hwndParent = hwndSource.Handle;
                 }
             }
             else

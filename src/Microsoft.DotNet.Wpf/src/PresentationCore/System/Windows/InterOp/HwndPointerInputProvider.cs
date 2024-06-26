@@ -80,7 +80,7 @@ namespace System.Windows.Interop
             _pointerLogic.PlugInManagers[_source] = new PointerStylusPlugInManager(_source);
 
             // Store if this window is enabled or disabled
-            int style = MS.Win32.UnsafeNativeMethods.GetWindowLong(new HandleRef(this, source.CriticalHandle), MS.Win32.NativeMethods.GWL_STYLE);
+            int style = MS.Win32.UnsafeNativeMethods.GetWindowLong(new HandleRef(this, source.Handle), MS.Win32.NativeMethods.GWL_STYLE);
             IsWindowEnabled = (style & MS.Win32.NativeMethods.WS_DISABLED) == 0;
         }
 

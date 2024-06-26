@@ -7429,7 +7429,7 @@ namespace System.Windows
                     {
                         if (_sourceWindow != null)
                         {
-                            return _sourceWindow.CriticalHandle;
+                            return _sourceWindow.Handle;
                         }
                         else
                         {
@@ -7496,7 +7496,7 @@ namespace System.Windows
                         // note that we use rc.right here for the RTL case and client to screen that point
                         pt = new NativeMethods.POINT(rc.right, rc.top);
                     }
-                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), ref pt);
+                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.Handle), ref pt);
 
                     return pt;
                 }
@@ -7526,7 +7526,7 @@ namespace System.Windows
                 {
                     get
                     {
-                        return (_sourceWindow.CriticalHandle == UnsafeNativeMethods.GetActiveWindow());
+                        return (_sourceWindow.Handle == UnsafeNativeMethods.GetActiveWindow());
                     }
                 }
 

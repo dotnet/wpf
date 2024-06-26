@@ -645,7 +645,7 @@ namespace System.Windows.Input.StylusWisp
                                             // We can only Activate the window without flashing the tray icon for it when
                                             // we are processing an Input message.  So we defer it till we see the mouse down.
                                             HwndSource hwndSource = mouseInputReport.InputSource as HwndSource;
-                                            IntPtr hwnd = hwndSource != null ? hwndSource.CriticalHandle : IntPtr.Zero;
+                                            IntPtr hwnd = hwndSource != null ? hwndSource.Handle : IntPtr.Zero;
 
                                             // If we see a stylusdown and we are not the foreground window
                                             // and there's no capture then make sure we get activated.
@@ -3163,7 +3163,7 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // Detect if this window is disabled. If so then let the pencontexts know.
-                int style = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndSource.CriticalHandle), NativeMethods.GWL_STYLE);
+                int style = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndSource.Handle), NativeMethods.GWL_STYLE);
                 if ((style & NativeMethods.WS_DISABLED) != 0)
                 {
                     penContexts.IsWindowDisabled = true;
@@ -3201,7 +3201,7 @@ namespace System.Windows.Input.StylusWisp
                     penContexts.Disable(shutdownWorkThread);
 
                     // Make sure we remember the last location of this window for mapping stylus input later.
-                    if (UnsafeNativeMethods.IsWindow(new HandleRef(hwndSource, hwndSource.CriticalHandle)))
+                    if (UnsafeNativeMethods.IsWindow(new HandleRef(hwndSource, hwndSource.Handle)))
                     {
                         penContexts.DestroyedLocation = PointUtil.ClientToScreen(new Point(0, 0), hwndSource);
                     }

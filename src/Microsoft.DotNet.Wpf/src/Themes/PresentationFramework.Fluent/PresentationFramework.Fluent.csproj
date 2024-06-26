@@ -42,6 +42,11 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\PlatformCulture.cs" />
+    <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" />
+  </ItemGroup>
+
   <!-- Minimal set of .NET core references -->
   <ItemGroup>
     <NetCoreReference Include="netstandard" />

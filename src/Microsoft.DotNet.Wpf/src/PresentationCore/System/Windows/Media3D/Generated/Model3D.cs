@@ -38,6 +38,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     abstract partial class Model3D : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -79,6 +82,10 @@ namespace System.Windows.Media.Media3D
 
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -347,9 +354,9 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
-                "Detected context bound default value Model3D.s_Transform (See OS Bug #947272).");
+                "Detected context bound default value Model3D.s_Transform.");
 
 
             // Initializations
@@ -365,6 +372,9 @@ namespace System.Windows.Media.Media3D
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

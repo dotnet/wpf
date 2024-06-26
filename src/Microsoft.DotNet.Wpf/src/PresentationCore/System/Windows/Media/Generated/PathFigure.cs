@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class PathFigure : Animatable
     {
         //------------------------------------------------------
@@ -278,9 +281,9 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Segments == null || s_Segments.IsFrozen,
-                "Detected context bound default value PathFigure.s_Segments (See OS Bug #947272).");
+                "Detected context bound default value PathFigure.s_Segments.");
 
 
             // Initializations
@@ -323,6 +326,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

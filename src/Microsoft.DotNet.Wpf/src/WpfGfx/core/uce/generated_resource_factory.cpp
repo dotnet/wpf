@@ -349,5 +349,3 @@ Cleanup:
     RRETURN(hr);
 }
 
-
-

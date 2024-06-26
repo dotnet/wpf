@@ -38,6 +38,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     sealed partial class MeshGeometry3D : Geometry3D
     {
         //------------------------------------------------------
@@ -79,6 +82,10 @@ namespace System.Windows.Media.Media3D
 
         private static void PositionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -86,6 +93,10 @@ namespace System.Windows.Media.Media3D
         }
         private static void NormalsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -93,6 +104,10 @@ namespace System.Windows.Media.Media3D
         }
         private static void TextureCoordinatesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -100,6 +115,10 @@ namespace System.Windows.Media.Media3D
         }
         private static void TriangleIndicesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -288,8 +307,11 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MESHGEOMETRY3D))
                 {
+
+
                     AddRefOnChannelAnimations(channel);
 
 
@@ -297,16 +319,22 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
+
+
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -418,21 +446,21 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Positions == null || s_Positions.IsFrozen,
-                "Detected context bound default value MeshGeometry3D.s_Positions (See OS Bug #947272).");
+                "Detected context bound default value MeshGeometry3D.s_Positions.");
 
 
             Debug.Assert(s_Normals == null || s_Normals.IsFrozen,
-                "Detected context bound default value MeshGeometry3D.s_Normals (See OS Bug #947272).");
+                "Detected context bound default value MeshGeometry3D.s_Normals.");
 
 
             Debug.Assert(s_TextureCoordinates == null || s_TextureCoordinates.IsFrozen,
-                "Detected context bound default value MeshGeometry3D.s_TextureCoordinates (See OS Bug #947272).");
+                "Detected context bound default value MeshGeometry3D.s_TextureCoordinates.");
 
 
             Debug.Assert(s_TriangleIndices == null || s_TriangleIndices.IsFrozen,
-                "Detected context bound default value MeshGeometry3D.s_TriangleIndices (See OS Bug #947272).");
+                "Detected context bound default value MeshGeometry3D.s_TriangleIndices.");
 
 
             // Initializations
@@ -475,6 +503,9 @@ namespace System.Windows.Media.Media3D
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

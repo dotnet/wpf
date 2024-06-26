@@ -38,6 +38,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     sealed partial class RotateTransform3D : AffineTransform3D
     {
         //------------------------------------------------------
@@ -106,6 +109,10 @@ namespace System.Windows.Media.Media3D
         }
         private static void RotationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -301,6 +308,7 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM3D))
                 {
                     Rotation3D vRotation = Rotation;
@@ -313,9 +321,11 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -324,8 +334,10 @@ namespace System.Windows.Media.Media3D
                     if (vRotation != null) ((DUCE.IResource)vRotation).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -424,9 +436,9 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Rotation == null || s_Rotation.IsFrozen,
-                "Detected context bound default value RotateTransform3D.s_Rotation (See OS Bug #947272).");
+                "Detected context bound default value RotateTransform3D.s_Rotation.");
 
 
             // Initializations
@@ -469,6 +481,9 @@ namespace System.Windows.Media.Media3D
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -40,6 +40,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     abstract partial class Effect : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -174,6 +177,7 @@ namespace System.Windows.Media.Effects
             return GetChannelCore(index);
         }
 
+
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -232,5 +236,6 @@ namespace System.Windows.Media.Effects
 
 
         #endregion Constructors
+
     }
 }

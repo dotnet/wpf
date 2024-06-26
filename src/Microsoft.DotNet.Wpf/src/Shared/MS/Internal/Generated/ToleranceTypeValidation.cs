@@ -19,7 +19,7 @@ using SR=MS.Internal.PresentationCore.SR;
 using SR=System.Windows.SR;
 #endif
 
-namespace System.Windows.Media.Imaging
+namespace System.Windows.Media
 {
     internal static partial class ValidateEnums
     {
@@ -32,14 +32,12 @@ namespace System.Windows.Media.Imaging
         ///     Enumeration value to validate.
         /// </param>    
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
-        public static bool IsRotationValid(object valueObject)
+        public static bool IsToleranceTypeValid(object valueObject)
         {
-            Rotation value = (Rotation) valueObject;
+            ToleranceType value = (ToleranceType) valueObject;
 
-            return (value == Rotation.Rotate0) || 
-                   (value == Rotation.Rotate90) || 
-                   (value == Rotation.Rotate180) || 
-                   (value == Rotation.Rotate270);
+            return (value == ToleranceType.Absolute) || 
+                   (value == ToleranceType.Relative);
         }                                
     }
 }

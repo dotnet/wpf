@@ -23,7 +23,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Windows;
 using System.Windows.Media;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
@@ -132,4 +131,5 @@ namespace System.Windows.Media
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class GeneralTransformGroup : GeneralTransform
     {
         //------------------------------------------------------
@@ -202,10 +205,10 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
+            //
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value GeneralTransformGroup.s_Children (See OS Bug #947272).");
+                "Detected context bound default value GeneralTransformGroup.s_Children.");
 
 
             // Initializations
@@ -221,6 +224,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -74,8 +74,8 @@ namespace System.Windows.Interop
 
         internal static HostingFlags HostingFlags 
         { 
-            get { return _hostingFlags.Value; }
-            set { _hostingFlags.Value = value; }
+            get { return _hostingFlags; }
+            set { _hostingFlags = value; }
         }
         
         /// <summary>
@@ -124,11 +124,11 @@ namespace System.Windows.Interop
         {
             get
             {
-                return IsViewer && _isInitialViewerNavigation.Value;
+                return IsViewer && _isInitialViewerNavigation;
             }
             set
             {
-                _isInitialViewerNavigation.Value = value;
+                _isInitialViewerNavigation = value;
             }
         }
 
@@ -148,9 +148,9 @@ namespace System.Windows.Interop
                 // not to run with a null service provider for sake of security.
                 // See InitializeHostHtmlDocumentServiceProvider as well.
                 /* TODO: straighten this with browser flags to check only when hosted in IE */
-                Invariant.Assert(!(_initializedHostScript.Value && _hostHtmlDocumentServiceProvider.Value == null));
+                Invariant.Assert(!(_initializedHostScript && _hostHtmlDocumentServiceProvider == null));
 
-                return _hostHtmlDocumentServiceProvider.Value;
+                return _hostHtmlDocumentServiceProvider;
             }
         }
 
@@ -159,7 +159,7 @@ namespace System.Windows.Interop
             // The service provider is used for Internet Explorer IDispatchEx use.
             if (   IsHostedInIEorWebOC
                 && scriptObject.ScriptObject is UnsafeNativeMethods.IHTMLWindow4
-                && _hostHtmlDocumentServiceProvider.Value == null)
+                && _hostHtmlDocumentServiceProvider == null)
             {
                 // We use the IDispatch infrastructure to gain access to the document DOM node where
                 // the IServiceProvider lives that was recommended to us by IE people. Notice during
@@ -176,11 +176,11 @@ namespace System.Windows.Interop
                 // document property and because we're dealing with IE, we know it has a service
                 // provider on it.
                 Invariant.Assert(foundDoc);
-                _hostHtmlDocumentServiceProvider.Value = (UnsafeNativeMethods.IServiceProvider)document;
+                _hostHtmlDocumentServiceProvider = (UnsafeNativeMethods.IServiceProvider)document;
 
                 // See HostHtmlDocumentServiceProvider property get accessor for more information on the use of
                 // this field to ensure we got a valid service provider.
-                _initializedHostScript.Value = true;
+                _initializedHostScript = true;
             }
         }
 
@@ -226,18 +226,18 @@ namespace System.Windows.Interop
 
         private static void EnsureScriptInteropAllowed()
         {
-            if (_isScriptInteropDisabled.Value == null)
+            if (_isScriptInteropDisabled == null)
             {
-                _isScriptInteropDisabled.Value = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
+                _isScriptInteropDisabled = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
             }
         }
 
-        private static SecurityCriticalDataForSet<HostingFlags> _hostingFlags;
-        private static SecurityCriticalDataForSet<bool> _isInitialViewerNavigation;
-        private static SecurityCriticalDataForSet<bool?> _isScriptInteropDisabled;
+        private static HostingFlags _hostingFlags;
+        private static bool _isInitialViewerNavigation;
+        private static bool? _isScriptInteropDisabled;
         
-        private static SecurityCriticalDataForSet<UnsafeNativeMethods.IServiceProvider> _hostHtmlDocumentServiceProvider;
-        private static SecurityCriticalDataForSet<bool> _initializedHostScript;
+        private static UnsafeNativeMethods.IServiceProvider _hostHtmlDocumentServiceProvider;
+        private static bool _initializedHostScript;
 
         [DllImport(ExternDll.PresentationHostDll, EntryPoint="ForwardTranslateAccelerator")]
         private static extern int ForwardTranslateAccelerator(ref MSG pMsg, bool appUnhandled);

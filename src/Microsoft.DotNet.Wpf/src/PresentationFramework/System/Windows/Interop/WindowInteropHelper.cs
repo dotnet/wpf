@@ -55,18 +55,7 @@ namespace System.Windows.Interop
         /// <summary>
         /// Get the Handle of the window
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public IntPtr Handle
-        {
-            get
-            {
-                return CriticalHandle;
-            }
-        }
-
-        internal IntPtr CriticalHandle
         {
             get
             {
@@ -111,12 +100,12 @@ namespace System.Windows.Interop
         public IntPtr EnsureHandle()
         {
 
-            if (CriticalHandle == IntPtr.Zero)
+            if (Handle == IntPtr.Zero)
             {
                 _window.CreateSourceWindow(false /*create hwnd during show*/);
             }
 
-            return CriticalHandle;
+            return Handle;
         }
 
         #endregion Public Methods

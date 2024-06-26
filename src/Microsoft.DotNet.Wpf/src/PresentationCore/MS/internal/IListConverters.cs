@@ -16,7 +16,6 @@ using System.Text;
 using System.Windows;
 using MS.Internal;
 using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Converters
 {
@@ -29,7 +28,6 @@ namespace System.Windows.Media.Converters
     /// <summary>
     /// The base converter for IList of T to string conversion in XAML serialization
     /// </summary>    
-    [FriendAccessAllowed]   // all implementations are used by Framework at serialization    
     public abstract class BaseIListConverter : TypeConverter 
     { 
         /// <Summary>

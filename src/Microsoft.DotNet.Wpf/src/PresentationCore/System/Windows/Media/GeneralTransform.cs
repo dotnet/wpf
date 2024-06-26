@@ -82,7 +82,6 @@ namespace System.Windows.Media
         /// </summary>
         internal virtual Transform AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get { return null; }
         }
     }

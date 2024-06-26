@@ -4,7 +4,6 @@
 
 
 using System;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input 
 {
@@ -12,7 +11,6 @@ namespace System.Windows.Input
     ///     The InputReportEventArgs class contains information about an input
     ///     report that is being processed.
     /// </summary>
-    [FriendAccessAllowed]
     internal class InputReportEventArgs : InputEventArgs
     {
         /// <summary>

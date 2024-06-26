@@ -30,10 +30,6 @@ using System.Windows;
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !SYSTEM_XAML
-    [FriendAccessAllowed]
-#endif
-
     // <returns>
     // true if xmlNamespace is recognized
     // </returns>
@@ -46,9 +42,7 @@ namespace System.Windows.Markup
     internal delegate bool IsXmlNamespaceSupportedCallback(string xmlNamespace, out string newXmlNamespace);
     delegate void HandleElementCallback(int elementDepth, ref bool more);
     delegate void HandleAttributeCallback(int elementDepth);
-#if !PBTCOMPILER && !SYSTEM_XAML
-    [FriendAccessAllowed]
-#endif
+
     internal sealed class XmlCompatibilityReader : XmlWrappingReader
     {
         #region Construction

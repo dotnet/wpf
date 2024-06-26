@@ -6,7 +6,6 @@ using System;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;
 using System.Collections.Specialized ;
 using System.Windows.Input;
 using System.Diagnostics;
@@ -336,7 +335,6 @@ namespace System.Windows
 
         internal bool UserInitiated
         {
-            [FriendAccessAllowed] // Also used by Framework.
             get
             {
                 if (_flags [UserInitiatedIndex])

@@ -268,7 +268,6 @@ namespace System.Windows.Markup
         ///     Finds a registered CultureInfo corresponding to the IetfLanguageTag, or the longest
         ///       sequence of leading subtags for which we have a registered CultureInfo.
         /// </summary>
-        [FriendAccessAllowed]
         internal CultureInfo GetCompatibleCulture()
         {
             if (_compatibleCulture == null)
@@ -319,7 +318,6 @@ namespace System.Windows.Markup
         ///      "sr-latn-sp" is in the range covered by "sr-latn".  (Note that "sr-latn" does
         ///      does not have a registered CultureInfo.)
         /// </remarks>
-        [FriendAccessAllowed]
         internal bool RangeIncludes(XmlLanguage language)
         {
             if (this.IsPrefixOf(language.IetfLanguageTag))

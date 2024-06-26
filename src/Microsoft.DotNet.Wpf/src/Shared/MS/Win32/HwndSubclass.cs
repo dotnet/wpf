@@ -50,7 +50,6 @@ namespace MS.Win32
     ///     the window.
     /// </summary>
     /// <remarks> Not available to partial trust callers</remarks>
-    [FriendAccessAllowed] // Built into Base, also used by Framework
     internal class HwndSubclass : IDisposable
     {
         static HwndSubclass()

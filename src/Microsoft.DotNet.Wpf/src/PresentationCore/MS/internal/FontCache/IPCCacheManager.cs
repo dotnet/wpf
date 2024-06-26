@@ -16,7 +16,6 @@ using System.Security;
 
 namespace MS.Internal.FontCache
 {
-    [FriendAccessAllowed]
     internal class FontCacheConfig
     {
         private enum ProtocolType { Single, Dual, ALPC };

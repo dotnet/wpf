@@ -74,7 +74,6 @@
       <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="InstallationError.xaml.cs" />
     <Compile Include="PresentationUIStyleResources.cs" />

@@ -9,7 +9,6 @@
 
 using System;
 using System.Globalization;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -18,7 +17,6 @@ namespace MS.Internal
     /// "new Object()".  The name will show up in the debugger, instead of
     /// merely "{object}"
     /// </summary>
-    [FriendAccessAllowed]   // Built into Base, also used by Framework.
     internal class NamedObject
     {
         public NamedObject(string name)

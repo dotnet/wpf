@@ -255,7 +255,6 @@ namespace System.Windows.Threading
             CriticalInvokeShutdown();
         }
 
-        [FriendAccessAllowed] //used by Application.ShutdownImpl() in PresentationFramework
         internal void CriticalInvokeShutdown()
         {
             Invoke(DispatcherPriority.Send, new ShutdownCallback(ShutdownCallbackInternal)); // NOTE: should be Priority.Max
@@ -1646,10 +1645,8 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved0
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reserved0; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reserved0 = value; }
         }
 
@@ -1658,10 +1655,8 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved1
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reserved1; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reserved1 = value; }
         }
 
@@ -1670,10 +1665,8 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved2
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reserved2; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reserved2 = value; }
         }
 
@@ -1682,10 +1675,8 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved3
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reserved3; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reserved3 = value; }
         }
 
@@ -1694,10 +1685,8 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved4
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reserved4; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reserved4 = value; }
         }
 
@@ -1708,7 +1697,6 @@ namespace System.Windows.Threading
         {
             // This gets multiplexed with the log for "request processing" failures.
             // See OnRequestProcessingFailure.
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get
             {
                 if (!_hasRequestProcessingFailed)
@@ -1720,7 +1708,6 @@ namespace System.Windows.Threading
                     return tuple.Item1;
             }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set
             {
                 if (!_hasRequestProcessingFailed)
@@ -1736,19 +1723,15 @@ namespace System.Windows.Threading
 
         internal object InputMethod
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reservedInputMethod; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reservedInputMethod = value; }
         }
 
         internal object InputManager
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get { return _reservedInputManager; }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set { _reservedInputManager = value; }
         }
 
@@ -2239,7 +2222,6 @@ namespace System.Windows.Threading
         /// no WPF element has focus.  This is important to ensure that native
         /// controls receive unfiltered input.
         /// </remarks>
-        [FriendAccessAllowed] // Used by TextServicesManager in PresentationCore.
         internal bool IsTSFMessagePumpEnabled
         {
             set
@@ -2840,7 +2822,6 @@ namespace System.Windows.Threading
             get { return (UnhandledException != null); }
         }
 
-        [FriendAccessAllowed] //also used by ResourceReferenceExpression in PresentationFramework
         internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
             return _exceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);

@@ -674,10 +674,6 @@ namespace System.Windows.Interop
         ///<summary>
         ///     Returns the set of modifier keys currently pressed as determined by calling to Win32
         ///</summary>
-        ///<remarks>
-        ///     Marked as FriendAccessAllowed so HwndHost in PresentationFramework can call it
-        ///</remarks>
-        [FriendAccessAllowed]
         internal static ModifierKeys GetSystemModifierKeys()
         {
             ModifierKeys modifierKeys = ModifierKeys.None;

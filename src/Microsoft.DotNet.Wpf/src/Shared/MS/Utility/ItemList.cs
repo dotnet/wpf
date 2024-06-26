@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using MS.Internal.WindowsBase;
 
 namespace MS.Utility
 {
@@ -11,7 +10,6 @@ namespace MS.Utility
     // ItemStructList<T>
     //
 
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     internal struct ItemStructList<T>
     {
         public ItemStructList(int capacity)

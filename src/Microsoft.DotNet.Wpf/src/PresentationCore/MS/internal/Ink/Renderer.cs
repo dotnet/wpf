@@ -27,7 +27,6 @@ namespace System.Windows.Ink
     /// and updates the visual state as necessary.
     /// </summary>
     ///
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class Renderer
     {
         #region StrokeVisual

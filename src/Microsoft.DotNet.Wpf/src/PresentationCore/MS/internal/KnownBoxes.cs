@@ -6,11 +6,8 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal.KnownBoxes
 {
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal static class FillRuleBoxes
     {
         internal static object EvenOddBox = FillRule.EvenOdd;
@@ -29,7 +26,6 @@ namespace MS.Internal.KnownBoxes
         }
     }
 
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal static class VisibilityBoxes
     {
         internal static object VisibleBox = Visibility.Visible;

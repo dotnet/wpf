@@ -46,7 +46,6 @@ namespace MS.Internal.FontCache
     /// The purpose of the class is to protect the memory block from overruns.
     /// ArgumentOutOfRangeException is thrown when an overrun is detected.
     /// </summary>
-    [FriendAccessAllowed]
     internal struct CheckedPointer
     {
         internal unsafe CheckedPointer(void * pointer, int size)
@@ -214,7 +213,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// HashFn is a port of predefined hash functions from LKRHash
     /// </summary>
-    [FriendAccessAllowed]
     internal static class HashFn
     {
         // Small prime number used as a multiplier in the supplied hash functions
@@ -283,7 +281,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// Utility functions for interaction with font cache service
     /// </summary>
-    [FriendAccessAllowed]
     internal static class Util
     {
         internal const int nullOffset = -1;
@@ -803,7 +800,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// A class that wraps operations with Win32 memory sections and file mappings
     /// </summary>
-    [FriendAccessAllowed]
     internal class FileMapping : UnmanagedMemoryStream
     {
         ~FileMapping()

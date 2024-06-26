@@ -71,7 +71,6 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
@@ -84,8 +83,6 @@ jobs:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _SignType
             value: real
-          - group: DotNet-Blob-Feed
-          - group: DotNet-Symbol-Server-Pats
           - group: DotNet-HelixApi-Access
 
           # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved
@@ -152,6 +149,8 @@ jobs:
             arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
+
+      - template: /eng/common/templates/steps/enable-internal-runtimes.yml
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd

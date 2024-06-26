@@ -1417,6 +1417,16 @@ namespace System.Windows
                     {
                         ThemeManager.ApplySystemTheme();
                     }
+
+                    if (FrameworkAppContextSwitches.EnableFluentTheme)
+                    {
+                        SystemColors.InvalidateCache();
+                        SystemParameters.InvalidateCache();
+                        SystemParameters.InvalidateDerivedThemeRelatedProperties();
+                        ThemeManager.UpdateBackdropAndImmersiveMode();
+                        OnThemeChanged();
+                        InvalidateResources(false); // Only invalidate this thread's resources, other threads will get a chance
+                    }
                     break;
 
                 case WindowMessage.WM_TABLET_ADDED:

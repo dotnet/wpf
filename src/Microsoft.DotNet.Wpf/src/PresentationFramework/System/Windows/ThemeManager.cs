@@ -82,6 +82,31 @@ internal static class ThemeManager
         ApplyTheme(windows , systemTheme, useLightMode, systemAccentColor, forceUpdate);
     }
 
+    internal static void UpdateBackdropAndImmersiveMode(IEnumerable windows = null)
+    {
+        if (windows == null)
+        {
+            // If windows is not provided, apply the theme to all windows in the application.
+            windows = Application.Current?.Windows;
+
+            if (windows == null)
+            {
+                return;
+            }
+        }
+
+        foreach (Window window in windows)
+        {
+            if (window == null)
+            {
+                continue;
+            }
+
+            SetImmersiveDarkMode(window, !ThemeManager.IsSystemThemeLight());
+            WindowBackdropManager.SetBackdrop(window, SystemParameters.HighContrast ? WindowBackdropType.None : WindowBackdropType.MainWindow);
+        }
+    }
+
     /// <summary>
     ///  Apply the requested theme and color mode to the windows.
     ///  Checks if any update is needed before applying the changes.

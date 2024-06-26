@@ -2521,6 +2521,11 @@ namespace System.Windows
                 ThemeManager.ApplySystemTheme(this, true);
             }
 
+            if (Standard.Utility.IsOSWindows11OrNewer && FrameworkAppContextSwitches.EnableFluentTheme)
+            {
+                ThemeManager.UpdateBackdropAndImmersiveMode();
+            }
+
             // Sub classes can have different intialization. RBW does very minimalistic
             // stuff in its override
             SetupInitialState(requestedTop, requestedLeft, requestedWidth, requestedHeight);
@@ -3581,7 +3586,7 @@ namespace System.Windows
             }
 
             // TODO : Remove when Fluent theme is enabled by default
-            if (ThemeManager.IsFluentThemeEnabled)
+            if (ThemeManager.IsFluentThemeEnabled || FrameworkAppContextSwitches.EnableFluentTheme)
             {
                 if(WindowBackdropManager.IsBackdropEnabled)
                 {

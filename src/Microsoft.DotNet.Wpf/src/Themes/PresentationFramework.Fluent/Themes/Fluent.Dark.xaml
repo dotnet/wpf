@@ -2545,13 +2545,106 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultExpanderStyle}" TargetType="{x:Type Expander}" />
-  <Style TargetType="{x:Type Frame}">
+  <ControlTemplate x:Key="FrameNavChromeTemplateKey" TargetType="{x:Type Frame}">
+    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+      <DockPanel>
+        <Grid Background="{StaticResource NavigationWindowNavigationChromeBackground}" DockPanel.Dock="Top" Height="22">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <!-- Menu -->
+          <Menu Name="NavMenu" Grid.ColumnSpan="3" Height="16" Margin="1,0,0,0" VerticalAlignment="Center" Style="{StaticResource NavigationWindowMenu}">
+            <MenuItem Padding="0,2,4,0" Style="{StaticResource NavigationWindowMenuItem}" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+              <MenuItem.ItemsSource>
+                <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                  <MultiBinding.Bindings>
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="BackStack" />
+                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ForwardStack" />
+                  </MultiBinding.Bindings>
+                </MultiBinding>
+              </MenuItem.ItemsSource>
+            </MenuItem>
+          </Menu>
+          <Path Grid.Column="0" SnapsToDevicePixels="false" IsHitTestVisible="false" Margin="2,0,0,0" Grid.ColumnSpan="3" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Data="M22.5767,21.035 Q27,19.37 31.424,21.035 A12.5,12.5,0,0,0,53.5,13 A12.5,12.5,0,0,0,37.765,0.926 Q27,4.93 16.235,0.926 A12.5,12.5,0,0,0,0.5,13 A12.5,12.5,0,0,0,22.5767,21.035 z">
+            <Path.Fill>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <LinearGradientBrush.GradientStops>
+                  <GradientStopCollection>
+                    <GradientStop Color="#A0C2CCE7" Offset="0" />
+                    <GradientStop Color="#60FFFFFF" Offset="1" />
+                  </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+              </LinearGradientBrush>
+            </Path.Fill>
+            <Path.Stroke>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <LinearGradientBrush.GradientStops>
+                  <GradientStopCollection>
+                    <GradientStop Color="#FFB7C2E3" Offset="0.2" />
+                    <GradientStop Color="#A0FFFFFF" Offset="0.9" />
+                  </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+              </LinearGradientBrush>
+            </Path.Stroke>
+            <Path.LayoutTransform>
+              <ScaleTransform ScaleX="0.667" ScaleY="0.667" />
+            </Path.LayoutTransform>
+          </Path>
+          <Button Style="{StaticResource NavigationWindowBackButtonStyle}" Margin="3,0,1,0" Grid.Column="0">
+            <Button.LayoutTransform>
+              <ScaleTransform ScaleX="0.667" ScaleY="0.667" />
+            </Button.LayoutTransform>
+          </Button>
+          <Button Style="{StaticResource NavigationWindowForwardButtonStyle}" Margin="1,0,0,0" Grid.Column="1">
+            <Button.LayoutTransform>
+              <ScaleTransform ScaleX="0.667" ScaleY="0.667" />
+            </Button.LayoutTransform>
+          </Button>
+        </Grid>
+        <ContentPresenter x:Name="PART_FrameCP" />
+      </DockPanel>
+    </Border>
+    <ControlTemplate.Triggers>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="CanGoForward" Value="false" />
+          <Condition Property="CanGoBack" Value="false" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="NavMenu" Property="IsEnabled" Value="false" />
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style x:Key="{x:Type Frame}" TargetType="{x:Type Frame}">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="NavigationUIVisibility" Value="Hidden" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Frame}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+            <ContentPresenter x:Name="PART_FrameCP" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="NavigationUIVisibility" Value="Visible">
+        <Setter Property="Template" Value="{StaticResource FrameNavChromeTemplateKey}" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="JournalOwnership" Value="OwnsJournal" />
+          <Condition Property="NavigationUIVisibility" Value="Automatic" />
+        </MultiTrigger.Conditions>
+        <Setter Property="Template" Value="{StaticResource FrameNavChromeTemplateKey}" />
+      </MultiTrigger>
+    </Style.Triggers>
   </Style>
   <Style TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
@@ -2988,21 +3081,19 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
   <Style x:Key="DefaultPageStyle" TargetType="{x:Type Page}">
-    <Setter Property="Control.Foreground">
+    <Setter Property="TextElement.Foreground">
       <Setter.Value>
         <SolidColorBrush Color="{StaticResource TextFillColorPrimary}" />
       </Setter.Value>
     </Setter>
     <Setter Property="Background" Value="Transparent" />
-    <!--  The Display option casues a large aliasing effect  -->
-    <!-- <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" /> -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Page}">
           <Grid>
-            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding ContentControl.Content}" TextElement.Foreground="{TemplateBinding Control.Foreground}" />
+            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding Page.Content}" TextElement.Foreground="{TemplateBinding TextElement.Foreground}" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

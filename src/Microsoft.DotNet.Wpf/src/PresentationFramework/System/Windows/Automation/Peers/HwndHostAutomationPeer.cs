@@ -39,7 +39,7 @@ namespace System.Windows.Automation.Peers
                 HostedWindowWrapper wrapper = null;
                 
                 HwndHost host = (HwndHost)Owner;
-                IntPtr hwnd = host.CriticalHandle;
+                IntPtr hwnd = host.Handle;
                 
                 if(hwnd != IntPtr.Zero)
                 {

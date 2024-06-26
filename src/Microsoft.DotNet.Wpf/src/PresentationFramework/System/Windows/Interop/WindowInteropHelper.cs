@@ -60,7 +60,7 @@ namespace System.Windows.Interop
             get
             {
                 Invariant.Assert(_window != null, "Cannot be null since we verify in the constructor");
-                return _window.CriticalHandle;
+                return _window.Handle;
             }
         }
 

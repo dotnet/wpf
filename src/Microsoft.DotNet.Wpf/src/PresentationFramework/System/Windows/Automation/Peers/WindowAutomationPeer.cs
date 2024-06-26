@@ -47,7 +47,7 @@ namespace System.Windows.Automation.Peers
                     try
                     {
                         StringBuilder sb = new StringBuilder(512);
-                        UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.CriticalHandle), sb, sb.Capacity);
+                        UnsafeNativeMethods.GetWindowText(new HandleRef(null, window.Handle), sb, sb.Capacity);
                         name = sb.ToString();
                     }
                     catch (Win32Exception)
@@ -79,7 +79,7 @@ namespace System.Windows.Automation.Peers
             if(!window.IsSourceWindowNull)
             {
                 NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
-                IntPtr windowHandle = window.CriticalHandle;
+                IntPtr windowHandle = window.Handle;
                 if(windowHandle != IntPtr.Zero) //it is Zero on a window that was just closed
                 {
                     try { SafeNativeMethods.GetWindowRect(new HandleRef(null, windowHandle), ref rc); }

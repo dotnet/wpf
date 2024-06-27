@@ -141,7 +141,9 @@ namespace System.Windows
                 {
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientResourceFindEnd, EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
                 }
-                return null;
+
+                // Disabling this to allow searching for string keys in theme dictionary
+                // return null;
             }
 
             // Check if the value was already cached
@@ -360,11 +362,21 @@ namespace System.Windows
         {
             // Thread safety handled by FindResourceInternal. Be sure to have locked _resourceCache.SyncRoot.
 
-            Debug.Assert(typeKey != null || resourceKey != null, "typeKey or resourceKey should be non-null");
+            // Disabling this to allow searching for string keys in theme dictionary
+            // Debug.Assert(typeKey != null || resourceKey != null, "typeKey or resourceKey should be non-null");
 
             canCache = true;
             object resource = null;
-            Assembly assembly = (typeKey != null) ? typeKey.Assembly : resourceKey.Assembly;
+
+            Assembly assembly = null;
+            if(typeKey == null && resourceKey == null)
+            {
+                assembly = PresentationFramework;
+            }
+            else
+            {
+                assembly = (typeKey != null) ? typeKey.Assembly : resourceKey.Assembly;
+            }
 
             if ((assembly == null) || IgnoreAssembly(assembly))
             {

@@ -42,7 +42,10 @@ $themeColorFilePath = Join-Path $resouceFilesDir "Theme\$themeColor.xaml"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
                         xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" 
-                        xmlns:system="clr-namespace:System;assembly=System.Runtime">
+                        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                        xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
+                        xmlns:theme="clr-namespace:Microsoft.Windows.Themes"
+                        xmlns:base="clr-namespace:System.Windows;assembly=WindowsBase">
                     </ResourceDictionary>'
 
 foreach ($file in Get-ChildItem $resouceFilesDir -Filter "*.xaml") {

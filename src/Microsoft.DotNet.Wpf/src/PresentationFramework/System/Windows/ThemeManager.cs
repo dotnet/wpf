@@ -102,7 +102,14 @@ internal static class ThemeManager
                 continue;
             }
 
-            SetImmersiveDarkMode(window, !ThemeManager.IsSystemThemeLight());
+            if (ThemeManager.UseCustomThemeColor)
+            {
+                SetImmersiveDarkMode(window, ThemeManager.RequestedThemeColor == "Dark");
+            }
+            else
+            {
+                SetImmersiveDarkMode(window, !ThemeManager.IsSystemThemeLight());
+            }
             WindowBackdropManager.SetBackdrop(window, SystemParameters.HighContrast ? WindowBackdropType.None : WindowBackdropType.MainWindow);
         }
     }
@@ -207,6 +214,27 @@ internal static class ThemeManager
         return useLightTheme != null && useLightTheme != 0;
     }
 
+
+    internal static void OverrideThemeColor(string requestedThemeColor)
+    {
+        if (requestedThemeColor == null)
+        {
+            return;
+        }
+
+        _requestedThemeColor = "System";
+        if (requestedThemeColor == "Light" || requestedThemeColor == "Dark")
+        {
+            _requestedThemeColor = requestedThemeColor;
+        }
+
+        if (IsFluentThemeEnabled)
+        {
+            var themeColorResourceUri = GetFluentWindowThemeColorResourceUri(_currentApplicationTheme, _currentUseLightMode);
+            AddOrUpdateThemeResources(themeColorResourceUri);
+        }
+    }
+
     /// <summary>
     ///  Update the Fluent theme resources with the values in new dictionary.
     /// </summary>
@@ -240,6 +268,10 @@ internal static class ThemeManager
     internal static bool IsFluentThemeEnabled => _isFluentThemeEnabled;
     // TODO : Find a better way to deal with different default font sizes for different themes.
     internal static double DefaultFluentThemeFontSize => 14;
+
+    internal static bool UseCustomThemeColor => _requestedThemeColor != "System";
+
+    internal static string RequestedThemeColor => _requestedThemeColor;
 
     #endregion
 
@@ -278,6 +310,8 @@ internal static class ThemeManager
     private static bool _isFluentThemeEnabled = false;
 
     private static bool _isFluentThemeInitialized = false;
+
+    private static string _requestedThemeColor = "System";
 
     #endregion
 }

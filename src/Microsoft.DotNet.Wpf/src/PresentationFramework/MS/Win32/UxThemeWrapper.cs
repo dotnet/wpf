@@ -275,9 +275,9 @@ namespace MS.Win32
                     themeName = "Aero2";
                 }
 
+                NameValueCollection appSettings = null;
 #if DEBUG
                 // for debugging, config file can override the theme name
-                NameValueCollection appSettings = null;
                 try
                 {
                     appSettings = ConfigurationManager.AppSettings;
@@ -302,6 +302,32 @@ namespace MS.Win32
                 {
                     themeName = "Fluent";
                     themeColor = ThemeManager.IsSystemThemeLight() ? "Light" : "Dark";
+
+                    appSettings = null;
+                    try
+                    {
+                        appSettings = ConfigurationManager.AppSettings;
+                    }
+                    catch (ConfigurationErrorsException)
+                    {
+                    }
+
+                    if (appSettings != null)
+                    {
+                        string tc = appSettings["ThemeColorOverride"];
+                        if (!String.IsNullOrEmpty(tc))
+                        {
+                            switch(tc.ToLowerInvariant())
+                            {
+                                case "light":
+                                case "dark":
+                                    themeColor = tc;
+                                    ThemeManager.OverrideThemeColor(themeColor);
+                                    break;
+                            }
+                            themeColor = tc;
+                        }
+                    }
                 }
             }
             else

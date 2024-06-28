@@ -1456,6 +1456,13 @@ namespace System.Windows
 
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
+
+                    if(SystemColors.InvalidateCache())
+                    {
+                        DwmColorization.UpdateCachedAccentColors();
+                        OnSystemValueChanged();
+                        InvalidateResources(true);
+                    }
                     break;
             }
 
@@ -1970,7 +1977,7 @@ namespace System.Windows
                     }
 
                     // Only cache keys that would be located by FindResourceInternal
-                    if ((key is Type || key is ResourceKey) && _canCacheAsThemeResource && canCache)
+                    if ((key is Type || key is ResourceKey || key is string) && _canCacheAsThemeResource && canCache)
                     {
                         SystemResources.CacheResource(key, value, false /*isTraceEnabled*/);
                     }

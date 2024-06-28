@@ -2523,6 +2523,7 @@ namespace System.Windows
 
             if (Standard.Utility.IsOSWindows11OrNewer && FrameworkAppContextSwitches.EnableFluentTheme)
             {
+                DwmColorization.UpdateCachedAccentColors();
                 ThemeManager.UpdateBackdropAndImmersiveMode();
             }
 

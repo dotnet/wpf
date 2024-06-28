@@ -1,7 +1,7 @@
 #
-# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos. 
+# This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos.
 #
-# 
+#
 
 parameters:
   # Needed because runAsPublic is used in template expressions, which can't read from user-defined variables
@@ -71,7 +71,6 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
@@ -84,17 +83,15 @@ jobs:
           # note: You have to use list syntax here (- name: value) or you will get errors about declaring the same variable multiple times
           - name: _SignType
             value: real
-          - group: DotNet-Blob-Feed
-          - group: DotNet-Symbol-Server-Pats
           - group: DotNet-HelixApi-Access
 
-          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved 
+          # note: Even though they are referenced here, user defined variables (like $(_SignType)) are not resolved
           # until the agent is running on the machine. They can be overridden any time before they are resolved,
           # like in the job matrix below (see Build_Debug)
           - name: _SignArgs
             value: /p:DotNetSignType=$(_SignType) /p:TeamName=$(_TeamName)
           - name: _PublishArgs
-            value: 
+            value:
               /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
           - name: _OfficialBuildIdArgs
             value: /p:OfficialBuildId=$(BUILD.BUILDNUMBER)
@@ -153,9 +150,11 @@ jobs:
           env:
             Token: $(dn-bot-dnceng-artifact-feeds-rw)
 
+      - template: /eng/common/templates-official/steps/enable-internal-runtimes.yml
+
       # Use utility script to run script command dependent on agent OS.
       - script: eng\common\cibuild.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
@@ -163,8 +162,8 @@ jobs:
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
-        # This condition should be kept in sync with the condition for 'Run DRTs' step 
-        #   When building on a regular pipeline (!_HelixPipeline), build as usual 
+        # This condition should be kept in sync with the condition for 'Run DRTs' step
+        #   When building on a regular pipeline (!_HelixPipeline), build as usual
         #   When building on a Helix pipeline, only build Release configs
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
@@ -173,7 +172,7 @@ jobs:
       # Run DRTs
       - powershell: eng\common\cibuild.cmd
           -configuration $(_BuildConfig)
-          $(_OfficialBuildIdArgs) 
+          $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           -projects $(Build.SourcesDirectory)\eng\helixpublish.proj
           /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\HelixDrt.binlog

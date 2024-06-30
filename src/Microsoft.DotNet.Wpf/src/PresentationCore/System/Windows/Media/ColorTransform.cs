@@ -161,7 +161,6 @@ namespace System.Windows.Media
             {
                 Span<UInt16> channel = stackalloc UInt16[4];
 
-                channel[0] = channel[1] = channel[2] = channel[3] = 0;
                 for (int i = 0; i < srcValue.Length; i++)
                 {
                     if (srcValue[i] >= 1.0)// this fails for values above 1.0 and below 0.0
@@ -184,8 +183,6 @@ namespace System.Windows.Media
             {
                 Span<byte> channel = stackalloc byte[8];
 
-                channel[0] = channel[1] = channel[2] = channel[3] =
-                        channel[4] = channel[5] = channel[6] = channel[7] = 0;
                 for (int i = 0; i < srcValue.Length; i++)
                 {
                     if (srcValue[i] >= 1.0)// this fails for values above 1.0 and below 0.0

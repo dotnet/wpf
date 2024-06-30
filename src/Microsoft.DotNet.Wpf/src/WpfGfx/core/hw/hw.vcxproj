@@ -127,6 +127,7 @@
     <ClCompile Include="InteropDeviceBitmap.cpp" />
     <ClCompile Include="swfallback.cpp" />
     <ClCompile Include="Waffler.cpp" />
+    <ClCompile Include="hybridrt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalLinkerInputs Include="$(IntermediateOutputPath)hw.res" />

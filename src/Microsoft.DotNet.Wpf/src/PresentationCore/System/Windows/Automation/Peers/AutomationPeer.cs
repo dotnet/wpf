@@ -1466,7 +1466,7 @@ namespace System.Windows.Automation.Peers
         ///
         internal int[] GetRuntimeId()
         {
-            return new int [] { 7, SafeNativeMethods.GetCurrentProcessId(), this.GetHashCode() };
+            return new int [] { 7, Environment.ProcessId, this.GetHashCode() };
         }
 
         ///
@@ -2500,7 +2500,7 @@ namespace System.Windows.Automation.Peers
         private static object IsKeyboardFocusable(AutomationPeer peer)      {   return peer.IsKeyboardFocusable();  }
         private static object IsEnabled(AutomationPeer peer)                {   return peer.IsEnabled();        }
         private static object GetBoundingRectangle(AutomationPeer peer)     {   return peer.GetBoundingRectangle(); }
-        private static object GetCurrentProcessId(AutomationPeer peer)      {   return SafeNativeMethods.GetCurrentProcessId(); }
+        private static object GetCurrentProcessId(AutomationPeer peer)      {   return Environment.ProcessId; }
         private static object GetRuntimeId(AutomationPeer peer)             {   return peer.GetRuntimeId();     }
         private static object GetClassName(AutomationPeer peer)             {   return peer.GetClassName();     }
         private static object GetHelpText(AutomationPeer peer)              {   return peer.GetHelpText();  }

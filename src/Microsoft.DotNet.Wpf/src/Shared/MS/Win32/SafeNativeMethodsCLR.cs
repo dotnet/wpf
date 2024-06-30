@@ -267,12 +267,6 @@ namespace MS.Win32
             }
         }
 
-        public static int GetCurrentProcessId()
-        {
-            return SafeNativeMethodsPrivate.GetCurrentProcessId();
-        }
-
-
         public static int GetCurrentThreadId()
         {
             return SafeNativeMethodsPrivate.GetCurrentThreadId();
@@ -290,7 +284,7 @@ namespace MS.Win32
 
             int sessionId;
             if (SafeNativeMethodsPrivate.ProcessIdToSessionId(
-                GetCurrentProcessId(), out sessionId))
+                Environment.ProcessId, out sessionId))
             {
                 result = sessionId;
             }
@@ -618,9 +612,6 @@ namespace MS.Win32
 
         private partial class SafeNativeMethodsPrivate
         {
-            [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-            public static extern int GetCurrentProcessId();
-
             [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
             [return:MarshalAs(UnmanagedType.Bool)]
             public static extern bool ProcessIdToSessionId([In]int dwProcessId, [Out]out int pSessionId);

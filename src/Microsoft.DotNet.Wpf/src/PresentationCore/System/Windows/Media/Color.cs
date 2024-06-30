@@ -1112,14 +1112,9 @@ namespace System.Windows.Media
             this.nativeColorValue = new float[numChannels];
             if (this.nativeColorValue.Length > 0)
             {
-                Span<float> sRGBValue = stackalloc float[3];
-
-                sRGBValue[0] = this.sRgbColor.r / 255.0f;
-                sRGBValue[1] = this.sRgbColor.g / 255.0f;
-                sRGBValue[2] = this.sRgbColor.b / 255.0f;
+                Span<float> sRGBValue = [this.sRgbColor.r / 255.0f, this.sRgbColor.g / 255.0f, this.sRgbColor.b / 255.0f];
 
                 ColorTransform colorTransform = new ColorTransform(this.context, new ColorContext(PixelFormats.Bgra32));
-
                 colorTransform.Translate(sRGBValue, this.nativeColorValue);
             }
         }

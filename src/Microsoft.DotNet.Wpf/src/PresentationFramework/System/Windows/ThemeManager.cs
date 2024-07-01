@@ -82,6 +82,38 @@ internal static class ThemeManager
         ApplyTheme(windows , systemTheme, useLightMode, systemAccentColor, forceUpdate);
     }
 
+    internal static void UpdateBackdropAndImmersiveMode(IEnumerable windows = null)
+    {
+        if (windows == null)
+        {
+            // If windows is not provided, apply the theme to all windows in the application.
+            windows = Application.Current?.Windows;
+
+            if (windows == null)
+            {
+                return;
+            }
+        }
+
+        foreach (Window window in windows)
+        {
+            if (window == null)
+            {
+                continue;
+            }
+
+            if (ThemeManager.UseCustomThemeColor)
+            {
+                SetImmersiveDarkMode(window, ThemeManager.RequestedThemeColor == "Dark");
+            }
+            else
+            {
+                SetImmersiveDarkMode(window, !ThemeManager.IsSystemThemeLight());
+            }
+            WindowBackdropManager.SetBackdrop(window, SystemParameters.HighContrast ? WindowBackdropType.None : WindowBackdropType.MainWindow);
+        }
+    }
+
     /// <summary>
     ///  Apply the requested theme and color mode to the windows.
     ///  Checks if any update is needed before applying the changes.
@@ -182,6 +214,27 @@ internal static class ThemeManager
         return useLightTheme != null && useLightTheme != 0;
     }
 
+
+    internal static void OverrideThemeColor(string requestedThemeColor)
+    {
+        if (requestedThemeColor == null)
+        {
+            return;
+        }
+
+        _requestedThemeColor = "System";
+        if (requestedThemeColor == "Light" || requestedThemeColor == "Dark")
+        {
+            _requestedThemeColor = requestedThemeColor;
+        }
+
+        if (IsFluentThemeEnabled)
+        {
+            var themeColorResourceUri = GetFluentWindowThemeColorResourceUri(_currentApplicationTheme, _currentUseLightMode);
+            AddOrUpdateThemeResources(themeColorResourceUri);
+        }
+    }
+
     /// <summary>
     ///  Update the Fluent theme resources with the values in new dictionary.
     /// </summary>
@@ -215,6 +268,10 @@ internal static class ThemeManager
     internal static bool IsFluentThemeEnabled => _isFluentThemeEnabled;
     // TODO : Find a better way to deal with different default font sizes for different themes.
     internal static double DefaultFluentThemeFontSize => 14;
+
+    internal static bool UseCustomThemeColor => _requestedThemeColor != "System";
+
+    internal static string RequestedThemeColor => _requestedThemeColor;
 
     #endregion
 
@@ -253,6 +310,8 @@ internal static class ThemeManager
     private static bool _isFluentThemeEnabled = false;
 
     private static bool _isFluentThemeInitialized = false;
+
+    private static string _requestedThemeColor = "System";
 
     #endregion
 }

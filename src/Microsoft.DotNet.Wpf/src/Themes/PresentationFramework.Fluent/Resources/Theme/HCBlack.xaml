@@ -35,7 +35,7 @@
     <!--  Same as SystemColorWindowColor  -->
     <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="{StaticResource ApplicationBackgroundColor}" />
 
-    <Color x:Key="KeyboardFocusBorderColor">#3D3D3D</Color>
+    <Color x:Key="KeyboardFocusBorderColor">#FFFFFF</Color>
     <!--  Same as SystemColorWindowTextColor  -->
     <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource KeyboardFocusBorderColor}" />
 
@@ -241,8 +241,8 @@
     <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource SystemColorHighlightTextColor}" />

@@ -1,6 +1,6 @@
 # editorconfig.org
-
 # This file should be kept in sync across https://www.github.com/dotnet/wpf and dotnet-wpf-int repos.
+
 # top-most EditorConfig file
 root = true
 
@@ -13,7 +13,7 @@ insert_final_newline = true
 indent_style = space
 indent_size = 4
 
-[project.json]
+[*.json]
 indent_size = 2
 
 # C# files
@@ -33,18 +33,24 @@ csharp_indent_braces = false
 csharp_indent_case_contents = true
 csharp_indent_switch_labels = true
 csharp_indent_labels = one_less_than_current
+[src/**/*.cs]
+file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
+
+# C# and VB files
+[*.{cs,vb}]
+charset = utf-8-bom
+insert_final_newline = true
+trim_trailing_whitespace = true
 
 # avoid this. unless absolutely necessary
 dotnet_style_qualification_for_field = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion
 dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_event = false:suggestion
-
 # only use var when it's obvious what the variable type is
 csharp_style_var_for_built_in_types = false:none
 csharp_style_var_when_type_is_apparent = false:none
 csharp_style_var_elsewhere = false:suggestion
-
 # use language keywords instead of BCL types
 dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
 dotnet_style_predefined_type_for_member_access = true:suggestion
@@ -52,7 +58,7 @@ dotnet_style_predefined_type_for_member_access = true:suggestion
 # name all constant fields using PascalCase
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
 
 dotnet_naming_symbols.constant_fields.applicable_kinds   = field
 dotnet_naming_symbols.constant_fields.required_modifiers = const
@@ -62,7 +68,7 @@ dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 # static fields should have s_ prefix
 dotnet_naming_rule.static_fields_should_have_prefix.severity = suggestion
 dotnet_naming_rule.static_fields_should_have_prefix.symbols  = static_fields
-dotnet_naming_rule.static_fields_should_have_prefix.style    = static_prefix_style
+dotnet_naming_rule.static_fields_should_have_prefix.style = static_prefix_style
 
 dotnet_naming_symbols.static_fields.applicable_kinds   = field
 dotnet_naming_symbols.static_fields.required_modifiers = static
@@ -73,7 +79,7 @@ dotnet_naming_style.static_prefix_style.capitalization = camel_case
 # internal and private fields should be _camelCase
 dotnet_naming_rule.camel_case_for_private_internal_fields.severity = suggestion
 dotnet_naming_rule.camel_case_for_private_internal_fields.symbols  = private_internal_fields
-dotnet_naming_rule.camel_case_for_private_internal_fields.style    = camel_case_underscore_style
+dotnet_naming_rule.camel_case_for_private_internal_fields.style = camel_case_underscore_style
 
 dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
 dotnet_naming_symbols.private_internal_fields.applicable_accessibilities = private, internal
@@ -83,23 +89,479 @@ dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 
 # Code style defaults
 dotnet_sort_system_directives_first = true
-csharp_preserve_single_line_blocks = true
-csharp_preserve_single_line_statements = false
 
 # Expression-level preferences
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_explicit_tuple_names = true:suggestion
-dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+dotnet_style_prefer_auto_properties = true:silent
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_compound_assignment = true:suggestion
+dotnet_style_prefer_simplified_interpolation = true:suggestion
+dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+end_of_line = crlf
+dotnet_style_allow_multiple_blank_lines_experimental = true:silent
+dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
+dotnet_style_prefer_collection_expression = when_types_exactly_match:suggestion
+
+# IDE0040: Add accessibility modifiers
+dotnet_diagnostic.IDE0040.severity = suggestion
+
+# CA1036: Override methods on comparable types
+dotnet_diagnostic.CA1036.severity = suggestion
+
+# CA1051: Do not declare visible instance fields
+dotnet_diagnostic.CA1051.severity = suggestion
+
+# CA1507: Use nameof in place of string
+dotnet_diagnostic.CA1507.severity = suggestion
+
+# CA1511: Use ArgumentException throw helper
+dotnet_diagnostic.CA1511.severity = suggestion
+
+# CA1512: Use ArgumentOutOfRangeException throw helper
+dotnet_diagnostic.CA1512.severity = suggestion
+
+# CA1513: Use ObjectDisposedException throw helper
+dotnet_diagnostic.CA1513.severity = suggestion
+
+# CA1805: Do not initialize unnecessarily
+dotnet_diagnostic.CA1805.severity = suggestion
+
+# CA1812: Remove empty finalizers
+dotnet_diagnostic.CA1821.severity = suggestion
+
+# CA1825: Avoid zero-length array allocations
+dotnet_diagnostic.CA1825.severity = suggestion
+
+# CA1826: Use property instead of Linq Enumerable method
+dotnet_diagnostic.CA1826.severity = suggestion
+
+# CA1827: Do not use Count()/LongCount() when Any() can be used
+dotnet_diagnostic.CA1827.severity = suggestion
+
+# CA1828: Do not use CountAsync/LongCountAsync when AnyAsync can be used
+dotnet_diagnostic.CA1828.severity = suggestion
+
+# CA1829: Use Length/Count property instead of Enumerable.Count method
+dotnet_diagnostic.CA1829.severity = suggestion
+
+# CA1830: Prefer strongly-typed Append and Insert method overloads on StringBuilder
+dotnet_diagnostic.CA1830.severity = suggestion
+
+# CA1831: Use AsSpan instead of Range-based indexers for string when appropriate
+dotnet_diagnostic.CA1831.severity = suggestion
+
+# CA1832: Use AsSpan or AsMemory instead of Range-based indexers for getting ReadOnlySpan or ReadOnlyMemory portion of an array
+dotnet_diagnostic.CA1832.severity = suggestion
+
+# CA1833: Use AsSpan or AsMemory instead of Range-based indexers for getting Span or Memory portion of an array
+dotnet_diagnostic.CA1833.severity = suggestion
+
+# CA1834: Use StringBuilder.Append(char) for single character strings
+dotnet_diagnostic.CA1834.severity = suggestion
+
+# CA1835: Prefer the memory-based overloads of ReadAsync/WriteAsync methods in stream-based classes
+dotnet_diagnostic.CA1835.severity = suggestion
+
+# CA1836: Prefer IsEmpty over Count when available
+dotnet_diagnostic.CA1836.severity = suggestion
+
+# CA1837: Use Environment.ProcessId instead of Process.GetCurrentProcess().Id
+dotnet_diagnostic.CA1837.severity = suggestion
+
+# CA1838: Avoid StringBuilder parameters for P/Invokes
+dotnet_diagnostic.CA1838.severity = suggestion
+
+# CA1839: Use Environment.ProcessPath instead of Process.GetCurrentProcess().MainModule.FileName
+dotnet_diagnostic.CA1839.severity = suggestion
+
+# CA1840: Use Environment.CurrentManagedThreadId instead of Thread.CurrentThread.ManagedThreadId
+dotnet_diagnostic.CA1840.severity = suggestion
+
+# CA1841: Prefer Dictionary Contains methods
+dotnet_diagnostic.CA1841.severity = suggestion
+
+# CA1842: Do not use 'WhenAll' with a single task
+dotnet_diagnostic.CA1842.severity = suggestion
+
+# CA1843: Do not use 'WaitAll' with a single task
+dotnet_diagnostic.CA1843.severity = suggestion
+
+# CA1844: Provide memory-based overrides of async methods when subclassing 'Stream'
+dotnet_diagnostic.CA1844.severity = suggestion
+
+# CA1847: Use string.Contains(char) instead of string.Contains(string) with single characters
+dotnet_diagnostic.CA1847.severity = suggestion
+
+# CA1848: Use the LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = suggestion
+
+# CA1850: Prefer static HashData method over ComputeHash
+dotnet_diagnostic.CA1850.severity = suggestion
+
+# CA1851: Possible multiple enumerations of IEnumerable collection
+dotnet_diagnostic.CA1851.severity = suggestion
+
+# CA1852: Seal internal types
+dotnet_diagnostic.CA1852.severity = suggestion
+
+# CA1853: Unnecessary call to 'Dictionary.ContainsKey(key)'
+dotnet_diagnostic.CA1853.severity = suggestion
+
+# CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method
+dotnet_diagnostic.CA1854.severity = suggestion
+
+# CA1858: Use StartsWith instead of IndexOf
+dotnet_diagnostic.CA1858.severity = suggestion
+
+# CA1860: Avoid using 'Enumerable.Any()' extension method
+dotnet_diagnostic.CA1860.severity = suggestion
+
+# CA2009: Do not call ToImmutableCollection on an ImmutableCollection value
+dotnet_diagnostic.CA2009.severity = suggestion
+
+# CA2011: Do not assign property within its setter
+dotnet_diagnostic.CA2011.severity = suggestion
+
+# CA2012: Use ValueTasks correctly
+dotnet_diagnostic.CA2012.severity = suggestion
+
+# CA2019: ThreadStatic fields should not use inline initialization
+dotnet_diagnostic.CA2019.severity = suggestion
+
+# CA2208: Instantiate argument exceptions correctly
+dotnet_diagnostic.CA2208.severity = suggestion
+
+# CA2211: Non-constant fields should not be visible
+dotnet_diagnostic.CA2211.severity = suggestion
+
+# CA2241: Provide correct arguments to formatting methods
+dotnet_diagnostic.CA2241.severity = suggestion
+
+# CA2245: Do not assign a property to itself
+dotnet_diagnostic.CA2245.severity = suggestion
+
+# CA2248: Provide correct enumm argument to Enum.HasFlag
+dotnet_diagnostic.CA2248.severity = suggestion
+
+# CA2249: Consider using String.Contains instead of String.IndexOf
+dotnet_diagnostic.CA2249.severity = suggestion
+
+# CA2242: Test for NaN correctly
+dotnet_diagnostic.CA2242.severity = suggestion
+
+# CA2251: Use String.Equals over String.Compare
+dotnet_diagnostic.CA2251.severity = suggestion
+
+# CA2201: Do not raise reserved exception types
+dotnet_diagnostic.CA2201.severity = suggestion
+
+# CA2219: Do not raise exceptions in exception clauses
+dotnet_diagnostic.CA2219.severity = suggestion
+
+# CA3061: Do not add schema by URL
+dotnet_diagnostic.CA3061.severity = suggestion
+
+# CA3075: Insecure DTD Processing
+dotnet_diagnostic.CA3075.severity = suggestion
+
+# CA3076: Insecure XSLT Script Execution
+dotnet_diagnostic.CA3076.severity = suggestion
+
+# CA3077: Insecure Processing in API Design, XML Document and XML Text Reader
+dotnet_diagnostic.CA3077.severity = suggestion
+
+# CA3147: Mark verb handlers with ValidateAntiForgeryToken
+dotnet_diagnostic.CA3147.severity = suggestion
+
+# CA5350: Do Not Use Weak Cryptographic Algorithms
+dotnet_diagnostic.CA5350.severity = suggestion
+
+# CA5351: Do Not Use Broken Cryptographic Algorithms
+dotnet_diagnostic.CA5351.severity = suggestion
+
+# CA5359: Do not disable certificate validation
+dotnet_diagnostic.CA5359.severity = suggestion
+
+# CA5360: Do not call dangerous methods in deserialization
+dotnet_diagnostic.CA5360.severity = suggestion
+
+# CA5363: Do not disable request validation
+dotnet_diagnostic.CA5363.severity = suggestion
+
+# CA5364: Do not use deprecated security protocols
+dotnet_diagnostic.CA5364.severity = suggestion
+
+# CA5365: Do Not Disable HTTP Header Checking
+dotnet_diagnostic.CA5365.severity = suggestion
+
+# CA5366: Use XmlReader For DataSet Read XML
+dotnet_diagnostic.CA5366.severity = suggestion
+
+# CA5368: Set ViewStateUserKey For Classes Derived From Page
+dotnet_diagnostic.CA5368.severity = suggestion
+
+# CA5369: Use XmlReader for Deserialize
+dotnet_diagnostic.CA5369.severity = suggestion
+
+# CA5370: Use XmlReader for validating reader
+dotnet_diagnostic.CA5370.severity = suggestion
+
+# CA5371: Use XmlReader for schema read
+dotnet_diagnostic.CA5371.severity = suggestion
+
+# CA5372: Use XmlReader for XPathDocument
+dotnet_diagnostic.CA5372.severity = suggestion
+
+# CA5373: Do not use obsolete key derivation function
+dotnet_diagnostic.CA5373.severity = suggestion
+
+# CA5374: Do not use XslTransform
+dotnet_diagnostic.CA5374.severity = suggestion
+
+# CA5375: Do not use account shared access signature
+dotnet_diagnostic.CA5379.severity = suggestion
+
+# CA5384: Do not use digital signature algorithm (DSA)
+dotnet_diagnostic.CA5384.severity = suggestion
+
+# CA5385: Use Rivest-Shamir-Adleman (RSA) algorithm with sufficient key size
+dotnet_diagnostic.CA5385.severity = suggestion
+
+# CA5387: Do not use weak key derivation function with insufficient iteration count
+dotnet_diagnostic.CA5397.severity = suggestion
+
+# RS0041: Public members should not use oblivious types
+dotnet_diagnostic.RS0041.severity = suggestion
+
+# C# files
+
+[*.cs]
+
+# CSIsNull001: Use 'is' pattern check
+dotnet_diagnostic.CSIsNull001.severity = suggestion
+
+# CSIsNull002: Use 'is not' pattern check
+dotnet_diagnostic.CSIsNull002.severity = suggestion
+
+# SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
+dotnet_diagnostic.SYSLIB1045.severity = suggestion
+
+# These two (1054 and 1096) conflict with our usage of CsWin32
+
+# SYSLIB1054: Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+dotnet_diagnostic.SYSLIB1054.severity = none
+
+# SYSLIB1096: Convert to 'GeneratedComInterface'
+dotnet_diagnostic.SYSLIB1096.severity = none
+
+# CA1047: Do not declare protected members in sealed types
+dotnet_diagnostic.CA1047.severity = suggestion
+
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = suggestion
+
+# CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = suggestion
+
+# CA1514: Avoid redundant length argument
+dotnet_diagnostic.CA1514.severity = suggestion
+
+# CA1725: Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = suggestion
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.CA2227.severity = suggestion
+
+# CA2244: Do not duplicate indexed element initializations
+dotnet_diagnostic.CA2244.severity = suggestion
+
+# CA1845: Use span-based 'string.Concat'
+dotnet_diagnostic.CA1845.severity = suggestion
+
+# CA1846: Prefer AsSpan over Substring
+dotnet_diagnostic.CA1846.severity = suggestion
+
+# CA2246: Do not assign a symbol and its member in the same statement
+dotnet_diagnostic.CA2246.severity = suggestion
+
+# CA1855: Use Span<T>.Clear() instead of Span<T>.Fill()
+dotnet_diagnostic.CA1855.severity = suggestion
+
+# CA1857: The parameter expects a constant for optimal performance
+dotnet_diagnostic.CA1857.severity = suggestion
+
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = suggestion
+
+# DOC100: Place text in paragraphs
+dotnet_diagnostic.DOC100.severity = suggestion
+
+# DOC101: Use child blocks consistently
+dotnet_diagnostic.DOC101.severity = suggestion
+
+# DOC102: Use child blocks consistently across elements of the same kind
+dotnet_diagnostic.DOC102.severity = suggestion
+
+# DOC103: Use Unicode characters instead of HTML entities
+dotnet_diagnostic.DOC103.severity = suggestion
+
+# DOC104: Use see langword
+dotnet_diagnostic.DOC104.severity = suggestion
+
+# DOC105: Use paramref
+dotnet_diagnostic.DOC105.severity = suggestion
+
+# DOC106: Use typeparamref
+dotnet_diagnostic.DOC106.severity = suggestion
+
+# DOC107: Use see cref
+dotnet_diagnostic.DOC107.severity = suggestion
+
+# DOC108: Avoid empty paragraphs
+dotnet_diagnostic.DOC108.severity = suggestion
+
+# IDE0002: Simplify Member Access
+dotnet_diagnostic.IDE0002.severity = suggestion
+
+# IDE0003: Remove qualification
+dotnet_diagnostic.IDE0003.severity = suggestion
+
+# IDE0004: Remove unnecessary cast
+dotnet_diagnostic.IDE0004.severity = suggestion
+
+# IDE0017: Simplify object initialization
+dotnet_diagnostic.IDE0017.severity = suggestion
+
+# IDE0019: Use pattern matching
+dotnet_diagnostic.IDE0019.severity = suggestion
+
+# IDE0031: Use null propagation
+dotnet_diagnostic.IDE0031.severity = suggestion
+
+# IDE0038: Use pattern matching
+dotnet_diagnostic.IDE0038.severity = suggestion
+
+# IDE0043: Invalid format string
+dotnet_diagnostic.IDE0043.severity = suggestion
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = suggestion
+
+# IDE0049: Simplify Names
+dotnet_diagnostic.IDE0049.severity = suggestion
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = suggestion
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = suggestion
+
+# IDE0057: Use range operator
+dotnet_diagnostic.IDE0057.severity = suggestion
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = suggestion
+
+# IDE0063: Use simple 'using' statement
+dotnet_diagnostic.IDE0063.severity = suggestion
+
+# IDE0064: Make struct fields writable
+dotnet_diagnostic.IDE0064.severity = suggestion
+
+# IDE0066: Convert switch statement to expression
+dotnet_diagnostic.IDE0066.severity = suggestion
+
+# IDE0075: Simplify conditional expression
+dotnet_diagnostic.IDE0075.severity = suggestion
+
+# IDE0076: Invalid global suppression
+dotnet_diagnostic.IDE0076.severity = suggestion
+
+# IDE0077: Avoid legacy global suppression format
+dotnet_diagnostic.IDE0077.severity = suggestion
+
+# IDE0078: Use pattern matching
+dotnet_diagnostic.IDE0078.severity = suggestion
+
+# IDE0079: Remove unnecessary suppression
+dotnet_diagnostic.IDE0079.severity = suggestion
+
+# IDE0180: Use tuple to swap values
+dotnet_diagnostic.IDE0180.severity = suggestion
+
+# IDE0251: Make member 'readonly'
+dotnet_diagnostic.IDE0251.severity = suggestion
+
+# IDE0270: Use coalesce expression
+dotnet_diagnostic.IDE0270.severity = suggestion
+
+# IDE0300: Simplify collection initialization
+dotnet_diagnostic.IDE0300.severity = suggestion
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = suggestion
+
+# CA1070: Do not declare event fields as virtual
+dotnet_diagnostic.CA1070.severity = suggestion
+
+# CA2016: Forward the CancellationToken parameter to methods that take one
+dotnet_diagnostic.CA2016.severity = suggestion
+
+# CA2020: Prevent behavioral change caused by built-in operators of IntPtr/UIntPtr 
+dotnet_diagnostic.CA2020.severity = suggestion
+
+# .NET diagnostic
+dotnet_diagnostic.RS0041.severity = none
+dotnet_diagnostic.IDE0005.severity = suggestion
+
+# Expression-level preferences
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+dotnet_style_prefer_conditional_expression_over_return = true:silent
+
+# New line preferences
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# Indentation preferences
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_labels = one_less_than_current
+
+# only use var when it's obvious what the variable type is
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:silent
+csharp_style_var_elsewhere = false:silent
+
+# Code style defaults
+csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_statements = false
 
 # Expression-bodied members
-csharp_style_expression_bodied_methods = false:none
-csharp_style_expression_bodied_constructors = false:none
-csharp_style_expression_bodied_operators = false:none
-csharp_style_expression_bodied_properties = true:none
-csharp_style_expression_bodied_indexers = true:none
-csharp_style_expression_bodied_accessors = true:none
+csharp_style_expression_bodied_methods = true:silent
+csharp_style_expression_bodied_constructors = true:silent
+csharp_style_expression_bodied_operators = true:silent
+csharp_style_expression_bodied_properties = true:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_accessors = true:silent
 
 # Pattern matching
 csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
@@ -133,6 +595,37 @@ csharp_space_between_method_declaration_name_and_open_parenthesis = false
 csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
+csharp_using_directive_placement = outside_namespace:silent
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_braces = true:silent
+csharp_style_namespace_declarations = file_scoped:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:silent
+csharp_style_expression_bodied_lambdas = true:silent
+csharp_style_expression_bodied_local_functions = false:silent
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
+csharp_style_deconstructed_variable_declaration = true:suggestion
+
+# Visual Basic files
+
+[*.vb]
+# Modifier preferences
+visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:suggestion
+
+dotnet_separate_import_directive_groups = false:suggestion
+
+# IDE0079: Remove unnecessary suppression
+dotnet_diagnostic.IDE0079.severity = none
+
+# Expression-level preferences
+dotnet_style_coalesce_expression = false:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = false:suggestion
+dotnet_style_prefer_conditional_expression_over_return = false:suggestion
 
 # C++ Files
 [*.{cpp,h,in}]
@@ -144,7 +637,7 @@ indent_brace_style = Allman
 end_of_line = lf
 
 # Xml project files
-[*.{csproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
 indent_size = 2
 
 # Xml build files
@@ -159,8 +652,40 @@ indent_size = 2
 [*.{props,targets,config,nuspec}]
 indent_size = 2
 
+# resx Files
+[*.{resx,xlf}]
+indent_size = 2
+charset = utf-8-bom
+insert_final_newline = true
+
 # Shell scripts
 [*.sh]
 end_of_line = lf
-[*.{cmd, bat}]
+
+[*.{cmd,bat}]
 end_of_line = crlf
+
+# Test specific
+[**/tests/**/*.cs]
+
+# CA1861: Avoid constant arrays as arguments - expected to be inline for test readability (4000 hits)
+dotnet_diagnostic.CA1861.severity = silent
+
+# This collides with TheoryData usage
+dotnet_style_prefer_collection_expression = true:silent
+
+# This should be fixed https://github.com/dotnet/winforms/issues/11041
+# xUnit1042: The member referenced by the MemberData attribute returns untyped data rows
+dotnet_diagnostic.xUnit1042.severity = none
+
+# CA1507: CA1507: Use nameof in place of string - many fasle positives
+dotnet_diagnostic.CA1507.severity = none
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1852: Seal internal types
+dotnet_diagnostic.CA1852.severity = suggestion
+
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = none

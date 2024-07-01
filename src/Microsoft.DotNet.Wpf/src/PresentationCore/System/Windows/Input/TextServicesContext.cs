@@ -138,7 +138,7 @@ namespace System.Windows.Input
             {
                 if (_threadManager.Value != null)
                 {
-                    Marshal.ReleaseComObject(_threadManager.Value);
+                    ((MS.Internal.WpfComWrappers.TfThreadMgrWrapper)_threadManager.Value).Dispose();
                 }
                 _threadManager = null;
             }

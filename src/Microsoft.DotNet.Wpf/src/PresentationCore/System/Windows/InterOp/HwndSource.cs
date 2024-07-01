@@ -687,7 +687,7 @@ namespace System.Windows.Interop
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
             {
                 HwndSource test = source as HwndSource;
-                if (test != null && test.CriticalHandle == hwnd)
+                if (test != null && test.Handle == hwnd)
                 {
                     // Don't hand out a disposed source.
                     if (!test.IsDisposed)
@@ -864,7 +864,7 @@ namespace System.Windows.Interop
         {
             // Find the topmost window.  This will handle the case where the HwndSource
             // is a child window.
-            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
 
             // Open the system menu.
             UnsafeNativeMethods.PostMessage(new HandleRef(this, hwndRoot), MS.Internal.Interop.WindowMessage.WM_SYSCOMMAND, new IntPtr(NativeMethods.SC_KEYMENU), new IntPtr(NativeMethods.VK_SPACE));
@@ -925,20 +925,8 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the hwnd handle to the window.
         /// </summary>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public IntPtr Handle
         {
-            get
-            {
-                return CriticalHandle;
-            }
-        }
-
-        internal IntPtr CriticalHandle
-        {
-            [FriendAccessAllowed]
             get
             {
                 if (null != _hwndWrapper)
@@ -959,7 +947,7 @@ namespace System.Windows.Interop
             {
                 IntPtr capture = SafeNativeMethods.GetCapture();
 
-                return ( capture == CriticalHandle );
+                return ( capture == Handle );
             }
         }
 
@@ -1549,11 +1537,11 @@ namespace System.Windows.Interop
 
             if(_treatAncestorsAsNonClientArea)
             {
-                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
             }
             else
             {
-                hwndRoot = CriticalHandle;
+                hwndRoot = Handle;
             }
 
             SafeNativeMethods.GetWindowRect(new HandleRef(this, hwndRoot), ref rc);
@@ -2682,7 +2670,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return UnsafeNativeMethods.GetFocus() == CriticalHandle;
+                return UnsafeNativeMethods.GetFocus() == Handle;
             }
         }
 

@@ -32,7 +32,7 @@ namespace MS.Internal
                 Window curWindow = Application.Current.MainWindow;
                 if (curWindow != null)
                 {
-                    phwnd = curWindow.CriticalHandle;
+                    phwnd = curWindow.Handle;
                 }
             }
         }

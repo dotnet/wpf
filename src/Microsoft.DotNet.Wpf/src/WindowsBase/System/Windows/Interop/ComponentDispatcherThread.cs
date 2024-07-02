@@ -161,7 +161,7 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        ///     Removes the first occurance of the specified handler from the
+        ///     Removes the first occurrence of the specified handler from the
         ///     invocation list of the PreprocessMessage event.
         /// <summary>
         public void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
@@ -170,12 +170,12 @@ namespace System.Windows.Interop
             {
                 ThreadMessageEventHandler newHandler = null;
 
-                foreach (ThreadMessageEventHandler testHandler in _threadPreprocessMessage.GetInvocationList())
+                foreach (ThreadMessageEventHandler testHandler in Delegate.EnumerateInvocationList(_threadPreprocessMessage))
                 {
                     if (testHandler == handler)
                     {
                         // This is the handler to remove.  We should not check
-                        // for any more occurances.
+                        // for any more occurrences.
                         handler = null;
                     }
                     else

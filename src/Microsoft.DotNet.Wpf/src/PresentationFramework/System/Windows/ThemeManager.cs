@@ -226,13 +226,7 @@ internal static class ThemeManager
 
         if(SystemParameters.HighContrast)
         {
-            themeColorFileName = systemTheme switch
-            {
-                string s when s.Contains("hcblack") => "hcblack.xaml",
-                string s when s.Contains("hcwhite") => "hcwhite.xaml",
-                string s when s.Contains("hc1") => "hc1.xaml",
-                _ => "hc2.xaml"
-            };
+            themeColorFileName = "hc.xaml";
         }
 
         return new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/" + themeColorFileName, UriKind.Absolute);

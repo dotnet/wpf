@@ -105,7 +105,7 @@ namespace MS.Internal
             string tokens = trimmedColor.Substring(s_ContextColor.Length);
             tokens = tokens.Trim();
             string[] preSplit = tokens.Split(' ');
-            if (preSplit.GetLength(0)< 2)
+            if (preSplit.Length < 2)
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }
@@ -114,7 +114,7 @@ namespace MS.Internal
 
             TokenizerHelper th = new TokenizerHelper(tokens, formatProvider);
             string[] split = tokens.Split(new Char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int numTokens = split.GetLength(0);
+            int numTokens = split.Length;
 
             float alpha = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
 

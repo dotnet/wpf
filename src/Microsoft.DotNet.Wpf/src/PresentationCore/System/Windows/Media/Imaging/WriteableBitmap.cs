@@ -1085,7 +1085,7 @@ namespace System.Windows.Media.Imaging
 
             if (sourceBuffer.Rank == 1)
             {
-                if (sourceBuffer.GetLength(0) <= 0)
+                if (sourceBuffer.Length == 0)
                 {
                     if (backwardsCompat)
                     {
@@ -1104,7 +1104,7 @@ namespace System.Windows.Media.Imaging
                     {
                         object exemplar = sourceBuffer.GetValue(0);
                         elementSize = Marshal.SizeOf(exemplar);
-                        sourceBufferSize = sourceBuffer.GetLength(0) * elementSize;
+                        sourceBufferSize = sourceBuffer.Length * elementSize;
                         elementType = exemplar.GetType();
                     }
                 }

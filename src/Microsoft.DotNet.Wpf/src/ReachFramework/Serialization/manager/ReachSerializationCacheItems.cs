@@ -218,7 +218,7 @@ namespace System.Windows.Xps.Serialization
             //    and that are not hidden
             //
             if (propertyInfo.CanRead && 
-                propertyInfo.GetIndexParameters().GetLength(0) == 0)
+                propertyInfo.GetIndexParameters().Length == 0)
             {
                 MemberInfo memberInfo          = (MemberInfo) propertyInfo;
 

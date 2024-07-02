@@ -57,7 +57,7 @@ namespace System.Windows.Media
             if (c1.context != null)
             {
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
                     c1.nativeColorValue[i] = 0.0f;
                 }
@@ -80,12 +80,12 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
-            if (values.GetLength(0) != c1.nativeColorValue.GetLength(0))
+            if (values.Length != c1.nativeColorValue.Length)
             {
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
-            for (int numChannels = 0; numChannels < values.GetLength(0); numChannels++)
+            for (int numChannels = 0; numChannels < values.Length; numChannels++)
             {
                 c1.nativeColorValue[numChannels] = values[numChannels];
             }
@@ -305,10 +305,10 @@ namespace System.Windows.Media
                 var sb = new StringBuilder();
                 sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
                 sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i= 0; i< nativeColorValue.GetLength(0); ++i )
+                for (int i = 0; i < nativeColorValue.Length; ++i )
                 {
                     sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
-                    if (i< nativeColorValue.GetLength(0)-1 )
+                    if (i < nativeColorValue.Length - 1)
                     {
                         sb.AppendFormat(provider,"{0}",separator);
                     }
@@ -350,7 +350,7 @@ namespace System.Windows.Media
             }
             else
             {
-                for (int i = 0; i < color.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < color.nativeColorValue.Length; i++)
                     result = result && FloatUtil.AreClose(nativeColorValue[i], color.nativeColorValue[i]);
             }
 
@@ -421,9 +421,9 @@ namespace System.Windows.Media
                 
                 #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
-                    c1.nativeColorValue[i] = color1.nativeColorValue[i] + color2.nativeColorValue[i] ;
+                    c1.nativeColorValue[i] = color1.nativeColorValue[i] + color2.nativeColorValue[i];
                 }
 
                 Color c2 = Color.FromRgb(0, 0, 0);
@@ -540,7 +540,7 @@ namespace System.Windows.Media
 
                 #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
                     c1.nativeColorValue[i] = color1.nativeColorValue[i] - color2.nativeColorValue[i];
                 }
@@ -750,12 +750,12 @@ namespace System.Windows.Media
                     return false;
                 }
 
-                if (color1.nativeColorValue.GetLength(0) != color2.nativeColorValue.GetLength(0))
+                if (color1.nativeColorValue.Length != color2.nativeColorValue.Length)
                 {
                     return false;
                 }
 
-                for (int i = 0; i < color1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < color1.nativeColorValue.Length; i++)
                 {
                     if (color1.nativeColorValue[i] != color2.nativeColorValue[i])
                     {

@@ -135,7 +135,10 @@
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"
-                                        Cursor="Arrow">
+                                        Cursor="Arrow"
+                                        Focusable="True"
+                                        IsTabStop="True"
+                                        TabIndex="1">
                                         <!--  WPF overrides paddings for button  -->
                                         
                                         <TextBlock

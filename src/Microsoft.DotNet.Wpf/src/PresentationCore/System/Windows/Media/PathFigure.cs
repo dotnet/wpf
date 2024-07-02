@@ -223,10 +223,7 @@ namespace System.Windows.Media
         internal string ConvertToString(string format, IFormatProvider provider)
         {
             PathSegmentCollection segments = Segments;
-            return "M" + 
-                ((IFormattable)StartPoint).ToString(format, provider) + 
-                (segments != null ? segments.ConvertToString(format, provider) : "") +
-                (IsClosed ? "z" : "");
+            return $"M{((IFormattable)StartPoint).ToString(format, provider)}{(segments != null ? segments.ConvertToString(format, provider) : "")}{(IsClosed ? "z" : "")}";
         }
  
         /// <summary>

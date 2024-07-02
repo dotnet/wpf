@@ -79,7 +79,7 @@ namespace MS.Internal.Ink
             }
 #if POINTS_FILTER_TRACE
             _totalPointsAdded += path.Length;
-            System.Diagnostics.Debug.WriteLine(String.Format("Total Points added: {0} screened: {1} collinear screened: {2}", _totalPointsAdded, _totalPointsScreened, _collinearPointsScreened));
+            System.Diagnostics.Debug.WriteLine($"Total Points added: {_totalPointsAdded} screened: {_totalPointsScreened} collinear screened: {_collinearPointsScreened}");
 #endif
 
         }

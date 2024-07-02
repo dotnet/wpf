@@ -717,8 +717,7 @@ namespace MS.Internal.TextFormatting
                 // We should never be changing a fixed type here
 
                 Debug.Assert(CharProperty[2, (int) characterClass[counter + classIndex]]==0,
-                         "Resolving fixed class as being neutral: " +
-                         characterClass[counter + classIndex].ToString());
+                    $"Resolving fixed class as being neutral: {characterClass[counter + classIndex]}");
 
                 characterClass[counter + classIndex] = resolutionType;
             }
@@ -853,9 +852,7 @@ namespace MS.Internal.TextFormatting
                 {
                 case StateMachineAction.ST_ST:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                              "Cannot have unresolved neutrals. State: " +
-                              state.ToString() +
-                              ", Class: " + currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (currentClass == DirectionClass.ArabicLetter)
                     {
@@ -898,9 +895,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.ST_ET:
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() +
-                             ", Class: "+ currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                     if (startOfNeutrals == PositionInvalid)
                     {
@@ -943,14 +938,10 @@ namespace MS.Internal.TextFormatting
                 case StateMachineAction.ST_NUMSEP:
                     {
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() +
-                             ", Class: "+ currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() +
-                             " Class: "+ currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state} Class: {currentClass}");
                     bool processed = false;
 
                     if (currentClass == DirectionClass.ArabicLetter)
@@ -1048,9 +1039,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.ST_N:
                     Debug.Assert(startOfNeutrals != PositionInvalid,
-                             "Must have unresolved neutrals. State: " +
-                             state.ToString() +", Class: "+
-                             currentClass.ToString());
+                        $"Must have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (currentClass == DirectionClass.ArabicLetter)
                     {
@@ -1087,9 +1076,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.EN_N:
                     Debug.Assert(startOfNeutrals != PositionInvalid,
-                             "Must have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: "+
-                             currentClass.ToString());
+                        $"Must have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if ((flags & Flags.OverrideEuropeanNumberResolution) == 0 &&
                             ((lastStrongClass == DirectionClass.ArabicLetter) ||
@@ -1120,9 +1107,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.SEP_ST:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (startOfDelayed != PositionInvalid)
                     {
@@ -1138,9 +1123,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.CS_NUM:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (startOfDelayed == PositionInvalid)
                     {
@@ -1151,9 +1134,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.SEP_ET:
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                     if (startOfNeutrals == PositionInvalid)
                     {
@@ -1165,14 +1146,10 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.SEP_NUMSEP:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                     startOfNeutrals = startOfDelayed;
                     startOfDelayed = PositionInvalid;
@@ -1181,18 +1158,14 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.SEP_N:
                     Debug.Assert(startOfNeutrals != PositionInvalid,
-                             "Must have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     startOfDelayed = PositionInvalid;
                     break;
 
                 case StateMachineAction.ES_AN:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (startOfDelayed != PositionInvalid)
                     {
@@ -1208,25 +1181,17 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.ET_ET:
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
                     Debug.Assert(lastClass == DirectionClass.EuropeanTerminator,
-                             "Last class must be ET. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Last class must be ET. State: {state}, Class: {currentClass}");
                     break;
 
                 case StateMachineAction.ET_NUMSEP:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                     startOfNeutrals = startOfDelayed;
                     startOfDelayed = counter;
@@ -1273,9 +1238,7 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.ET_N:
                     Debug.Assert(startOfNeutrals != PositionInvalid,
-                             "Must have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     if (startOfDelayed == PositionInvalid)
                     {
@@ -1287,14 +1250,10 @@ namespace MS.Internal.TextFormatting
 
                 case StateMachineAction.NUM_NUMSEP:
                     Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                     Debug.Assert(startOfDelayed != PositionInvalid,
-                             "Must have delayed weak classes. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                        $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                     if ((lastStrongClass == DirectionClass.ArabicLetter) ||
                         previousClassIsArabic || ArabicNumberAfterLeft)
@@ -1324,9 +1283,7 @@ namespace MS.Internal.TextFormatting
 
                case StateMachineAction.EN_L:
                    Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                       $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                    if (lastStrongClass == DirectionClass.Left)
                    {
@@ -1351,9 +1308,7 @@ namespace MS.Internal.TextFormatting
 
                case StateMachineAction.NUM_NUM:
                    Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                       $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                    if ((flags & Flags.OverrideEuropeanNumberResolution) == 0 &&
                        (lastStrongClass == DirectionClass.ArabicLetter || previousClassIsArabic)
@@ -1396,9 +1351,7 @@ namespace MS.Internal.TextFormatting
 
                case StateMachineAction.EN_AL:
                    Debug.Assert(startOfNeutrals == PositionInvalid,
-                             "Cannot have unresolved neutrals. State: " +
-                             state.ToString() + ", Class: " +
-                             currentClass.ToString());
+                       $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                    if ((flags & Flags.OverrideEuropeanNumberResolution) == 0)
                    {
@@ -1432,9 +1385,7 @@ namespace MS.Internal.TextFormatting
 
                case StateMachineAction.EN_ET:
                    Debug.Assert(startOfDelayed != PositionInvalid,
-                            "Must have delayed weak classes. State: " +
-                            state.ToString() + ", Class: " +
-                            currentClass.ToString());
+                       $"Must have delayed weak classes. State: {state}, Class: {currentClass}");
 
                    if ((lastStrongClass == DirectionClass.ArabicLetter) ||
                         previousClassIsArabic)
@@ -1574,9 +1525,7 @@ namespace MS.Internal.TextFormatting
 
                case StateMachineAction.N_ST:
                    Debug.Assert(startOfNeutrals == PositionInvalid,
-                            "Cannot have unresolved neutrals. State: " +
-                            state.ToString() + ", Class: " +
-                            currentClass.ToString());
+                       $"Cannot have unresolved neutrals. State: {state}, Class: {currentClass}");
 
                    if (startOfDelayed != PositionInvalid)
                    {
@@ -2465,8 +2414,7 @@ namespace MS.Internal.TextFormatting
                     // unless we passed a corrupted data
 
                     Debug.Assert(runLengthResolved == runLength,
-                                    "Failed to resolve neutrals and weaks. Run#:" +
-                                    counter.ToString(CultureInfo.InvariantCulture));
+                        $"Failed to resolve neutrals and weaks. Run#:{counter.ToString(CultureInfo.InvariantCulture)}");
 }
                 else
                 {

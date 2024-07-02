@@ -86,7 +86,7 @@ namespace MS.Internal.Shaping
             )
         {
             SpanVector<int> cachedScaledTypefaceIndexSpans;
-            
+
             int ichItem = 0;
 
             CharacterBufferRange unicodeString = new CharacterBufferRange(
@@ -96,15 +96,15 @@ namespace MS.Internal.Shaping
 
             CultureInfo culture = textRunProperties.CultureInfo;
             IList<Span> spans;
-            
+
             GCHandle gcHandle;
             IntPtr ptext = characterBufferReference.CharacterBuffer.PinAndGetCharacterPointer(characterBufferReference.OffsetToFirstChar, out gcHandle);
 
-            // Contextual number substitution cannot be performed on the run level, since it depends 
-            // on context - nearest preceding strong character. For this reason, contextual number 
-            // substitutions has been already done (TextStore.CreateLSRunsUniformBidiLevel) and 
+            // Contextual number substitution cannot be performed on the run level, since it depends
+            // on context - nearest preceding strong character. For this reason, contextual number
+            // substitutions has been already done (TextStore.CreateLSRunsUniformBidiLevel) and
             // digitCulture has been updated to reflect culture which is dependent on the context.
-            // NumberSubstitutionMethod.AsCulture method can be resolved to Context, hence it also needs to be resolved to appropriate 
+            // NumberSubstitutionMethod.AsCulture method can be resolved to Context, hence it also needs to be resolved to appropriate
             // not ambiguous method.
             // Both of those values (Context and AsCulture) are resolved to one of following: European, Traditional or NativeNational,
             // which can be safely handled by DWrite without getting context information.
@@ -114,7 +114,7 @@ namespace MS.Internal.Shaping
             // Itemize the text based on DWrite's text analysis for scripts and number substitution.
             unsafe
             {
-                checked 
+                checked
                 {
                     spans = MS.Internal.Text.TextInterface.TextAnalyzer.Itemize(
                         (char*)ptext.ToPointer(),
@@ -137,7 +137,7 @@ namespace MS.Internal.Shaping
 
             SpanVector itemSpans = new SpanVector(null, new FrugalStructList<Span>((ICollection<Span>)spans));
 
-            cachedScaledTypefaceIndexSpans = new SpanVector<int>(-1);            
+            cachedScaledTypefaceIndexSpans = new SpanVector<int>(-1);
             foreach(Span itemSpan in itemSpans)
             {
                 MapItem(
@@ -423,10 +423,9 @@ namespace MS.Internal.Shaping
                         {
                             Invariant.Assert(
                                 false,
-                                string.Format(
+                                string.Create(
                                     CultureInfo.InvariantCulture,
-                                    "shapeable cache stores conflicting info, ch = {0}, map[ch] = {1}, index = {2}",
-                                    ch, map[ch], index
+                                    $"shapeable cache stores conflicting info, ch = {ch}, map[ch] = {map[ch]}, index = {index}"
                                 )
                             );
                         }
@@ -492,7 +491,7 @@ namespace MS.Internal.Shaping
             IFontFamily                     fontFamily,
             CanonicalFontFamilyReference    canonicalFamilyReference,
             FontStyle                       canonicalStyle,
-            FontWeight                      canonicalWeight, 
+            FontWeight                      canonicalWeight,
             FontStretch                     canonicalStretch,
             ref PhysicalFontFamily          firstValidFamily,
             ref int                         firstValidLength,
@@ -919,7 +918,7 @@ namespace MS.Internal.Shaping
                             targetFamily,
                             canonicalFamilyReference,
                             canonicalStyle,
-                            canonicalWeight, 
+                            canonicalWeight,
                             canonicalStretch,
                             ref firstValidFamily,
                             ref firstValidLength,
@@ -1043,7 +1042,7 @@ namespace MS.Internal.Shaping
             if (firstValidLength <= 0)
             {
                 // Either firstValidFamily hasn't been set, or has "expired" (see below). The first valid
-                // family is the first existing physical font in the font linking chain. We want to remember 
+                // family is the first existing physical font in the font linking chain. We want to remember
                 // it so we can use it to map any unresolved characters.
                 firstValidFamily = fontFaceFamily;
 

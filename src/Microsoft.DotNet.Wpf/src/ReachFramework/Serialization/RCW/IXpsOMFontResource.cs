@@ -35,5 +35,9 @@ namespace System.Windows.Xps.Serialization.RCW
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_FONT_EMBEDDING")]
         XPS_FONT_EMBEDDING GetEmbeddingOption();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        [return: MarshalAs(UnmanagedType.Interface)]
+        IOpcPartUri GetPartUri();
     }
 }

@@ -244,7 +244,7 @@ namespace System.Windows.Controls
                     if (goodString.EndsWith(unitString, StringComparison.Ordinal))
                     {
                         strLenUnit = unitString.Length;
-                        unitFactor = _pixelUnitFactors[i];
+                        unitFactor = PixelUnitFactors[i];
                         break;
                     }
                 }
@@ -281,11 +281,11 @@ namespace System.Windows.Controls
         private static string[] _nonStandardUnitStrings = { "in", "cm", "pt" };
 
         // These are conversion factors to transform other units to pixels
-        private static double[] _pixelUnitFactors = 
-        { 
+        private static ReadOnlySpan<double> PixelUnitFactors =>
+        [ 
             96.0,             // Pixels per Inch
             96.0 / 2.54,      // Pixels per Centimeter
             96.0 / 72.0,      // Pixels per Point 
-        };
+        ];
     }
 }

@@ -91,8 +91,8 @@ namespace System.Windows.Documents
         // NOTE it is okay to not getting accurate list as long as
         // we deal with common cases since this is used in heuristic
         // algorithm!
-        internal static char[] HyphenSet =
-        {
+        internal static ReadOnlySpan<char> HyphenSet =>
+        [
             '\x002D',     // Hyphen-Minus
             '\x2010',     // Hyphen
             '\x2011',     // Non-breaking Hyphen
@@ -100,19 +100,9 @@ namespace System.Windows.Documents
             '\x2013',     // En-dash
             '\x2212',     // Minus Sign
             '\x00AD'      // Soft-Hyphen
-        };
+        ];
 
-        internal static bool IsHyphen(char target)
-        {
-            foreach (char hyphen in HyphenSet)
-            {
-                if (hyphen == target)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        internal static bool IsHyphen(char target) => HyphenSet.Contains(target);
 
         // Space that was used in the heuristic algorithm.
         internal static bool IsSpace(char target)

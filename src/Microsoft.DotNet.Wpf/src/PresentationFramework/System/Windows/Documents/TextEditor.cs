@@ -1246,7 +1246,7 @@ namespace System.Windows.Documents
                     {
                         textData = textData.Substring(0, endOfFirstLine);
                     }
-                    endOfFirstLine = textData.IndexOfAny(TextPointerBase.NextLineCharacters);
+                    endOfFirstLine = textData.AsSpan().IndexOfAny(TextPointerBase.NextLineCharacters);
                     if (endOfFirstLine >= 0)
                     {
                         textData = textData.Substring(0, endOfFirstLine);

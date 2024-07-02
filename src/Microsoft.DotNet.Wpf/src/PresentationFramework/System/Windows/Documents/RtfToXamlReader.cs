@@ -4581,8 +4581,7 @@ namespace System.Windows.Documents
             "td"
         };
 
-        internal static int[] HtmlLengths = new int[]
-        {
+        internal static ReadOnlySpan<int> HtmlLengths => [
             0,    // unknown
             0,    // text
             4,    // span
@@ -4595,7 +4594,7 @@ namespace System.Windows.Documents
             6,    // tbody
             2,    // tr
             2     // td
-        };
+        ];
 
         internal static string[] XamlNames = new string[]
         {

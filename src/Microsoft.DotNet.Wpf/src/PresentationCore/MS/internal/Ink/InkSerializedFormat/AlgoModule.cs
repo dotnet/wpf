@@ -457,7 +457,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal const byte DefaultBAACount = 8;
         internal const byte MaxBAACount = 10;
 
+        private static ReadOnlySpan<double> DefaultFirstSquareRoot => [1, 1, 1, 4, 9, 16, 36, 49];
 
-        private static readonly double[] DefaultFirstSquareRoot = { 1, 1, 1, 4, 9, 16, 36, 49};
     }
 }

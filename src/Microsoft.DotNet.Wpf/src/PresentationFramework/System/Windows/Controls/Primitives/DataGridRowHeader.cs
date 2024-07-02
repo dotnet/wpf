@@ -42,7 +42,7 @@ namespace System.Windows.Controls.Primitives
         private const byte DATAGRIDROWHEADER_stateSelectedFocusedCode = 15;
         private const byte DATAGRIDROWHEADER_stateNullCode = 255;
 
-        private static byte[] _fallbackStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> FallbackStateMapping => [
             DATAGRIDROWHEADER_stateNormalCode,
             DATAGRIDROWHEADER_stateNormalCurrentRowCode,
             DATAGRIDROWHEADER_stateMouseOverEditingRowFocusedCode,
@@ -59,9 +59,9 @@ namespace System.Windows.Controls.Primitives
             DATAGRIDROWHEADER_stateSelectedCurrentRowFocusedCode,
             DATAGRIDROWHEADER_stateNormalCurrentRowCode,
             DATAGRIDROWHEADER_stateNormalCode,
-        };
+        ];
 
-        private static byte[] _idealStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> IdealStateMapping => [
             DATAGRIDROWHEADER_stateNormalCode,
             DATAGRIDROWHEADER_stateNormalCode,
             DATAGRIDROWHEADER_stateMouseOverCode,
@@ -94,7 +94,7 @@ namespace System.Windows.Controls.Primitives
             DATAGRIDROWHEADER_stateNormalEditingRowFocusedCode,
             DATAGRIDROWHEADER_stateMouseOverEditingRowCode,
             DATAGRIDROWHEADER_stateMouseOverEditingRowFocusedCode
-        };
+        ];
 
         private static string[] _stateNames = new string[]
         {
@@ -490,7 +490,7 @@ namespace System.Windows.Controls.Primitives
                 idealStateMappingIndex += 1;
             }
 
-            byte stateCode = _idealStateMapping[idealStateMappingIndex];
+            byte stateCode = IdealStateMapping[idealStateMappingIndex];
             Debug.Assert(stateCode != DATAGRIDROWHEADER_stateNullCode);
 
             string storyboardName;
@@ -504,7 +504,7 @@ namespace System.Windows.Controls.Primitives
                 else
                 {
                     // The state wasn't implemented so fall back to the next one
-                    stateCode = _fallbackStateMapping[stateCode];
+                    stateCode = FallbackStateMapping[stateCode];
                 }
             }
 

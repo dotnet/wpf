@@ -179,10 +179,10 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Point * pPoints = stackalloc Point[(int)c_pointCount];
+                    Point* pPoints = stackalloc Point[(int)c_pointCount];
                     EllipseGeometry.GetPointList(pPoints, c_pointCount, center, radiusX, radiusY);
 
-                    fixed (byte *pTypes = EllipseGeometry.s_roundedPathTypes)
+                    fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         rect = Geometry.GetBoundsHelper(
                             pen, 
@@ -206,10 +206,10 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point *pPoints = stackalloc Point[(int)GetPointCount()];
+                Point* pPoints = stackalloc Point[(int)GetPointCount()];
                 EllipseGeometry.GetPointList(pPoints, GetPointCount(), Center, RadiusX, RadiusY);
 
-                fixed (byte* pTypes = GetTypeList())
+                fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -383,9 +383,8 @@ namespace System.Windows.Media
             points[8].Y = points[9].Y = points[10].Y = center.Y - radiusY;
         }
 
-        private byte[] GetTypeList() { return s_roundedPathTypes; }
-        private uint GetPointCount() { return c_pointCount; }
-        private uint GetSegmentCount() { return c_segmentCount; }
+        private static uint GetPointCount() { return c_pointCount; }
+        private static uint GetSegmentCount() { return c_segmentCount; }
         
         #region Static Data
         
@@ -396,18 +395,16 @@ namespace System.Windows.Media
         private const UInt32 c_pointCount = 13;
 
         private const byte c_smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier  |
-                                              (byte)MILCoreSegFlags.SegIsCurved    |
-                                              (byte)MILCoreSegFlags.SegSmoothJoin;
+                                            (byte)MILCoreSegFlags.SegIsCurved    |
+                                            (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        private static readonly byte[] s_roundedPathTypes = {
-            (byte)MILCoreSegFlags.SegTypeBezier | 
-            (byte)MILCoreSegFlags.SegIsCurved   |
-            (byte)MILCoreSegFlags.SegSmoothJoin | 
-            (byte)MILCoreSegFlags.SegClosed,
-            c_smoothBezier, 
-            c_smoothBezier, 
-            c_smoothBezier
-        };
+        private static ReadOnlySpan<byte> RoundedPathTypes => [(byte)MILCoreSegFlags.SegTypeBezier | 
+                                                               (byte)MILCoreSegFlags.SegIsCurved   |
+                                                               (byte)MILCoreSegFlags.SegSmoothJoin | 
+                                                               (byte)MILCoreSegFlags.SegClosed,
+                                                               c_smoothBezier, 
+                                                               c_smoothBezier, 
+                                                               c_smoothBezier];
 
         #endregion
     }

@@ -1185,7 +1185,7 @@ namespace System.Windows.Controls
                 // Set the zoom percentage, with _updatingInternalZoomLevel set to true to
                 //   avoid resetting the zoom level index.
                 _updatingInternalZoomLevel = true;
-                Zoom = DocumentViewer._zoomLevelCollection[_zoomLevelIndex];
+                Zoom = ZoomLevelCollection[_zoomLevelIndex];
                 _updatingInternalZoomLevel = false;
             }
         }
@@ -1203,8 +1203,8 @@ namespace System.Windows.Controls
                 FindZoomLevelIndex();
                 // If the current zoom value exists in the zoomLevelCollection, and can
                 //   still be zoomed out, then zoom out another level.
-                if ((oldZoom == DocumentViewer._zoomLevelCollection[_zoomLevelIndex]) &&
-                    (_zoomLevelIndex < DocumentViewer._zoomLevelCollection.Length - 1))
+                if ((oldZoom == ZoomLevelCollection[_zoomLevelIndex]) &&
+                    (_zoomLevelIndex < ZoomLevelCollection.Length - 1))
                {
                     _zoomLevelIndex++;
                 }
@@ -1212,7 +1212,7 @@ namespace System.Windows.Controls
                 // Set the zoom percentage, with _updatingInternalZoomLevel set to true to
                 //   avoid resetting the zoom level index.
                 _updatingInternalZoomLevel = true;
-                Zoom = _zoomLevelCollection[_zoomLevelIndex];
+                Zoom = ZoomLevelCollection[_zoomLevelIndex];
                 _updatingInternalZoomLevel = false;
             }
         }
@@ -2287,45 +2287,41 @@ namespace System.Windows.Controls
         /// </summary>
         private void FindZoomLevelIndex()
         {
-            // Ensure the list of zoom levels is created.
-            if (_zoomLevelCollection != null)
+            // If the index is not in a valid location, update it to the list start.
+            if ((_zoomLevelIndex < 0) || (_zoomLevelIndex >= ZoomLevelCollection.Length))
             {
-                // If the index is not in a valid location, update it to the list start.
-                if ((_zoomLevelIndex < 0) || (_zoomLevelIndex >= _zoomLevelCollection.Length))
+                _zoomLevelIndex = 0;
+                _zoomLevelIndexValid = false;
+            }
+
+            // Check if the current index is in the correct location in the list.
+            if (!_zoomLevelIndexValid)
+            {
+                // Since the index is not in the correct location in the list
+                //  (ie the Zoom was set by another means), then
+                //   search the list of possible zooms for the correct location.
+                double currentZoom = Zoom;
+
+                // Currently this search is done using a linear method which is
+                // fine given the small size of the list.  If we increase the list
+                // size, then a simple binary search could increaes performance.
+
+                // Search the list of zoom's from highest to lowest until the
+                //   appropriate "floor" level (level equal to, or
+                //   lower than the current zoom) is found.
+                int loopIndex;
+                for (loopIndex = 0; loopIndex < ZoomLevelCollection.Length - 1; loopIndex++)
                 {
-                    _zoomLevelIndex = 0;
-                    _zoomLevelIndexValid = false;
-                }
-
-                // Check if the current index is in the correct location in the list.
-                if (!_zoomLevelIndexValid)
-                {
-                    // Since the index is not in the correct location in the list
-                    //  (ie the Zoom was set by another means), then
-                    //   search the list of possible zooms for the correct location.
-                    double currentZoom = Zoom;
-
-                    // Currently this search is done using a linear method which is
-                    // fine given the small size of the list.  If we increase the list
-                    // size, then a simple binary search could increaes performance.
-
-                    // Search the list of zoom's from highest to lowest until the
-                    //   appropriate "floor" level (level equal to, or
-                    //   lower than the current zoom) is found.
-                    int loopIndex;
-                    for (loopIndex = 0; loopIndex < _zoomLevelCollection.Length - 1; loopIndex++)
+                    if (currentZoom >= ZoomLevelCollection[loopIndex])
                     {
-                        if (currentZoom >= _zoomLevelCollection[loopIndex])
-                        {
-                            // Closest equal or lower match found
-                            break;
-                        }
+                        // Closest equal or lower match found
+                        break;
                     }
-                    // Assign the current zoom level, and mark that our index is valid
-                    //   (for future Increase / Decrease zoom calls).
-                    _zoomLevelIndex = loopIndex;
-                    _zoomLevelIndexValid = true;
                 }
+                // Assign the current zoom level, and mark that our index is valid
+                //   (for future Increase / Decrease zoom calls).
+                _zoomLevelIndex = loopIndex;
+                _zoomLevelIndexValid = true;
             }
         }
 
@@ -2658,9 +2654,9 @@ namespace System.Windows.Controls
         private static RoutedUICommand            _fitToMaxPagesAcrossCommand;
 
         // This list is assumed to be in decreasing order.
-        private static double[] _zoomLevelCollection = {5000.0, 4000.0, 3200.0, 2400.0, 2000.0, 1600.0,
-                                                       1200.0, 800.0, 400.0, 300.0, 200.0, 175.0, 150.0,
-                                                       125.0, 100.0, 75.0, 66.0, 50.0, 33.0, 25.0, 10.0, 5.0};
+        private static ReadOnlySpan<double> ZoomLevelCollection => [5000.0, 4000.0, 3200.0, 2400.0, 2000.0, 1600.0,
+                                                                    1200.0, 800.0, 400.0, 300.0, 200.0, 175.0, 150.0,
+                                                                    125.0, 100.0, 75.0, 66.0, 50.0, 33.0, 25.0, 10.0, 5.0];
         private int                             _zoomLevelIndex; // = 0
         private bool                            _zoomLevelIndexValid; // = false
         private bool                            _updatingInternalZoomLevel; // = false

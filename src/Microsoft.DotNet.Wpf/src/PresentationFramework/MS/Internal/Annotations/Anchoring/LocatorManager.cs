@@ -1370,7 +1370,7 @@ namespace MS.Internal.Annotations.Anchoring
         private Hashtable _selectionProcessors;
 
         // Potential separators for subtree processor class names
-        private static readonly Char[] Separators = new Char[] { ',', ' ', ';' };
+        private static ReadOnlySpan<char> Separators => [',', ' ', ';'];
 
         // Optional store, used if passed in, otherwise we grab the service's store
         private AnnotationStore _internalStore = null;

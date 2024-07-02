@@ -350,7 +350,7 @@ namespace MS.Internal.AppModel
                 _secMgr.ProcessUrlAction(targetString,
                                             NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
                                             (byte*)&policy,
-                                            Marshal.SizeOf(typeof(int)),
+                                            sizeof(int),
                                             null,
                                             0,
                                             NativeMethods.PUAF_NOUI,

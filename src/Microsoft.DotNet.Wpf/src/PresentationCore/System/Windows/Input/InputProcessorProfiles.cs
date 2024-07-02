@@ -155,12 +155,10 @@ namespace System.Windows.Input
 
                  ArrayList arrayLang = new ArrayList();
 
-                 int sizeOfShort = Marshal.SizeOf(typeof(short));
-
                  for (int i = 0; i < nCount; i++)
                  {
                      // Unmarshal each langid from short array.
-                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeOfShort * i));
+                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeof(short) * i));
                      arrayLang.Add(new CultureInfo(langid));
                  }
 

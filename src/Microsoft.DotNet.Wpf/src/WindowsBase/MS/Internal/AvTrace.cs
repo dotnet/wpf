@@ -59,13 +59,13 @@ namespace MS.Internal
         /// </summary>
         static AvTrace() => LoadWpfTracingSettings();
 
-        //
-        //  Refresh this trace source -- see if it needs to be enabled
-        //  because registry setting has changed or debugger is attached.
-        //
-        //  To re-read the config file, call System.Diagnostics.Trace.Refresh() .
-        //
 
+        /// <summary>
+        /// Refreshes this trace source. Checks again if it has been enabled
+        /// either because registry setting has changed or debugger has been attached.
+        /// <br/><br/>
+        ///  To re-read the config file, call <see cref="System.Diagnostics.Trace.Refresh"/>
+        /// </summary>
         public void Refresh()
         {
             // Re-read current WPF Trace settings from Registry in case it has changed.
@@ -165,7 +165,7 @@ namespace MS.Internal
         //
         // Internal initialization
         //
-       private void Initialize(bool isEnabledInRegistry)
+        private void Initialize(bool isEnabledInRegistry)
         {
             // Decide if we should actually create a TraceSource instance (doing so isn't free,
             // so we don't want to do it if we can avoid it).
@@ -198,17 +198,9 @@ namespace MS.Internal
         //  the TraceSource.)
         //
 
-        static private bool ShouldCreateTraceSources(bool isEnabledInRegistry)
+        private static bool ShouldCreateTraceSources(bool isEnabledInRegistry)
         {
-            if( isEnabledInRegistry
-                || IsDebuggerAttached()
-                || _hasBeenRefreshed
-              )
-            {
-                return true;
-            }
-
-            return false;
+            return isEnabledInRegistry || IsDebuggerAttached() || _hasBeenRefreshed;
         }
 
         /// <summary> Initializes <see cref="s_enabledInRegistry"/> variable from Registry and returns the value. </summary>
@@ -231,9 +223,9 @@ namespace MS.Internal
             return enabled;
         }
 
-        /// <summary> Retrieves cached value to see whether WPF Tracing is enabled. </summary>
+        /// <summary> Retrieves cached value from <see cref=" s_enabledInRegistry"/> to see whether WPF Tracing is enabled. </summary>
         /// <returns> A boolean value specifying whether WPF Tracing is enabled. </returns>
-        static internal bool IsWpfTracingEnabledInRegistry() => s_enabledInRegistry;
+        internal static bool IsWpfTracingEnabledInRegistry() => s_enabledInRegistry;
 
         //
         // Check for an attached debugger.

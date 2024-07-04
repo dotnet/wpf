@@ -21,16 +21,7 @@
     <Color x:Key="SystemAccentColorSecondary">#4cc2ff</Color>
     <Color x:Key="SystemAccentColorTertiary">#4cc2ff</Color>
 
-    <!--  Highcontrast theme: DUSK.  -->
-    <!-- <Color x:Key="SystemColorWindowTextColor">#FFFFFF</Color>
-    <Color x:Key="SystemColorWindowColor">#2D3236</Color>
-    <Color x:Key="SystemColorHighlightTextColor">#212D3B</Color>
-    <Color x:Key="SystemColorHighlightColor">#ABCFF2</Color>
-    <Color x:Key="SystemColorButtonTextColor">#B6F6F0</Color>
-    <Color x:Key="SystemColorButtonFaceColor">#2D3236</Color>
-    <Color x:Key="SystemColorHotlightColor">#70EBDE</Color>
-    <Color x:Key="SystemColorGrayTextColor">#A6A6A6</Color> -->
-
+    <!--  Highcontrast theme -->
     <DynamicResource x:Key="SystemColorWindowTextColor" ResourceKey="{x:Static SystemColors.WindowTextColorKey}" />
     <DynamicResource x:Key="SystemColorWindowColor" ResourceKey="{x:Static SystemColors.WindowColorKey}" />
     <DynamicResource x:Key="SystemColorHighlightTextColor" ResourceKey="{x:Static SystemColors.HighlightTextColorKey}" />

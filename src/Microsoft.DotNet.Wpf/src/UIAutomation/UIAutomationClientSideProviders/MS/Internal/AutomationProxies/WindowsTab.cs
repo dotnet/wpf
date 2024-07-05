@@ -319,7 +319,7 @@ namespace MS.Internal.AutomationProxies
                     WinEventTracker.AddToNotificationList(
                         upDownHwnd,
                         new WinEventTracker.ProxyRaiseEvents(UpDownControlRaiseEvents),
-                        _upDownEvents, 1);
+                        _upDownEvents, _upDownEvents.Length);
                 }
             }
 

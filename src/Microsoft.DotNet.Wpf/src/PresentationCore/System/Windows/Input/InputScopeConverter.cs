@@ -156,7 +156,7 @@ namespace System.Windows.Input
             {
                 if (destinationType == typeof(string))
                 {
-                    return Enum.GetName(typeof(InputScopeNameValue), ((InputScopeName)inputScope.Names[0]).NameValue);
+                    return Enum.GetName(((InputScopeName)inputScope.Names[0]).NameValue);
                 }
             }
             return base.ConvertTo(context, culture, value, destinationType);

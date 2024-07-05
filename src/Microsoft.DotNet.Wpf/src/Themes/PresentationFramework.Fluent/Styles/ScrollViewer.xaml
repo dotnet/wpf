@@ -32,7 +32,7 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             Margin="{TemplateBinding Padding}">
-                            <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" />
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" />
                         </Grid>
 
                         <ScrollBar

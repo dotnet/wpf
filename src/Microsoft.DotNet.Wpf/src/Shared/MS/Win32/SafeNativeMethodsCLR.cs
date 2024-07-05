@@ -350,9 +350,9 @@ namespace MS.Win32
                     out buffer, out bytesReturned) && (bytesReturned >= sizeof(int)))
                 {
                     var data = Marshal.ReadInt32(buffer);
-                    if (Enum.IsDefined(typeof(NativeMethods.WTS_CONNECTSTATE_CLASS), data))
+                    var connectState = (NativeMethods.WTS_CONNECTSTATE_CLASS)data;
+                    if (Enum.IsDefined(connectState))
                     {
-                        var connectState = (NativeMethods.WTS_CONNECTSTATE_CLASS)data;
                         currentSessionConnectState = (connectState == NativeMethods.WTS_CONNECTSTATE_CLASS.WTSActive);
                     }
                 }

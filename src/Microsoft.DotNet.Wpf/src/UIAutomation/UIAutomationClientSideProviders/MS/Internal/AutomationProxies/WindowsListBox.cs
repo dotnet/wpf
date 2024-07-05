@@ -453,7 +453,7 @@ namespace MS.Internal.AutomationProxies
                 // This array must be kept in sync with the array in PropertyToWinEvent
                 ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvtIdProperties = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, SelectionPattern.IsSelectionRequiredProperty)];
 
-                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null, aEvtIdProperties.Length);
+                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null);
                 el = wlb;
             }
             else if (eventId == NativeMethods.EventObjectSelection || eventId == NativeMethods.EventObjectSelectionRemove || eventId == NativeMethods.EventObjectSelectionAdd)

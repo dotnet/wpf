@@ -68,24 +68,23 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            int cEvents = 0;
             ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)
             {
-                aEvents = PropertyToWinEvent (aidProps, out cEvents);
+                aEvents = PropertyToWinEvent(aidProps, out _);
             }
             else
             {
-                aEvents = EventToWinEvent (eventId, out cEvents);
+                aEvents = EventToWinEvent(eventId, out _);
             }
 
             // If we have WinEvents to trap, add those to the list of WinEvent
             // notification list
-            if (cEvents > 0)
+            if (aEvents.Length > 0)
             {
-                WinEventTracker.AddToNotificationList (_hwnd, _createOnEvent, aEvents, cEvents);
+                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents);
             }
         }
 
@@ -98,24 +97,23 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            int cEvents;
             ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)
             {
-                aEvents = PropertyToWinEvent (aidProps, out cEvents);
+                aEvents = PropertyToWinEvent(aidProps, out _);
             }
             else
             {
-                aEvents = EventToWinEvent (eventId, out cEvents);
+                aEvents = EventToWinEvent(eventId, out _);
             }
 
             // If we have WinEvents to remove, remive those to the list of WinEvent
             // notification list
-            if (cEvents > 0)
+            if (aEvents.Length > 0)
             {
-                WinEventTracker.RemoveToNotificationList (_hwnd, aEvents, null, cEvents);
+                WinEventTracker.RemoveToNotificationList(_hwnd, aEvents, null);
             }
         }
 

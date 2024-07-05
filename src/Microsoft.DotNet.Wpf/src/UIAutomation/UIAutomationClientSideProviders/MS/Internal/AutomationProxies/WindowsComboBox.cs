@@ -307,7 +307,7 @@ namespace MS.Internal.AutomationProxies
 
                         if (editPortionEvents.Length > 0)
                         {
-                            WinEventTracker.AddToNotificationList(cbInfo.hwndItem, new WinEventTracker.ProxyRaiseEvents(EditPortionEvents), editPortionEvents, editPortionEvents.Length);
+                            WinEventTracker.AddToNotificationList(cbInfo.hwndItem, new WinEventTracker.ProxyRaiseEvents(EditPortionEvents), editPortionEvents);
                         }
                     }
                 }
@@ -343,7 +343,7 @@ namespace MS.Internal.AutomationProxies
 
                         if (editPortionEvents.Length > 0)
                         {
-                            WinEventTracker.RemoveToNotificationList(cbInfo.hwndItem, editPortionEvents, null, editPortionEvents.Length);
+                            WinEventTracker.RemoveToNotificationList(cbInfo.hwndItem, editPortionEvents, null);
                         }
                     }
                 }

@@ -512,29 +512,25 @@ namespace MS.Internal.AutomationProxies
 
         // Builds a list of Win32 WinEvents to process changes in properties changes values.
         // Returns an array of Events to Set. The number of valid entries in this array is pass back in cEvents
-        private WinEventTracker.EvtIdProperty [] PropertyToWinEvent (AutomationProperty [] aProps, out int cEvent)
+        private ReadOnlySpan<WinEventTracker.EvtIdProperty> PropertyToWinEvent(AutomationProperty[] aProps, out int cEvent)
         {
-            ArrayList alEvents = new ArrayList (16);
+            List<WinEventTracker.EvtIdProperty> automationEvents = new(16);
 
             foreach (AutomationProperty idProp in aProps)
             {
-                int [] evtId = PropertyToWinEvent (idProp);
+                int[] evtId = PropertyToWinEvent(idProp);
 
                 for (int i = 0; evtId != null && i < evtId.Length; i++)
                 {
-                    alEvents.Add (new WinEventTracker.EvtIdProperty (evtId [i], idProp));
+                    automationEvents.Add(new WinEventTracker.EvtIdProperty(evtId[i], idProp));
                 }
 
             }
 
-            WinEventTracker.EvtIdProperty [] aEvtIdProperties = new WinEventTracker.EvtIdProperty [alEvents.Count];
+            //Assign OUT parameter
+            cEvent = automationEvents.Count;
 
-            cEvent = alEvents.Count;
-            for (int i = 0; i < cEvent; i++)
-            {
-                aEvtIdProperties [i] = (WinEventTracker.EvtIdProperty) alEvents [i];
-            }
-            return aEvtIdProperties;
+            return CollectionsMarshal.AsSpan(automationEvents);
         }
 
         #endregion

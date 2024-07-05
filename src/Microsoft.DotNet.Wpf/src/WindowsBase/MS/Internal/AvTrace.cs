@@ -374,7 +374,13 @@ namespace MS.Internal
         }
 
 
-        // replace { and } by {{ and }} - call if literal string will be passed to Format
+        /// <summary> Replaces '{' and '}' occurrences with '{{' and '}}'.
+        /// <para>
+        /// Call if literal string will be passed to StringBuilder.AppendFormat() overloads.
+        /// </para>
+        /// </summary>
+        /// <param name="value">The string to replace formatting characters in.</param>
+        /// <returns>A formatted string, no-op in case there are no '{' or '}'. </returns>
         public static string AntiFormat(string value)
         {
             ReadOnlySpan<char> input = value.AsSpan();
@@ -501,7 +507,7 @@ namespace MS.Internal
 
     }
 
-    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
+    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, object[] parameters, int start);
 
     internal class AvTraceBuilder
     {
@@ -512,42 +518,42 @@ namespace MS.Internal
             _sb = new StringBuilder();
         }
 
-        public AvTraceBuilder( string message )
+        public AvTraceBuilder(string message)
         {
-            _sb = new StringBuilder( message );
+            _sb = new StringBuilder(message);
         }
 
-        public void Append( string message )
+        public void Append(string message)
         {
-            _sb.Append( message );
+            _sb.Append(message);
         }
 
-        public void AppendFormat( string message, params object[] args )
+        public void AppendFormat(string message, params object[] args)
         {
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string value) ? value : AvTrace.ToStringHelper(args[i]);
             }
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, argstrs);
         }
 
-        public void AppendFormat( string message, object arg1 )
+        public void AppendFormat(string message, object arg1)
         {
             _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.ToStringHelper(arg1));
         }
 
-        public void AppendFormat( string message, object arg1, object arg2 )
+        public void AppendFormat(string message, object arg1, object arg2)
         {
             _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.ToStringHelper(arg1), AvTrace.ToStringHelper(arg2));
         }
 
-        public void AppendFormat( string message, string arg1 )
+        public void AppendFormat(string message, string arg1)
         {
             _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.AntiFormat(arg1));
         }
 
-        public void AppendFormat( string message, string arg1, string arg2 )
+        public void AppendFormat(string message, string arg1, string arg2)
         {
             _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.AntiFormat(arg1), AvTrace.AntiFormat(arg2));
         }

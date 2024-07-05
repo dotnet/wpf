@@ -44,7 +44,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="raiseEvents" - function to call to create a raw element
         // Param name="aEvtIdProp"
         // Param name="cProps" - Number of valid props in the array
-        static internal void AddToNotificationList (IntPtr hwnd, ProxyRaiseEvents raiseEvents, EvtIdProperty[] aEvtIdProp, int cProps)
+        static internal void AddToNotificationList(IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp, int cProps)
         {
             GetCallbackQueue();
 
@@ -74,7 +74,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="raiseEvents" - Callback, should be null for non system-wide events
         // Param name="aEvtIdProp"
         // Param name="cProps" - Number of valid props in the array
-        static internal void RemoveToNotificationList (IntPtr hwnd, EvtIdProperty[] aEvtIdProp, ProxyRaiseEvents raiseEvents, int cProps)
+        static internal void RemoveToNotificationList(IntPtr hwnd, ReadOnlySpan<EvtIdProperty> aEvtIdProp, ProxyRaiseEvents raiseEvents, int cProps)
         {
             // Remove the list of Event to Window List
             // NOTE: raiseEvents must be null in the case when event is not a system-wide event
@@ -337,7 +337,7 @@ namespace MS.Internal.AutomationProxies
         //      raiseEvents - function to call to create a raw element
         //      aEvtIdProp - Array of Tupples WinEvent and Automation properties
         //      cProps  - Number of valid props in the array
-        private static void BuildEventsList (EventFlag eFlag, IntPtr hwnd, ProxyRaiseEvents raiseEvents, EvtIdProperty[] aEvtIdProp, int cProps)
+        private static void BuildEventsList(EventFlag eFlag, IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp, int cProps)
         {
             // All operations in the list of events and windows handle must be atomic
             lock (_ahp)

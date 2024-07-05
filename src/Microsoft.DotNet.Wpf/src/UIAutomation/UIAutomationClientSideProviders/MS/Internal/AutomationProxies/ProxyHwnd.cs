@@ -69,7 +69,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             int cEvents = 0;
-            WinEventTracker.EvtIdProperty [] aEvents;
+            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)
@@ -99,7 +99,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             int cEvents;
-            WinEventTracker.EvtIdProperty [] aEvents;
+            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)

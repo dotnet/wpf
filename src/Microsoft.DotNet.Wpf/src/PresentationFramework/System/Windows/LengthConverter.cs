@@ -221,11 +221,6 @@ namespace System.Windows
             }
         }
 
-        static internal string ToString(double l, CultureInfo cultureInfo)
-        {
-            if(double.IsNaN(l)) return "Auto";
-            return Convert.ToString(l, cultureInfo);
-        }
 
         #endregion
 

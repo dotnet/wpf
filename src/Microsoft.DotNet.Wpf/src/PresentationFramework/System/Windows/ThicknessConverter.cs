@@ -12,6 +12,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -169,17 +170,38 @@ namespace System.Windows
             // Initial capacity [64] is an estimate based on a sum of:
             // 48 = 4x double (twelve digits is generous for the range of values likely)
             //  8 = 4x Unit Type string (approx two characters)
-            //  4 = 4x separator characters
-            StringBuilder sb = new StringBuilder(64);
+            //  3 = 3x separator characters
+            //  1 = 1x scratch space for alignment
 
-            sb.Append(LengthConverter.ToString(th.Left, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Top, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Right, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Bottom, cultureInfo));
-            return sb.ToString();
+            DefaultInterpolatedStringHandler handler = new(0, 7, cultureInfo, stackalloc char[64]);
+            FormatDoubleAsString(th.Left, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            FormatDoubleAsString(th.Top, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            FormatDoubleAsString(th.Right, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            FormatDoubleAsString(th.Bottom, ref handler);
+
+            return handler.ToStringAndClear();
+        }
+
+        /// <summary> Holds the "Auto" string representation for <see cref="double.NaN"/> conversion. </summary>
+        private static ReadOnlySpan<char> NaNValue => ['A', 'u', 't', 'o'];
+
+        /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
+        /// in <paramref name="handler"/>. <br /> <br />
+        /// Special representation applies for <see cref="double.NaN"/> values, emitted as "Auto" string instead. </summary>
+        /// <param name="value">The value to format as string.</param>
+        /// <param name="handler">The handler specifying culture used for conversion.</param>
+        static internal void FormatDoubleAsString(double value, ref DefaultInterpolatedStringHandler handler)
+        {
+            if (double.IsNaN(value))
+                handler.AppendFormatted(NaNValue);
+            else
+                handler.AppendFormatted(value);
         }
 
         static internal Thickness FromString(string s, CultureInfo cultureInfo)

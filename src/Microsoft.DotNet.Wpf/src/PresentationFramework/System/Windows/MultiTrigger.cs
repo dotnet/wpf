@@ -115,10 +115,8 @@ namespace System.Windows
             // Set conditions array for all property triggers
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                PropertyValue propertyValue = PropertyValues[i];
+                ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(i);
                 propertyValue.Conditions = TriggerConditions;
-                // Put back modified struct
-                PropertyValues[i] = propertyValue;
             }
 
             base.Seal();

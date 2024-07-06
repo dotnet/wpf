@@ -458,11 +458,9 @@ namespace System.Windows
             if( existingIndex >= 0 )
             {
                 // Overwrite existing value for dp
-                PropertyValue propertyValue = PropertyValues[existingIndex];
+                ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(existingIndex);
                 propertyValue.ValueType = valueType;
                 propertyValue.ValueInternal = value;
-                // Put back modified struct
-                PropertyValues[existingIndex] = propertyValue;
             }
             else
             {

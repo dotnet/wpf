@@ -431,11 +431,9 @@ namespace System.Windows
                 // Overwrite existing value for dp
                 lock (_synchronized)
                 {
-                    PropertyValue propertyValue = PropertyValues[existingIndex];
+                    ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(existingIndex);
                     propertyValue.ValueType = valueType;
                     propertyValue.ValueInternal = value;
-                    // Put back modified struct
-                    PropertyValues[existingIndex] = propertyValue;
                 }
             }
             else
@@ -590,14 +588,11 @@ namespace System.Windows
                 // Set delayed ChildID for all property triggers
                 for (int i = 0; i < PropertyValues.Count; i++)
                 {
-                    PropertyValue propertyValue = PropertyValues[i];
+                    ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(i);
                     propertyValue.ChildName = _childName;
 
                     // Freeze the FEF property value
                     StyleHelper.SealIfSealable(propertyValue.ValueInternal);
-
-                    // Put back modified struct
-                    PropertyValues[i] = propertyValue;
                 }
             }
 

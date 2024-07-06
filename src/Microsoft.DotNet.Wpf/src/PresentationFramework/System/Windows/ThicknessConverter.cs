@@ -204,19 +204,20 @@ namespace System.Windows
                 handler.AppendFormatted(value);
         }
 
-        static internal Thickness FromString(string s, CultureInfo cultureInfo)
+        static internal unsafe Thickness FromString(string s, CultureInfo cultureInfo)
         {
             TokenizerHelper th = new(s, cultureInfo);
-            Span<double> lengths = stackalloc double[4];
+            double* lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.
             while (th.NextToken())
             {
-                if (i == 4) // In case we've got more than 4 doubles, we throw
+                if (i >= 4) // In case we've got more than 4 doubles, we throw
                     throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
 
-                lengths[i++] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
+                lengths[i] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
+                i++;
             }
 
             // We have a reasonable interpretation for one value (all four edges),

@@ -79,15 +79,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string)) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
@@ -110,10 +102,12 @@ namespace System.Windows
                                            CultureInfo cultureInfo, 
                                            object source)
         {
-            if (source != null)
+            if (source is not null)
             {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
+                if (source is string sourceString)
+                    return FromString(sourceString, cultureInfo);
+                else
+                    return Convert.ToDouble(source, cultureInfo);
             }
 
             throw GetConvertFromException(source);
@@ -143,23 +137,22 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is double )
+            if (value is double doubleValue)
             {
-                double l = (double)value;
                 if (destinationType == typeof(string)) 
                 { 
-                    if(double.IsNaN(l)) 
-                        return "Auto";
+                    if(double.IsNaN(doubleValue)) 
+                        return NaNValue.ToString();
                     else 
-                        return Convert.ToString(l, cultureInfo); 
+                        return Convert.ToString(doubleValue, cultureInfo); 
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
                     ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
-                    return new InstanceDescriptor(ci, new object[] { l });
+                    return new InstanceDescriptor(ci, new object[] { doubleValue });
                 }
             }
+
             throw GetConvertToException(value, destinationType);
         }
         #endregion 

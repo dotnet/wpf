@@ -28,7 +28,7 @@ namespace System.Windows
     /// <summary>
     /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
     /// </summary> 
-    public class LengthConverter: TypeConverter
+    public class LengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -181,24 +181,24 @@ namespace System.Windows
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
         static internal double FromString(string s, CultureInfo cultureInfo)
         {
-            string valueString = s.Trim();
-            string goodString = valueString.ToLowerInvariant();
-            int strLen = goodString.Length;
+            ReadOnlySpan<char> valueString = s.AsSpan().Trim();
+
             int strLenUnit = 0;
             double unitFactor = 1.0;
 
             //Auto is represented and Double.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
-            if (goodString == "auto") return Double.NaN;
+            if (valueString.Equals(NaNValue, StringComparison.OrdinalIgnoreCase))
+                return double.NaN;
 
-            for (int i = 0; i < PixelUnitStrings.Length; i++)
+            for (int i = 0; i < s_pixelUnitStrings.Length; i++)
             {
                 // NOTE: This is NOT a culture specific comparison.
                 // This is by design: we want the same unit string table to work across all cultures.
-                if (goodString.EndsWith(PixelUnitStrings[i], StringComparison.Ordinal))
+                if (valueString.EndsWith(s_pixelUnitStrings[i], StringComparison.OrdinalIgnoreCase))
                 {
-                    strLenUnit = PixelUnitStrings[i].Length;
+                    strLenUnit = s_pixelUnitStrings[i].Length;
                     unitFactor = PixelUnitFactors[i];
                     break;
                 }
@@ -207,33 +207,37 @@ namespace System.Windows
             //  important to substring original non-lowered string 
             //  this allows case sensitive ToDouble below handle "NaN" and "Infinity" correctly. 
             //  this addresses windows bug 1177408
-            valueString = valueString.Substring(0, strLen - strLenUnit);
+            valueString = valueString.Slice(0, valueString.Length - strLenUnit);
 
             // FormatException errors thrown by Convert.ToDouble are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
             // to create a Length instance from a string.  This addresses windows bug 968884
             try
             {
-                double result = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
-                return result;
+                return double.Parse(valueString, cultureInfo) * unitFactor;
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Format(SR.LengthFormatError, valueString));
+                throw new FormatException(SR.Format(SR.LengthFormatError, valueString.ToString()));
             }
         }
 
         // This array contains strings for unit types 
         // These are effectively "TypeConverter only" units.
         // They are all expressable in terms of the Pixel unit type and a conversion factor.
-        static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
-        static private double[] PixelUnitFactors = 
-        { 
+        private static readonly string[] s_pixelUnitStrings = ["px", "in", "cm", "pt"];
+
+        /// <summary> Holds the factor value representation for <see cref="s_pixelUnitStrings"/> units. </summary>
+        private static ReadOnlySpan<double> PixelUnitFactors =>
+        [ 
             1.0,              // Pixel itself
             96.0,             // Pixels per Inch
             96.0 / 2.54,      // Pixels per Centimeter
             96.0 / 72.0,      // Pixels per Point
-        };
+        ];
+
+        /// <summary> Holds the "Auto" string representation for <see cref="double"/> conversion. </summary>
+        private static ReadOnlySpan<char> NaNValue => ['A', 'u', 't', 'o'];
 
         static internal string ToString(double l, CultureInfo cultureInfo)
         {

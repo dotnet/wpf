@@ -206,38 +206,29 @@ namespace System.Windows
 
         static internal Thickness FromString(string s, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
-            double[] lengths = new double[4];
+            TokenizerHelper th = new(s, cultureInfo);
+            Span<double> lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.
             while (th.NextToken())
             {
-                if (i >= 4)
-                {
-                    i = 5;    // Set i to a bad value. 
-                    break;
-                }
+                if (i == 4) // In case we've got more than 4 doubles, we throw
+                    throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
 
-                lengths[i] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
-                i++;
+                lengths[i++] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
             }
 
-            // We have a reasonable interpreation for one value (all four edges), two values (horizontal, vertical),
+            // We have a reasonable interpretation for one value (all four edges),
+            // two values (horizontal, vertical),
             // and four values (left, top, right, bottom).
-            switch (i)
+            return i switch
             {
-                case 1:
-                    return new Thickness(lengths[0]);
-
-                case 2:
-                    return new Thickness(lengths[0], lengths[1], lengths[0], lengths[1]);
-
-                case 4:
-                    return new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]);
-            }
-
-            throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
+                1 => new Thickness(lengths[0]),
+                2 => new Thickness(lengths[0], lengths[1], lengths[0], lengths[1]),
+                4 => new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringThickness, s)),
+            };
         }
 
     #endregion

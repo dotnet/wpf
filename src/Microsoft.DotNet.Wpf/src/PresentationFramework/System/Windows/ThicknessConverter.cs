@@ -5,7 +5,7 @@
 //
 // 
 //
-// Description: Contains the ThicknessConverter: TypeConverter for the Thicknessclass.
+// Description: Contains the ThicknessConverter: TypeConverter for the Thickness struct.
 //
 //
 
@@ -74,15 +74,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor) 
-                ||  destinationType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
@@ -103,12 +95,16 @@ namespace System.Windows
         /// <param name="source"> The object to convert to a Thickness. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
+            if (source is not null)
             {
-                if (source is string)      { return FromString((string)source, cultureInfo); }
-                else if (source is double) { return new Thickness((double)source); }
-                else                       { return new Thickness(Convert.ToDouble(source, cultureInfo)); }
+                if (source is string sourceString)
+                    return FromString(sourceString, cultureInfo);
+                else if (source is double sourceValue)
+                    return new Thickness(sourceValue);
+                else
+                    return new Thickness(Convert.ToDouble(source, cultureInfo));
             }
+
             throw GetConvertFromException(source);
         }
 
@@ -134,22 +130,18 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(value);
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (!(value is Thickness))
-            {
-                #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Thickness)), "value");
-            }
+            if (value is not Thickness thickness)
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Thickness)), nameof(value));
 
-            Thickness th = (Thickness)value;
-            if (destinationType == typeof(string)) { return ToString(th, cultureInfo); }
-            if (destinationType == typeof(InstanceDescriptor))
+            if (destinationType == typeof(string))
+                return ToString(thickness, cultureInfo);
+            else if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(Thickness).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
-                return new InstanceDescriptor(ci, new object[] { th.Left, th.Top, th.Right, th.Bottom });
+                return new InstanceDescriptor(ci, new object[] { thickness.Left, thickness.Top, thickness.Right, thickness.Bottom });
             }
 
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(Thickness), destinationType.FullName));
-
         }
 
 

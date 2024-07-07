@@ -179,7 +179,7 @@ namespace System.Windows
             int strLenUnit = 0;
             double unitFactor = 1.0;
 
-            //Auto is represented and Double.NaN
+            //Auto is represented as Double.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
             if (valueString.Equals(NaNValue, StringComparison.OrdinalIgnoreCase))
@@ -197,9 +197,7 @@ namespace System.Windows
                 }
             }
 
-            //  important to substring original non-lowered string 
-            //  this allows case sensitive ToDouble below handle "NaN" and "Infinity" correctly. 
-            //  this addresses windows bug 1177408
+            // Remove pixel unit string if present, otherwise no-op
             valueString = valueString.Slice(0, valueString.Length - strLenUnit);
 
             // FormatException errors thrown by Convert.ToDouble are pretty uninformative.
@@ -215,18 +213,18 @@ namespace System.Windows
             }
         }
 
-        // This array contains strings for unit types 
+        // This array contains string representations for unit known types.
         // These are effectively "TypeConverter only" units.
         // They are all expressable in terms of the Pixel unit type and a conversion factor.
         private static readonly string[] s_pixelUnitStrings = ["px", "in", "cm", "pt"];
 
-        /// <summary> Holds the factor value representation for <see cref="s_pixelUnitStrings"/> units. </summary>
+        /// <summary> Holds the factor value representation for units specified in <see cref="s_pixelUnitStrings"/>. </summary>
         private static ReadOnlySpan<double> PixelUnitFactors =>
         [ 
-            1.0,              // Pixel itself
-            96.0,             // Pixels per Inch
-            96.0 / 2.54,      // Pixels per Centimeter
-            96.0 / 72.0,      // Pixels per Point
+            1.0,              // px - Pixel itself
+            96.0,             // in - Pixels per Inch
+            96.0 / 2.54,      // cm - Pixels per Centimeter
+            96.0 / 72.0,      // pt - Pixels per Point
         ];
 
         /// <summary> Holds the "Auto" string representation for <see cref="double"/> conversion. </summary>

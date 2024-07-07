@@ -455,7 +455,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        [FriendAccessAllowed]
         static public PathGeometry GetAsPathGeometry(Geometry geo)
         {
             PathGeometry pg = geo as PathGeometry;
@@ -468,7 +467,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return pg;
         }
 
-        [FriendAccessAllowed]
         static public bool IsRectangle(Geometry geometry)
         {
             if (geometry.Transform != null && !IsScaleTranslate(geometry.Transform.Value))
@@ -886,7 +884,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return estimatedPoints;
         }
 
-        [FriendAccessAllowed]
         public static int GetGeometryDataPointCount(Geometry.PathGeometryData geometryData)
         {
             int pointCount;
@@ -896,7 +893,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return pointCount;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathGeometry geometry)
         {
             int size = 0;
@@ -914,7 +910,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return size;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathFigure figure)
         {
             int size = 2;     // For the startpoint and endpoint
@@ -932,7 +927,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return size;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathSegment segment)
         {
             Type typ = segment.GetType();
@@ -1775,7 +1769,6 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Font
 
-        [FriendAccessAllowed]
         public static Uri GetFontUri(GlyphTypeface typeface)
         {
             return typeface.FontUri;
@@ -2348,7 +2341,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <remarks>
         /// Accessed by GDIExporter!CGDIDevice.HrEndPage.
         /// </remarks>
-        [FriendAccessAllowed]
         public static bool DisplayPageDebugHeader
         {
             get

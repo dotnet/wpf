@@ -32,11 +32,9 @@ using System;
 using System.Security;              // 
 using System.Threading;             // Interlocked
 using System.Windows.Threading;     // Dispatcher
-using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]   // defined in Base, also used in Framework
     [Flags]
     internal enum ShutDownEvents : ushort
     {
@@ -48,7 +46,6 @@ namespace MS.Internal
         All                 = AppDomain | DispatcherShutdown,
     }
 
-    [FriendAccessAllowed]   // defined in Base, also used in Framework
     internal abstract class ShutDownListener : WeakReference
     {
         internal ShutDownListener(object target)

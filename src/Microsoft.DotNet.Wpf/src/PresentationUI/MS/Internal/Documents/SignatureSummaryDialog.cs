@@ -16,7 +16,6 @@ using System.Security;
 using System.Windows.Forms;
 using System.IO.Packaging;
 using System.Windows.TrustUI;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {

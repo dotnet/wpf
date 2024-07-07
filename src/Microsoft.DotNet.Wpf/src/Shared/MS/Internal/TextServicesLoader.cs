@@ -30,7 +30,6 @@ using System.Diagnostics;
 #elif DRT
     using MS.Internal.Drt;
 #else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
 using MS.Internal.YourAssemblyName;
 #endif
 
@@ -38,7 +37,6 @@ namespace MS.Internal
 {
     // Creates ITfThreadMgr instances, the root object of the Text Services
     // Framework.
-    [FriendAccessAllowed]
     internal class TextServicesLoader
     {
         //------------------------------------------------------

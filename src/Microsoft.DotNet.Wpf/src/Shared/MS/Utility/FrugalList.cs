@@ -1604,9 +1604,6 @@ namespace MS.Utility
     // Use FrugalObjectList when more than one reference to the list is needed.
     // The "object" in FrugalObjectLIst refers to the list itself, not what the list contains.
 
-#if !SYSTEM_XAML
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif
     internal class FrugalObjectList<T>
     {
         public FrugalObjectList()
@@ -1935,9 +1932,6 @@ namespace MS.Utility
 
     // Use FrugalStructList when only one reference to the list is needed.
     // The "struct" in FrugalStructList refers to the list itself, not what the list contains.
-#if !SYSTEM_XAML
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
-#endif
     internal struct FrugalStructList<T>
     {
         public FrugalStructList(int size)

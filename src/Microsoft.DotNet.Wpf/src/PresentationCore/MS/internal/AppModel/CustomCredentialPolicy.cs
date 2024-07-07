@@ -38,7 +38,6 @@ using MS.Win32;
 
 namespace MS.Internal.AppModel
 {
-    [FriendAccessAllowed]
     internal class CustomCredentialPolicy : ICredentialPolicy
     {
         static CustomCredentialPolicy()

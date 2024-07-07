@@ -7,7 +7,6 @@
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using MS.Internal.PresentationCore;
 using System;
 using System.Diagnostics;
 using System.Security;
@@ -803,7 +802,6 @@ namespace System.Windows.Media.Media3D
         /// Visual2DContentBounds returns the 2D bounding box for the content of this 3D object.  The 2D bounding box
         /// is the projection of the 3D content bounding box up to the nearest 2D visual that contains the Visual3D.
         /// </summary>
-        [FriendAccessAllowed]
         internal Rect Visual2DContentBounds
         {
             get
@@ -1867,10 +1865,8 @@ namespace System.Windows.Media.Media3D
         // This flag is set during a descendents walk, for property invalidation.
         internal bool IsVisualChildrenIterationInProgress
         {
-            [FriendAccessAllowed]
             get { return CheckFlagsAnd(VisualFlags.IsVisualChildrenIterationInProgress); }
 
-            [FriendAccessAllowed]
             set { SetFlags(value, VisualFlags.IsVisualChildrenIterationInProgress); }
         }
 

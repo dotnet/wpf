@@ -710,7 +710,6 @@ namespace System.Windows.Xps.Serialization
         //                      cPieces = -1 indicates that the arc degenerates to a point 
         //
         //--------------------------------------------------------------------------------------------------
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         public static PointCollection ArcToBezier(
             double xStart,     // X coordinate of the last point
             double yStart,     // Y coordinate of the last point

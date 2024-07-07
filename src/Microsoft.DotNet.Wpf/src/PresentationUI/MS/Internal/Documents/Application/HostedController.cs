@@ -10,7 +10,6 @@ using System.Security;
 using System.Windows.TrustUI;
 using System.Windows.Interop;
 using MS.Internal;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents.Application
 {
@@ -19,7 +18,6 @@ namespace MS.Internal.Documents.Application
 /// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
 /// </summary>
 
-[FriendAccessAllowed]
 internal class HostedController : IDocumentController
 {
     #region IDocumentController Members

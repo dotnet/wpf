@@ -4,7 +4,6 @@
 
 using System;
 using MS.Internal;
-using MS.Internal.WindowsBase;
 using System.Security;
 using Microsoft.Win32;
 
@@ -13,7 +12,6 @@ using Microsoft.Win32;
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal static class RegistryKeys
     {
         internal const string

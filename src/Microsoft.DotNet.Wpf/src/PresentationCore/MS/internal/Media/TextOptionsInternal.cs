@@ -12,7 +12,6 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.Media
 {
@@ -20,13 +19,11 @@ namespace MS.Internal.Media
     /// Provide access to text options of element in syntax of TextOptions.xxx = yyy;
     /// Actual data is stored in the owner.
     /// </summary>
-    [FriendAccessAllowed]   // used by Framework
     internal static class TextOptionsInternal
     {
         #region Dependency Properties
 
         /// <summary> Text hinting property </summary>
-        [FriendAccessAllowed]   // used by Framework
         internal static readonly DependencyProperty TextHintingModeProperty = 
                 DependencyProperty.RegisterAttached(
                         "TextHintingMode",
@@ -40,7 +37,6 @@ namespace MS.Internal.Media
         
         #region Attached Properties Setters
 
-        [FriendAccessAllowed]   // used by Framework
         public static void SetTextHintingMode(DependencyObject element, TextHintingMode value)
         {
             ArgumentNullException.ThrowIfNull(element);
@@ -48,7 +44,6 @@ namespace MS.Internal.Media
             element.SetValue(TextHintingModeProperty, value);
         }
 
-        [FriendAccessAllowed]   // used by Framework
         public static TextHintingMode GetTextHintingMode(DependencyObject element)
         {
             ArgumentNullException.ThrowIfNull(element);

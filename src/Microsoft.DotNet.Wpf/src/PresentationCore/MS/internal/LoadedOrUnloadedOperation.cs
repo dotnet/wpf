@@ -13,11 +13,9 @@ using System.Diagnostics;           // Debug.Assert
 
 using System.Windows;               // DependencyObject
 using System.Windows.Threading;     // DispatcherOperationCallback
-using MS.Internal.PresentationCore; // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class LoadedOrUnloadedOperation
     {
         internal LoadedOrUnloadedOperation(

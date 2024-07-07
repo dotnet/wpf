@@ -18,15 +18,12 @@ using System.IO;
 using MS.Utility;     // For SR.cs
 #else
 using System.Windows;
-using MS.Internal.WindowsBase; // FriendAccessAllowed
+using MS.Internal.WindowsBase;
 #endif
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for manipulating version object</summary>
-#if !PBTCOMPILER
-    [FriendAccessAllowed]
-#endif
     internal class FormatVersion
     {
         //------------------------------------------------------

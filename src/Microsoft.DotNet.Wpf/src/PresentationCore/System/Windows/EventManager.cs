@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using SR=MS.Internal.PresentationCore.SR;
 
@@ -250,7 +249,6 @@ namespace System.Windows
         /// <returns>
         ///     Matching <see cref="RoutedEvent"/>
         /// </returns>
-        [FriendAccessAllowed]
         internal static RoutedEvent GetRoutedEventFromName(string name, Type ownerType)
         {
             ArgumentNullException.ThrowIfNull(name);

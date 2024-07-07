@@ -13,7 +13,6 @@
 
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Collections.Specialized;
 using System.IO;
 using System.Security;
@@ -463,7 +462,6 @@ namespace System.Windows
         /// <param name="copy">
         /// Specify whether the data should remain on the clipboard after the application exits.
         /// </param>
-        [FriendAccessAllowed]
         internal static void CriticalSetDataObject(object data, bool copy)
         {
             ArgumentNullException.ThrowIfNull(data);
@@ -517,7 +515,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed]
         internal static bool IsClipboardPopulated()
         {
             return (GetDataObjectInternal() != null);

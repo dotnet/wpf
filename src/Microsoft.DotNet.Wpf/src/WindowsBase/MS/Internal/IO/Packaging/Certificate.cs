@@ -113,7 +113,7 @@ namespace MS.Internal.IO.Packaging
                         // X509Certificate constructor desires a byte array
                         Byte[] byteArray = new Byte[s.Length];
                         PackagingUtilities.ReliableRead(s, byteArray, 0, (int)s.Length);
-                        _certificate = new X509Certificate2(byteArray);
+                        _certificate = X509CertificateLoader.LoadCertificate(byteArray);
                     }
                 }
             }

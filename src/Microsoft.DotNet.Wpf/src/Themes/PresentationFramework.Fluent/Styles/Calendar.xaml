@@ -416,7 +416,7 @@
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <Grid x:Name="PART_YearView" Visibility="Hidden">
+                                <Grid x:Name="PART_YearView" Visibility="Hidden" KeyboardNavigation.TabNavigation="None">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />

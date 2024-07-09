@@ -169,7 +169,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
                             AllowsTransparency="True"
-                            Placement="Mouse"
+                            Placement="Bottom"
                             PlacementTarget="{Binding ElementName=PART_TextBox}"
                             StaysOpen="False" />
                     </Grid>

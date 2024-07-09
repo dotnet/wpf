@@ -182,7 +182,7 @@ namespace System.Windows
             //Auto is represented as Double.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
-            if (valueString.Equals(NaNValue, StringComparison.OrdinalIgnoreCase))
+            if (valueString.Equals("Auto", StringComparison.OrdinalIgnoreCase))
                 return double.NaN;
 
             for (int i = 0; i < s_pixelUnitStrings.Length; i++)
@@ -226,9 +226,6 @@ namespace System.Windows
             96.0 / 2.54,      // cm - Pixels per Centimeter
             96.0 / 72.0,      // pt - Pixels per Point
         ];
-
-        /// <summary> Holds the "Auto" string representation for <see cref="double"/> conversion. </summary>
-        private static ReadOnlySpan<char> NaNValue => ['A', 'u', 't', 'o'];
 
         static internal string ToString(double l, CultureInfo cultureInfo)
         {

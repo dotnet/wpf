@@ -140,9 +140,9 @@ namespace System.Windows
             if (value is double doubleValue)
             {
                 if (destinationType == typeof(string)) 
-                { 
-                    if(double.IsNaN(doubleValue)) 
-                        return NaNValue.ToString();
+                {
+                    if (double.IsNaN(doubleValue))
+                        return "Auto";
                     else 
                         return Convert.ToString(doubleValue, cultureInfo); 
                 }

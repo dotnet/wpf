@@ -311,7 +311,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
                     <Grid x:Name="PART_Root" Margin="12">
-                        <Grid>
+                        <Grid KeyboardNavigation.TabNavigation="Cycle">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
@@ -333,13 +333,14 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Focusable="False"
+                                    Focusable="True"
                                     FontSize="14"
                                     FontWeight="Bold"
+                                    KeyboardNavigation.TabNavigation="Cycle"
                                     Foreground="{DynamicResource CalendarViewForeground}" />
                                 <Button
                                     x:Name="PART_PreviousButton"
-                                    Grid.Column="1"
+                                    Grid.Column="1" 
                                     Width="26"
                                     Height="26"
                                     Margin="0,0,8,0"
@@ -348,8 +349,9 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Focusable="False"
+                                    Focusable="True"
                                     AutomationProperties.Name="Previous"
+                                    KeyboardNavigation.TabNavigation="Cycle"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
                                     <Button.Content>
                                         <TextBlock
@@ -369,8 +371,9 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     BorderBrush="Transparent"
-                                    Focusable="False"
+                                    Focusable="True"
                                     AutomationProperties.Name="Next"
+                                    KeyboardNavigation.TabNavigation="Contained"
                                     Foreground="{DynamicResource CalendarViewButtonForeground}">
                                     <Button.Content>
                                         <TextBlock
@@ -387,6 +390,7 @@
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                KeyboardNavigation.TabNavigation="None"
                                 Visibility="Visible">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -412,7 +416,7 @@
                                 Grid.Row="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
-                                <Grid x:Name="PART_YearView" Visibility="Hidden">
+                                <Grid x:Name="PART_YearView" Visibility="Hidden" KeyboardNavigation.TabNavigation="None">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />

@@ -66,9 +66,6 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Interface
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        // Param name="idEvent", UIAuotmation event
-        // Param name="cEvent"out, number of winevent set in the array
-        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent
         protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             if (idEvent == InvokePattern.InvokedEvent)

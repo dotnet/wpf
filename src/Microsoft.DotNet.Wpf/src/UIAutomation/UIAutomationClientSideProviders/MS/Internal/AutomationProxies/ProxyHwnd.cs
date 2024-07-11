@@ -393,7 +393,9 @@ namespace MS.Internal.AutomationProxies
             return null;
         }
 
-        // Builds a list of Win32 WinEvents to process a UIAutomation Event.
+        /// <summary> Builds a list of Win32 WinEvents to process a UIAutomation Event. </summary>
+        /// <param name="idEvent"> An UIAutomation event. </param>
+        /// <returns> Returns an array of Events to Set. </returns>
         protected virtual ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             // Fill this variable with a WinEvent id if found

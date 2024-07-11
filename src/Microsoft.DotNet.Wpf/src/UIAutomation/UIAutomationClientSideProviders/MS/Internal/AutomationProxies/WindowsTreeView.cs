@@ -343,12 +343,11 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent.
         protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             if (idEvent == AutomationElement.StructureChangedEvent)
             {
-                return new WinEventTracker.EvtIdProperty [3]
+                return new WinEventTracker.EvtIdProperty[3]
                 {
                     new(NativeMethods.EventObjectStateChange, idEvent),
                     new(NativeMethods.EventObjectCreate, idEvent),

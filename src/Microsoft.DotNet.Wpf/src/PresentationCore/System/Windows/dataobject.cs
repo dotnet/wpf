@@ -3091,27 +3091,7 @@ namespace System.Windows
                     catch (RestrictedTypeDeserializationException)
                     {
                         value = null;
-                        // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]
-                        
-                    }
-
-                    // Using Binary formatter
-                    stream.Position = startPosition;
-                    BinaryFormatter formatter;
-                    formatter = new BinaryFormatter();
-                    if (restrictDeserialization)
-                    {
-                        formatter.Binder = new TypeRestrictingSerializationBinder();
-                    }
-                    try
-                    {
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                        value = formatter.Deserialize(stream);
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
-                    }
-                    catch (RestrictedTypeDeserializationException)
-                    {
-                        value = null;
+                        // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]                     
                     }
                 }
                 else

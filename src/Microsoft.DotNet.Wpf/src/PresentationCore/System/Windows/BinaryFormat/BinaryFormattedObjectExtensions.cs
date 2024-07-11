@@ -520,20 +520,6 @@ namespace System.Windows
         ///  Gets <paramref name="count"/> number of strings from a <see cref="ArraySingleString"/>.
         /// </summary>
         public static IEnumerable<string?> GetStringValues(this BinaryFormattedObject format, ArraySingleString array, int count)
-            // {
-                
-            //     // var eao = array.ArrayObjects as IEnumerable<string?>;
-            //     // if (eao != null)
-            //     // {
-            //     //     return IEnumerable<string?>.Take(eao,count).Select(record =>
-            //     //     format.Dereference((IRecord)record) switch
-            //     //     {
-            //     //         BinaryObjectString stringRecord => stringRecord.Value,
-            //     //         _ => null
-            //     //     });
-            //     // }
-            //     // return null;
-            // }
             => array.ArrayObjects.Take(count).Select(record =>
                 format.Dereference((IRecord)record) switch
                 {

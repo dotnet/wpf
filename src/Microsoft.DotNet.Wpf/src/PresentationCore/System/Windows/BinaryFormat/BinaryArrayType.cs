@@ -29,20 +29,5 @@ namespace System.Windows
         ///  A multi-dimensional rectangular array.
         /// </summary>
         Rectangular = 2,
-
-        /// <summary>
-        ///  A single-dimensional array where the lower bound index is greater than 0.
-        /// </summary>
-        SingleOffset = 3,
-
-        /// <summary>
-        ///  A jagged array where the lower bound index is greater than 0.
-        /// </summary>
-        JaggedOffset = 4,
-
-        /// <summary>
-        ///  Multi-dimensional arrays where the lower bound index of at least one of the dimensions is greater than 0.
-        /// </summary>
-        RectangularOffset = 5,
     }
 }

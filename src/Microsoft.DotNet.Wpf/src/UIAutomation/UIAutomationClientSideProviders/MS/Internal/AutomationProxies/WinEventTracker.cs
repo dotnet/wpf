@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Windows.Automation;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using System.Diagnostics;
 using MS.Win32;
 
@@ -115,7 +116,7 @@ namespace MS.Internal.AutomationProxies
         internal class EventHookParams
         {
             // List of hwnd that requested to receive notification event
-            internal ArrayList _alHwnd;
+            internal List<EventCreateParams> _hWndList;
 
             // Win32 Hook handle from SetWinEventHook.
             internal IntPtr _winEventHook;
@@ -214,9 +215,9 @@ namespace MS.Internal.AutomationProxies
 
                     // Don't use the Misc.GetWindowThreadProcessId() helper since that throws; some events we want even
                     // though the hwnd is no longer valid (e.g. menu item events).
-                    uint processId;
+
                     // GetWindowThreadProcessId doesn't use SetLastError().
-                    if (UnsafeNativeMethods.GetWindowThreadProcessId(hwnd, out processId) != 0)
+                    if (UnsafeNativeMethods.GetWindowThreadProcessId(hwnd, out uint processId) != 0)
                     {
                         // Find the EventHookParams.  
                         // _ahp is an array of Hashtables where each Hashtable corrasponds to one event.
@@ -226,14 +227,14 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Sanity check
-                    if (hookParams != null && hookParams._alHwnd != null)
+                    if (hookParams != null && hookParams._hWndList != null)
                     {
-                        ArrayList eventCreateParams = hookParams._alHwnd;
+                        List<EventCreateParams> eventCreateParams = hookParams._hWndList;
 
                         // Loop for all the registered hwnd listeners for this event
                         for (int index = eventCreateParams.Count - 1; index >= 0; index--)
                         {
-                            EventCreateParams ecp = (EventCreateParams)eventCreateParams[index];
+                            EventCreateParams ecp = eventCreateParams[index];
 
                             // if hwnd of the event matches the registered hwnd -OR- this is a global event (all hwnds)
                             // -AND- the hwnd is still valid have the proxies raise appropriate events.
@@ -279,14 +280,14 @@ namespace MS.Internal.AutomationProxies
                     // where the hwnd is not there until it is shown.  So we need to raise these event all the time.
                     // Office command bars use this.
                     hookParams = (EventHookParams)_ahp[evt][_globalEventKey];
-                    if (hookParams != null && hookParams._alHwnd != null)
+                    if (hookParams != null && hookParams._hWndList != null)
                     {
-                        ArrayList eventCreateParams = hookParams._alHwnd;
+                        List<EventCreateParams> eventCreateParams = hookParams._hWndList;
 
                         // Loop for all the registered hwnd listeners for this event
                         for (int index = eventCreateParams.Count - 1; index >= 0; index--)
                         {
-                            EventCreateParams ecp = (EventCreateParams)eventCreateParams[index];
+                            EventCreateParams ecp = eventCreateParams[index];
 
                             // We have global event
                             if ((ecp._hwnd == IntPtr.Zero))
@@ -347,8 +348,6 @@ namespace MS.Internal.AutomationProxies
                     // add the window to the list
                     if (evt >= 0)
                     {
-                        EventHookParams hookParams = null;
-                        
                         uint processId;
 
                         if (hwnd == IntPtr.Zero)
@@ -375,34 +374,33 @@ namespace MS.Internal.AutomationProxies
                         // _ahp is an array of Hashtables where each Hashtable corrasponds to one event.
                         // Get the correct Hashtable using the index evt.  Then lookup the EventHookParams
                         // in the hash table, using the process id.
-                        hookParams = (EventHookParams)_ahp[evt][processId];
+                        EventHookParams hookParams = (EventHookParams)_ahp[evt][processId];
 
                         // If there is not an entry for the event for the specified process then create one.
                         if (hookParams == null)
                         {
-                            hookParams = new EventHookParams
-                            {
-                                _process = processId
-                            };
+                            hookParams = new EventHookParams { _process = processId };
                             _ahp[evt].Add(processId, hookParams);
                         }
 
-                        ArrayList eventCreateParams = hookParams._alHwnd;
+                        List<EventCreateParams> eventCreateParams = hookParams._hWndList;
 
                         if (eFlag == EventFlag.Add)
                         {
                             if (eventCreateParams == null)
-                            {
-                                // empty array, create the hwnd arraylist
+                            {                            
                                 hookParams._evtId = evtIdProp._evtId;
-                                eventCreateParams = hookParams._alHwnd = new ArrayList (16);
+
+                                // empty array, create the hwnd list
+                                hookParams._hWndList = new List<EventCreateParams>(16);
+                                eventCreateParams = hookParams._hWndList;
                             }
 
                             // Check if the event for that window already exist.
                             // Discard it as no dups are allowed
                             for (int index = eventCreateParams.Count - 1; index >= 0; index--)
                             {
-                                EventCreateParams ecp = (EventCreateParams)eventCreateParams[index];
+                                EventCreateParams ecp = eventCreateParams[index];
 
                                 // Code below will discard duplicates:
                                 // Proxy cannot subscribe same hwnd to the same event more than once
@@ -436,11 +434,10 @@ namespace MS.Internal.AutomationProxies
                             // Go through the list of window to find the one
                             for (int index = eventCreateParams.Count - 1; index >= 0; index--)
                             {
-                                EventCreateParams ecp = (EventCreateParams)eventCreateParams[index];
+                                EventCreateParams ecp = eventCreateParams[index];
 
                                 // Detect if caller should be removed from notification list
-                                bool remove = false;
-
+                                bool remove;
                                 if (raiseEvents == null)
                                 {
                                     // Not a global wide events                                    
@@ -592,7 +589,7 @@ namespace MS.Internal.AutomationProxies
         private static uint _globalEventKey = 0;
         
         // Parameters needed to send a notification to a client
-        struct EventCreateParams
+        internal struct EventCreateParams
         {
             // hwnd requesting a notification
             internal IntPtr _hwnd;

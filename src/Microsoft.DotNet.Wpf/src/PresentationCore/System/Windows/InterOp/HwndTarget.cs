@@ -2530,18 +2530,8 @@ namespace System.Windows.Interop
         {
             #region Data
 
-            /// <SecurityNode>
-            ///     Critical: We dont want _notificationHwnd to be exposed and used
-            ///         by anyone besides this class.
-            /// </SecurityNode>
             private HwndWrapper _notificationHwnd; // The hwnd used to listen system wide messages
-
-            /// <SecurityNode>
-            ///     Critical: _notificationHook is the hook to listen to window
-            ///         messages. We want this to be critical that no one can get it
-            ///         listen to window messages.
-            /// </SecurityNode>
-            private HwndWrapperHook _notificationHook;
+            private HwndWrapperHook _notificationHook; // The hwnd hook to listen to window messages
 
             private int _hwndTargetCount;
             public event EventHandler<MonitorPowerEventArgs> MonitorPowerEvent;
@@ -2551,10 +2541,6 @@ namespace System.Windows.Interop
 
             #endregion
 
-            /// <SecurityNode>
-            ///     Critical: Calls critical code.
-            ///     TreatAsSafe: Doesn't expose the critical resource.
-            /// </SecurityNode>
             public NotificationWindowHelper()
             {
                 // Check for Vista or newer is needed for RegisterPowerSettingNotification.
@@ -2589,10 +2575,6 @@ namespace System.Windows.Interop
                 }
             }
 
-            /// <SecurityNode>
-            ///     Critical: Calls critical code.
-            ///     TreatAsSafe: Doesn't expose the critical resource.
-            /// </SecurityNode>
             public void Dispose()
             {
                 if (_hPowerNotify != IntPtr.Zero)
@@ -2612,10 +2594,6 @@ namespace System.Windows.Interop
                 }
             }
 
-            /// <SecurityNode>
-            ///     Critical: Calls critical code.
-            ///     TreatAsSafe: Doesn't expose the critical resource.
-            /// </SecurityNode>
             public void AttachHwndTarget(HwndTarget hwndTarget)
             {
                 Debug.Assert(hwndTarget != null);
@@ -2633,10 +2611,6 @@ namespace System.Windows.Interop
                 _hwndTargetCount++;
             }
 
-            /// <SecurityNode>
-            ///     Critical: Calls critical code.
-            ///     TreatAsSafe: Doesn't expose the critical resource.
-            /// </SecurityNode>
             public bool DetachHwndTarget(HwndTarget hwndTarget)
             {
                 Debug.Assert(hwndTarget != null);

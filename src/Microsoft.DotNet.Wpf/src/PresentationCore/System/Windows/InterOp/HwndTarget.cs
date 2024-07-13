@@ -2581,7 +2581,7 @@ namespace System.Windows.Interop
                                                 IntPtr.Zero,
                                                 wrapperHooks);
 
-                    Guid monitorGuid = new Guid(NativeMethods.GUID_MONITOR_POWER_ON.ToByteArray());
+                    Guid monitorGuid = NativeMethods.GUID_MONITOR_POWER_ON;
                     unsafe
                     {
                         _hPowerNotify = UnsafeNativeMethods.RegisterPowerSettingNotification(_notificationHwnd.Handle, &monitorGuid, 0);

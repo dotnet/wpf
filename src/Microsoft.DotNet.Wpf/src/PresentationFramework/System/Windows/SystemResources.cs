@@ -1412,7 +1412,7 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
-                    
+
                     if(ThemeManager.IsFluentThemeEnabled)
                     {
                         ThemeManager.ApplySystemTheme();
@@ -1733,8 +1733,7 @@ namespace System.Windows
             // the dictionary else just retun the cached value
             if (_dictionary != null)
             {
-                bool canCache;
-                object value  = _dictionary.GetValue(_keyOrValue, out canCache);
+                object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
                 if (canCache)
                 {
                     // Note that we are replacing the _keyorValue field
@@ -1790,8 +1789,7 @@ namespace System.Windows
             {
                 // Take a peek at the element type of the ElementStartRecord
                 // within the ResourceDictionary's deferred content.
-                bool found;
-                return _dictionary.GetValueType(_keyOrValue, out found);
+                return _dictionary.GetValueType(_keyOrValue, out bool _);
             }
             else
             {
@@ -1800,7 +1798,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        internal virtual void RemoveFromDictionary()
+        protected virtual void RemoveFromDictionary()
         {
             if (_dictionary != null)
             {
@@ -1970,7 +1968,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        internal override void RemoveFromDictionary()
+        protected override void RemoveFromDictionary()
         {
             // DeferredThemeResourceReferences are never added to the dictionary's
             // list of deferred references, so they don't need to be removed.
@@ -2034,11 +2032,11 @@ namespace System.Windows
         #endregion Properties
     }
 
-    internal class DeferredResourceReferenceList
+    internal class DeferredResourceReferenceList : IEnumerable<DeferredResourceReference>
     {
         private readonly object _syncRoot = new();
         private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
-        private int _potentiallyDeadEntryCount = 0;
+        private int _potentiallyDeadEntryCount;
 
         public void AddOrSet(DeferredResourceReference deferredResourceReference)
         {
@@ -2112,6 +2110,11 @@ namespace System.Windows
 
         private void Purge()
         {
+            Purge(null);
+        }
+
+        private void Purge(List<DeferredResourceReference> aliveItems)
+        {
             lock (_syncRoot)
             {
                 List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
@@ -2119,9 +2122,13 @@ namespace System.Windows
 
                 foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
                 {
-                    if (entry.Value.TryGetTarget(out _) == false)
+                    if (entry.Value.TryGetTarget(out var item) is false)
                     {
                         deadKeys.Add(entry.Key);
+                    }
+                    else
+                    {
+                        aliveItems?.Add(item);
                     }
                 }
 
@@ -2130,6 +2137,18 @@ namespace System.Windows
                     _entries.Remove(deadKey);
                 }
             }
+        }
+
+        public IEnumerator<DeferredResourceReference> GetEnumerator()
+        {
+            var aliveItems = new List<DeferredResourceReference>(_entries.Count);
+            Purge(aliveItems);
+            return aliveItems.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

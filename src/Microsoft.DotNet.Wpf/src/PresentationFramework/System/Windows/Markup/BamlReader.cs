@@ -182,7 +182,7 @@ namespace System.Windows.Markup
             _properties = new ArrayList();
             _haveUnprocessedRecord = false;
             _deferableContentBlockDepth = -1;
-            _nodeStack = new Stack();
+            _nodeStack = new Stack<BamlNodeInfo>();
             _reverseXmlnsTable = new Dictionary<String, List<String>>();
         }
 
@@ -1493,7 +1493,7 @@ namespace System.Windows.Markup
 
                     case BamlRecordType.PropertyComplexStart:
                         ReadPropertyComplexStartRecord();
-                        nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+                        nodeInfo = _nodeStack.Pop();
                         if (readProperty.Pop())
                         {
                             markupString += ", ";
@@ -1842,7 +1842,7 @@ namespace System.Windows.Markup
         {
             // Pop information off the node stack to ensure we have matched all the
             // start and end nodes and have nothing left but the start document node.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.DocumentStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2025,7 +2025,7 @@ namespace System.Windows.Markup
             // Pop information off the node stack that tells us what element this
             // is the end of.  Check to make sure the record on the stack is for a
             // start element.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ElementStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2112,7 +2112,7 @@ namespace System.Windows.Markup
             // Pop information off the node info stack that tells us what the starting
             // record was for this ending record.  Check to make sure it is the
             // correct type.  If not, throw an exception.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             BamlRecordType expectedType;
             switch (nodeInfo.RecordType)
             {
@@ -2240,7 +2240,7 @@ namespace System.Windows.Markup
             // Pop information off the node stack that tells us what element this
             // is the end of.  Check to make sure the record on the stack is for a
             // start element.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ConstructorParametersStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2842,7 +2842,7 @@ namespace System.Windows.Markup
         private BamlAttributeUsage _attributeUsage;
 
         // Stack of node information about the element tree being built.
-        private Stack _nodeStack;
+        private readonly Stack<BamlNodeInfo> _nodeStack;
 
         // Context information used when reading baml file.  This contains the XamlTypeMapper used
         // for resolving binary property information into strings.

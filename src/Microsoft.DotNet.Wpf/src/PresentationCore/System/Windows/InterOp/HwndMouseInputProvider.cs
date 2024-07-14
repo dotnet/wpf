@@ -1482,7 +1482,7 @@ namespace System.Windows.Interop
         private NativeMethods.TRACKMOUSEEVENT _tme = new NativeMethods.TRACKMOUSEEVENT();
 
         // accessors into PresentationFramework classes
-        const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
+        const string PresentationFrameworkAssemblyFullName = $"PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}";
         private static DependencyProperty WindowChromeWorkerProperty;
         private static MethodInfo GetEffectiveClientAreaMI;
 

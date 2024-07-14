@@ -256,11 +256,9 @@ namespace System.Windows.Input.StylusPlugIns
                     }
                     catch(System.ComponentModel.Win32Exception e)
                     {
-                        if (e.NativeErrorCode != 1400) // ERROR_INVALID_WINDOW_HANDLE
-                        {
+                        Debug.WriteLineIf(e.NativeErrorCode != 1400, // ERROR_INVALID_WINDOW_HANDLE
                             // This is an unlocalized string but it only prints on the Debug Console
-                            Debug.WriteLine(String.Format("Dispatcher.CriticalInvokeShutdown() Failed.  Error={0}", e.NativeErrorCode));
-                        }
+                            $"Dispatcher.CriticalInvokeShutdown() Failed.  Error={e.NativeErrorCode}");
                     }
                     finally
                     {

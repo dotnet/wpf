@@ -25,8 +25,8 @@ namespace System.Windows
     ///     NOTE: None of the members can be null
     /// </remarks>
     /// <ExternalAPI/>
-    [TypeConverter("System.Windows.Markup.RoutedEventConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
-    [ValueSerializer("System.Windows.Markup.RoutedEventValueSerializer, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+    [TypeConverter($"System.Windows.Markup.RoutedEventConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
+    [ValueSerializer($"System.Windows.Markup.RoutedEventValueSerializer, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
     public sealed class RoutedEvent
     {
         #region External API
@@ -109,7 +109,7 @@ namespace System.Windows
         /// </summary>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", _ownerType.Name, _name );
+            return string.Create(CultureInfo.InvariantCulture, $"{_ownerType.Name}.{_name}");
         }
 
         #endregion External API

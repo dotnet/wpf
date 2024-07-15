@@ -53,6 +53,7 @@ namespace System.Windows.Documents
 
             _defaultCulture = InputLanguageManager.Current != null ? InputLanguageManager.Current.CurrentInputLanguage :
                                                                      Thread.CurrentThread.CurrentCulture;
+            _defaultComparer = StringComparer.Create(_defaultCulture, true);
         }
 
         #endregion Constructors
@@ -224,17 +225,15 @@ namespace System.Windows.Documents
         // implement this as a process-wide list.
         internal void IgnoreAll(string word)
         {
-            if (_ignoredWordsList == null)
-            {
-                _ignoredWordsList = new ArrayList(1);
-            }
+            if (_ignoredWordsList is null)
+                _ignoredWordsList = new List<string>(1);
 
-            int index = _ignoredWordsList.BinarySearch(word, new CaseInsensitiveComparer(_defaultCulture));
+            int index = _ignoredWordsList.BinarySearch(word, _defaultComparer);
 
+            // If we didn't find the word, we're gonna add it to ignore list
             if (index < 0)
             {
                 // This is a new word to ignore.
-
                 // Add it the list so we don't flag it later.
                 _ignoredWordsList.Insert(~index, word);
 
@@ -1438,17 +1437,7 @@ namespace System.Windows.Documents
         }
 
         // Returns true if a user has tagged the specified word with "Ignore All".
-        private bool IsIgnoredWord(char[] word)
-        {
-            bool isIgnoredWord = false;
-
-            if (_ignoredWordsList != null)
-            {
-                isIgnoredWord = _ignoredWordsList.BinarySearch(new string(word), new CaseInsensitiveComparer(_defaultCulture)) >= 0;
-            }
-
-            return isIgnoredWord;
-        }
+        private bool IsIgnoredWord(char[] word) => _ignoredWordsList?.BinarySearch(new string(word), _defaultComparer) >= 0;
 
         // Returns true if we have an engine capable of proofing the specified
         // language.
@@ -2052,11 +2041,12 @@ namespace System.Windows.Documents
         private bool _pendingCaretMovedCallback;
 
         // List of words tagged by the user as non-errors.
-        private ArrayList _ignoredWordsList;
+        private List<string> _ignoredWordsList;
 
         // The CultureInfo associated with this speller.
         // Used for ignored words comparison, and plain text controls (TextBox).
         private readonly CultureInfo _defaultCulture;
+        private readonly IComparer<string> _defaultComparer;
 
         // Set true if the nl6 library is unavailable.
         private bool _failedToInit;

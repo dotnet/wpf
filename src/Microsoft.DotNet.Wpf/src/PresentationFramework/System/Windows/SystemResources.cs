@@ -1434,6 +1434,12 @@ namespace System.Windows
 
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
+
+                    if(SystemColors.InvalidateCache())
+                    {
+                        OnSystemValueChanged();
+                        InvalidateResources(true);
+                    }
                     break;
             }
 

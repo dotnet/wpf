@@ -943,7 +943,6 @@ namespace System.Windows.Documents
         {
             TextMapCallbackData data = (TextMapCallbackData)o;
             SpellerInteropBase.ITextRange sTextRange = textSegment.TextRange;
-            char[] word;
 
             // Check if this segment falls outside the content range.
             // The region before/after the content is only for context --
@@ -962,8 +961,7 @@ namespace System.Windows.Documents
             if (sTextRange.Length > 1) // Ignore single letter errors.
             {
                 // Check if the segment has been marked "ignore" by the user.
-                word = new char[sTextRange.Length];
-                Array.Copy(data.TextMap.Text, sTextRange.Start, word, 0, sTextRange.Length);
+                string word = new(data.TextMap.Text, sTextRange.Start, sTextRange.Length);
 
                 if (!IsIgnoredWord(word))
                 {
@@ -1437,7 +1435,7 @@ namespace System.Windows.Documents
         }
 
         // Returns true if a user has tagged the specified word with "Ignore All".
-        private bool IsIgnoredWord(char[] word) => _ignoredWordsList?.BinarySearch(new string(word), _defaultComparer) >= 0;
+        private bool IsIgnoredWord(string word) => _ignoredWordsList?.BinarySearch(word, _defaultComparer) >= 0;
 
         // Returns true if we have an engine capable of proofing the specified
         // language.

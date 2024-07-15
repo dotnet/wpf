@@ -1247,6 +1247,13 @@ namespace System.Windows
             }
         }
 
+        private static object InvalidateApplicationResources(Object args)
+        {
+            Application application = (Application)args;
+            application.InvalidateResourceReferences(ResourcesChangeInfo.SysColorsOrSettingsChangeInfo);
+            return null;
+        }
+
         private static object InvalidateTreeResources(Object args)
         {
             object[] argsArray = (object[])args;
@@ -1325,6 +1332,13 @@ namespace System.Windows
             Dispatcher dispatcher = isSysColorsOrSettingsChange ? null : Dispatcher.FromThread(System.Threading.Thread.CurrentThread);
             if (dispatcher != null || isSysColorsOrSettingsChange)
             {
+                if (isSysColorsOrSettingsChange && Application.Current is Application application)
+                {
+                    application.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                                                       new DispatcherOperationCallback(InvalidateApplicationResources),
+                                                       application);
+                }
+
                 foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
                 {
                     if (!source.IsDisposed && (isSysColorsOrSettingsChange || (source.Dispatcher == dispatcher)))

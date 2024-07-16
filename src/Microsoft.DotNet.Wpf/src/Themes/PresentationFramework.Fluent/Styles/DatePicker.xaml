@@ -46,9 +46,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
-                    <Border Margin="{TemplateBinding Margin}">
-                        <Decorator x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
-                    </Border>
+                    <Grid>
+                        <Border>
+                            <ContentControl x:Name="PART_Watermark"
+                                Opacity="0"
+                                Focusable="False"
+                                IsHitTestVisible="False"
+                                Padding="2"/>
+                        </Border>
+                        <Border Margin="{TemplateBinding Margin}">
+                            <Decorator x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

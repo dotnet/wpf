@@ -113,7 +113,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
-                                <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid x:Name="PART_Root" FocusManager.FocusedElement="{Binding ElementName=PART_Button}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
@@ -144,9 +144,11 @@
                                         Background="Transparent"
                                         BorderBrush="Transparent"
                                         AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}"
-                                        Cursor="Arrow">
+                                        Cursor="Arrow"
+                                        Focusable="True"
+                                        IsTabStop="True" >
                                         <!--  WPF overrides paddings for button  -->
-                                        
+
                                         <TextBlock
                                             Margin="{StaticResource DatePickerCalendarButtonPadding}"
                                             HorizontalAlignment="Center"
@@ -176,7 +178,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
                             AllowsTransparency="True"
-                            Placement="Mouse"
+                            Placement="Bottom"
                             PlacementTarget="{Binding ElementName=PART_TextBox}"
                             StaysOpen="False" />
                     </Grid>

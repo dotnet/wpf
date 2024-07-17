@@ -18,10 +18,18 @@ internal static class ThemeManager
         // TODO : Temprorary way of checking if setting Fluent theme enabled flag. Provide a property for theme switch.
         if (Application.Current != null)
         {
+            string dictionarySource;
             foreach (ResourceDictionary mergedDictionary in Application.Current.Resources.MergedDictionaries)
             {
-                if (mergedDictionary.Source != null && mergedDictionary.Source.ToString().EndsWith("Fluent.xaml"))
+                if (mergedDictionary.Source != null)
                 {
+                    dictionarySource = mergedDictionary.Source.ToString();
+
+                    if (dictionarySource.EndsWith("Fluent.Light.xaml", StringComparison.OrdinalIgnoreCase)
+                        || dictionarySource.EndsWith("Fluent.Dark.xaml", StringComparison.OrdinalIgnoreCase)
+                        || dictionarySource.EndsWith("Fluent.HC.xaml", StringComparison.OrdinalIgnoreCase)
+                        || dictionarySource.EndsWith("Fluent.xaml", StringComparison.OrdinalIgnoreCase))
+                    
                     _isFluentThemeEnabled = true;
                     break;
                 }
@@ -40,8 +48,8 @@ internal static class ThemeManager
             _currentApplicationTheme = GetSystemTheme();
             _currentUseLightMode = IsSystemThemeLight();
 
-            var themeColorResourceUri = GetFluentWindowThemeColorResourceUri(_currentApplicationTheme, _currentUseLightMode);
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = themeColorResourceUri });
+            var themeColorResourceUri = GetFluentThemeResourceUri(_currentApplicationTheme, _currentUseLightMode);
+            AddOrUpdateThemeResources(themeColorResourceUri);
 
             _isFluentThemeInitialized = true;
         }
@@ -103,7 +111,7 @@ internal static class ThemeManager
                 requestedAccentColor != _currentSystemAccentColor)
         {
 
-            Uri dictionaryUri = GetFluentWindowThemeColorResourceUri(requestedTheme, requestedUseLightMode);
+            Uri dictionaryUri = GetFluentThemeResourceUri(requestedTheme, requestedUseLightMode);
             AddOrUpdateThemeResources(dictionaryUri);
 
             foreach(Window window in windows)
@@ -191,11 +199,11 @@ internal static class ThemeManager
 
         var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
 
-        FindFluentThemeAndColorDictionary(out ResourceDictionary fluentDictionary, out ResourceDictionary colorDictionary);
+        FindFluentThemeResourceDictionary(out ResourceDictionary fluentDictionary);
         
-        if (colorDictionary != null)
+        if (fluentDictionary != null)
         {
-            Application.Current.Resources.MergedDictionaries.Remove(colorDictionary);
+            Application.Current.Resources.MergedDictionaries.Remove(fluentDictionary);
         }
 
         Application.Current.Resources.MergedDictionaries.Add(newDictionary);
@@ -215,22 +223,21 @@ internal static class ThemeManager
 
     #region Private Methods
 
-    private static Uri GetFluentWindowThemeColorResourceUri(string systemTheme, bool useLightMode)
+    private static Uri GetFluentThemeResourceUri(string systemTheme, bool useLightMode)
     {
-        string themeColorFileName = useLightMode ? "light.xaml" : "dark.xaml";
+        string themeFileName = "Fluent." + (useLightMode ? "Light" : "Dark") + ".xaml";
 
         if(SystemParameters.HighContrast)
         {
-            themeColorFileName = "hc.xaml";
+            themeFileName = "Fluent.HC.xaml";
         }
 
-        return new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/" + themeColorFileName, UriKind.Absolute);
-    }
+        return new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Themes/" + themeFileName, UriKind.Absolute);
+    }  
 
-    private static void FindFluentThemeAndColorDictionary(out ResourceDictionary fluentThemeDictionary, out ResourceDictionary fluentColorDictionary)
+    private static void FindFluentThemeResourceDictionary(out ResourceDictionary fluentDictionary)
     {
-        fluentThemeDictionary = null;
-        fluentColorDictionary = null;
+        fluentDictionary = null;
 
         if (Application.Current == null) return;
 
@@ -238,19 +245,14 @@ internal static class ThemeManager
         {
             if (mergedDictionary.Source != null)
             {
-                if (mergedDictionary.Source.ToString() == fluentResourceDictionaryUri)
+                if (mergedDictionary.Source.ToString().Contains(fluentThemeResoruceDictionaryUri))
                 {
-                    fluentThemeDictionary = mergedDictionary;
-                }
-                else if (mergedDictionary.Source.ToString().StartsWith(fluentColorResourceUriPart))
-                {
-                    fluentColorDictionary = mergedDictionary;
+                    fluentDictionary = mergedDictionary;
+                    break;
                 }
             }
         }
     }
-
-
 
     #endregion
 
@@ -260,8 +262,7 @@ internal static class ThemeManager
 
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
 
-    private static readonly string fluentResourceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Resources/Fluent.xaml";
-    private static readonly string fluentColorResourceUriPart = "pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/";
+    private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
 
     private static string _currentApplicationTheme;
 

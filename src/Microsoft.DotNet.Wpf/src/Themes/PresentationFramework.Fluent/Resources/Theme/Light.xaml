@@ -155,6 +155,7 @@
     <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource AccentFillColorDisabled}" />
 
     <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+    
     <Color x:Key="SystemColorWindowTextColor">#FF00FF</Color>
     <Color x:Key="SystemColorWindowColor">#FF00FF</Color>
     <Color x:Key="SystemColorButtonFaceColor">#FF00FF</Color>

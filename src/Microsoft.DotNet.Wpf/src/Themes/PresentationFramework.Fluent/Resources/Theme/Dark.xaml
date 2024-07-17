@@ -128,6 +128,15 @@
     <Color x:Key="SystemFillColorSolidAttentionBackground">#2E2E2E</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#2E2E2E</Color>
 
+    <Color x:Key="SystemColorWindowTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorWindowColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonFaceColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHotlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorGrayTextColor">#FF00FF</Color>
+
     <!--  Brushes  -->
 
     <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="{StaticResource TextFillColorPrimary}" />
@@ -271,14 +280,14 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorButtonTextColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorHighlightColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="#FF00FF" />
-    <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="#FF00FF" />
+    <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonTextColorBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightColorBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="{StaticResource SystemColorHotlightColor}" />
+    <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  Control brushes  -->
 

@@ -12,13 +12,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    xmlns:controls="clr-namespace:Fluent.Controls"
+    xmlns:fluentcontrols="clr-namespace:Fluent.Controls"
     >
 
     <Thickness x:Key="ExpanderPadding">11,11,11,11</Thickness>
     <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
     <system:Double x:Key="ExpanderChevronSize">12.0</system:Double>
-    <controls:AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
+    <fluentcontrols:AnimationFactorToValueConverter x:Key="AnimationFactorToValueConverter" />
     <system:String x:Key="ExpanderChevronUpGlyph">&#xE70E;</system:String>
     <system:String x:Key="ExpanderChevronDownGlyph">&#xE70D;</system:String>
     <system:String x:Key="ExpanderChevronLeftGlyph">&#xE76B;</system:String>

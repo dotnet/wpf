@@ -6,7 +6,6 @@
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Resources/Accent.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Resources/DefaultContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Resources/DefaultFocusVisualStyle.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Resources/Fonts.xaml" />

@@ -28,7 +28,6 @@
     <Color x:Key="TextFillColorSecondary">#9E000000</Color>
     <Color x:Key="TextFillColorTertiary">#72000000</Color>
     <Color x:Key="TextFillColorDisabled">#5C000000</Color>
-    <Color x:Key="TextPlaceholderColor">#9E000000</Color>
     <Color x:Key="TextFillColorInverse">#FFFFFF</Color>
 
     <Color x:Key="AccentTextFillColorDisabled">#5C000000</Color>
@@ -53,11 +52,10 @@
     <Color x:Key="SubtleFillColorSecondary">#09000000</Color>
     <Color x:Key="SubtleFillColorTertiary">#06000000</Color>
     <Color x:Key="SubtleFillColorDisabled">#00FFFFFF</Color>
-    <Color x:Key="SubtleBorderBrushTertiary">#B6B6B6</Color>
 
     <Color x:Key="ControlAltFillColorTransparent">#00FFFFFF</Color>
     <Color x:Key="ControlAltFillColorSecondary">#06000000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#FFE9E9E9</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#0F000000</Color>
     <Color x:Key="ControlAltFillColorQuarternary">#18000000</Color>
     <Color x:Key="ControlAltFillColorDisabled">#00FFFFFF</Color>
 
@@ -70,7 +68,6 @@
 
     <Color x:Key="ControlStrokeColorDefault">#0F000000</Color>
     <Color x:Key="ControlStrokeColorSecondary">#29000000</Color>
-    <Color x:Key="ControlStrokeColorTertiary">#9E000000</Color>
     <Color x:Key="ControlStrokeColorOnAccentDefault">#14FFFFFF</Color>
     <Color x:Key="ControlStrokeColorOnAccentSecondary">#66000000</Color>
     <Color x:Key="ControlStrokeColorOnAccentTertiary">#37000000</Color>
@@ -158,6 +155,14 @@
     <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource AccentFillColorDisabled}" />
 
     <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+    <Color x:Key="SystemColorWindowTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorWindowColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonFaceColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHotlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorGrayTextColor">#FF00FF</Color>
 
     <!--  Brushes  -->
 
@@ -165,7 +170,6 @@
     <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="{StaticResource TextFillColorSecondary}" />
     <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="{StaticResource TextFillColorTertiary}" />
     <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="{StaticResource TextFillColorDisabled}" />
-    <SolidColorBrush x:Key="TextPlaceholderColorBrush" Color="{StaticResource TextPlaceholderColor}" />
     <SolidColorBrush x:Key="TextFillColorInverseBrush" Color="{StaticResource TextFillColorInverse}" />
 
     <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="{StaticResource ControlFillColorDefault}" />
@@ -198,7 +202,6 @@
 
     <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
-    <SolidColorBrush x:Key="ControlStrokeColorTertiaryBrush" Color="{StaticResource ControlStrokeColorTertiary}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentDefaultBrush" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentSecondaryBrush" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentTertiaryBrush" Color="{StaticResource ControlStrokeColorOnAccentTertiary}" />
@@ -288,44 +291,14 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <DrawingBrush
-        x:Key="StripedBackgroundBrush"
-        Stretch="UniformToFill"
-        TileMode="Tile"
-        Viewport="0,0,10,10"
-        ViewportUnits="Absolute">
-        <DrawingBrush.Drawing>
-            <DrawingGroup>
-                <DrawingGroup.Children>
-                    <GeometryDrawing Brush="#0E000000">
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup FillRule="Nonzero">
-                                <PathGeometry>
-                                    <PathFigure StartPoint="0,0">
-                                        <LineSegment Point="25,0" />
-                                        <LineSegment Point="100,75" />
-                                        <LineSegment Point="100,100" />
-                                        <LineSegment Point="75,100" />
-                                        <LineSegment Point="0,25" />
-                                        <LineSegment Point="0,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="75,0">
-                                        <LineSegment Point="100,25" />
-                                        <LineSegment Point="100,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="0,75">
-                                        <LineSegment Point="25,100" />
-                                        <LineSegment Point="0,100" />
-                                    </PathFigure>
-                                </PathGeometry>
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup.Children>
-            </DrawingGroup>
-        </DrawingBrush.Drawing>
-    </DrawingBrush>
-
+    <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonTextColorBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightColorBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="{StaticResource SystemColorHotlightColor}" />
+    <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  Control brushes  -->
 
@@ -398,7 +371,7 @@
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.8" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SubtleBorderBrushTertiary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource TextFillColorDisabled}" />

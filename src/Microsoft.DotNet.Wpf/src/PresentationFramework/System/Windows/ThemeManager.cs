@@ -131,7 +131,7 @@ internal static class ThemeManager
     /// <returns></returns>
     private static bool SetImmersiveDarkMode(Window window, bool useDarkMode)
     {
-        if (window == null)
+        if (window == null || !Utility.IsOSWindows11OrNewer)
         {
             return false;
         }

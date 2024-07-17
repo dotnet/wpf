@@ -2515,7 +2515,7 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentThemeEnabled)
+            if (Standard.Utility.IsOSWindows10OrNewer && ThemeManager.IsFluentThemeEnabled)
             {
                 ThemeManager.InitializeFluentTheme();
                 ThemeManager.ApplySystemTheme(this, true);

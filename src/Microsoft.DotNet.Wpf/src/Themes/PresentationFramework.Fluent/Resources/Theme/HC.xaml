@@ -45,10 +45,9 @@
     <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="TextPlaceholderColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextFillColorInverseBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
-    <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <SolidColorBrush x:Key="TextOnAccentFillColorSelectedTextBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
@@ -88,11 +87,10 @@
 
     <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="ControlStrokeColorTertiaryBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentDefaultBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentSecondaryBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentTertiaryBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="ControlStrokeColorOnAccentDisabledBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ControlStrokeColorOnAccentDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <SolidColorBrush x:Key="ControlStrokeColorForStrongFillWhenOnImageBrush" Color="{StaticResource SystemColorButtonTextColor}" />
 
@@ -160,45 +158,6 @@
     <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="{StaticResource SystemColorHotlightColor}" />
     <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
-
-    <DrawingBrush
-        x:Key="StripedBackgroundBrush"
-        Stretch="UniformToFill"
-        TileMode="Tile"
-        Viewport="0,0,10,10"
-        ViewportUnits="Absolute">
-        <DrawingBrush.Drawing>
-            <DrawingGroup>
-                <DrawingGroup.Children>
-                    <GeometryDrawing Brush="#0DFFFFFF">
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup FillRule="Nonzero">
-                                <PathGeometry>
-                                    <PathFigure StartPoint="0,0">
-                                        <LineSegment Point="25,0" />
-                                        <LineSegment Point="100,75" />
-                                        <LineSegment Point="100,100" />
-                                        <LineSegment Point="75,100" />
-                                        <LineSegment Point="0,25" />
-                                        <LineSegment Point="0,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="75,0">
-                                        <LineSegment Point="100,25" />
-                                        <LineSegment Point="100,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="0,75">
-                                        <LineSegment Point="25,100" />
-                                        <LineSegment Point="0,100" />
-                                    </PathFigure>
-                                </PathGeometry>
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup.Children>
-            </DrawingGroup>
-        </DrawingBrush.Drawing>
-    </DrawingBrush>
-
 
     <!--  Control brushes  -->
 
@@ -596,7 +555,6 @@
     <Color x:Key="TextFillColorSecondary">#FFFFFF</Color>
     <Color x:Key="TextFillColorTertiary">#FFFFFF</Color>
     <Color x:Key="TextFillColorDisabled">#A6A6A6</Color>
-    <Color x:Key="TextPlaceholderColor">#FF0000</Color>
     <Color x:Key="TextFillColorInverse">#FFFFFF</Color>
 
     <Color x:Key="AccentTextFillColorDisabled">#A6A6A6</Color>
@@ -637,7 +595,6 @@
 
     <Color x:Key="ControlStrokeColorDefault">#B6F6F0</Color>
     <Color x:Key="ControlStrokeColorSecondary">#B6F6F0</Color>
-    <Color x:Key="ControlStrokeColorTertiary">#B6F6F0</Color>
     <Color x:Key="ControlStrokeColorOnAccentDefault">#B6F6F0</Color>
     <Color x:Key="ControlStrokeColorOnAccentSecondary">#B6F6F0</Color>
     <Color x:Key="ControlStrokeColorOnAccentTertiary">#B6F6F0</Color>

@@ -43,7 +43,6 @@ internal static class ThemeManager
             var themeColorResourceUri = GetFluentWindowThemeColorResourceUri(_currentApplicationTheme, _currentUseLightMode);
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = themeColorResourceUri });
 
-            DwmColorization.UpdateAccentColors();
             _isFluentThemeInitialized = true;
         }
     }
@@ -78,7 +77,7 @@ internal static class ThemeManager
 
         string systemTheme = GetSystemTheme();
         bool useLightMode = IsSystemThemeLight();
-        Color systemAccentColor = DwmColorization.GetSystemAccentColor();
+        Color systemAccentColor = AccentColorHelper.SystemAccentColor;
         ApplyTheme(windows , systemTheme, useLightMode, systemAccentColor, forceUpdate);
     }
 
@@ -101,9 +100,8 @@ internal static class ThemeManager
         if(forceUpdate || 
                 requestedTheme != _currentApplicationTheme || 
                 requestedUseLightMode != _currentUseLightMode ||
-                DwmColorization.GetSystemAccentColor() != DwmColorization.CurrentApplicationAccentColor)
+                requestedAccentColor != _currentSystemAccentColor)
         {
-            DwmColorization.UpdateAccentColors();
 
             Uri dictionaryUri = GetFluentWindowThemeColorResourceUri(requestedTheme, requestedUseLightMode);
             AddOrUpdateThemeResources(dictionaryUri);
@@ -121,6 +119,7 @@ internal static class ThemeManager
 
             _currentApplicationTheme = requestedTheme;
             _currentUseLightMode = requestedUseLightMode;
+            _currentSystemAccentColor = requestedAccentColor;
         }
     }
 
@@ -192,18 +191,14 @@ internal static class ThemeManager
 
         var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
 
-        ResourceDictionary currentDictionary = Application.Current?.Resources;
-        foreach (var key in newDictionary.Keys)
+        FindFluentThemeAndColorDictionary(out ResourceDictionary fluentDictionary, out ResourceDictionary colorDictionary);
+        
+        if (colorDictionary != null)
         {
-            if (currentDictionary.Contains(key))
-            {
-                currentDictionary[key] = newDictionary[key];
-            }
-            else
-            {
-                currentDictionary.Add(key, newDictionary[key]);
-            }
+            Application.Current.Resources.MergedDictionaries.Remove(colorDictionary);
         }
+
+        Application.Current.Resources.MergedDictionaries.Add(newDictionary);
     }
 
     #endregion
@@ -232,6 +227,31 @@ internal static class ThemeManager
         return new Uri("pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/" + themeColorFileName, UriKind.Absolute);
     }
 
+    private static void FindFluentThemeAndColorDictionary(out ResourceDictionary fluentThemeDictionary, out ResourceDictionary fluentColorDictionary)
+    {
+        fluentThemeDictionary = null;
+        fluentColorDictionary = null;
+
+        if (Application.Current == null) return;
+
+        foreach (ResourceDictionary mergedDictionary in Application.Current.Resources.MergedDictionaries)
+        {
+            if (mergedDictionary.Source != null)
+            {
+                if (mergedDictionary.Source.ToString() == fluentResourceDictionaryUri)
+                {
+                    fluentThemeDictionary = mergedDictionary;
+                }
+                else if (mergedDictionary.Source.ToString().StartsWith(fluentColorResourceUriPart))
+                {
+                    fluentColorDictionary = mergedDictionary;
+                }
+            }
+        }
+    }
+
+
+
     #endregion
 
     #region Private Members
@@ -240,6 +260,9 @@ internal static class ThemeManager
 
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
 
+    private static readonly string fluentResourceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Resources/Fluent.xaml";
+    private static readonly string fluentColorResourceUriPart = "pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/";
+
     private static string _currentApplicationTheme;
 
     private static bool _currentUseLightMode = true;
@@ -247,6 +270,8 @@ internal static class ThemeManager
     private static bool _isFluentThemeEnabled = false;
 
     private static bool _isFluentThemeInitialized = false;
+
+    private static Color _currentSystemAccentColor = AccentColorHelper.SystemAccentColor;
 
     #endregion
 }

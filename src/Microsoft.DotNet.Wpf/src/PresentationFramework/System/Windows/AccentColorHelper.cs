@@ -17,14 +17,12 @@ internal static class AccentColorHelper
 
     internal static Color GetAccentColor(UISettingsRCW.UIColorType uiColorType = UISettingsRCW.UIColorType.Accent)
     {
-        Color color = _defaultAccentColor;
-
-        if (_UISettings.TryGetColorValue(uiColorType, out color))
+        if (UISettings.TryGetColorValue(uiColorType, out Color color))
         {
             return color;
         }
 
-        return color;
+        return _defaultAccentColor;
     }
 
     #endregion
@@ -39,7 +37,7 @@ internal static class AccentColorHelper
         }
     }
 
-    internal static UISettings _UISettings
+    private static UISettings UISettings
     {
         get
         {
@@ -56,7 +54,7 @@ internal static class AccentColorHelper
 
     #region Private Fields
 
-    private static Color _defaultAccentColor = Color.FromArgb(0xff, 0x00, 0x78, 0xd4);
+    private static readonly Color _defaultAccentColor = Color.FromArgb(0xff, 0x00, 0x78, 0xd4);
 
     private static UISettings _uiSettings = null;
 

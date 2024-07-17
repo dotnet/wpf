@@ -28,14 +28,13 @@
     <Color x:Key="TextFillColorSecondary">#C5FFFFFF</Color>
     <Color x:Key="TextFillColorTertiary">#87FFFFFF</Color>
     <Color x:Key="TextFillColorDisabled">#5DFFFFFF</Color>
-    <Color x:Key="TextPlaceholderColor">#87FFFFFF</Color>
     <Color x:Key="TextFillColorInverse">#E4000000</Color>
 
     <Color x:Key="AccentTextFillColorDisabled">#5DFFFFFF</Color>
     <Color x:Key="TextOnAccentFillColorSelectedText">#FFFFFF</Color>
     <Color x:Key="TextOnAccentFillColorPrimary">#000000</Color>
     <Color x:Key="TextOnAccentFillColorSecondary">#80000000</Color>
-    <Color x:Key="TextOnAccentFillColorDisabled">#77000000</Color>
+    <Color x:Key="TextOnAccentFillColorDisabled">#87FFFFFF</Color>
 
     <Color x:Key="ControlFillColorDefault">#0FFFFFFF</Color>
     <Color x:Key="ControlFillColorSecondary">#15FFFFFF</Color>
@@ -53,11 +52,10 @@
     <Color x:Key="SubtleFillColorSecondary">#0FFFFFFF</Color>
     <Color x:Key="SubtleFillColorTertiary">#0AFFFFFF</Color>
     <Color x:Key="SubtleFillColorDisabled">#00FFFFFF</Color>
-    <Color x:Key="SubtleBorderBrushTertiary">#4A4A4A</Color>
 
     <Color x:Key="ControlAltFillColorTransparent">#00FFFFFF</Color>
     <Color x:Key="ControlAltFillColorSecondary">#19000000</Color>
-    <Color x:Key="ControlAltFillColorTertiary">#FF373737</Color>
+    <Color x:Key="ControlAltFillColorTertiary">#0BFFFFFF</Color>
     <Color x:Key="ControlAltFillColorQuarternary">#12FFFFFF</Color>
     <Color x:Key="ControlAltFillColorDisabled">#00FFFFFF</Color>
 
@@ -70,7 +68,6 @@
 
     <Color x:Key="ControlStrokeColorDefault">#12FFFFFF</Color>
     <Color x:Key="ControlStrokeColorSecondary">#18FFFFFF</Color>
-    <Color x:Key="ControlStrokeColorTertiary">#C5FFFFFF</Color>
     <Color x:Key="ControlStrokeColorOnAccentDefault">#14FFFFFF</Color>
     <Color x:Key="ControlStrokeColorOnAccentSecondary">#23000000</Color>
     <Color x:Key="ControlStrokeColorOnAccentTertiary">#37000000</Color>
@@ -131,13 +128,21 @@
     <Color x:Key="SystemFillColorSolidAttentionBackground">#2E2E2E</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#2E2E2E</Color>
 
+    <Color x:Key="SystemColorWindowTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorWindowColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonFaceColor">#FF00FF</Color>
+    <Color x:Key="SystemColorButtonTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHighlightTextColor">#FF00FF</Color>
+    <Color x:Key="SystemColorHotlightColor">#FF00FF</Color>
+    <Color x:Key="SystemColorGrayTextColor">#FF00FF</Color>
+
     <!--  Brushes  -->
 
     <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="{StaticResource TextFillColorSecondary}" />
     <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="{StaticResource TextFillColorTertiary}" />
     <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="{StaticResource TextFillColorDisabled}" />
-    <SolidColorBrush x:Key="TextPlaceholderColorBrush" Color="{StaticResource TextPlaceholderColor}" />
     <SolidColorBrush x:Key="TextFillColorInverseBrush" Color="{StaticResource TextFillColorInverse}" />
 
     <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource AccentTextFillColorDisabled}" />
@@ -180,7 +185,6 @@
 
     <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
-    <SolidColorBrush x:Key="ControlStrokeColorTertiaryBrush" Color="{StaticResource ControlStrokeColorTertiary}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentDefaultBrush" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentSecondaryBrush" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
     <SolidColorBrush x:Key="ControlStrokeColorOnAccentTertiaryBrush" Color="{StaticResource ControlStrokeColorOnAccentTertiary}" />
@@ -276,44 +280,14 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <DrawingBrush
-        x:Key="StripedBackgroundBrush"
-        Stretch="UniformToFill"
-        TileMode="Tile"
-        Viewport="0,0,10,10"
-        ViewportUnits="Absolute">
-        <DrawingBrush.Drawing>
-            <DrawingGroup>
-                <DrawingGroup.Children>
-                    <GeometryDrawing Brush="#0DFFFFFF">
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup FillRule="Nonzero">
-                                <PathGeometry>
-                                    <PathFigure StartPoint="0,0">
-                                        <LineSegment Point="25,0" />
-                                        <LineSegment Point="100,75" />
-                                        <LineSegment Point="100,100" />
-                                        <LineSegment Point="75,100" />
-                                        <LineSegment Point="0,25" />
-                                        <LineSegment Point="0,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="75,0">
-                                        <LineSegment Point="100,25" />
-                                        <LineSegment Point="100,0" />
-                                    </PathFigure>
-                                    <PathFigure StartPoint="0,75">
-                                        <LineSegment Point="25,100" />
-                                        <LineSegment Point="0,100" />
-                                    </PathFigure>
-                                </PathGeometry>
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup.Children>
-            </DrawingGroup>
-        </DrawingBrush.Drawing>
-    </DrawingBrush>
-
+    <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="SystemColorButtonTextColorBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightColorBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="SystemColorHighlightTextColorBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="{StaticResource SystemColorHotlightColor}" />
+    <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  Control brushes  -->
 
@@ -390,7 +364,7 @@
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{DynamicResource SystemAccentColorSecondary}" Opacity="0.8" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SubtleBorderBrushTertiary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource TextFillColorDisabled}" />

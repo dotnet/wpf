@@ -16,11 +16,6 @@
         https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/Common_themeresources_any.xaml
     -->
 
-    <!--  Colors depending on the theme should be changed by the Manager  -->
-    <Color x:Key="SystemAccentColor">#4cc2ff</Color>
-    <Color x:Key="SystemAccentColorSecondary">#4cc2ff</Color>
-    <Color x:Key="SystemAccentColorTertiary">#4cc2ff</Color>
-
     <!--  Highcontrast theme -->
     <DynamicResource x:Key="SystemColorWindowTextColor" ResourceKey="{x:Static SystemColors.WindowTextColorKey}" />
     <DynamicResource x:Key="SystemColorWindowColor" ResourceKey="{x:Static SystemColors.WindowColorKey}" />
@@ -39,6 +34,35 @@
     <!--  Same as SystemColorWindowTextColor  -->
     <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!-- Accent Colors and Brushes -->
+
+    <DynamicResource x:Key="SystemAccentColor" ResourceKey="{x:Static SystemColors.AccentColorKey}" />
+    <DynamicResource x:Key="SystemAccentColorLight1" ResourceKey="{x:Static SystemColors.AccentColorLight1Key}" />
+    <DynamicResource x:Key="SystemAccentColorLight2" ResourceKey="{x:Static SystemColors.AccentColorLight2Key}" />
+    <DynamicResource x:Key="SystemAccentColorLight3" ResourceKey="{x:Static SystemColors.AccentColorLight3Key}" />
+    <DynamicResource x:Key="SystemAccentColorDark1" ResourceKey="{x:Static SystemColors.AccentColorDark1Key}" />
+    <DynamicResource x:Key="SystemAccentColorDark2" ResourceKey="{x:Static SystemColors.AccentColorDark2Key}" />
+    <DynamicResource x:Key="SystemAccentColorDark3" ResourceKey="{x:Static SystemColors.AccentColorDark3Key}" />
+
+    <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="{StaticResource SystemAccentColorDark2}" />
+    <SolidColorBrush x:Key="AccentTextFillColorSecondaryBrush" Color="{StaticResource SystemAccentColorDark3}" />
+    <SolidColorBrush x:Key="AccentTextFillColorTertiaryBrush" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <SolidColorBrush x:Key="TextOnAccentFillColorSelectedTextBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorPrimaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
+    
+    <SolidColorBrush x:Key="AccentFillColorSelectedTextBackgroundBrush" Color="{StaticResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Opacity="0.9" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Opacity="0.8" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource SystemColorWindowColor}" />
+
+    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+
+
     <!--  Brushes  -->
 
     <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -47,14 +71,6 @@
     <SolidColorBrush x:Key="TextFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextPlaceholderColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextFillColorInverseBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-
-    <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-
-    <SolidColorBrush x:Key="TextOnAccentFillColorSelectedTextBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-
-    <SolidColorBrush x:Key="TextOnAccentFillColorPrimaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -83,8 +99,6 @@
     <SolidColorBrush x:Key="ControlOnImageFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ControlOnImageFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ControlOnImageFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
-
-    <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource SystemColorWindowColor}" />
 
     <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource SystemColorButtonTextColor}" />
@@ -201,10 +215,6 @@
 
 
     <!--  Control brushes  -->
-
-    <!--  Badge  -->
-    <SolidColorBrush x:Key="BadgeForeground" Color="{StaticResource SystemColorHighlightTextColor}"/>
-    <SolidColorBrush x:Key="BadgeBackground" Color="{StaticResource SystemColorHighlightColor}"/>
 
     <!--  BreadcrumbBar  -->
     <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="{StaticResource SystemColorButtonTextColor}" />
@@ -585,9 +595,6 @@
     <SolidColorBrush x:Key="TreeViewItemBackgroundSelected" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="TreeViewItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="TreeViewItemSelectionIndicatorForeground" Color="{StaticResource SystemColorHighlightColor}" />
-
-
-
 
 
     <!--  Colors  -->

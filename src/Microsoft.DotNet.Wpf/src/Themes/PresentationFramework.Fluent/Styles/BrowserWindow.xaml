@@ -6,7 +6,7 @@
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes">
+                    xmlns:controls="clr-namespace:Fluent.Controls">
     <JournalEntryListConverter x:Key="NavigationWindowDropDownLimiter"/>
 
     <!-- Browser Window back/fwd button Drop Down style-->
@@ -43,7 +43,7 @@
                                IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
                                Focusable="false"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-                            <theme:SystemDropShadowChrome Name="Shdw"
+                            <controls:SystemDropShadowChrome Name="Shdw"
                                                           Color="Transparent">
                                 <Border Name="SubMenuBorder"
                                         Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
@@ -65,7 +65,7 @@
                                       </Grid>
                                     </ScrollViewer>
                                 </Border>
-                            </theme:SystemDropShadowChrome>
+                            </controls:SystemDropShadowChrome>
                         </Popup>
                         <Path x:Name="Arrow"
                               HorizontalAlignment="Center"
@@ -730,7 +730,7 @@
                 BorderThickness="{TemplateBinding BorderThickness}">
             <DockPanel>
                 <Grid
-                      FlowDirection="{x:Static theme:PlatformCulture.FlowDirection}"
+                      FlowDirection="{x:Static controls:PlatformCulture.FlowDirection}"
                       DockPanel.Dock="Top"
                       Height="30">
                     <Grid.Background>

@@ -6,7 +6,7 @@
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:theme="clr-namespace:Microsoft.Windows.Themes">
+                    xmlns:controls="clr-namespace:Fluent.Controls">
     <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter"/>
 
     <LinearGradientBrush x:Key="NavigationWindowNavigationButtonFillEnabled"
@@ -246,7 +246,7 @@
                                    IsOpen="{Binding Path=(MenuItem.IsSubmenuOpen),RelativeSource={RelativeSource TemplatedParent}}"
                                    Focusable="false"
                                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-                            <theme:SystemDropShadowChrome Name="Shdw"
+                            <controls:SystemDropShadowChrome Name="Shdw"
                                                           Color="Transparent">
                                 <Border Name="SubMenuBorder"
                                         Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"
@@ -269,7 +269,7 @@
                                       </Grid>
                                     </ScrollViewer>
                                 </Border>
-                            </theme:SystemDropShadowChrome>
+                            </controls:SystemDropShadowChrome>
                         </Popup>
                         
                         <Grid x:Name="Panel" 

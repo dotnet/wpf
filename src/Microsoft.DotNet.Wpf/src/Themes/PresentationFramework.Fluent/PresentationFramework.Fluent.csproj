@@ -28,6 +28,8 @@
   <ItemGroup>
     <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
     <Compile Include="Controls\FallbackBrushConverter.cs" />
+    <Compile Include="Controls\PlatformCulture.cs" />
+    <Compile Include="Controls\SystemDropShadowChrome.cs" />
   </ItemGroup>
 
   <!-- Project References -->
@@ -42,10 +44,10 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\PlatformCulture.cs" />
     <Compile Include="$(WpfSourceDir)\Themes\Shared\Microsoft\Windows\Themes\SystemDropShadowChrome.cs" />
-  </ItemGroup>
+  </ItemGroup> -->
 
   <!-- Minimal set of .NET core references -->
   <ItemGroup>

@@ -17,6 +17,7 @@ namespace MS.Internal.AutomationProxies
         /// </summary>
         static ClickablePoint()
         {
+            _hwndDesktop = UnsafeNativeMethods.GetDesktopWindow();
             _hwndProgman = Misc.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Progman", null);
             if (_hwndProgman == IntPtr.Zero)
             {
@@ -457,16 +458,16 @@ namespace MS.Internal.AutomationProxies
         }
 
         #endregion
-        
+
         #region Private fields
-        
+
         // Top level Desktop window
-        private static IntPtr _hwndDesktop = UnsafeNativeMethods.GetDesktopWindow();
+        private static readonly IntPtr _hwndDesktop;
 
         /// The WindowsRect for "Program" is the union for the real
         /// estate for all the monitors. Instead of doing clipping against the root of the hwnd
         /// tree that is the desktop. The last clipping should be done against the Progman hwnd.
-        private static IntPtr _hwndProgman;
+        private static readonly IntPtr _hwndProgman;
         
         #endregion Private fields
 

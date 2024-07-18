@@ -24,7 +24,7 @@ namespace MS.Internal.AutomationProxies
                 _hwndProgman = _hwndDesktop;
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -47,11 +47,11 @@ namespace MS.Internal.AutomationProxies
         /// But makes it a bit more efficent.
         /// </summary>
         /// <param name="hwnd">Window Handle</param>
-        /// <param name="alIn">Input list of Rectangles to check GetPoint against</param>
-        /// <param name="alOut">Output list of Rectangles after the exclusion test</param>
+        /// <param name="listIn">Input list of Rectangles to check GetPoint against</param>
+        /// <param name="listOut">Output list of Rectangles after the exclusion test</param>
         /// <param name="pt">Clickable Point</param>
         /// <returns>True if there is a clickable in ro</returns>
-        static internal bool GetPoint(IntPtr hwnd, List<CPRect> alIn, List<CPRect> alOut, ref NativeMethods.Win32Point pt)
+        static internal bool GetPoint(IntPtr hwnd, List<CPRect> listIn, List<CPRect> listOut, ref NativeMethods.Win32Point pt)
         {
             IntPtr hwndStart = hwnd;
             IntPtr hwndCurrent = hwnd;
@@ -62,7 +62,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // For siblings, the element bounding rectangle must not be covered by the
                 // bounding rect of its siblings
-                if (!ClickableInRect(hwnd, ref pt, true, alIn, alOut))
+                if (!ClickableInRect(hwnd, ref pt, true, listIn, listOut))
                 {
                     return false;
                 }
@@ -104,7 +104,7 @@ namespace MS.Internal.AutomationProxies
                     // Substitute the Desktop with the Progman hwnd for clipping calculation
                     IntPtr hwndClip = hwnd == _hwndDesktop ? _hwndProgman : hwnd;
 
-                    if (!ClickableInRect(hwndClip, ref pt, false, alIn, alOut))
+                    if (!ClickableInRect(hwndClip, ref pt, false, listIn, listOut))
                     {
                         return false;
                     }
@@ -116,7 +116,7 @@ namespace MS.Internal.AutomationProxies
 
                 // For siblings, the element bounding rectangle must not be covered by the
                 // bounding rect of its siblings
-                if (!ClickableInRect(hwnd, ref pt, true, alIn, alOut))
+                if (!ClickableInRect(hwnd, ref pt, true, listIn, listOut))
                 {
                     return false;
                 }
@@ -132,9 +132,9 @@ namespace MS.Internal.AutomationProxies
         /// be performed. There is no easy way out.
         /// </summary>
         /// <param name="fragment"></param>
-        /// <param name="alIn"></param>
-        /// <param name="alOut"></param>
-        internal static void ExcludeChildren(ProxyFragment fragment, List<CPRect> alIn, List<CPRect> alOut)
+        /// <param name="listIn"></param>
+        /// <param name="listOut"></param>
+        internal static void ExcludeChildren(ProxyFragment fragment, List<CPRect> listIn, List<CPRect> listOut)
         {
             // First go through all the children to exclude whatever is on top
             for (ProxySimple simple = fragment.GetFirstChild(); simple != null; simple = fragment.GetNextSibling(simple))
@@ -146,18 +146,18 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 // Copy the output bits
-                alIn.Clear();
-                alIn.AddRange(alOut);
+                listIn.Clear();
+                listIn.AddRange(listOut);
 
                 NativeMethods.Win32Rect rc = new NativeMethods.Win32Rect(simple.BoundingRectangle);
                 CPRect rcp = new CPRect(ref rc, false);
 
-                SplitRect(alIn, ref rcp, alOut, true);
+                SplitRect(listIn, ref rcp, listOut, true);
 
                 // recurse on the children
                 if (simple is ProxyFragment)
                 {
-                    ExcludeChildren((ProxyFragment)simple, alIn, alOut);
+                    ExcludeChildren((ProxyFragment)simple, listIn, listOut);
                 }
             }
         }
@@ -229,7 +229,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Methods
 
-        private static bool ClickableInRect(IntPtr hwnd, ref NativeMethods.Win32Point pt, bool fRiAsInsideRect, List<CPRect> alIn, List<CPRect> alOut)
+        private static bool ClickableInRect(IntPtr hwnd, ref NativeMethods.Win32Point pt, bool fRiAsInsideRect, List<CPRect> listIn, List<CPRect> listOut)
         {
             if (!SafeNativeMethods.IsWindowVisible(hwnd))
             {
@@ -271,13 +271,13 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Copy the output bits
-            alIn.Clear();
-            alIn.AddRange(alOut);
+            listIn.Clear();
+            listIn.AddRange(listOut);
 
             CPRect rcp = new CPRect(ref rc, false);
 
-            SplitRect(alIn, ref rcp, alOut, fRiAsInsideRect);
-            if (!GetClickablePoint(alOut, out pt.x, out pt.y))
+            SplitRect(listIn, ref rcp, listOut, fRiAsInsideRect);
+            if (!GetClickablePoint(listOut, out pt.x, out pt.y))
             {
                 return false;
             }
@@ -295,9 +295,9 @@ namespace MS.Internal.AutomationProxies
         /// <param name="ri">Inside Rectangle</param>
         /// <param name="left">Left Margin for the resulting rectangles</param>
         /// <param name="right">Right Margin for the resulting rectangles</param>
-        /// <param name="alRect">Array of resulting rectangles</param>
+        /// <param name="rectList">Array of resulting rectangles</param>
         /// <param name="fRiAsInsideRect">Covered flag</param>
-        static private void SplitVertical(ref CPRect ro, ref CPRect ri, int left, int right, List<CPRect> alRect, bool fRiAsInsideRect)
+        static private void SplitVertical(ref CPRect ro, ref CPRect ri, int left, int right, List<CPRect> rectList, bool fRiAsInsideRect)
         {
             // bottom clip
             if (ri._bottom > ro._bottom)
@@ -310,21 +310,21 @@ namespace MS.Internal.AutomationProxies
 
             if (bottom > top)
             {
-                alRect.Add(new CPRect(left, top, right, bottom, ro._fNotCovered));
+                rectList.Add(new CPRect(left, top, right, bottom, ro._fNotCovered));
                 top = bottom;
             }
 
             bottom = ri._bottom;
             if (bottom > top)
             {
-                alRect.Add(new CPRect(left, top, right, bottom, ro._fNotCovered & fRiAsInsideRect));
+                rectList.Add(new CPRect(left, top, right, bottom, ro._fNotCovered & fRiAsInsideRect));
                 top = bottom;
             }
 
             bottom = ro._bottom;
             if (bottom > top)
             {
-                alRect.Add(new CPRect(left, top, right, bottom, ro._fNotCovered));
+                rectList.Add(new CPRect(left, top, right, bottom, ro._fNotCovered));
             }
         }
 
@@ -351,20 +351,20 @@ namespace MS.Internal.AutomationProxies
         /// <param name="ri">Inside Rectangle</param>
         /// <param name="alRect">Collection of resulting rectangles</param>
         /// <param name="fRiAsInsideRect"></param>
-        static private void SplitRect(ref CPRect ro, CPRect ri, List<CPRect> alRect, bool fRiAsInsideRect)
+        static private void SplitRect(ref CPRect ro, CPRect ri, List<CPRect> rectList, bool fRiAsInsideRect)
         {
             // If ri is fully outside easy way out.
             if (!ro._fNotCovered || !ro.Intersect(ref ri))
             {
                 ro._fNotCovered &= fRiAsInsideRect;
-                alRect.Add(ro);
+                rectList.Add(ro);
                 return;
             }
 
             if (ro.Overlap(ref ri))
             {
                 ro._fNotCovered &= !fRiAsInsideRect;
-                alRect.Add(ro);
+                rectList.Add(ro);
                 return;
             }
 
@@ -385,21 +385,21 @@ namespace MS.Internal.AutomationProxies
 
             if (right > left)
             {
-                alRect.Add(new CPRect(left, ro._top, right, ro._bottom, ro._fNotCovered & fRiAsInsideRect));
+                rectList.Add(new CPRect(left, ro._top, right, ro._bottom, ro._fNotCovered & fRiAsInsideRect));
                 left = right;
             }
 
             right = ri._right;
             if (right > left)
             {
-                SplitVertical(ref ro, ref ri, left, right, alRect, !fRiAsInsideRect);
+                SplitVertical(ref ro, ref ri, left, right, rectList, !fRiAsInsideRect);
                 left = right;
             }
 
             right = ro._right;
             if (right > left)
             {
-                alRect.Add(new CPRect(left, ro._top, right, ro._bottom, ro._fNotCovered & fRiAsInsideRect));
+                rectList.Add(new CPRect(left, ro._top, right, ro._bottom, ro._fNotCovered & fRiAsInsideRect));
             }
         }
 
@@ -409,19 +409,19 @@ namespace MS.Internal.AutomationProxies
         /// marked as covered or not.
         /// 
         /// </summary>
-        /// <param name="alIn">List of input rectangle</param>
+        /// <param name="listIn">List of input rectangle</param>
         /// <param name="ri">Overlapping Rectangle</param>
-        /// <param name="alOut">New sets of reactangle</param>
+        /// <param name="listOut">New sets of reactangle</param>
         /// <param name="fRiAsInsideRect">Input Rectangle is rectangle covering alIn Rects or everything
         ///                               outside of ri must be marked as covered</param>
-        static private void SplitRect(List<CPRect> alIn, ref CPRect ri, List<CPRect> alOut, bool fRiAsInsideRect)
+        static private void SplitRect(List<CPRect> listIn, ref CPRect ri, List<CPRect> listOut, bool fRiAsInsideRect)
         {
-            alOut.Clear();
-            for (int i = 0; i < alIn.Count; i++)
+            listOut.Clear();
+            for (int i = 0; i < listIn.Count; i++)
             {
-                CPRect ro = alIn[i];
+                CPRect ro = listIn[i];
 
-                SplitRect(ref ro, ri, alOut, fRiAsInsideRect);
+                SplitRect(ref ro, ri, listOut, fRiAsInsideRect);
             }
         }
 
@@ -430,15 +430,15 @@ namespace MS.Internal.AutomationProxies
         /// Goes through the list of rectangle, stops on the first rectangle that is not covered
         /// and returns the mid point
         /// </summary>
-        /// <param name="al">list of ractangle</param>
+        /// <param name="rectList">list of ractangle</param>
         /// <param name="x">X coordinate for a clickable point</param>
         /// <param name="y">Y coordinate for a clickable point</param>
         /// <returns>Clickable point found</returns>
-        static private bool GetClickablePoint(List<CPRect> al, out int x, out int y)
+        static private bool GetClickablePoint(List<CPRect> rectList, out int x, out int y)
         {
-            for (int i = 0, c = al.Count; i < c; i++)
+            for (int i = 0; i < rectList.Count; i++)
             {
-                CPRect r = al[i];
+                CPRect r = rectList[i];
 
                 if (r._fNotCovered == true && (r._right - r._left) * (r._bottom - r._top) > 0)
                 {

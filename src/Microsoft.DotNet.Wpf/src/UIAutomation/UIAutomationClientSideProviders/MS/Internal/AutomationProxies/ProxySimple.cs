@@ -584,22 +584,22 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            List<ClickablePoint.CPRect> alIn = new(100);
-            List<ClickablePoint.CPRect> alOut = new(100);
+            List<ClickablePoint.CPRect> listIn = new(100);
+            List<ClickablePoint.CPRect> listOut = new(100);
 
             // Get the mid point to start with
             pt.x = (rcItem.right - 1 + rcItem.left) / 2;
             pt.y = (rcItem.bottom - 1 + rcItem.top) / 2;
-            alOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
+            listOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
 
             // First go through all the children to exclude whatever is on top
             ProxyFragment proxyFrag = this as ProxyFragment;
             if (proxyFrag != null)
             {
-                ClickablePoint.ExcludeChildren(proxyFrag, alIn, alOut);
+                ClickablePoint.ExcludeChildren(proxyFrag, listIn, listOut);
             }
 
-            return ClickablePoint.GetPoint(_hwnd, alIn, alOut, ref pt);
+            return ClickablePoint.GetPoint(_hwnd, listIn, listOut, ref pt);
         }
 
         internal string GetAccessibleName(int item)

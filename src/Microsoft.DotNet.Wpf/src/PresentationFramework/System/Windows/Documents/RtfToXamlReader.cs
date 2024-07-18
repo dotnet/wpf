@@ -8641,7 +8641,7 @@ namespace System.Windows.Documents
                     {
                         // Read the windows metafile from the rtf content and then convert it
                         // to bitmap data then save it as PNG on the container image part
-                        MemoryStream metafileStream = new MemoryStream(); ;
+                        MemoryStream metafileStream = new MemoryStream();
 
                         using (metafileStream)
                         {

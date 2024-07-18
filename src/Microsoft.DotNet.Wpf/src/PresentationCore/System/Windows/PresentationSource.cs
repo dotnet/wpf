@@ -220,7 +220,7 @@ namespace System.Windows
                     }
                     if (info == null || info.Count == 0)
                     {
-                        uie.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie.OnVisualAncestorChanged); ;
+                        uie.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie.OnVisualAncestorChanged);
                         RemoveElementFromWatchList(uie);
                     }
                 }
@@ -234,7 +234,7 @@ namespace System.Windows
                     }
                     if (info == null || info.Count == 0)
                     {
-                        uie3D.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie3D.OnVisualAncestorChanged); ;
+                        uie3D.VisualAncestorChanged -= new Visual.AncestorChangedEventHandler(uie3D.OnVisualAncestorChanged);
                         RemoveElementFromWatchList(uie3D);
                     }
                 }

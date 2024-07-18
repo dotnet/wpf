@@ -29,7 +29,6 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Collections;
 using Accessibility;
 using System.Windows;
 using MS.Win32;
@@ -585,8 +584,8 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            ArrayList alIn = new ArrayList(100);
-            ArrayList alOut = new ArrayList(100);
+            List<ClickablePoint.CPRect> alIn = new(100);
+            List<ClickablePoint.CPRect> alOut = new(100);
 
             // Get the mid point to start with
             pt.x = (rcItem.right - 1 + rcItem.left) / 2;

@@ -3583,14 +3583,7 @@ namespace System.Windows
             // TODO : Remove when Fluent theme is enabled by default
             if (ThemeManager.IsFluentThemeEnabled)
             {
-                if(WindowBackdropManager.IsBackdropEnabled)
-                {
-                    SetResourceReference(StyleProperty, typeof(Window));
-                }
-                else
-                {
-                    SetResourceReference(StyleProperty, "BackdropDisabledWindowStyle");
-                }
+                SetResourceReference(StyleProperty, typeof(Window));
             }
         }
 

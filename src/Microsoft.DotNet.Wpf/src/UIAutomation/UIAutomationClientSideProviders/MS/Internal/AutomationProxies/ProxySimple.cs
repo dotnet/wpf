@@ -593,8 +593,7 @@ namespace MS.Internal.AutomationProxies
             listOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
 
             // First go through all the children to exclude whatever is on top
-            ProxyFragment proxyFrag = this as ProxyFragment;
-            if (proxyFrag != null)
+            if (this is ProxyFragment proxyFrag)
             {
                 ClickablePoint.ExcludeChildren(proxyFrag, listIn, listOut);
             }

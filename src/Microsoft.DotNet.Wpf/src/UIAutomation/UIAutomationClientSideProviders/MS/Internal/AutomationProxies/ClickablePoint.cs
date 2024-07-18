@@ -155,9 +155,9 @@ namespace MS.Internal.AutomationProxies
                 SplitRect(listIn, ref rcp, listOut, true);
 
                 // recurse on the children
-                if (simple is ProxyFragment)
+                if (simple is ProxyFragment proxyFrag)
                 {
-                    ExcludeChildren((ProxyFragment)simple, listIn, listOut);
+                    ExcludeChildren(proxyFrag, listIn, listOut);
                 }
             }
         }

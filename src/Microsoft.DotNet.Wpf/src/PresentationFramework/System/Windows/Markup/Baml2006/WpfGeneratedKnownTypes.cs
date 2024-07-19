@@ -8844,6 +8844,7 @@ namespace System.Windows.Baml2006
                                               typeof(System.Windows.Setter),
                                               isBamlType, useV3Rules);
             bamlType.DefaultConstructor = delegate() { return new System.Windows.Setter(); };
+            bamlType.ContentPropertyName = "Value";
             bamlType.Freeze();
             return bamlType;
         }

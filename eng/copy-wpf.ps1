@@ -30,15 +30,15 @@ function Print-Usage()
 Write-Host "*** Copy WPF files procedure ***"
 
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-Write-host "Repo root = " $RepoRoot
+Write-Debug ("Repo root = " + $RepoRoot)
 $Config = if ($release) { "Release" } else { "Debug" }
 
-Write-Host "Target architecture - configuration: " $arch $Config
+Write-Debug ("Target architecture - configuration: " + $arch + $Config)
 
 function CopyBinariesToLocation($location)
 {
     $locallyBuiltBinaryLocationBase = Join-Path $RepoRoot "artifacts\packaging"
-    Write-host "locallyBuiltBinaryLocationBase = " $locallyBuiltBinaryLocationBase
+    Write-Debug ("locallyBuiltBinaryLocationBase = " + $locallyBuiltBinaryLocationBase)
 
     # Write-Host "Copy native binaries..."
     # CopyNativeBinariesToLocation $location $locallyBuiltBinaryLocationBase
@@ -61,7 +61,7 @@ function CopyNativeBinariesToLocation($location, $localBinLocation)
 
     $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
     $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "runtimes", $binaryLocationInPackage,"native" , "*")
-    Write-host "Native binLocation = " $BinLocation
+    Write-Debug ("Native binLocation = " + $BinLocation)
 
     if (Test-Path $BinLocation)
     {
@@ -92,7 +92,7 @@ function CopyPackagedBinaries($location, $localBinLocation, $packageName, $binar
 {
     $ArchFolder = if ($arch -eq "x86") { "" } else { "x64" }
     $BinLocation = [System.IO.Path]::Combine($localBinLocation, $Config, $ArchFolder, $packageName, "lib", $binaryLocationInPackage, "*")
-    Write-host "binLocation = " $BinLocation
+    Write-Debug ("binLocation = " + $BinLocation)
 
     if (Test-Path $BinLocation)
     {

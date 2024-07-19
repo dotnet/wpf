@@ -559,6 +559,7 @@ namespace System.Windows
         //---------------------------------------------------
         #region Public Properties
 
+        [TypeConverter(typeof(ThemeModeConverter))]
         public ThemeMode ThemeMode
         {
             get

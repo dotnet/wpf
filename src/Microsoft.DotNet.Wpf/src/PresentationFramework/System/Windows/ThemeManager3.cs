@@ -233,7 +233,7 @@ internal static class ThemeManager3
 
     internal static double DefaultFluentThemeFontSize => 14;
 
-    internal static WindowCollection FluentEnabledWindows { get; set; }
+    internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
 
     #endregion
 
@@ -356,7 +356,6 @@ internal static class ThemeManager3
     private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
     
-    private static WindowCollection _fluentEnabledWindows = new WindowCollection();
 
     #endregion
 }

@@ -956,6 +956,7 @@ namespace System.Windows
             set { Resources = value; }
         }
 
+        [TypeConverter(typeof(ThemeModeConverter))]
         public ThemeMode ThemeMode
         {
             get

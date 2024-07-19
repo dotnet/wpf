@@ -31,6 +31,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup;
+using System.Globalization;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -250,6 +251,48 @@ namespace System.Windows.Controls
             return ((bool)element.GetValue(IsSharedSizeScopeProperty));
         }
 
+        private static void OnColumnDefinitionsInlineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Grid grid)
+            {
+                grid.UpdateColumnDefinitions((string)e.NewValue);
+            }
+        }
+
+        private static void OnRowDefinitionsInlineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Grid grid)
+            {
+                grid.UpdateRowDefinitions((string)e.NewValue);
+            }
+        }
+
+        private void UpdateColumnDefinitions(string definitions)
+        {
+            ColumnDefinitions.Clear();
+            if (!string.IsNullOrEmpty(definitions))
+            {
+                var columns = definitions.Split(',');
+                foreach (var column in columns)
+                {
+                    ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthConverter.FromString(column, CultureInfo.InvariantCulture) });
+                }
+            }
+        }
+
+        private void UpdateRowDefinitions(string definitions)
+        {
+            RowDefinitions.Clear();
+            if (!string.IsNullOrEmpty(definitions))
+            {
+                var rows = definitions.Split(',');
+                foreach (var row in rows)
+                {
+                    RowDefinitions.Add(new RowDefinition { Height = GridLengthConverter.FromString(row, CultureInfo.InvariantCulture) });
+                }
+            }
+        }
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -297,6 +340,18 @@ namespace System.Windows.Controls
 
                 return (_data.RowDefinitions);
             }
+        }
+
+        public string ColumnDefinitionsInline
+        {
+            get { return (string)GetValue(ColumnDefinitionsInlineProperty); }
+            set { SetValue(ColumnDefinitionsInlineProperty, value); }
+        }
+
+        public string RowDefinitionsInline
+        {
+            get { return (string)GetValue(RowDefinitionsInlineProperty); }
+            set { SetValue(RowDefinitionsInlineProperty, value); }
         }
 
         #endregion Public Properties
@@ -3488,6 +3543,20 @@ namespace System.Windows.Controls
                               false,
                               new PropertyChangedCallback(DefinitionBase.OnIsSharedSizeScopePropertyChanged)));
 
+        public static readonly DependencyProperty ColumnDefinitionsInlineProperty =
+            DependencyProperty.Register(
+                nameof(ColumnDefinitionsInline),
+                typeof(string),
+                typeof(Grid),
+                new FrameworkPropertyMetadata(null, OnColumnDefinitionsInlineChanged));
+
+        public static readonly DependencyProperty RowDefinitionsInlineProperty =
+            DependencyProperty.Register(
+                nameof(RowDefinitionsInline),
+                typeof(string),
+                typeof(Grid),
+                new FrameworkPropertyMetadata(null, OnRowDefinitionsInlineChanged));
+            
         #endregion Properties
 
         //------------------------------------------------------

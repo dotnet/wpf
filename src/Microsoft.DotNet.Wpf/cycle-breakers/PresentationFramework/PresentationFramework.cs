@@ -5044,6 +5044,8 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty RowProperty;
         public static readonly System.Windows.DependencyProperty RowSpanProperty;
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
+        public static readonly System.Windows.DependencyProperty ColumnDefinitionsInlineProperty ;
+        public static readonly System.Windows.DependencyProperty RowDefinitionsInlineProperty;
         public Grid() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
@@ -5051,6 +5053,8 @@ namespace System.Windows.Controls
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
         public bool ShowGridLines { get { throw null; } set { } }
+        public string ColumnDefinitionsInline { get { throw null; } }
+        public string RowDefinitionsInline { get { throw null; } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
         [System.Windows.AttachedPropertyBrowsableForChildrenAttribute]

@@ -66,9 +66,7 @@
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <XUnitVersion>2.4.0</XUnitVersion>
-    <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
-    <XUnitRunnerVisualStudioVersion>$(XUnitVersion)</XUnitRunnerVisualStudioVersion>
+   
     <!-- 
         Also in global.json 
         Used in Wpf.Cpp.PrivateTools.props/targets 
@@ -87,9 +85,23 @@
   <PropertyGroup>
     <MicrosoftCodeAnalysisNetAnalyzersVersion>7.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
   </PropertyGroup>
+  <!-- XUnit-related (not extensions) -->
+  <PropertyGroup>
+    <XUnitVersion>2.6.1</XUnitVersion>
+    <XUnitAssertVersion>$(XUnitVersion)</XUnitAssertVersion>
+    <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
+    <XUnitRunnerVisualStudioVersion>2.4.3</XUnitRunnerVisualStudioVersion>
+    <XUnitExtensibilityExecutionVersion>$(XUnitVersion)</XUnitExtensibilityExecutionVersion>
+    <XUnitStaFactPackageVersion>1.2.46-alpha</XUnitStaFactPackageVersion>
+  </PropertyGroup>
   <!-- Test related -->
   <PropertyGroup>
     <MoqPackageVersion>4.10.0</MoqPackageVersion>
+    <FluentAssertionsVersion>6.11.0</FluentAssertionsVersion>
+    <SystemComponentModelTypeConverterTestDataVersion>8.0.0-beta.23107.1</SystemComponentModelTypeConverterTestDataVersion>
+    <SystemDrawingCommonTestDataVersion>8.0.0-beta.23107.1</SystemDrawingCommonTestDataVersion>
+    <SystemWindowsExtensionsTestDataVersion>8.0.0-beta.23107.1</SystemWindowsExtensionsTestDataVersion>
+    <VerifyXunitVersion>14.2.0</VerifyXunitVersion>
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>

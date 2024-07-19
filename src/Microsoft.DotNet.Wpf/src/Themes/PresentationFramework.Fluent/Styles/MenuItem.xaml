@@ -75,7 +75,7 @@
                 </Grid>
 
                 <Popup
-                    x:Name="Popup"
+                    x:Name="PART_Popup"
                     Grid.Row="1"
                     Grid.Column="0"
                     AllowsTransparency="True"
@@ -334,7 +334,7 @@
             </Border>
 
             <Popup
-                x:Name="Popup"
+                x:Name="PART_Popup"
                 Grid.Row="1"
                 AllowsTransparency="True"
                 Focusable="False"

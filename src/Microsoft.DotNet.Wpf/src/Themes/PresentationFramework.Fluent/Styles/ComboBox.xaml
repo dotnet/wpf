@@ -266,7 +266,7 @@
                                     </Grid>
                                 </Grid>
                                 <Popup
-                                    x:Name="Popup"
+                                    x:Name="PART_Popup"
                                     MinWidth="{TemplateBinding ActualWidth}"
                                     VerticalAlignment="Center"
                                     AllowsTransparency="True"
@@ -357,7 +357,7 @@
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="{StaticResource ComboBoxPopupMinHeight}" />
                         </Trigger>
-                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="False">
+                        <Trigger SourceName="PART_Popup" Property="Popup.AllowsTransparency" Value="False">
                             <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0" />
                         </Trigger>
                         <Trigger Property="IsGrouping" Value="True">

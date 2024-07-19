@@ -63,7 +63,7 @@ namespace System.Windows.Input
                 string modifiersToken;
 
                 if (fullName.Length == 0)
-                    return new MouseGesture(MouseAction.None, ModifierKeys.None); ;
+                    return new MouseGesture(MouseAction.None, ModifierKeys.None);
 
                 // break apart LocalName and Prefix
                 int Offset = fullName.LastIndexOf(MODIFIERS_DELIMITER);

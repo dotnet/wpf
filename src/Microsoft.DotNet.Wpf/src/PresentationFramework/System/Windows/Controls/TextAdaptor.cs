@@ -103,7 +103,7 @@ namespace MS.Internal.Automation
             {
                 if (!textView.Contains(start) && start.CompareTo(textSegments[0].Start) < 0)
                 {
-                    start = textSegments[0].Start.CreatePointer(); ;
+                    start = textSegments[0].Start.CreatePointer();
                 }
                 if (!textView.Contains(end) && end.CompareTo(textSegments[textSegments.Count-1].End) > 0)
                 {

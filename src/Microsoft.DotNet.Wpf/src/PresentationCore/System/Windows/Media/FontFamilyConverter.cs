@@ -126,7 +126,7 @@ namespace System.Windows.Media
 
                 return new FontFamily(baseUri, s);
             }
-            return base.ConvertFrom(context, cultureInfo, o); ;
+            return base.ConvertFrom(context, cultureInfo, o);
         }
 
         /// <summary>

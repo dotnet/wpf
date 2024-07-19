@@ -31,6 +31,7 @@ using Microsoft.Win32;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
+using SNM = Standard.NativeMethods;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -557,6 +558,36 @@ namespace System.Windows
         //
         //---------------------------------------------------
         #region Public Properties
+
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                VerifyContextAndObjectState();
+                return _themeMode;
+            }
+            set
+            {
+                VerifyContextAndObjectState();
+
+                if(!ThemeManager3.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException("Invalid Application Theme value. System, Light, Dark and None are the only valid values for ApplicationTheme property.");
+                }
+                
+                ThemeMode oldTheme = _themeMode;
+                _themeMode = value;
+                
+                if(IsSourceWindowNull)
+                {
+                    _deferThemeLoading = true;
+                }
+                else
+                {
+                    ThemeManager3.OnWindowThemeChanged(this, oldTheme, value);
+                }
+            }
+        }
 
         /// <summary>
         /// DependencyProperty for TaskbarItemInfo
@@ -2515,10 +2546,19 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows10OrNewer && ThemeManager.IsFluentThemeEnabled)
+            if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                ThemeManager.InitializeFluentTheme();
-                ThemeManager.ApplySystemTheme(this, true);
+                if(ThemeManager3.IsFluentThemeEnabled)
+                {
+                    // Should deffered be added here ?
+                    ThemeManager3.ApplyStyleOnWindow(this);
+                }
+
+                if(_deferThemeLoading)
+                {
+                    _deferThemeLoading = false;
+                    ThemeManager3.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                }
             }
 
             // Sub classes can have different intialization. RBW does very minimalistic
@@ -2527,6 +2567,23 @@ namespace System.Windows
 
             // Fire SourceInitialized event
             OnSourceInitialized(EventArgs.Empty);
+        }
+
+        internal void SetImmersiveDarkMode(bool useDarkMode)
+        {
+            if(!Standard.Utility.IsOSWindows11OrNewer) return;
+
+            if(_useDarkMode == useDarkMode) return;
+
+            IntPtr handle = CriticalHandle;
+            if (handle != IntPtr.Zero)
+            {
+                bool succeeded = SNM.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useDarkMode);
+                if(succeeded)
+                {
+                    _useDarkMode = useDarkMode;
+                }
+            }
         }
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
@@ -3581,7 +3638,7 @@ namespace System.Windows
             }
 
             // TODO : Remove when Fluent theme is enabled by default
-            if (ThemeManager.IsFluentThemeEnabled)
+            if (ThemeManager3.IsFluentThemeEnabled)
             {
                 SetResourceReference(StyleProperty, typeof(Window));
             }
@@ -7187,6 +7244,11 @@ namespace System.Windows
         private double              _actualTop = Double.NaN;
 
         private double              _actualLeft = Double.NaN;
+
+
+        private ThemeMode           _themeMode = ThemeMode.None;
+        internal bool               _deferThemeLoading = false;
+        private bool                _useDarkMode = false;
 
         //Never expose this at any cost
         private bool                        _inTrustedSubWindow;

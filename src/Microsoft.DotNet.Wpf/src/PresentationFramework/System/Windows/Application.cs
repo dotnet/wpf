@@ -956,6 +956,27 @@ namespace System.Windows
             set { Resources = value; }
         }
 
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                return _themeMode;
+            }
+            set
+            {
+                VerifyAccess();
+                if (!ThemeManager3.IsValidThemeMode(value))
+                {
+                    throw new InvalidEnumArgumentException(string.Format("ThemeMode value {0} is invalid", value));
+                }
+                
+                ThemeMode oldValue = _themeMode;
+                _themeMode = value;
+
+                ThemeManager3.OnApplicationThemeChanged(oldValue, value);
+            }
+        }
+
         bool IQueryAmbient.IsAmbientPropertyAvailable(string propertyName)
         {
             // We want to make sure that StaticResource resolution checks the .Resources
@@ -2427,6 +2448,8 @@ namespace System.Windows
 
         private bool                        _ownDispatcherStarted;
         private NavigationService           _navService;
+
+        private ThemeMode                   _themeMode = ThemeMode.None;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

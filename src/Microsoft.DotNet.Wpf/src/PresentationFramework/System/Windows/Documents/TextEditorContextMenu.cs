@@ -422,7 +422,7 @@ namespace System.Windows.Documents
         {
             public EditorContextMenu() : base()
             {
-                if(ThemeManager.IsFluentThemeEnabled)
+                if(ThemeManager3.IsFluentThemeEnabled)
                 {
                     SetResourceReference(StyleProperty, typeof(ContextMenu));
                 }

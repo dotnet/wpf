@@ -1412,10 +1412,10 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
-
-                    if(ThemeManager.IsFluentThemeEnabled)
+                    
+                    if(ThemeManager3.IsFluentThemeEnabled || ThemeManager3.FluentEnabledWindows.Count > 0)
                     {
-                        ThemeManager.ApplySystemTheme();
+                        ThemeManager3.OnSystemThemeChanged();
                     }
                     break;
 

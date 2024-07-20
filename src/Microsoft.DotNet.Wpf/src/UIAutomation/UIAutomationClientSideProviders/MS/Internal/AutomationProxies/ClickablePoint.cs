@@ -11,8 +11,8 @@ namespace MS.Internal.AutomationProxies
     static internal class ClickablePoint
     {
         /// <summary>
-        /// Static Constructor. Retrieve and keeps the hwnd for "Program"
-        /// The Windows Rectangle for "Program"  is the union for the real
+        /// Static Constructor. Retrieve and keeps the hwnd for "Progman"
+        /// The Windows Rectangle for "Progman" is the union for the real
         /// Estate for all the monitors.
         /// </summary>
         static ClickablePoint()
@@ -464,7 +464,7 @@ namespace MS.Internal.AutomationProxies
         // Top level Desktop window
         private static readonly IntPtr _hwndDesktop;
 
-        /// The WindowsRect for "Program" is the union for the real
+        /// The WindowsRect for "Progman" is the union for the real
         /// estate for all the monitors. Instead of doing clipping against the root of the hwnd
         /// tree that is the desktop. The last clipping should be done against the Progman hwnd.
         private static readonly IntPtr _hwndProgman;

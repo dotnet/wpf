@@ -1379,7 +1379,7 @@ namespace MS.Internal.PtsHost
 
             PTS.Validate(PTS.FsQueryTableObjDetails(
                 PtsContext.Context,
-                _paraHandle.Value,
+                _paraHandle,
                 out tableObjDetails));
             Debug.Assert(TableParagraph == (TableParagraph)(PtsContext.HandleToObject(tableObjDetails.fsnmTable)));
 

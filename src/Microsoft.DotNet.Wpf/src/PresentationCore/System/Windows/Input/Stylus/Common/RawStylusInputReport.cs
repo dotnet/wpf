@@ -63,7 +63,7 @@ namespace System.Windows.Input
         /// <summary>
         /// The raw input used for stylus plugins
         /// </summary>
-        SecurityCriticalDataForSet<RawStylusInput> _rawStylusInput;
+        RawStylusInput _rawStylusInput;
 
         /// <summary>
         /// Set from StylusDevice.Synchronize.
@@ -82,9 +82,9 @@ namespace System.Windows.Input
 
         internal RawStylusInput RawStylusInput
         {
-            get { return _rawStylusInput.Value; }
+            get { return _rawStylusInput; }
 
-            set { _rawStylusInput.Value = value; }
+            set { _rawStylusInput = value; }
         }
 
         internal bool Synchronized

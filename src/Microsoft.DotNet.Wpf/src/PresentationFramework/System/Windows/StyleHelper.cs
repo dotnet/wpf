@@ -5832,11 +5832,11 @@ namespace System.Windows
     //  Conditions set on [Multi]Trigger are stored
     //  in structures of this kind
     //
-    internal struct TriggerCondition
+    public struct TriggerCondition
     {
         #region Construction
 
-        internal TriggerCondition(DependencyProperty dp, LogicalOp logicalOp, object value, string sourceName)
+        public TriggerCondition(DependencyProperty dp, LogicalOp logicalOp, object value, string sourceName)
         {
             Property = dp;
             Binding = null;
@@ -5847,13 +5847,13 @@ namespace System.Windows
             BindingValueCache = new BindingValueCache(null, null);
         }
 
-        internal TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value) :
+        public TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value) :
             this(binding, logicalOp, value, StyleHelper.SelfName)
         {
             // Call Forwarded
         }
 
-        internal TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value, string sourceName)
+        public TriggerCondition(BindingBase binding, LogicalOp logicalOp, object value, string sourceName)
         {
             Property = null;
             Binding = binding;
@@ -5865,7 +5865,7 @@ namespace System.Windows
         }
 
         // Check for match
-        internal bool Match(object state)
+        public bool Match(object state)
         {
             return Match(state, Value);
         }
@@ -5884,7 +5884,7 @@ namespace System.Windows
 
         // Check for match, after converting the reference value to the type
         // of the state value.  (Used by data triggers)
-        internal bool ConvertAndMatch(object state)
+        public bool ConvertAndMatch(object state)
         {
             // convert the reference value to the type of 'state',
             // provided the reference value is a string and the
@@ -5954,7 +5954,7 @@ namespace System.Windows
 
         // Implemented for #1038821, FxCop ConsiderOverridingEqualsAndOperatorEqualsOnValueTypes
         //  Called from ChildValueLookup.Equals, avoid boxing by not using the generic object-based Equals.
-        internal bool TypeSpecificEquals( TriggerCondition value )
+        public bool TypeSpecificEquals( TriggerCondition value )
         {
             if( Property            == value.Property &&
                 Binding             == value.Binding &&
@@ -5969,12 +5969,12 @@ namespace System.Windows
 
         #endregion Construction
 
-        internal readonly DependencyProperty        Property;
-        internal readonly BindingBase               Binding;
+        public   readonly DependencyProperty        Property;
+        public   readonly BindingBase               Binding;
         internal readonly LogicalOp                 LogicalOp;
         internal readonly object                    Value;
         internal readonly string                    SourceName;
-        internal          int                       SourceChildIndex;
+        public            int                       SourceChildIndex;
         internal          BindingValueCache         BindingValueCache;
     }
 

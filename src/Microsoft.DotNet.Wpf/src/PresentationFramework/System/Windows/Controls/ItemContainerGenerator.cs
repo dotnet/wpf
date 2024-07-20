@@ -2061,7 +2061,8 @@ namespace System.Windows.Controls
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
             if (_emptyGroupItems == null)
-                _emptyGroupItems = new ArrayList();
+                _emptyGroupItems = new();
+
             _emptyGroupItems.Add(emptyGroupItem);
         }
 
@@ -2798,7 +2799,7 @@ namespace System.Windows.Controls
         private ReadOnlyCollection<object> _itemsReadOnly;
         private GroupStyle      _groupStyle;
         private ItemContainerGenerator _parent;
-        private ArrayList       _emptyGroupItems;
+        private List<EmptyGroupItem> _emptyGroupItems;
         private int             _alternationCount;
 
         private Type            _containerType;     // type of containers on the recycle queue

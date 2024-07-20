@@ -59,37 +59,16 @@ namespace System.Windows
     }
 
 
-    public class ThemeModeConverter: TypeConverter
+    internal class ThemeModeConverter: TypeConverter
     {
-        //-------------------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //-------------------------------------------------------------------
 
         #region Public Methods
 
-        /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type.
-        /// </summary>
-        /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
-        /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="sourceType"> The Type being queried for support. </param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
            return Type.GetTypeCode(sourceType) == TypeCode.String;
         }
 
-        /// <summary>
-        /// CanConvertTo - Returns whether or not this class can convert to a given type.
-        /// </summary>
-        /// <returns>
-        /// bool - True if this converter can convert to the provided type, false if not.
-        /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="destinationType"> The Type being queried for support. </param>
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
         {
             // We can convert to an InstanceDescriptor or to a string.

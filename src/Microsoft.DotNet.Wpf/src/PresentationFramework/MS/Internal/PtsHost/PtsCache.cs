@@ -163,7 +163,7 @@ namespace MS.Internal.PtsHost
         ~PtsCache()
         {
             // After shutdown is initiated, do not allow Finalizer thread to the cleanup.
-            if (0 == Interlocked.CompareExchange(ref _disposed, 1, 0))
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 // Destroy all PTS contexts
                 DestroyPTSContexts();
@@ -292,7 +292,7 @@ namespace MS.Internal.PtsHost
 
             // After shutdown is initiated, do not allow Finalizer thread to add any
             // items to _releaseQueue.
-            if (0 == Interlocked.CompareExchange(ref _disposed, 1, 0))
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 // Dispose any pending PtsContexts stored in _releaseQueue
                 OnPtsContextReleased(false);
@@ -763,7 +763,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether object is already disposed.
         /// </summary>
-        private int _disposed;
+        private bool _disposed;
 
         #endregion Private Fields
 

@@ -28,6 +28,7 @@ using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
 using Microsoft.Win32;
+using System.Diagnostics.CodeAnalysis;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
@@ -559,6 +560,7 @@ namespace System.Windows
         //---------------------------------------------------
         #region Public Properties
 
+        [Experimental("WPF0001")]
         [TypeConverter(typeof(ThemeModeConverter))]
         public ThemeMode ThemeMode
         {

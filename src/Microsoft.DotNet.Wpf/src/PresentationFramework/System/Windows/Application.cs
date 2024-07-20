@@ -56,6 +56,7 @@ using MS.Utility;
 using MS.Win32;
 using Microsoft.Win32;
 using MS.Internal.Telemetry.PresentationFramework;
+using System.Diagnostics.CodeAnalysis;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -956,6 +957,7 @@ namespace System.Windows
             set { Resources = value; }
         }
 
+        [Experimental("WPF0001")]
         [TypeConverter(typeof(ThemeModeConverter))]
         public ThemeMode ThemeMode
         {

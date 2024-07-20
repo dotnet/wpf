@@ -10,9 +10,11 @@ using System.Windows.Markup;
 using System.Security;
 using MS.Internal;
 using MS.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.Windows
 {
+    [Experimental("WPF0001")]
     public readonly struct ThemeMode : IEquatable<ThemeMode>
     {
         public static ThemeMode None => new ThemeMode();

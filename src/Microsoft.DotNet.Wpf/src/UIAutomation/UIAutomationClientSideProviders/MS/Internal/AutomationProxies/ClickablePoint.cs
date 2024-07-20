@@ -207,13 +207,13 @@ namespace MS.Internal.AutomationProxies
             }
 
             // return true if the 2 rectangle intersects
-            internal bool Intersect(ref CPRect ri)
+            internal readonly bool Intersect(ref CPRect ri)
             {
                 return !(_top >= ri._bottom || ri._top >= _bottom || _left >= ri._right || ri._left >= _right);
             }
 
             // return true if ri completely covers this
-            internal bool Overlap(ref CPRect ri)
+            internal readonly bool Overlap(ref CPRect ri)
             {
                 return (ri._left <= _left && ri._right >= _right && ri._top <= _top && ri._bottom >= _bottom);
             }

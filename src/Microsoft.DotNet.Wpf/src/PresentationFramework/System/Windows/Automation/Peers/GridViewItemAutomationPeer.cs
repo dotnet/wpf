@@ -62,7 +62,7 @@ namespace System.Windows.Automation.Peers
                     _dataChildren = new Hashtable(rowPresenter.ActualCells.Count);
 
                     List<AutomationPeer> list = new List<AutomationPeer>();
-                    int row = listview.Items.IndexOf(item);
+                    int row = listview.ItemContainerGenerator.IndexFromContainer(lvi);
                     int column = 0;
 
                     foreach (UIElement ele in rowPresenter.ActualCells)

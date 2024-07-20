@@ -353,12 +353,12 @@ namespace System.Windows
             Debug.Assert(_threadWindowHandles == null, "_threadWindowHandles must be null before enumerating the thread windows");
 
             // NOTE:
-            // _threadWindowHandles is created here.  This reference is nulled out in EnableThreadWindows
-            // when it is called with a true parameter.  Please do not null it out anywhere else.
-            // EnableThreadWindow(true) is called when dialog is going away.  Once dialog is closed and
-            // thread windows have been enabled, then there no need to keep the array list around.
+            // _threadWindowHandles is created here. This reference is nulled out in EnableThreadWindows
+            // when it is called with a true parameter. Please do not null it out anywhere else.
+            // EnableThreadWindow(true) is called when dialog is going away. Once dialog is closed and
+            // thread windows have been enabled, then there no need to keep the list around.
             // Please see BUG 929740 before making any changes to how _threadWindowHandles works.
-            _threadWindowHandles = new ArrayList();
+            _threadWindowHandles = new();
             //Get visible and enabled windows in the thread
             // If the callback function returns true for all windows in the thread, the return value is true.
             // If the callback function returns false on any enumerated window, or if there are no windows
@@ -3524,7 +3524,7 @@ namespace System.Windows
 
             for (int i = 0; i < _threadWindowHandles.Count; i++)
             {
-                IntPtr hWnd = (IntPtr)_threadWindowHandles[i];
+                IntPtr hWnd = _threadWindowHandles[i];
 
                 if (UnsafeNativeMethods.IsWindow(new HandleRef(null, hWnd)))
                 {
@@ -7152,7 +7152,7 @@ namespace System.Windows
         // which is different than the owner Window object
         private IntPtr              _ownerHandle = IntPtr.Zero;   // no need to dispose this
         private WindowCollection    _ownedWindows;
-        private ArrayList           _threadWindowHandles;
+        private List<IntPtr>        _threadWindowHandles;
 
         private bool                _updateHwndSize     = true;
         private bool                _updateHwndLocation = true;

@@ -62,20 +62,24 @@ namespace MS.Internal.Ink
             if (_erasingStrokeNodes == null)
             {
                 _erasingStrokeNodes = new List<StrokeNode>(points.Length);
+                _erasingStrokeNodeBounds = new List<Rect>(points.Length);
             }
             else
             {
                 _erasingStrokeNodes.Clear();
+                _erasingStrokeNodeBounds.Clear();
             }
-
 
             _bounds = Rect.Empty;
             _nodeIterator = _nodeIterator.GetIteratorForNextSegment(points.Length > 1 ? FilterPoints(points) : points);
             for (int i = 0; i < _nodeIterator.Count; i++)
             {
                 StrokeNode strokeNode = _nodeIterator[i];
-                _bounds.Union(strokeNode.GetBoundsConnected());
+                var boundsConnected = strokeNode.GetBoundsConnected();
+
+                _bounds.Union(boundsConnected);
                 _erasingStrokeNodes.Add(strokeNode);
+                _erasingStrokeNodeBounds.Add(boundsConnected);
             }
 #if POINTS_FILTER_TRACE
             _totalPointsAdded += path.Length;
@@ -113,14 +117,16 @@ namespace MS.Internal.Ink
 
                 if (inkSegmentBounds.IntersectsWith(_bounds))
                 {
-                    // can be optimized (using pre-computed bounds
-                    // of parts of the erasing stroke)
-                    foreach (StrokeNode erasingStrokeNode in _erasingStrokeNodes)
+                    for (var index = 0; index < _erasingStrokeNodes.Count; index++)
                     {
-                        if (inkSegmentBounds.IntersectsWith(erasingStrokeNode.GetBoundsConnected())
-                            && erasingStrokeNode.HitTest(inkStrokeNode))
+                        var erasingStrokeNodeBound = _erasingStrokeNodeBounds[index];
+                        if (inkSegmentBounds.IntersectsWith(erasingStrokeNodeBound))
                         {
-                            return true;
+                            StrokeNode erasingStrokeNode = _erasingStrokeNodes[index];
+                            if (erasingStrokeNode.HitTest(inkStrokeNode))
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -149,23 +155,23 @@ namespace MS.Internal.Ink
 
             Rect inkSegmentBounds = Rect.Empty;
             for (int x = 0; x < iterator.Count; x++)
-            {   
+            {
                 StrokeNode inkStrokeNode = iterator[x];
                 Rect inkNodeBounds = inkStrokeNode.GetBounds();
                 inkSegmentBounds.Union(inkNodeBounds);
 
                 if (inkSegmentBounds.IntersectsWith(_bounds))
                 {
-                    // can be optimized (using pre-computed bounds
-                    // of parts of the erasing stroke)
                     int index = eraseAt.Count;
-                    foreach (StrokeNode erasingStrokeNode in _erasingStrokeNodes)
+                    for (var strokeNodeIndex = 0; strokeNodeIndex < _erasingStrokeNodes.Count; strokeNodeIndex++)
                     {
-                        if (false == inkSegmentBounds.IntersectsWith(erasingStrokeNode.GetBoundsConnected()))
+                        var erasingStrokeNodeBound = _erasingStrokeNodeBounds[strokeNodeIndex];
+                        if (inkSegmentBounds.IntersectsWith(erasingStrokeNodeBound) == false)
                         {
                             continue;
                         }
 
+                        StrokeNode erasingStrokeNode = _erasingStrokeNodes[strokeNodeIndex];
                         StrokeFIndices fragment = inkStrokeNode.CutTest(erasingStrokeNode);
                         if (fragment.IsEmpty)
                         {
@@ -214,17 +220,19 @@ namespace MS.Internal.Ink
                         {
                             eraseAt.Add(fragment);
                         }
+
                         // Break out if the entire ink segment is hit - {BeforeFirst, AfterLast}
                         if (eraseAt[eraseAt.Count - 1].IsFull)
                         {
                             break;
                         }
                     }
+
                     // Merge inter-segment overlapping fragments
                     if ((index > 0) && (index < eraseAt.Count))
                     {
                         StrokeFIndices lastFragment = eraseAt[index - 1];
-                        if (DoubleUtil.AreClose(lastFragment.EndFIndex, StrokeFIndices.AfterLast) )
+                        if (DoubleUtil.AreClose(lastFragment.EndFIndex, StrokeFIndices.AfterLast))
                         {
                             if (DoubleUtil.AreClose(eraseAt[index].BeginFIndex, StrokeFIndices.BeforeFirst))
                             {
@@ -328,6 +336,7 @@ namespace MS.Internal.Ink
 
         private StrokeNodeIterator      _nodeIterator;
         private List<StrokeNode>        _erasingStrokeNodes = null;
+        private List<Rect>              _erasingStrokeNodeBounds = null;
         private Rect                    _bounds = Rect.Empty;
 
 #if POINTS_FILTER_TRACE

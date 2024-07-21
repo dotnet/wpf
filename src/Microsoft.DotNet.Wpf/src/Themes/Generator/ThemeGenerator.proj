@@ -26,6 +26,7 @@
     <StyleXaml Include="..\XAML\DocumentViewer.xaml" />
     <StyleXaml Include="..\XAML\DataGrid.xaml" />
     <StyleXaml Include="..\XAML\DatePicker.xaml" />
+    <StyleXaml Include="..\XAML\TimePicker.xaml" />
     <StyleXaml Include="..\XAML\Expander.xaml" />
     <StyleXaml Include="..\XAML\FocusVisual.xaml" />
     <StyleXaml Include="..\XAML\Frame.xaml" />

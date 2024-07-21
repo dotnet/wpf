@@ -579,7 +579,7 @@ namespace MS.Internal.Annotations.Component
         /// This is to control the relationships with TextSelection which lives in the same
         /// AdornerLayer. Will be removed when more flexible Z-ordering mechanism is available
         /// </summary>
-        private sealed class ZRange
+        private readonly struct ZRange
         {
             public ZRange(int min, int max)
             {

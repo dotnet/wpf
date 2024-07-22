@@ -13,7 +13,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <Thickness x:Key="TimePickerBorderThemeThickness">1,1,1,0</Thickness>
+    <Style TargetType="TimePicker">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TimePicker">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Grid.Column="0"
+                            Text="{Binding SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            Background="White"
+                            Foreground="Black"
+                            BorderBrush="Gray"
+                            BorderThickness="1" />
+                        <Button
+                            Grid.Column="1"
+                            Content="..."
+                            Background="Gray"
+                            Foreground="White"
+                            Width="30"
+                            Margin="5,0,0,0" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- <Thickness x:Key="TimePickerBorderThemeThickness">1,1,1,0</Thickness>
     <Thickness x:Key="TimePickerAccentBorderThemeThickness">0,0,0,1</Thickness>
     <Thickness x:Key="TimePickerLeftIconMargin">10,8,0,0</Thickness>
     <Thickness x:Key="TimePickerRightIconMargin">0,8,10,0</Thickness>
@@ -79,7 +108,6 @@
                                        Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <Border Margin="{TemplateBinding Margin}">
-                            <!-- This is a placeholder for TimePickerTextBox -->
                             <ContentControl
                                 x:Name="PART_Watermark"
                                 Opacity="0"
@@ -271,5 +299,7 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultTimePickerStyle}" TargetType="{x:Type TimePicker}"/>
+    <Style BasedOn="{StaticResource DefaultTimePickerStyle}" TargetType="{x:Type TimePicker}"/> -->
+
+
 </ResourceDictionary>

@@ -677,7 +677,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Is this page already disposed?
         //-------------------------------------------------------------------
-        internal bool IsDisposed { get { return (_disposed != 0) || _structuralCache.PtsContext.Disposed; } }
+        internal bool IsDisposed { get { return _disposed || _structuralCache.PtsContext.Disposed; } }
 
         //-------------------------------------------------------------------
         // Size of content on page.

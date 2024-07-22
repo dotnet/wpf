@@ -118,7 +118,7 @@ namespace MS.Internal.PtsHost
                 PtsCache ptsCache = Dispatcher.CurrentDispatcher.PtsCache as PtsCache;
                 if (ptsCache != null)
                 {
-                    disposed = (ptsCache._disposed == 1);
+                    disposed = ptsCache._disposed;
                 }
             }
             return disposed;
@@ -225,7 +225,7 @@ namespace MS.Internal.PtsHost
             {
                 // After shutdown is initiated, do not allow Finalizer thread to add any
                 // items to _releaseQueue.
-                if (_disposed == 0)
+                if (_disposed == false)
                 {
                     // Add PtsContext to collection of released PtsContexts.
                     // If the queue is empty, schedule Dispatcher time to dispose

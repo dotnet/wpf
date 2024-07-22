@@ -370,7 +370,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal bool Disposed
         {
-            get { return (_disposed != 0); }
+            get { return _disposed; }
         }
 
         /// <summary>

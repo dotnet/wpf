@@ -179,14 +179,6 @@ namespace System.Windows.Documents
         // re-evaluating the error from scratch.
         internal List<string> GetSuggestionsForError(SpellingError error)
         {
-            ITextPointer contextStart;
-            ITextPointer contextEnd;
-            ITextPointer contentStart;
-            ITextPointer contentEnd;
-            TextMap textMap;
-
-            List<string> suggestions = new();
-
             //
             // IMPORTANT!!
             //
@@ -194,18 +186,15 @@ namespace System.Windows.Documents
             // calculate the exact same error.  Keep the two methods in sync!
             //
 
-            XmlLanguage language;
-            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out language);
-            if (culture == null || !_spellerInterop.CanSpellCheck(culture))
-            {
-                // Return an empty list.
-            }
-            else
-            {
-                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out contentStart, out contextStart);
-                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out contentEnd, out contextEnd);
+            List<string> suggestions = new();
+            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
-                textMap = new TextMap(contextStart, contextEnd, contentStart, contentEnd);
+            if (culture is not null || _spellerInterop.CanSpellCheck(culture))
+            {
+                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out ITextPointer contentStart, out ITextPointer contextStart);
+                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out ITextPointer contentEnd, out ITextPointer contextEnd);
+
+                TextMap textMap = new(contextStart, contextEnd, contentStart, contentEnd);
 
                 SetCulture(culture);
 

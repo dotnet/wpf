@@ -75,7 +75,7 @@ int PaletteSorter::Search(int start, int end, COLORREF color)
 {
     for (;;)
     {
-        Debug::Assert((start >= 0) && (end < IndexUsed));
+        Debug::Assert((start >= 0) && (end < IndexUsed), "Invalid index range. Start: " + start + ", End: " + end + ", IndexUsed: " + IndexUsed);
 
         // Break condition
         if (start > end)
@@ -251,8 +251,8 @@ void CGDIBitmap::SetBits(interior_ptr<BITMAPINFO> bmi)
 // Convert to indexed bitmap
 HRESULT CGDIBitmap::ColorReduction()
 {
-    Debug::Assert(m_pSorter != nullptr);
-    Debug::Assert(m_pSorter->IndexUsed <= 256);
+    Debug::Assert(m_pSorter != nullptr, "m_pSorter should not be null.");
+    Debug::Assert(m_pSorter->IndexUsed <= 256, "IndexUsed is out of bounds. IndexUsed: " + m_pSorter->IndexUsed);
 
     int bpp = 8;
     
@@ -284,7 +284,7 @@ HRESULT CGDIBitmap::ColorReduction()
             {
                 int index = m_pSorter->Find(RGB(src[2], src[1], src[0]));
 
-                Debug::Assert(index < 2);
+                Debug::Assert(index < 2, "index should be less than 2.");
                 
                 dst[0] |= mask * index;
         
@@ -305,7 +305,7 @@ HRESULT CGDIBitmap::ColorReduction()
             {
                 int index = m_pSorter->Find(RGB(src[2], src[1], src[0]));
 
-                Debug::Assert(index < 16);
+                Debug::Assert(index < 16, "index should be less than 16.");
             
                 if (w & 1)
                 {
@@ -322,13 +322,13 @@ HRESULT CGDIBitmap::ColorReduction()
         }
         else
         {
-            Debug::Assert(bpp == 8);
+            Debug::Assert(bpp == 8, "bpp should be equal to 8.");
 
             for (int w = 0; w < m_Width; w ++)
             {
                 int index = m_pSorter->Find(RGB(src[2], src[1], src[0]));
 
-                Debug::Assert(index < 256);
+                Debug::Assert(index < 256, "index should be less than 256.");
             
                 dst[0] = (BYTE) index;
     
@@ -510,7 +510,7 @@ public:
     // Gets the current band's rectangle.
     Int32Rect GetCurrent()
     {
-        Debug::Assert(_index < _count && _index >= 0);
+        Debug::Assert(_index < _count && _index >= 0, "Index out of bounds. Index: " + _index + ", Count: " + _count);
 
         return _band;
     }
@@ -518,7 +518,7 @@ public:
     // Moves to the next band.
     bool MoveNext()
     {
-        Debug::Assert(_index < _count && _index >= -1);
+        Debug::Assert(_index < _count && _index >= -1, "Index out of bounds. Index: " + _index + ", Count: " + _count);
 
         _index++;
 
@@ -565,8 +565,8 @@ public:
 HRESULT
 CGDIBitmap::StretchBlt(CGDIDevice ^ pDevice, const Int32Rect & dst, bool flipHoriz, bool flipVert)
 {
-    Debug::Assert(pDevice != nullptr);
-    Debug::Assert(IsValid());
+    Debug::Assert(pDevice != nullptr, "pDevice should not be null.");
+    Debug::Assert(IsValid(), "Not in a valid state.");
 
     if ((m_Height > 0) && (m_Width > 0))
     {
@@ -682,7 +682,7 @@ CGDIBitmap::StretchBlt(CGDIDevice ^ pDevice, const Int32Rect & dst, bool flipHor
 
 HRESULT CGDIBitmap::Load(BitmapSource ^ pBitmap, array<Byte>^ buffer, PixelFormat LoadFormat)
 {
-    Debug::Assert(pBitmap != nullptr);
+    Debug::Assert(pBitmap != nullptr, "pBitmap should not be null.");
 
     m_pBitmap     = pBitmap;
 
@@ -831,8 +831,8 @@ BitmapSource ^ CreateBitmapAndFillWithBrush(
     PixelFormat  pixelFormat
     )
 {
-    Debug::Assert(brush != nullptr);
-    Debug::Assert((nWidth > 0) && (nHeight > 0));
+    Debug::Assert(brush != nullptr, "brush should not be null.");
+    Debug::Assert((nWidth > 0) && (nHeight > 0), "Width and height must be positive. Width: " + nWidth + ", Height: " + nHeight);
 
     RenderTargetBitmap ^pBitmap = gcnew RenderTargetBitmap(nWidth, nHeight, 96, 96, pixelFormat);
 

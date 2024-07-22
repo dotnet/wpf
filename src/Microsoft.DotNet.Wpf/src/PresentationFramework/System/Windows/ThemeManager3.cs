@@ -145,6 +145,8 @@ internal static class ThemeManager3
             if(themeMode == ThemeMode.None && index == 0)
             {
                 resyncThemeMode = true;
+                ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode _themeMode);            
+                themeMode = _themeMode;
             }
         }
 
@@ -261,7 +263,11 @@ internal static class ThemeManager3
         if(window == null || window.IsDisposed) return;
 
         // Add a check to see if the window already has a non-implicit style set.
-        window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+        if(window.Style == null)
+        {
+            window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+        }
+
         window.SetImmersiveDarkMode(!useLightColors);
 
         if(SystemParameters.HighContrast)

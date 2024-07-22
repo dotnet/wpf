@@ -27,7 +27,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         public:
 
-            FontFileEnumerator() { Debug::Assert(false); }
+            FontFileEnumerator() { Debug::Assert(false, "Assertion failed"); }
 
             FontFileEnumerator(
                               IEnumerable<IFontSource^>^ fontSourceCollection,

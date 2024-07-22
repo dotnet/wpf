@@ -115,7 +115,7 @@ internal static class ThemeManager3
         if(Application.Current.ThemeMode != themeMode)
         {
             Application.Current.ThemeMode = themeMode;
-            return true;
+            return themeMode == ThemeMode.None ? false : true;
         }
         return false;
     }

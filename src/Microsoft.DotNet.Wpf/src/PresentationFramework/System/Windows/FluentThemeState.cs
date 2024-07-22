@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Security;
 using MS.Internal;
 using MS.Utility;
@@ -35,9 +36,9 @@ namespace System.Windows
         public bool UseLightColors => _useLightColors;
         public Color AccentColor => _accentColor;
 
-        private string _themeName;
-        private bool _useLightColors;
-        private Color _accentColor;     
+        private readonly string _themeName;
+        private readonly bool _useLightColors;
+        private readonly Color _accentColor;     
 
 
         public bool Equals(FluentThemeState other)
@@ -46,6 +47,11 @@ namespace System.Windows
                    UseLightColors == other.UseLightColors &&
                    AccentColor == other.AccentColor;
         }   
+
+        public override bool Equals(object obj)
+        {
+            return obj is FluentThemeState other && Equals(other);
+        }
 
         public static bool operator ==(FluentThemeState left, FluentThemeState right)
         {
@@ -56,6 +62,12 @@ namespace System.Windows
         {
             return !left.Equals(right);
         }
+
+        public override int GetHashCode()
+        {
+            return StringComparer.Ordinal.GetHashCode(ToString());
+        }
+
 
         public override string ToString()
         {

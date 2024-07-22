@@ -1342,6 +1342,7 @@
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
     <Compile Include="System\Windows\ThemeManager3.cs" />
+    <Compile Include="System\Windows\FluentThemeState.cs" />
     <Compile Include="System\Windows\ThemeMode.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />

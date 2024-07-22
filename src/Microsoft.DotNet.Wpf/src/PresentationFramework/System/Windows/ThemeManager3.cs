@@ -24,6 +24,14 @@ internal static class ThemeManager3
 
             bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
             var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
+
+            FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
+
+            if(_currentFluentThemeState == newFluentThemeState)
+            {
+                return;
+            }
+
             AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
 
             foreach(Window window in Application.Current.Windows)
@@ -38,6 +46,7 @@ internal static class ThemeManager3
                 }
             }
 
+            _currentFluentThemeState = newFluentThemeState;
             IgnoreAppResourcesChange = false;
         }
         else
@@ -69,6 +78,7 @@ internal static class ThemeManager3
                 if(oldThemeMode != newThemeMode)
                 {
                     RemoveFluentFromApplication();
+                    _currentFluentThemeState = new FluentThemeState("None", false);
                 }
                 return;
             }
@@ -85,6 +95,8 @@ internal static class ThemeManager3
                     ApplyStyleOnWindow(window, useLightColors);
                 }
             }
+
+            _currentFluentThemeState= new FluentThemeState(newThemeMode.Value, useLightColors);
         }
         finally
         {
@@ -446,7 +458,7 @@ internal static class ThemeManager3
     #region Private Fields
     private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
-    
+    private static FluentThemeState _currentFluentThemeState = new FluentThemeState("None", false, SystemColors.AccentColor);
 
     #endregion
 }

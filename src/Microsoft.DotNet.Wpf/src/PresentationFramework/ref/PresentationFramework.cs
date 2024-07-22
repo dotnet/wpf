@@ -132,6 +132,7 @@ namespace System.Windows
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.ShutdownMode ShutdownMode { get { throw null; } set { } }
         public System.Uri StartupUri { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
         public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         public System.Windows.WindowCollection Windows { get { throw null; } }
@@ -1851,6 +1852,15 @@ namespace System.Windows
         public static bool operator !=(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public partial class ThemeModeConverter : System.ComponentModel.TypeConverter
+    {
+        public ThemeModeConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
+    }
 
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThicknessConverter))]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
@@ -2064,6 +2074,7 @@ namespace System.Windows
         public bool ShowInTaskbar { get { throw null; } set { } }
         public System.Windows.SizeToContent SizeToContent { get { throw null; } set { } }
         public System.Windows.Shell.TaskbarItemInfo TaskbarItemInfo { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
         public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]

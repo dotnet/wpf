@@ -130,7 +130,7 @@ internal static class ThemeManager
     {
         if(DeferSyncingThemeModeAndResources) return true;
 
-       ThemeMode themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);
+       ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
 
         if(Application.Current.ThemeMode != themeMode)
         {
@@ -152,7 +152,7 @@ internal static class ThemeManager
         if(index > 0)
         {
             // This means that the devleoper has added the Fluent theme resources manually
-            themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);            
+            themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);            
             resyncThemeMode = true;
         }
         else
@@ -168,7 +168,7 @@ internal static class ThemeManager
             if(themeMode == ThemeMode.None && index == 0)
             {
                 resyncThemeMode = true;
-                themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);            
+                themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);            
             }
         }
 
@@ -347,7 +347,7 @@ internal static class ThemeManager
         return themeMode == ThemeMode.Light || (themeMode == ThemeMode.System && IsSystemThemeLight());
     }
 
-    private static ThemeMode ResourceDictionaryContainsFluentDictionary(ResourceDictionary rd)
+    private static ThemeMode GetThemeModeFromResourceDictionary(ResourceDictionary rd)
     {
         ThemeMode themeMode = ThemeMode.None;
 
@@ -385,18 +385,17 @@ internal static class ThemeManager
         }
         else
         {
-            themeFileName = "Fluent." + (useLightMode ? "Light" : "Dark") + ".xaml";
+            themeFileName = useLightMode ? "Fluent.Light.xaml" : "Fluent.Dark.xaml";
         }
 
         return new Uri(fluentThemeResoruceDictionaryUri + themeFileName, UriKind.Absolute);
-
     }
 
     private static void AddOrUpdateThemeResources(ResourceDictionary rd, Uri dictionaryUri)
     {
         if (rd == null) return;
 
-        ArgumentNullException.ThrowIfNull(dictionaryUri, nameof(dictionaryUri));
+        ArgumentNullException.ThrowIfNull(dictionaryUri);
         
         var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
         int index = FindLastFluentThemeResourceDictionaryIndex(rd);
@@ -413,10 +412,9 @@ internal static class ThemeManager
 
     private static int FindLastFluentThemeResourceDictionaryIndex(ResourceDictionary rd)
     {
-        // Return -1 or throw ?
         // Throwing here because, here we are passing application or window resources,
         // and even though when the field is null, a new RD is created and returned.
-        ArgumentNullException.ThrowIfNull(rd, nameof(rd));
+        ArgumentNullException.ThrowIfNull(rd);
 
         for(int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
         {

@@ -979,7 +979,6 @@ namespace System.Windows
             }
             set
             {
-                Debug.WriteLine("> Application.ThemeMode.set");
                 VerifyAccess();
                 if (!ThemeManager.IsValidThemeMode(value))
                 {
@@ -989,7 +988,6 @@ namespace System.Windows
                 ThemeMode oldValue = _themeMode;
                 _themeMode = value;
 
-                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
                 if(!_resourcesInitialized)
                 {
                     // If the resources are not initializd, 
@@ -1734,11 +1732,8 @@ namespace System.Windows
 
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
-            Debug.WriteLine("> InvalidateResourceReference");
-            
             _resourcesInitialized = true;
             
-            Debug.WriteLine($"  IgnoreAppResourcesChange = {ThemeManager.IgnoreAppResourcesChange}");
             if(!ThemeManager.IgnoreAppResourcesChange)
             {
                 if(ThemeManager.SyncThemeModeAndResources())

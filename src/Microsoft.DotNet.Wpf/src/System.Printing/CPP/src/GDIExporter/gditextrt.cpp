@@ -83,7 +83,7 @@ bool RenderUnicode(GlyphRun ^pGlyphRun)
     Debug::Assert(!renderCodepoints ||
         (  pGlyphRun->Characters != nullptr
         && pGlyphRun->GlyphIndices->Count == pGlyphRun->Characters->Count
-        )
+        ), "Assertion failed: Condition for GlyphIndices and Characters count mismatch."
       );
 
     //

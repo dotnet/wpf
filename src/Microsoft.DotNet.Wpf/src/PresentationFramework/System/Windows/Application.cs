@@ -915,6 +915,7 @@ namespace System.Windows
             }
             set
             {
+                Debug.WriteLine("> Application.Resources.set");
                 bool invalidateResources = false;
                 ResourceDictionary oldValue;
 
@@ -928,6 +929,17 @@ namespace System.Windows
                 {
                     // This app is no longer an owner for the old RD
                     oldValue.RemoveOwner(this);
+                }
+
+                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager3.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
+                if(ThemeManager3.DeferredAppThemeLoading && !_resourcesInitialized)
+                {
+                    if(value != null)
+                    {
+                        var uri = ThemeManager3.GetThemeResource(ThemeMode);
+                        value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
+                    }
+                    ThemeManager3.DeferredAppThemeLoading = false;
                 }
 
                 if (value != null)
@@ -967,6 +979,7 @@ namespace System.Windows
             }
             set
             {
+                Debug.WriteLine("> Application.ThemeMode.set");
                 VerifyAccess();
                 if (!ThemeManager3.IsValidThemeMode(value))
                 {
@@ -975,6 +988,16 @@ namespace System.Windows
                 
                 ThemeMode oldValue = _themeMode;
                 _themeMode = value;
+
+                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager3.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
+                if(!_resourcesInitialized)
+                {
+                    // If the resources are not initializd, 
+                    // fluent dictionary included will be reset.
+                    // Hence, deferring the step.
+                    ThemeManager3.DeferredAppThemeLoading = true;
+                    return;
+                }
 
                 ThemeManager3.OnApplicationThemeChanged(oldValue, value);
             }
@@ -1711,6 +1734,19 @@ namespace System.Windows
 
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
+            Debug.WriteLine("> InvalidateResourceReference");
+            
+            _resourcesInitialized = true;
+            
+            Debug.WriteLine($"  IgnoreAppResourcesChange = {ThemeManager3.IgnoreAppResourcesChange}");
+            if(!ThemeManager3.IgnoreAppResourcesChange)
+            {
+                if(ThemeManager3.SyncThemeModeAndResources())
+                {
+                    return;
+                }
+            }
+            
             // Invalidate ResourceReference properties on all the windows.
             // we Clone() the collection b/c if we don't then some other thread can be
             // modifying the collection while we iterate over it
@@ -2453,6 +2489,7 @@ namespace System.Windows
         private NavigationService           _navService;
 
         private ThemeMode                   _themeMode = ThemeMode.None;
+        private bool _resourcesInitialized = false;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

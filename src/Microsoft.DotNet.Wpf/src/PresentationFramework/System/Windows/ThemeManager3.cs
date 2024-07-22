@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Appearance;
+using System.Diagnostics;
+
 
 namespace System.Windows;
 
@@ -18,6 +20,8 @@ internal static class ThemeManager3
     {
         if(IsFluentThemeEnabled)
         {
+            IgnoreAppResourcesChange = true;
+
             bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
             var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
             AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
@@ -33,6 +37,8 @@ internal static class ThemeManager3
                     ApplyFluentOnWindow(window);
                 }
             }
+
+            IgnoreAppResourcesChange = false;
         }
         else
         {
@@ -58,9 +64,12 @@ internal static class ThemeManager3
 
         try
         {
-            if(newThemeMode == ThemeMode.None && oldThemeMode != newThemeMode)
+            if(newThemeMode == ThemeMode.None)
             {
-                RemoveFluentFromApplication();
+                if(oldThemeMode != newThemeMode)
+                {
+                    RemoveFluentFromApplication();
+                }
                 return;
             }
 
@@ -97,14 +106,52 @@ internal static class ThemeManager3
         ApplyFluentOnWindow(window);
     }
 
-    internal static void OnAppResourcesChanged()
+    internal static bool SyncThemeModeAndResources()
     {
+        if(DeferSyncingThemeModeAndResources) return true;
 
+        ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode themeMode);
+
+        if(Application.Current.ThemeMode != themeMode)
+        {
+            Application.Current.ThemeMode = themeMode;
+            return true;
+        }
+        return false;
     }
 
-    internal static void LoadDefferedApplicationTheme()
+    internal static void SyncDeferredThemeModeAndResources()
     {
+        if(Application.Current == null) return;
 
+        ThemeMode themeMode = Application.Current.ThemeMode;
+
+        bool resyncThemeMode = false;
+        int index = FindLastFluentThemeResourceDictionaryIndex(Application.Current.Resources);
+
+        if(index > 0)
+        {
+            ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode _themeMode);            
+            resyncThemeMode = true;
+            themeMode = _themeMode;
+        }
+        else
+        {
+            if(themeMode != ThemeMode.None && index != 0)
+            {
+                resyncThemeMode = true;
+            }
+
+            if(themeMode == ThemeMode.None && index == 0)
+            {
+                resyncThemeMode = true;
+            }
+        }
+
+        if(resyncThemeMode)
+        {
+            Application.Current.ThemeMode = themeMode;
+        }
     }
 
     internal static void ApplyStyleOnWindow(Window window)
@@ -124,6 +171,12 @@ internal static class ThemeManager3
         return themeMode == ThemeMode.None || themeMode == ThemeMode.Light || themeMode == ThemeMode.Dark || themeMode == ThemeMode.System;
     }
 
+    internal static Uri GetThemeResource(ThemeMode themeMode)
+    {
+        bool useLightColors = GetUseLightColors(themeMode);
+        return GetFluentThemeResourceUri(useLightColors);
+    }
+
     #endregion
 
 
@@ -133,9 +186,9 @@ internal static class ThemeManager3
     {
         if(Application.Current == null) return;
 
-        int index = FindLastFluentThemeResourceDictionaryIndex(Application.Current.Resources);
+        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(Application.Current.Resources);
 
-        if(index != -1)
+        foreach(int index in indices)
         {
             Application.Current.Resources.MergedDictionaries.RemoveAt(index);
         }
@@ -153,11 +206,11 @@ internal static class ThemeManager3
     {
         if(window == null || window.IsDisposed) return;
 
-        int index = FindLastFluentThemeResourceDictionaryIndex(window.Resources);
+        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(Application.Current.Resources);
 
-        if(index != -1)
+        foreach(int index in indices)
         {
-            window.Resources.MergedDictionaries.RemoveAt(index);
+            Application.Current.Resources.MergedDictionaries.RemoveAt(index);
         }
 
         RemoveStyleFromWindow(window);
@@ -220,6 +273,8 @@ internal static class ThemeManager3
 
     #region Internal Properties
 
+    internal static bool DeferSyncingThemeModeAndResources { get; set; } = true;
+
     internal static bool IsFluentThemeEnabled
     {
         get
@@ -228,6 +283,8 @@ internal static class ThemeManager3
             return Application.Current.ThemeMode != ThemeMode.None;
         }
     }
+
+    internal static bool DeferredAppThemeLoading { get; set; } = false;
 
     internal static bool IgnoreAppResourcesChange { get; set; } = false;
 
@@ -331,6 +388,26 @@ internal static class ThemeManager3
         return -1;
     }
 
+    private static List<int> FindAllFluentThemeResourceDictionaryIndex(ResourceDictionary rd)
+    {
+        ArgumentNullException.ThrowIfNull(rd, nameof(rd));
+
+        List<int> indices = new List<int>();
+
+        for(int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
+        {
+            if(rd.MergedDictionaries[i].Source != null)
+            {
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri))
+                {
+                    indices.Add(i);
+                }
+            }
+        }
+
+        return indices;
+    }
+
     private static bool IsSystemThemeLight()
     {
         var useLightTheme = Registry.GetValue(_regPersonalizeKeyPath,
@@ -349,10 +426,6 @@ internal static class ThemeManager3
 
 
     #region Private Fields
-
-    // private static bool _isFluentThemeEnabled;
-    // private static bool _deferThemeLoading;
-
     private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
     

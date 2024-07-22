@@ -29,7 +29,7 @@ namespace System.Windows
         
         public bool Equals(ThemeMode other)
         {
-            return string.Equals(_value, other._value, StringComparison.Ordinal);
+            return string.Equals(Value, other.Value, StringComparison.Ordinal);
         }
 
         public override bool Equals(object obj)

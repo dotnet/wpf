@@ -74,15 +74,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string)) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
 
@@ -105,12 +97,11 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is ThemeMode )
+            if (value is ThemeMode themeMode)
             {
                 if (destinationType == typeof(string)) 
                 { 
-                    return ((ThemeMode)value).Value;
+                    return themeMode.Value;
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {

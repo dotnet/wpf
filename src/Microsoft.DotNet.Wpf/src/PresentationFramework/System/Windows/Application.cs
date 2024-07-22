@@ -2489,7 +2489,7 @@ namespace System.Windows
         private NavigationService           _navService;
 
         private ThemeMode                   _themeMode = ThemeMode.None;
-        private bool _resourcesInitialized = false;
+        private bool                        _resourcesInitialized = false;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

@@ -3653,12 +3653,6 @@ namespace System.Windows
                     App.NonAppWindowsInternal.Add(this);
                 }
             }
-
-            // TODO : Remove when Fluent theme is enabled by default
-            if (ThemeManager3.IsFluentThemeEnabled)
-            {
-                SetResourceReference(StyleProperty, typeof(Window));
-            }
         }
 
 

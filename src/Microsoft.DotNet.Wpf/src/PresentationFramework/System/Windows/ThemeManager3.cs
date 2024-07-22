@@ -158,11 +158,17 @@ internal static class ThemeManager3
     {
         if(!IsFluentThemeEnabled && window.ThemeMode == ThemeMode.None) return;
 
-        bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
+        bool useLightColors;
+
         if(window.ThemeMode != ThemeMode.None)
         {
             useLightColors = GetUseLightColors(window.ThemeMode);
         }
+        else
+        {
+            useLightColors = GetUseLightColors(Application.Current.ThemeMode);
+        }
+
         ApplyStyleOnWindow(window, useLightColors);
     }
 
@@ -206,11 +212,11 @@ internal static class ThemeManager3
     {
         if(window == null || window.IsDisposed) return;
 
-        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(Application.Current.Resources);
+        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(window.Resources);
 
         foreach(int index in indices)
         {
-            Application.Current.Resources.MergedDictionaries.RemoveAt(index);
+            window.Resources.MergedDictionaries.RemoveAt(index);
         }
 
         RemoveStyleFromWindow(window);
@@ -338,11 +344,15 @@ internal static class ThemeManager3
 
     private static Uri GetFluentThemeResourceUri(bool useLightMode)
     {
-        string themeFileName = "Fluent." + (useLightMode ? "Light" : "Dark") + ".xaml";
+        string themeFileName;
 
         if(SystemParameters.HighContrast)
         {
             themeFileName = "Fluent.HC.xaml";
+        }
+        else
+        {
+            themeFileName = "Fluent." + (useLightMode ? "Light" : "Dark") + ".xaml";
         }
 
         return new Uri(fluentThemeResoruceDictionaryUri + themeFileName, UriKind.Absolute);
@@ -379,7 +389,8 @@ internal static class ThemeManager3
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri))
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri, 
+                                                                            StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
                 }
@@ -398,7 +409,8 @@ internal static class ThemeManager3
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri))
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri, 
+                                                                            StringComparison.OrdinalIgnoreCase))
                 {
                     indices.Add(i);
                 }

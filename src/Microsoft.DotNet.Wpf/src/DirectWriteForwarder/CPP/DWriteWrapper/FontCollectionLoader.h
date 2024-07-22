@@ -25,7 +25,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         public:
    
-            FontCollectionLoader() { Debug::Assert(false, "Assertion failed"); }
+            FontCollectionLoader() { Debug::Fail("Assertion failed"); }
             
             FontCollectionLoader(
                                 IFontSourceCollectionFactory^ fontSourceCollectionFactory,

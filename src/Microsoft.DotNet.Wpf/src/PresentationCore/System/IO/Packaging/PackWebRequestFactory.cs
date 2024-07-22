@@ -20,6 +20,9 @@ using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using System.Security;
 using MS.Internal;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace System.IO.Packaging
 {
@@ -63,13 +66,8 @@ namespace System.IO.Packaging
             if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))
                 throw new ArgumentException(SR.Format(SR.UriSchemeMismatch, PackUriHelper.UriSchemePack), "uri");
 
-#if DEBUG
-            if (_traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequestFactory - responding to uri: " + uri);
-#endif
+            Trace(this, $"responding to uri: {uri}");
+
             // only inspect cache if part name is present because cache only contains an object, not
             // the stream it was derived from
             Uri packageUri = System.IO.Packaging.PackUriHelper.GetPackageUri(uri);
@@ -102,26 +100,15 @@ namespace System.IO.Packaging
                 // do we have a package?
                 if (c != null)
                 {
-#if DEBUG
-                    if (_traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + ": " + 
-                                "PackWebRequestFactory - cache hit - returning CachedPackWebRequest");
-#endif
+                    Trace(this, "cache hit - returning CachedPackWebRequest");
                     // use the cached object
                     return new PackWebRequest(uri, packageUri, partUri, c, 
                         cachedPackageIsFromPublicStore, cachedPackageIsThreadSafe);   
                 }
 }
-        
-#if DEBUG
-            if (_traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + ": " + 
-                        "PackWebRequestFactory - spawning regular PackWebRequest");
-#endif
+
+            Trace(this, "spawning regular PackWebRequest");
+
             return new PackWebRequest(uri, packageUri, partUri);
         }
 
@@ -163,8 +150,124 @@ namespace System.IO.Packaging
             }
         }
 
-        internal static System.Diagnostics.BooleanSwitch _traceSwitch;
+        private static System.Diagnostics.BooleanSwitch _traceSwitch;
 #endif
+
+        [Conditional("DEBUG")]
+        internal static void Trace(object caller, string message)
+        {
+#if DEBUG
+            if (_traceSwitch.Enabled)
+            {
+                System.Diagnostics.Trace.TraceInformation(
+                    $"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: {caller.GetType().Name} - {message}");
+            }
+#endif
+        }
+
+        [Conditional("DEBUG")]
+        internal static void Trace(object caller, [InterpolatedStringHandlerArgument(nameof(caller))] ref TraceInterpolatedStringHandler message)
+        {
+#if DEBUG
+            if (_traceSwitch.Enabled)
+            {
+                System.Diagnostics.Trace.TraceInformation(message.ToStringAndClear());
+            }
+#endif
+        }
+
+        /// <summary>
+        ///   Provides an interpolated string handler for <see
+        ///   cref="PackWebRequestFactory.Trace(object, ref PackWebRequestFactory.TraceInterpolatedStringHandler)"
+        ///   /> that only performs formatting if the condition applies.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [InterpolatedStringHandler]
+        public struct TraceInterpolatedStringHandler
+        {
+            /// <summary>
+            ///   The handler we use to perform the formatting.
+            /// </summary>
+            private StringBuilder.AppendInterpolatedStringHandler _stringBuilderHandler;
+
+            /// <summary>
+            ///   The underlying <see cref="StringBuilder"/> instance used by <see cref="_stringBuilderHandler"/>,
+            ///   if any.
+            /// </summary>
+            private StringBuilder _builder;
+
+            /// <summary>
+            ///   Creates an instance of the handler.
+            /// </summary>
+            /// <param name="literalLength">The number of constant characters outside of interpolation expressions in the interpolated string.</param>
+            /// <param name="formattedCount">The number of interpolation expressions in the interpolated string.</param>
+            /// <param name="traceSwitch">The TraceSwitch passed to the <see cref="TraceSwitchExtensions"/> method.</param>
+            /// <param name="shouldAppend">A value indicating whether formatting should proceed.</param>
+            /// <remarks>
+            ///   This is intended to be called only by compiler-generated code. Arguments are not validated as they'd
+            ///   otherwise be for members intended to be used directly.
+            /// </remarks>
+            internal TraceInterpolatedStringHandler(int literalLength, int formattedCount, object caller, out bool shouldAppend)
+            {
+                if (_traceSwitch.Enabled)
+                {
+                    _builder = new StringBuilder();
+                    _builder.Append($"{DateTime.Now:T} {DateTime.Now.Millisecond} {Environment.CurrentManagedThreadId}: {caller.GetType().Name} - ");
+                    _stringBuilderHandler = new StringBuilder.AppendInterpolatedStringHandler(literalLength, formattedCount,
+                        _builder);
+                    shouldAppend = true;
+                }
+                else
+                {
+                    _stringBuilderHandler = default;
+                    shouldAppend = false;
+                }
+            }
+
+            /// <summary>
+            ///   Extracts the built string from the handler.
+            /// </summary>
+            internal string ToStringAndClear()
+            {
+                string s = _builder?.ToString() ?? string.Empty;
+                _stringBuilderHandler = default;
+                _builder = null;
+                return s;
+            }
+
+            /// <summary>
+            ///   Writes the specified string to the handler.
+            /// </summary>
+            /// <param name="value">The string to write.</param>
+            public void AppendLiteral(string value) => _stringBuilderHandler.AppendLiteral(value);
+
+            /// <summary>
+            ///   Writes the specified value to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            /// <typeparam name="T">The type of the value to write.</typeparam>
+            public void AppendFormatted<T>(T value) => _stringBuilderHandler.AppendFormatted(value);
+
+            /// <summary>
+            ///   Writes the specified value to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            /// <param name="format">The format string.</param>
+            /// <typeparam name="T">The type of the value to write.</typeparam>
+            public void AppendFormatted<T>(T value, string? format) => _stringBuilderHandler.AppendFormatted(value, format);
+
+            /// <summary>
+            ///   Writes the specified character span to the handler.
+            /// </summary>
+            /// <param name="value">The span to write.</param>
+            public void AppendFormatted(ReadOnlySpan<char> value) => _stringBuilderHandler.AppendFormatted(value);
+
+            /// <summary>
+            ///   Writes the specified character span to the handler.
+            /// </summary>
+            /// <param name="value">The value to write.</param>
+            public void AppendFormatted(string value) => _stringBuilderHandler.AppendFormatted(value);
+        }
 
         //------------------------------------------------------
         //

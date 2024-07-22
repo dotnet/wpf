@@ -416,7 +416,7 @@ namespace System.Windows.Media.Media3D
                 }
 
                 double dist = (worldPointHit - rayParams.Origin).Length;
-                Debug.Assert(dist > 0, "Distance is negative: " + dist);
+                Debug.Assert(dist > 0, $"Distance is negative: {dist}");
 
                 if (rayParams.HasModelTransformMatrix)
                 {

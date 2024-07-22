@@ -185,7 +185,7 @@ namespace System.Windows.Input
         /// </summary>
         public override string ToString()
         {
-            return String.Format(CultureInfo.CurrentCulture, "{0}({1})", base.ToString(), Name);
+            return $"{base.ToString()}({this.Name})";
         }
 
         /// <summary>

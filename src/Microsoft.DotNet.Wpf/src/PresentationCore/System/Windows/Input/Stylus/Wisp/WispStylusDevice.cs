@@ -1117,7 +1117,7 @@ namespace System.Windows.Input.StylusWisp
         /// </summary>
         public override string ToString()
         {
-            return String.Format(CultureInfo.CurrentCulture, "{0}({1})", base.ToString(), this.Name);
+            return $"{base.ToString()}({this.Name})";
         }
 
         /////////////////////////////////////////////////////////////////////

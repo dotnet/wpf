@@ -77,7 +77,7 @@ namespace System.Windows.Input
         /// <summary>
         /// The key to assert access to for WISP data
         /// </summary>
-        private const string WispKeyAssert = @"HKEY_CURRENT_USER\" + WispRootKey;
+        private const string WispKeyAssert = $@"HKEY_CURRENT_USER\{WispRootKey}";
 
         /// <summary>
         /// The root of all WISP registry entries
@@ -87,12 +87,12 @@ namespace System.Windows.Input
         /// <summary>
         /// The event parameters for WISP pen input
         /// </summary>
-        private const string WispPenSystemEventParametersKey = WispRootKey + @"Software\Microsoft\Wisp\Pen\SysEventParameters";
+        private const string WispPenSystemEventParametersKey = $@"{WispRootKey}Software\Microsoft\Wisp\Pen\SysEventParameters";
 
         /// <summary>
         /// The WISP touch paramaters
         /// </summary>
-        private const string WispTouchConfigKey = WispRootKey + @"Software\Microsoft\Wisp\Touch";
+        private const string WispTouchConfigKey = $@"{WispRootKey}Software\Microsoft\Wisp\Touch";
 
         /// <summary>
         /// The max distance a double tap can vary
@@ -126,7 +126,7 @@ namespace System.Windows.Input
         /// <summary>
         /// String to use for assert of registry permissions
         /// </summary>
-        private const string WpfPointerKeyAssert = @"HKEY_CURRENT_USER\" + WpfPointerKey;
+        private const string WpfPointerKeyAssert = $@"HKEY_CURRENT_USER\{WpfPointerKey}";
 
         /// <summary>
         /// The key location for the registry switch to configure the touch stack system wide

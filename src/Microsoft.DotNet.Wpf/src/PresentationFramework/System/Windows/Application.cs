@@ -932,14 +932,14 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                if(ThemeManager3.DeferredAppThemeLoading && !_resourcesInitialized)
+                if(ThemeManager.DeferredAppThemeLoading && !_resourcesInitialized)
                 {
                     if(value != null)
                     {
-                        var uri = ThemeManager3.GetThemeResource(ThemeMode);
+                        var uri = ThemeManager.GetThemeResource(ThemeMode);
                         value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
                     }
-                    ThemeManager3.DeferredAppThemeLoading = false;
+                    ThemeManager.DeferredAppThemeLoading = false;
                 }
 
                 if (value != null)
@@ -981,7 +981,7 @@ namespace System.Windows
             {
                 Debug.WriteLine("> Application.ThemeMode.set");
                 VerifyAccess();
-                if (!ThemeManager3.IsValidThemeMode(value))
+                if (!ThemeManager.IsValidThemeMode(value))
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
@@ -989,17 +989,17 @@ namespace System.Windows
                 ThemeMode oldValue = _themeMode;
                 _themeMode = value;
 
-                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager3.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
+                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
                 if(!_resourcesInitialized)
                 {
                     // If the resources are not initializd, 
                     // fluent dictionary included will be reset.
                     // Hence, deferring the step.
-                    ThemeManager3.DeferredAppThemeLoading = true;
+                    ThemeManager.DeferredAppThemeLoading = true;
                     return;
                 }
 
-                ThemeManager3.OnApplicationThemeChanged(oldValue, value);
+                ThemeManager.OnApplicationThemeChanged(oldValue, value);
             }
         }
 
@@ -1738,10 +1738,10 @@ namespace System.Windows
             
             _resourcesInitialized = true;
             
-            Debug.WriteLine($"  IgnoreAppResourcesChange = {ThemeManager3.IgnoreAppResourcesChange}");
-            if(!ThemeManager3.IgnoreAppResourcesChange)
+            Debug.WriteLine($"  IgnoreAppResourcesChange = {ThemeManager.IgnoreAppResourcesChange}");
+            if(!ThemeManager.IgnoreAppResourcesChange)
             {
-                if(ThemeManager3.SyncThemeModeAndResources())
+                if(ThemeManager.SyncThemeModeAndResources())
                 {
                     return;
                 }

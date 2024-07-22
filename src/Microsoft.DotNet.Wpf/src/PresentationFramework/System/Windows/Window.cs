@@ -575,7 +575,7 @@ namespace System.Windows
             {
                 VerifyContextAndObjectState();
 
-                if(!ThemeManager3.IsValidThemeMode(value))
+                if(!ThemeManager.IsValidThemeMode(value))
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
@@ -589,7 +589,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    ThemeManager3.OnWindowThemeChanged(this, oldTheme, value);
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
                 }
             }
         }
@@ -2553,30 +2553,30 @@ namespace System.Windows
 
             if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                if(ThemeManager3.DeferSyncingThemeModeAndResources)
+                if(ThemeManager.DeferSyncingThemeModeAndResources)
                 {
-                    ThemeManager3.DeferSyncingThemeModeAndResources = false;
-                    ThemeManager3.SyncDeferredThemeModeAndResources();
+                    ThemeManager.DeferSyncingThemeModeAndResources = false;
+                    ThemeManager.SyncDeferredThemeModeAndResources();
                 }
 
-                if(ThemeManager3.IsFluentThemeEnabled)
+                if(ThemeManager.IsFluentThemeEnabled)
                 {
 
-                    if(ThemeManager3.DeferredAppThemeLoading)
+                    if(ThemeManager.DeferredAppThemeLoading)
                     {
-                        ThemeManager3.OnApplicationThemeChanged(ThemeMode.None, Application.Current.ThemeMode);
-                        ThemeManager3.DeferredAppThemeLoading = false;
+                        ThemeManager.OnApplicationThemeChanged(ThemeMode.None, Application.Current.ThemeMode);
+                        ThemeManager.DeferredAppThemeLoading = false;
                     }
                     else
                     {
-                        ThemeManager3.ApplyStyleOnWindow(this);
+                        ThemeManager.ApplyStyleOnWindow(this);
                     }
                 }
 
                 if(_deferThemeLoading)
                 {
                     _deferThemeLoading = false;
-                    ThemeManager3.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                    ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
                 }
             }
 

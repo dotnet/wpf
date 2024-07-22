@@ -607,6 +607,7 @@
     <Compile Include="System\Windows\Controls\DataTemplateSelector.cs" />
     <Compile Include="System\Windows\Controls\DatePicker.cs" />
     <Compile Include="System\Windows\Controls\TimePicker.cs" />
+    <Compile Include="System\Windows\Controls\TimePickerTextBox.cs" />
     <Compile Include="System\Windows\Controls\DatePickerDateValidationErrorEventArgs.cs" />
     <Compile Include="System\Windows\Controls\DatePickerFormat.cs" />
     <Compile Include="System\Windows\Controls\DateTimeHelper.cs" />

@@ -23,26 +23,36 @@
     <sys:Double x:Key="TimePickerClockButtonIconSize">14</sys:Double>
     <sys:String x:Key="ClockGlyph">&#xE787;</sys:String>
 
-    <Style x:Key="DefaultTimePickerTextBoxStyle" TargetType="{x:Type TimePickerTextBox}">
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TimePicker}}}" />
+    <Style x:Key="DefaultTimePickerTextBoxStyle"
+           TargetType="{x:Type TimePickerTextBox}">
+        <Setter Property="FocusVisualStyle"
+                Value="{DynamicResource DefaultControlFocusVisualStyle}"/>
+        <Setter Property="BorderThickness"
+                Value="0"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="BorderBrush"
+                Value="Transparent"/>
+        <Setter Property="Background"
+                Value="Transparent"/>
+        <Setter Property="AutomationProperties.Name"
+                Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TimePicker}}}"/>
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="CaretBrush">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}"/>
             </Setter.Value>
         </Setter>
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
+        <Setter Property="OverridesDefaultStyle"
+                Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TimePickerTextBox}">
@@ -50,28 +60,32 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="WatermarkStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0" />
+                                    <VisualTransition GeneratedDuration="0"/>
                                 </VisualStateGroup.Transitions>
-                                <VisualState Name="Unwatermarked" />
+                                <VisualState Name="Unwatermarked"/>
                                 <VisualState Name="Watermarked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_Watermark" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        
+
                         <Border Margin="{TemplateBinding Margin}">
-                            <Decorator x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                            <Decorator x:Name="PART_ContentHost"
+                                       Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <Border Margin="{TemplateBinding Margin}">
                             <!-- This is a placeholder for TimePickerTextBox -->
-                            <ContentControl 
+                            <ContentControl
                                 x:Name="PART_Watermark"
                                 Opacity="0"
                                 Margin="{TemplateBinding Padding}"
                                 Focusable="False"
-                                IsHitTestVisible="False" />
+                                IsHitTestVisible="False"/>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -79,40 +93,57 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultTimePickerStyle" TargetType="{x:Type TimePicker}">
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-        <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
-        <Setter Property="ClockStyle" Value="{DynamicResource DefaultClockStyle}" />
+    <Style x:Key="DefaultTimePickerStyle"
+           TargetType="{x:Type TimePicker}">
+        <Setter Property="FocusVisualStyle"
+                Value="{DynamicResource DefaultControlFocusVisualStyle}"/>
+        <Setter Property="ContextMenu"
+                Value="{DynamicResource DefaultControlContextMenu}"/>
+        <Setter Property="ClockStyle"
+                Value="{DynamicResource DefaultClockStyle}"/>
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+                <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}"/>
             </Setter.Value>
         </Setter>
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{StaticResource TimePickerBorderThemeThickness}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
-        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
-        <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource ControlElevationBorderBrush}"/>
+        <Setter Property="BorderThickness"
+                Value="{StaticResource TimePickerBorderThemeThickness}"/>
+        <Setter Property="FontSize"
+                Value="{DynamicResource ControlContentThemeFontSize}"/>
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalAlignment"
+                Value="Center"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="Top"/>
+        <Setter Property="MinHeight"
+                Value="{DynamicResource TextControlThemeMinHeight}"/>
+        <Setter Property="MinWidth"
+                Value="{DynamicResource TextControlThemeMinWidth}"/>
+        <Setter Property="Padding"
+                Value="{DynamicResource TextControlThemePadding}"/>
+        <Setter Property="Border.CornerRadius"
+                Value="{DynamicResource ControlCornerRadius}"/>
+        <Setter Property="SnapsToDevicePixels"
+                Value="True"/>
+        <Setter Property="OverridesDefaultStyle"
+                Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TimePicker}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid
                             Grid.Row="0"
@@ -129,10 +160,13 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
-                                <Grid x:Name="PART_Root" FocusManager.FocusedElement="{Binding ElementName=PART_Button}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid x:Name="PART_Root"
+                                      FocusManager.FocusedElement="{Binding ElementName=PART_Button}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
                                         <TimePickerTextBox
@@ -143,7 +177,7 @@
                                             VerticalAlignment="Stretch"
                                             ContextMenu="{TemplateBinding ContextMenu}"
                                             Focusable="{TemplateBinding Focusable}"
-                                            Foreground="{TemplateBinding Foreground}" />
+                                            Foreground="{TemplateBinding Foreground}"/>
                                     </Grid>
                                     <Button
                                         x:Name="PART_Button"
@@ -169,7 +203,7 @@
                                             FontFamily="{DynamicResource SegoeFluentIcons}"
                                             FontSize="{StaticResource TimePickerClockButtonIconSize}"
                                             Foreground="{TemplateBinding Foreground}"
-                                            Text="{StaticResource ClockGlyph}" />
+                                            Text="{StaticResource ClockGlyph}"/>
                                     </Button>
                                 </Grid>
                             </Border>
@@ -180,7 +214,7 @@
                                 BorderThickness="{StaticResource TimePickerAccentBorderThemeThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                                 <Border.BorderBrush>
-                                    <SolidColorBrush Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+                                    <SolidColorBrush Color="{DynamicResource ControlStrongStrokeColorDefault}"/>
                                 </Border.BorderBrush>
                             </Border>
                         </Grid>
@@ -192,7 +226,50 @@
                             AllowsTransparency="True"
                             Placement="Bottom"
                             PlacementTarget="{Binding ElementName=PART_TextBox}"
-                            StaysOpen="False" />
+                            StaysOpen="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True
+                        <Trigger Property="IsKeyboardFocusWithin"
+                                Value="True">
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ControlElevationBorderBrushSelected}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource TextFillColorDisabled}"/>
+                            <Setter TargetName="ContentBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource ControlFillColorDisabled}"/>
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ControlStrokeColorDisabled}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                Value="True">
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ControlElevationBorderBrushPointerOver}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                Value="True">
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ControlElevationBorderBrushSelected}"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup"
+                                Property="IsOpen"
+                                Value="True">
+                            <Setter TargetName="ContentBorder"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ControlElevationBorderBrushSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultTimePickerStyle}" TargetType="{x:Type TimePicker}"/>
+</ResourceDictionary>

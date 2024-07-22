@@ -25,6 +25,15 @@ namespace System.Windows.Controls
             this.Loaded += TimePicker_Loaded;
         }
 
+        public static readonly DependencyProperty ClockStyleProperty =
+            DependencyProperty.Register("ClockStyle", typeof(Style), typeof(TimePicker), new PropertyMetadata(null));
+
+        public Style ClockStyle
+        {
+            get { return (Style)GetValue(ClockStyleProperty); }
+            set { SetValue(ClockStyleProperty, value); }
+        }
+
         private void TimePicker_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeTimeComponents();

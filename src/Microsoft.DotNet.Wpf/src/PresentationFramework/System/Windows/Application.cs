@@ -21,6 +21,8 @@
 //warnings 1634 and 1691. (From PreSharp Documentation)
 #pragma warning disable 1634, 1691
 
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -915,7 +917,6 @@ namespace System.Windows
             }
             set
             {
-                Debug.WriteLine("> Application.Resources.set");
                 bool invalidateResources = false;
                 ResourceDictionary oldValue;
 
@@ -931,7 +932,6 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                Debug.WriteLine($"    DeferredAppThemeLoading = {ThemeManager3.DeferredAppThemeLoading}, _resourcesInitialized = {_resourcesInitialized}");
                 if(ThemeManager3.DeferredAppThemeLoading && !_resourcesInitialized)
                 {
                     if(value != null)
@@ -983,7 +983,7 @@ namespace System.Windows
                 VerifyAccess();
                 if (!ThemeManager3.IsValidThemeMode(value))
                 {
-                    throw new InvalidEnumArgumentException(string.Format("ThemeMode value {0} is invalid", value));
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
                 
                 ThemeMode oldValue = _themeMode;

@@ -22,32 +22,40 @@ internal static class ThemeManager3
         {
             IgnoreAppResourcesChange = true;
 
-            bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
-            var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
-
-            FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
-
-            if(_currentFluentThemeState == newFluentThemeState)
+            try
             {
-                return;
+
+                bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
+                var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
+
+                FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
+
+                if(_currentFluentThemeState == newFluentThemeState)
+                {
+                    return;
+                }
+
+                AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
+
+                foreach(Window window in Application.Current.Windows)
+                {
+                    if(window.ThemeMode == ThemeMode.None)
+                    {
+                        ApplyStyleOnWindow(window, useLightColors);
+                    }
+                    else
+                    {
+                        ApplyFluentOnWindow(window);
+                    }
+                }
+
+                _currentFluentThemeState = newFluentThemeState;
+            }
+            finally
+            {
+                IgnoreAppResourcesChange = false;
             }
 
-            AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
-
-            foreach(Window window in Application.Current.Windows)
-            {
-                if(window.ThemeMode == ThemeMode.None)
-                {
-                    ApplyStyleOnWindow(window, useLightColors);
-                }
-                else
-                {
-                    ApplyFluentOnWindow(window);
-                }
-            }
-
-            _currentFluentThemeState = newFluentThemeState;
-            IgnoreAppResourcesChange = false;
         }
         else
         {
@@ -122,7 +130,7 @@ internal static class ThemeManager3
     {
         if(DeferSyncingThemeModeAndResources) return true;
 
-        ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode themeMode);
+       ThemeMode themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);
 
         if(Application.Current.ThemeMode != themeMode)
         {
@@ -143,22 +151,24 @@ internal static class ThemeManager3
 
         if(index > 0)
         {
-            ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode _themeMode);            
+            // This means that the devleoper has added the Fluent theme resources manually
+            themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);            
             resyncThemeMode = true;
-            themeMode = _themeMode;
         }
         else
         {
+            // This means that the developer has set ThemeMode but Resources has not been set
+            // Hence we need to resync the properties but ThemeMode is the one that should be used here.
             if(themeMode != ThemeMode.None && index != 0)
             {
                 resyncThemeMode = true;
             }
 
+            // If ThemeMode is None, and yet there is a Fluent theme dictionary, hence that was manually set.
             if(themeMode == ThemeMode.None && index == 0)
             {
                 resyncThemeMode = true;
-                ResourceDictionaryContainsFluentDictionary(Application.Current.Resources, out ThemeMode _themeMode);            
-                themeMode = _themeMode;
+                themeMode = ResourceDictionaryContainsFluentDictionary(Application.Current.Resources);            
             }
         }
 
@@ -188,7 +198,10 @@ internal static class ThemeManager3
 
     internal static bool IsValidThemeMode(ThemeMode themeMode)
     {
-        return themeMode == ThemeMode.None || themeMode == ThemeMode.Light || themeMode == ThemeMode.Dark || themeMode == ThemeMode.System;
+        return themeMode == ThemeMode.None 
+                    || themeMode == ThemeMode.Light 
+                    || themeMode == ThemeMode.Dark 
+                    || themeMode == ThemeMode.System;
     }
 
     internal static Uri GetThemeResource(ThemeMode themeMode)
@@ -260,6 +273,7 @@ internal static class ThemeManager3
         {
             bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
             window.SetImmersiveDarkMode(!useLightColors);
+            WindowBackdropManager.SetBackdrop(window, WindowBackdropType.MainWindow);
         }
         else
         {
@@ -274,7 +288,7 @@ internal static class ThemeManager3
     {
         if(window == null || window.IsDisposed) return;
 
-        // Add a check to see if the window already has a non-implicit style set.
+        // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
         if(window.Style == null)
         {
             window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
@@ -333,10 +347,11 @@ internal static class ThemeManager3
         return themeMode == ThemeMode.Light || (themeMode == ThemeMode.System && IsSystemThemeLight());
     }
 
-    private static bool ResourceDictionaryContainsFluentDictionary(ResourceDictionary rd, out ThemeMode themeMode)
+    private static ThemeMode ResourceDictionaryContainsFluentDictionary(ResourceDictionary rd)
     {
-        themeMode = ThemeMode.None;
-        if (rd == null) return false;
+        ThemeMode themeMode = ThemeMode.None;
+
+        if (rd == null) return themeMode;
 
         int index = FindLastFluentThemeResourceDictionaryIndex(rd);
 
@@ -355,9 +370,9 @@ internal static class ThemeManager3
             {
                 themeMode = ThemeMode.System;
             }
-            return true;
         }
-        return false;
+
+        return themeMode;
     }
 
     private static Uri GetFluentThemeResourceUri(bool useLightMode)

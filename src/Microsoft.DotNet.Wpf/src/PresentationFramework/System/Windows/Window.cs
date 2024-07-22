@@ -7,6 +7,8 @@
 // Description: Implements the base Avalon Window class
 //
 
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -575,7 +577,7 @@ namespace System.Windows
 
                 if(!ThemeManager3.IsValidThemeMode(value))
                 {
-                    throw new ArgumentException("Invalid Application Theme value. System, Light, Dark and None are the only valid values for ApplicationTheme property.");
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
                 
                 ThemeMode oldTheme = _themeMode;

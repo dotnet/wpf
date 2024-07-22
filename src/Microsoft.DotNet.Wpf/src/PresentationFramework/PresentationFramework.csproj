@@ -1344,6 +1344,7 @@
     <Compile Include="System\Windows\ThemeManager3.cs" />
     <Compile Include="System\Windows\FluentThemeState.cs" />
     <Compile Include="System\Windows\ThemeMode.cs" />
+    <Compile Include="System\Windows\ThemeModeConverter.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />
     <Compile Include="System\Windows\Thickness.cs" />

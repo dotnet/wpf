@@ -4206,45 +4206,6 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />
   <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="{x:Type TextBox}" />
-  <Style x:Key="DefaultTimePickerStyle" TargetType="{x:Type TimePicker}">
-    <Setter Property="Background" Value="Green" />
-    <Setter Property="Foreground" Value="Red" />
-    <Setter Property="BorderBrush" Value="Black" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type TimePicker}">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-              <StackPanel Orientation="Horizontal">
-                <ComboBox x:Name="HoursComboBox" Width="50" />
-                <TextBlock Text=":" VerticalAlignment="Center" />
-                <ComboBox x:Name="MinutesComboBox" Width="50" />
-                <ComboBox x:Name="AmPmComboBox" Width="50" />
-              </StackPanel>
-            </Border>
-            <Button x:Name="PART_Button" Grid.Column="1" Width="24" Height="24" Margin="0,5,4,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent">
-              <TextBlock Background="{TemplateBinding Background}" Text="" FontFamily="Segoe Fluent Icons" FontSize="14" />
-            </Button>
-          </Grid>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsKeyboardFocusWithin" Value="True">
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Blue" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Foreground" Value="Gray" />
-              <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Gray" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style BasedOn="{StaticResource DefaultTimePickerStyle}" TargetType="{x:Type TimePicker}" />
   <Thickness x:Key="ToggleButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ToggleButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ToggleButtonIconMargin">0,0,8,0</Thickness>

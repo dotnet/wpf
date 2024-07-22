@@ -186,7 +186,7 @@ namespace System.Windows.Documents
             // calculate the exact same error.  Keep the two methods in sync!
             //
 
-            List<string> suggestions = new();
+            List<string> suggestions = new(4);
             CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
             if (culture is not null || _spellerInterop.CanSpellCheck(culture))

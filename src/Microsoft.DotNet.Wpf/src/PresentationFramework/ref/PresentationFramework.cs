@@ -132,6 +132,8 @@ namespace System.Windows
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.ShutdownMode ShutdownMode { get { throw null; } set { } }
         public System.Uri StartupUri { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         public System.Windows.WindowCollection Windows { get { throw null; } }
         public event System.EventHandler Activated { add { } remove { } }
         public event System.EventHandler Deactivated { add { } remove { } }
@@ -1259,6 +1261,34 @@ namespace System.Windows
     }
     public static partial class SystemColors
     {
+        public static System.Windows.Media.Color AccentColor { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorBrush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorBrushKey { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark1 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark1Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark1BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark1Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark2 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark2Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark2BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark2Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark3 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark3Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark3BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark3Key { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorKey { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight1 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight1Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight1BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight1Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight2 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight2Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight2BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight2Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight3 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight3Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight3BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight3Key { get { throw null; } }
         public static System.Windows.Media.SolidColorBrush ActiveBorderBrush { get { throw null; } }
         public static System.Windows.ResourceKey ActiveBorderBrushKey { get { throw null; } }
         public static System.Windows.Media.Color ActiveBorderColor { get { throw null; } }
@@ -1805,6 +1835,23 @@ namespace System.Windows
         public System.Windows.ResourceDictionaryLocation GenericDictionaryLocation { get { throw null; } }
         public System.Windows.ResourceDictionaryLocation ThemeDictionaryLocation { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public readonly partial struct ThemeMode : System.IEquatable<System.Windows.ThemeMode>
+    {
+        public ThemeMode(string value) { throw null; }
+        public static System.Windows.ThemeMode Dark { get { throw null; } }
+        public static System.Windows.ThemeMode Light { get { throw null; } }
+        public static System.Windows.ThemeMode None { get { throw null; } }
+        public static System.Windows.ThemeMode System { get { throw null; } }
+        public string Value { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public bool Equals(System.Windows.ThemeMode other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public static bool operator !=(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThicknessConverter))]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial struct Thickness : System.IEquatable<System.Windows.Thickness>
@@ -2017,6 +2064,8 @@ namespace System.Windows
         public bool ShowInTaskbar { get { throw null; } set { } }
         public System.Windows.SizeToContent SizeToContent { get { throw null; } set { } }
         public System.Windows.Shell.TaskbarItemInfo TaskbarItemInfo { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]
         public string Title { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]

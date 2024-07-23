@@ -358,7 +358,7 @@ namespace System.Windows
             // EnableThreadWindow(true) is called when dialog is going away. Once dialog is closed and
             // thread windows have been enabled, then there no need to keep the list around.
             // Please see BUG 929740 before making any changes to how _threadWindowHandles works.
-            _threadWindowHandles = new();
+            _threadWindowHandles = new List<IntPtr>();
             //Get visible and enabled windows in the thread
             // If the callback function returns true for all windows in the thread, the return value is true.
             // If the callback function returns false on any enumerated window, or if there are no windows

@@ -247,7 +247,7 @@ private:
         }
 
         _figureStartIndex = AddPoint(point, PT_MOVETO);
-        Debug::Assert(_figureStartIndex != -1);
+        Debug::Assert(_figureStartIndex != -1, "figure start index cannot be -1.");
 
         _figureStartPoint = point;
         _figureHasGaps = false;
@@ -343,7 +343,7 @@ private:
 
         if (Double::IsNaN(transformedPoint.X) || Double::IsNaN(transformedPoint.Y))
         {
-            Debug::Assert(false, "Invalid path input: NaN encountered");
+            Debug::Fail("Invalid path input: NaN encountered");
             ForceGeometryEmpty();
             return -1;
         }
@@ -403,7 +403,9 @@ private:
                 if (_bezierIndex == 2 && _pointCount >= 3)
                 {
                     Debug::Assert((_types[_pointCount - 1] & PT_TYPEMASK) == PT_BEZIERTO &&
-                        (_types[_pointCount - 2] & PT_TYPEMASK) == PT_BEZIERTO);
+                        (_types[_pointCount - 2] & PT_TYPEMASK) == PT_BEZIERTO,
+                            "Last two points must be of type PT_BEZIERTO. "
+                            "Types: " + (_types[_pointCount - 1] & PT_TYPEMASK) + ", " + (_types[_pointCount - 2] & PT_TYPEMASK));
 
                     if (Colinear(dx, dy, _pointCount - 2, _pointCount - 1) &&
                         Colinear(dx, dy, _pointCount - 3, _pointCount - 1))
@@ -436,7 +438,7 @@ private:
     // MUST be followed by adding a new point, or end geometry.
     void RemoveLastPoint()
     {
-        Debug::Assert(_pointCount > 0);
+        Debug::Assert(_pointCount > 0, "-pointCount should be greater than 0.");
 
         if ((_types[_pointCount - 1] & PT_TYPEMASK) == PT_MOVETO)
         {
@@ -451,7 +453,8 @@ private:
 
     Point GetLastPoint()
     {
-        Debug::Assert(!Double::IsNaN(_lastPoint.X) && !Double::IsNaN(_lastPoint.Y));
+        Debug::Assert(!Double::IsNaN(_lastPoint.X) && !Double::IsNaN(_lastPoint.Y),
+              "Invalid point coordinates. X: " + _lastPoint.X + ", Y: " + _lastPoint.Y);
 
         return _lastPoint;
     }
@@ -630,7 +633,8 @@ CGDIPath::CGDIPath(
     bool  ForFill,
     Pen ^ pPen)
 {
-    Debug::Assert(ForFill || pPen != nullptr);
+    Debug::Assert(ForFill || pPen != nullptr,
+              "ForFill is false and pPen is null. ForFill: " + ForFill + ", pPen: " + (pPen == nullptr ? "null" : "not null"));
 
     // get path GDI fill mode
     m_PathFillMode = (geometry.GetFillRule() == FillRule::EvenOdd) ? ALTERNATE : WINDING;
@@ -757,7 +761,8 @@ void CGDIPath::ProcessPolygon(int count, bool ForFill, int figureCount)
                     }
 
                     // add polygon count for previous polygon
-                    Debug::Assert((iPoint - iStartPoint) >= 2);
+                    Debug::Assert((iPoint - iStartPoint) >= 2, "Insufficient points for polygon. Points: " + (iPoint - iStartPoint));
+
                     m_PolyCounts[iPolygon] = iPoint - iStartPoint;
                 }
                 
@@ -770,7 +775,7 @@ void CGDIPath::ProcessPolygon(int count, bool ForFill, int figureCount)
 
         default:
             // invalid type
-            Debug::Assert(0);
+            Debug::Assert(0, "Unexpected assertion reached. This is a placeholder for an invalid type check.");
             // FALLTHRU
 
         case PT_LINETO:
@@ -838,7 +843,7 @@ MixedData:
 // Get the actual device bounds of the transformed points
 void CGDIPath::GetDeviceBounds(array<PointI>^ p, int count)
 {
-    Debug::Assert(count >= 1);
+    Debug::Assert(count >= 1, "Count should be greater than or equal to 1.");
 
     int  minX, minY, maxX, maxY;
 
@@ -875,8 +880,8 @@ void CGDIPath::GetDeviceBounds(array<PointI>^ p, int count)
 // !!! This is a problem if there is already a path opened or defined
 HRESULT CGDIPath::Fill(CGDIDevice ^ dc, GdiSafeHandle^ brush)
 {
-    Debug::Assert(IsValid());
-    Debug::Assert(brush != nullptr);
+    Debug::Assert(IsValid(), "Not in a valid state.");
+    Debug::Assert(brush != nullptr, "brush should not be null.");
 
     HRESULT hr = S_OK;
 
@@ -964,8 +969,8 @@ HRESULT CGDIPath::Fill(CGDIDevice ^ dc, GdiSafeHandle^ brush)
 
 HRESULT CGDIPath::Draw(CGDIDevice ^ dc, GdiSafeHandle ^ pen)
 {
-    Debug::Assert(IsValid());
-    Debug::Assert(pen != nullptr);
+    Debug::Assert(IsValid(), "Not in a valid state.");
+    Debug::Assert(pen != nullptr, "pen should not be null.");
 
     HRESULT hr = S_OK;
 
@@ -1005,7 +1010,7 @@ HRESULT CGDIPath::Draw(CGDIDevice ^ dc, GdiSafeHandle ^ pen)
 
                             // The polygons are generated through our API and
                             // should have been verified above.
-                            Debug::Assert(count > 0);
+                            Debug::Assert(count > 0, "Count should be greater than 0.");
 
                             if ((m_Points[offset].x == m_Points[offset + count - 1].x) &&
                                 (m_Points[offset].y == m_Points[offset + count - 1].y))
@@ -1068,7 +1073,7 @@ HRESULT CGDIPath::Draw(CGDIDevice ^ dc, GdiSafeHandle ^ pen)
 
 HRESULT CGDIPath::SelectClip(CGDIDevice ^ dc, int mode)
 {
-    Debug::Assert(IsValid());
+    Debug::Assert(IsValid(), "Not in a valid state.");
 
     HRESULT hr = S_OK;
 
@@ -1154,7 +1159,7 @@ double CGDIPath::MaxCos(void)
             {
                 // close of figure.
                 // figure is from this point and last PT_MOVETO inclusive.
-                Debug::Assert(lastMoveTo != -1);
+                Debug::Assert(lastMoveTo != -1, "last PT_MOVETO is not initialized.");
 
                 figureStartClose->Add(lastMoveTo);
                 figureStartClose->Add(i);
@@ -1343,7 +1348,7 @@ void CPolyPolygon::GetBounds(void)
         nTotal += m_rgcPoly[m_offsetC + i];
     }
 
-    Debug::Assert(nTotal >= 1);
+    Debug::Assert(nTotal >= 1, "nTotal should be greater than or equal to 1.");
 
     for (int i = 1; i < nTotal; i++)
     {
@@ -1371,7 +1376,7 @@ void CPolyPolygon::Divide(
     IN INT cGroup                   // number of CPolyPolygon to divide into
     )
 {
-    Debug::Assert(m_cPolygons >= cGroup);
+    Debug::Assert(m_cPolygons >= cGroup, "The number of polygons (m_cPolygons) should be greater than or equal to the group count (cGroup).");
 
     int part = m_cPolygons / cGroup;        // number of polygons per group  
 

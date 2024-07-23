@@ -1178,7 +1178,7 @@ HRESULT CGDIRenderTarget::StrokePath(
         }
         else
         {
-            Debug::Assert(false, "PathGeometry.GetWidenedPathGeometry failed.");
+            Debug::Fail("PathGeometry.GetWidenedPathGeometry failed.");
         }
     }
 
@@ -1487,12 +1487,12 @@ HRESULT CGDIRenderTarget::FillLinearGradient(
     }
     else if (gradientBrush->GradientStops == nullptr || gradientBrush->GradientStops->Count == 0)
     {
-        Debug::Assert(false, "Empty LinearGradientBrush, should've been culled");
+        Debug::Fail("Empty LinearGradientBrush, should've been culled");
         return S_OK;
     }
     else if (gradientBrush->GradientStops->Count == 1)
     {
-        Debug::Assert(false, "Single-stop LinearGradientBrush, should've been converted to SolidColorBrush");
+        Debug::Fail("Single-stop LinearGradientBrush, should've been converted to SolidColorBrush");
         return FillPath(geometry, gcnew SolidColorBrush(gradientBrush->GradientStops[0]->Color));
     }
 
@@ -1538,7 +1538,7 @@ HRESULT CGDIRenderTarget::FillLinearGradient(
             break;
 
         default:
-            Debug::Assert(false, "Unknown GradientSpreadMethod");
+            Debug::Fail("Unknown GradientSpreadMethod");
             return E_NOTIMPL;
     }
 

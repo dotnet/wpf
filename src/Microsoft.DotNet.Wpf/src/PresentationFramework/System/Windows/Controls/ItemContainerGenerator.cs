@@ -2061,7 +2061,7 @@ namespace System.Windows.Controls
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
             if (_emptyGroupItems == null)
-                _emptyGroupItems = new();
+                _emptyGroupItems = new List<EmptyGroupItem>();
 
             _emptyGroupItems.Add(emptyGroupItem);
         }

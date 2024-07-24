@@ -7,7 +7,7 @@
 
 bool DashStylesEqual(DashStyle^ da, DashStyle^ db)
 {
-    Debug::Assert(da != nullptr && db != nullptr);
+    Debug::Assert(da != nullptr && db != nullptr, "DashStyle da and db should not be null.");
 
     if (!AreCloseReal(da->Offset, db->Offset))
     {
@@ -17,7 +17,7 @@ bool DashStylesEqual(DashStyle^ da, DashStyle^ db)
     DoubleCollection^ a = da->Dashes;
     DoubleCollection^ b = db->Dashes;
 
-    Debug::Assert(a != nullptr && b != nullptr);
+    Debug::Assert(a != nullptr && b != nullptr, "a and b should not be null.");
     
     int count = a->Count;
     
@@ -40,7 +40,7 @@ bool DashStylesEqual(DashStyle^ da, DashStyle^ db)
 
 bool PenSupported(Pen ^ pPen, Matrix matrix, unsigned dpi)
 {
-    Debug::Assert(pPen != nullptr);
+    Debug::Assert(pPen != nullptr, "pPen should not be null.");
 
     // Pen width in inch
     double width  = pPen->Thickness * GetScaleX(matrix) / dpi;
@@ -361,7 +361,7 @@ GdiSafeHandle^ CGDIDevice::ConvertPen(
             }
             else
             {
-                Debug::Assert(false, "ExtCreatePen failed");
+                Debug::Fail("ExtCreatePen failed");
             }
         }
 

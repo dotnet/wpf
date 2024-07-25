@@ -500,7 +500,7 @@ namespace MS.Internal
 
     }
 
-    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, Span<object> parameters, int start );
+    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, ReadOnlySpan<object> parameters, int start );
 
     internal class AvTraceBuilder
     {

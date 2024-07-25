@@ -250,12 +250,8 @@ namespace MS.Internal
         {
             // Don't bother building the string if this trace is going to be ignored.
 
-            if( _traceSource == null
-                || !_traceSource.Switch.ShouldTrace( type ))
-            {
+            if(_traceSource == null|| !_traceSource.Switch.ShouldTrace(type))
                 return null;
-            }
-
 
             // Compose the trace string.
 
@@ -285,11 +281,11 @@ namespace MS.Internal
                     // Otherwise, if this is an interesting object, add the hash code and type to
                     // the format string explicitely.
 
-                    else if( !SuppressGeneratedParameters
-                             && parameters[j].GetType() != typeof(string)
-                             && !(parameters[j] is ValueType)
-                             && !(parameters[j] is Type)
-                             && !(parameters[j] is DependencyProperty) )
+                    else if(SuppressGeneratedParameters == false
+                            && parameters[j].GetType() != typeof(string)
+                            && parameters[j] is not ValueType
+                            && parameters[j] is not Type
+                            && parameters[j] is not DependencyProperty)
                     {
                         traceBuilder.Append($"; {labels[i]}.HashCode='{GetHashCodeHelper(parameters[j])}'");
                         traceBuilder.Append($"; {labels[i]}.Type='{GetTypeHelper(parameters[j])}'");

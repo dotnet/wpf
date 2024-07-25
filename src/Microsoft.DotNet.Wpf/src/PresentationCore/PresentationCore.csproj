@@ -1480,6 +1480,7 @@
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" PrivateAssets="contentfiles;analyzers;build" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
   </ItemGroup>
 
   <ItemGroup>

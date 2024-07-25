@@ -21,27 +21,27 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>9.0.0-preview.7.24374.7</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>9.0.0-preview.7.24375.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.0-preview.7.24374.9</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>9.0.0-preview.7.24374.9</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>9.0.0-preview.7.24374.9</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>9.0.0-preview.7.24374.9</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>9.0.0-preview.7.24374.9</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>9.0.0-preview.7.24374.9</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>9.0.0-preview.7.24374.9</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>9.0.0-preview.7.24374.7</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>9.0.0-preview.7.24374.9</SystemDirectoryServicesVersion>
-    <SystemIOPackagingVersion>9.0.0-preview.7.24374.9</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.7.24374.9</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.0-preview.7.24374.12</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>9.0.0-preview.7.24374.12</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>9.0.0-preview.7.24374.12</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>9.0.0-preview.7.24374.12</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>9.0.0-preview.7.24374.12</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>9.0.0-preview.7.24374.12</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>9.0.0-preview.7.24374.12</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>9.0.0-preview.7.24375.1</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>9.0.0-preview.7.24374.12</SystemDirectoryServicesVersion>
+    <SystemIOPackagingVersion>9.0.0-preview.7.24374.12</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.7.24374.12</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>9.0.0-preview.7.24374.9</SystemResourcesExtensionsVersion>
-    <SystemRuntimeSerializationFormattersPackageVersion>9.0.0-preview.7.24374.9</SystemRuntimeSerializationFormattersPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>9.0.0-preview.7.24374.9</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>9.0.0-preview.7.24374.9</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>9.0.0-preview.7.24374.9</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>9.0.0-preview.7.24374.12</SystemResourcesExtensionsVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>9.0.0-preview.7.24374.12</SystemRuntimeSerializationFormattersPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>9.0.0-preview.7.24374.12</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>9.0.0-preview.7.24374.12</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>9.0.0-preview.7.24374.12</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

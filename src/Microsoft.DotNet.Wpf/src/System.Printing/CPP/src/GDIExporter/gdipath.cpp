@@ -343,7 +343,7 @@ private:
 
         if (Double::IsNaN(transformedPoint.X) || Double::IsNaN(transformedPoint.Y))
         {
-            Debug::Fail("Invalid path input: NaN encountered");
+            Debug::Assert(false, "Invalid path input: NaN encountered");
             ForceGeometryEmpty();
             return -1;
         }

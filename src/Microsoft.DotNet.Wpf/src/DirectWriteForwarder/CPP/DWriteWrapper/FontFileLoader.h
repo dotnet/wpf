@@ -22,7 +22,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
     public:
 
-        FontFileLoader() { Debug::Fail("Assertion failed"); }
+        FontFileLoader() { Debug::Assert(false, "Assertion failed"); }
 
         FontFileLoader(IFontSourceFactory^ fontSourceFactory);
 

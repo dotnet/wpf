@@ -361,7 +361,7 @@ GdiSafeHandle^ CGDIDevice::ConvertPen(
             }
             else
             {
-                Debug::Fail("ExtCreatePen failed");
+                Debug::Assert(false, "ExtCreatePen failed");
             }
         }
 

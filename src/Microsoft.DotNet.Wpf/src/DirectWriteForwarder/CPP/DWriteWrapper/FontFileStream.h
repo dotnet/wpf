@@ -29,7 +29,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             /// Asserts false because COM convention requires us to have a default constructor
             /// but we are the only entity that can construct these objects, and we use the
             /// other constructor.            
-            FontFileStream() { Debug::Fail("Assertion failed"); }
+            FontFileStream() { Debug::Assert(false, "Assertion failed"); }
             
             /// <summary>
             /// ctor.

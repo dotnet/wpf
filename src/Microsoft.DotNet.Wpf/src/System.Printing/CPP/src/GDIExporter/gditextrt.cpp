@@ -931,7 +931,7 @@ GdiSafeHandle^ CGDIRenderTarget::CreateSimulatedStyleFont(interior_ptr<ENUMLOGFO
             {
                 // we have no way of telling if we've succeeded in creating unstyled font,
                 // fail.
-                Debug::Fail("CreateUnstyledFont failed");
+                Debug::Assert(false, "CreateUnstyledFont failed");
             }
             else
             {
@@ -975,7 +975,7 @@ GdiSafeHandle^ CGDIRenderTarget::CreateSimulatedStyleFont(interior_ptr<ENUMLOGFO
 
                 if (charsetFont == nullptr)
                 {
-                    Debug::Fail("CreateFontCached failed");
+                    Debug::Assert(false, "CreateFontCached failed");
                 }
                 else if (CheckFontFaceAndStyle(charsetFont, regularFaceName, regularStyleName))
                 {

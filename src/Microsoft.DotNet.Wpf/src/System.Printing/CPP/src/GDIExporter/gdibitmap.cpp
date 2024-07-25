@@ -188,7 +188,7 @@ void CGDIBitmap::SetupPalette(interior_ptr<BITMAPINFO> bmi, int bitCount)
     }
     else
     {
-        Debug::Fail("Unsupported format");
+        Debug::Assert(false, "Unsupported format");
     }
 
     bmi->bmiHeader.biClrUsed      = count;
@@ -242,7 +242,7 @@ void CGDIBitmap::SetBits(interior_ptr<BITMAPINFO> bmi)
     }
     else
     {
-        Debug::Fail("Unexpected bitcount");
+        Debug::Assert(false, "Unexpected bitcount");
         m_Buffer = nullptr;
     }
 }

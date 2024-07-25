@@ -15,17 +15,13 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class MemberReference : IRecord<MemberReference>
+    internal sealed class MemberReference : IRecord
     {
         public Id IdRef { get; }
 
         public MemberReference(Id idRef) => IdRef = idRef;
 
         public static RecordType RecordType => RecordType.MemberReference;
-
-        static MemberReference IBinaryFormatParseable<MemberReference>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap) => new(reader.ReadInt32());
 
         public void Write(BinaryWriter writer)
         {

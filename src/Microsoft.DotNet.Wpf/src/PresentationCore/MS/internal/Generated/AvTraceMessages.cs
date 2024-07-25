@@ -74,7 +74,7 @@ namespace MS.Internal
         }
 
         /// <summary> Send a single trace output </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
+        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, ReadOnlySpan<object> parameters )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }

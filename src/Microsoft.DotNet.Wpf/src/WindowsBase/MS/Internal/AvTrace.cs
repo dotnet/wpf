@@ -258,7 +258,9 @@ namespace MS.Internal
         //  note: labels start at index 1, parameters start at index 0
         //
 
-        public string Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters )
+        public string Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters ) => Trace( type, eventId, message, labels, parameters );
+        
+        internal string Trace( TraceEventType type, int eventId, string message, string[] labels, ReadOnlySpan<object> parameters )
         {
             // Don't bother building the string if this trace is going to be ignored.
 

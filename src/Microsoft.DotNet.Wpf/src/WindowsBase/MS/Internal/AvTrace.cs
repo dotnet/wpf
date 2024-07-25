@@ -268,7 +268,7 @@ namespace MS.Internal
                     // Append to the format string a "; {0} = '{1}'", where the index increments (e.g. the second iteration will
                     // produce {2} & {3}).
 
-                    traceBuilder.Append($"; {{{++formatIndex}}}='{{{++formatIndex}}}'");
+                    traceBuilder.Append($"; {{{formatIndex++}}}='{{{formatIndex++}}}'");
 
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.

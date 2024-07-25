@@ -17,6 +17,7 @@ using System.Windows;
 using Microsoft.Win32;
 using MS.Win32;
 using MS.Internal.WindowsBase;
+using System.Collections.Generic;
 
 namespace MS.Internal
 {
@@ -259,7 +260,7 @@ namespace MS.Internal
             // Compose the trace string.
 
             AvTraceBuilder traceBuilder = new AvTraceBuilder(AntiFormat(message)); // Holds the format string
-            ArrayList arrayList = new ArrayList(); // Holds the combined labels & parameters arrays.
+            List<object> combinedList = new(parameters.Length * 2); // Holds the combined labels & parameters arrays.
 
             int formatIndex = 0;
 
@@ -302,14 +303,14 @@ namespace MS.Internal
                     // (As an optimization, the generated classes could pre-allocate a thread-safe static array, to avoid
                     // this allocation and the ToArray allocation below.)
 
-                    arrayList.Add( labels[i] );
-                    arrayList.Add( parameters[j] );
+                    combinedList.Add(labels[i]);
+                    combinedList.Add(parameters[j]);
                 }
 
                 // It's OK if we terminate because we have more lables than parameters;
                 // this is used by traces to have out-values in the Stop message.
 
-                if( TraceExtraMessages != null && j < parameters.Length)
+                if(TraceExtraMessages != null && j < parameters.Length)
                 {
                     TraceExtraMessages(traceBuilder, parameters, j);
                 }
@@ -323,7 +324,7 @@ namespace MS.Internal
                 type,
                 eventId,
                 traceMessage,
-                arrayList.ToArray() );
+                combinedList.ToArray()); //Cannot avoid the alloc here, no ROS<object> overload
 
             // When in the debugger, always flush the output, to guarantee that the
             // traces and other info (e.g. exceptions) get interleaved correctly.

@@ -5,23 +5,6 @@ namespace PresentationCore.Tests.BinaryFormat;
 
 public class ArrayTests
 {
-    public static TheoryData<MemoryStream, int, int> ArrayInfo_ParseSuccessData => new()
-     {
-         { new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }), 0, 0 },
-         { new MemoryStream(new byte[] { 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00 }), 1, 1 },
-         { new MemoryStream(new byte[] { 0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00 }), 2, 1 },
-         { new MemoryStream(new byte[] { 0xFF, 0xFF, 0xFF, 0x7F, 0xFF, 0xFF, 0xFF, 0x7F }), int.MaxValue, int.MaxValue }
-     };
-
-    public static TheoryData<MemoryStream, Type> ArrayInfo_ParseNegativeData => new()
-     {
-         // Not enough data
-         { new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }), typeof(EndOfStreamException) },
-         { new MemoryStream(new byte[] { 0x00, 0x00, 0x00 }), typeof(EndOfStreamException) },
-         // Negative numbers
-         { new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF }), typeof(ArgumentOutOfRangeException) }
-     };
-
     public static TheoryData<string?[]> StringArray_Parse_Data => new()
      {
          new string?[] { "one", "two" },

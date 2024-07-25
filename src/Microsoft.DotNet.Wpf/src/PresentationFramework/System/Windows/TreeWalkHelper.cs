@@ -457,6 +457,12 @@ namespace System.Windows
         {
             Debug.Assert(fe != null || fce != null, "Node with the resources change notification must be an FE or an FCE.");
 
+            Window currentWindow = fe as Window;
+            if(currentWindow != null && !ThemeManager.IgnoreWindowResourcesChange)
+            {
+                ThemeManager.SyncWindowThemeModeAndResources(currentWindow);
+            }
+
             // We're interested in changes to the Template property that occur during
             // the walk - if the template has changed we don't need to invalidate
             // template-driven properties a second time.  The HasTemplateChanged property

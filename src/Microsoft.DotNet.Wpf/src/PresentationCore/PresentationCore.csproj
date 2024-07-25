@@ -350,7 +350,7 @@
     <Compile Include="System\Windows\BinaryFormat\FormatterConverterStub.cs" />
     <Compile Include="System\Windows\BinaryFormat\SerializationExtensions.cs" />
     <Compile Include="System\Windows\BinaryFormat\BinaryFormattedObject.cs" />
-    <Compile Include="System\Windows\BinaryFormat\BinaryFormattedObjectExtensions.cs" />
+    <Compile Include="System\Windows\Nrbf\SerializationRecordExtensions.cs" />
     <Compile Include="System\Windows\BinaryFormat\MessageEnd.cs" />
     <Compile Include="System\Windows\BinaryFormat\Record.cs" />
     <Compile Include="System\Windows\BinaryFormat\BinaryType.cs" />

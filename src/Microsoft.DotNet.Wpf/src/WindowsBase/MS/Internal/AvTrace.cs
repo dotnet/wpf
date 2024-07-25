@@ -245,7 +245,7 @@ namespace MS.Internal
         //  note: labels start at index 1, parameters start at index 0
         //
 
-        public string Trace( TraceEventType type, int eventId, string message, string[] labels, object[] parameters )
+        public string Trace(TraceEventType type, int eventId, string message, string[] labels, params Span<object> parameters)
         {
             // Don't bother building the string if this trace is going to be ignored.
 
@@ -263,10 +263,10 @@ namespace MS.Internal
 
             int formatIndex = 0;
 
-            if (parameters != null && labels != null && labels.Length > 0)
+            if (parameters != Span<object>.Empty && labels != null && labels.Length > 0)
             {
                 int i = 1, j = 0;
-                for( ; i < labels.Length && j < parameters.Length; i++, j++ )
+                for(; i < labels.Length && j < parameters.Length; i++, j++)
                 {
                     // Append to the format string a "; {0} = '{1}'", where the index increments (e.g. the second iteration will
                     // produce {2} & {3}).
@@ -276,7 +276,7 @@ namespace MS.Internal
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.
 
-                    if( parameters[j] == null )
+                    if(parameters[j] == null)
                     {
                         parameters[j] = "<null>";
                     }
@@ -311,7 +311,7 @@ namespace MS.Internal
 
                 if( TraceExtraMessages != null && j < parameters.Length)
                 {
-                    TraceExtraMessages( traceBuilder, parameters, j );
+                    TraceExtraMessages(traceBuilder, parameters, j);
                 }
             }
 
@@ -342,10 +342,10 @@ namespace MS.Internal
         //  (information is contained in the Start event)
         //
 
-        public void TraceStartStop( int eventID, string message, string[] labels, Object[] parameters )
+        public void TraceStartStop(int eventID, string message, string[] labels, params Span<object> parameters)
         {
-            Trace( TraceEventType.Start, eventID, message, labels, parameters );
-            _traceSource.TraceEvent( TraceEventType.Stop, eventID);
+            Trace(TraceEventType.Start, eventID, message, labels, parameters);
+            _traceSource.TraceEvent(TraceEventType.Stop, eventID);
         }
 
 
@@ -506,7 +506,7 @@ namespace MS.Internal
 
     }
 
-    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, object[] parameters, int start);
+    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, Span<object> parameters, int start );
 
     internal class AvTraceBuilder
     {

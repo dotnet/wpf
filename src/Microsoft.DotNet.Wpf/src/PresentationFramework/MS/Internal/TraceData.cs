@@ -87,7 +87,7 @@ namespace MS.Internal
         }
 
         // report/describe any additional parameters passed to TraceData.Trace()
-        public static void OnTrace( AvTraceBuilder traceBuilder, object[] parameters, int start )
+        public static void OnTrace(AvTraceBuilder traceBuilder, Span<object> parameters, int start)
         {
             for( int i = start; i < parameters.Length; i++ )
             {

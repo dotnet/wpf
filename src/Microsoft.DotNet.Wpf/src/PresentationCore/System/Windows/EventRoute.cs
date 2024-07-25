@@ -200,9 +200,9 @@ namespace System.Windows
                             TraceEventType.Stop,
                             TraceRoutedEvent.InvokeHandlers,
                             _traceArguments);
+
+                        Array.Clear(_traceArguments);
                     }
-
-
                 }
             }
             else
@@ -273,6 +273,8 @@ namespace System.Windows
                                 TraceEventType.Stop,
                                 TraceRoutedEvent.InvokeHandlers,
                                 _traceArguments);
+
+                            Array.Clear(_traceArguments);
                         }
 
                     }

@@ -244,16 +244,6 @@ namespace System.Formats.Nrbf
         /// <summary>
         ///  Trys to get this object as a binary recordted <see cref="Hashtable"/> of <see cref="PrimitiveType"/> keys and values.
         /// </summary>
-        public static bool TryGetPrimitiveHashtable(this SerializationRecord record, [NotNullWhen(true)] out Hashtable? hashtable)
-        {
-            bool success = record.TryGetPrimitiveHashtable(out object? value);
-            hashtable = (Hashtable?)value;
-            return success;
-        }
-
-        /// <summary>
-        ///  Trys to get this object as a binary recordted <see cref="Hashtable"/> of <see cref="PrimitiveType"/> keys and values.
-        /// </summary>
         public static bool TryGetPrimitiveHashtable(this SerializationRecord record, [NotNullWhen(true)] out object? hashtable)
         {
             return TryGet(Get, record, out hashtable);
@@ -295,45 +285,6 @@ namespace System.Formats.Nrbf
                 hashtable = temp;
                 return true;
             }
-        }
-
-        /// <summary>
-        ///  Tries to get the value for the given <paramref name="record"/> if it represents a <see cref="PrimitiveType"/>
-        ///  that isn't <see cref="PrimitiveType.Null"/>.
-        /// </summary>
-        public static bool TryGetPrimitiveRecordValue(
-            this SerializationRecord record,
-            [NotNullWhen(true)] out object? value)
-        {
-            if (record.RecordType is SerializationRecordType.BinaryObjectString)
-            {
-                value = ((PrimitiveTypeRecord<string>)record).Value;
-                return true;
-            }
-            else if (record.RecordType is SerializationRecordType.MemberPrimitiveTyped)
-            {
-                value = ((PrimitiveTypeRecord)record).Value;
-                return true;
-            }
-
-            value = null;
-            return value is not null;
-        }
-
-        /// <summary>
-        ///  Tries to get the value for the given <paramref name="record"/> if it represents a <see cref="PrimitiveType"/>.
-        /// </summary>
-        public static bool TryGetPrimitiveRecordValueOrNull(
-            this SerializationRecord record,
-            out object? value)
-        {
-            value = null;
-            if (record is null)
-            {
-                return true;
-            }
-
-            return TryGetPrimitiveRecordValue(record, out value);
         }
 
         /// <summary>

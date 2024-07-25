@@ -780,7 +780,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
-                    int bufferSize = checked(_backBufferStride.Value * source.PixelHeight);
+                    uint bufferSize = checked((uint)_backBufferStride.Value * (uint)source.PixelHeight);
                     source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride.Value);
                     AddDirtyRect(rcFull);
                 }
@@ -914,7 +914,7 @@ namespace System.Windows.Media.Imaging
                 //
                 unsafe
                 {
-                    uint destOffset = (uint)(destinationY * _backBufferStride.Value) + destXbyteOffset;
+                    uint destOffset = ((uint)destinationY * (uint)_backBufferStride.Value) + destXbyteOffset;
                     byte* pDest = (byte*)_backBuffer.ToPointer();
                     pDest += destOffset;
                     uint outputBufferSize = _backBufferSize - destOffset;

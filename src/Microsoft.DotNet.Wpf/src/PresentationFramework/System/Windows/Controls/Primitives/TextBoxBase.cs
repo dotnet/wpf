@@ -1073,7 +1073,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            base.OnKeyDown(e);
+            base.OnPreviewKeyDown(e);
 
             if (e.Handled)
             {

@@ -181,35 +181,27 @@ internal static class ThemeManager
 
     internal static void SyncWindowThemeModeAndResources(Window window)
     {
-        Collection<ResourceDictionary> windowResources = window.Resources.MergedDictionaries;
-        bool containsFluentResource = false;
+        ResourceDictionary windowResources = window.Resources;
+        int index = FindLastFluentThemeResourceDictionaryIndex(windowResources);
 
-        for (int i = windowResources.Count - 1 ; i >= 0 ; i--) 
-        {
-            if (windowResources[i].Source.ToString().Contains("Fluent")) 
-            {
-                containsFluentResource = true;
-
-                if(windowResources[i].Source.ToString().Contains("Light"))
-                {
-                    window.ThemeMode = ThemeMode.Light;
-                }
-                else if(windowResources[i].Source.ToString().Contains("Dark"))
-                {
-                    window.ThemeMode = ThemeMode.Dark;
-                }
-                else
-                {
-                    window.ThemeMode = ThemeMode.System;
-                }
-
-                break;
-            }
-        }
-
-        if(!containsFluentResource)
+        if ( index == -1 )
         {
             window.ThemeMode = ThemeMode.None;
+            return;
+        }
+
+        // Check: Do we need a null check here for source's value?
+        if (windowResources.MergedDictionaries[index].Source.ToString().ToLower().Contains("light"))
+        {
+            window.ThemeMode = ThemeMode.Light;
+        }
+        else if (windowResources.MergedDictionaries[index].Source.ToString().ToLower().Contains("dark"))
+        {
+            window.ThemeMode = ThemeMode.Dark;
+        }
+        else
+        {
+            window.ThemeMode = ThemeMode.System;
         }
     }
 

@@ -457,8 +457,9 @@ namespace System.Windows
         {
             Debug.Assert(fe != null || fce != null, "Node with the resources change notification must be an FE or an FCE.");
 
-            Window currentWindow = fe as Window;
-            if(currentWindow != null && !ThemeManager.IgnoreWindowResourcesChange)
+            // Here we are syncing the window's Theme mode when resource dictionary changes.
+            // The IgnoreWindowResourcesChange is a flag set to make sure the ThemeMode change does not cause an infinite loop of resource changes.
+            if(fe is Window currentWindow && !ThemeManager.IgnoreWindowResourcesChange)
             {
                 ThemeManager.SyncWindowThemeModeAndResources(currentWindow);
             }

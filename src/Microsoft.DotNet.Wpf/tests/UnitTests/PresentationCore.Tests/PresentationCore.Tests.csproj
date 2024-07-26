@@ -5,26 +5,24 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <Nullable>enable</Nullable>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Platforms>AnyCPU;x64;x86</Platforms>
-    <SignAssembly>True</SignAssembly>
+    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="..\..\..\src\WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
     <PackageReference Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
-    <PackageReference Include="Xunit" Version="$(XUnitVersion)" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
-    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.0-preview.7.24359.11 " />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
   </ItemGroup>
 
 </Project>

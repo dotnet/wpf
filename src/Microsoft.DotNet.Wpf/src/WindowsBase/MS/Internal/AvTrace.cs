@@ -11,13 +11,13 @@
 
 using System.Globalization;
 using System.Text;
+using System.Reflection;
 using System.Collections;
 using System.Windows;
 
 using Microsoft.Win32;
 using MS.Win32;
 using MS.Internal.WindowsBase;
-using System.Collections.Generic;
 
 namespace MS.Internal
 {
@@ -250,42 +250,43 @@ namespace MS.Internal
         {
             // Don't bother building the string if this trace is going to be ignored.
 
-            if (_traceSource == null|| !_traceSource.Switch.ShouldTrace(type))
+            if (_traceSource == null || !_traceSource.Switch.ShouldTrace(type))
                 return null;
 
             // Compose the trace string.
 
             AvTraceBuilder traceBuilder = new AvTraceBuilder(AntiFormat(message)); // Holds the format string
-            List<object> combinedList = new(parameters.Length * 2); // Holds the combined labels & parameters arrays.
-
+            object[] combinedArgs = null; // Holds the combined labels & parameters arrays.
             int formatIndex = 0;
 
             if (!parameters.IsEmpty && labels?.Length > 0)
             {
+                // Create array of pre-computed size
+                int combinedArgsLength = Math.Min(labels.Length - 1, parameters.Length) * 2;
+                if (combinedArgsLength > 0)
+                    combinedArgs = new object[combinedArgsLength];             
+
                 int i = 1, j = 0;
                 for (; i < labels.Length && j < parameters.Length; i++, j++)
                 {
                     // Append to the format string a "; {0} = '{1}'", where the index increments
                     // (e.g. the second iteration will produce {2} & {3}).
-
                     traceBuilder.Append($"; {{{formatIndex++}}}='{{{formatIndex++}}}'");
 
                     // Add the label to the combined list.
-
-                    combinedList.Add(labels[i]);
+                    combinedArgs[j * 2] = labels[i];
 
                     // If the parameter is null, convert to "<null>"; otherwise,
                     // when a string.format is ultimately called it produces bad results.
-
                     if (parameters[j] == null)
                     {
-                        combinedList.Add("<null>");
+                        combinedArgs[j * 2 + 1] = "<null>";
                     }
 
                     // Otherwise, if this is an interesting object, add the hash code and type to
                     // the format string explicitly.
 
-                    else if (SuppressGeneratedParameters == false
+                    else if (!SuppressGeneratedParameters
                              && parameters[j].GetType() != typeof(string)
                              && parameters[j] is not ValueType
                              && parameters[j] is not Type
@@ -296,11 +297,11 @@ namespace MS.Internal
 
                         // Add the parameter to the combined list.
 
-                        combinedList.Add(parameters[j]);
+                        combinedArgs[j * 2 + 1] = parameters[j];
                     }
                     else // Add the parameter to the combined list.
                     {
-                        combinedList.Add(parameters[j]);
+                        combinedArgs[j * 2 + 1] = parameters[j];
                     }
                 }
 
@@ -316,12 +317,7 @@ namespace MS.Internal
             // Send the trace
 
             string traceMessage = traceBuilder.ToString();
-
-            _traceSource.TraceEvent(
-                type,
-                eventId,
-                traceMessage,
-                combinedList.ToArray()); //Cannot avoid the alloc here, no ROS<object> overload
+            _traceSource.TraceEvent(type, eventId, traceMessage, combinedArgs);
 
             // When in the debugger, always flush the output, to guarantee that the
             // traces and other info (e.g. exceptions) get interleaved correctly.

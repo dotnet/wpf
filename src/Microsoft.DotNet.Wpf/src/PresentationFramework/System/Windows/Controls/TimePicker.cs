@@ -20,11 +20,6 @@ namespace System.Windows.Controls
             set { SetValue(SelectedTimeProperty, value); }
         }
 
-        public TimePicker()
-        {
-            this.Loaded += TimePicker_Loaded;
-        }
-
         public static readonly DependencyProperty ClockStyleProperty =
             DependencyProperty.Register("ClockStyle", typeof(Style), typeof(TimePicker), new PropertyMetadata(null));
 
@@ -34,42 +29,40 @@ namespace System.Windows.Controls
             set { SetValue(ClockStyleProperty, value); }
         }
 
-        private void TimePicker_Loaded(object sender, RoutedEventArgs e)
+        public override void OnApplyTemplate()
         {
+            base.OnApplyTemplate();
             InitializeTimeComponents();
         }
 
         private void InitializeTimeComponents()
         {
-            if (Template != null)
+            var hoursComboBox = GetTemplateChild("HoursComboBox") as ComboBox;
+            var minutesComboBox = GetTemplateChild("MinutesComboBox") as ComboBox;
+            var amPmComboBox = GetTemplateChild("AmPmComboBox") as ComboBox;
+
+            if (hoursComboBox != null && minutesComboBox != null && amPmComboBox != null)
             {
-                var hoursComboBox = Template.FindName("HoursComboBox", this) as ComboBox;
-                var minutesComboBox = Template.FindName("MinutesComboBox", this) as ComboBox;
-                var amPmComboBox = Template.FindName("AmPmComboBox", this) as ComboBox;
+                for (int i = 1; i <= 12; i++)
+                    hoursComboBox.Items.Add(i);
 
-                if (hoursComboBox != null && minutesComboBox != null && amPmComboBox != null)
-                {
-                    for (int i = 1; i <= 12; i++)
-                        hoursComboBox.Items.Add(i);
+                for (int i = 0; i < 60; i++)
+                    minutesComboBox.Items.Add(i.ToString("00"));
 
-                    for (int i = 0; i < 60; i++)
-                        minutesComboBox.Items.Add(i.ToString("00"));
+                amPmComboBox.Items.Add("AM");
+                amPmComboBox.Items.Add("PM");
 
-                    amPmComboBox.Items.Add("AM");
-                    amPmComboBox.Items.Add("PM");
-
-                    hoursComboBox.SelectionChanged += TimeComponentChanged;
-                    minutesComboBox.SelectionChanged += TimeComponentChanged;
-                    amPmComboBox.SelectionChanged += TimeComponentChanged;
-                }
+                hoursComboBox.SelectionChanged += TimeComponentChanged;
+                minutesComboBox.SelectionChanged += TimeComponentChanged;
+                amPmComboBox.SelectionChanged += TimeComponentChanged;
             }
         }
 
         private void TimeComponentChanged(object sender, SelectionChangedEventArgs e)
         {
-            var hoursComboBox = Template.FindName("HoursComboBox", this) as ComboBox;
-            var minutesComboBox = Template.FindName("MinutesComboBox", this) as ComboBox;
-            var amPmComboBox = Template.FindName("AmPmComboBox", this) as ComboBox;
+            var hoursComboBox = GetTemplateChild("HoursComboBox") as ComboBox;
+            var minutesComboBox = GetTemplateChild("MinutesComboBox") as ComboBox;
+            var amPmComboBox = GetTemplateChild("AmPmComboBox") as ComboBox;
 
             if (hoursComboBox.SelectedItem != null && minutesComboBox.SelectedItem != null && amPmComboBox.SelectedItem != null)
             {

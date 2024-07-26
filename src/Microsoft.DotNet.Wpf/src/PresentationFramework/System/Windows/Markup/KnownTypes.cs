@@ -829,7 +829,8 @@ namespace System.Windows.Markup
         XmlLanguageConverter,
         XmlNamespaceMapping,
         ZoomPercentageConverter,
-        MaxElement
+        BackEase,
+        MaxElement,
     }
 
     // This enum specifies the IDs we use for known CLR and DP Properties in BAML.
@@ -1671,6 +1672,7 @@ namespace System.Windows.Markup
                 case KnownElements.XmlLanguageConverter: o = new System.Windows.Markup.XmlLanguageConverter();   break;
                 case KnownElements.XmlNamespaceMapping: o = new System.Windows.Data.XmlNamespaceMapping();   break;
                 case KnownElements.ZoomPercentageConverter: o = new System.Windows.Documents.ZoomPercentageConverter();   break;
+                case KnownElements.BackEase: o = new System.Windows.Media.Animation.BackEase();   break;
             }
             return o;
         }
@@ -4971,7 +4973,8 @@ namespace System.Windows.Markup
             case KnownElements.Typography: t = _asmFramework.GetType("System.Windows.Documents.Typography"); break;
             case KnownElements.Underline: t = _asmFramework.GetType("System.Windows.Documents.Underline"); break;
             case KnownElements.ZoomPercentageConverter: t = _asmFramework.GetType("System.Windows.Documents.ZoomPercentageConverter"); break;
-            case KnownElements.DynamicResourceExtension: t = _asmFramework.GetType("System.Windows.DynamicResourceExtension"); break;
+            case KnownElements.BackEase: t = _asmFramework.GetType("System.Windows.Media.Animation.BackEase"); break;
+                case KnownElements.DynamicResourceExtension: t = _asmFramework.GetType("System.Windows.DynamicResourceExtension"); break;
             case KnownElements.DynamicResourceExtensionConverter: t = _asmFramework.GetType("System.Windows.DynamicResourceExtensionConverter"); break;
             case KnownElements.SetterBase: t = _asmFramework.GetType("System.Windows.SetterBase"); break;
             case KnownElements.EventSetter: t = _asmFramework.GetType("System.Windows.EventSetter"); break;
@@ -6319,6 +6322,7 @@ namespace System.Windows.Markup
             case KnownElements.XmlLanguageConverter: t = typeof(System.Windows.Markup.XmlLanguageConverter); break;
             case KnownElements.XmlNamespaceMapping: t = typeof(System.Windows.Data.XmlNamespaceMapping); break;
             case KnownElements.ZoomPercentageConverter: t = typeof(System.Windows.Documents.ZoomPercentageConverter); break;
+            case KnownElements.BackEase: t = typeof(System.Windows.Media.Animation.BackEase); break;
             }
 
             return t;

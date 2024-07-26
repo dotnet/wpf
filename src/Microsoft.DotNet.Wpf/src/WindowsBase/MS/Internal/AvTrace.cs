@@ -246,7 +246,7 @@ namespace MS.Internal
         //  note: labels start at index 1, parameters start at index 0
         //
 
-        public string Trace(TraceEventType type, int eventId, string message, string[] labels, params Span<object> parameters)
+        public string Trace(TraceEventType type, int eventId, string message, string[] labels, params ReadOnlySpan<object> parameters)
         {
             // Don't bother building the string if this trace is going to be ignored.
 
@@ -265,19 +265,25 @@ namespace MS.Internal
                 int i = 1, j = 0;
                 for (; i < labels.Length && j < parameters.Length; i++, j++)
                 {
-                    // Append to the format string a "; {0} = '{1}'", where the index increments (e.g. the second iteration will
-                    // produce {2} & {3}).
+                    // Append to the format string a "; {0} = '{1}'", where the index increments
+                    // (e.g. the second iteration will produce {2} & {3}).
 
                     traceBuilder.Append($"; {{{formatIndex++}}}='{{{formatIndex++}}}'");
 
-                    // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
-                    // it produces bad results.
+                    // Add the label to the combined list.
+
+                    combinedList.Add(labels[i]);
+
+                    // If the parameter is null, convert to "<null>"; otherwise,
+                    // when a string.format is ultimately called it produces bad results.
 
                     if (parameters[j] == null)
-                        parameters[j] = "<null>";
+                    {
+                        combinedList.Add("<null>");
+                    }
 
                     // Otherwise, if this is an interesting object, add the hash code and type to
-                    // the format string explicitely.
+                    // the format string explicitly.
 
                     else if (SuppressGeneratedParameters == false
                              && parameters[j].GetType() != typeof(string)
@@ -287,23 +293,23 @@ namespace MS.Internal
                     {
                         traceBuilder.Append($"; {labels[i]}.HashCode='{GetHashCodeHelper(parameters[j])}'");
                         traceBuilder.Append($"; {labels[i]}.Type='{GetTypeHelper(parameters[j])}'");
+
+                        // Add the parameter to the combined list.
+
+                        combinedList.Add(parameters[j]);
                     }
-
-
-                    // Add the label & parameter to the combined list.
-                    // (As an optimization, the generated classes could pre-allocate a thread-safe static array, to avoid
-                    // this allocation and the ToArray allocation below.)
-
-                    combinedList.Add(labels[i]);
-                    combinedList.Add(parameters[j]);
+                    else // Add the parameter to the combined list.
+                    {
+                        combinedList.Add(parameters[j]);
+                    }
                 }
 
-                // It's OK if we terminate because we have more lables than parameters;
+                // It's OK if we terminate because we have more labels than parameters;
                 // this is used by traces to have out-values in the Stop message.
 
                 if (TraceExtraMessages != null && j < parameters.Length)
                 {
-                    TraceExtraMessages(traceBuilder, parameters, j);
+                    TraceExtraMessages(traceBuilder, parameters.Slice(j));
                 }
             }
 
@@ -326,18 +332,16 @@ namespace MS.Internal
             return traceMessage;
         }
 
-
         //
         //  Trace an event, as both a TraceEventType.Start and TraceEventType.Stop.
         //  (information is contained in the Start event)
         //
 
-        public void TraceStartStop(int eventID, string message, string[] labels, params Span<object> parameters)
+        public void TraceStartStop(int eventID, string message, string[] labels, params ReadOnlySpan<object> parameters)
         {
             Trace(TraceEventType.Start, eventID, message, labels, parameters);
             _traceSource.TraceEvent(TraceEventType.Stop, eventID);
         }
-
 
         //
         //  Convert the value to a string, even if the system conversion throws
@@ -496,7 +500,7 @@ namespace MS.Internal
 
     }
 
-    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, ReadOnlySpan<object> parameters, int start);
+    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, ReadOnlySpan<object> parameters);
 
     internal class AvTraceBuilder
     {

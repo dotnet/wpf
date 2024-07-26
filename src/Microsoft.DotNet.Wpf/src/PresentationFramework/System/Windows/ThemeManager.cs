@@ -127,17 +127,18 @@ internal static class ThemeManager
         ApplyFluentOnWindow(window);
     }
 
-    internal static bool SyncThemeModeAndResources()
+    internal static bool SyncApplicationThemeModeAndResources()
     {
         if(DeferSyncingThemeModeAndResources) return true;
 
-       ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
+        ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
 
         if(Application.Current.ThemeMode != themeMode)
         {
             Application.Current.ThemeMode = themeMode;
             return themeMode == ThemeMode.None ? false : true;
         }
+        
         return false;
     }
 
@@ -181,27 +182,11 @@ internal static class ThemeManager
 
     internal static void SyncWindowThemeModeAndResources(Window window)
     {
-        ResourceDictionary windowResources = window.Resources;
-        int index = FindLastFluentThemeResourceDictionaryIndex(windowResources);
+        ThemeMode themeMode = GetThemeModeFromResourceDictionary(window.Resources);
 
-        if ( index == -1 )
+        if(window.ThemeMode != themeMode)
         {
-            window.ThemeMode = ThemeMode.None;
-            return;
-        }
-
-        // Check: Do we need a null check here for source's value?
-        if (windowResources.MergedDictionaries[index].Source.ToString().ToLower().Contains("light"))
-        {
-            window.ThemeMode = ThemeMode.Light;
-        }
-        else if (windowResources.MergedDictionaries[index].Source.ToString().ToLower().Contains("dark"))
-        {
-            window.ThemeMode = ThemeMode.Dark;
-        }
-        else
-        {
-            window.ThemeMode = ThemeMode.System;
+            window.ThemeMode = themeMode;
         }
     }
 

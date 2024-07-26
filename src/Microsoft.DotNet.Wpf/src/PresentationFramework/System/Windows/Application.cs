@@ -1736,7 +1736,7 @@ namespace System.Windows
             
             if(!ThemeManager.IgnoreAppResourcesChange)
             {
-                if(ThemeManager.SyncThemeModeAndResources())
+                if(ThemeManager.SyncApplicationThemeModeAndResources())
                 {
                     return;
                 }

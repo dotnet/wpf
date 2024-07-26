@@ -2,25 +2,16 @@
 
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
-  <ItemGroup>
-    <PackageReference Include="runtime.$(WpfRuntimeIdentifier).$(DncEngTransportPackageName)"
-                      Condition="'$(RepositoryName)'=='wpf'"
-                      Version="$(MicrosoftDotNetWpfDncEngVersion)">
-      <CopyLocal>true</CopyLocal>
-      <GeneratePathProperty>true</GeneratePathProperty>
-    </PackageReference>
-  </ItemGroup>
-
   <PropertyGroup>
-    <_DncEngPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)</_DncEngPackagePath>
-    <_DncEngPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)</_DncEngPackagePath>
-    <_DncEngPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)</_DncEngPackagePath>
-    <_DncEngPackagePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)</_DncEngPackagePath>
+    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\x64\Microsoft.DotNet.Wpf.GitHub</_PackagingNativePath>
+    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\x64\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
+    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub</_PackagingNativePath>
+    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-    <None Include="$(_DncEngPackagePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
+    <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"
           Visible="False" />
   </ItemGroup>

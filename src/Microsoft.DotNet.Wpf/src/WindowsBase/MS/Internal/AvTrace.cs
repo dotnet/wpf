@@ -250,7 +250,7 @@ namespace MS.Internal
         {
             // Don't bother building the string if this trace is going to be ignored.
 
-            if(_traceSource == null|| !_traceSource.Switch.ShouldTrace(type))
+            if (_traceSource == null|| !_traceSource.Switch.ShouldTrace(type))
                 return null;
 
             // Compose the trace string.
@@ -273,19 +273,17 @@ namespace MS.Internal
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.
 
-                    if(parameters[j] == null)
-                    {
+                    if (parameters[j] == null)
                         parameters[j] = "<null>";
-                    }
 
                     // Otherwise, if this is an interesting object, add the hash code and type to
                     // the format string explicitely.
 
-                    else if(SuppressGeneratedParameters == false
-                            && parameters[j].GetType() != typeof(string)
-                            && parameters[j] is not ValueType
-                            && parameters[j] is not Type
-                            && parameters[j] is not DependencyProperty)
+                    else if (SuppressGeneratedParameters == false
+                             && parameters[j].GetType() != typeof(string)
+                             && parameters[j] is not ValueType
+                             && parameters[j] is not Type
+                             && parameters[j] is not DependencyProperty)
                     {
                         traceBuilder.Append($"; {labels[i]}.HashCode='{GetHashCodeHelper(parameters[j])}'");
                         traceBuilder.Append($"; {labels[i]}.Type='{GetTypeHelper(parameters[j])}'");
@@ -303,7 +301,7 @@ namespace MS.Internal
                 // It's OK if we terminate because we have more lables than parameters;
                 // this is used by traces to have out-values in the Stop message.
 
-                if(TraceExtraMessages != null && j < parameters.Length)
+                if (TraceExtraMessages != null && j < parameters.Length)
                 {
                     TraceExtraMessages(traceBuilder, parameters, j);
                 }
@@ -322,10 +320,8 @@ namespace MS.Internal
             // When in the debugger, always flush the output, to guarantee that the
             // traces and other info (e.g. exceptions) get interleaved correctly.
 
-            if( IsDebuggerAttached() )
-            {
+            if (IsDebuggerAttached())
                 _traceSource.Flush();
-            }
 
             return traceMessage;
         }

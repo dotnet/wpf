@@ -402,6 +402,9 @@ namespace MS.Internal
         // replace { and } by {{ and }} - call if literal string will be passed to Format
         static public string AntiFormat(string s)
         {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
             int formatIndex = s.IndexOfAny(FormatChars);
             if (formatIndex < 0)
                 return s;

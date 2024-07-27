@@ -79,7 +79,7 @@ namespace MS.Internal.Xaml.Parser
             get
             {
                 return IsDotted ?
-                    Owner.ScopedName + "." + Name :
+                    $"{Owner.ScopedName}.{Name}" :
                     Name;
             }
         }

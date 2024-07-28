@@ -76,9 +76,8 @@ namespace MS.Internal.Xaml.Context
             string prop = (Member == null) ? "-" : Member.Name;
             string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
             string coll = (Collection == null) ? "-" : "*";
-            string res = KS.Fmt("{0}.{1} inst={2} coll={3}",
-                                 type, prop, inst, coll);
-            return res;
+
+            return string.Format(TypeConverterHelper.InvariantEnglishUS, "{0}.{1} inst={2} coll={3}", type, prop, inst, coll);
         }
 
         public object Instance { get; set; }

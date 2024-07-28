@@ -37,7 +37,7 @@ namespace System.Windows.Controls
     [Automation(AccessibilityControlType = "Edit")]
 #endif
     [TemplatePart(Name = "PART_ContentHost", Type = typeof(FrameworkElement))]
-    public sealed class PasswordBox : Control, ITextBoxViewHost
+    public class PasswordBox : Control, ITextBoxViewHost
 #if OLD_AUTOMATION
         , IAutomationPatternProvider, IAutomationPropertyProvider
 #endif

@@ -1648,7 +1648,7 @@ namespace System.Windows.Controls
         {
             // If the original source is not from the same PresentationSource as of ScrollViewer,
             // then do not start the manipulation.
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return false;
             }

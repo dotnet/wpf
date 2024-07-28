@@ -105,7 +105,7 @@ namespace System.Windows.Controls.Primitives
         private void OnAnyMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
         {
             // Ignore actions if the button down arises from a different presentation source
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return;
             }

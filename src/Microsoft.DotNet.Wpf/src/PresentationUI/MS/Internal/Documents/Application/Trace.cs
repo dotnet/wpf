@@ -7,7 +7,6 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
@@ -21,12 +20,8 @@ internal static class Trace
     // Internal Methods
     //--------------------------------------------------------------------------
 
-    /// <summary>
-    /// Will permit only internet zone permissions for TraceListeners and is
-    /// safe to use inside of asserts for partial trust code.
-    /// </summary>
     internal static void SafeWrite(
-        BooleanSwitch boolSwitch, string format, params object[] args)
+        BooleanSwitch boolSwitch, string format, params ReadOnlySpan<object> args)
     {
         if (AvTrace.IsWpfTracingEnabledInRegistry())
         {
@@ -40,15 +35,11 @@ internal static class Trace
         }
     }
 
-    /// <summary>
-    /// Will permit only internet zone permissions for TraceListeners and is
-    /// safe to use inside of asserts for partial trust code.
-    /// </summary>
     internal static void SafeWriteIf(
         bool condition,
         BooleanSwitch boolSwitch,
         string format,
-        params object[] args)
+        params ReadOnlySpan<object> args)
     {
         if (AvTrace.IsWpfTracingEnabledInRegistry())
         {
@@ -69,16 +60,11 @@ internal static class Trace
     // Internal Fields
     //--------------------------------------------------------------------------
 
-    internal static BooleanSwitch File = new BooleanSwitch(
-        FileSwitchName, FileSwitchName, "1");
-    internal static BooleanSwitch Packaging = new BooleanSwitch(
-        PackagingSwitchName, PackagingSwitchName, "1");
-    internal static BooleanSwitch Presentation = new BooleanSwitch(
-        PresentationSwitchName, PresentationSwitchName, "1");
-    internal static BooleanSwitch Rights = new BooleanSwitch(
-        RightsSwitchName, RightsSwitchName, "1");
-    internal static BooleanSwitch Signatures = new BooleanSwitch(
-        SignaturesSwitchName, SignaturesSwitchName, "1");
+    internal static readonly BooleanSwitch File = new(FileSwitchName, FileSwitchName, "1");
+    internal static readonly BooleanSwitch Packaging = new(PackagingSwitchName, PackagingSwitchName, "1");
+    internal static readonly BooleanSwitch Presentation = new(PresentationSwitchName, PresentationSwitchName, "1");
+    internal static readonly BooleanSwitch Rights = new(RightsSwitchName, RightsSwitchName, "1");
+    internal static readonly BooleanSwitch Signatures = new(SignaturesSwitchName, SignaturesSwitchName, "1");
     #endregion Internal Fields
 
     #region Private Fields

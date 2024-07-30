@@ -29,7 +29,7 @@ foreach ($file in Get-ChildItem $resouceFilesDir -Filter "*.xaml") {
     if($file.BaseName -eq "Fluent") {
         continue
     }
-    [xml]$currentXaml = Get-Content $file
+    [xml]$currentXaml = Get-Content $file.FullName
 
     $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
 }
@@ -38,7 +38,7 @@ foreach ($file in Get-ChildItem $resouceFilesDir -Filter "*.xaml") {
 $combinedXaml.ResourceDictionary.InnerXml += $themeColorXaml.ResourceDictionary.InnerXml
 
 foreach ($file in Get-ChildItem $styleFilesDir -Filter "*.xaml") {
-    [xml]$currentXaml = Get-Content $file
+    [xml]$currentXaml = Get-Content $file.FullName
 
     $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
 }

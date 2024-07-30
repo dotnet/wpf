@@ -16,7 +16,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class BinaryObjectString : IRecord<BinaryObjectString>
+    internal sealed class BinaryObjectString : IRecord
     {
         public Id ObjectId { get; }
         public string Value { get; }
@@ -27,16 +27,6 @@ namespace System.Windows
         {
             ObjectId = objectId;
             Value = value;
-        }
-
-        static BinaryObjectString IBinaryFormatParseable<BinaryObjectString>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            BinaryObjectString record = new(reader.ReadInt32(), reader.ReadString());
-
-            recordMap[record.ObjectId] = record;
-            return record;
         }
 
         public void Write(BinaryWriter writer)

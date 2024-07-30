@@ -50,7 +50,6 @@
     <NetCoreReference Include="System.Runtime.CompilerServices.VisualC" />
     <NetCoreReference Include="System.Runtime.Extensions" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
     <NetCoreReference Include="System.Text.Encoding.Extensions" />
     <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Threading" />
@@ -63,6 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <!-- PrivateAssets metadata is required as Packaging.props in WpfArcadeSdk unconditionally sets it to all which is wrong: https://github.com/dotnet/wpf/issues/9261. -->
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" PrivateAssets="contentfiles;analyzers;build" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>

@@ -306,7 +306,7 @@ HRESULT CGDIDevice::SetupForIncreasedResolution(int resolutionMultiplier, XFORM&
 {
     if (resolutionMultiplier > 1)
     {
-        Debug::Assert((GetCaps() & CAP_WorldTransform) != 0);
+        Debug::Assert((GetCaps() & CAP_WorldTransform) != 0, "CAP_WorldTransform flag is not set. GetCaps() returned: " + GetCaps());
 
         // The points are greater than we want them so we need
         // to set a scaling transform to get them to the right size.
@@ -337,7 +337,7 @@ CGDIDevice::CleanupForIncreasedResolution(int resolutionMultiplier, const XFORM&
 {
     if (resolutionMultiplier > 1)
     {
-        Debug::Assert((GetCaps() & CAP_WorldTransform) != 0);
+        Debug::Assert((GetCaps() & CAP_WorldTransform) != 0, "CAP_WorldTransform flag is not set. GetCaps() returned: " + GetCaps());
 
         return ErrorCode(CNativeMethods::SetWorldTransform(m_hDC, &oldTransform));
     }

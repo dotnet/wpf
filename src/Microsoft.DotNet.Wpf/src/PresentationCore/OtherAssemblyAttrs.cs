@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 [assembly:InternalsVisibleTo(BuildInfo.PresentationFrameworkSystemDrawing)]
 [assembly:InternalsVisibleTo(BuildInfo.SystemWindowsControlsRibbon)]
 [assembly:InternalsVisibleTo(BuildInfo.WindowsFormsIntegration)]
-
+[assembly:InternalsVisibleTo($"PresentationCore.Tests, PublicKey={BuildInfo.WCP_PUBLIC_KEY_STRING}")]
 [assembly: TypeForwardedTo(typeof(System.Windows.Markup.IUriContext))]
 [assembly: TypeForwardedTo(typeof(System.Windows.Media.TextFormattingMode))]
 [assembly: TypeForwardedTo(typeof(System.Windows.Input.ICommand))]

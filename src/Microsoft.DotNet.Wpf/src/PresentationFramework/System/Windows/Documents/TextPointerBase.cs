@@ -637,13 +637,10 @@ namespace System.Windows.Documents
 
         // Following Unicode newline guideline from http://www.unicode.org/unicode/standard/reports/tr13/tr13-5.html
         // To the standard list requirements we added '\v' and '\f'
-        internal static Char[] NextLineCharacters = new char[] { '\n', '\r', '\v', '\f', '\u0085' /*NEL*/, '\u2028' /*LS*/, '\u2029' /*PS*/ };
+        internal static ReadOnlySpan<char> NextLineCharacters => ['\n', '\r', '\v', '\f', '\u0085' /*NEL*/, '\u2028' /*LS*/, '\u2029' /*PS*/];
 
         // Returns true if a specified char matches the Unicode definition of "newline".
-        internal static bool IsCharUnicodeNewLine(char ch)
-        {
-            return Array.IndexOf(NextLineCharacters, ch) > -1;
-        }
+        internal static bool IsCharUnicodeNewLine(char ch) => NextLineCharacters.Contains(ch);
 
         /// <summary>
         /// Returns true if the position is adjacent to a LineBreak element,

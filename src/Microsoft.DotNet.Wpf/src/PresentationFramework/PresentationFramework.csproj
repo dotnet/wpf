@@ -1087,7 +1087,7 @@
     <Compile Include="System\Windows\Documents\XamlToRtfWriter.cs" />
     <Compile Include="System\Windows\Documents\XPSS0ValidatingLoader.cs" />
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
-    <Compile Include="System\Windows\DwmColorization.cs" />
+    <Compile Include="System\Windows\AccentColorHelper.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
@@ -1342,6 +1342,9 @@
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
     <Compile Include="System\Windows\ThemeManager.cs" />
+    <Compile Include="System\Windows\FluentThemeState.cs" />
+    <Compile Include="System\Windows\ThemeMode.cs" />
+    <Compile Include="System\Windows\ThemeModeConverter.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />
     <Compile Include="System\Windows\Thickness.cs" />
@@ -1403,7 +1406,6 @@
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime.CompilerServices.DynamicAttribute" />
     <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
     <NetCoreReference Include="System.Text.RegularExpressions" />
     <NetCoreReference Include="System.Threading" />
     <NetCoreReference Include="System.Threading.Tasks" />
@@ -1447,6 +1449,8 @@
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <!-- PrivateAssets metadata is required as Packaging.props in WpfArcadeSdk unconditionally sets it to all which is wrong: https://github.com/dotnet/wpf/issues/9261. -->
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" PrivateAssets="contentfiles;analyzers;build" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>

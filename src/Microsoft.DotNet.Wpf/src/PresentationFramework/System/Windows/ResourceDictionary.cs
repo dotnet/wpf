@@ -109,7 +109,7 @@ namespace System.Windows
                 entry.Value = value; // refresh the entry value in case it was changed in the previous call
             }
         }
-        
+
         // This is set when the RD is loaded from unsafe xps doc. This will be checked while creating reader for RD source.
         internal bool IsUnsafe { get; set; }
 
@@ -157,7 +157,7 @@ namespace System.Windows
                 // that it is being passed down by the Baml parsing code, and it is trying to give us more
                 // information to avoid possible ambiguities in assembly resolving. Use the VersionedUri
                 // to resolve, and the set _source to the OriginalUri so we don't change the return of Source property.
-                // The versioned Uri is not stored, if the version info is needed while debugging, once this method 
+                // The versioned Uri is not stored, if the version info is needed while debugging, once this method
                 // returns _reader should be set, from there BamlSchemaContext.LocalAssembly contains the version info.
                 if (uriWrapper == null)
                 {
@@ -169,10 +169,10 @@ namespace System.Windows
                     _source = uriWrapper.OriginalUri;
                     sourceUri = uriWrapper.VersionedUri;
                 }
-                
+
                 Clear();
-                
-                
+
+
                 Uri uri = BindUriHelper.GetResolvedUri(_baseUri, sourceUri);
 
                 WebRequest request = WpfWebRequestHelper.CreateRequest(uri);
@@ -1735,23 +1735,21 @@ namespace System.Windows
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        if (_ownerApps != null)
+                        // Cache the deferredResourceReference so that it can be validated
+                        // in case of a dictionary change prior to its inflation
+                        _deferredResourceReferences ??= new DeferredResourceReferenceList();
+
+                        if (_deferredResourceReferences.Get(resourceKey) is { } existingDeferredResourceReference
+                            && existingDeferredResourceReference.Dictionary == this)
                         {
-                            deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
+                            deferredResourceReference = existingDeferredResourceReference;
                         }
                         else
                         {
-                            deferredResourceReference = new DeferredResourceReference(this, resourceKey);
-                        }
+                            deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
 
-                        // Cache the deferredResourceReference so that it can be validated
-                        // in case of a dictionary change prior to its inflation
-                        if (_deferredResourceReferences == null)
-                        {
-                            _deferredResourceReferences = new WeakReferenceList();
+                            _deferredResourceReferences.AddOrSet(deferredResourceReference);
                         }
-
-                        _deferredResourceReferences.Add( deferredResourceReference, true /*SkipFind*/);
                     }
                     else
                     {
@@ -1773,23 +1771,38 @@ namespace System.Windows
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            if (_deferredResourceReferences != null)
+            if (_deferredResourceReferences is null)
             {
-                foreach (Object o in _deferredResourceReferences)
-                {
+                return;
+            }
 
-                    DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
-                    if (deferredResourceReference != null && (resourceKey == null || Object.Equals(resourceKey, deferredResourceReference.Key)))
-                    {
-                        // This will inflate the deferred reference, causing it
-                        // to be removed from the list.  The list may also be
-                        // purged of dead references.
-                        deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
-                    }
+            if (resourceKey is null)
+            {
+                foreach (DeferredResourceReference deferredResourceReference in _deferredResourceReferences)
+                {
+                    Inflate(deferredResourceReference);
+                }
+            }
+            else
+            {
+                DeferredResourceReference deferredResourceReference = _deferredResourceReferences.Get(resourceKey);
+
+                Inflate(deferredResourceReference);
+            }
+
+            return;
+
+            void Inflate(DeferredResourceReference deferredResourceReference)
+            {
+                if (deferredResourceReference is not null)
+                {
+                    // This will inflate the deferred reference, causing it
+                    // to be removed from the list.  The list may also be
+                    // purged of dead references.
+                    deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
                 }
             }
         }
-
 
         /// <summary>
         /// Called when the MergedDictionaries collection changes
@@ -2053,7 +2066,7 @@ namespace System.Windows
 
         #region Properties
 
-        internal WeakReferenceList DeferredResourceReferences
+        internal DeferredResourceReferenceList DeferredResourceReferences
         {
             get { return _deferredResourceReferences; }
         }
@@ -2478,10 +2491,7 @@ namespace System.Windows
             // redirect each entry toward its new owner
             if (_deferredResourceReferences != null)
             {
-                foreach (DeferredResourceReference drr in _deferredResourceReferences)
-                {
-                    drr.Dictionary = this;
-                }
+                _deferredResourceReferences.ChangeDictionary(this);
             }
         }
 
@@ -2503,9 +2513,9 @@ namespace System.Windows
 
         /// <summary>
         /// This wrapper class exists so SourceUriTypeConverterMarkupExtension can pass
-        /// a more complete Uri to help resolve to the correct assembly, while also passing 
+        /// a more complete Uri to help resolve to the correct assembly, while also passing
         /// the original Uri so that ResourceDictionary.Source still returns the original value.
-        /// </summary> 
+        /// </summary>
         internal class ResourceDictionarySourceUriWrapper : Uri
         {
             public ResourceDictionarySourceUriWrapper(Uri originalUri, Uri versionedUri) : base(originalUri.OriginalString, UriKind.RelativeOrAbsolute)
@@ -2548,7 +2558,7 @@ namespace System.Windows
         private WeakReferenceList                         _ownerFEs = null;
         private WeakReferenceList                         _ownerFCEs = null;
         private WeakReferenceList                         _ownerApps = null;
-        private WeakReferenceList                         _deferredResourceReferences = null;
+        private DeferredResourceReferenceList             _deferredResourceReferences = null;
         private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
         private Uri                                       _source = null;
         private Uri                                       _baseUri = null;

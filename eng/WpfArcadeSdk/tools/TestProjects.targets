@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="$(MicrosoftWin32RegistryPackageVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" CopyLocal="true"  />
     <PackageReference Include="System.Diagnostics.EventLog" Version="$(SystemDiagnosticsEventLogPackageVersion)" CopyLocal="true" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" CopyLocal="true" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="$(SystemSecurityCryptographyXmlPackageVersion)" CopyLocal="true" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" CopyLocal="true" />
 

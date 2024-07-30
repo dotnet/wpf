@@ -398,8 +398,7 @@ namespace MS.Internal.PtsHost
             new string[] { "M??", "CDM", "XLC", "IVX" }
         };
 
-        private static int[] RomanNumericSizeIncrements =
-            new int[] { 1, 2, 3, 8, 18, 28, 38, 88, 188, 288, 388, 888 };
+        private static ReadOnlySpan<int> RomanNumericSizeIncrements => [1, 2, 3, 8, 18, 28, 38, 88, 188, 288, 388, 888];
 }
 }
 

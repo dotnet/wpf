@@ -116,7 +116,7 @@ namespace MS.Internal.Documents
             if (_brushResources == null)
             {
                 // Get the entire list of RightsManagementStatus values.
-                Array statusList = Enum.GetValues(typeof(RightsManagementStatus));
+                RightsManagementStatus[] statusList = Enum.GetValues<RightsManagementStatus>();
 
                 // Construct the array to hold brush references.
                 _brushResources = new DrawingBrush[statusList.Length];
@@ -138,7 +138,7 @@ namespace MS.Internal.Documents
                 {
                     // Determine resource name.
                     string resourceName = "PUIRMStatus"
-                        + Enum.GetName(typeof(RightsManagementStatus), status)
+                        + Enum.GetName(status)
                         + "BrushKey";
 
                     // Acquire reference to the brush.

@@ -143,7 +143,7 @@ namespace MS.Internal.Documents
             if (_brushResources == null)
             {
                 // Get the entire list of SignatureStatus values.
-                Array statusList = Enum.GetValues(typeof(SignatureStatus));
+                SignatureStatus[] statusList = Enum.GetValues<SignatureStatus>();
 
                 // Construct the array to hold brush references.
                 _brushResources = new DrawingBrush[statusList.Length];
@@ -165,7 +165,7 @@ namespace MS.Internal.Documents
                 {
                     // Determine resource name.
                     string resourceName = "PUISignatureStatus"
-                        + Enum.GetName(typeof(SignatureStatus), sigStatus)
+                        + Enum.GetName(sigStatus)
                         + "BrushKey";
 
                     // Acquire reference to the brush.

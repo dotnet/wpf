@@ -1412,10 +1412,10 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
-                    
-                    if(ThemeManager.IsFluentThemeEnabled)
+
+                    if(ThemeManager.IsFluentThemeEnabled || ThemeManager.FluentEnabledWindows.Count > 0)
                     {
-                        ThemeManager.ApplySystemTheme();
+                        ThemeManager.OnSystemThemeChanged();
                     }
                     break;
 
@@ -1434,6 +1434,12 @@ namespace System.Windows
 
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
+
+                    if(SystemColors.InvalidateCache())
+                    {
+                        OnSystemValueChanged();
+                        InvalidateResources(true);
+                    }
                     break;
             }
 
@@ -1733,14 +1739,14 @@ namespace System.Windows
             // the dictionary else just retun the cached value
             if (_dictionary != null)
             {
-                bool canCache;
-                object value  = _dictionary.GetValue(_keyOrValue, out canCache);
+                object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
                 if (canCache)
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    _keyOrValue = value;
                     RemoveFromDictionary();
+                    // Update after removal from dictionary as we need the key for proper removal
+                    _keyOrValue = value;
                 }
 
                 // Freeze if this value originated from a style or template
@@ -1789,8 +1795,7 @@ namespace System.Windows
             {
                 // Take a peek at the element type of the ElementStartRecord
                 // within the ResourceDictionary's deferred content.
-                bool found;
-                return _dictionary.GetValueType(_keyOrValue, out found);
+                return _dictionary.GetValueType(_keyOrValue, out bool _);
             }
             else
             {
@@ -1799,7 +1804,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        internal virtual void RemoveFromDictionary()
+        protected virtual void RemoveFromDictionary()
         {
             if (_dictionary != null)
             {
@@ -1969,7 +1974,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        internal override void RemoveFromDictionary()
+        protected override void RemoveFromDictionary()
         {
             // DeferredThemeResourceReferences are never added to the dictionary's
             // list of deferred references, so they don't need to be removed.
@@ -2032,9 +2037,124 @@ namespace System.Windows
 
         #endregion Properties
     }
+
+    internal class DeferredResourceReferenceList : IEnumerable<DeferredResourceReference>
+    {
+        private readonly object _syncRoot = new();
+        private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
+        private int _potentiallyDeadEntryCount;
+
+        public void AddOrSet(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries[deferredResourceReference.Key] = new WeakReference<DeferredResourceReference>(deferredResourceReference);
+            }
+        }
+
+        public void Remove(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries.Remove(deferredResourceReference.Key);
+            }
+        }
+
+        internal DeferredResourceReference Get(object resourceKey)
+        {
+            lock (_syncRoot)
+            {
+                _entries.TryGetValue(resourceKey, out var weakReference);
+
+                if (weakReference is null)
+                {
+                    return null;
+                }
+
+                if (weakReference.TryGetTarget(out var deferredResourceReference))
+                {
+                    return deferredResourceReference;
+                }
+                else
+                {
+                    ++_potentiallyDeadEntryCount;
+                }
+            }
+
+            PurgeIfRequired();
+
+            return null;
+        }
+
+        internal void ChangeDictionary(ResourceDictionary resourceDictionary)
+        {
+            lock (_syncRoot)
+            {
+                foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
+                {
+                    if (weakReference.TryGetTarget(out var deferredResourceReference))
+                    {
+                        deferredResourceReference.Dictionary = resourceDictionary;
+                    }
+                    else
+                    {
+                        ++_potentiallyDeadEntryCount;
+                    }
+                }
+            }
+
+            PurgeIfRequired();
+        }
+
+        private void PurgeIfRequired()
+        {
+            if (_potentiallyDeadEntryCount > 25)
+            {
+                Purge();
+            }
+        }
+
+        private void Purge()
+        {
+            Purge(null);
+        }
+
+        private void Purge(List<DeferredResourceReference> aliveItems)
+        {
+            lock (_syncRoot)
+            {
+                List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
+                _potentiallyDeadEntryCount = 0;
+
+                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
+                {
+                    if (entry.Value.TryGetTarget(out var item) is false)
+                    {
+                        deadKeys.Add(entry.Key);
+                    }
+                    else
+                    {
+                        aliveItems?.Add(item);
+                    }
+                }
+
+                foreach (object deadKey in deadKeys)
+                {
+                    _entries.Remove(deadKey);
+                }
+            }
+        }
+
+        public IEnumerator<DeferredResourceReference> GetEnumerator()
+        {
+            var aliveItems = new List<DeferredResourceReference>(_entries.Count);
+            Purge(aliveItems);
+            return aliveItems.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 }
-
-
-
-
-

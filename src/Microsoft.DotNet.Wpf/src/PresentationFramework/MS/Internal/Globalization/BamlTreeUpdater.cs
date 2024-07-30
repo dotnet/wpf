@@ -613,9 +613,9 @@ namespace MS.Internal.Globalization
             IList<BamlTreeNode> newChildrenList          // list of new children
             )
         {
-            BamlStringToken[] tokens = BamlResourceContentUtil.ParseChildPlaceholder(content);
+            ReadOnlySpan<BamlStringToken> tokens = BamlResourceContentUtil.ParseChildPlaceholder(content);
 
-            if (tokens == null)
+            if (tokens.IsEmpty)
             {
                 bamlTreeMap.Resolver.RaiseErrorNotifyEvent(
                     new BamlLocalizerErrorNotifyEventArgs(

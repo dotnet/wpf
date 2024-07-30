@@ -8,6 +8,7 @@
 
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace MS.Internal.Globalization
 {
@@ -125,12 +126,15 @@ namespace MS.Internal.Globalization
         /// Element placeholders start with '#' and end with ';'. 
         /// In case of error, a null array is returned. 
         /// </summary>
-        internal static BamlStringToken[] ParseChildPlaceholder(string input)
+        internal static ReadOnlySpan<BamlStringToken> ParseChildPlaceholder(string input)
         {
-            if (input == null) return null;
+            if (input == null)
+                return ReadOnlySpan<BamlStringToken>.Empty;
 
-            List<BamlStringToken> tokens = new List<BamlStringToken>(8);
-            int tokenStart = 0; bool inPlaceHolder = false;
+            List<BamlStringToken> tokens = new(8);
+            int tokenStart = 0;
+            bool inPlaceHolder = false;
+
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] == BamlConst.ChildStart)
@@ -140,7 +144,7 @@ namespace MS.Internal.Globalization
                         if (inPlaceHolder)
                         {
                             // All # needs to be escaped in a child place holder
-                            return null; // error
+                            return ReadOnlySpan<BamlStringToken>.Empty; // error
                         }
 
                         inPlaceHolder = true;
@@ -180,7 +184,7 @@ namespace MS.Internal.Globalization
             if (inPlaceHolder)
             {
                 // at the end of the string, all child placeholder must be closed
-                return null; // error
+                return ReadOnlySpan<BamlStringToken>.Empty; // error
             }
 
             if (tokenStart < input.Length)
@@ -193,12 +197,12 @@ namespace MS.Internal.Globalization
                     );
             }
 
-            return tokens.ToArray();
+            return CollectionsMarshal.AsSpan(tokens);
         }
     }
 
 
-    internal struct BamlStringToken
+    internal readonly struct BamlStringToken
     {
         internal readonly TokenType Type;
         internal readonly string Value;

@@ -16,7 +16,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class ClassWithMembersAndTypes : ClassRecord, IRecord<ClassWithMembersAndTypes>
+    internal sealed class ClassWithMembersAndTypes : ClassRecord
     {
         public MemberTypeInfo MemberTypeInfo { get; }
         public Id LibraryId { get; }
@@ -42,24 +42,6 @@ namespace System.Windows
         }
 
         public static RecordType RecordType => RecordType.ClassWithMembersAndTypes;
-
-        static ClassWithMembersAndTypes IBinaryFormatParseable<ClassWithMembersAndTypes>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            ClassInfo classInfo = ClassInfo.Parse(reader, out Count memberCount);
-            MemberTypeInfo memberTypeInfo = MemberTypeInfo.Parse(reader, memberCount);
-
-            ClassWithMembersAndTypes record = new(
-                classInfo,
-                reader.ReadInt32(),
-                memberTypeInfo,
-                ReadValuesFromMemberTypeInfo(reader, recordMap, memberTypeInfo));
-
-            // Index this record by the id of the embedded ClassInfo's object id.
-            recordMap[record.ClassInfo.ObjectId] = record;
-            return record;
-        }
 
         public override void Write(BinaryWriter writer)
         {

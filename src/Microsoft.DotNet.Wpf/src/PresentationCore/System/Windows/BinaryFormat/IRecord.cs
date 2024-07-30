@@ -11,12 +11,5 @@ namespace System.Windows
     {
         static virtual RecordType RecordType { get; }
     }
-
-    /// <summary>
-    ///  Typed record interface.
-    /// </summary>
-    internal interface IRecord<T> : IRecord, IBinaryFormatParseable<T> where T : class, IRecord
-    {
-    }
 }
 

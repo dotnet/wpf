@@ -2840,9 +2840,66 @@ To automatically copy the files, set the environment variable
 
 
     <!--=================================================================
+            TimePicker
+        ==================================================================-->
+
+    <Style x:Key="&#231;" TargetType="{x:Type TimePicker}">
+        <Setter Property="Background" Value="Green" />
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TimePicker}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox x:Name="HoursComboBox"
+                                          Width="50"/>
+                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="MinutesComboBox"
+                                          Width="50"/>
+                                <ComboBox x:Name="AmPmComboBox"
+                                          Width="50"/>
+                            </StackPanel>
+                        </Border>
+                        <Button x:Name="PART_Button"
+                                Grid.Column="1"
+                                Width="24"
+                                Height="24"
+                                Margin="0,5,4,0"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                            <TextBlock Background="{TemplateBinding Background}" Text="&#xE787;" FontFamily="Segoe Fluent Icons" FontSize="14"/>
+                        </Button>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Blue"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter TargetName="ContentBorder" Property="Background" Value="LightGray"/>
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource &#231;}" TargetType="{x:Type TimePicker}" />
+
+    <!--=================================================================
         Expander
     ==================================================================-->
-    <Style x:Key="&#231;">
+    <Style x:Key="&#232;">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -2867,7 +2924,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#232;"
+    <Style x:Key="&#233;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -2927,7 +2984,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#233;"
+    <Style x:Key="&#234;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -2992,7 +3049,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#234;"
+    <Style x:Key="&#235;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -3056,7 +3113,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#235;"
+    <Style x:Key="&#236;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -3149,8 +3206,8 @@ To automatically copy the files, set the environment variable
                                           Margin="1"
                                           MinWidth="0"
                                           MinHeight="0"
-                                          Style="{StaticResource &#232;}"
-                                          FocusVisualStyle="{StaticResource &#231;}"
+                                          Style="{StaticResource &#233;}"
+                                          FocusVisualStyle="{StaticResource &#232;}"
                                           IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -3189,7 +3246,7 @@ To automatically copy the files, set the environment variable
                                     Value="Left"
                                     TargetName="HeaderSite"/>
                             <Setter Property="Style"
-                                    Value="{StaticResource &#235;}"
+                                    Value="{StaticResource &#236;}"
                                     TargetName="HeaderSite"/>
                         </Trigger>
                         <Trigger Property="ExpandDirection"
@@ -3201,7 +3258,7 @@ To automatically copy the files, set the environment variable
                                     Value="Bottom"
                                     TargetName="HeaderSite"/>
                             <Setter Property="Style"
-                                    Value="{StaticResource &#233;}"
+                                    Value="{StaticResource &#234;}"
                                     TargetName="HeaderSite"/>
                         </Trigger>
                         <Trigger Property="ExpandDirection"
@@ -3213,7 +3270,7 @@ To automatically copy the files, set the environment variable
                                     Value="Right"
                                     TargetName="HeaderSite"/>
                             <Setter Property="Style"
-                                    Value="{StaticResource &#234;}"
+                                    Value="{StaticResource &#235;}"
                                     TargetName="HeaderSite"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
@@ -3288,7 +3345,7 @@ To automatically copy the files, set the environment variable
     <!--=================================================================
         GridSplitter
     ==================================================================-->
-    <Style x:Key="&#244;">
+    <Style x:Key="&#245;">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -3302,7 +3359,7 @@ To automatically copy the files, set the environment variable
         <Setter Property="Background"
                 Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
         <Setter Property="PreviewStyle"
-                Value="{StaticResource &#244;}"/>
+                Value="{StaticResource &#245;}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GridSplitter}">
@@ -3318,7 +3375,7 @@ To automatically copy the files, set the environment variable
     <!--=================================================================
         GroupBox
     ==================================================================-->
-    <BorderGapMaskConverter x:Key="&#245;"/>
+    <BorderGapMaskConverter x:Key="&#246;"/>
     <Style x:Key="{x:Type GroupBox}"
            TargetType="{x:Type GroupBox}">
         <Setter Property="BorderBrush"
@@ -3359,7 +3416,7 @@ To automatically copy the files, set the environment variable
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderStyle="Etched">
                             <theme:ClassicBorderDecorator.OpacityMask>
-                                <MultiBinding Converter="{StaticResource &#245;}"
+                                <MultiBinding Converter="{StaticResource &#246;}"
                                               ConverterParameter="7">
                                     <Binding ElementName="Header"
                                              Path="ActualWidth"/>
@@ -3589,7 +3646,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <Style x:Key="&#246;">
+    <Style x:Key="&#247;">
       <Setter Property="Control.Template">
         <Setter.Value>
           <ControlTemplate>
@@ -3661,7 +3718,7 @@ To automatically copy the files, set the environment variable
                             <Condition Binding="{Binding Path=(base:AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)}" Value="false"/>
                             <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
                           </MultiDataTrigger.Conditions>
-                          <Setter Property="FocusVisualStyle" Value="{StaticResource &#246;}"/>
+                          <Setter Property="FocusVisualStyle" Value="{StaticResource &#247;}"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -3758,7 +3815,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <Style x:Key="&#247;"
+    <Style x:Key="&#248;"
            TargetType="{x:Type Thumb}">
         <Setter Property="Canvas.Right"
                 Value="-9"/>
@@ -3817,7 +3874,7 @@ To automatically copy the files, set the environment variable
                         </theme:ClassicBorderDecorator>
                         <Canvas>
                             <Thumb x:Name="PART_HeaderGripper"
-                                   Style="{StaticResource &#247;}"
+                                   Style="{StaticResource &#248;}"
                                    Background="Transparent"/>
                         </Canvas>
                         <Border x:Name="HeaderPressBorder"
@@ -4044,13 +4101,13 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <MenuScrollingVisibilityConverter x:Key="&#248;"/>
-    <Geometry x:Key="&#249;"> M 0,0 L 3.5,4 L 7,0 Z</Geometry>
-    <Geometry x:Key="&#250;">   M 0,4 L 3.5,0 L 7,4 Z</Geometry>
-    <Geometry x:Key="&#251;">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+    <MenuScrollingVisibilityConverter x:Key="&#249;"/>
+    <Geometry x:Key="&#250;"> M 0,0 L 3.5,4 L 7,0 Z</Geometry>
+    <Geometry x:Key="&#251;">   M 0,4 L 3.5,0 L 7,4 Z</Geometry>
+    <Geometry x:Key="&#252;">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
 
 
-    <PathGeometry x:Key="&#252;">
+    <PathGeometry x:Key="&#253;">
         <PathGeometry.Figures>
             <PathFigureCollection>
                 <PathFigure StartPoint="0 2"
@@ -4087,7 +4144,7 @@ To automatically copy the files, set the environment variable
      <!--=================================================================
         ScrollViewer inside a MenuItem or ContextMenu
     ==================================================================-->
-    <Style x:Key="&#253;"
+    <Style x:Key="&#254;"
            TargetType="{x:Type RepeatButton}"
            BasedOn="{x:Null}">
         <Setter Property="ClickMode"
@@ -4146,7 +4203,7 @@ To automatically copy the files, set the environment variable
                             <ScrollContentPresenter Margin="{TemplateBinding Padding}" CanContentScroll="{TemplateBinding CanContentScroll}"/>
                         </Border>
                         <RepeatButton
-                                      Style="{StaticResource &#253;}"
+                                      Style="{StaticResource &#254;}"
                                       Grid.Row="0"
                                       Grid.Column="0"
                                       Command="{x:Static ScrollBar.LineUpCommand}"
@@ -4154,7 +4211,7 @@ To automatically copy the files, set the environment variable
                                       Focusable="false">
                             <RepeatButton.Visibility>
                                 <MultiBinding FallbackValue="Visibility.Collapsed"
-                                              Converter="{StaticResource &#248;}"
+                                              Converter="{StaticResource &#249;}"
                                               ConverterParameter="0">
                                     <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                              Path="ComputedVerticalScrollBarVisibility"/>
@@ -4167,10 +4224,10 @@ To automatically copy the files, set the environment variable
                                 </MultiBinding>
                             </RepeatButton.Visibility>
                             <Path Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                  Data="{StaticResource &#250;}"/>
+                                  Data="{StaticResource &#251;}"/>
                         </RepeatButton>
                         <RepeatButton
-                                      Style="{StaticResource &#253;}"
+                                      Style="{StaticResource &#254;}"
                                       Grid.Row="2"
                                       Grid.Column="0"
                                       Command="{x:Static ScrollBar.LineDownCommand}"
@@ -4178,7 +4235,7 @@ To automatically copy the files, set the environment variable
                                       Focusable="false">
                             <RepeatButton.Visibility>
                                 <MultiBinding FallbackValue="Visibility.Collapsed"
-                                              Converter="{StaticResource &#248;}"
+                                              Converter="{StaticResource &#249;}"
                                               ConverterParameter="100">
                                     <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                              Path="ComputedVerticalScrollBarVisibility"/>
@@ -4191,7 +4248,7 @@ To automatically copy the files, set the environment variable
                                 </MultiBinding>
                             </RepeatButton.Visibility>
                             <Path Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                  Data="{StaticResource &#249;}"/>
+                                  Data="{StaticResource &#250;}"/>
                         </RepeatButton>
                     </Grid>
                 </ControlTemplate>
@@ -4237,7 +4294,7 @@ To automatically copy the files, set the environment variable
                       VerticalAlignment="Center"
                       Fill="{TemplateBinding Foreground}"
                       FlowDirection="LeftToRight"
-                      Data="{StaticResource &#252;}"/>
+                      Data="{StaticResource &#253;}"/>
                 <!-- Header Content -->
                 <ContentPresenter
                                   ContentSource="Header"
@@ -4300,7 +4357,7 @@ To automatically copy the files, set the environment variable
                       VerticalAlignment="Center"
                       Fill="{TemplateBinding Foreground}"
                       FlowDirection="LeftToRight"
-                      Data="{StaticResource &#252;}"/>
+                      Data="{StaticResource &#253;}"/>
                 <!-- Header Content -->
                 <ContentPresenter
                                   ContentSource="Header"
@@ -4435,7 +4492,7 @@ To automatically copy the files, set the environment variable
                       VerticalAlignment="Center"
                       Fill="{TemplateBinding Foreground}"
                       FlowDirection="LeftToRight"
-                      Data="{StaticResource &#252;}"/>
+                      Data="{StaticResource &#253;}"/>
                 <ContentPresenter
                                   Grid.Column="1"
                                   ContentSource="Header"
@@ -4506,7 +4563,7 @@ To automatically copy the files, set the environment variable
                       VerticalAlignment="Center"
                       Fill="{TemplateBinding Foreground}"
                       FlowDirection="LeftToRight"
-                      Data="{StaticResource &#252;}"/>
+                      Data="{StaticResource &#253;}"/>
                 <ContentPresenter Grid.Column="1"
                                   ContentSource="Header"
                                   Margin="{TemplateBinding Padding}"
@@ -4518,7 +4575,7 @@ To automatically copy the files, set the environment variable
                       VerticalAlignment="Center"
                       Margin="4,0,6,0"
                       Fill="{TemplateBinding Foreground}"
-                      Data="{StaticResource &#251;}"/>
+                      Data="{StaticResource &#252;}"/>
                 <Popup x:Name="PART_Popup"
                        AllowsTransparency="true"
                        Placement="Right"
@@ -4670,9 +4727,9 @@ To automatically copy the files, set the environment variable
     ==================================================================-->
 
 
-    <JournalEntryUnifiedViewConverter x:Key="&#241;"/>
+    <JournalEntryUnifiedViewConverter x:Key="&#242;"/>
 
-    <LinearGradientBrush x:Key="&#254;"
+    <LinearGradientBrush x:Key="&#255;"
                          StartPoint="0.5,0.0"
                          EndPoint="0.5,1.0">
         <GradientBrush.GradientStops>
@@ -4689,7 +4746,7 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#255;"
+    <LinearGradientBrush x:Key="&#256;"
                          StartPoint="0.5,0.0"
                          EndPoint="0.5,1.0">
         <GradientBrush.GradientStops>
@@ -4706,7 +4763,7 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#256;"
+    <LinearGradientBrush x:Key="&#257;"
                          StartPoint="0.5,0.0"
                          EndPoint="0.5,1.0">
         <GradientBrush.GradientStops>
@@ -4722,7 +4779,7 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#257;"
+    <LinearGradientBrush x:Key="&#258;"
                          StartPoint="0.5,0.0"
                          EndPoint="0.5,1.0">
         <GradientBrush.GradientStops>
@@ -4735,7 +4792,7 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#258;"
+    <LinearGradientBrush x:Key="&#259;"
                          StartPoint="0,0" 
                          EndPoint="0,1">
         <GradientBrush.GradientStops>
@@ -4748,7 +4805,7 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#259;"
+    <LinearGradientBrush x:Key="&#260;"
                          StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -4757,7 +4814,7 @@ To automatically copy the files, set the environment variable
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#260;"
+    <LinearGradientBrush x:Key="&#261;"
                          StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -4769,7 +4826,7 @@ To automatically copy the files, set the environment variable
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#261;"
+    <LinearGradientBrush x:Key="&#262;"
                          StartPoint="0,0" 
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -4780,7 +4837,7 @@ To automatically copy the files, set the environment variable
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="&#237;"
+    <LinearGradientBrush x:Key="&#238;"
                          StartPoint="0,0"
                          EndPoint="0,1">
         <GradientBrush.GradientStops>
@@ -4791,12 +4848,12 @@ To automatically copy the files, set the environment variable
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="&#262;" 
+    <SolidColorBrush x:Key="&#263;" 
                      Color="{StaticResource {x:Static SystemColors.HighlightColorKey}}"
                      Opacity="0.25"/>
 
     <!-- Navigation Window back/fwd button Drop Down style-->
-    <Style x:Key="&#240;"
+    <Style x:Key="&#241;"
            TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
@@ -4836,7 +4893,7 @@ To automatically copy the files, set the environment variable
                                  Value="Current">
                             <Setter TargetName="Panel"
                                     Property="Background"
-                                    Value="{StaticResource &#262;}"/>
+                                    Value="{StaticResource &#263;}"/>
                             <Setter TargetName="Glyph"
                                     Property="Data"
                                     Value="M 0,5 L 2.5,8 L 7,3 "/>
@@ -4890,7 +4947,7 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-    <Style x:Key="&#239;" 
+    <Style x:Key="&#240;" 
            TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" 
                 Value="true"/>
@@ -4963,7 +5020,7 @@ To automatically copy the files, set the environment variable
                                   HorizontalAlignment="Right"
                                   VerticalAlignment="Center"
                                   Margin="{TemplateBinding Padding}"
-                                  Fill="{StaticResource &#261;}"
+                                  Fill="{StaticResource &#262;}"
                                   Stroke="White"
                                   StrokeThickness="1"
                                   StrokeLineJoin="Round"
@@ -5010,7 +5067,7 @@ To automatically copy the files, set the environment variable
         </Setter>
     </Style>
 
-    <Style x:Key="&#238;"
+    <Style x:Key="&#239;"
            TargetType="{x:Type Menu}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -5035,7 +5092,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
     <!-- Navigation Window Back Button Style -->
-    <Style x:Key="&#242;"
+    <Style x:Key="&#243;"
            TargetType="{x:Type Button}">
         <!-- We will need to find out the size of button and menu height from system resources -->
         <!-- Opened work item #22122 to track this-->
@@ -5054,8 +5111,8 @@ To automatically copy the files, set the environment variable
                         <!-- Circle -->
                         <Ellipse Name="Circle"
                                  StrokeThickness="1"
-                                 Fill="{StaticResource &#254;}"
-                                 Stroke="{StaticResource &#258;}" />
+                                 Fill="{StaticResource &#255;}"
+                                 Stroke="{StaticResource &#259;}" />
 
                         <!-- Arrow -->
                         <Path Name="Arrow" 
@@ -5063,14 +5120,14 @@ To automatically copy the files, set the environment variable
                               HorizontalAlignment="Center" 
                               StrokeThickness="0.75"
                               Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
-                              Stroke="{StaticResource &#259;}"
-                              Fill="{StaticResource &#260;}" />
+                              Stroke="{StaticResource &#260;}"
+                              Fill="{StaticResource &#261;}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Fill"
-                                    Value="{StaticResource &#257;}"
+                                    Value="{StaticResource &#258;}"
                                     TargetName="Circle"/>
                             <Setter Property="Stroke"
                                     Value="#B5BACE"
@@ -5085,13 +5142,13 @@ To automatically copy the files, set the environment variable
                         <Trigger Property="IsMouseOver" 
                                  Value="true">
                             <Setter Property="Fill" 
-                                    Value="{StaticResource &#255;}"
+                                    Value="{StaticResource &#256;}"
                                     TargetName="Circle"/>
                         </Trigger>
                         <Trigger Property="IsPressed" 
                                  Value="true">
                             <Setter Property="Fill"
-                                    Value="{StaticResource &#256;}"
+                                    Value="{StaticResource &#257;}"
                                     TargetName="Circle"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -5103,7 +5160,7 @@ To automatically copy the files, set the environment variable
 
 
     <!-- Navigation Window Forward Button Style -->
-    <Style x:Key="&#243;"
+    <Style x:Key="&#244;"
            TargetType="{x:Type Button}">
         <!-- We will need to find out the size of button and menu height from system resources -->
         <!-- Opened work item #22122 to track this-->
@@ -5123,8 +5180,8 @@ To automatically copy the files, set the environment variable
                         <Ellipse Name="Circle"
                                  Grid.Column="0"      
                                  StrokeThickness="1"
-                                 Fill="{StaticResource &#254;}"
-                                 Stroke="{StaticResource &#258;}" />
+                                 Fill="{StaticResource &#255;}"
+                                 Stroke="{StaticResource &#259;}" />
 
                         <!-- Arrow -->
                         <Path Name="Arrow" 
@@ -5133,8 +5190,8 @@ To automatically copy the files, set the environment variable
                               HorizontalAlignment="Center" 
                               StrokeThickness="0.75"
                               Data="M0.37,7.69 L5.74,14.20 A1.5,1.5,0,1,0,10.26,12.27 L8.42,10.42 14.90,10.39 A1.5,1.5,0,1,0,14.92,5.87 L8.44,5.90 10.31,4.03 A1.5,1.5,0,1,0,5.79,1.77 z"
-                              Stroke="{StaticResource &#259;}"
-                              Fill="{StaticResource &#260;}"
+                              Stroke="{StaticResource &#260;}"
+                              Fill="{StaticResource &#261;}"
                               RenderTransformOrigin="0.5,0">
                             <Path.RenderTransform>
                                 <ScaleTransform ScaleX="-1" />
@@ -5146,7 +5203,7 @@ To automatically copy the files, set the environment variable
                         <Trigger Property="IsEnabled" 
                                  Value="false">
                             <Setter Property="Fill"
-                                    Value="{StaticResource &#257;}"
+                                    Value="{StaticResource &#258;}"
                                     TargetName="Circle"/>
                             <Setter Property="Stroke"
                                     Value="#B5BACE"
@@ -5161,13 +5218,13 @@ To automatically copy the files, set the environment variable
                         <Trigger Property="IsMouseOver" 
                                  Value="true">
                             <Setter Property="Fill" 
-                                    Value="{StaticResource &#255;}"
+                                    Value="{StaticResource &#256;}"
                                     TargetName="Circle"/>
                         </Trigger>
                         <Trigger Property="IsPressed" 
                                  Value="true">
                             <Setter Property="Fill"
-                                    Value="{StaticResource &#256;}"
+                                    Value="{StaticResource &#257;}"
                                     TargetName="Circle"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -5178,14 +5235,14 @@ To automatically copy the files, set the environment variable
 
 
 
-    <ControlTemplate x:Key="&#263;"
+    <ControlTemplate x:Key="&#264;"
                      TargetType="{x:Type NavigationWindow}">
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}">
             <DockPanel>
                 <Grid Name="NavChrome"
-                      Background="{StaticResource &#237;}"
+                      Background="{StaticResource &#238;}"
                       DockPanel.Dock="Top"
                       Height="30">
                     <Grid.ColumnDefinitions>
@@ -5201,14 +5258,14 @@ To automatically copy the files, set the environment variable
                           Height="23"
                           Margin="1,0,0,1"
                           VerticalAlignment="Center" 
-                          Style="{StaticResource &#238;}">
+                          Style="{StaticResource &#239;}">
 
                         <MenuItem Padding="0,2,5,0"
-                                  Style="{StaticResource &#239;}"
-                                  ItemContainerStyle="{StaticResource &#240;}"
+                                  Style="{StaticResource &#240;}"
+                                  ItemContainerStyle="{StaticResource &#241;}"
                                   IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
                             <MenuItem.ItemsSource>
-                                <MultiBinding Converter="{StaticResource &#241;}">
+                                <MultiBinding Converter="{StaticResource &#242;}">
                                     <MultiBinding.Bindings>
                                         <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="(NavigationWindow.BackStack)" />
@@ -5254,12 +5311,12 @@ To automatically copy the files, set the environment variable
                         </Path.Stroke>
                     </Path>
 
-                    <Button Style="{StaticResource &#242;}"
+                    <Button Style="{StaticResource &#243;}"
                             Margin="3,0,2,0" 
                             Grid.Column="0"/>
                     
 
-                    <Button Style="{StaticResource &#243;}"
+                    <Button Style="{StaticResource &#244;}"
                             Margin="2,0,0,0" 
                             Grid.Column="1"/>
                 </Grid>
@@ -5320,7 +5377,7 @@ To automatically copy the files, set the environment variable
         <Setter Property="Background"
                 Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="Template"
-                Value="{StaticResource &#263;}"/>
+                Value="{StaticResource &#264;}"/>
     </Style>
 
 
@@ -5463,10 +5520,10 @@ To automatically copy the files, set the environment variable
             * and VerticalScrollBar LineUp/Down button                   *
             **************************************************************
         -->
-    <SolidColorBrush x:Key="&#264;"
+    <SolidColorBrush x:Key="&#265;"
                      Color="{StaticResource {x:Static SystemColors.ControlLightLightColorKey}}"
                      Opacity="0.5"/>
-    <Style x:Key="&#265;"
+    <Style x:Key="&#266;"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5523,7 +5580,7 @@ To automatically copy the files, set the environment variable
             * HorizontalScrollBar PageLeftButton Style *
             ********************************************
         -->
-    <Style x:Key="&#266;"
+    <Style x:Key="&#267;"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5557,7 +5614,7 @@ To automatically copy the files, set the environment variable
             * VerticalScrollBar PageButton Style     *
             ******************************************
         -->
-    <Style x:Key="&#267;"
+    <Style x:Key="&#268;"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5586,7 +5643,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#268;"
+    <Style x:Key="&#269;"
            TargetType="{x:Type Thumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -5630,34 +5687,34 @@ To automatically copy the files, set the environment variable
                             <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
                         </Grid.RowDefinitions>
                         <Viewbox Stretch="Fill">
-                            <RepeatButton Style="{StaticResource &#265;}"
+                            <RepeatButton Style="{StaticResource &#266;}"
                                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                                           MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
                                           Command="{x:Static ScrollBar.LineUpCommand}"
                                           Content="M 0 4 L 7 4 L 3.5 0 Z"/>
                         </Viewbox>
                         <Rectangle Grid.Row="1"
-                                   Fill="{StaticResource &#264;}"/>
+                                   Fill="{StaticResource &#265;}"/>
 
                         <Track Grid.Row="1"
                                Name="PART_Track"
                                IsDirectionReversed="true">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource &#267;}"
+                                <RepeatButton Style="{StaticResource &#268;}"
                                               Command="{x:Static ScrollBar.PageUpCommand}"/>
                             </Track.DecreaseRepeatButton>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource &#267;}"
+                                <RepeatButton Style="{StaticResource &#268;}"
                                               Command="{x:Static ScrollBar.PageDownCommand}"/>
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb Style="{StaticResource &#268;}"/>
+                                <Thumb Style="{StaticResource &#269;}"/>
                             </Track.Thumb>
                         </Track>
 
                         <Viewbox Stretch="Fill"
                                  Grid.Row="2">
-                            <RepeatButton Style="{StaticResource &#265;}"
+                            <RepeatButton Style="{StaticResource &#266;}"
                                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                                           MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}"
                                           Command="{x:Static ScrollBar.LineDownCommand}"
@@ -5688,33 +5745,33 @@ To automatically copy the files, set the environment variable
                                     <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
                                 </Grid.ColumnDefinitions>
                                 <Viewbox Stretch="Fill">
-                                    <RepeatButton Style="{StaticResource &#265;}"
+                                    <RepeatButton Style="{StaticResource &#266;}"
                                                   Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                                                   MinHeight="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"
                                                   Command="{x:Static ScrollBar.LineLeftCommand}"
                                                   Content="M 0 4 L 4 8 L 4 0 Z"/>
                                 </Viewbox>
                                 <Rectangle Grid.Column="1"
-                                           Fill="{StaticResource &#264;}"/>
+                                           Fill="{StaticResource &#265;}"/>
                                 <Track Grid.Column="1"
                                        Name="PART_Track">
                                     <Track.DecreaseRepeatButton>
-                                        <RepeatButton Style="{StaticResource &#266;}"
+                                        <RepeatButton Style="{StaticResource &#267;}"
                                                       Command="{x:Static ScrollBar.PageLeftCommand}"/>
                                     </Track.DecreaseRepeatButton>
                                     <Track.IncreaseRepeatButton>
-                                        <RepeatButton Style="{StaticResource &#266;}"
+                                        <RepeatButton Style="{StaticResource &#267;}"
                                                       Command="{x:Static ScrollBar.PageRightCommand}"/>
                                     </Track.IncreaseRepeatButton>
                                     <Track.Thumb>
-                                        <Thumb Style="{StaticResource &#268;}"/>
+                                        <Thumb Style="{StaticResource &#269;}"/>
                                     </Track.Thumb>
                                 </Track>
 
 
                                 <Viewbox Stretch="Fill"
                                          Grid.Column="2">
-                                    <RepeatButton Style="{StaticResource &#265;}"
+                                    <RepeatButton Style="{StaticResource &#266;}"
                                                   Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                                                   MinHeight="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}"
                                                   Command="{x:Static ScrollBar.LineRightCommand}"
@@ -5770,7 +5827,7 @@ To automatically copy the files, set the environment variable
 <!--=================================================================
         Slider
     ==================================================================-->
-    <Style x:Key="&#269;"
+    <Style x:Key="&#270;"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5788,7 +5845,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#270;"
+    <Style x:Key="&#271;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5828,7 +5885,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#271;"
+    <Style x:Key="&#272;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5884,7 +5941,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#272;"
+    <Style x:Key="&#273;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5943,7 +6000,7 @@ To automatically copy the files, set the environment variable
     <!--=================================================================
         VerticalSlider
     ==================================================================-->
-    <Style x:Key="&#273;"
+    <Style x:Key="&#274;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -5983,7 +6040,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#274;"
+    <Style x:Key="&#275;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -6039,7 +6096,7 @@ To automatically copy the files, set the environment variable
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#275;"
+    <Style x:Key="&#276;"
            TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle"
                 Value="true"/>
@@ -6175,16 +6232,16 @@ To automatically copy the files, set the environment variable
                             <Track Grid.Row="1"
                                    Name="PART_Track">
                                 <Track.DecreaseRepeatButton>
-                                    <RepeatButton Style="{StaticResource &#269;}"
+                                    <RepeatButton Style="{StaticResource &#270;}"
                                                   Command="{x:Static Slider.DecreaseLarge}"/>
                                 </Track.DecreaseRepeatButton>
                                 <Track.IncreaseRepeatButton>
-                                    <RepeatButton Style="{StaticResource &#269;}"
+                                    <RepeatButton Style="{StaticResource &#270;}"
                                                   Command="{x:Static Slider.IncreaseLarge}"/>
                                 </Track.IncreaseRepeatButton>
                                 <Track.Thumb>
                                     <Thumb x:Name="Thumb"
-                                           Style="{StaticResource &#270;}"/>
+                                           Style="{StaticResource &#271;}"/>
                                 </Track.Thumb>
                             </Track>
 
@@ -6210,7 +6267,7 @@ To automatically copy the files, set the environment variable
                                     Value="Visible"/>
                             <Setter TargetName="Thumb"
                                     Property="Style"
-                                    Value="{StaticResource &#271;}"/>
+                                    Value="{StaticResource &#272;}"/>
                             <Setter TargetName="TrackBackground"
                                     Property="Margin"
                                     Value="0,3,0,0"/>
@@ -6222,7 +6279,7 @@ To automatically copy the files, set the environment variable
                                     Value="Visible"/>
                             <Setter TargetName="Thumb"
                                     Property="Style"
-                                    Value="{StaticResource &#272;}"/>
+                                    Value="{StaticResource &#273;}"/>
                             <Setter TargetName="TrackBackground"
                                     Property="Margin"
                                     Value="0,0,0,3"/>
@@ -6315,16 +6372,16 @@ To automatically copy the files, set the environment variable
                                     <Track Grid.Column="1"
                                            Name="PART_Track">
                                         <Track.DecreaseRepeatButton>
-                                            <RepeatButton Style="{StaticResource &#269;}"
+                                            <RepeatButton Style="{StaticResource &#270;}"
                                                           Command="{x:Static Slider.DecreaseLarge}"/>
                                         </Track.DecreaseRepeatButton>
                                         <Track.IncreaseRepeatButton>
-                                            <RepeatButton Style="{StaticResource &#269;}"
+                                            <RepeatButton Style="{StaticResource &#270;}"
                                                           Command="{x:Static Slider.IncreaseLarge}"/>
                                         </Track.IncreaseRepeatButton>
                                         <Track.Thumb>
                                             <Thumb x:Name="Thumb"
-                                                   Style="{StaticResource &#273;}"/>
+                                                   Style="{StaticResource &#274;}"/>
                                         </Track.Thumb>
                                     </Track>
 
@@ -6351,7 +6408,7 @@ To automatically copy the files, set the environment variable
                                             Value="Visible"/>
                                     <Setter TargetName="Thumb"
                                             Property="Style"
-                                            Value="{StaticResource &#274;}"/>
+                                            Value="{StaticResource &#275;}"/>
                                     <Setter TargetName="TrackBackground"
                                             Property="Margin"
                                             Value="3,0,0,0"/>
@@ -6363,7 +6420,7 @@ To automatically copy the files, set the environment variable
                                             Value="Visible"/>
                                     <Setter TargetName="Thumb"
                                             Property="Style"
-                                            Value="{StaticResource &#275;}"/>
+                                            Value="{StaticResource &#276;}"/>
                                     <Setter TargetName="TrackBackground"
                                             Property="Margin"
                                             Value="0,0,3,0"/>
@@ -6642,7 +6699,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <Style x:Key="&#276;">
+    <Style x:Key="&#277;">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -6664,7 +6721,7 @@ To automatically copy the files, set the environment variable
     <Style x:Key="{x:Type TabItem}"
            TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle"
-                Value="{StaticResource &#276;}"/>
+                Value="{StaticResource &#277;}"/>
         <Setter Property="Padding"
                 Value="12,2,12,2"/>
         <Setter Property="Foreground"
@@ -6777,7 +6834,7 @@ To automatically copy the files, set the environment variable
     </Style>
 
 
-    <Thickness x:Key="&#277;">5</Thickness>
+    <Thickness x:Key="&#278;">5</Thickness>
 
     <!--=================================================================
         TextBoxBase
@@ -6831,7 +6888,7 @@ To automatically copy the files, set the environment variable
                                 <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
                                 <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource &#277;}"/>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource &#278;}"/>
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -6923,7 +6980,7 @@ To automatically copy the files, set the environment variable
                                 <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true"/>
                                 <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Self}}" Value="true"/>
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource &#277;}"/>
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="{StaticResource &#278;}"/>
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -7045,31 +7102,31 @@ TODO:
         ToolBar
     ==================================================================-->
     <!-- Common colors for ToolBar controls -->
-    <SolidColorBrush x:Key="&#278;"
-                     Color="#8592B5"/>
     <SolidColorBrush x:Key="&#279;"
-                     Color="#D4D0C8"/>
-    <SolidColorBrush x:Key="&#280;"
-                     Color="#8D8D8D"/>
-    <SolidColorBrush x:Key="&#281;"
-                     Color="#A6A6A6"/>
-    <SolidColorBrush x:Key="&#282;"
-                     Color="#B6BDD2"/>
-    <SolidColorBrush x:Key="&#283;"
-                     Color="#0A246A"/>
-    <SolidColorBrush x:Key="&#284;"
-                     Color="#D4D5D8"/>
-    <SolidColorBrush x:Key="&#285;"
                      Color="#8592B5"/>
-    <SolidColorBrush x:Key="&#286;"
+    <SolidColorBrush x:Key="&#280;"
+                     Color="#D4D0C8"/>
+    <SolidColorBrush x:Key="&#281;"
+                     Color="#8D8D8D"/>
+    <SolidColorBrush x:Key="&#282;"
+                     Color="#A6A6A6"/>
+    <SolidColorBrush x:Key="&#283;"
+                     Color="#B6BDD2"/>
+    <SolidColorBrush x:Key="&#284;"
                      Color="#0A246A"/>
-    <SolidColorBrush x:Key="&#287;"
-                     Color="#666666"/>
-    <SolidColorBrush x:Key="&#288;"
-                     Color="#F9F8F7"/>
-    <SolidColorBrush x:Key="&#289;"
+    <SolidColorBrush x:Key="&#285;"
                      Color="#D4D5D8"/>
-    <LinearGradientBrush x:Key="&#290;"
+    <SolidColorBrush x:Key="&#286;"
+                     Color="#8592B5"/>
+    <SolidColorBrush x:Key="&#287;"
+                     Color="#0A246A"/>
+    <SolidColorBrush x:Key="&#288;"
+                     Color="#666666"/>
+    <SolidColorBrush x:Key="&#289;"
+                     Color="#F9F8F7"/>
+    <SolidColorBrush x:Key="&#290;"
+                     Color="#D4D5D8"/>
+    <LinearGradientBrush x:Key="&#291;"
                          StartPoint="0,0"
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -7079,7 +7136,7 @@ TODO:
                           Offset="1"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="&#291;"
+    <LinearGradientBrush x:Key="&#292;"
                          StartPoint="0,0"
                          EndPoint="688,0"
                          MappingMode="Absolute">
@@ -7090,22 +7147,22 @@ TODO:
                           Offset="1"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="&#292;"
-                         StartPoint="0,0"
-                         EndPoint="0,1">
-        <LinearGradientBrush.GradientStops>
-            <GradientStop Color="#E2E0DB"
-                          Offset="0"/>
-            <GradientStop Color="#EAE8E4"
-                          Offset="0.5"/>
-            <GradientStop Color="#D5D2CA"
-                          Offset="0.9"/>
-            <GradientStop Color="#DBD8D1"
-                          Offset="1"/>
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
     <LinearGradientBrush x:Key="&#293;"
                          StartPoint="0,0"
+                         EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#E2E0DB"
+                          Offset="0"/>
+            <GradientStop Color="#EAE8E4"
+                          Offset="0.5"/>
+            <GradientStop Color="#D5D2CA"
+                          Offset="0.9"/>
+            <GradientStop Color="#DBD8D1"
+                          Offset="1"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="&#294;"
+                         StartPoint="0,0"
                          EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Color="#E2E0DB"
@@ -7118,9 +7175,9 @@ TODO:
                           Offset="1"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="&#294;"
+    <SolidColorBrush x:Key="&#295;"
                      Color="#A0A0A0"/>
-    <LinearGradientBrush x:Key="&#295;"
+    <LinearGradientBrush x:Key="&#296;"
                          StartPoint="0,0"
                          EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -7132,7 +7189,7 @@ TODO:
                           Offset="1"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="&#296;"
+    <LinearGradientBrush x:Key="&#297;"
                          StartPoint="0,0"
                          EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
@@ -7146,9 +7203,9 @@ TODO:
     </LinearGradientBrush>
 
 
-    <Geometry x:Key="&#297;"> M 0,2.5 L 2.5,5 L 7,0.5</Geometry>
+    <Geometry x:Key="&#298;"> M 0,2.5 L 2.5,5 L 7,0.5</Geometry>
 
-    <Style x:Key="&#298;" TargetType="{x:Type Border}">
+    <Style x:Key="&#299;" TargetType="{x:Type Border}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
                 <Setter Property="CornerRadius" Value="0,0,0,0" />
@@ -7161,7 +7218,7 @@ TODO:
     <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}"
            TargetType="{x:Type Separator}">
         <Setter Property="Background"
-                Value="{StaticResource &#281;}"/>
+                Value="{StaticResource &#282;}"/>
         <Setter Property="MinWidth"
                 Value="1"/>
         <Setter Property="MinHeight"
@@ -7217,28 +7274,28 @@ TODO:
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused"
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#286;}"/>
+                                    Value="{StaticResource &#287;}"/>
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#285;}"/>
+                                    Value="{StaticResource &#286;}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -7286,23 +7343,23 @@ TODO:
                         <Trigger Property="IsChecked"
                                  Value="true">
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
-                            <Setter Property="Background"
                                     Value="{StaticResource &#284;}"/>
+                            <Setter Property="Background"
+                                    Value="{StaticResource &#285;}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused"
                                  Value="true">
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -7312,9 +7369,9 @@ TODO:
                                            Value="true"/>
                             </MultiTrigger.Conditions>
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#286;}"/>
+                                    Value="{StaticResource &#287;}"/>
                             <Setter Property="Background"
-                                    Value="{StaticResource &#285;}"/>
+                                    Value="{StaticResource &#286;}"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -7324,16 +7381,16 @@ TODO:
                                            Value="true"/>
                             </MultiTrigger.Conditions>
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#286;}"/>
+                                    Value="{StaticResource &#287;}"/>
                             <Setter Property="Background"
-                                    Value="{StaticResource &#285;}"/>
+                                    Value="{StaticResource &#286;}"/>
                         </MultiTrigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource &#286;}"/>
+                                    Value="{StaticResource &#287;}"/>
                             <Setter Property="Background"
-                                    Value="{StaticResource &#285;}"/>
+                                    Value="{StaticResource &#286;}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -7353,7 +7410,7 @@ TODO:
            TargetType="{x:Type RadioButton}"/>
 
 
-    <Style x:Key="&#299;"
+    <Style x:Key="&#300;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="MinWidth"
                 Value="0"/>
@@ -7405,25 +7462,25 @@ TODO:
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Chrome"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </MultiTrigger>
                         <Trigger Property="IsChecked"
                                  Value="true">
                             <Setter TargetName="Chrome"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#286;}"/>
+                                    Value="{StaticResource &#287;}"/>
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter TargetName="Chrome"
                                     Property="Background"
-                                    Value="{StaticResource &#285;}"/>
+                                    Value="{StaticResource &#286;}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter TargetName="ArrowDownPath"
                                     Property="Fill"
-                                    Value="{StaticResource &#280;}"/>
+                                    Value="{StaticResource &#281;}"/>
                         </Trigger>
                       <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
@@ -7505,7 +7562,7 @@ TODO:
                                           BorderThickness="1"
                                           x:Name="DropDownButton"
                                           Grid.ColumnSpan="2"
-                                          Style="{StaticResource &#299;}"
+                                          Style="{StaticResource &#300;}"
                                           IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"/>
                             <TextBox Padding="{TemplateBinding Padding}"
                                      Margin="1,1,0,1"
@@ -7529,7 +7586,7 @@ TODO:
                                 <Border x:Name="DropDownBorder"
                                         Background="{TemplateBinding Background}"
                                         BorderThickness="1"
-                                        BorderBrush="{StaticResource &#287;}">
+                                        BorderBrush="{StaticResource &#288;}">
                                     <ScrollViewer Name="DropDownScrollViewer">
                                       <Grid RenderOptions.ClearTypeHint="Enabled">
                                         <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -7553,13 +7610,13 @@ TODO:
                                     Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             <Setter TargetName="Background"
                                     Property="Background"
-                                    Value="{StaticResource &#279;}"/>
+                                    Value="{StaticResource &#280;}"/>
                             <Setter TargetName="Background"
                                     Property="Grid.ColumnSpan"
                                     Value="2"/>
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#280;}"/>
+                                    Value="{StaticResource &#281;}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -7591,25 +7648,25 @@ TODO:
                                  Value="true">
                             <Setter TargetName="DropDownButton"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter TargetName="DropDownButton"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="true">
                             <Setter TargetName="DropDownButton"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                             <Setter TargetName="DropDownButton"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                         </Trigger>
                         <Trigger SourceName="PART_Popup"
                                  Property="Popup.HasDropShadow"
@@ -7719,22 +7776,22 @@ TODO:
                                     Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource &#279;}"/>
+                                    Value="{StaticResource &#280;}"/>
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#280;}"/>
+                                    Value="{StaticResource &#281;}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource &#283;}"/>
+                                    Value="{StaticResource &#284;}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -7777,7 +7834,7 @@ TODO:
                 <Setter Property="OverridesDefaultStyle"
                         Value="true" />
                 <Setter Property="Background"
-                        Value="{StaticResource &#281;}" />
+                        Value="{StaticResource &#282;}" />
                 <Setter Property="Height" Value="1" />
                 <Setter Property="Margin" Value="0,1,0,0" />
                 <Setter Property="Template">
@@ -7850,15 +7907,15 @@ TODO:
                                         Width="20"
                                         Height="20"
                                         Visibility="Hidden"
-                                        BorderBrush="{StaticResource &#283;}"
-                                        Background="{StaticResource &#289;}"
+                                        BorderBrush="{StaticResource &#284;}"
+                                        Background="{StaticResource &#290;}"
                                         BorderThickness="1">
                                     <Path VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
                                           FlowDirection="LeftToRight"
                                           Stroke="{TemplateBinding Foreground}"
                                           StrokeThickness="1.2"
-                                          Data="{StaticResource &#297;}"/>
+                                          Data="{StaticResource &#298;}"/>
                                 </Border>
 
                                 <ContentPresenter Grid.Column="1"
@@ -7891,16 +7948,16 @@ TODO:
                                          Value="true">
                                     <Setter TargetName="Border"
                                             Property="BorderBrush"
-                                            Value="{StaticResource &#283;}"/>
+                                            Value="{StaticResource &#284;}"/>
                                     <Setter TargetName="Border"
                                             Property="Background"
-                                            Value="{StaticResource &#282;}"/>
+                                            Value="{StaticResource &#283;}"/>
                                     <Setter TargetName="GlyphPanel"
                                             Property="BorderBrush"
-                                            Value="{StaticResource &#286;}"/>
+                                            Value="{StaticResource &#287;}"/>
                                     <Setter TargetName="GlyphPanel"
                                             Property="Background"
-                                            Value="{StaticResource &#278;}"/>
+                                            Value="{StaticResource &#279;}"/>
                                 </Trigger>
                                 <Trigger Property="IsEnabled"
                                          Value="false">
@@ -7940,7 +7997,7 @@ TODO:
                                                   FlowDirection="LeftToRight"
                                                   Stroke="{TemplateBinding Foreground}"
                                                   StrokeThickness="1.2"
-                                                  Data="{StaticResource &#297;}"/>
+                                                  Data="{StaticResource &#298;}"/>
                                             <!-- Header Content -->
                                             <ContentPresenter ContentSource="Header"
                                                               Margin="{TemplateBinding Padding}"
@@ -7956,11 +8013,11 @@ TODO:
                                                    AllowsTransparency="true">
                                                 <theme:SystemDropShadowChrome Name="Shdw"
                                                                               Color="Transparent">
-                                                    <Border Name="SubMenuBorder" Background="{StaticResource &#288;}"
-                                                            BorderBrush="{StaticResource &#287;}"
+                                                    <Border Name="SubMenuBorder" Background="{StaticResource &#289;}"
+                                                            BorderBrush="{StaticResource &#288;}"
                                                             BorderThickness="1">
                                                         <Grid>
-                                                            <Rectangle Fill="{StaticResource &#288;}"
+                                                            <Rectangle Fill="{StaticResource &#289;}"
                                                                        Margin="0,-1,0,0"
                                                                        VerticalAlignment="Top"
                                                                        HorizontalAlignment="Left"
@@ -7982,7 +8039,7 @@ TODO:
                                                                         Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
                                                                         Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
                                                                 </Canvas>
-                                                                <Rectangle Fill="{StaticResource &#293;}"
+                                                                <Rectangle Fill="{StaticResource &#294;}"
                                                                            Margin="0,1"/>
                                                                 <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
                                                                                 Grid.ColumnSpan="2"
@@ -8023,19 +8080,19 @@ TODO:
                                                  Value="true">
                                             <Setter TargetName="Border"
                                                     Property="BorderBrush"
-                                                    Value="{StaticResource &#283;}"/>
+                                                    Value="{StaticResource &#284;}"/>
                                             <Setter TargetName="Border"
                                                     Property="Background"
-                                                    Value="{StaticResource &#282;}"/>
+                                                    Value="{StaticResource &#283;}"/>
                                         </Trigger>
                                         <Trigger Property="IsSubmenuOpen"
                                                  Value="true">
                                             <Setter TargetName="Border"
                                                     Property="BorderBrush"
-                                                    Value="{StaticResource &#287;}"/>
+                                                    Value="{StaticResource &#288;}"/>
                                             <Setter TargetName="Border"
                                                     Property="Background"
-                                                    Value="{StaticResource &#290;}"/>
+                                                    Value="{StaticResource &#291;}"/>
                                         </Trigger>
                                         <Trigger SourceName="PART_Popup"
                                                   Property="Popup.HasDropShadow"
@@ -8098,7 +8155,7 @@ TODO:
                                                   FlowDirection="LeftToRight"
                                                   Stroke="{TemplateBinding Foreground}"
                                                   StrokeThickness="1.2"
-                                                  Data="{StaticResource &#297;}"/>
+                                                  Data="{StaticResource &#298;}"/>
                                             <!-- Header Content -->
                                             <ContentPresenter ContentSource="Header"
                                                               Margin="{TemplateBinding Padding}"
@@ -8126,10 +8183,10 @@ TODO:
                                                  Value="true">
                                             <Setter TargetName="Border"
                                                     Property="BorderBrush"
-                                                    Value="{StaticResource &#283;}"/>
+                                                    Value="{StaticResource &#284;}"/>
                                             <Setter TargetName="Border"
                                                     Property="Background"
-                                                    Value="{StaticResource &#282;}"/>
+                                                    Value="{StaticResource &#283;}"/>
                                         </Trigger>
                                         <Trigger Property="IsEnabled"
                                                  Value="false">
@@ -8180,15 +8237,15 @@ TODO:
                                                 Width="20"
                                                 Height="20"
                                                 Visibility="Hidden"
-                                                BorderBrush="{StaticResource &#283;}"
-                                                Background="{StaticResource &#289;}"
+                                                BorderBrush="{StaticResource &#284;}"
+                                                Background="{StaticResource &#290;}"
                                                 BorderThickness="1">
                                             <Path VerticalAlignment="Center"
                                                   HorizontalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   Stroke="{TemplateBinding Foreground}"
                                                   StrokeThickness="1.2"
-                                                  Data="{StaticResource &#297;}"/>
+                                                  Data="{StaticResource &#298;}"/>
                                         </Border>
                                         <ContentPresenter Grid.Column="1"
                                                           ContentSource="Header"
@@ -8200,7 +8257,7 @@ TODO:
                                               VerticalAlignment="Center"
                                               Margin="4,0,6,0"
                                               Fill="{TemplateBinding Foreground}"
-                                              Data="{StaticResource &#251;}"/>
+                                              Data="{StaticResource &#252;}"/>
                                         <Popup x:Name="PART_Popup"
                                                Placement="Right"
                                                IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
@@ -8209,8 +8266,8 @@ TODO:
                                                AllowsTransparency="true">
                                             <theme:SystemDropShadowChrome Name="Shdw"
                                                                           Color="Transparent">
-                                                <Border Name="SubMenuBorder" Background="{StaticResource &#288;}"
-                                                        BorderBrush="{StaticResource &#287;}"
+                                                <Border Name="SubMenuBorder" Background="{StaticResource &#289;}"
+                                                        BorderBrush="{StaticResource &#288;}"
                                                         BorderThickness="1"
                                                         Grid.IsSharedSizeScope="true">
                                                     <ScrollViewer Name="SubMenuScrollViewer"
@@ -8229,7 +8286,7 @@ TODO:
                                                                 Width="{Binding ElementName=SubMenuBorder,Path=ActualWidth}"
                                                                 Fill="{Binding ElementName=SubMenuBorder,Path=Background}" />
                                                         </Canvas>
-                                                        <Rectangle Fill="{StaticResource &#293;}"
+                                                        <Rectangle Fill="{StaticResource &#294;}"
                                                                    Margin="0,1"/>
                                                         <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle"
                                                                         Grid.ColumnSpan="2"
@@ -8268,16 +8325,16 @@ TODO:
                                                  Value="true">
                                             <Setter TargetName="Border"
                                                     Property="BorderBrush"
-                                                    Value="{StaticResource &#283;}"/>
+                                                    Value="{StaticResource &#284;}"/>
                                             <Setter TargetName="Border"
                                                     Property="Background"
-                                                    Value="{StaticResource &#282;}"/>
+                                                    Value="{StaticResource &#283;}"/>
                                             <Setter TargetName="GlyphPanel"
                                                     Property="BorderBrush"
-                                                    Value="{StaticResource &#286;}"/>
+                                                    Value="{StaticResource &#287;}"/>
                                             <Setter TargetName="GlyphPanel"
                                                     Property="Background"
-                                                    Value="{StaticResource &#278;}"/>
+                                                    Value="{StaticResource &#279;}"/>
                                         </Trigger>
                                         <Trigger SourceName="PART_Popup"
                                                   Property="Popup.HasDropShadow"
@@ -8320,7 +8377,7 @@ TODO:
 
 
     <!-- Thumb used in ToolBar Style -->
-    <Style x:Key="&#300;"
+    <Style x:Key="&#301;"
            TargetType="{x:Type Thumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -8340,7 +8397,7 @@ TODO:
                                             <DrawingGroup.Children>
                                                 <GeometryDrawing Brush="White"
                                                                  Geometry="M 1 1 L 1 3 L 3 3 L 3 1 z"/>
-                                                <GeometryDrawing Brush="{StaticResource &#294;}"
+                                                <GeometryDrawing Brush="{StaticResource &#295;}"
                                                                  Geometry="M 0 0 L 0 2 L 2 2 L 2 0 z"/>
                                             </DrawingGroup.Children>
                                         </DrawingGroup>
@@ -8360,7 +8417,7 @@ TODO:
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#301;"
+    <Style x:Key="&#302;"
            TargetType="{x:Type ToggleButton}">
     <Style.Triggers>
         <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
@@ -8370,7 +8427,7 @@ TODO:
         </DataTrigger>
     </Style.Triggers>
     <Setter Property="Background"
-                Value="{StaticResource &#295;}"/>
+                Value="{StaticResource &#296;}"/>
         <Setter Property="MinHeight"
                 Value="0"/>
         <Setter Property="MinWidth"
@@ -8403,25 +8460,25 @@ TODO:
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused"
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
-                                    Value="{StaticResource &#294;}"/>
+                                    Value="{StaticResource &#295;}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="&#302;"
+    <Style x:Key="&#303;"
            TargetType="{x:Type ToggleButton}">
     <Style.Triggers>
         <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
@@ -8431,7 +8488,7 @@ TODO:
         </DataTrigger>
     </Style.Triggers>
     <Setter Property="Background"
-                Value="{StaticResource &#296;}"/>
+                Value="{StaticResource &#297;}"/>
         <Setter Property="MinHeight"
                 Value="0"/>
         <Setter Property="MinWidth"
@@ -8464,18 +8521,18 @@ TODO:
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused"
                                  Value="true">
                             <Setter TargetName="Bd"
                                     Property="Background"
-                                    Value="{StaticResource &#282;}"/>
+                                    Value="{StaticResource &#283;}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
-                                    Value="{StaticResource &#294;}"/>
+                                    Value="{StaticResource &#295;}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -8492,7 +8549,7 @@ TODO:
                         Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
         </DataTrigger>
     </Style.Triggers>
-    <Setter Property="Background" Value="{StaticResource &#292;}"/>
+    <Setter Property="Background" Value="{StaticResource &#293;}"/>
     <Setter Property="Template">
         <Setter.Value>
             <ControlTemplate TargetType="{x:Type ToolBar}">
@@ -8504,7 +8561,7 @@ TODO:
                         <ToggleButton x:Name="OverflowButton"
                                       FocusVisualStyle="{x:Null}"
                                       IsEnabled="{TemplateBinding HasOverflowItems}"
-                                      Style="{StaticResource &#301;}"
+                                      Style="{StaticResource &#302;}"
                                       IsChecked="{Binding Path=IsOverflowOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                                       ClickMode="Press"/>
                         <Popup x:Name="OverflowPopup"
@@ -8516,8 +8573,8 @@ TODO:
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                             <theme:SystemDropShadowChrome Name="Shdw"
                                                           Color="Transparent">
-                                <Border Background="{StaticResource &#288;}"
-                                        BorderBrush="{StaticResource &#287;}"
+                                <Border Background="{StaticResource &#289;}"
+                                        BorderBrush="{StaticResource &#288;}"
                                         BorderThickness="1"
                                         RenderOptions.ClearTypeHint="Enabled"
                                         x:Name="ToolBarSubMenuBorder">
@@ -8538,11 +8595,11 @@ TODO:
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            Style="{StaticResource &#298;}">
+                            Style="{StaticResource &#299;}">
                         <DockPanel KeyboardNavigation.TabIndex="1"
                                    KeyboardNavigation.TabNavigation="Local">
                             <Thumb x:Name="ToolBarThumb"
-                                   Style="{StaticResource &#300;}"
+                                   Style="{StaticResource &#301;}"
                                    Margin="-3,-1,0,0"
                                    Width="10"
                                    Padding="6,5,1,6"/>
@@ -8598,7 +8655,7 @@ TODO:
                                 Value="1,3,1,1"/>
                         <Setter TargetName="OverflowButton"
                                 Property="Style"
-                                Value="{StaticResource &#302;}"/>
+                                Value="{StaticResource &#303;}"/>
                         <Setter TargetName="ToolBarThumb"
                                 Property="Height"
                                 Value="10"/>
@@ -8636,7 +8693,7 @@ TODO:
                                 Property="Margin"
                                 Value="0,0,0,11"/>
                         <Setter Property="Background"
-                                Value="{StaticResource &#293;}"/>
+                                Value="{StaticResource &#294;}"/>
                     </Trigger>
                     <Trigger Property="IsEnabled"
                              Value="false">
@@ -8651,7 +8708,7 @@ TODO:
 
     <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
         <Setter Property="Background"
-                Value="{StaticResource &#291;}"/>
+                Value="{StaticResource &#292;}"/>
     <Style.Triggers>
         <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
             <!-- This trigger on a SystemParameter works because switching into high contrast mode requires a re-evaluation of theme -->
@@ -8795,7 +8852,7 @@ TODO:
         <!--=================================================================
         TreeViewItem
     ==================================================================-->
-    <Style x:Key="&#303;"
+    <Style x:Key="&#304;"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable"
                 Value="False"/>
@@ -8840,7 +8897,7 @@ TODO:
     <!--=================================================================
         TreeViewItem
     ==================================================================-->
-    <Style x:Key="&#304;">
+    <Style x:Key="&#305;">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -8862,7 +8919,7 @@ TODO:
         <Setter Property="Foreground"
                 Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="FocusVisualStyle"
-                Value="{StaticResource &#304;}"/>
+                Value="{StaticResource &#305;}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -8878,7 +8935,7 @@ TODO:
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <ToggleButton x:Name="Expander"
-                                      Style="{StaticResource &#303;}"
+                                      Style="{StaticResource &#304;}"
                                       IsChecked="{Binding Path=IsExpanded,RelativeSource={RelativeSource TemplatedParent}}"
                                       ClickMode="Press"/>
                         <Border Name="Bd"
@@ -8983,7 +9040,7 @@ TODO:
     <!--=================================================================
         Window
     ==================================================================-->
-    <ControlTemplate x:Key="&#305;"
+    <ControlTemplate x:Key="&#306;"
                      TargetType="{x:Type Window}">
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -9045,7 +9102,7 @@ TODO:
             <Trigger Property="Window.ResizeMode"
                      Value="CanResizeWithGrip">
                 <Setter Property="Template"
-                        Value="{StaticResource &#305;}"/>
+                        Value="{StaticResource &#306;}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -9250,14 +9307,14 @@ TODO:
     <!--=================================================================
         Frame
     ==================================================================-->
-    <ControlTemplate x:Key="&#236;"
+    <ControlTemplate x:Key="&#237;"
                      TargetType="{x:Type Frame}">
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Padding="{TemplateBinding Padding}">
             <DockPanel>
-                <Grid Background="{StaticResource &#237;}"
+                <Grid Background="{StaticResource &#238;}"
                       DockPanel.Dock="Top"
                       Height="22">
                     <Grid.ColumnDefinitions>
@@ -9273,14 +9330,14 @@ TODO:
                           Height="16"
                           Margin="1,0,0,0"
                           VerticalAlignment="Center" 
-                          Style="{StaticResource &#238;}">
+                          Style="{StaticResource &#239;}">
 
                         <MenuItem Padding="0,2,4,0"
-                                  Style="{StaticResource &#239;}"
-                                  ItemContainerStyle="{StaticResource &#240;}"
+                                  Style="{StaticResource &#240;}"
+                                  ItemContainerStyle="{StaticResource &#241;}"
                                   IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
                             <MenuItem.ItemsSource>
-                                <MultiBinding Converter="{StaticResource &#241;}">
+                                <MultiBinding Converter="{StaticResource &#242;}">
                                     <MultiBinding.Bindings>
                                         <Binding RelativeSource="{RelativeSource TemplatedParent}" 
                                                  Path="BackStack" />
@@ -9329,7 +9386,7 @@ TODO:
                         </Path.LayoutTransform>
                     </Path>
 
-                    <Button Style="{StaticResource &#242;}"
+                    <Button Style="{StaticResource &#243;}"
                             Margin="3,0,1,0" 
                             Grid.Column="0">
                         <Button.LayoutTransform>
@@ -9338,7 +9395,7 @@ TODO:
                     </Button>
                     
 
-                    <Button Style="{StaticResource &#243;}"
+                    <Button Style="{StaticResource &#244;}"
                             Margin="1,0,0,0" 
                             Grid.Column="1">
                         <Button.LayoutTransform>
@@ -9382,7 +9439,7 @@ TODO:
             <Trigger Property="NavigationUIVisibility"
                      Value="Visible">
                 <Setter Property="Template"
-                        Value="{StaticResource &#236;}"/>
+                        Value="{StaticResource &#237;}"/>
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -9392,7 +9449,7 @@ TODO:
                                Value="Automatic"/>
                 </MultiTrigger.Conditions>
                 <Setter Property="Template"
-                        Value="{StaticResource &#236;}"/>
+                        Value="{StaticResource &#237;}"/>
             </MultiTrigger>
         </Style.Triggers>
     </Style>

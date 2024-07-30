@@ -409,7 +409,7 @@ namespace System.Windows.Navigation
         /// </summary>
         internal Guid NavigationServiceId
         {
-            get { return _jeGroupState.NavigationServiceId; ; }
+            get { return _jeGroupState.NavigationServiceId; }
         }
 
         /// <summary>

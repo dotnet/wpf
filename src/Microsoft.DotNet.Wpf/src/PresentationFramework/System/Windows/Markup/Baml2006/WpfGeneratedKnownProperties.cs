@@ -10,7 +10,7 @@ namespace System.Windows.Baml2006
 {
     partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        const int KnownPropertyCount = 270;
+        const int KnownPropertyCount = 272;
 
 
         private WpfKnownMember CreateKnownMember(short bamlNumber)
@@ -286,6 +286,7 @@ namespace System.Windows.Baml2006
                 case 268: return Create_BamlProperty_XmlDataProvider_XmlSerializer();
                 case 269: return Create_BamlProperty_TextBox_IsReadOnly();
                 case 270: return Create_BamlProperty_RichTextBox_IsReadOnly();
+                case 272: return Create_BamlProperty_Setter_Value();
                 default:
                     throw new InvalidOperationException("Invalid BAML number");
             }

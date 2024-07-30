@@ -863,7 +863,7 @@ namespace System.Windows
             // on side-effects from setting the "Freezable context".  Freezable's
             // implementation does its own checks of the conditions omitted here.
             // Enhancement suggestion: Freezable should follow the same rules for
-            // InheritanceContext as everyone else 
+            // InheritanceContext as everyone else
 
 
             if (doValue != null &&
@@ -910,7 +910,7 @@ namespace System.Windows
             // on side-effects from setting the "Freezable context".  Freezable's
             // implementation does its own checks of the conditions omitted here.
             // Enhancement suggestion: Freezable should follow the same rules for
-            // InheritanceContext as everyone else 
+            // InheritanceContext as everyone else
 
 
             if (doValue != null &&
@@ -3534,6 +3534,7 @@ namespace System.Windows
     }
 
     [FriendAccessAllowed] // Built into Base, also used by Framework.
+    [Flags]
     internal enum RequestFlags
     {
         FullyResolved = 0x00,

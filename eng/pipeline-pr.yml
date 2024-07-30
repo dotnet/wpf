@@ -88,7 +88,6 @@ jobs:
           - name: _InternalRuntimeDownloadArgs
             value: ''
         - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          - group: DotNetBuilds storage account read tokens
           - group: AzureDevOps-Artifact-Feeds-Pats
           - name: _InternalRuntimeDownloadArgs
             value: >-
@@ -158,14 +157,8 @@ jobs:
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
 
-      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
-        - task: PowerShell@2
-          displayName: Setup Private Feeds Credentials
-          inputs:
-            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
-            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
-          env:
-            Token: $(dn-bot-dnceng-artifact-feeds-rw)
+      - template: /eng/common/templates/steps/enable-internal-sources.yml
+      - template: /eng/common/templates/steps/enable-internal-runtimes.yml
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\scripts\cibuild.cmd
@@ -209,28 +202,28 @@ jobs:
         displayName: Install .NET Core
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
           condition: eq(variables['_Platform'], 'x64')
       
       - task: PowerShell@2
         displayName: Install .NET Core(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 8.0 -Quality daily
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
         condition: eq(variables['_Platform'], 'x86')
   
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
+          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
         condition: eq(variables['_Platform'], 'x64')
      
       - task: PowerShell@2
         displayName: Install .NET WindowsDesktop(x86)
         inputs:
           filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 8.0 -Quality daily
+          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
         condition: eq(variables['_Platform'], 'x86')  
 
       - task: PowerShell@2

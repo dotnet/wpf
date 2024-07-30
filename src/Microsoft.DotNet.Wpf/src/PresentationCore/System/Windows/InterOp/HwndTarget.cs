@@ -2037,7 +2037,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return OSVersionHelper.IsOsWindows10RS1OrGreater; ;
+                return OSVersionHelper.IsOsWindows10RS1OrGreater;
             }
         }
 

@@ -339,7 +339,7 @@ namespace System.Windows.Input
             else
             {
                 // Get the string representation fo the cursor type enumeration.
-                return Enum.GetName(typeof(CursorType), _cursorType);
+                return Enum.GetName(_cursorType);
             }
         }
 
@@ -354,7 +354,7 @@ namespace System.Windows.Input
 
         private SafeHandle  _cursorHandle;
 
-        private static readonly int[] CursorTypes = {
+        private static ReadOnlySpan<int> CursorTypes => [
             0, // None
             NativeMethods.IDC_NO,
             NativeMethods.IDC_ARROW,
@@ -383,6 +383,6 @@ namespace System.Windows.Input
             NativeMethods.IDC_ARROW + 149, // ScrollSWCursor
             NativeMethods.IDC_ARROW + 150, // ScrollSECursor
             NativeMethods.IDC_ARROW + 151 // ArrowCDCursor
-       };
+       ];
     }
 }

@@ -25,6 +25,22 @@
     <system:String x:Key="ComboBoxChevronDownGlyph">&#xE70D;</system:String>
     <system:Double x:Key="ChevronIconHeight">24</system:Double>
 
+    <Style x:Key="ComboBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle
+                                Margin="-3"
+                                StrokeThickness="1"
+                                Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
+                                SnapsToDevicePixels="true"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Focus by parent element  -->
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -146,7 +162,7 @@
 
     <Style x:Key="DefaultComboBoxStyle" TargetType="{x:Type ComboBox}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ComboBoxFocusVisual}" />
         <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
         <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
@@ -253,11 +269,12 @@
                                             FontSize="{TemplateBinding FontSize}"
                                             Foreground="{TemplateBinding Foreground}"
                                             IsReadOnly="{TemplateBinding IsReadOnly}"
-                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}" />
+                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}"
+                                            AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" />
                                     </Grid>
                                 </Grid>
                                 <Popup
-                                    x:Name="Popup"
+                                    x:Name="PART_Popup"
                                     MinWidth="{TemplateBinding ActualWidth}"
                                     VerticalAlignment="Center"
                                     AllowsTransparency="True"
@@ -312,7 +329,7 @@
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="{StaticResource ComboBoxPopupMinHeight}" />
                         </Trigger>
-                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="False">
+                        <Trigger SourceName="PART_Popup" Property="Popup.AllowsTransparency" Value="False">
                             <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0" />
                         </Trigger>
                         <Trigger Property="IsGrouping" Value="True">

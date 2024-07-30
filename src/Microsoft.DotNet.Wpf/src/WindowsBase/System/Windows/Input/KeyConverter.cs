@@ -215,7 +215,7 @@ namespace System.Windows.Input
                         case "PLAY": keyFound = Key.Play; break;
                         case "ZOOM": keyFound = Key.Zoom; break;
                         case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = (Key)Enum.Parse(typeof(Key), keyToken, true); break;
+                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
                     }
 
                     if ((int)keyFound != -1)

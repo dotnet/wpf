@@ -497,7 +497,7 @@ namespace MS.Internal.IO.Packaging
                 // of .rels.  The folder must also be the last "folder".
                 // Comparing using the normalized string to reduce the number of ToUpperInvariant operations
                 // required for case-insensitive comparison
-                string[] segments = NormalizedPartUriString.Split(_forwardSlashSeparator); //new Uri(_defaultUri, this).Segments; //partUri.Segments cannot be called on a relative Uri;
+                string[] segments = NormalizedPartUriString.Split(ForwardSlashSeparator); //new Uri(_defaultUri, this).Segments; //partUri.Segments cannot be called on a relative Uri;
 
                 // String.Split, will always return an empty string as the
                 // first member in the array as the string starts with a "/"
@@ -591,7 +591,7 @@ namespace MS.Internal.IO.Packaging
                                                                                                          false /*computeIsRelationship*/,
                                                                                                          true /*IsRelationship*/);
 
-            private static readonly char[] _forwardSlashSeparator = { '/' };
+            private static ReadOnlySpan<char> ForwardSlashSeparator => ['/'];
 
             #endregion Private Methods
             

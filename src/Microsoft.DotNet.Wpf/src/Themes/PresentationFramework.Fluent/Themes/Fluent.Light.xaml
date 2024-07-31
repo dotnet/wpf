@@ -693,7 +693,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style x:Key="DefaultAccentButtonStyle" TargetType="{x:Type Button}">
+  <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />

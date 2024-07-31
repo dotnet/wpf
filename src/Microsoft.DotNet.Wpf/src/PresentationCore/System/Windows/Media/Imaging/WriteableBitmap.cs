@@ -414,24 +414,16 @@ namespace System.Windows.Media.Imaging
             }
 
             // Get the address of the data in the array by pinning it.
-            GCHandle arrayHandle = GCHandle.Alloc(sourceBuffer, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                unsafe
-                {
-                    IntPtr buffer = arrayHandle.AddrOfPinnedObject();
+                fixed (byte* buffer = &MemoryMarshal.GetArrayDataReference(sourceBuffer))
                     WritePixelsImpl(sourceRect,
-                                    buffer,
+                                    (nint)buffer,
                                     sourceBufferSize,
                                     sourceBufferStride,
                                     destinationX,
                                     destinationY,
                                     /*backwardsCompat*/ false);
-                }
-            }
-            finally
-            {
-                arrayHandle.Free();
             }
         }
 
@@ -549,28 +541,25 @@ namespace System.Windows.Media.Imaging
                 sourceRect.Y = 0;
 
                 // Get the address of the data in the array by pinning it.
-                GCHandle arrayHandle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    IntPtr buffer = arrayHandle.AddrOfPinnedObject();
-
-                    checked
+                    fixed (byte* buffer = &MemoryMarshal.GetArrayDataReference(pixels))
                     {
-                        buffer = new IntPtr(((long) buffer) + (long) offsetInBytes);
-                        sourceBufferSize -= offsetInBytes;
-                    }
+                        nint adjustedBuffer;
+                        checked
+                        {
+                            adjustedBuffer = new IntPtr(((long)buffer) + (long)offsetInBytes);
+                            sourceBufferSize -= offsetInBytes;
+                        }
 
-                    WritePixelsImpl(sourceRect,
-                                    buffer,
-                                    sourceBufferSize,
-                                    stride,
-                                    destinationX,
-                                    destinationY,
-                                    /*backwardsCompat*/ true);
-                }
-                finally
-                {
-                    arrayHandle.Free();
+                        WritePixelsImpl(sourceRect,
+                                        adjustedBuffer,
+                                        sourceBufferSize,
+                                        stride,
+                                        destinationX,
+                                        destinationY,
+                                        /*backwardsCompat*/ true);
+                    }
                 }
             }
         }

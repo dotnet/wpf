@@ -87,7 +87,7 @@ protected:
     public:
         FontSimulatedStyleKey(String^ faceName, LONG lfWeight, BYTE lfItalic)
         {
-            Debug::Assert(faceName != nullptr);
+            Debug::Assert(faceName != nullptr, "faceName is not null.");
 
             m_faceName = faceName;
             m_lfWeight = lfWeight;

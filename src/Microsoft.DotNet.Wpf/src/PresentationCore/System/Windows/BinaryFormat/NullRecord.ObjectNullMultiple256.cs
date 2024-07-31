@@ -17,15 +17,11 @@ namespace System.Windows
         ///   </see>
         ///  </para>
         /// </remarks>
-        internal sealed class ObjectNullMultiple256 : NullRecord, IRecord<ObjectNullMultiple256>
+        internal sealed class ObjectNullMultiple256 : NullRecord, IRecord
         {
             public static RecordType RecordType => RecordType.ObjectNullMultiple256;
 
             public ObjectNullMultiple256(Count count) => NullCount = count;
-
-            static ObjectNullMultiple256 IBinaryFormatParseable<ObjectNullMultiple256>.Parse(
-                BinaryReader reader,
-                RecordMap recordMap) => new(reader.ReadByte());
 
             public void Write(BinaryWriter writer)
             {

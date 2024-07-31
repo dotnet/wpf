@@ -8,6 +8,9 @@ using System.Windows;
 using FluentAssertions;
 using System.IO;
 using PresentationCore.Tests.TestUtilities;
+using System.Globalization;
+using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace PresentationCore.Tests.BinaryFormat;
 
@@ -86,16 +89,6 @@ public class PrimitiveTypeTests
 
     [Theory]
     [MemberData(nameof(Primitive_Data))]
-    public void PrimitiveTypeMemberName(object value)
-    {
-        BinaryFormattedObject format = value.SerializeAndParse();
-        SystemClassWithMembersAndTypes systemClass = (SystemClassWithMembersAndTypes)format[1];
-        systemClass.MemberNames[0].Should().Be("m_value");
-        systemClass.MemberValues.Count.Should().Be(1);
-    }
-
-    [Theory]
-    [MemberData(nameof(Primitive_Data))]
     [MemberData(nameof(Primitive_ExtendedData))]
     public void BinaryFormatWriter_WritePrimitive(object value)
     {
@@ -108,16 +101,6 @@ public class PrimitiveTypeTests
         BinaryFormatter formatter = new();
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
         object deserialized = formatter.Deserialize(stream);
-        deserialized.Should().Be(value);
-    }
-
-    [Theory]
-    [MemberData(nameof(Primitive_Data))]
-    [MemberData(nameof(Primitive_ExtendedData))]
-    public void BinaryFormattedObject_ReadPrimitive(object value)
-    {
-        BinaryFormattedObject formattedObject = value.SerializeAndParse();
-        formattedObject.TryGetPrimitiveType(out object? deserialized).Should().BeTrue();
         deserialized.Should().Be(value);
     }
 
@@ -153,7 +136,60 @@ public class PrimitiveTypeTests
             => WritePrimitiveType(writer, type, value);
 
         public static object ReadPrimitiveValue(BinaryReader reader, PrimitiveType type)
-            => ReadPrimitiveType(reader, type);
+            => type switch
+            {
+                PrimitiveType.Boolean => reader.ReadBoolean(),
+                PrimitiveType.Byte => reader.ReadByte(),
+                PrimitiveType.SByte => reader.ReadSByte(),
+                PrimitiveType.Char => reader.ReadChar(),
+                PrimitiveType.Int16 => reader.ReadInt16(),
+                PrimitiveType.UInt16 => reader.ReadUInt16(),
+                PrimitiveType.Int32 => reader.ReadInt32(),
+                PrimitiveType.UInt32 => reader.ReadUInt32(),
+                PrimitiveType.Int64 => reader.ReadInt64(),
+                PrimitiveType.UInt64 => reader.ReadUInt64(),
+                PrimitiveType.Single => reader.ReadSingle(),
+                PrimitiveType.Double => reader.ReadDouble(),
+                PrimitiveType.Decimal => decimal.Parse(reader.ReadString(), CultureInfo.InvariantCulture),
+                PrimitiveType.DateTime => ReadDateTime(reader),
+                PrimitiveType.TimeSpan => new TimeSpan(reader.ReadInt64()),
+                // String is handled with a record, never on it's own
+                _ => throw new SerializationException($"Failure trying to read primitve '{type}'"),
+            };
+
+        /// <summary>
+        ///  Reads a binary formatted <see cref="DateTime"/> from the given <paramref name="reader"/>.
+        /// </summary>
+        /// <exception cref="SerializationException">The data was invalid.</exception>
+        private static unsafe DateTime ReadDateTime(BinaryReader reader)
+            => CreateDateTimeFromData(reader.ReadInt64());
+
+        /// <summary>
+        ///  Creates a <see cref="DateTime"/> object from raw data with validation.
+        /// </summary>
+        /// <exception cref="SerializationException"><paramref name="data"/> was invalid.</exception>
+        private static DateTime CreateDateTimeFromData(long data)
+        {
+            // Copied from System.Runtime.Serialization.Formatters.Binary.BinaryParser
+
+            // Use DateTime's public constructor to validate the input, but we
+            // can't return that result as it strips off the kind. To address
+            // that, store the value directly into a DateTime via an unsafe cast.
+            // See BinaryFormatterWriter.WriteDateTime for details.
+
+            try
+            {
+                const long TicksMask = 0x3FFFFFFFFFFFFFFF;
+                _ = new DateTime(data & TicksMask);
+            }
+            catch (ArgumentException ex)
+            {
+                // Bad data
+                throw new SerializationException(ex.Message, ex);
+            }
+
+            return Unsafe.As<long, DateTime>(ref data);
+        }
 
         public override void Write(BinaryWriter writer)
         {

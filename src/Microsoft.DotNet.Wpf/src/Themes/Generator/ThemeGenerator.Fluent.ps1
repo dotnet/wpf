@@ -21,6 +21,7 @@ $themeColorFilePath = Join-Path $resouceFilesDir "Theme\$themeColor.xaml"
                         xmlns:system="clr-namespace:System;assembly=System.Runtime"
                         xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
                         xmlns:theme="clr-namespace:Microsoft.Windows.Themes"
+                        xmlns:framework="clr-namespace:MS.Internal;assembly=PresentationFramework"
                         xmlns:base="clr-namespace:System.Windows;assembly=WindowsBase">
                     </ResourceDictionary>'
 
@@ -28,7 +29,7 @@ foreach ($file in Get-ChildItem $resouceFilesDir -Filter "*.xaml") {
     if($file.BaseName -eq "Fluent") {
         continue
     }
-    [xml]$currentXaml = Get-Content $file
+    [xml]$currentXaml = Get-Content $file.FullName
 
     $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
 }
@@ -37,7 +38,7 @@ foreach ($file in Get-ChildItem $resouceFilesDir -Filter "*.xaml") {
 $combinedXaml.ResourceDictionary.InnerXml += $themeColorXaml.ResourceDictionary.InnerXml
 
 foreach ($file in Get-ChildItem $styleFilesDir -Filter "*.xaml") {
-    [xml]$currentXaml = Get-Content $file
+    [xml]$currentXaml = Get-Content $file.FullName
 
     $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
 }

@@ -35,30 +35,6 @@ namespace System.Windows
             = "System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
 
         /// <summary>
-        ///  Returns the <see cref="PrimitiveType"/> for the given <paramref name="typeName"/>.
-        /// </summary>
-        internal static PrimitiveType GetPrimitiveType(ReadOnlySpan<char> typeName) => typeName switch
-        {
-            BooleanType => PrimitiveType.Boolean,
-            CharType => PrimitiveType.Char,
-            SByteType => PrimitiveType.SByte,
-            ByteType => PrimitiveType.Byte,
-            Int16Type => PrimitiveType.Int16,
-            UInt16Type => PrimitiveType.UInt16,
-            Int32Type => PrimitiveType.Int32,
-            UInt32Type => PrimitiveType.UInt32,
-            Int64Type => PrimitiveType.Int64,
-            UInt64Type => PrimitiveType.UInt64,
-            SingleType => PrimitiveType.Single,
-            DoubleType => PrimitiveType.Double,
-            DecimalType => PrimitiveType.Decimal,
-            DateTimeType => PrimitiveType.DateTime,
-            StringType => PrimitiveType.String,
-            TimeSpanType => PrimitiveType.TimeSpan,
-            _ => default,
-        };
-
-        /// <summary>
         ///  Returns the <see cref="PrimitiveType"/> for the given <paramref name="type"/>.
         /// </summary>
         /// <returns><see cref="PrimitiveType"/> or <see langword="default"/> if not a <see cref="PrimitiveType"/>.</returns>

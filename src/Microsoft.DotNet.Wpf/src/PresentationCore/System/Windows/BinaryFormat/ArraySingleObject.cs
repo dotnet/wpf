@@ -16,25 +16,13 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class ArraySingleObject : ArrayRecord, IRecord<ArraySingleObject>
+    internal sealed class ArraySingleObject : ArrayRecord
     {
         public static RecordType RecordType => RecordType.ArraySingleObject;
 
         public ArraySingleObject(ArrayInfo arrayInfo, IReadOnlyList<object> arrayObjects)
             : base(arrayInfo, arrayObjects)
         { }
-
-        static ArraySingleObject IBinaryFormatParseable<ArraySingleObject>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            ArraySingleObject record = new(
-                ArrayInfo.Parse(reader, out Count length),
-                ReadRecords(reader, recordMap, length));
-
-            recordMap[record.ObjectId] = record;
-            return record;
-        }
 
         public override void Write(BinaryWriter writer)
         {

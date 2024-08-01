@@ -93,7 +93,7 @@ namespace MS.Internal.Globalization
 
             for (int i = 0; i < contentSpan.Length; i++)
             {
-                if (contentSpan[i] == '\\') //An escape token
+                if (contentSpan[i] == BamlConst.EscapeChar) //An escape token ('\')
                 {
                     if (contentSpan.Length > i + 1) //Check whether we're at the end
                     {
@@ -103,16 +103,16 @@ namespace MS.Internal.Globalization
                     else //We are, break out of the loop
                         break;
                 }
-                else if (contentSpan[i] == '&') //A known escape token
+                else if (contentSpan[i] == '&') //A known escape sequence
                 {
-                    EvaulateEscape(stringBuilder, contentSpan, ref i);
+                    EvaulateEscapeSequence(stringBuilder, contentSpan, ref i);
                 }
                 else //Nothing interesting, append character
                     stringBuilder.Append(contentSpan[i]);
             }
 
-            //Evaluates whether any of the known tokens follows "&" (&quot; - &apos; - &amp; - &lt; - &gt;)
-            static void EvaulateEscape(StringBuilder stringBuilder, ReadOnlySpan<char> contentSpan, ref int i)
+            //Evaluates whether any of the known escape sequences follows '&' (&quot; - &apos; - &amp; - &lt; - &gt;)
+            static void EvaulateEscapeSequence(StringBuilder stringBuilder, ReadOnlySpan<char> contentSpan, ref int i)
             {
                 contentSpan = contentSpan.Slice(i);
 

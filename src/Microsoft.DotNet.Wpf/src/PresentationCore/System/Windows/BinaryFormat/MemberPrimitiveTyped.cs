@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
 using System.IO;
 
 namespace System.Windows
@@ -16,7 +15,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class MemberPrimitiveTyped : Record, IRecord<MemberPrimitiveTyped>
+    internal sealed class MemberPrimitiveTyped : Record
     {
         public PrimitiveType PrimitiveType { get; }
         public object Value { get; }
@@ -41,16 +40,6 @@ namespace System.Windows
         }
 
         public static RecordType RecordType => RecordType.MemberPrimitiveTyped;
-
-        static MemberPrimitiveTyped IBinaryFormatParseable<MemberPrimitiveTyped>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            PrimitiveType primitiveType = (PrimitiveType)reader.ReadByte();
-            return new(
-                primitiveType,
-                ReadPrimitiveType(reader, primitiveType));
-        }
 
         public override void Write(BinaryWriter writer)
         {

@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.IO;
-using System.Collections.Generic;
 
 namespace System.Windows
 {
@@ -18,16 +17,11 @@ namespace System.Windows
         ///   </see>
         ///  </para>
         /// </remarks>
-        internal sealed class ObjectNullMultiple : NullRecord, IRecord<ObjectNullMultiple>
+        internal sealed class ObjectNullMultiple : NullRecord, IRecord
         {
             public static RecordType RecordType => RecordType.ObjectNullMultiple;
 
             public ObjectNullMultiple(Count count) => NullCount = count;
-
-            static ObjectNullMultiple IBinaryFormatParseable<ObjectNullMultiple>.Parse(
-                BinaryReader reader,
-                RecordMap recordMap)
-                => new(reader.ReadInt32());
 
             public void Write(BinaryWriter writer)
             {

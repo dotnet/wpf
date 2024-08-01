@@ -16,7 +16,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class ObjectNull : NullRecord, IRecord<ObjectNull>
+    internal sealed class ObjectNull : NullRecord, IRecord
     {
         public static ObjectNull Instance { get; } = new();
 
@@ -25,10 +25,6 @@ namespace System.Windows
         public override Count NullCount => Count.One;
 
         public static RecordType RecordType => RecordType.ObjectNull;
-
-        static ObjectNull IBinaryFormatParseable<ObjectNull>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap) => Instance;
 
         public void Write(BinaryWriter writer) => writer.Write((byte)RecordType);
 

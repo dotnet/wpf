@@ -34,6 +34,7 @@
     <SystemDiagnosticsEventLogPackageVersion>9.0.0-preview.7.24376.15</SystemDiagnosticsEventLogPackageVersion>
     <SystemDrawingCommonVersion>9.0.0-preview.7.24379.1</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>9.0.0-preview.7.24376.15</SystemDirectoryServicesVersion>
+    <SystemFormatsNrbfVersion>9.0.0-preview.7.24376.15</SystemFormatsNrbfVersion>
     <SystemIOPackagingVersion>9.0.0-preview.7.24376.15</SystemIOPackagingVersion>
     <SystemReflectionMetadataLoadContextVersion>9.0.0-preview.7.24376.15</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
@@ -66,14 +67,14 @@
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <!-- 
-        Also in global.json 
-        Used in Wpf.Cpp.PrivateTools.props/targets 
+    <!--
+        Also in global.json
+        Used in Wpf.Cpp.PrivateTools.props/targets
     <MsvcurtC1xxVersion>0.0.1.2</MsvcurtC1xxVersion>
     -->
     <!--
     This is the version of the test infrastructure package is compiled against. This should be
-    removed as part of https://github.com/dotnet/wpf/issues/816 
+    removed as part of https://github.com/dotnet/wpf/issues/816
     -->
     <MicrosoftDotNetWpfTestPackageVersion>1.0.0-beta.19263.1</MicrosoftDotNetWpfTestPackageVersion>
     <!-- These versions are specified in global.json -->
@@ -86,10 +87,10 @@
   </PropertyGroup>
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
-    <XUnitVersion>2.4.0</XUnitVersion>
+    <XUnitVersion>2.9.0</XUnitVersion>
     <XUnitAssertVersion>$(XUnitVersion)</XUnitAssertVersion>
     <XUnitRunnerConsoleVersion>$(XUnitVersion)</XUnitRunnerConsoleVersion>
-    <XUnitRunnerVisualStudioVersion>2.4.0</XUnitRunnerVisualStudioVersion>
+    <XUnitRunnerVisualStudioVersion>2.8.1</XUnitRunnerVisualStudioVersion>
     <XUnitExtensibilityExecutionVersion>$(XUnitVersion)</XUnitExtensibilityExecutionVersion>
     <XUnitStaFactPackageVersion>1.2.46-alpha</XUnitStaFactPackageVersion>
   </PropertyGroup>

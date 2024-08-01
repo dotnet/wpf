@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Formats.Nrbf;
 
 namespace PresentationCore.Tests.TestUtilities;
 
@@ -15,7 +16,7 @@ internal static class BinaryFormatTestExtensions
     /// <summary>
     ///  Serializes the object using the <see cref="BinaryFormatter"/> and reads it into a <see cref="BinaryFormattedObject"/>.
     /// </summary>
-    public static BinaryFormattedObject SerializeAndParse(this object source) => new(source.Serialize());
+    public static SerializationRecord SerializeAndParse(this object source) => NrbfDecoder.Decode(source.Serialize());
 
     /// <summary>
     ///  Serializes the object using the <see cref="BinaryFormatter"/>.

@@ -1734,7 +1734,7 @@ namespace System.Windows
         {
             _resourcesInitialized = true;
             
-            if(!ThemeManager.IgnoreAppResourcesChange)
+            if(ThemeManager.IsFluentThemeEnabled && !ThemeManager.IgnoreAppResourcesChange)
             {
                 if(ThemeManager.SyncThemeModeAndResources())
                 {

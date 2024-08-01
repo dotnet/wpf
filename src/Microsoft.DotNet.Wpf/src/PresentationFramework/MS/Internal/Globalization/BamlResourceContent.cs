@@ -9,6 +9,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Buffers;
 
 namespace MS.Internal.Globalization
 {
@@ -75,23 +76,35 @@ namespace MS.Internal.Globalization
         }
 
         /// <summary>
-        /// Unescape a string. Note:
-        /// Backslash following any character will become that character.
-        /// Backslash by itself will be skipped.
+        /// Holds all escape tokens used for initial string-search loop to find out whether we need to unescape the string.
         /// </summary>
-        /// <remarks>Prefer <see cref="UnescapeString(ReadOnlySpan{char})"/> overload when possible.</remarks>
-        internal static string UnescapeString(string content) => UnescapeString(content.AsSpan());
+        private static readonly SearchValues<string> s_escapeTokens = SearchValues.Create(["\\", "&quot;", "&apos;", "&amp;", "&lt;", "&gt;"], StringComparison.Ordinal);
 
         /// <summary>
         /// Unescape a string. Note:
         /// Backslash following any character will become that character.
         /// Backslash by itself will be skipped.
         /// </summary>
-        internal static string UnescapeString(ReadOnlySpan<char> contentSpan)
-        {
-            StringBuilder stringBuilder = new(contentSpan.Length);
+        /// <remarks>Prefer <see cref="UnescapeString(ReadOnlySpan{char})"/> overload when possible.</remarks>
+        internal static string UnescapeString(string content) => UnescapeString(content.AsSpan(), false) ?? content;
 
-            for (int i = 0; i < contentSpan.Length; i++)
+        /// <summary>
+        /// Unescape a string. Note:
+        /// Backslash following any character will become that character.
+        /// Backslash by itself will be skipped.
+        /// </summary>
+        internal static string UnescapeString(ReadOnlySpan<char> contentSpan, bool returnNewInstance = true)
+        {
+            //Check whether there's anything to unescape
+            int firstEscapeToken = contentSpan.IndexOfAny(s_escapeTokens);
+            if (firstEscapeToken == -1)
+                return returnNewInstance ? new string(contentSpan) : null;
+
+            //Allocate buffer and append the chunk without tokens (unescaped)
+            StringBuilder stringBuilder = new(contentSpan.Length);
+            stringBuilder.Append(contentSpan.Slice(0, firstEscapeToken));
+
+            for (int i = firstEscapeToken; i < contentSpan.Length; i++)
             {
                 if (contentSpan[i] == BamlConst.EscapeChar) //An escape token ('\')
                 {
@@ -103,7 +116,7 @@ namespace MS.Internal.Globalization
                     else //We are, break out of the loop
                         break;
                 }
-                else if (contentSpan[i] == '&') //A known escape sequence
+                else if (contentSpan[i] == '&') //A known escape sequence shall follow
                 {
                     EvaulateEscapeSequence(stringBuilder, contentSpan, ref i);
                 }

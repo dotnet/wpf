@@ -31,47 +31,6 @@ namespace System.Windows
         public readonly (BinaryType Type, object? Info) this[int index] => _info[index];
         public readonly int Count => _info.Count;
 
-        public static MemberTypeInfo Parse(BinaryReader reader, Count expectedCount)
-        {
-            List<(BinaryType Type, object? Info)> info = new(expectedCount);
-
-            // Get all of the BinaryTypes
-            for (int i = 0; i < expectedCount; i++)
-            {
-                info.Add(((BinaryType)reader.ReadByte(), null));
-            }
-
-            // Check for more clarifying information
-
-            for (int i = 0; i < expectedCount; i++)
-            {
-                BinaryType type = info[i].Type;
-                switch (type)
-                {
-                    case BinaryType.Primitive:
-                    case BinaryType.PrimitiveArray:
-                        info[i] = (type, (PrimitiveType)reader.ReadByte());
-                        break;
-                    case BinaryType.SystemClass:
-                        info[i] = (type, reader.ReadString());
-                        break;
-                    case BinaryType.Class:
-                        info[i] = (type, ClassTypeInfo.Parse(reader));
-                        break;
-                    case BinaryType.String:
-                    case BinaryType.ObjectArray:
-                    case BinaryType.StringArray:
-                    case BinaryType.Object:
-                        // Other types have no additional data.
-                        break;
-                    default:
-                        throw new SerializationException("Unexpected binary type.");
-                }
-            }
-
-            return new MemberTypeInfo(info);
-        }
-
         public readonly void Write(BinaryWriter writer)
         {
             foreach ((BinaryType type, _) in this)
@@ -111,4 +70,3 @@ namespace System.Windows
         IEnumerator IEnumerable.GetEnumerator() => _info.GetEnumerator();
     }
 }
-

@@ -16,7 +16,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class ArraySinglePrimitive : ArrayRecord, IRecord<ArraySinglePrimitive>
+    internal sealed class ArraySinglePrimitive : ArrayRecord
     {
         public PrimitiveType PrimitiveType { get; }
 
@@ -26,22 +26,6 @@ namespace System.Windows
             : base(arrayInfo, arrayObjects)
         {
             PrimitiveType = primitiveType;
-        }
-
-        static ArraySinglePrimitive IBinaryFormatParseable<ArraySinglePrimitive>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            ArrayInfo arrayInfo = ArrayInfo.Parse(reader, out Count length);
-            PrimitiveType primitiveType = (PrimitiveType)reader.ReadByte();
-
-            ArraySinglePrimitive record = new(
-                arrayInfo,
-                primitiveType,
-                ReadPrimitiveTypes(reader, primitiveType, length));
-
-            recordMap[record.ObjectId] = record;
-            return record;
         }
 
         public override void Write(BinaryWriter writer)

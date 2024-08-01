@@ -4,6 +4,7 @@
 using System.Drawing;
 using PresentationCore.Tests.TestUtilities;
 using PresentationCore.Tests.FluentAssertions;
+using System.Formats.Nrbf;
 
 namespace PresentationCore.Tests.BinaryFormat;
 
@@ -12,45 +13,27 @@ public class SystemDrawingTests
     [Fact]
     public void PointF_Parse()
     {
-        BinaryFormattedObject format = new PointF().SerializeAndParse();
+        PointF input = new(1.5f, 2.1f);
+        SerializationRecord record = input.SerializeAndParse();
 
-        BinaryLibrary binaryLibrary = (BinaryLibrary)format[1];
-        binaryLibrary.LibraryId.Should().Be(2);
-        binaryLibrary.LibraryName.ToString().Should().Be("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+        Assert.True(record.TryGetPointF(out object? read));
 
-        ClassWithMembersAndTypes classInfo = (ClassWithMembersAndTypes)format[2];
-        classInfo.ObjectId.Should().Be(1);
-        classInfo.Name.Should().Be("System.Drawing.PointF");
-        classInfo.MemberNames.Should().BeEquivalentTo(new string[] { "x", "y" });
-        classInfo.MemberValues.Should().BeEquivalentTo(new object[] { 0.0f, 0.0f });
-        classInfo.MemberTypeInfo.Should().BeEquivalentTo(new[]
-        {
-            (BinaryType.Primitive, PrimitiveType.Single),
-            (BinaryType.Primitive, PrimitiveType.Single)
-        });
+        Assert.Equal(input.X, ((PointF)read!).X);
+        Assert.Equal(input.Y, ((PointF)read).Y);
     }
 
     [Fact]
     public void RectangleF_Parse()
     {
-        BinaryFormattedObject format = new RectangleF().SerializeAndParse();
+        RectangleF input = new(1.5f, 2.1f, 100.7f, 15.9f);
+        SerializationRecord record = input.SerializeAndParse();
 
-        BinaryLibrary binaryLibrary = (BinaryLibrary)format[1];
-        binaryLibrary.LibraryId.Should().Be(2);
-        binaryLibrary.LibraryName.ToString().Should().Be("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+        Assert.True(record.TryGetRectangleF(out object? read));
 
-        ClassWithMembersAndTypes classInfo = (ClassWithMembersAndTypes)format[2];
-        classInfo.ObjectId.Should().Be(1);
-        classInfo.Name.Should().Be("System.Drawing.RectangleF");
-        classInfo.MemberNames.Should().BeEquivalentTo(new string[] { "x", "y", "width", "height" });
-        classInfo.MemberValues.Should().BeEquivalentTo(new object[] { 0.0f, 0.0f, 0.0f, 0.0f });
-        classInfo.MemberTypeInfo.Should().BeEquivalentTo(new[]
-        {
-            (BinaryType.Primitive, PrimitiveType.Single),
-            (BinaryType.Primitive, PrimitiveType.Single),
-            (BinaryType.Primitive, PrimitiveType.Single),
-            (BinaryType.Primitive, PrimitiveType.Single)
-        });
+        Assert.Equal(input.X, ((RectangleF)read!).X);
+        Assert.Equal(input.Y, ((RectangleF)read).Y);
+        Assert.Equal(input.Width, ((RectangleF)read).Width);
+        Assert.Equal(input.Height, ((RectangleF)read).Height);
     }
 
     public static TheoryData<object> SystemDrawing_TestData => new()

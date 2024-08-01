@@ -20,6 +20,7 @@ namespace System.Windows
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Formats.Nrbf;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
@@ -3063,7 +3064,7 @@ namespace System.Windows
                     long startPosition = stream.Position;
                     try
                     {
-                        if (new BinaryFormattedObject(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
+                        if (NrbfDecoder.Decode(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
                         {
                             return val;
                         }

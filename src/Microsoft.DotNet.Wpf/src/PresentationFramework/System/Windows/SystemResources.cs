@@ -1818,11 +1818,11 @@ namespace System.Windows
             {
                 if(FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
                 {
-                    _dictionary.DeferredResourceReferences1.Remove(this);
+                    _dictionary.WeakDeferredResourceReferences.Remove(this);
                 }
                 else
                 {
-                    _dictionary.DeferredResourceReferences2.Remove(this);
+                    _dictionary.DeferredResourceReferencesList.Remove(this);
                 }
                 _dictionary = null;
             }

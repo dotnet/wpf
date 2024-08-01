@@ -437,7 +437,9 @@
                                 Stretch="Fill"
                                 Stroke="Transparent"
                                 StrokeThickness="0"
-                                Visibility="Collapsed">
+                                Visibility="Collapsed"
+                                KeyboardNavigation.TabNavigation="Once"
+                                KeyboardNavigation.TabIndex="1">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
                                 </Rectangle.Fill>

@@ -975,7 +975,7 @@
                   </Grid.RowDefinitions>
                 </Grid>
               </Border>
-              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed">
+              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
                 <Rectangle.Fill>
                   <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
                 </Rectangle.Fill>

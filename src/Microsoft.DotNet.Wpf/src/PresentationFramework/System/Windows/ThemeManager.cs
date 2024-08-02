@@ -219,7 +219,7 @@ internal static class ThemeManager
     {
         if(Application.Current == null) return;
 
-        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(Application.Current.Resources);
+        IEnumerable<int> indices = FindAllFluentThemeResourceDictionaryIndices(Application.Current.Resources);
 
         foreach(int index in indices)
         {
@@ -239,7 +239,7 @@ internal static class ThemeManager
     {
         if(window == null || window.IsDisposed) return;
 
-        List<int> indices = FindAllFluentThemeResourceDictionaryIndex(window.Resources);
+        IEnumerable<int> indices = FindAllFluentThemeResourceDictionaryIndices(window.Resources);
 
         foreach(int index in indices)
         {
@@ -430,11 +430,11 @@ internal static class ThemeManager
         return -1;
     }
 
-    private static List<int> FindAllFluentThemeResourceDictionaryIndex(ResourceDictionary rd)
+    private static IEnumerable<int> FindAllFluentThemeResourceDictionaryIndices(ResourceDictionary rd)
     {
         ArgumentNullException.ThrowIfNull(rd, nameof(rd));
 
-        List<int> indices = new List<int>();
+        ICollection<int> indices = new List<int>();
 
         for(int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
         {

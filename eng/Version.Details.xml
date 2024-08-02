@@ -95,6 +95,10 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>7f2b222f92d323b7ca522a06c7116f1ec25d12ca</Sha>
     </Dependency>
+    <Dependency Name="System.Formats.Nrbf" Version="9.0.0-rc.1.24381.5" CoherentParentDependency="Microsoft.Private.Winforms">
+      <Uri>https://github.com/dotnet/runtime</Uri>
+      <Sha>7f2b222f92d323b7ca522a06c7116f1ec25d12ca</Sha>
+    </Dependency>
     <Dependency Name="System.IO.Packaging" Version="9.0.0-rc.1.24381.5" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>7f2b222f92d323b7ca522a06c7116f1ec25d12ca</Sha>

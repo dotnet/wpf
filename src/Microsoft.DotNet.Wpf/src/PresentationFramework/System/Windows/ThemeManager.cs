@@ -176,13 +176,11 @@ internal static class ThemeManager
         {
             Application.Current.ThemeMode = themeMode;
         }
-        else
-        {
-            // In case ThemeMode was not set and we did not include the 
-            // Fluent theme resources, we need to invalidate the resources,
-            // that were earlier deferred.
-            Application.Current.InvalidateResourceReferences(ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
-        }
+
+        // Since we have deferred the app resource changes invalidation during this time,
+        // we need to invalidate the resources now. Since, there can be multiple invalidations over the time,
+        // we will do a catastrophic invalidation here.
+        Application.Current.InvalidateResourceReferences(ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
     }
 
     internal static void ApplyStyleOnWindow(Window window)

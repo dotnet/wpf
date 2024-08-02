@@ -176,6 +176,11 @@ internal static class ThemeManager
         {
             Application.Current.ThemeMode = themeMode;
         }
+
+        // Since we have deferred the app resource changes invalidation during this time,
+        // we need to invalidate the resources now. Since, there can be multiple invalidations over the time,
+        // we will do a catastrophic invalidation here.
+        Application.Current.InvalidateResourceReferences(ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
     }
 
     internal static void ApplyStyleOnWindow(Window window)
@@ -311,7 +316,7 @@ internal static class ThemeManager
 
     #region Internal Properties
 
-    internal static bool DeferSyncingThemeModeAndResources { get; set; } = true;
+    internal static bool DeferSyncingThemeModeAndResources { get; set; } = Standard.Utility.IsOSWindows10OrNewer ? true : false;
 
     internal static bool IsFluentThemeEnabled
     {

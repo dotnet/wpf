@@ -176,6 +176,13 @@ internal static class ThemeManager
         {
             Application.Current.ThemeMode = themeMode;
         }
+        else
+        {
+            // In case ThemeMode was not set and we did not include the 
+            // Fluent theme resources, we need to invalidate the resources,
+            // that were earlier deferred.
+            Application.Current.InvalidateResourceReferences(ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
+        }
     }
 
     internal static void ApplyStyleOnWindow(Window window)

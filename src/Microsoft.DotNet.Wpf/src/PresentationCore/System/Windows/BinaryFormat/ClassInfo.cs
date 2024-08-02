@@ -29,20 +29,6 @@ namespace System.Windows
             MemberNames = memberNames;
         }
 
-        public static ClassInfo Parse(BinaryReader reader, out Count memberCount)
-        {
-            Id objectId = reader.ReadInt32();
-            string name = reader.ReadString();
-            memberCount = reader.ReadInt32();
-            List<string> memberNames = new(Math.Min(BinaryFormattedObject.MaxNewCollectionSize, memberCount));
-            for (int i = 0; i < memberCount; i++)
-            {
-                memberNames.Add(reader.ReadString());
-            }
-
-            return new(objectId, name, memberNames);
-        }
-
         public void Write(BinaryWriter writer)
         {
             writer.Write(ObjectId);

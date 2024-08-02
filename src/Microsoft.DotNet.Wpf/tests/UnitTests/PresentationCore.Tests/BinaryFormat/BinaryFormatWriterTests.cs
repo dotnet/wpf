@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using PresentationCore.Tests.TestUtilities;
 using PresentationCore.Tests.FluentAssertions;
+using System.Formats.Nrbf;
 
 namespace PresentationCore.Tests.BinaryFormat;
 
@@ -71,7 +72,7 @@ public class BinaryFormatWriterTests
         BinaryFormatWriter.TryWriteFrameworkObject(stream, value).Should().BeTrue();
         stream.Position = 0;
 
-        BinaryFormattedObject format = new(stream);
+        SerializationRecord format = NrbfDecoder.Decode(stream);
         format.TryGetFrameworkObject(out object? deserialized).Should().BeTrue();
 
         if (value is Hashtable hashtable)

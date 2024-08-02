@@ -312,8 +312,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
-                    <Grid x:Name="PART_Root">
-                        <Grid KeyboardNavigation.TabNavigation="Cycle">
+                    <Grid x:Name="PART_Root" Margin="12">
+                        <Grid KeyboardNavigation.TabNavigation="Local">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -321,7 +321,7 @@
                             </Grid.RowDefinitions>
 
                             <!--  HINT: Header with title and navigation buttons  -->
-                            <Grid Grid.Row="0">
+                            <Grid Grid.Row="0"  KeyboardNavigation.TabIndex="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -339,7 +339,6 @@
                                     Focusable="True"
                                     FontSize="14"
                                     FontWeight="SemiBold"
-                                    KeyboardNavigation.TabNavigation="Cycle"
                                     Foreground="{DynamicResource CalendarViewForeground}" />
                                 <Button
                                     x:Name="PART_PreviousButton"
@@ -354,7 +353,6 @@
                                     BorderBrush="Transparent"
                                     Focusable="True"
                                     AutomationProperties.Name="Previous"
-                                    KeyboardNavigation.TabNavigation="Cycle"
                                     Foreground="{DynamicResource CalendarViewForeground}">
                                     <Button.Content>
                                         <TextBlock
@@ -376,7 +374,6 @@
                                     BorderBrush="Transparent"
                                     Focusable="True"
                                     AutomationProperties.Name="Next"
-                                    KeyboardNavigation.TabNavigation="Contained"
                                     Foreground="{DynamicResource CalendarViewForeground}">
                                     <Button.Content>
                                         <TextBlock
@@ -393,7 +390,8 @@
                                 Grid.Row="2"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                KeyboardNavigation.TabNavigation="None"
+                                KeyboardNavigation.TabNavigation="Once"
+                                KeyboardNavigation.TabIndex="1"
                                 Visibility="Visible">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -415,7 +413,9 @@
                                 </Grid.RowDefinitions>
                             </Grid>
 
-                            <Grid x:Name="PART_YearView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" KeyboardNavigation.TabNavigation="None">
+                            <Grid x:Name="PART_YearView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" 
+                                KeyboardNavigation.TabNavigation="Once"
+                                KeyboardNavigation.TabIndex="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
@@ -439,7 +439,9 @@
                                 Stretch="Fill"
                                 Stroke="Transparent"
                                 StrokeThickness="0"
-                                Visibility="Collapsed">
+                                Visibility="Collapsed"
+                                KeyboardNavigation.TabNavigation="Once"
+                                KeyboardNavigation.TabIndex="1">
                                 <Rectangle.Fill>
                                     <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
                                 </Rectangle.Fill>

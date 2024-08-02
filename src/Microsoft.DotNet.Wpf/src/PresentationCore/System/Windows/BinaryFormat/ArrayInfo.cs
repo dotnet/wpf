@@ -26,13 +26,6 @@ namespace System.Windows
             ObjectId = objectId;
         }
 
-        public static ArrayInfo Parse(BinaryReader reader, out Count length)
-        {
-            ArrayInfo arrayInfo = new(reader.ReadInt32(), reader.ReadInt32());
-            length = arrayInfo.Length;
-            return arrayInfo;
-        }
-
         public readonly void Write(BinaryWriter writer)
         {
             writer.Write(ObjectId);

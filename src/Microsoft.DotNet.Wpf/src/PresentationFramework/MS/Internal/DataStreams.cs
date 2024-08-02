@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Formats.Nrbf;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -254,9 +255,11 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
+                        using MemoryStream dataStream = new(subStream._data);
+
                         try
                         {
-                            new BinaryFormattedObject(new MemoryStream(subStream._data),leaveOpen: true).TryGetFrameworkObject(out object val);
+                            NrbfDecoder.Decode(dataStream, leaveOpen: true).TryGetFrameworkObject(out object val);
                             newValue = val;
                         }
                         catch (Exception ex) when (!ex.IsCriticalException())
@@ -268,8 +271,9 @@ namespace MS.Internal.AppModel
                         //Using Binary formatter
                         if(newValue == null)
                         {
+                            dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
+                            newValue = this.Formatter.Deserialize(dataStream);
                             #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }
                         

@@ -318,7 +318,7 @@ internal static class ThemeManager
 
     #region Internal Properties
 
-    internal static bool DeferSyncingThemeModeAndResources { get; set; } = true;
+    internal static bool DeferSyncingThemeModeAndResources { get; set; } = Standard.Utility.IsOSWindows10OrNewer ? true : false;
 
     internal static bool IsFluentThemeEnabled
     {

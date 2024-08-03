@@ -37,9 +37,10 @@ namespace MS.Win32
 
         internal static void UnhookHwndSubclass(HwndSubclass subclass)
         {
-            // if exiting the AppDomain, ignore this call.  This avoids changing
-            // the list during the loop in OnAppDomainProcessExit
-            if (s_exiting)
+            // If we're exiting the AppDomain, ignore this call.
+            // Since this can be called from multiple threads,
+            // we want to be sure to get the freshest value possible.
+            if (Volatile.Read(ref s_exiting))
                 return;
 
             lock (s_hwndList)
@@ -57,7 +58,9 @@ namespace MS.Win32
             // the DefaultWindowProc.
             //DbgUserBreakPoint();
 
-            s_exiting = true;
+            // While this is only gonna be called once (guranteed by ShutDownListener),
+            // we want to make sure this is written as fast as possible to avoid waiting for lock.
+            Volatile.Write(ref s_exiting, true);
 
             lock (s_hwndList)
             {

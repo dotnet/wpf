@@ -94,7 +94,7 @@ namespace MS.Win32
                     // Just in case, restore the DefaultWindowProc.
                     HookUpDefWindowProc(hwnd);
                 }
-}
+            }
         }
 
         private static void HookUpDefWindowProc(IntPtr hwnd)
@@ -125,7 +125,7 @@ namespace MS.Win32
                         UnsafeNativeMethods.PostMessage(new HandleRef(null, hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
                     }
                 }
-                catch(System.ComponentModel.Win32Exception e)
+                catch (System.ComponentModel.Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
 

@@ -87,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             _createOnEvent = new WinEventTracker.ProxyRaiseEvents (RaiseEvents);
 
             // internally track some of the lv events
-            WinEventTracker.AddToNotificationList (_hwnd, new WinEventTracker.ProxyRaiseEvents (WindowsListView.GroupSpecificEvents), _groupEvents, 3);
+            WinEventTracker.AddToNotificationList(_hwnd, new WinEventTracker.ProxyRaiseEvents (WindowsListView.GroupSpecificEvents), _groupEvents);
         }
 
         #endregion Constructors
@@ -502,8 +502,8 @@ namespace MS.Internal.AutomationProxies
                         if (hwndHeader != IntPtr.Zero && SafeNativeMethods.IsWindowVisible (hwndHeader))
                         {
                             WindowsSysHeader header = (WindowsSysHeader) WindowsSysHeader.Create (hwndHeader, 0);
-                            WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty) };
-                            WinEventTracker.AddToNotificationList(hwndHeader, header._createOnEvent, aEvents, 1);
+                            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty)];
+                            WinEventTracker.AddToNotificationList(hwndHeader, header._createOnEvent, aEvents);
                         }
                     }
                 }
@@ -511,8 +511,8 @@ namespace MS.Internal.AutomationProxies
 
             if (eventId == InvokePattern.InvokedEvent)
             {
-                WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId) };
-                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents, 1); 
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId)];
+                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents); 
             }
 
             base.AdviseEventAdded (eventId, aidProps);
@@ -531,8 +531,8 @@ namespace MS.Internal.AutomationProxies
                         if (hwndHeader != IntPtr.Zero && SafeNativeMethods.IsWindowVisible (hwndHeader))
                         {
                             WindowsSysHeader header = (WindowsSysHeader) WindowsSysHeader.Create (hwndHeader, 0);
-                            WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty) };
-                            WinEventTracker.RemoveToNotificationList (hwndHeader, aEvents, header._createOnEvent, 1);
+                            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty)];
+                            WinEventTracker.RemoveToNotificationList(hwndHeader, aEvents, header._createOnEvent);
                         }
                     }
                 }
@@ -540,8 +540,8 @@ namespace MS.Internal.AutomationProxies
 
             if (eventId == InvokePattern.InvokedEvent)
             {
-                WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId) };
-                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents, 1);
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId)];
+                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents);
             }
 
             base.AdviseEventRemoved(eventId, aidProps);
@@ -1155,7 +1155,7 @@ namespace MS.Internal.AutomationProxies
                         if (_groupsCollection.Contains (hwnd))
                         {
                             _groupsCollection.Remove (hwnd);
-                            WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
+                            WinEventTracker.RemoveToNotificationList(hwnd, _groupEvents, null);
                         }
                     }
                     break;
@@ -1171,7 +1171,7 @@ namespace MS.Internal.AutomationProxies
                         if (_groupsCollection.Contains (hwnd) && !SafeNativeMethods.IsWindowVisible (hwnd) && !SafeNativeMethods.IsWindowEnabled (hwnd))
                         {
                             _groupsCollection.Remove (hwnd);
-                            WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
+                            WinEventTracker.RemoveToNotificationList(hwnd, _groupEvents, null);
                         }
                     }
                     break;

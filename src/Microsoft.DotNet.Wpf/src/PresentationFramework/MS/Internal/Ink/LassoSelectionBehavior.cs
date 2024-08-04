@@ -25,6 +25,7 @@ using System.Windows.Ink;
 using System.Windows.Interop;
 using System.Windows.Navigation;
 using System.Windows.Media;
+using System.Runtime.InteropServices;
 
 namespace MS.Internal.Ink
 {
@@ -365,10 +366,10 @@ namespace MS.Internal.Ink
         /// </summary>
         private void HitTestElement(InkCanvasInnerCanvas parent, UIElement uiElement, List<UIElement> elementsToSelect)
         {
-            ElementCornerPoints elementPoints = LassoSelectionBehavior.GetTransformedElementCornerPoints(parent, uiElement);
+            ElementCornerPoints elementPoints = GetTransformedElementCornerPoints(parent, uiElement);
             if (elementPoints.Set != false)
             {
-                Point[] points = GeneratePointGrid(elementPoints);
+                ReadOnlySpan<Point> points = GeneratePointGrid(elementPoints);
 
                 //
                 // perform hit testing against our lasso
@@ -409,8 +410,8 @@ namespace MS.Internal.Ink
             //
             // get the transform from us to our parent InkCavas
             //
-            GeneralTransform parentTransform = childElement.TransformToAncestor(canvas);            
-            
+            GeneralTransform parentTransform = childElement.TransformToAncestor(canvas);
+
             // REVIEW: any of the methods below may not actually perform the transformation
             // Do we need to do anything special in that scenario?
             parentTransform.TryTransform(new Point(0, 0), out elementPoints.UpperLeft);
@@ -426,16 +427,14 @@ namespace MS.Internal.Ink
         /// Private helper that will generate a grid of points 5 px apart given the elements bounding points
         /// this works with any affline transformed points
         /// </summary>
-        private Point[] GeneratePointGrid(ElementCornerPoints elementPoints)
+        private ReadOnlySpan<Point> GeneratePointGrid(ElementCornerPoints elementPoints)
         {
             if (!elementPoints.Set)
-            {
-                return new Point[]{};
-            }
-            ArrayList pointArray = new ArrayList();
+                return Span<Point>.Empty;
 
             UpdatePointDistances(elementPoints);
 
+            List<Point> pointArray = new(4);
             //
             // add our original points
             //
@@ -447,36 +446,34 @@ namespace MS.Internal.Ink
             pointArray.Add(elementPoints.LowerRight);
             FillInPoints(pointArray, elementPoints.LowerLeft, elementPoints.LowerRight);
 
-            FillInGrid( pointArray,
-                        elementPoints.UpperLeft,
-                        elementPoints.UpperRight,
-                        elementPoints.LowerRight,
-                        elementPoints.LowerLeft);
+            FillInGrid(pointArray,
+                       elementPoints.UpperLeft,
+                       elementPoints.UpperRight,
+                       elementPoints.LowerRight,
+                       elementPoints.LowerLeft);
 
-            Point[] retPointArray = new Point[pointArray.Count];
-            pointArray.CopyTo(retPointArray);
-            return retPointArray;
+            return CollectionsMarshal.AsSpan(pointArray);
         }
 
         /// <summary>
         /// Private helper that fills in the points between two points by calling itself
         /// recursively in a divide and conquer fashion
         /// </summary>
-        private void FillInPoints(ArrayList pointArray, Point point1, Point point2)
+        private void FillInPoints(List<Point> pointArray, Point point1, Point point2)
         {
             // this algorithm improves perf by 20%
-            if(!PointsAreCloseEnough(point1, point2))
+            if (!PointsAreCloseEnough(point1, point2))
             {
                 Point midPoint = LassoSelectionBehavior.GeneratePointBetweenPoints(point1, point2);
                 pointArray.Add(midPoint);
 
-                if(!PointsAreCloseEnough(point1, midPoint))
+                if (!PointsAreCloseEnough(point1, midPoint))
                 {
                     FillInPoints(pointArray, point1, midPoint);
                 }
 
                 //sort the right
-                if(!PointsAreCloseEnough(midPoint, point2))
+                if (!PointsAreCloseEnough(midPoint, point2))
                 {
                     FillInPoints(pointArray, midPoint, point2);
                 }
@@ -487,14 +484,14 @@ namespace MS.Internal.Ink
         /// Private helper that fills in the points between four points by calling itself
         /// recursively in a divide and conquer fashion
         /// </summary>
-        private void FillInGrid(ArrayList pointArray,
+        private void FillInGrid(List<Point> pointArray,
                                 Point upperLeft,
                                 Point upperRight,
                                 Point lowerRight,
                                 Point lowerLeft)
         {
             // this algorithm improves perf by 20%
-            if(!PointsAreCloseEnough(upperLeft, lowerLeft))
+            if (!PointsAreCloseEnough(upperLeft, lowerLeft))
             {
                 Point midPointLeft = LassoSelectionBehavior.GeneratePointBetweenPoints(upperLeft, lowerLeft);
                 Point midPointRight = LassoSelectionBehavior.GeneratePointBetweenPoints(upperRight, lowerRight);
@@ -502,13 +499,13 @@ namespace MS.Internal.Ink
                 pointArray.Add(midPointRight);
                 FillInPoints(pointArray, midPointLeft, midPointRight);
 
-                if(!PointsAreCloseEnough(upperLeft, midPointLeft))
+                if (!PointsAreCloseEnough(upperLeft, midPointLeft))
                 {
                     FillInGrid(pointArray, upperLeft, upperRight, midPointRight, midPointLeft);
                 }
 
                 //sort the right
-                if(!PointsAreCloseEnough(midPointLeft, lowerLeft))
+                if (!PointsAreCloseEnough(midPointLeft, lowerLeft))
                 {
                     FillInGrid(pointArray, midPointLeft, midPointRight, lowerRight, lowerLeft);
                 }
@@ -656,7 +653,7 @@ namespace MS.Internal.Ink
                 // Try to find out whether we have a pre-select object.
                 tappedElement = InkCanvas.InnerCanvas.HitTestOnElements(pointOnInnerCanvas);
             }
-}
+        }
 
         #endregion Private Methods
 

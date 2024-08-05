@@ -79,14 +79,14 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 // requiring that they be split across two namespaces.
                 switch (instance.ModuleName)
                 {
-                    case @"Core\CSharp":
+                    case @"PresentationCore":
                         moduleReference = "using MS.Internal.PresentationCore;";
                         sridReference = 
                             [[inline]]
                                 using SR=MS.Internal.PresentationCore.SR;
                             [[/inline]];
                         break;
-                    case "Framework":
+                    case "PresentationFramework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
                         break;
                     default:
@@ -296,14 +296,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     nullCheck = 
                         [[inline]]
                             // Verify that object arguments are non-null since we are a value type
-                            if (defaultOriginValue == null)
-                            {
-                                throw new ArgumentNullException("defaultOriginValue");
-                            }
-                            if (defaultDestinationValue == null)
-                            {
-                                throw new ArgumentNullException("defaultDestinationValue");
-                            }
+                            ArgumentNullException.ThrowIfNull(defaultOriginValue);
+                            ArgumentNullException.ThrowIfNull(defaultDestinationValue);
                         [[/inline]];
                 }
 
@@ -324,10 +318,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     ReadPreamble();
                     
-                    if (animationClock == null)
-                    {
-                        throw new ArgumentNullException("animationClock");
-                    }
+                    ArgumentNullException.ThrowIfNull(animationClock);
                     
                     // We check for null above but presharp doesn't notice so we suppress the 
                     // warning here.

@@ -40,6 +40,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     sealed partial class BitmapEffectInput : Animatable
     {
         //------------------------------------------------------
@@ -246,9 +249,10 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
+            // of your app.
+            //
             Debug.Assert(s_Input == null || s_Input.IsFrozen,
-                "Detected context bound default value BitmapEffectInput.s_Input");
+                "Detected context bound default value BitmapEffectInput.s_Input.");
 
 
             // Initializations
@@ -282,6 +286,9 @@ namespace System.Windows.Media.Effects
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

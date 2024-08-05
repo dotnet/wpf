@@ -34,7 +34,7 @@ namespace System.Windows.Media
 
         /// <summary>
         ///     Tile - The basic tile mode  the base tile is drawn and the remaining area is filled 
-        ///     by repeating the base tile such that the right edge of one tile is adjacent to the left edge 
+        ///     by repeating the base tile such that the right edge of one tile butts the left edge 
         ///     of the next, and similarly for bottom and top
         /// </summary>
         Tile = 4,

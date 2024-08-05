@@ -434,5 +434,6 @@ namespace System.Windows.Media
         /// </summary>
         public abstract void Pop(
             );
-}
+
+    }
 }

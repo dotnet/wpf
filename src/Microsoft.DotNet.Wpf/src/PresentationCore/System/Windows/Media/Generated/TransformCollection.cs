@@ -271,6 +271,7 @@ namespace System.Windows.Media
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     Transform oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
@@ -647,7 +648,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -668,7 +670,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -689,7 +692,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -710,7 +714,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -814,6 +819,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -962,7 +968,7 @@ namespace System.Windows.Media
                 _collection = new FrugalStructList<Transform>(icollectionOfT);
             }
             else
-            {
+            {       
                 ICollection icollection = collection as ICollection;
 
                 if (icollection != null) // an IC but not and IC<T>
@@ -1007,5 +1013,6 @@ namespace System.Windows.Media
         }
 
         #endregion Constructors
+
     }
 }

@@ -40,6 +40,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     partial class ShaderEffect : Effect
     {
         //------------------------------------------------------
@@ -81,6 +84,7 @@ namespace System.Windows.Media.Effects
 
         private static void PixelShaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             ShaderEffect target = ((ShaderEffect) d);
 
 
@@ -188,6 +192,7 @@ namespace System.Windows.Media.Effects
         }
         private DUCE.ResourceHandle GeneratedAddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SHADEREFFECT))
                 {
                     PixelShader vPixelShader = PixelShader;
@@ -200,9 +205,11 @@ namespace System.Windows.Media.Effects
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         private void GeneratedReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -211,8 +218,10 @@ namespace System.Windows.Media.Effects
                     if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -292,8 +301,8 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app
-
+            // of your app.
+            //
 
 
             // Initializations
@@ -309,6 +318,9 @@ namespace System.Windows.Media.Effects
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

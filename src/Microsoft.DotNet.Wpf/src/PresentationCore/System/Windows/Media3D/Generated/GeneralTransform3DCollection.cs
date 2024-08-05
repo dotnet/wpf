@@ -166,7 +166,7 @@ namespace System.Windows.Media.Media3D
             // not in the collection.  Therefore we need to first verify the old value exists
             // before calling OnFreezablePropertyChanged.  Since we already need to locate
             // the item in the collection we keep the index and use RemoveAt(...) to do
-            // the work.#1016178)
+            // the work.  (Windows OS #1016178)
 
             // We use the public IndexOf to guard our UIContext since OnFreezablePropertyChanged
             // is only called conditionally.  IList.IndexOf returns -1 if the value is not found.
@@ -255,11 +255,14 @@ namespace System.Windows.Media.Media3D
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     GeneralTransform3D oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -604,8 +607,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -624,8 +629,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -644,8 +651,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -664,8 +673,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -769,6 +780,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -917,7 +929,7 @@ namespace System.Windows.Media.Media3D
                 _collection = new FrugalStructList<GeneralTransform3D>(icollectionOfT);
             }
             else
-            {
+            {       
                 ICollection icollection = collection as ICollection;
 
                 if (icollection != null) // an IC but not and IC<T>
@@ -937,6 +949,7 @@ namespace System.Windows.Media.Media3D
                         GeneralTransform3D newValue = item;
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                     }
 
                     needsItemValidation = false;
@@ -952,6 +965,7 @@ namespace System.Windows.Media.Media3D
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
                     OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
                 }
             }
 
@@ -960,5 +974,6 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Constructors
+
     }
 }

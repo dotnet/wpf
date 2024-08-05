@@ -1,0 +1,10 @@
+{
+    "instanceUrl": "https://devdiv.visualstudio.com/",
+    "template": "TFSDEVDIV",
+    "projectName": "DEVDIV",
+    "areaPath": "DevDiv\\NET Fundamentals\\NET Partners\\WPF\\Security\\SDL",
+    "iterationPath": "DevDiv",
+    "notificationAliases": [ "wpf-netcore-dev@microsoft.com" ],
+    "repositoryName":"wpf",
+    "codebaseName": "wpf"
+}

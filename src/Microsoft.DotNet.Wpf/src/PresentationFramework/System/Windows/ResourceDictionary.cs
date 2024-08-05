@@ -1735,9 +1735,9 @@ namespace System.Windows
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        if(FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                        if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
                         {
-                            if (_ownerApps != null)
+                            if (_ownerApps is not null)
                             {
                                 deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
                             }
@@ -1748,12 +1748,12 @@ namespace System.Windows
 
                             // Cache the deferredResourceReference so that it can be validated
                             // in case of a dictionary change prior to its inflation
-                            if (_weakDeferredResourceReferences == null)
+                            if (_weakDeferredResourceReferences is null)
                             {
                                 _weakDeferredResourceReferences = new WeakReferenceList();
                             }
-                            
-                            _weakDeferredResourceReferences.Add( deferredResourceReference, true /*SkipFind*/);
+
+                            _weakDeferredResourceReferences.Add(deferredResourceReference, true /*SkipFind*/);
                         }
                         else
                         {
@@ -1794,7 +1794,7 @@ namespace System.Windows
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            if(FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
                 if (_weakDeferredResourceReferences != null)
                 {
@@ -2533,7 +2533,7 @@ namespace System.Windows
 
         private void  MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
         {
-            if(FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
                 // copy the list
                 _weakDeferredResourceReferences = loadedRD._weakDeferredResourceReferences;
@@ -2557,7 +2557,6 @@ namespace System.Windows
                 {
                     _deferredResourceReferencesList.ChangeDictionary(this);
                 }
-              
             }
         }
 

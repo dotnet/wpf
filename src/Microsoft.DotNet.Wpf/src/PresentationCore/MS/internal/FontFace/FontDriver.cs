@@ -165,10 +165,10 @@ namespace MS.Internal.FontFace
 
             try
             {
-                // 4 means that we skip the type tag
                 byte* ptrFontFile = _unmanagedMemoryStream.PositionPointer;
                 int lenFontFile = (int)_unmanagedMemoryStream.Length;
 
+                // 4 means that we skip the type tag
                 ReadOnlySpan<byte> fileStream = new(ptrFontFile, lenFontFile);
                 fileStream = fileStream.Slice(4);
 

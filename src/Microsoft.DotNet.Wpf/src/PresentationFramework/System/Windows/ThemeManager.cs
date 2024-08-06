@@ -20,7 +20,7 @@ internal static class ThemeManager
     {
         if(IsFluentThemeEnabled)
         {
-            IgnoreAppResourcesChange = true;
+            SkipAppThemeModeSyncing = true;
 
             try
             {
@@ -53,7 +53,7 @@ internal static class ThemeManager
             }
             finally
             {
-                IgnoreAppResourcesChange = false;
+                SkipAppThemeModeSyncing = false;
             }
 
         }
@@ -77,7 +77,7 @@ internal static class ThemeManager
 
     internal static void OnApplicationThemeChanged(ThemeMode oldThemeMode, ThemeMode newThemeMode)
     {
-        IgnoreAppResourcesChange = true;
+        SkipAppThemeModeSyncing = true;
 
         try
         {
@@ -108,7 +108,7 @@ internal static class ThemeManager
         }
         finally
         {
-            IgnoreAppResourcesChange = false;
+            SkipAppThemeModeSyncing = false;
         }
     }
 
@@ -126,10 +126,8 @@ internal static class ThemeManager
         ApplyFluentOnWindow(window);
     }
 
-    internal static bool SyncThemeModeAndResources()
+    internal static bool SyncThemeMode()
     {
-        if(DeferSyncingThemeModeAndResources) return true;
-
        ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
 
         if(Application.Current.ThemeMode != themeMode)
@@ -140,8 +138,10 @@ internal static class ThemeManager
         return false;
     }
 
-    internal static void SyncDeferredThemeModeAndResources()
+    internal static void SyncThemeModeAndResources()
     {
+        // Since, this is called from window there is a possiblity that the application
+        // instance is null. Hence, we need to check for null.
         if(Application.Current == null) return;
 
         ThemeMode themeMode = Application.Current.ThemeMode;
@@ -311,7 +311,7 @@ internal static class ThemeManager
 
     #region Internal Properties
 
-    internal static bool DeferSyncingThemeModeAndResources { get; set; } = true;
+    internal static bool IsAppThemeModeSyncEnabled { get; set; } = false;
 
     internal static bool IsFluentThemeEnabled
     {
@@ -324,7 +324,7 @@ internal static class ThemeManager
 
     internal static bool DeferredAppThemeLoading { get; set; } = false;
 
-    internal static bool IgnoreAppResourcesChange { get; set; } = false;
+    internal static bool SkipAppThemeModeSyncing { get; set; } = false;
 
     internal static double DefaultFluentThemeFontSize => 14;
 

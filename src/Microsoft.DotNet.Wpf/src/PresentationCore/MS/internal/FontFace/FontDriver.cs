@@ -3,27 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
+using System.Buffers.Binary;
+using System.Collections.Generic;
 
-using MS.Internal;
 using MS.Internal.PresentationCore;
-using MS.Utility;
-using MS.Internal.FontCache;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 
 namespace MS.Internal.FontFace
 {
@@ -39,14 +23,25 @@ namespace MS.Internal.FontFace
         TrueTypeCollection
     }
 
-    internal class TrueTypeFontDriver
+    internal sealed unsafe class TrueTypeFontDriver
     {
         #region Font constants, structures and enumerations
 
-        private struct DirectoryEntry
+        /// <summary>
+        /// Describes a directory entry within TrueType Font.
+        /// </summary>
+        private readonly unsafe struct FontDirectoryEntry
         {
-            internal TrueTypeTags   tag;
-            internal CheckedPointer pointer;
+            public readonly TrueTypeTags  Tag;
+            public readonly byte*         Data;
+            public readonly int           Length;
+
+            public FontDirectoryEntry(TrueTypeTags tag, byte* data, int length)
+            {
+                Tag = tag;
+                Data = data;
+                Length = length;
+            }
         }
 
         private enum TrueTypeTags : int
@@ -90,61 +85,52 @@ namespace MS.Internal.FontFace
 
         #endregion
 
-        #region Byte, Short, Long etc. accesss to CheckedPointers
+        #region Byte, Short, Long etc. types in OpenType fonts
 
-        /// <summary>
-        /// The follwoing APIs extract OpenType variable types from OpenType font
-        /// files. OpenType variables are stored big-endian, and the type are named
-        /// as follows:
-        ///     Byte   -  signed     8 bit
-        ///     UShort -  unsigned   16 bit
-        ///     Short  -  signed     16 bit
-        ///     ULong  -  unsigned   32 bit
-        ///     Long   -  signed     32 bit
-        /// </summary>
-        private static ushort ReadOpenTypeUShort(CheckedPointer pointer)
-        {
-            unsafe
-            {
-                byte * readBuffer = (byte *)pointer.Probe(0, 2);
-                ushort result = (ushort)((readBuffer[0] << 8) + readBuffer[1]);
-                return result;
-            }
-        }
+        // The following APIs extract OpenType variable types from OpenType font
+        // files. OpenType variables are stored big-endian, and the type are named
+        // as follows:
+        //     Byte   -  signed     8 bit
+        //     UShort -  unsigned   16 bit
+        //     Short  -  signed     16 bit
+        //     ULong  -  unsigned   32 bit
+        //     Long   -  signed     32 bit
 
-        private static int ReadOpenTypeLong(CheckedPointer pointer)
-        {
-            unsafe
-            {
-                byte * readBuffer = (byte *)pointer.Probe(0, 4);
-                int result = (int)((((((readBuffer[0] << 8) + readBuffer[1]) << 8) + readBuffer[2]) << 8) + readBuffer[3]);
-                return result;
-            }
-        }
-
-        #endregion Byte, Short, Long etc. accesss to CheckedPointers
+        #endregion Byte, Short, Long etc. types in OpenType fonts
 
         #region Constructor and general helpers
 
+        /// <summary>
+        /// Initializes instance from the underlying buffer held by <paramref name="unmanagedMemoryStream"/>.
+        /// The buffer is expected to be pinned (non-movable).
+        /// </summary>
+        /// <param name="unmanagedMemoryStream">TrueType font buffer/file mapping.</param>
+        /// <param name="sourceUri"></param>
+        /// <exception cref="FileFormatException">Thrown when the buffer is not a TrueType font.</exception>
         internal TrueTypeFontDriver(UnmanagedMemoryStream unmanagedMemoryStream, Uri sourceUri)
         {
+            // Check whether we have valid length
+            long streamLength = unmanagedMemoryStream.Length;
+            ArgumentOutOfRangeException.ThrowIfNegative(streamLength);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(streamLength, int.MaxValue);
+
+            // Assign parameters
             _sourceUri = sourceUri;
             _unmanagedMemoryStream = unmanagedMemoryStream;
-            _fileStream = new CheckedPointer(unmanagedMemoryStream);
 
             try
             {
-                CheckedPointer seekPosition = _fileStream;
+                ReadOnlySpan<byte> fileStream = new(unmanagedMemoryStream.PositionPointer, (int)streamLength);
 
-                TrueTypeTags typeTag = (TrueTypeTags)ReadOpenTypeLong(seekPosition);
-                seekPosition += 4;
+                TrueTypeTags typeTag = (TrueTypeTags)BinaryPrimitives.ReadInt32BigEndian(fileStream);
+                fileStream = fileStream.Slice(4);
 
                 if (typeTag == TrueTypeTags.TTC_TTCF)
                 {
                     // this is a TTC file, we need to decode the ttc header
                     _technology = FontTechnology.TrueTypeCollection;
-                    seekPosition += 4; // skip version
-                    _numFaces = ReadOpenTypeLong(seekPosition);
+                    fileStream = fileStream.Slice(4); // skip version
+                    _numFaces = BinaryPrimitives.ReadInt32BigEndian(fileStream);
                 }
                 else if (typeTag == TrueTypeTags.OTTO)
                 {
@@ -159,7 +145,7 @@ namespace MS.Internal.FontFace
             }
             catch (ArgumentOutOfRangeException e)
             {
-                // convert exceptions from CheckedPointer to FileFormatException
+                // convert exceptions from ReadOnlySpan<T> to FileFormatException
                 throw new FileFormatException(SourceUri, e);
             }
         }
@@ -174,60 +160,62 @@ namespace MS.Internal.FontFace
             else
             {
                 if (faceIndex != 0)
-                    throw new ArgumentOutOfRangeException("faceIndex", SR.FaceIndexValidOnlyForTTC);
+                    throw new ArgumentOutOfRangeException(nameof(faceIndex), SR.FaceIndexValidOnlyForTTC);
             }
 
             try
             {
-                CheckedPointer seekPosition = _fileStream + 4;
+                // 4 means that we skip the type tag
+                byte* ptrFontFile = _unmanagedMemoryStream.PositionPointer;
+                int lenFontFile = (int)_unmanagedMemoryStream.Length;
+
+                ReadOnlySpan<byte> fileStream = new(ptrFontFile, lenFontFile);
+                fileStream = fileStream.Slice(4);
 
                 if (_technology == FontTechnology.TrueTypeCollection)
-                {
-                    // this is a TTC file, we need to decode the ttc header
+                {   // this is a TTC file, we need to decode the ttc header
 
                     // skip version, num faces, OffsetTable array
-                    seekPosition += (4 + 4 + 4 * faceIndex);
+                    _directoryOffset = BinaryPrimitives.ReadInt32BigEndian(fileStream.Slice(4 + 4 + 4 * faceIndex));
 
-                    _directoryOffset = ReadOpenTypeLong(seekPosition);
-
-                    seekPosition = _fileStream + (_directoryOffset + 4);
                     // 4 means that we skip the version number
+                    fileStream = fileStream.Slice(_directoryOffset);
                 }
 
                 _faceIndex = faceIndex;
 
-                int numTables = ReadOpenTypeUShort(seekPosition);
-                seekPosition += 2;
+                int numTables = BinaryPrimitives.ReadUInt16BigEndian(fileStream);
+                fileStream = fileStream.Slice(2);
 
                 // quick check for malformed fonts, see if numTables is too large
                 // file size should be >= sizeof(offset table) + numTables * (sizeof(directory entry) + minimum table size (4))
                 long minimumFileSize = (4 + 2 + 2 + 2 + 2) + numTables * (4 + 4 + 4 + 4 + 4);
-                if (_fileStream.Size < minimumFileSize)
+                if (lenFontFile < minimumFileSize)
                 {
                     throw new FileFormatException(SourceUri);
                 }
 
-                _tableDirectory = new DirectoryEntry[numTables];
-
                 // skip searchRange, entrySelector and rangeShift
-                seekPosition += 6;
+                fileStream = fileStream.Slice(6);
 
-                // I can't use foreach here because C# disallows modifying the current value
-                for (int i = 0; i < _tableDirectory.Length; ++i)
+                ReadOnlySpan<byte> fontFile = new(ptrFontFile, lenFontFile);
+                _tableDirectory = new FontDirectoryEntry[numTables];
+                for (int i = 0; i < _tableDirectory.Length; i++)
                 {
-                    _tableDirectory[i].tag = (TrueTypeTags)ReadOpenTypeLong(seekPosition);
-                    seekPosition += 8; // skip checksum
-                    int offset = ReadOpenTypeLong(seekPosition);
-                    seekPosition += 4;
-                    int length = ReadOpenTypeLong(seekPosition);
-                    seekPosition += 4;
+                    TrueTypeTags tag = (TrueTypeTags)BinaryPrimitives.ReadInt32BigEndian(fileStream);
+                    fileStream = fileStream.Slice(8); // skip checksum
+                    int offset = BinaryPrimitives.ReadInt32BigEndian(fileStream);
+                    fileStream = fileStream.Slice(4);
+                    int length = BinaryPrimitives.ReadInt32BigEndian(fileStream);
+                    fileStream = fileStream.Slice(4);
 
-                    _tableDirectory[i].pointer = _fileStream.CheckedProbe(offset, length);
+                    //fontFile.Slice(offset, length).Length checks validity of the offset/length
+                    _tableDirectory[i] = new(tag, ptrFontFile + offset, fontFile.Slice(offset, length).Length);
                 }
             }
             catch (ArgumentOutOfRangeException e)
             {
-                // convert exceptions from CheckedPointer to FileFormatException
+                // convert exceptions from ReadOnlySpan<T> to FileFormatException
                 throw new FileFormatException(SourceUri, e);
             }
         }
@@ -257,48 +245,37 @@ namespace MS.Internal.FontFace
         /// </summary>
         internal byte[] ComputeFontSubset(ICollection<ushort> glyphs)
         {
-            int fileSize = _fileStream.Size;
-            unsafe
+            // Since we currently don't have a way to subset CFF fonts, just return a copy of the font.
+            if (_technology == FontTechnology.PostscriptOpenType)
             {
-                void* fontData = _fileStream.Probe(0, fileSize);
-
-                // Since we currently don't have a way to subset CFF fonts, just return a copy of the font.
-                if (_technology == FontTechnology.PostscriptOpenType)
-                {
-                    byte[] fontCopy = new byte[fileSize];
-                    Marshal.Copy((IntPtr)fontData, fontCopy, 0, fileSize);
-                    return fontCopy;
-                }
-
-                ushort[] glyphArray;
-                if (glyphs == null || glyphs.Count == 0)
-                    glyphArray = null;
-                else
-                {
-                    glyphArray = new ushort[glyphs.Count];
-                    glyphs.CopyTo(glyphArray, 0);
-                }
-
-                return TrueTypeSubsetter.ComputeSubset(fontData, fileSize, SourceUri, _directoryOffset, glyphArray);
+                return new ReadOnlySpan<byte>(_unmanagedMemoryStream.PositionPointer, (int)_unmanagedMemoryStream.Length).ToArray();
             }
+
+            ushort[] glyphArray = null;
+            if (glyphs?.Count > 0)
+            {
+                glyphArray = new ushort[glyphs.Count];
+                glyphs.CopyTo(glyphArray, 0);
+            }
+
+            return TrueTypeSubsetter.ComputeSubset(_unmanagedMemoryStream.PositionPointer, (int)_unmanagedMemoryStream.Length, SourceUri, _directoryOffset, glyphArray);
         }
 
-            
+
         #endregion Public methods and properties   
-        
+
         #region Fields
 
         // file-specific state
-        private CheckedPointer          _fileStream;
-        private UnmanagedMemoryStream   _unmanagedMemoryStream;
-        private Uri                     _sourceUri;
-        private int                     _numFaces;
-        private FontTechnology          _technology;
+        private readonly UnmanagedMemoryStream   _unmanagedMemoryStream;
+        private readonly Uri                     _sourceUri;
+        private readonly int                     _numFaces;
+        private readonly FontTechnology          _technology;
 
         // face-specific state
         private int _faceIndex;
         private int _directoryOffset; // table directory offset for TTC, 0 for TTF
-        private DirectoryEntry[] _tableDirectory;
+        private FontDirectoryEntry[] _tableDirectory;
 
         #endregion
     }

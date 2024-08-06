@@ -431,7 +431,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(c1.context, c2.context);
-                float[] sRGBValue = new float[3];
+                Span<float> sRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(c1.nativeColorValue, sRGBValue);
 
@@ -550,7 +550,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(c1.context, c2.context);
-                float[] sRGBValue = new float[3];
+                Span<float> sRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(c1.nativeColorValue, sRGBValue);
 
@@ -1097,7 +1097,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(this.context, c2.context);
-                float[] scRGBValue = new float[3];
+                Span<float> scRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(this.nativeColorValue, scRGBValue);
 
@@ -1110,16 +1110,11 @@ namespace System.Windows.Media
         private void ComputeNativeValues(int numChannels)
         {
             this.nativeColorValue = new float[numChannels];
-            if (this.nativeColorValue.GetLength(0) > 0)
+            if (this.nativeColorValue.Length > 0)
             {
-                float[] sRGBValue = new float[3];
-
-                sRGBValue[0] = this.sRgbColor.r / 255.0f;
-                sRGBValue[1] = this.sRgbColor.g / 255.0f;
-                sRGBValue[2] = this.sRgbColor.b / 255.0f;
+                Span<float> sRGBValue = [this.sRgbColor.r / 255.0f, this.sRgbColor.g / 255.0f, this.sRgbColor.b / 255.0f];
 
                 ColorTransform colorTransform = new ColorTransform(this.context, new ColorContext(PixelFormats.Bgra32));
-
                 colorTransform.Translate(sRGBValue, this.nativeColorValue);
             }
         }

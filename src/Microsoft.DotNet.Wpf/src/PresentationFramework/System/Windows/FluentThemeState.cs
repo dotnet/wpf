@@ -16,10 +16,5 @@ namespace System.Windows
         public string ThemeName {get; init;}
         public bool UseLightColors {get; init;}
         public Color AccentColor {get; init;}
-
-        public override string ToString()
-        {
-            return $"ThemeName: {ThemeName}, UseLightColors: {UseLightColors}, AccentColor: {AccentColor}";
-        }
     }
 }

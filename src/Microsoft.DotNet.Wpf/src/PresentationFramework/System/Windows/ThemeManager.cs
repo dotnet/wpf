@@ -472,7 +472,7 @@ internal static class ThemeManager
     #region Private Fields
     private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
     private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
-    private static FluentThemeState _currentFluentThemeState = new FluentThemeState("None", false, SystemColors.AccentColor);
+    private static FluentThemeState _currentFluentThemeState = new FluentThemeState("None", false);
 
     #endregion
 }

@@ -362,11 +362,11 @@ internal static class ThemeManager
         if(source == null) return ThemeMode.None;
 
         string sourceString = source.ToString();
-        if(sourceString.EndsWith("Fluent.Light.xaml", StringComparison.OrdinalIgnoreCase))
+        if(sourceString.EndsWith(_fluentLightDictionary, StringComparison.OrdinalIgnoreCase))
         {
             return ThemeMode.Light;
         }
-        else if(sourceString.EndsWith("Fluent.Dark.xaml", StringComparison.OrdinalIgnoreCase))
+        else if(sourceString.EndsWith(_fluentDarkDictionary, StringComparison.OrdinalIgnoreCase))
         {
             return ThemeMode.Dark;
         }
@@ -386,10 +386,10 @@ internal static class ThemeManager
         }
         else
         {
-            themeFileName = useLightMode ? "Fluent.Light.xaml" : "Fluent.Dark.xaml";
+            themeFileName = useLightMode ? _fluentLightDictionary : _fluentDarkDictionary;
         }
 
-        return new Uri(fluentThemeResoruceDictionaryUri + themeFileName, UriKind.Absolute);
+        return new Uri(_fluentThemeResoruceDictionaryUri + themeFileName, UriKind.Absolute);
     }
 
     private static void AddOrUpdateThemeResources(ResourceDictionary rd, Uri dictionaryUri)
@@ -421,7 +421,7 @@ internal static class ThemeManager
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri, 
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(_fluentThemeResoruceDictionaryUri, 
                                                                             StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
@@ -435,13 +435,13 @@ internal static class ThemeManager
     {
         ArgumentNullException.ThrowIfNull(rd, nameof(rd));
 
-        ICollection<int> indices = new List<int>();
+        List<int> indices = new List<int>();
 
         for(int i = rd.MergedDictionaries.Count - 1; i >= 0; i--)
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(fluentThemeResoruceDictionaryUri, 
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(_fluentThemeResoruceDictionaryUri, 
                                                                             StringComparison.OrdinalIgnoreCase))
                 {
                     indices.Add(i);
@@ -470,8 +470,10 @@ internal static class ThemeManager
 
 
     #region Private Fields
-    private static readonly string fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
-    private static readonly string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
+    private const string _fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
+    private const string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
+    private const string _fluentLightDictionary = "Fluent.Light.xaml";
+    private const string _fluentDarkDictionary = "Fluent.Dark.xaml";
     private static FluentThemeState _currentFluentThemeState = new FluentThemeState("None", false);
 
     #endregion

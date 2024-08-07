@@ -693,7 +693,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style x:Key="DefaultAccentButtonStyle" TargetType="{x:Type Button}">
+  <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
@@ -936,32 +936,32 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CalendarItem}">
           <Grid x:Name="PART_Root" Margin="12">
-            <Grid KeyboardNavigation.TabNavigation="Cycle">
+            <Grid KeyboardNavigation.TabNavigation="Local">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
               <!--  HINT: Header with title and navigation buttons  -->
-              <Grid Grid.Row="0" Margin="8,0,8,14">
+              <Grid Grid.Row="0" Margin="8,0,8,14" KeyboardNavigation.TabIndex="0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="Bold" KeyboardNavigation.TabNavigation="Cycle" Foreground="{DynamicResource CalendarViewForeground}" />
-                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" KeyboardNavigation.TabNavigation="Cycle" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" />
+                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
                   </Button.Content>
                 </Button>
-                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" KeyboardNavigation.TabNavigation="Contained" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
                   </Button.Content>
                 </Button>
               </Grid>
               <!--  HINT: Day picker  -->
-              <Grid x:Name="PART_MonthView" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="None" Visibility="Visible">
+              <Grid x:Name="PART_MonthView" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
@@ -981,8 +981,8 @@
                   <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
               </Grid>
-              <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid x:Name="PART_YearView" Visibility="Hidden" KeyboardNavigation.TabNavigation="None">
+              <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
+                <Grid x:Name="PART_YearView" Visibility="Hidden">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -996,7 +996,7 @@
                   </Grid.RowDefinitions>
                 </Grid>
               </Border>
-              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed">
+              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
                 <Rectangle.Fill>
                   <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
                 </Rectangle.Fill>
@@ -3085,10 +3085,12 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
+
+
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-    <Setter Property="PasswordChar" Value="●" />
+    <Setter Property="PasswordChar" Value="●"/>
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />

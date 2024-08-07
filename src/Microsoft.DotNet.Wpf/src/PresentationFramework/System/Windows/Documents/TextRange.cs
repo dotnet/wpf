@@ -95,8 +95,8 @@ namespace System.Windows.Documents
 
             SetFlags(ignoreTextUnitBoundaries, Flags.IgnoreTextUnitBoundaries);
 
-            ValidationHelper.VerifyPosition(position1.TextContainer, position1, "position1");
-            ValidationHelper.VerifyPosition(position1.TextContainer, position2, "position2");
+            ValidationHelper.VerifyPosition(position1.TextContainer, position1);
+            ValidationHelper.VerifyPosition(position1.TextContainer, position2);
 
             TextRangeBase.Select(this, position1, position2);
         }

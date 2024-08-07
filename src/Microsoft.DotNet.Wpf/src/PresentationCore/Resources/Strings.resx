@@ -523,9 +523,6 @@
   <data name="DataObject_DataObjectMustHaveAtLeastOneFormat" xml:space="preserve">
     <value>Data object must have at least one format.</value>
   </data>
-  <data name="DataObject_EmptyFormatNotAllowed" xml:space="preserve">
-    <value>Empty string is not a valid value for parameter 'format'.</value>
-  </data>
   <data name="DataObject_FileDropListHasInvalidFileDropPath" xml:space="preserve">
     <value>'{0}' file drop path is not valid.</value>
   </data>
@@ -2119,9 +2116,6 @@
   <data name="StreamGeometry_NeedBeginFigure" xml:space="preserve">
     <value>BeginFigure must be called before this API.</value>
   </data>
-  <data name="StringEmpty" xml:space="preserve">
-    <value>Parameter cannot be a zero-length string.</value>
-  </data>
   <data name="StrokeCollectionCountTooBig" xml:space="preserve">
     <value>Maximum number of strokes is two.</value>
   </data>
@@ -2157,9 +2151,6 @@
   </data>
   <data name="Stylus_PlugInIsDuplicated" xml:space="preserve">
     <value>'{0}' already exists in the collection.</value>
-  </data>
-  <data name="Stylus_PlugInIsNull" xml:space="preserve">
-    <value>'{0}' must be non-null.</value>
   </data>
   <data name="Stylus_PlugInNotExist" xml:space="preserve">
     <value>'{0}' does not exist in the collection.</value>

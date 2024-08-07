@@ -29,8 +29,10 @@ namespace System.Windows.Markup
         /// <param name="newNamespace">new xml namespace</param>
         public XmlnsCompatibleWithAttribute(string oldNamespace, string newNamespace)
         {
-            OldNamespace = oldNamespace ?? throw new ArgumentNullException(nameof(oldNamespace));
-            NewNamespace = newNamespace ?? throw new ArgumentNullException(nameof(newNamespace));
+            ArgumentNullException.ThrowIfNull(oldNamespace);
+            ArgumentNullException.ThrowIfNull(newNamespace);
+            OldNamespace = oldNamespace;
+            NewNamespace = newNamespace;
         }
 
         /// <summary>

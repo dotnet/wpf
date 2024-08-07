@@ -26,7 +26,8 @@ namespace System.Xaml.Schema
 
         public XamlMemberInvoker(XamlMember member)
         {
-            _member = member ?? throw new ArgumentNullException(nameof(member));
+            ArgumentNullException.ThrowIfNull(member);
+            _member = member;
         }
 
         public static XamlMemberInvoker UnknownInvoker

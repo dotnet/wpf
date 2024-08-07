@@ -89,7 +89,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             if (!ContainsCore(position))
             {
                 throw new ArgumentOutOfRangeException("position");
@@ -117,8 +117,8 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
-            ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
-            ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
+            ValidationHelper.VerifyPosition(_textContainer, startPosition);
+            ValidationHelper.VerifyPosition(_textContainer, endPosition);
 
             _owner.EnsureValidVisuals();
 
@@ -233,7 +233,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             if (!ContainsCore(position))
             {
                 throw new ArgumentOutOfRangeException("position");
@@ -284,7 +284,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             if (!ContainsCore(position))
             {
                 throw new ArgumentOutOfRangeException("position");
@@ -303,7 +303,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             ValidationHelper.VerifyDirection(direction, "direction");
             if (!ContainsCore(position))
             {
@@ -323,7 +323,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             if (!ContainsCore(position))
             {
                 throw new ArgumentOutOfRangeException("position");
@@ -342,7 +342,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             if (!ContainsCore(position))
             {
                 throw new ArgumentOutOfRangeException("position");
@@ -363,8 +363,8 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, start, "start");
-            ValidationHelper.VerifyPosition(_textContainer, end, "end");
+            ValidationHelper.VerifyPosition(_textContainer, start);
+            ValidationHelper.VerifyPosition(_textContainer, end);
             ValidationHelper.VerifyPositionPair(start, end);
             if (!ContainsCore(start))
             {
@@ -390,7 +390,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position);
             return ContainsCore(position);
         }
 

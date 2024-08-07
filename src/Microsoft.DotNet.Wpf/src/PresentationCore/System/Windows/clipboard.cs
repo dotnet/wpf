@@ -87,12 +87,7 @@ namespace System.Windows
         /// </summary>
         public static bool ContainsData(string format)
         {
-            ArgumentNullException.ThrowIfNull(format);
-
-            if (format.Length == 0)
-            {
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-            }
+            ArgumentException.ThrowIfNullOrEmpty(format);
 
             return ContainsDataInternal(format);
         }
@@ -176,12 +171,7 @@ namespace System.Windows
         /// </summary>
         public static object GetData(string format)
         {
-            ArgumentNullException.ThrowIfNull(format);
-
-            if (format == string.Empty)
-            {
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-            }
+            ArgumentException.ThrowIfNullOrEmpty(format);
 
             return GetDataInternal(format);
         }
@@ -268,12 +258,7 @@ namespace System.Windows
         /// </summary>
         public static void SetData(string format, object data)
         {
-            ArgumentNullException.ThrowIfNull(format);
-
-            if (format == string.Empty)
-            {
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-            }
+            ArgumentException.ThrowIfNullOrEmpty(format);
 
             ArgumentNullException.ThrowIfNull(data);
 

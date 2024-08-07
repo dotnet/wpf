@@ -782,11 +782,6 @@
         <target state="translated">Недопустимое имя "{0}" для идентификатора.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NameScopeNameNotEmptyString">
-        <source>Name cannot be an empty string.</source>
-        <target state="translated">Имя не может быть пустой строкой.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NameScopeNameNotFound">
         <source>Name '{0}' was not found.</source>
         <target state="translated">Имя "{0}" не найдено.</target>
@@ -1210,16 +1205,6 @@
       <trans-unit id="SimpleFixupsMustHaveOneName">
         <source>Directly Assignable Fixups must only have one name.</source>
         <target state="translated">У напрямую присваиваемых адресных привязок может быть только одно имя.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringEmpty">
-        <source>Parameter cannot be a zero-length string.</source>
-        <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="StringIsNullOrEmpty">
-        <source>The string is null or empty.</source>
-        <target state="translated">Строка является неопределенной (null) или пустой.</target>
         <note />
       </trans-unit>
       <trans-unit id="TemplateNotCollected">

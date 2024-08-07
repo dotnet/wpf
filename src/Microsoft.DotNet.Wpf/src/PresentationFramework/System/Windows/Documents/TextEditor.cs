@@ -1562,7 +1562,7 @@ namespace System.Windows.Documents
                     }
 
                     _textstore.OnAttach();
-                    Marshal.ReleaseComObject(threadManager);
+                    ((IDisposable)threadManager).Dispose();
                 }
             }
 

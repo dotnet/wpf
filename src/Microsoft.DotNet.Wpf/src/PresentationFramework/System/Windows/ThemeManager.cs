@@ -12,8 +12,6 @@ namespace System.Windows;
 
 internal static class ThemeManager
 {
-
-
     #region Internal Methods
 
     internal static void OnSystemThemeChanged()
@@ -145,30 +143,26 @@ internal static class ThemeManager
         if(Application.Current == null) return;
 
         ThemeMode themeMode = Application.Current.ThemeMode;
+        var rd = Application.Current.Resources;
 
         bool resyncThemeMode = false;
-        int index = FindLastFluentThemeResourceDictionaryIndex(Application.Current.Resources);
+        int index = LastIndexOfFluentThemeDictionary(rd);
 
-        if(index > 0)
+        if (index == -1 && themeMode != ThemeMode.None)
         {
-            // This means that the devleoper has added the Fluent theme resources manually
-            themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);            
+            // This means that ThemeMode was set but Resources were not set during initialization.
+            // Hence we need to resync.
             resyncThemeMode = true;
         }
         else
         {
-            // This means that the developer has set ThemeMode but Resources has not been set
-            // Hence we need to resync the properties but ThemeMode is the one that should be used here.
-            if(themeMode != ThemeMode.None && index != 0)
-            {
-                resyncThemeMode = true;
-            }
-
+            // If index > 0, then Fluent theme dictionary was added manually.
             // If ThemeMode is None, and yet there is a Fluent theme dictionary, hence that was manually set.
-            if(themeMode == ThemeMode.None && index == 0)
+            // Hence we need to resync.
+            if (index > 0 || themeMode == ThemeMode.None)
             {
+                themeMode = GetThemeModeFromSourceUri(rd.MergedDictionaries[index].Source);
                 resyncThemeMode = true;
-                themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);            
             }
         }
 
@@ -353,26 +347,33 @@ internal static class ThemeManager
 
         if (rd == null) return themeMode;
 
-        int index = FindLastFluentThemeResourceDictionaryIndex(rd);
+        int index = LastIndexOfFluentThemeDictionary(rd);
 
         if(index != -1)
         {
-            string dictionarySource = rd.MergedDictionaries[index].Source.ToString();
-            if(dictionarySource.EndsWith("Fluent.Light.xaml", StringComparison.OrdinalIgnoreCase))
-            {
-                themeMode = ThemeMode.Light;
-            }
-            else if(dictionarySource.EndsWith("Fluent.Dark.xaml", StringComparison.OrdinalIgnoreCase))
-            {
-                themeMode = ThemeMode.Dark;
-            }
-            else
-            {
-                themeMode = ThemeMode.System;
-            }
+            themeMode = GetThemeModeFromSourceUri(rd.MergedDictionaries[index].Source);
         }
 
         return themeMode;
+    }
+
+    private static ThemeMode GetThemeModeFromSourceUri(Uri source)
+    {
+        if(source == null) return ThemeMode.None;
+
+        string sourceString = source.ToString();
+        if(sourceString.EndsWith("Fluent.Light.xaml", StringComparison.OrdinalIgnoreCase))
+        {
+            return ThemeMode.Light;
+        }
+        else if(sourceString.EndsWith("Fluent.Dark.xaml", StringComparison.OrdinalIgnoreCase))
+        {
+            return ThemeMode.Dark;
+        }
+        else
+        {
+            return ThemeMode.System;
+        }
     }
 
     private static Uri GetFluentThemeResourceUri(bool useLightMode)
@@ -398,7 +399,7 @@ internal static class ThemeManager
         ArgumentNullException.ThrowIfNull(dictionaryUri);
         
         var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
-        int index = FindLastFluentThemeResourceDictionaryIndex(rd);
+        int index = LastIndexOfFluentThemeDictionary(rd);
 
         if (index >= 0)
         {
@@ -410,7 +411,7 @@ internal static class ThemeManager
         }
     }
 
-    private static int FindLastFluentThemeResourceDictionaryIndex(ResourceDictionary rd)
+    private static int LastIndexOfFluentThemeDictionary(ResourceDictionary rd)
     {
         // Throwing here because, here we are passing application or window resources,
         // and even though when the field is null, a new RD is created and returned.

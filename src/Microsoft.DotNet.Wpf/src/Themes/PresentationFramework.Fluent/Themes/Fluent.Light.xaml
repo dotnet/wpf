@@ -385,7 +385,7 @@
   <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--<SolidColorBrush x:Key="ComboBoxItemBorderBrush" Color="{StaticResource ControlElevationBorderBrush}" />-->
   <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
-  <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
@@ -430,8 +430,8 @@
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundDisabled" Color="{StaticResource SubtleFillColorDisabled}" />
-  <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{StaticResource SystemAccentColorDark1}" />
-  <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.9" />
+  <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" Opacity="0.9" />
   <SolidColorBrush x:Key="HyperlinkButtonForegroundPressed" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.8" />
   <SolidColorBrush x:Key="HyperlinkButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  InfoBadge  -->
@@ -446,7 +446,7 @@
   <SolidColorBrush x:Key="InfoBarErrorSeverityIconBackground" Color="{StaticResource SystemFillColorCritical}" />
   <SolidColorBrush x:Key="InfoBarWarningSeverityIconBackground" Color="{StaticResource SystemFillColorCaution}" />
   <SolidColorBrush x:Key="InfoBarSuccessSeverityIconBackground" Color="{StaticResource SystemFillColorSuccess}" />
-  <SolidColorBrush x:Key="InfoBarInformationalSeverityIconBackground" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="InfoBarInformationalSeverityIconBackground" Color="{StaticResource SystemAccentColor}" />
   <!--  Label  -->
   <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  ListBox  -->
@@ -606,7 +606,7 @@
   <SolidColorBrush x:Key="ToggleSwitchStrokeOffPointerOver" Color="{StaticResource ControlStrongStrokeColorDefault}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOffDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{StaticResource SystemAccentColorDark1}" />
-  <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOnDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.9" />

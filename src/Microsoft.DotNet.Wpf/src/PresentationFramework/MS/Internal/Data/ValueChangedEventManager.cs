@@ -89,7 +89,7 @@ namespace MS.Internal.Data
         public static void AddHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
             ArgumentNullException.ThrowIfNull(handler);
-            if (handler.GetInvocationList().Length != 1)
+            if (!handler.HasSingleTarget)
                 throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateAddHandler(source, handler, pd);
@@ -101,7 +101,7 @@ namespace MS.Internal.Data
         public static void RemoveHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
             ArgumentNullException.ThrowIfNull(handler);
-            if (handler.GetInvocationList().Length != 1)
+            if (!handler.HasSingleTarget)
                 throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateRemoveHandler(source, handler, pd);

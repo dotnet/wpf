@@ -99,7 +99,7 @@ namespace MS.Internal
                 {
                     // If a valid window is not specified, then query the current process instead of the process
                     // associated with the window
-                    windowThreadProcessId = SafeNativeMethods.GetCurrentProcessId();
+                    windowThreadProcessId = Environment.ProcessId;
                 }
 
                 Debug.Assert(windowThreadProcessId != 0, "GetWindowThreadProcessId failed");

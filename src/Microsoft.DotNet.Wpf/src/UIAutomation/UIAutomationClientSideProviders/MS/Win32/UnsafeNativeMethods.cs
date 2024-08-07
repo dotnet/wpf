@@ -34,8 +34,6 @@ namespace MS.Win32
         internal static extern IntPtr OpenProcess(int flags, bool inherit, uint dwProcessId);
 
         [DllImport(ExternDll.Kernel32)]
-        public static extern uint GetCurrentProcessId();
-        [DllImport(ExternDll.Kernel32)]
         internal static extern void GetSystemInfo(out NativeMethods.SYSTEM_INFO SystemInfo);
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern bool IsWow64Process(MS.Internal.AutomationProxies.SafeProcessHandle hProcess, out bool Wow64Process);

@@ -621,7 +621,7 @@
       <Setter.Value>
         <ControlTemplate>
           <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
+            <Rectangle RadiusX="4" RadiusY="4" Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
           </Border>
         </ControlTemplate>
       </Setter.Value>
@@ -1171,7 +1171,7 @@
       <Setter.Value>
         <ControlTemplate>
           <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
+            <Rectangle RadiusX="4" RadiusY="4" Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
           </Border>
         </ControlTemplate>
       </Setter.Value>
@@ -2322,7 +2322,7 @@
       <Setter.Value>
         <ControlTemplate>
           <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
+            <Rectangle RadiusX="4" RadiusY="4" Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
           </Border>
         </ControlTemplate>
       </Setter.Value>

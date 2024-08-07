@@ -21,6 +21,8 @@
                 <ControlTemplate>
                     <Border>
                         <Rectangle
+                                RadiusX="4"
+                                RadiusY="4"
                                 Margin="-3"
                                 StrokeThickness="1"
                                 Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"

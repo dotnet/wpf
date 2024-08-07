@@ -345,7 +345,7 @@
                                     Grid.Column="1" 
                                     Width="26"
                                     Height="26"
-                                    Margin="7,6,3,7"
+                                    Margin="7,6,7,7"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
@@ -366,7 +366,7 @@
                                     Grid.Column="2"
                                     Width="26"
                                     Height="26"
-                                    Margin="3,6,7,7"
+                                    Margin="7,6,7,7"
                                     Padding="0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
@@ -383,7 +383,7 @@
                                     </Button.Content>
                                 </Button>
                             </Grid>
-                            <Border Grid.Row="1" Height="1" Background="{DynamicResource CalendarViewBorderBrush}" />
+                            <Border Grid.Row="1" Height="0.5" Background="{DynamicResource CalendarViewBorderBrush}" />
                             <!--  HINT: Day picker  -->
                             <Grid
                                 x:Name="PART_MonthView"
@@ -499,7 +499,7 @@
                         Background="{DynamicResource CalendarViewBackground}"
                         BorderBrush="{DynamicResource CalendarViewBorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="8">
+                        CornerRadius="4">
                         <CalendarItem
                             x:Name="PART_CalendarItem"
                             Margin="0"

@@ -5,13 +5,14 @@
 //
 // 
 //
-// Description: Contains the ThicknessConverter: TypeConverter for the Thicknessclass.
+// Description: Contains the ThicknessConverter: TypeConverter for the Thickness struct.
 //
 //
 
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -73,15 +74,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor) 
-                ||  destinationType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
@@ -102,12 +95,16 @@ namespace System.Windows
         /// <param name="source"> The object to convert to a Thickness. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
+            if (source is not null)
             {
-                if (source is string)      { return FromString((string)source, cultureInfo); }
-                else if (source is double) { return new Thickness((double)source); }
-                else                       { return new Thickness(Convert.ToDouble(source, cultureInfo)); }
+                if (source is string sourceString)
+                    return FromString(sourceString, cultureInfo);
+                else if (source is double sourceValue)
+                    return new Thickness(sourceValue);
+                else
+                    return new Thickness(Convert.ToDouble(source, cultureInfo));
             }
+
             throw GetConvertFromException(source);
         }
 
@@ -115,7 +112,7 @@ namespace System.Windows
         /// ConvertTo - Attempt to convert a Thickness to the given type
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
@@ -133,22 +130,18 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(value);
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (!(value is Thickness))
-            {
-                #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Thickness)), "value");
-            }
+            if (value is not Thickness thickness)
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Thickness)), nameof(value));
 
-            Thickness th = (Thickness)value;
-            if (destinationType == typeof(string)) { return ToString(th, cultureInfo); }
-            if (destinationType == typeof(InstanceDescriptor))
+            if (destinationType == typeof(string))
+                return ToString(thickness, cultureInfo);
+            else if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(Thickness).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
-                return new InstanceDescriptor(ci, new object[] { th.Left, th.Top, th.Right, th.Bottom });
+                return new InstanceDescriptor(ci, new object[] { thickness.Left, thickness.Top, thickness.Right, thickness.Bottom });
             }
 
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(Thickness), destinationType.FullName));
-
         }
 
 
@@ -169,53 +162,50 @@ namespace System.Windows
             // Initial capacity [64] is an estimate based on a sum of:
             // 48 = 4x double (twelve digits is generous for the range of values likely)
             //  8 = 4x Unit Type string (approx two characters)
-            //  4 = 4x separator characters
-            StringBuilder sb = new StringBuilder(64);
+            //  3 = 3x separator characters
+            //  1 = 1x scratch space for alignment
 
-            sb.Append(LengthConverter.ToString(th.Left, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Top, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Right, cultureInfo));
-            sb.Append(listSeparator);
-            sb.Append(LengthConverter.ToString(th.Bottom, cultureInfo));
-            return sb.ToString();
+            DefaultInterpolatedStringHandler handler = new(0, 7, cultureInfo, stackalloc char[64]);
+            LengthConverter.FormatLengthAsString(th.Left, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            LengthConverter.FormatLengthAsString(th.Top, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            LengthConverter.FormatLengthAsString(th.Right, ref handler);
+            handler.AppendFormatted(listSeparator);
+
+            LengthConverter.FormatLengthAsString(th.Bottom, ref handler);
+
+            return handler.ToStringAndClear();
         }
 
-        static internal Thickness FromString(string s, CultureInfo cultureInfo)
+        static internal unsafe Thickness FromString(string s, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
-            double[] lengths = new double[4];
+            TokenizerHelper th = new(s, cultureInfo);
+            double* lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.
             while (th.NextToken())
             {
-                if (i >= 4)
-                {
-                    i = 5;    // Set i to a bad value. 
-                    break;
-                }
+                if (i >= 4) // In case we've got more than 4 doubles, we throw
+                    throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
 
                 lengths[i] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
-            // We have a reasonable interpreation for one value (all four edges), two values (horizontal, vertical),
+            // We have a reasonable interpretation for one value (all four edges),
+            // two values (horizontal, vertical),
             // and four values (left, top, right, bottom).
-            switch (i)
+            return i switch
             {
-                case 1:
-                    return new Thickness(lengths[0]);
-
-                case 2:
-                    return new Thickness(lengths[0], lengths[1], lengths[0], lengths[1]);
-
-                case 4:
-                    return new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]);
-            }
-
-            throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
+                1 => new Thickness(lengths[0]),
+                2 => new Thickness(lengths[0], lengths[1], lengths[0], lengths[1]),
+                4 => new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringThickness, s)),
+            };
         }
 
     #endregion

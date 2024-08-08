@@ -56,13 +56,13 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)"
-                                            To="0.86"
-                                            Duration="0:0:0.1" />
+                                            To="1"
+                                            Duration="0:0:0.25" />
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
-                                            To="0.86"
-                                            Duration="0:0:0.1" />
+                                            To="1"
+                                            Duration="0:0:0.25" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
@@ -71,12 +71,12 @@
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)"
                                             To="1.167"
-                                            Duration="0:0:0.1" />
+                                            Duration="0:0:0.25" />
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
                                             To="1.167"
-                                            Duration="0:0:0.1" />
+                                            Duration="0:0:0.25" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -84,13 +84,13 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)"
-                                            To="0.71"
-                                            Duration="0:0:0.1" />
+                                            To="0.86"
+                                            Duration="0:0:0.25" />
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
-                                            To="0.71"
-                                            Duration="0:0:0.1" />
+                                            To="0.86"
+                                            Duration="0:0:0.25" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

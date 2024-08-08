@@ -4,7 +4,7 @@
 
 using System;
 using System.Security;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 namespace MS.Internal.Ink
 {
@@ -18,14 +18,14 @@ namespace MS.Internal.Ink
             // NOTICE-2005/10/14-WAYNEZEN,
             // Make sure those lengths are indepentent from the 32bit or 64bit platform. Otherwise it could 
             // break the ISF format.
-            SizeOfInt = (uint)Marshal.SizeOf(typeof(int));
-            SizeOfUInt = (uint)Marshal.SizeOf(typeof(uint));
-            SizeOfUShort = (uint)Marshal.SizeOf(typeof(ushort));
-            SizeOfByte = (uint)Marshal.SizeOf(typeof(byte));
-            SizeOfFloat = (uint)Marshal.SizeOf(typeof(float));
-            SizeOfDouble = (uint)Marshal.SizeOf(typeof(double));
-            SizeOfGuid = (uint)Marshal.SizeOf(typeof(Guid));
-            SizeOfDecimal = (uint)Marshal.SizeOf(typeof(decimal));
+            SizeOfInt = sizeof(int);
+            SizeOfUInt = sizeof(uint);
+            SizeOfUShort = sizeof(ushort);
+            SizeOfByte = sizeof(byte);
+            SizeOfFloat = sizeof(float);
+            SizeOfDouble = sizeof(double);
+            SizeOfGuid = (uint)Unsafe.SizeOf<Guid>();
+            SizeOfDecimal = sizeof(decimal);
         }
 
         internal static readonly uint SizeOfInt;      // Size of an int

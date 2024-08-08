@@ -693,8 +693,7 @@ namespace MS.Internal.Printing
             bool
             Is64Bit()
             {
-                IntPtr temp = IntPtr.Zero;
-                return Marshal.SizeOf(temp) == 8;
+                return IntPtr.Size == sizeof(long);
             }
 
             /// <summary>

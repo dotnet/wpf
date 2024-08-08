@@ -3093,7 +3093,7 @@
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-    <Setter Property="PasswordChar" Value="●"/>
+    <Setter Property="PasswordChar" Value="â—" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3239,6 +3239,28 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RadioButton}">
           <Grid HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="0.86" Duration="0:0:0.1" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="0.86" Duration="0:0:0.1" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="MouseOver">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="1.167" Duration="0:0:0.1" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="1.167" Duration="0:0:0.1" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="0.71" Duration="0:0:0.1" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="0.71" Duration="0:0:0.1" />
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="20" />
               <ColumnDefinition Width="*" />
@@ -3247,10 +3269,10 @@
               <Ellipse x:Name="OuterEllipse" Width="{StaticResource RadioButtonOuterEllipseSize}" Height="{StaticResource RadioButtonOuterEllipseSize}" Fill="{DynamicResource RadioButtonOuterEllipseFill}" Stroke="{DynamicResource RadioButtonOuterEllipseStroke}" StrokeThickness="{StaticResource RadioButtonStrokeThickness}" UseLayoutRounding="False" />
               <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
               <Ellipse x:Name="CheckOuterEllipse" Width="{StaticResource RadioButtonOuterEllipseSize}" Height="{StaticResource RadioButtonOuterEllipseSize}" Fill="{TemplateBinding Background}" Opacity="0" Stroke="{TemplateBinding Background}" StrokeThickness="{StaticResource RadioButtonStrokeThickness}" UseLayoutRounding="False" />
-              <Ellipse x:Name="CheckGlyph" Width="{StaticResource RadioButtonCheckGlyphSize}" Height="{StaticResource RadioButtonCheckGlyphSize}" Fill="{DynamicResource RadioButtonCheckGlyphFill}" Opacity="0" Stroke="{DynamicResource CircleElevationBorderBrush}" UseLayoutRounding="False">
-                <Ellipse.LayoutTransform>
-                  <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
-                </Ellipse.LayoutTransform>
+              <Ellipse x:Name="CheckGlyph" Width="{StaticResource RadioButtonCheckGlyphSize}" Height="{StaticResource RadioButtonCheckGlyphSize}" Fill="{DynamicResource RadioButtonCheckGlyphFill}" RenderTransformOrigin="0.5, 0.5" Opacity="0" Stroke="{DynamicResource CircleElevationBorderBrush}" UseLayoutRounding="False">
+                <Ellipse.RenderTransform>
+                  <ScaleTransform />
+                </Ellipse.RenderTransform>
               </Ellipse>
               <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
               <Border x:Name="PressedCheckGlyph" Width="4" Height="4" Background="{DynamicResource RadioButtonCheckGlyphFill}" BorderBrush="{DynamicResource CircleElevationBorderBrush}" CornerRadius="6" Opacity="0" UseLayoutRounding="False" />

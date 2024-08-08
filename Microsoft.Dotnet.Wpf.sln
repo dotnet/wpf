@@ -253,6 +253,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluent-ref", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj", "{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}"
 EndProject
+Project("{6FFF8BB3-74D1-4860-BEF1-5B307BCDBB95}") = "WindowsBase.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\WindowsBase.Tests\WindowsBase.Tests.csproj", "{A5DC575D-EC10-445B-94C1-98015F926FFA}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCore.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests\PresentationCore.Tests.csproj", "{A4377D3F-6BA1-4994-945C-88667993E4F3}"
 EndProject
 Global
@@ -1990,6 +1992,28 @@ Global
 		{A4377D3F-6BA1-4994-945C-88667993E4F3}.Release|x64.Build.0 = Release|x64
 		{A4377D3F-6BA1-4994-945C-88667993E4F3}.Release|x86.ActiveCfg = Release|x86
 		{A4377D3F-6BA1-4994-945C-88667993E4F3}.Release|x86.Build.0 = Release|x86
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|Any CPU.Build.0 = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|Any CPU.Deploy.0 = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|ARM64.Build.0 = Debug|ARM64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x64.ActiveCfg = Debug|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x64.Build.0 = Debug|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x64.Deploy.0 = Debug|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x86.ActiveCfg = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x86.Build.0 = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Debug|x86.Deploy.0 = Debug|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|Any CPU.Build.0 = Release|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|Any CPU.Deploy.0 = Release|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|ARM64.Build.0 = Release|ARM64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x64.ActiveCfg = Release|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x64.Build.0 = Release|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x64.Deploy.0 = Release|x64
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x86.ActiveCfg = Release|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x86.Build.0 = Release|Win32
+		{A5DC575D-EC10-445B-94C1-98015F926FFA}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2113,6 +2137,7 @@ Global
 		{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9} = {5ACFB055-649D-4A01-98C2-B0BFE7E543D6}
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
 		{A4377D3F-6BA1-4994-945C-88667993E4F3} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
+		{A5DC575D-EC10-445B-94C1-98015F926FFA} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4340004-DAC0-497D-B69D-CFA7CD93F567}

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>WindowsBase.Tests</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
+    <PackageReference Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

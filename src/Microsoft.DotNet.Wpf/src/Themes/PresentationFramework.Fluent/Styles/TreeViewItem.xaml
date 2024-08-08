@@ -17,7 +17,7 @@
 
     <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
         <Setter Property="Focusable" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -75,7 +75,7 @@
 
     <Style x:Key="DefaultTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
         <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
         <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />

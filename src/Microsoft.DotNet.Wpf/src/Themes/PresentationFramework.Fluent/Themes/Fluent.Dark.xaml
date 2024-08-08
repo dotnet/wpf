@@ -8,7 +8,16 @@
     <Setter Property="Control.Template">
       <Setter.Value>
         <ControlTemplate>
-          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="1" />
+          <Rectangle RadiusX="4" RadiusY="4" Margin="-3" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="DefaultCollectionFocusVisualStyle">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -644,19 +653,8 @@
   <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
-  <Style x:Key="ButtonFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultButtonStyle" TargetType="{x:Type ButtonBase}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -699,7 +697,7 @@
     </Setter>
   </Style>
   <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
@@ -1194,17 +1192,6 @@
   <system:Double x:Key="ComboBoxChevronSize">11.0</system:Double>
   <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
   <system:String x:Key="ComboBoxChevronDownGlyph"></system:String>
-  <Style x:Key="ComboBoxFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Focus by parent element  -->
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -1290,7 +1277,7 @@
   </Style>
   <Style x:Key="DefaultComboBoxStyle" TargetType="{x:Type ComboBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ComboBoxFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
@@ -2345,17 +2332,6 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
-  <Style x:Key="ExpanderHeaderFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultExpanderStyle" TargetType="{x:Type Expander}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
@@ -2378,7 +2354,7 @@
         <ControlTemplate TargetType="{x:Type Expander}">
           <DockPanel>
             <Border x:Name="ToggleButtonBorder" DockPanel.Dock="Top" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{TemplateBinding Border.CornerRadius}">
-              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" />
+              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{DynamicResource DefaultControlFocusVisualStyle}" />
             </Border>
             <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
@@ -2649,6 +2625,7 @@
     <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="Border.CornerRadius" Value="0" />
@@ -2737,6 +2714,7 @@
     <Setter Property="Margin" Value="0,0,0,2" />
     <Setter Property="Padding" Value="4" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -3020,7 +2998,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3077,7 +3055,7 @@
   </ContextMenu>
   <Style x:Key="DefaultPasswordBoxStyle" TargetType="{x:Type PasswordBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultPasswordBoxContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4073,7 +4051,7 @@
   </Style>
   <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4205,7 +4183,7 @@
   </ControlTemplate>
   <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4561,7 +4539,7 @@
   <system:String x:Key="TreeViewChevronRightGlyph"></system:String>
   <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -4599,7 +4577,7 @@
   </Style>
   <Style x:Key="DefaultTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />

@@ -90,6 +90,7 @@
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">

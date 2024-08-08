@@ -51,7 +51,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronDownGlyph}" />
             </Grid>
@@ -111,7 +111,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronUpGlyph}" />
             </Grid>
@@ -171,7 +171,7 @@
                         x:Name="ControlChevronIcon"
                         FontSize="{StaticResource ExpanderChevronSize}"
                         Foreground="{TemplateBinding Foreground}"
-                        FontFamily="{DynamicResource SegoeFluentIcons}"
+                        FontFamily="{DynamicResource SymbolThemeFontFamily}"
                         HorizontalAlignment="Center"
                         Text="{StaticResource ExpanderChevronLeftGlyph}" />
             </Grid>
@@ -231,7 +231,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronRightGlyph}" />
             </Grid>

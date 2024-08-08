@@ -232,7 +232,7 @@
                                             FontSize="{StaticResource ComboBoxChevronSize}"
                                             Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"
                                             RenderTransformOrigin="0.5, 0.5"
-                                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                             Text ="{StaticResource ComboBoxChevronDownGlyph}">
                                             <TextBlock.RenderTransform>
                                                 <RotateTransform Angle="0" />

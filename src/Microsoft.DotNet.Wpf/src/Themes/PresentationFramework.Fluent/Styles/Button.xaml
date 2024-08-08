@@ -15,24 +15,8 @@
     <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
     <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
 
-    <Style x:Key="ButtonFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle
-                                Margin="-3"
-                                StrokeThickness="1"
-                                Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
-                                SnapsToDevicePixels="true"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="DefaultButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -92,7 +76,7 @@
     </Style>
 
     <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />

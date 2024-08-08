@@ -40,7 +40,7 @@
 
     <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
         <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -188,7 +188,7 @@
                         <Button.Content>
                             <TextBlock
                                 FontSize="{TemplateBinding FontSize}"
-                                FontFamily="{DynamicResource SegoeFluentIcons}"
+                                FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                 >&#xE894;</TextBlock>
                         </Button.Content>
                     </Button>
@@ -254,7 +254,7 @@
 
     <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
         <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />

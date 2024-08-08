@@ -38,7 +38,7 @@
                             x:Name="ChevronIcon"
                             VerticalAlignment="Center"
                             FontSize="{StaticResource TreeViewItemChevronSize}"
-                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                             HorizontalAlignment="Center"
                             Text="{StaticResource TreeViewChevronRightGlyph}" />
                     </Grid>

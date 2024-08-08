@@ -28,7 +28,7 @@ internal static class ThemeManager
 
                 FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
 
-                if(_currentFluentThemeState == newFluentThemeState)
+                if(s_currentFluentThemeState == newFluentThemeState)
                 {
                     return;
                 }
@@ -47,7 +47,7 @@ internal static class ThemeManager
                     }
                 }
 
-                _currentFluentThemeState = newFluentThemeState;
+                s_currentFluentThemeState = newFluentThemeState;
             }
             finally
             {
@@ -84,7 +84,7 @@ internal static class ThemeManager
                 if(oldThemeMode != newThemeMode)
                 {
                     RemoveFluentFromApplication();
-                    _currentFluentThemeState = new FluentThemeState("None", false);
+                    s_currentFluentThemeState = new FluentThemeState("None", false);
                 }
                 return;
             }
@@ -102,7 +102,7 @@ internal static class ThemeManager
                 }
             }
 
-            _currentFluentThemeState= new FluentThemeState(newThemeMode.Value, useLightColors);
+            s_currentFluentThemeState = new FluentThemeState(newThemeMode.Value, useLightColors);
         }
         finally
         {
@@ -362,11 +362,11 @@ internal static class ThemeManager
         if(source == null) return ThemeMode.None;
 
         string sourceString = source.ToString();
-        if(sourceString.EndsWith(_fluentLightDictionary, StringComparison.OrdinalIgnoreCase))
+        if(sourceString.EndsWith(FluentLightDictionary, StringComparison.OrdinalIgnoreCase))
         {
             return ThemeMode.Light;
         }
-        else if(sourceString.EndsWith(_fluentDarkDictionary, StringComparison.OrdinalIgnoreCase))
+        else if(sourceString.EndsWith(FluentDarkDictionary, StringComparison.OrdinalIgnoreCase))
         {
             return ThemeMode.Dark;
         }
@@ -386,10 +386,10 @@ internal static class ThemeManager
         }
         else
         {
-            themeFileName = useLightMode ? _fluentLightDictionary : _fluentDarkDictionary;
+            themeFileName = useLightMode ? FluentLightDictionary : FluentDarkDictionary;
         }
 
-        return new Uri(_fluentThemeResoruceDictionaryUri + themeFileName, UriKind.Absolute);
+        return new Uri(FluentThemeResourceDictionaryUri + themeFileName, UriKind.Absolute);
     }
 
     private static void AddOrUpdateThemeResources(ResourceDictionary rd, Uri dictionaryUri)
@@ -421,7 +421,7 @@ internal static class ThemeManager
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(_fluentThemeResoruceDictionaryUri, 
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(FluentThemeResourceDictionaryUri, 
                                                                             StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
@@ -441,7 +441,7 @@ internal static class ThemeManager
         {
             if(rd.MergedDictionaries[i].Source != null)
             {
-                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(_fluentThemeResoruceDictionaryUri, 
+                if(rd.MergedDictionaries[i].Source.ToString().StartsWith(FluentThemeResourceDictionaryUri, 
                                                                             StringComparison.OrdinalIgnoreCase))
                 {
                     indices.Add(i);
@@ -454,12 +454,12 @@ internal static class ThemeManager
 
     private static bool IsSystemThemeLight()
     {
-        var useLightTheme = Registry.GetValue(_regPersonalizeKeyPath,
+        var useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
             "AppsUseLightTheme", null) as int?;
 
         if (useLightTheme == null)
         {
-            useLightTheme = Registry.GetValue(_regPersonalizeKeyPath,
+            useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
                 "SystemUsesLightTheme", null) as int?;
         }
 
@@ -470,11 +470,11 @@ internal static class ThemeManager
 
 
     #region Private Fields
-    private const string _fluentThemeResoruceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
-    private const string _regPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
-    private const string _fluentLightDictionary = "Fluent.Light.xaml";
-    private const string _fluentDarkDictionary = "Fluent.Dark.xaml";
-    private static FluentThemeState _currentFluentThemeState = new FluentThemeState("None", false);
+    private const string FluentThemeResourceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
+    private const string RegPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
+    private const string FluentLightDictionary = "Fluent.Light.xaml";
+    private const string FluentDarkDictionary = "Fluent.Dark.xaml";
+    private static FluentThemeState s_currentFluentThemeState = new FluentThemeState("None", false);
 
     #endregion
 }

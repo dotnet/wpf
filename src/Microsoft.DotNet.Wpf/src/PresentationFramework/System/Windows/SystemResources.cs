@@ -1744,9 +1744,17 @@ namespace System.Windows
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    RemoveFromDictionary();
-                    // Update after removal from dictionary as we need the key for proper removal
-                    _keyOrValue = value;
+                    if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                    {
+                        _keyOrValue = value;
+                        RemoveFromDictionary();
+                    }
+                    else
+                    {
+                        RemoveFromDictionary();
+                        // Update after removal from dictionary as we need the key for proper removal
+                        _keyOrValue = value;
+                    }
                 }
 
                 // Freeze if this value originated from a style or template
@@ -1804,11 +1812,18 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        protected virtual void RemoveFromDictionary()
+        internal virtual void RemoveFromDictionary()
         {
             if (_dictionary != null)
             {
-                _dictionary.DeferredResourceReferences.Remove(this);
+                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                {
+                    _dictionary.WeakDeferredResourceReferences.Remove(this);
+                }
+                else
+                {
+                    _dictionary.DeferredResourceReferencesList.Remove(this);
+                }
                 _dictionary = null;
             }
         }
@@ -1974,7 +1989,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        protected override void RemoveFromDictionary()
+        internal override void RemoveFromDictionary()
         {
             // DeferredThemeResourceReferences are never added to the dictionary's
             // list of deferred references, so they don't need to be removed.

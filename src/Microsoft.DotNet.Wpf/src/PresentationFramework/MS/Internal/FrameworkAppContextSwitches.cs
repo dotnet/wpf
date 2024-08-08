@@ -142,6 +142,19 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(DisableFluentThemeWindowBackdropSwitchName, ref _DisableFluentThemeWindowBackdrop);
             }
         }
+
+
+        // Switch to disable DynamicResource optimizations
+        internal const string DisableDynamicResourceOptimizationSwitchName = "Switch.System.Windows.Controls.DisableDynamicResourceOptimization";
+        private static int _DisableDynamicResourceOptimization;
+        public static bool DisableDynamicResourceOptimization
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDynamicResourceOptimizationSwitchName, ref _DisableDynamicResourceOptimization);
+            }
+        }
     }
 
 #pragma warning restore 436

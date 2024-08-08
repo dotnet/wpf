@@ -209,7 +209,7 @@
     <!--  Calendar  -->
     <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />

@@ -148,11 +148,14 @@ internal static class ThemeManager
         bool resyncThemeMode = false;
         int index = LastIndexOfFluentThemeDictionary(rd);
 
-        if (index == -1 && themeMode != ThemeMode.None)
+        if (index == -1)
         {
             // This means that ThemeMode was set but Resources were not set during initialization.
             // Hence we need to resync.
-            resyncThemeMode = true;
+            if(themeMode != themeMode.None)
+            {
+                resyncThemeMode = true;
+            }
         }
         else
         {

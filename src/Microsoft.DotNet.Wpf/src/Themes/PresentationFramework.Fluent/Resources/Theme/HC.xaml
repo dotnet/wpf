@@ -290,6 +290,15 @@
     <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 
+    <!--  DatePicker  -->
+    <SolidColorBrush x:Key="DatePickerForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="Transparent" />
     <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="{StaticResource SystemColorButtonTextColor}" />

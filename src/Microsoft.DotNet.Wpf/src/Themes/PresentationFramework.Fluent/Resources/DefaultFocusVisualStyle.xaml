@@ -14,9 +14,25 @@
                     <Rectangle
                         RadiusX="4"
                         RadiusY="4"
+                        Margin = "-3"
                         SnapsToDevicePixels="True"
                         Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
-                        StrokeThickness="1" />
+                        StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DefaultCollectionFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        RadiusX="4"
+                        RadiusY="4"
+                        SnapsToDevicePixels="True"
+                        Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
+                        StrokeThickness="2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

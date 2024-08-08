@@ -51,7 +51,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronDownGlyph}" />
             </Grid>
@@ -111,7 +111,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronUpGlyph}" />
             </Grid>
@@ -171,7 +171,7 @@
                         x:Name="ControlChevronIcon"
                         FontSize="{StaticResource ExpanderChevronSize}"
                         Foreground="{TemplateBinding Foreground}"
-                        FontFamily="{DynamicResource SegoeFluentIcons}"
+                        FontFamily="{DynamicResource SymbolThemeFontFamily}"
                         HorizontalAlignment="Center"
                         Text="{StaticResource ExpanderChevronLeftGlyph}" />
             </Grid>
@@ -231,7 +231,7 @@
                     x:Name="ControlChevronIcon"
                     FontSize="{StaticResource ExpanderChevronSize}"
                     Foreground="{TemplateBinding Foreground}"
-                    FontFamily="{DynamicResource SegoeFluentIcons}"
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     HorizontalAlignment="Center"
                     Text="{StaticResource ExpanderChevronRightGlyph}" />
             </Grid>
@@ -263,22 +263,6 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-
-    <Style x:Key="ExpanderHeaderFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle 
-                            Margin="-3"
-                            StrokeThickness="1"
-                            Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
-                            SnapsToDevicePixels="true"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <Style x:Key="DefaultExpanderStyle" TargetType="{x:Type Expander}">
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
@@ -323,7 +307,7 @@
                                         IsEnabled="{TemplateBinding IsEnabled}"
                                         OverridesDefaultStyle="True"
                                         Template="{StaticResource DefaultExpanderToggleButtonDownStyle}"
-                                        FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"/>
+                                        FocusVisualStyle="{DynamicResource DefaultControlFocusVisualStyle}"/>
                         </Border>
 
                         <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">

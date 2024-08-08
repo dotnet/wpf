@@ -8,13 +8,22 @@
     <Setter Property="Control.Template">
       <Setter.Value>
         <ControlTemplate>
-          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="1" />
+          <Rectangle RadiusX="4" RadiusY="4" Margin="-3" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="DefaultCollectionFocusVisualStyle">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" BasedOn="{StaticResource DefaultControlFocusVisualStyle}" />
-  <FontFamily x:Key="SegoeFluentIcons">Segoe Fluent Icons</FontFamily>
+  <FontFamily x:Key="SymbolThemeFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
   <Color x:Key="TextFillColorLightPrimary">#FFFFFF</Color>
   <Color x:Key="TextFillColorLightSecondary">#C5FFFFFF</Color>
   <Color x:Key="TextFillColorLightTertiary">#87FFFFFF</Color>
@@ -461,8 +470,6 @@
   <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
-  <!--  ThumbRate  -->
-  <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />
   <!--  TimePicker  -->
   <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="TimePickerButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -618,19 +625,8 @@
   <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
-  <Style x:Key="ButtonFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultButtonStyle" TargetType="{x:Type ButtonBase}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -673,7 +669,7 @@
     </Setter>
   </Style>
   <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
@@ -930,12 +926,12 @@
                 <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" />
                 <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
-                    <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+                    <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
                 <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
-                    <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+                    <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
               </Grid>
@@ -1064,7 +1060,7 @@
               <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource CheckBoxHeight}" Height="{StaticResource CheckBoxWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Border x:Name="StrokeBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                   <Grid>
-                    <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource CheckBoxIconSize}" FontWeight="Bold" Foreground="{DynamicResource CheckBoxCheckGlyphForeground}" FontFamily="{DynamicResource SegoeFluentIcons}" Visibility="Collapsed" Text="{StaticResource CheckBoxCheckedGlyph}" />
+                    <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource CheckBoxIconSize}" FontWeight="Bold" Foreground="{DynamicResource CheckBoxCheckGlyphForeground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Visibility="Collapsed" Text="{StaticResource CheckBoxCheckedGlyph}" />
                   </Grid>
                 </Border>
               </Border>
@@ -1168,17 +1164,6 @@
   <system:Double x:Key="ComboBoxChevronSize">11.0</system:Double>
   <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
   <system:String x:Key="ComboBoxChevronDownGlyph"></system:String>
-  <Style x:Key="ComboBoxFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Focus by parent element  -->
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -1264,7 +1249,7 @@
   </Style>
   <Style x:Key="DefaultComboBoxStyle" TargetType="{x:Type ComboBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ComboBoxFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
@@ -1309,7 +1294,7 @@
                     <ContentPresenter Name="PART_ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" IsHitTestVisible="False" TextElement.Foreground="{TemplateBinding Foreground}" />
                   </Grid>
                   <Grid Grid.Column="1" Margin="{StaticResource ComboBoxChevronMargin}">
-                    <TextBlock x:Name="ChevronIcon" Margin="0" VerticalAlignment="Center" FontSize="{StaticResource ComboBoxChevronSize}" Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}" RenderTransformOrigin="0.5, 0.5" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource ComboBoxChevronDownGlyph}">
+                    <TextBlock x:Name="ChevronIcon" Margin="0" VerticalAlignment="Center" FontSize="{StaticResource ComboBoxChevronSize}" Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}" RenderTransformOrigin="0.5, 0.5" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ComboBoxChevronDownGlyph}">
                       <TextBlock.RenderTransform>
                         <RotateTransform Angle="0" />
                       </TextBlock.RenderTransform>
@@ -1769,7 +1754,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="32" />
               </Grid.ColumnDefinitions>
               <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
-              <TextBlock x:Name="SortIcon" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Opacity="0" FontFamily="{DynamicResource SegoeFluentIcons}" Text="" />
+              <TextBlock x:Name="SortIcon" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Opacity="0" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="SortStates">
@@ -1935,7 +1920,7 @@
             <BulletDecorator.Bullet>
               <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource DataGridCheckBoxHeight}" Height="{StaticResource DataGridCheckBoxWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Grid>
-                  <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource DataGridCheckBoxIconSize}" FontWeight="Bold" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource DataGridCheckBoxCheckedGlyph}" Visibility="Collapsed">
+                  <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource DataGridCheckBoxIconSize}" FontWeight="Bold" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource DataGridCheckBoxCheckedGlyph}" Visibility="Collapsed">
                     <TextBlock.Foreground>
                       <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
                     </TextBlock.Foreground>
@@ -2124,7 +2109,7 @@
                   <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
                   <Button x:Name="PART_Button" Grid.Column="1" Width="{StaticResource DatePickerCalendarButtonHeight}" Height="{StaticResource DatePickerCalendarButtonHeight}" Margin="{StaticResource DatePickerCalendarButtonMargin}" Padding="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}" Cursor="Arrow" Focusable="True" IsTabStop="True">
                     <!--  WPF overrides paddings for button  -->
-                    <TextBlock Margin="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="{StaticResource DatePickerCalendarButtonIconSize}" Foreground="{TemplateBinding Foreground}" Text="{StaticResource CalendarGlyph}" />
+                    <TextBlock Margin="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{StaticResource DatePickerCalendarButtonIconSize}" Foreground="{TemplateBinding Foreground}" Text="{StaticResource CalendarGlyph}" />
                   </Button>
                 </Grid>
               </Border>
@@ -2198,7 +2183,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronDownGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronDownGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2231,7 +2216,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronUpGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronUpGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2264,7 +2249,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronLeftGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronLeftGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2297,7 +2282,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronRightGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronRightGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2319,17 +2304,6 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
-  <Style x:Key="ExpanderHeaderFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultExpanderStyle" TargetType="{x:Type Expander}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
@@ -2352,7 +2326,7 @@
         <ControlTemplate TargetType="{x:Type Expander}">
           <DockPanel>
             <Border x:Name="ToggleButtonBorder" DockPanel.Dock="Top" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{TemplateBinding Border.CornerRadius}">
-              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" />
+              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{DynamicResource DefaultControlFocusVisualStyle}" />
             </Border>
             <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
@@ -2623,6 +2597,7 @@
     <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="Border.CornerRadius" Value="0" />
@@ -2711,6 +2686,7 @@
     <Setter Property="Margin" Value="0,0,0,2" />
     <Setter Property="Padding" Value="4" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -2885,7 +2861,7 @@
           <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
         </Grid.ColumnDefinitions>
         <Border x:Name="CheckBoxIconBorder" Grid.Column="0" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center" Background="{DynamicResource CheckBoxBackground}" BorderBrush="{DynamicResource CheckBoxBorderBrush}" BorderThickness="1" CornerRadius="4" Visibility="Collapsed">
-          <TextBlock x:Name="CheckBoxIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="16" Text="" TextAlignment="Center" />
+          <TextBlock x:Name="CheckBoxIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="16" Text="" TextAlignment="Center" />
         </Border>
         <ContentPresenter x:Name="Icon" Grid.Column="1" Margin="0,0,6,0" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
         <ContentPresenter Grid.Column="2" ContentSource="Header" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" />
@@ -2934,7 +2910,7 @@
           <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,6,0" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
           <ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" />
           <Grid Grid.Column="2">
-            <TextBlock x:Name="Chevron" Margin="0,3,0,0" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="{TemplateBinding FontSize}" Text="{StaticResource MenuItemChevronRightGlyph}" />
+            <TextBlock x:Name="Chevron" Margin="0,3,0,0" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{TemplateBinding FontSize}" Text="{StaticResource MenuItemChevronRightGlyph}" />
           </Grid>
         </Grid>
       </Border>
@@ -2994,7 +2970,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3051,7 +3027,7 @@
   </ContextMenu>
   <Style x:Key="DefaultPasswordBoxStyle" TargetType="{x:Type PasswordBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultPasswordBoxContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -3413,7 +3389,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RepeatButton}">
           <Border x:Name="Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Margin="{TemplateBinding Margin}" Background="{DynamicResource ScrollBarButtonBackground}" CornerRadius="6">
-            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -4047,7 +4023,7 @@
   </Style>
   <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4124,7 +4100,7 @@
           <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
           <Button x:Name="ClearButton" Grid.Column="1" MinWidth="{StaticResource TextBoxClearButtonHeight}" MinHeight="{StaticResource TextBoxClearButtonHeight}" Margin="{StaticResource TextBoxClearButtonMargin}" Padding="{StaticResource TextBoxClearButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}" Cursor="Arrow" IsTabStop="False" Foreground="{DynamicResource TextControlButtonForeground}">
             <Button.Content>
-              <TextBlock FontSize="{TemplateBinding FontSize}" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+              <TextBlock FontSize="{TemplateBinding FontSize}" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
             </Button.Content>
           </Button>
         </Grid>
@@ -4179,7 +4155,7 @@
   </ControlTemplate>
   <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4398,7 +4374,7 @@
         <ControlTemplate TargetType="{x:Type ToggleButton}">
           <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="0,3,3,0" SnapsToDevicePixels="true">
             <Grid>
-              <TextBlock Margin="0" VerticalAlignment="Bottom" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource ToolBarChevronDownGlyph}" />
+              <TextBlock Margin="0" VerticalAlignment="Bottom" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ToolBarChevronDownGlyph}" />
               <ContentPresenter />
             </Grid>
           </Border>
@@ -4535,7 +4511,7 @@
   <system:String x:Key="TreeViewChevronRightGlyph"></system:String>
   <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -4547,7 +4523,7 @@
             <Grid.RenderTransform>
               <RotateTransform Angle="0" />
             </Grid.RenderTransform>
-            <TextBlock x:Name="ChevronIcon" VerticalAlignment="Center" FontSize="{StaticResource TreeViewItemChevronSize}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource TreeViewChevronRightGlyph}" />
+            <TextBlock x:Name="ChevronIcon" VerticalAlignment="Center" FontSize="{StaticResource TreeViewItemChevronSize}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource TreeViewChevronRightGlyph}" />
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsChecked" Value="True">
@@ -4573,7 +4549,7 @@
   </Style>
   <Style x:Key="DefaultTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />

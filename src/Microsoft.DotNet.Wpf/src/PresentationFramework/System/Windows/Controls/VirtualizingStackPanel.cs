@@ -12019,27 +12019,28 @@ namespace System.Windows.Controls
                 _flushDepth = 0;
                 _luThreshold = s_DefaultLayoutUpdatedThreshold;
 
-                string s = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
-                if (!String.IsNullOrEmpty(s))
+                string trace = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
+                if (!string.IsNullOrEmpty(trace))
                 {
-                    string[] a = s.Split(';');
-                    _fileName = a[0];
+                    Span<Range> splitRegions = stackalloc Range[4];
+                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
+                    int regionsLength = traceSplits.Split(splitRegions, ';');
 
-                    if (a.Length > 1)
+                    _fileName = traceSplits[splitRegions[0]].ToString();
+
+                    if (regionsLength > 1)
                     {
-                        int flushDepth;
-                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
+                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }
                     }
 
-                    if (a.Length > 2)
+                    if (regionsLength > 2)
                     {
-                        int luThreshold;
-                        if (Int32.TryParse(a[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out luThreshold))
+                        if (int.TryParse(traceSplits[splitRegions[2]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int luThreshold))
                         {
-                            _luThreshold = (luThreshold <= 0) ? Int32.MaxValue : luThreshold;
+                            _luThreshold = (luThreshold <= 0) ? int.MaxValue : luThreshold;
                         }
                     }
                 }

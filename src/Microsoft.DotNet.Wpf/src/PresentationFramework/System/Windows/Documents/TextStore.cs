@@ -4675,16 +4675,18 @@ namespace System.Windows.Documents
                 _targetName = FrameworkCompatibilityPreferences.GetIMECompositionTraceTarget();
                 _flushDepth = 0;
 
-                string s = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
-                if (!String.IsNullOrEmpty(s))
+                string trace = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
+                if (!string.IsNullOrEmpty(trace))
                 {
-                    string[] a = s.Split(';');
-                    _fileName = a[0];
+                    Span<Range> splitRegions = stackalloc Range[3];
+                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
+                    int regionsLength = traceSplits.Split(splitRegions, ';');
 
-                    if (a.Length > 1)
+                    _fileName = traceSplits[splitRegions[0]].ToString();
+
+                    if (regionsLength > 1)
                     {
-                        int flushDepth;
-                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
+                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }

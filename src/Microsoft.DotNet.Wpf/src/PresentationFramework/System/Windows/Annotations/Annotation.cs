@@ -597,6 +597,8 @@ namespace System.Windows.Annotations
         {
             Invariant.Assert(reader != null, "No reader passed in.");
 
+            Span<Range> splitRegions = stackalloc Range[3];
+
             // Read all the attributes
             while (reader.MoveToNextAttribute())
             {
@@ -604,7 +606,7 @@ namespace System.Windows.Annotations
 
                 // Skip null and empty values - they will be treated the
                 // same as if they weren't specified at all
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                     continue;
 
                 switch (reader.LocalName)
@@ -627,27 +629,29 @@ namespace System.Windows.Annotations
                     #pragma warning restore 0618
 
                     case AnnotationXmlConstants.Attributes.TypeName:
-                        string[] typeName = value.Split(_Colon);
-                        if (typeName.Length == 1)
+                        ReadOnlySpan<char> typeName = value.AsSpan();
+                        int regionsLength = typeName.Split(splitRegions, Colon);
+
+                        if (regionsLength == 1)
                         {
-                            typeName[0] = typeName[0].Trim();
-                            if (String.IsNullOrEmpty(typeName[0]))
+                            ReadOnlySpan<char> firstPart = typeName[splitRegions[0]].Trim();
+                            if (firstPart.IsEmpty)
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(typeName[0]);
+                            _typeName = new XmlQualifiedName(firstPart.ToString());
                         }
-                        else if (typeName.Length == 2)
+                        else if (regionsLength == 2)
                         {
-                            typeName[0] = typeName[0].Trim();
-                            typeName[1] = typeName[1].Trim();
-                            if (String.IsNullOrEmpty(typeName[0]) || String.IsNullOrEmpty(typeName[1]))
+                            ReadOnlySpan<char> firstPart = typeName[splitRegions[0]].Trim();
+                            ReadOnlySpan<char> secondPart = typeName[splitRegions[1]].Trim();
+                            if (firstPart.IsEmpty || secondPart.IsEmpty)
                             {
                                 // One colon, prefix or suffix is empty string or whitespace
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(typeName[1], reader.LookupNamespace(typeName[0]));
+                            _typeName = new XmlQualifiedName(firstPart.ToString(), reader.LookupNamespace(secondPart.ToString()));
                         }
                         else
                         {
@@ -947,7 +951,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Colon used to split the parts of a qualified name attribute value
         /// </summary>
-        private const char _Colon = ':';
+        private const char Colon = ':';
 
         #endregion Private Fields
     }

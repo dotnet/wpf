@@ -1085,7 +1085,8 @@ namespace System.Windows.Media.Imaging
 
             if (sourceBuffer.Rank == 1)
             {
-                if (sourceBuffer.GetLength(0) <= 0)
+                int firstDimLength = sourceBuffer.GetLength(0);
+                if (firstDimLength == 0)
                 {
                     if (backwardsCompat)
                     {
@@ -1095,7 +1096,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Image_InsufficientBuffer, "sourceBuffer");
+                        throw new ArgumentException(SR.Image_InsufficientBuffer, nameof(sourceBuffer));
                     }
                 }
                 else
@@ -1104,14 +1105,16 @@ namespace System.Windows.Media.Imaging
                     {
                         object exemplar = sourceBuffer.GetValue(0);
                         elementSize = Marshal.SizeOf(exemplar);
-                        sourceBufferSize = sourceBuffer.GetLength(0) * elementSize;
+                        sourceBufferSize = firstDimLength * elementSize;
                         elementType = exemplar.GetType();
                     }
                 }
 }
             else if (sourceBuffer.Rank == 2)
             {
-                if (sourceBuffer.GetLength(0) <= 0 || sourceBuffer.GetLength(1) <= 0)
+                int firstDimLength = sourceBuffer.GetLength(0);
+                int secondDimLength = sourceBuffer.GetLength(1);
+                if (firstDimLength == 0 || secondDimLength == 0)
                 {
                     if (backwardsCompat)
                     {
@@ -1121,16 +1124,16 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Image_InsufficientBuffer, "sourceBuffer");
+                        throw new ArgumentException(SR.Image_InsufficientBuffer, nameof(sourceBuffer));
                     }
                 }
                 else
                 {
                     checked
                     {
-                        object exemplar = sourceBuffer.GetValue(0,0);
+                        object exemplar = sourceBuffer.GetValue(0, 0);
                         elementSize = Marshal.SizeOf(exemplar);
-                        sourceBufferSize = sourceBuffer.GetLength(0) * sourceBuffer.GetLength(1) * elementSize;
+                        sourceBufferSize = (firstDimLength * secondDimLength) * elementSize;
                         elementType = exemplar.GetType();
                     }
                 }

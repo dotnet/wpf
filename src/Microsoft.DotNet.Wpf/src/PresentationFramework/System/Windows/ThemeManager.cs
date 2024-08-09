@@ -141,7 +141,8 @@ internal static class ThemeManager
     {
         // Since, this is called from window there is a possiblity that the application
         // instance is null. Hence, we need to check for null.
-        if(Application.Current == null) return;
+        if(Application.Current == null) 
+            return;
 
         ThemeMode themeMode = Application.Current.ThemeMode;
         var rd = Application.Current.Resources;

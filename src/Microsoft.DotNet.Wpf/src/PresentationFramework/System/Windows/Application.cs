@@ -1741,8 +1741,7 @@ namespace System.Windows
             //      i.e. SkipAppThemeModeSyncing is set to true
             //  - if application's ThemeMode and Resources sync is enabled.
             //      i.e. IsAppThemeModeSyncEnabled is set to true
-            if (!info.IsIndividualResourceAddOperation
-                    && !ThemeManager.SkipAppThemeModeSyncing 
+            if (!ThemeManager.SkipAppThemeModeSyncing 
                     && ThemeManager.IsAppThemeModeSyncEnabled)
             {
                 ThemeManager.SyncThemeMode();

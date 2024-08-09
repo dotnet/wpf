@@ -9,13 +9,24 @@
     <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-    <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
-          CopyToOutputDirectory="PreserveNewest"
-          Visible="False" />
-  </ItemGroup>
+  <!--
+    We need to copy the native dependencies from the packaging folder to make sure that we use the ones built or redistributed in the current build.
+  -->
+  <Target Name="IncludeNativeDependencies"
+          BeforeTargets="AssignTargetPaths"
+          Returns="@(None)">
+    <ItemGroup>
+      <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
+      <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
+            CopyToOutputDirectory="PreserveNewest"
+            Visible="False" />
+    </ItemGroup>
+  </Target>
 
+  <!--
+    A WindowsBase facade is included in the Microsoft.NETCore.App targeting pack while we ship our own WindowsBase in the Microsoft.WindowsDesktop.App targeting pack.
+    To allow our projects to reference our version of WindowsBase without conflicting, we remove the version from the Microsoft.NETCore.App targeting pack from the list of reference.
+  -->
   <Target Name="RemoveWindowsBaseNetCoreAppReference"
           AfterTargets="ResolveTargetingPackAssets"
           Returns="@(Reference)">

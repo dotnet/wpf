@@ -1736,12 +1736,12 @@ namespace System.Windows
             
             // Sync needs to be performed only under the following conditions:
             //  - the resource change event raised is due to a collection change
-            //      i.e. it is not a IsResourceAddOperation
+            //      i.e. it is not a IsIndividualResourceAddOperation
             //  - the event is not raised due to the change in Application.ThemeMode
             //      i.e. SkipAppThemeModeSyncing is set to true
             //  - if application's ThemeMode and Resources sync is enabled.
             //      i.e. IsAppThemeModeSyncEnabled is set to true
-            if (!info.IsResourceAddOperation
+            if (!info.IsIndividualResourceAddOperation
                     && !ThemeManager.SkipAppThemeModeSyncing 
                     && ThemeManager.IsAppThemeModeSyncEnabled)
             {

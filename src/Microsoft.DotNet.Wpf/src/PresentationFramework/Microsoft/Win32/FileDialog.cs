@@ -19,9 +19,21 @@ using System.Windows;
 //              deferred to the derived classes.
 //
 
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+
+
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
+using System.IO;
+using System;
 
 namespace Microsoft.Win32
 {
+
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from
@@ -312,11 +324,11 @@ namespace Microsoft.Win32
 
             set
             {
-                if (String.CompareOrdinal(value, _filter) != 0)   // different filter than what we have stored already
+                if (!string.Equals(value, _filter, StringComparison.Ordinal))   // different filter than what we have stored already
                 {
                     string updatedFilter = value;
 
-                    if (!String.IsNullOrEmpty(updatedFilter))
+                    if (!string.IsNullOrEmpty(updatedFilter))
                     {
                         // Require the number of segments of the filter string to be even -
                         // in other words, there must only be matched pairs of description and
@@ -584,7 +596,7 @@ namespace Microsoft.Win32
                 // a list of valid extensions from the filter(s).
                 // The first extension from FilterExtensions is the
                 // default extension.
-                string[] extensions = GetFilterExtensions();
+                ReadOnlySpan<string> extensions = GetFilterExtensions();
 
                 // For each filename:
                 //      -  Process AddExtension
@@ -600,15 +612,14 @@ namespace Microsoft.Win32
                         for (int j = 0; j < extensions.Length; j++)
                         {
                             // Assert for a valid extension
-                            Invariant.Assert(!extensions[j].StartsWith(".", StringComparison.Ordinal),
+                            Invariant.Assert(!extensions[j].StartsWith('.'),
                                         "FileDialog.GetFilterExtensions should not return things starting with '.'");
 
                             string currentExtension = Path.GetExtension(fileName);
 
                             // Assert to make sure Path.GetExtension behaves as we think it should, returning
                             // "" if the string is empty and something beginnign with . otherwise.
-                            // Use StringComparison.Ordinal as per FxCop CA1307 and CA130.
-                            Invariant.Assert(currentExtension.Length == 0 || currentExtension.StartsWith(".", StringComparison.Ordinal),
+                            Invariant.Assert(currentExtension.Length == 0 || currentExtension.StartsWith('.'),
                                          "Path.GetExtension should return something that starts with '.'");
 
                             // Because we check Path.HasExtension above, files should
@@ -620,7 +631,7 @@ namespace Microsoft.Win32
                             // of the filename in s.
 
                             string newFilename;
-                            if (((ReadOnlySpan<char>)extensions[j]).IndexOfAny('*', '?') != -1)
+                            if (extensions[j].AsSpan().IndexOfAny('*', '?') != -1)
                             {
                                 // we don't want to append the extension if it contains wild cards
                                 newFilename = fileName.Substring(0, fileName.Length - currentExtension.Length);
@@ -708,10 +719,10 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if the filter string stored in the dialog is invalid.
         /// </exception>
-        private string[] GetFilterExtensions()
+        private ReadOnlySpan<string> GetFilterExtensions()
         {
-            string filter = this._filter;
-            List<string> extensions = new List<string>();
+            string filter = _filter;
+            List<string> extensions = new();
 
             // Always make the default extension the first in the list,
             // because other functions process files in order accepting the first
@@ -756,27 +767,27 @@ namespace Microsoft.Win32
                 {
                     // Find our filter in the tokens list, then split it on the
                     // ';' character (which is the filter extension delimiter)
-                    string[] exts = tokens[indexOfExtension].Split(';');
+                    ReadOnlySpan<char> exts = tokens[indexOfExtension].AsSpan();
 
-                    foreach (string ext in exts)
+                    foreach (Range ext in exts.Split(';'))
                     {
                         // Filter extensions should be in the form *.txt or .txt,
                         // so we strip out everything before and including the '.'
                         // before adding the extension to our list.
                         // If the extension has no '.', we just ignore it as invalid.
-                        int i = ext.LastIndexOf('.');
+                        int i = exts[ext].LastIndexOf('.');
 
                         if (i >= 0)
                         {
-                            // start the substring one beyond the location of the '.'
+                            // start the slice one beyond the location of the '.'
                             // (i) and continue to the end of the string
-                            extensions.Add(ext.Substring(i + 1, ext.Length - (i + 1)));
+                            extensions.Add(exts[ext].Slice(i + 1, exts[ext].Length - (i + 1)).ToString());
                         }
                     }
                 }
             }
 
-            return extensions.ToArray();
+            return CollectionsMarshal.AsSpan(extensions);
         }
 
         #endregion Private Properties

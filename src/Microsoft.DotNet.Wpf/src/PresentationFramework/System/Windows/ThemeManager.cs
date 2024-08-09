@@ -1,6 +1,7 @@
 using Standard;
 using Microsoft.Win32;
 using System.Collections;
+using System.Collections.ObjectModel; 
 using System.Collections.Generic;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -125,7 +126,7 @@ internal static class ThemeManager
         ApplyFluentOnWindow(window);
     }
 
-    internal static bool SyncThemeModeAndResources()
+    internal static bool SyncApplicationThemeModeAndResources()
     {
         if (DeferSyncingThemeModeAndResources)
             return true;
@@ -137,6 +138,7 @@ internal static class ThemeManager
             Application.Current.ThemeMode = themeMode;
             return themeMode == ThemeMode.None ? false : true;
         }
+        
         return false;
     }
 
@@ -175,6 +177,16 @@ internal static class ThemeManager
         if (resyncThemeMode)
         {
             Application.Current.ThemeMode = themeMode;
+        }
+    }
+
+    internal static void SyncWindowThemeModeAndResources(Window window)
+    {
+        ThemeMode themeMode = GetThemeModeFromResourceDictionary(window.Resources);
+
+        if(window.ThemeMode != themeMode)
+        {
+            window.ThemeMode = themeMode;
         }
     }
 
@@ -333,6 +345,8 @@ internal static class ThemeManager
 
     internal static bool IgnoreAppResourcesChange { get; set; } = false;
 
+    internal static bool IgnoreWindowResourcesChange { get; set; } = false;
+
     internal static double DefaultFluentThemeFontSize => 14;
 
     internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
@@ -417,6 +431,8 @@ internal static class ThemeManager
         var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
         int index = LastIndexOfFluentThemeDictionary(rd);
 
+        IgnoreWindowResourcesChange = true;
+
         if (index >= 0)
         {
             rd.MergedDictionaries[index] = newDictionary;
@@ -425,6 +441,8 @@ internal static class ThemeManager
         {
             rd.MergedDictionaries.Insert(0, newDictionary);
         }
+
+        IgnoreWindowResourcesChange = false;
     }
 
     private static int LastIndexOfFluentThemeDictionary(ResourceDictionary rd)

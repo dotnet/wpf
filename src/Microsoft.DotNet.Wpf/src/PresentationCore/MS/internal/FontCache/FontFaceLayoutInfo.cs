@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Security;
+using System.Buffers;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
@@ -401,7 +402,7 @@ namespace MS.Internal.FontCache
         private void ComputeTypographyAvailabilities()
         {
             int glyphBitsLength = (GlyphCount + 31) >> 5;
-            uint[] glyphBits = BufferCache.GetUInts(glyphBitsLength);
+            uint[] glyphBits = ArrayPool<uint>.Shared.Rent(glyphBitsLength);
             Array.Clear(glyphBits, 0, glyphBitsLength);
 
             ushort minGlyphId = 65535;
@@ -417,7 +418,7 @@ namespace MS.Internal.FontCache
             for (int i = 0; i < fastTextRanges.Length; i++)
             {
                 uint[] codepoints = fastTextRanges[i].GetFullRange();
-                ushort[] glyphIndices = BufferCache.GetUShorts(codepoints.Length);
+                ushort[] glyphIndices = ArrayPool<ushort>.Shared.Rent(codepoints.Length);
 
                 unsafe
                 {
@@ -442,7 +443,7 @@ namespace MS.Internal.FontCache
                     }
                 }
 
-                BufferCache.ReleaseUShorts(glyphIndices);
+                ArrayPool<ushort>.Shared.Return(glyphIndices);
             }
 
             //
@@ -571,10 +572,10 @@ namespace MS.Internal.FontCache
 
             _typographyAvailabilities = typography;
 
-            // Note: we don't worry about calling ReleaseUInts in case of early out for a failure
+            // Note: we don't worry about calling Return in case of early out for a failure
             // above.  Releasing glyphBits is a performance optimization that is not necessary
             // for correctness, and not interesting in the rare failure case.
-            BufferCache.ReleaseUInts(glyphBits);
+            ArrayPool<uint>.Shared.Return(glyphBits);
         }
       
 

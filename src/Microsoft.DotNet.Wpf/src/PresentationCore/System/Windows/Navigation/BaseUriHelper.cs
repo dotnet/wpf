@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO.Packaging;
 using System.Globalization;
 using System.Net;
-using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
@@ -155,12 +154,12 @@ namespace System.Windows.Navigation
                 uri.IsAbsoluteUri && 
 
                 // Does the "outer" URI have the pack: scheme?
-                SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) &&
+                string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) &&
 
                 // Does the "inner" URI have the application: scheme
-                SecurityHelper.AreStringTypesEqual(
-                    PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
-                    _packageApplicationBaseUriEscaped);
+                string.Equals(PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
+                              _packageApplicationBaseUriEscaped,
+                              StringComparison.OrdinalIgnoreCase);
         }
 
         // The method accepts a relative or absolute Uri and returns the appropriate assembly.
@@ -172,13 +171,12 @@ namespace System.Windows.Navigation
         // assembly name matches the text string in the first segment. otherwise, this method
         // would return EntryAssembly in the AppDomain.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyAndPartNameFromPackAppUri(Uri uri, out Assembly assembly, out string partName)
         {
             // The input Uri is assumed to be a valid absolute pack application Uri.
             // The caller should guarantee that.
             // Perform a sanity check to make sure the assumption stays.
-            Debug.Assert(uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) && IsPackApplicationUri(uri));
+            Debug.Assert(uri is not null && uri.IsAbsoluteUri && string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) && IsPackApplicationUri(uri));
 
             // Generate a relative Uri which gets rid of the pack://application:,,, authority part.
             Uri partUri = new Uri(uri.AbsolutePath, UriKind.Relative);
@@ -189,7 +187,7 @@ namespace System.Windows.Navigation
 
             GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
 
-            if (String.IsNullOrEmpty(assemblyName))
+            if (string.IsNullOrEmpty(assemblyName))
             {
                 // The uri doesn't contain ";component". it should map to the enty application assembly.
                 assembly = ResourceAssembly;
@@ -379,10 +377,9 @@ namespace System.Windows.Navigation
             return sUri;
         }
 
-        [FriendAccessAllowed]
         static internal Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
         {
-            Invariant.Assert(packUri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(packUri.Scheme, PackAppBaseUri.Scheme));
+            Invariant.Assert(packUri.IsAbsoluteUri && string.Equals(packUri.Scheme, PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase));
 
             Uri relative = MakeRelativeToSiteOfOriginIfPossible(packUri);
 
@@ -400,10 +397,10 @@ namespace System.Windows.Navigation
         // object will not correctly resolve relative Uris in some cases.  This method
         // detects and fixes this by constructing a new Uri with an original string
         // that contains the scheme file://.
-        [FriendAccessAllowed]
         static internal Uri FixFileUri(Uri uri)
         {
-            if (uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, Uri.UriSchemeFile) &&
+            if (uri is not null && uri.IsAbsoluteUri &&
+                string.Equals(uri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase) &&
                 string.Compare(uri.OriginalString, 0, Uri.UriSchemeFile, 0, Uri.UriSchemeFile.Length, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 return new Uri(uri.AbsoluteUri);

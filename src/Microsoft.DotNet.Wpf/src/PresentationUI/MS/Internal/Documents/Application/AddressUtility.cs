@@ -7,9 +7,6 @@
 //    strings and Uri objects.
 using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
-using MS.Internal.WindowsBase;
-
 
 namespace MS.Internal.Documents
 {
@@ -31,14 +28,7 @@ namespace MS.Internal.Documents
         /// <returns>Whether or not it is a mailto URI</returns>
         internal static bool IsMailtoUri(Uri mailtoUri)
         {
-            if (mailtoUri != null)
-            {
-                return SecurityHelper.AreStringTypesEqual(
-                    mailtoUri.Scheme,
-                    Uri.UriSchemeMailto);
-            }
-
-            return false;
+            return mailtoUri is not null && string.Equals(mailtoUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

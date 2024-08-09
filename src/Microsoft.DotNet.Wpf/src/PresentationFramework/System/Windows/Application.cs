@@ -932,14 +932,21 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                if(ThemeManager.DeferredAppThemeLoading && !_resourcesInitialized)
+                if(_reloadFluentDictionary && !_resourcesInitialized)
                 {
+                    // We are here only when ThemeMode is set before Application.Resources is set
+                    // Now, while Resources initialization from BAML, resources will be set to empty
+                    // ResourceDictionary, and we need to have Fluent dictionary as ThemeMode is set.
+                    // So, we add Fluent dictionary here, once this is done, we don't need to 
+                    // do this again
                     if(value != null)
                     {
                         var uri = ThemeManager.GetThemeResource(ThemeMode);
                         value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
+                        invalidateResources = true;
                     }
-                    ThemeManager.DeferredAppThemeLoading = false;
+                    
+                    _reloadFluentDictionary = false;
                 }
 
                 if (value != null)
@@ -990,10 +997,17 @@ namespace System.Windows
 
                 if(!_resourcesInitialized)
                 {
-                    // If the resources are not initializd, 
-                    // fluent dictionary included will be reset.
-                    // Hence, deferring the step.
-                    ThemeManager.DeferredAppThemeLoading = true;
+                    // We do this because, Resources may not be present in App.xaml
+                    // so the setter will never be called, and we will not get a chance to 
+                    // load the fluent dictionary before parsing Window, where Fluent resources
+                    // may be used.
+                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+                    _resourcesInitialized = false;
+                    
+                    // We are here only when ThemeMode is set before Application.Resources is set
+                    // So, when Resources is being parsed from BAML, Resources will be initialized
+                    // with an empty ResourceDictionary. Then, we will have to reload fluent dictionary.
+                    _reloadFluentDictionary = true;
                     return;
                 }
 
@@ -2485,6 +2499,7 @@ namespace System.Windows
 
         private ThemeMode                   _themeMode = ThemeMode.None;
         private bool                        _resourcesInitialized = false;
+        private bool                        _reloadFluentDictionary = false;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

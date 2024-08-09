@@ -2566,16 +2566,7 @@ namespace System.Windows
 
                 if(ThemeManager.IsFluentThemeEnabled)
                 {
-
-                    if(ThemeManager.DeferredAppThemeLoading)
-                    {
-                        ThemeManager.OnApplicationThemeChanged(ThemeMode.None, Application.Current.ThemeMode);
-                        ThemeManager.DeferredAppThemeLoading = false;
-                    }
-                    else
-                    {
-                        ThemeManager.ApplyStyleOnWindow(this);
-                    }
+                    ThemeManager.ApplyStyleOnWindow(this);
                 }
 
                 if(_deferThemeLoading)

@@ -2558,10 +2558,10 @@ namespace System.Windows
 
             if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                if(ThemeManager.DeferSyncingThemeModeAndResources)
+                if(!ThemeManager.IsAppThemeModeSyncEnabled)
                 {
-                    ThemeManager.DeferSyncingThemeModeAndResources = false;
-                    ThemeManager.SyncDeferredThemeModeAndResources();
+                    ThemeManager.SyncThemeModeAndResources();
+                    ThemeManager.IsAppThemeModeSyncEnabled = true;
                 }
 
                 if(ThemeManager.IsFluentThemeEnabled)

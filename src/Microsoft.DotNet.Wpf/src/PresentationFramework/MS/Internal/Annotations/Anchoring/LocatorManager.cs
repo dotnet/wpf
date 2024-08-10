@@ -202,15 +202,12 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(processor);
             ArgumentNullException.ThrowIfNull(selectionType);
 
-            XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
+            ReadOnlySpan<XmlQualifiedName> locatorPartTypes = processor.GetLocatorPartTypes();
             _selectionProcessors[selectionType] = processor;
 
-            if (locatorPartTypes != null)
+            foreach (XmlQualifiedName type in locatorPartTypes)
             {
-                foreach (XmlQualifiedName type in locatorPartTypes)
-                {
-                    _locatorPartHandlers[type] = processor;
-                }
+                _locatorPartHandlers[type] = processor;
             }
         }
 

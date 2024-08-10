@@ -158,7 +158,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (elementEnd.CompareTo(start) < 0)
                 throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
-            ContentLocatorPart part = new ContentLocatorPart(CharacterRangeElementName);
+            ContentLocatorPart part = new ContentLocatorPart(s_characterRangeElementName);
 
             int startOffset = 0;
             int endOffset = 0;
@@ -199,7 +199,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
             ArgumentNullException.ThrowIfNull(locatorPart);
 
-            if (CharacterRangeElementName != locatorPart.PartType)
+            if (s_characterRangeElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // First we extract the offset and length of the
@@ -302,10 +302,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override XmlQualifiedName[] GetLocatorPartTypes()
-        {
-            return (XmlQualifiedName[])LocatorPartTypeNames.Clone();
-        }
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
 
         #endregion Public Methods
 
@@ -420,7 +417,7 @@ namespace MS.Internal.Annotations.Anchoring
         internal const Char Separator = ',';
 
         // Name of locator part element
-        internal static readonly XmlQualifiedName CharacterRangeElementName = new XmlQualifiedName("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
+        internal static readonly XmlQualifiedName s_characterRangeElementName = new("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
 
         #endregion Internal Fields
 
@@ -559,11 +556,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames =
-                new XmlQualifiedName[]
-                {
-                    CharacterRangeElementName
-                };
+        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = [s_characterRangeElementName];
 
         // Optional DPV - used in printing case when there is no viewer available
         private DocumentPageView _targetPage = null;

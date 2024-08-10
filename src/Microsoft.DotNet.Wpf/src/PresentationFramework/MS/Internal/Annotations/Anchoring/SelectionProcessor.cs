@@ -130,7 +130,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public abstract XmlQualifiedName[] GetLocatorPartTypes();
+        public abstract ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes();
 
         #endregion Public Methods
 

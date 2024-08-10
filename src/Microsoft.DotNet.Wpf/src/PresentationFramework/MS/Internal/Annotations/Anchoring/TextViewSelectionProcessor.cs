@@ -155,7 +155,7 @@ namespace MS.Internal.Annotations.Anchoring
                 endOffset = -1;
             }
 
-            ContentLocatorPart part = new ContentLocatorPart(TextSelectionProcessor.CharacterRangeElementName);// DocumentPageViewLocatorPart();
+            ContentLocatorPart part = new ContentLocatorPart(TextSelectionProcessor.s_characterRangeElementName);// DocumentPageViewLocatorPart();
             part.NameValuePairs.Add(TextSelectionProcessor.CountAttribute, 1.ToString(NumberFormatInfo.InvariantInfo));
             part.NameValuePairs.Add(TextSelectionProcessor.SegmentAttribute + 0.ToString(NumberFormatInfo.InvariantInfo), startOffset.ToString(NumberFormatInfo.InvariantInfo) + TextSelectionProcessor.Separator + endOffset.ToString(NumberFormatInfo.InvariantInfo));
             part.NameValuePairs.Add(TextSelectionProcessor.IncludeOverlaps, Boolean.TrueString);
@@ -190,10 +190,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     the locator parts this processor can generate.  This processor
         ///     does not resolve these ContentLocatorParts - only generates them.
         /// </summary>
-        public override XmlQualifiedName[] GetLocatorPartTypes()
-        {
-            return (XmlQualifiedName[])LocatorPartTypeNames.Clone();
-        }
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
 
         #endregion Public Methods
 
@@ -292,7 +289,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // ContentLocator part types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames = Array.Empty<XmlQualifiedName>();
+        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = Array.Empty<XmlQualifiedName>();
 
         #endregion Private Fields
     }

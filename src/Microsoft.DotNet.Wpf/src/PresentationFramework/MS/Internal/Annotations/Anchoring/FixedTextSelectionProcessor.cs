@@ -204,7 +204,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (fp == null)
                 throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, "startNode");
 
-            ContentLocatorPart part = new ContentLocatorPart(FixedTextElementName);
+            ContentLocatorPart part = new ContentLocatorPart(s_fixedTextElementName);
             if (fp.Segments.Count == 0)
             {
                 part.NameValuePairs.Add(TextSelectionProcessor.CountAttribute, 1.ToString(NumberFormatInfo.InvariantInfo));
@@ -371,10 +371,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override XmlQualifiedName[] GetLocatorPartTypes()
-        {
-            return (XmlQualifiedName[])LocatorPartTypeNames.Clone();
-        }
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
 
         #endregion Public Methods
 
@@ -501,7 +498,7 @@ namespace MS.Internal.Annotations.Anchoring
         {
             ArgumentNullException.ThrowIfNull(locatorPart);
 
-            if (FixedTextElementName != locatorPart.PartType)
+            if (s_fixedTextElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             string segmentValue = locatorPart.NameValuePairs[TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
@@ -624,14 +621,10 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // Name of locator part element
-        private static readonly XmlQualifiedName FixedTextElementName = new XmlQualifiedName("FixedTextRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
+        private static readonly XmlQualifiedName s_fixedTextElementName = new("FixedTextRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
 
         // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames =
-                new XmlQualifiedName[]
-                {
-                    FixedTextElementName
-                };
+        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = [s_fixedTextElementName];
 
         #endregion Private Fields
 

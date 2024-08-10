@@ -977,16 +977,13 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(name);
             ArgumentNullException.ThrowIfNull(ownerType);
 
-            FromNameKey key;
-
             while ((dp == null) && (ownerType != null))
             {
                 // Ensure static constructor of type has run
-                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(ownerType);
+                SecurityHelper.RunClassConstructor(ownerType);
 
                 // Locate property
-                key = new FromNameKey(name, ownerType);
-
+                FromNameKey key = new(name, ownerType);
                 lock (Synchronized)
                 {
                     if (PropertyFromName.TryGetValue(key, out dp))

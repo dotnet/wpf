@@ -260,7 +260,7 @@ namespace System.Windows
             FromNameKey key = new FromNameKey(name, ownerType);
             lock (Synchronized)
             {
-                if (PropertyFromName.Contains(key))
+                if (PropertyFromName.ContainsKey(key))
                 {
                     throw new ArgumentException(SR.Format(SR.PropertyAlreadyRegistered, name, ownerType.Name));
                 }
@@ -765,7 +765,7 @@ namespace System.Windows
 
             lock (Synchronized)
             {
-                if (PropertyFromName.Contains(key))
+                if (PropertyFromName.ContainsKey(key))
                 {
                     throw new ArgumentException(SR.Format(SR.PropertyAlreadyRegistered, Name, ownerType.Name));
                 }
@@ -991,7 +991,7 @@ namespace System.Windows
 
                 lock (Synchronized)
                 {
-                    dp = (DependencyProperty)PropertyFromName[key];
+                    dp = PropertyFromName[key];
                 }
 
                 ownerType = ownerType.BaseType;
@@ -1198,7 +1198,7 @@ namespace System.Windows
         /* property */ internal static ItemStructList<DependencyProperty> RegisteredPropertyList = new ItemStructList<DependencyProperty>(768);
 
         // Synchronized: Covered by DependencyProperty.Synchronized
-        private static Hashtable PropertyFromName = new Hashtable();
+        private static readonly Dictionary<FromNameKey, DependencyProperty> PropertyFromName = new();
 
         // Synchronized: Covered by DependencyProperty.Synchronized
         private static int GlobalIndexCount;

@@ -257,7 +257,7 @@ namespace System.Windows
 
         private static DependencyProperty RegisterCommon(string name, Type propertyType, Type ownerType, PropertyMetadata defaultMetadata, ValidateValueCallback validateValueCallback)
         {
-            FromNameKey key = new FromNameKey(name, ownerType);
+            FromNameKey key = new(name, ownerType);
             lock (Synchronized)
             {
                 if (PropertyFromName.ContainsKey(key))
@@ -761,7 +761,7 @@ namespace System.Windows
 
             // Map owner type to this property
             // Build key
-            FromNameKey key = new FromNameKey(Name, ownerType);
+            FromNameKey key = new(Name, ownerType);
 
             lock (Synchronized)
             {
@@ -776,12 +776,10 @@ namespace System.Windows
                 OverrideMetadata(ownerType, typeMetadata);
             }
 
-
             lock (Synchronized)
             {
                 PropertyFromName[key] = this;
             }
-
 
             return this;
         }
@@ -979,7 +977,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(name);
             ArgumentNullException.ThrowIfNull(ownerType);
 
-            FromNameKey key = new FromNameKey(name, ownerType);
+            FromNameKey key;
 
             while ((dp == null) && (ownerType != null))
             {
@@ -987,11 +985,12 @@ namespace System.Windows
                 MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(ownerType);
 
                 // Locate property
-                key.UpdateNameKey(ownerType);
+                key = new FromNameKey(name, ownerType);
 
                 lock (Synchronized)
                 {
-                    dp = PropertyFromName[key];
+                    if (PropertyFromName.TryGetValue(key, out dp))
+                        return dp;
                 }
 
                 ownerType = ownerType.BaseType;
@@ -1033,18 +1032,11 @@ namespace System.Windows
             return true;
         }
 
-        private class FromNameKey
+        private readonly struct FromNameKey : IEquatable<FromNameKey>
         {
             public FromNameKey(string name, Type ownerType)
             {
                 _name = name;
-                _ownerType = ownerType;
-
-                _hashCode = _name.GetHashCode() ^ _ownerType.GetHashCode();
-            }
-
-            public void UpdateNameKey(Type ownerType)
-            {
                 _ownerType = ownerType;
 
                 _hashCode = _name.GetHashCode() ^ _ownerType.GetHashCode();
@@ -1057,25 +1049,18 @@ namespace System.Windows
 
             public override bool Equals(object o)
             {
-                if ((o != null) && (o is FromNameKey))
-                {
-                    return Equals((FromNameKey)o);
-                }
-                else
-                {
-                    return false;
-                }
+                return o is FromNameKey key && Equals(key);
             }
 
             public bool Equals(FromNameKey key)
             {
-                return (_name.Equals(key._name) && (_ownerType == key._ownerType));
+                return _name.Equals(key._name) && _ownerType == key._ownerType;
             }
 
-            private string _name;
-            private Type _ownerType;
+            private readonly string _name;
+            private readonly Type _ownerType;
 
-            private int _hashCode;
+            private readonly int _hashCode;
         }
 
 

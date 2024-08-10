@@ -1204,7 +1204,7 @@ namespace System.Windows
         private static int GlobalIndexCount;
 
         // Global, cross-object synchronization
-        internal static object Synchronized = new object();
+        internal static readonly object Synchronized = new object();
 
         // Nullable Type
         private static Type NullableType = typeof(Nullable<>);

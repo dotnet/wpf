@@ -302,7 +302,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => new(in s_characterRangeElementName);
 
         #endregion Public Methods
 
@@ -554,9 +554,6 @@ namespace MS.Internal.Annotations.Anchoring
         //------------------------------------------------------
 
         #region Private Fields
-
-        // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = [s_characterRangeElementName];
 
         // Optional DPV - used in printing case when there is no viewer available
         private DocumentPageView _targetPage = null;

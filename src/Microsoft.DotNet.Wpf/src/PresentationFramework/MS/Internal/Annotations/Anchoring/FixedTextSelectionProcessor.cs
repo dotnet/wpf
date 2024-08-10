@@ -371,7 +371,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => new(in s_fixedTextElementName);
 
         #endregion Public Methods
 
@@ -622,9 +622,6 @@ namespace MS.Internal.Annotations.Anchoring
 
         // Name of locator part element
         private static readonly XmlQualifiedName s_fixedTextElementName = new("FixedTextRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
-
-        // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = [s_fixedTextElementName];
 
         #endregion Private Fields
 

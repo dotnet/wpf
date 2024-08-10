@@ -177,7 +177,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => s_locatorPartTypeNames;
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => ReadOnlySpan<XmlQualifiedName>.Empty;
 
         #endregion Public Methods
 
@@ -204,9 +204,6 @@ namespace MS.Internal.Annotations.Anchoring
         //------------------------------------------------------
 
         #region Private Fields
-
-        // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] s_locatorPartTypeNames = Array.Empty<XmlQualifiedName>();
 
         #endregion Private Fields        
     }

@@ -22,7 +22,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Win32 menu proxy
-    class WindowsMenu: ProxyHwnd
+    class WindowsMenu : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -1176,7 +1176,7 @@ namespace MS.Internal.AutomationProxies
                 if (_type == MenuItemType.Spacer)
                 {
                     _cControlType = ControlType.Separator;
-                    _sAutomationId = "Separator " + (_item + 1).ToString(CultureInfo.InvariantCulture); // This string is a non-localizable string
+                    _sAutomationId = string.Create(CultureInfo.InvariantCulture, $"Separator {_item + 1}"); // This string is a non-localizable string
                     _fIsContent = false;
                 }
                 else
@@ -1325,19 +1325,18 @@ namespace MS.Internal.AutomationProxies
                     string keyWin = SR.KeyWinKey;
 
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    string accelerator;
 
-                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) != null)
+                    if (AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), $"{keyAlt} + ", menuText, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), $"{keyShift} + ", menuText, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), $"{keyWin} + ", menuText, menuRawText, out pos) != null)
                     {
                         return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
                     }
 
                     // Try to look for a Fxx
-                    accelerator = AccelatorFxx(menuText);
+                    string accelerator = AccelatorFxx(menuText);
                     if (!string.IsNullOrEmpty(accelerator))
                     {
                         pos = menuText.LastIndexOf(accelerator, StringComparison.OrdinalIgnoreCase);
@@ -1354,12 +1353,10 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Look for a bunch of Predefined keyword
-                    string[] keywordsAccelerators = GetKeywordsAccelerators();
-
-                    for (int i = 0; i < keywordsAccelerators.Length; i++)
+                    for (int i = 0; i < s_keywordsAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
+                        if (pos > 0 && pos + s_keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
                         {
                             return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
                         }
@@ -1528,7 +1525,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     case MenuType.System:
                         {
-                            return SR.KeyAlt + " + " + SR.KeySpace;
+                            return $"{SR.KeyAlt} + {SR.KeySpace}";
                         }
                     case MenuType.Submenu:
                     case MenuType.SystemPopup:
@@ -1910,28 +1907,6 @@ namespace MS.Internal.AutomationProxies
                 return (Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_SEPARATOR) ||
                         Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBARBREAK) ||
                         Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBREAK));
-            }
-
-            //Gets the localized keywords accelerators
-            private string[] GetKeywordsAccelerators()
-            {
-                return new string[] {
-                    SR.KeyHome,
-                    SR.KeyEnd,
-                    SR.KeyDel,
-                    SR.KeyDelete,
-                    SR.KeyIns,
-                    SR.KeyInsert,
-                    SR.KeyPageUp,
-                    SR.KeyPageDown,
-                    SR.KeyEsc,
-                    SR.KeyScrLk,
-                    SR.KeyPause,
-                    SR.KeySysRq,
-                    SR.KeyPrtScn,
-                    SR.KeyTab,
-                    SR.KeyHelp,
-                };
             }
 
             // Retrieve type of menu item
@@ -2446,14 +2421,14 @@ namespace MS.Internal.AutomationProxies
                         // Found a combination "Ctrl+letter"
                         if (pos + cKeyChars + 2 == cMenuChars)
                         {
-                            // UperCase the letter, case Ctr+A
-                            return string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", sCanonicalsKeyword, menuText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 2)), Char.ToUpper(menuText[cMenuChars - 1], CultureInfo.InvariantCulture));
+                            // UperCase the letter, case Ctrl+A
+                            return $"{sCanonicalsKeyword}{menuText.AsSpan(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 2))}{char.ToUpper(menuText[cMenuChars - 1], CultureInfo.InvariantCulture)}";
                         }
                         else
                         {
                             // Take the remaining string from the Keyword
                             // Case Alt+Enter
-                            return sCanonicalsKeyword + menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1));
+                            return $"{sCanonicalsKeyword}{menuRawText.AsSpan(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1))}";
                         }
                     }
                 }
@@ -2504,14 +2479,14 @@ namespace MS.Internal.AutomationProxies
 
                 if (result > 0)
                 {
-                    itemId = "Item " + result.ToString(CultureInfo.CurrentCulture);
+                    itemId = $"Item {result}";
                 }
                 else if (result == -1)
                 {
                     // since the "Application-defined 16-bit value that identifies the menu item", i.e.
                     // the MENUITEMINFO.wID, changes from instance to instance, I am using the position as
                     // the ID of the menu items.
-                    itemId = "Item " + (_item + 1).ToString(CultureInfo.CurrentCulture);
+                    itemId = $"Item {_item + 1}";
                 }
             }
 
@@ -2751,11 +2726,11 @@ namespace MS.Internal.AutomationProxies
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
 
-                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), keyCtrl + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), keyAlt + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), keyShift + " + ", menuText, menuRawText, out pos)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), keyWin + " + ", menuText, menuRawText, out pos)) != null)
+                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), $"{keyAlt} + ", menuText, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), $"{keyShift} + ", menuText, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), $"{keyWin} + ", menuText, menuRawText, out _)) != null)
                     {
                         return accelerator;
                     }
@@ -2768,14 +2743,12 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Look for a bunch of Predefined keyword
-                    string[] keywordsAccelerators = GetKeywordsAccelerators();
-
-                    for (int i = 0; i < keywordsAccelerators.Length; i++)
+                    for (int i = 0; i < s_keywordsAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
+                        if (pos > 0 && pos + s_keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
                         {
-                            return keywordsAccelerators[i];
+                            return s_keywordsAccelerators[i];
                         }
                     }
 
@@ -2793,6 +2766,25 @@ namespace MS.Internal.AutomationProxies
             // ------------------------------------------------------
 
             #region Private Fields
+
+            /// <summary>
+            /// Retrieves the localized keywords accelerators.
+            /// </summary>
+            private static readonly string[] s_keywordsAccelerators = [SR.KeyHome,
+                                                                       SR.KeyEnd,
+                                                                       SR.KeyDel,
+                                                                       SR.KeyDelete,
+                                                                       SR.KeyIns,
+                                                                       SR.KeyInsert,
+                                                                       SR.KeyPageUp,
+                                                                       SR.KeyPageDown,
+                                                                       SR.KeyEsc,
+                                                                       SR.KeyScrLk,
+                                                                       SR.KeyPause,
+                                                                       SR.KeySysRq,
+                                                                       SR.KeyPrtScn,
+                                                                       SR.KeyTab,
+                                                                       SR.KeyHelp];
 
             private enum MenuItemType
             {
@@ -2855,7 +2847,7 @@ namespace MS.Internal.AutomationProxies
                 _cControlType = ControlType.MenuItem;
                 _item = item;
 
-                _sAutomationId = "Item " + (item).ToString(CultureInfo.CurrentCulture);
+                _sAutomationId = $"Item {item}";
 
                 // This is used only to return a HostRawElementProvider for this menu item
                 _hwndParent = hwndParent;

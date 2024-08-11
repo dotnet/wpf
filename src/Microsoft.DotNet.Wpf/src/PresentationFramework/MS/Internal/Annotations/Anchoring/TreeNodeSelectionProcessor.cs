@@ -83,9 +83,9 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override IList<DependencyObject> GetSelectedNodes(Object selection)
+        public override ReadOnlySpan<DependencyObject> GetSelectedNodes(object selection)
         {
-            return new DependencyObject[] { GetParent(selection) };
+            return new DependencyObject[1] { GetParent(selection) };
         }
 
         /// <summary>
@@ -95,12 +95,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the parent element of the selection; can be null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override UIElement GetParent(Object selection)
+        public override UIElement GetParent(object selection)
         {
             ArgumentNullException.ThrowIfNull(selection);
 
-            UIElement element = selection as UIElement;
-            if (element == null)
+            if (selection is not UIElement element)
             {
                 throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
             }

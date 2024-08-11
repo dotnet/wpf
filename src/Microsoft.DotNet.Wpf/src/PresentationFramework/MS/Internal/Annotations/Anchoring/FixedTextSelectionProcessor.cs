@@ -32,6 +32,7 @@ using System.Xml;
 using MS.Utility;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost;
+using System.Runtime.InteropServices;
 
 namespace MS.Internal.Annotations.Anchoring
 {
@@ -93,11 +94,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
         /// <exception cref="ArgumentException">selection start or end point can not be resolved to a page</exception>
-        public override IList<DependencyObject> GetSelectedNodes(Object selection)
+        public override ReadOnlySpan<DependencyObject> GetSelectedNodes(object selection)
         {
             IList<TextSegment> textSegments = CheckSelection(selection);
 
-            IList<DependencyObject> pageEl = new List<DependencyObject>();
+            List<DependencyObject> pageEl = new();
 
             Point start;
             Point end;
@@ -108,14 +109,14 @@ namespace MS.Internal.Annotations.Anchoring
                 TextSelectionHelper.GetPointerPage(startPointer, out startPage);
                 start = TextSelectionHelper.GetPointForPointer(startPointer);
                 if (startPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), nameof(selection));
 
                 int endPage = int.MinValue;
                 ITextPointer endPointer = segment.End.CreatePointer(LogicalDirection.Backward);
                 TextSelectionHelper.GetPointerPage(endPointer, out endPage);
                 end = TextSelectionHelper.GetPointForPointer(endPointer);
                 if (endPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), nameof(selection));
 
                 int firstPage = pageEl.Count;
                 int numOfPages = endPage - startPage;
@@ -149,7 +150,7 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
 
-            return pageEl;
+            return CollectionsMarshal.AsSpan(pageEl);
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the parent element of the selection; can be null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override UIElement GetParent(Object selection)
+        public override UIElement GetParent(object selection)
         {
             CheckAnchor(selection);
             return TextSelectionHelper.GetParent(selection);

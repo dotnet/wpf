@@ -79,12 +79,12 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>a list containing the selection</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override IList<DependencyObject> GetSelectedNodes(Object selection)
+        public override ReadOnlySpan<DependencyObject> GetSelectedNodes(object selection)
         {
             // Verify selection is a service provider that provides ITextView
             VerifySelection(selection);
 
-            return new DependencyObject[] { (DependencyObject)selection };
+            return new DependencyObject[1] { (DependencyObject)selection };
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the selection itself</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override UIElement GetParent(Object selection)
+        public override UIElement GetParent(object selection)
         {
             // Verify selection is a service provider that provides ITextView
             VerifySelection(selection);

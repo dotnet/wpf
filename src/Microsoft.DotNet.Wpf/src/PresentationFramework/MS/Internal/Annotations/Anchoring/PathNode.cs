@@ -151,11 +151,8 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the instance referring to the root of the tree; its 
         /// children/descendants only include the nodes between the root and 
         /// all of the nodes</returns>
-        /// <exception cref="ArgumentNullException">nodes is null</exception>
-        internal static PathNode BuildPathForElements(ICollection nodes)
+        internal static PathNode BuildPathForElements(ReadOnlySpan<DependencyObject> nodes)
         {
-            ArgumentNullException.ThrowIfNull(nodes);
-
             PathNode firstPathNode = null;
             foreach (DependencyObject node in nodes)
             {

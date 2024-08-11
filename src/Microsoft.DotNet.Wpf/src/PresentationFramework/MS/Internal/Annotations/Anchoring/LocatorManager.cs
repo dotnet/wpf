@@ -356,16 +356,16 @@ namespace MS.Internal.Annotations.Anchoring
             VerifyAccess();
             ArgumentNullException.ThrowIfNull(selection);
 
-            ICollection nodes = null;
+            ReadOnlySpan<DependencyObject> nodes;
             SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
 
             if (selProcessor != null)
             {
-                nodes = (ICollection)selProcessor.GetSelectedNodes(selection);
+                nodes = selProcessor.GetSelectedNodes(selection);
             }
             else
             {
-                throw new ArgumentException("Unsupported Selection", "selection");
+                throw new ArgumentException("Unsupported Selection", nameof(selection));
             }
 
             IList<ContentLocatorBase> returnLocators = null;

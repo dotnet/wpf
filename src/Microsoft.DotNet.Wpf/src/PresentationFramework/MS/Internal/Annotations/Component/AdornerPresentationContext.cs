@@ -19,7 +19,6 @@ using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Collections;
 
 namespace MS.Internal.Annotations.Component
 {
@@ -29,7 +28,7 @@ namespace MS.Internal.Annotations.Component
     /// for a different annotation component (located in the same adorner layer) works, but is slower than using the presentation context stored in the
     /// annotation component.
     /// </summary>
-    internal class AdornerPresentationContext : PresentationContext
+    internal sealed class AdornerPresentationContext : PresentationContext
     {
         #region Constructors
 
@@ -120,7 +119,7 @@ namespace MS.Internal.Annotations.Component
         /// <param name="max">max Z-order value for this level</param>
         internal static void SetZLevelRange(int level, int min, int max)
         {
-            if (s_ZRanges.ContainsKey(level) == false)
+            if (!s_ZRanges.ContainsKey(level))
             {
                 s_ZRanges.Add(level, new ZRange(min, max));
             }

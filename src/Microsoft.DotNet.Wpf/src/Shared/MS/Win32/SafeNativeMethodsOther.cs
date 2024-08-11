@@ -101,26 +101,19 @@ namespace MS.Win32
         public const UInt16 C3_IDEOGRAPH  = 0x0100;
         public const UInt16 C3_KASHIDA    = 0x0200;
 
-        public static unsafe bool GetStringTypeEx(uint locale, uint infoType, ReadOnlySpan<char> sourceString, int count, ReadOnlySpan<UInt16> charTypes)
+        public static unsafe bool GetStringTypeEx(uint locale, uint infoType, ReadOnlySpan<char> sourceString, ReadOnlySpan<UInt16> charTypes)
         {
-            bool win32Return;
             // Since we do not use [LibraryImport], Span<T> marshallers are not available by default
             fixed (char* ptrSourceString = sourceString)
             {
                 fixed (ushort* ptrCharTypes = charTypes)
                 {
-                    win32Return = SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, ptrSourceString, count, ptrCharTypes);
+                    if (!SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, ptrSourceString, sourceString.Length, ptrCharTypes))
+                        throw new Win32Exception(); //Initializes with Marshal.GetLastPInvokeError()
                 }
-            }
-            
-            int win32Error = Marshal.GetLastWin32Error();
+            }         
 
-            if (!win32Return)
-            {
-                throw new Win32Exception(win32Error);
-            }
-
-            return win32Return;
+            return true;
         }
         
         public static int GetSysColor(int nIndex)

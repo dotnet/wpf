@@ -76,7 +76,7 @@ namespace System.Windows.Documents
             ReadOnlySpan<UInt16> charType3 = stackalloc UInt16[2];
             ReadOnlySpan<char> sourceChars = [text[position - 1], text[position]];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, sourceChars, 2, charType3);
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, sourceChars, charType3);
 
             // Otherwise we're at a word boundary if the classes of the surrounding text differ.
             return IsWordBoundary(text[position - 1], text[position]) ||
@@ -228,7 +228,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in ch), 1, charType1);
+                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in ch), charType1);
 
                     if ((charType1[0] & SafeNativeMethods.C1_SPACE) != 0)
                     {
@@ -262,7 +262,7 @@ namespace System.Windows.Documents
         {
             ReadOnlySpan<UInt16> charType3 = stackalloc UInt16[1];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new(in ch), 1, charType3);
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new(in ch), charType3);
 
             return (charType3[0] & (SafeNativeMethods.C3_DIACRITIC | SafeNativeMethods.C3_NONSPACING | SafeNativeMethods.C3_VOWELMARK | SafeNativeMethods.C3_KASHIDA)) != 0;
         }

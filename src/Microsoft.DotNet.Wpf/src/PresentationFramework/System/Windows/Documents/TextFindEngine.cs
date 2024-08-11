@@ -109,8 +109,8 @@ namespace System.Windows.Documents
                 ReadOnlySpan<char> startEndChars = [findPattern[0], findPattern[findPattern.Length - 1]];
 
                 // Get the character type for the start/end character of the find pattern.
-                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in startEndChars[0]), 1, startCharType1);
-                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in startEndChars[1]), 1, endCharType1);
+                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in startEndChars[0]), startCharType1);
+                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in startEndChars[1]), endCharType1);
 
                 // Reset the finding whole word flag if FindPattern includes the space
                 // or blank character at the start or end position.

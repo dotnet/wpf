@@ -73,9 +73,10 @@ namespace System.Windows.Documents
                 }
             }
 
-            UInt16[] charType3 = new UInt16[2];
+            ReadOnlySpan<UInt16> charType3 = stackalloc UInt16[2];
+            ReadOnlySpan<char> sourceChars = [text[position - 1], text[position]];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new char[] { text[position - 1], text[position] }, 2, charType3);
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, sourceChars, 2, charType3);
 
             // Otherwise we're at a word boundary if the classes of the surrounding text differ.
             return IsWordBoundary(text[position - 1], text[position]) ||
@@ -202,6 +203,7 @@ namespace System.Windows.Documents
         private static CharClass[] GetClasses(char[] text)
         {
             CharClass[] classes = new CharClass[text.Length];
+            ReadOnlySpan<UInt16> charType1 = stackalloc UInt16[1];
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -226,9 +228,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    UInt16[] charType1 = new UInt16[1];
-
-                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new char[] { ch }, 1, charType1);
+                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new(in ch), 1, charType1);
 
                     if ((charType1[0] & SafeNativeMethods.C1_SPACE) != 0)
                     {
@@ -260,9 +260,9 @@ namespace System.Windows.Documents
         // Returns true if a char is a non-spacing diacritic or kashida.
         private static bool IsDiacriticOrKashida(char ch)
         {
-            UInt16 []charType3 = new UInt16[1];
+            ReadOnlySpan<UInt16> charType3 = stackalloc UInt16[1];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new char[] { ch }, 1, charType3);
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new(in ch), 1, charType3);
 
             return (charType3[0] & (SafeNativeMethods.C3_DIACRITIC | SafeNativeMethods.C3_NONSPACING | SafeNativeMethods.C3_VOWELMARK | SafeNativeMethods.C3_KASHIDA)) != 0;
         }

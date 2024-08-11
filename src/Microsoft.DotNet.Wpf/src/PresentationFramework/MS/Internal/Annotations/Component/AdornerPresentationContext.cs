@@ -100,22 +100,14 @@ namespace MS.Internal.Annotations.Component
         /// BringToTop method. This will move the component to the top of its priority group. If there are other
         /// components with higher priority they will still be on top of that component. If more than
         /// one component type have the same ZLevel that means they all can stay on top of each other.
-        /// Setting IAnnotationComponent.ZOrder must be invoked only by the PrezentationContext
+        /// Setting IAnnotationComponent.ZOrder must be invoked only by the PresentationContext
         /// when the Z-order changes. It can not be set by application in v1.</remarks>
         internal static void SetTypeZLevel(Type type, int level)
         {
             Invariant.Assert(level >= 0, "level is < 0");
-
             Invariant.Assert(type != null, "type is null");
 
-            if (s_ZLevel.ContainsKey(type))
-            {
-                s_ZLevel[type] = level;
-            }
-            else
-            {
-                s_ZLevel.Add(type, level);
-            }
+            s_ZLevel[type] = level;
         }
 
         /// <summary>

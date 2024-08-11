@@ -2450,10 +2450,10 @@ namespace MS.Internal.AutomationProxies
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
                 {
-                    int iKey = int.Parse(menuText.Substring(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
+                    int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
                     if (iKey > 0 && iKey <= 12)
                     {
-                        return "F" + iKey.ToString(CultureInfo.CurrentCulture);
+                        return $"F{iKey}";
                     }
                 }
                 return null;

@@ -553,7 +553,7 @@ namespace MS.Internal.Annotations.Component
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private class AnnotationHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class AnnotationHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal AnnotationHighlightChangedEventArgs(ITextPointer start, ITextPointer end)

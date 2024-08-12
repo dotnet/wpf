@@ -139,7 +139,7 @@ namespace System.Windows.Documents
 
         #region Private Classes
         // Argument for the Changed event, encapsulates a highlight change.
-        private class DocumentSequenceHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class DocumentSequenceHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal DocumentSequenceHighlightChangedEventArgs(IList<TextSegment> ranges)

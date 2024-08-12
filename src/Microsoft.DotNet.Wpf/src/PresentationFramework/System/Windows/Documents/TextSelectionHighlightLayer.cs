@@ -321,7 +321,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private class TextSelectionHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class TextSelectionHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal TextSelectionHighlightChangedEventArgs(ITextPointer invalidRangeLeftStart, ITextPointer invalidRangeLeftEnd,

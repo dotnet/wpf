@@ -193,7 +193,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal SpellerHighlightChangedEventArgs(ITextPointer start, ITextPointer end)

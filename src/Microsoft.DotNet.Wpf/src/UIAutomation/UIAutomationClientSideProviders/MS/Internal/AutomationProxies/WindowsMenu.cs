@@ -1314,23 +1314,16 @@ namespace MS.Internal.AutomationProxies
                         return menuRawText.Substring(0, pos);
                     }
 
-                    // Try to remove the Ctrl or Alt, etc at the end of the string if there
-                    // Be caution modifying this code, it must miror the code for AcceleratorKeyProperty
-
+                    // Be cautious modifying this code, it must mirror the code for AcceleratorKeyProperty
                     // Try to look for a combination Ctrl or Alt + something
-                    string keyCtrl = SR.KeyCtrl;
-                    string keyControl = SR.KeyControl;
-                    string keyAlt = SR.KeyAlt;
-                    string keyShift = SR.KeyShift;
-                    string keyWin = SR.KeyWinKey;
 
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
 
-                    if (AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out pos) != null ||
-                        AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out pos) != null ||
-                        AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), $"{keyAlt} + ", menuText, menuRawText, out pos) != null ||
-                        AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), $"{keyShift} + ", menuText, menuRawText, out pos) != null ||
-                        AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), $"{keyWin} + ", menuText, menuRawText, out pos) != null)
+                    if (AccelatorKeyCtrl(SR.KeyCtrl, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(SR.KeyControl, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(SR.KeyAlt, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(SR.KeyShift, menuRawText, out pos) != null ||
+                        AccelatorKeyCtrl(SR.KeyWinKey, menuRawText, out pos) != null)
                     {
                         return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
                     }
@@ -2403,41 +2396,40 @@ namespace MS.Internal.AutomationProxies
                 Input.SendKeyboardInput (Key.LeftAlt, false);
             }
 
-            // Search in a menu if the menu item string finishes with an accelerator
-            // of the form Ctrl+Am Control+Shift+K.
-            private static string AccelatorKeyCtrl(string sKeyword, string sCanonicalsKeyword, string menuText, string menuRawText, out int pos)
+            // Search in a menu if the menu item string finishes with an accelerator; e.g. Ctrl+A
+            private static string AccelatorKeyCtrl(string sKeyword, string menuRawText, out int pos)
             {
-                int cMenuChars = menuText.Length;
-                char ch;
+                int menuTextLength = menuRawText.Length;
+                int keywordLength = sKeyword.Length;
 
                 // Try to find the keyword
-               // Eg: Ctrl or Control; 4 == "ctrl".Length; 2 '+' or ' ' + one char
-                int cKeyChars = sKeyword.Length;
-                if ((pos = menuText.LastIndexOf(sKeyword, StringComparison.Ordinal)) >= 0 && pos + cKeyChars + 2 <= cMenuChars)
+                // e.g. "CTRL + A": 4 chars == "Ctrl"; 2 chars == ('+' or ' ') + one character
+                if ((pos = menuRawText.LastIndexOf(sKeyword, StringComparison.InvariantCultureIgnoreCase)) >= 0 && pos + keywordLength + 2 <= menuTextLength)
                 {
-                    ch = menuText [pos + cKeyChars];
+                    char ch = menuRawText[pos + keywordLength];
                     if (ch == '+' || ch == ' ')
                     {
-                        // Found a combination "Ctrl+letter"
-                        if (pos + cKeyChars + 2 == cMenuChars)
+                        // Found a combination of "Ctrl+Letter"
+                        if (pos + keywordLength + 2 == menuTextLength)
                         {
-                            // UperCase the letter, case Ctrl+A
-                            return $"{sCanonicalsKeyword}{menuText.AsSpan(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 2))}{char.ToUpper(menuText[cMenuChars - 1], CultureInfo.InvariantCulture)}";
+                            // Uppercase the letter, f.e. "Ctrl + a" to "Ctrl+A"
+                            return $"{sKeyword} + {char.ToUpperInvariant(menuRawText[menuTextLength - 1])}";
                         }
                         else
                         {
-                            // Take the remaining string from the Keyword
-                            // Case Alt+Enter
-                            return $"{sCanonicalsKeyword}{menuRawText.AsSpan(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1))}";
+                            // Take the remaining string from the menuText
+                            // e.g. Alt+Enter
+                            return $"{sKeyword} + {menuRawText.AsSpan(pos + keywordLength + 1, menuTextLength - (pos + keywordLength + 1))}";
                         }
                     }
                 }
+
                 return null;
             }
 
             // Search in a menu if the menu item string finishes with an accelerator
             // of the form Fxx (F5, F12, etc)
-            private static string AccelatorFxx (string menuText)
+            private static string AccelatorFxx(string menuText)
             {
                 int cChars = menuText.Length;
                 int pos;
@@ -2714,23 +2706,16 @@ namespace MS.Internal.AutomationProxies
                         return menuRawText.Remove(0, pos + 1);
                     }
 
-                    // !!! Be caution modifying this code, it must miror the code for the Name Property
-
+                    // Be cautious modifying this code, it must mirror the code for the Name Property
                     // Try to look for a combination Ctrl or Alt + something
-                    string keyCtrl = SR.KeyCtrl;
-                    string keyControl = SR.KeyControl;
-                    string keyAlt = SR.KeyAlt;
-                    string keyShift = SR.KeyShift;
-                    string keyWin = SR.KeyWinKey;
-
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
 
-                    if ((accelerator = AccelatorKeyCtrl(keyCtrl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out _)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyControl.ToLower(CultureInfo.InvariantCulture), $"{keyCtrl} + ", menuText, menuRawText, out _)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyAlt.ToLower(CultureInfo.InvariantCulture), $"{keyAlt} + ", menuText, menuRawText, out _)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyShift.ToLower(CultureInfo.InvariantCulture), $"{keyShift} + ", menuText, menuRawText, out _)) != null ||
-                        (accelerator = AccelatorKeyCtrl(keyWin.ToLower(CultureInfo.InvariantCulture), $"{keyWin} + ", menuText, menuRawText, out _)) != null)
+                    if ((accelerator = AccelatorKeyCtrl(SR.KeyCtrl, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(SR.KeyControl, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(SR.KeyAlt, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(SR.KeyShift, menuRawText, out _)) != null ||
+                        (accelerator = AccelatorKeyCtrl(SR.KeyWinKey, menuRawText, out _)) != null)
                     {
                         return accelerator;
                     }

@@ -236,7 +236,7 @@
   <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
@@ -3073,7 +3073,7 @@
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
-    <Setter Property="PasswordChar" Value="â—" />
+    <Setter Property="PasswordChar" Value="●" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />

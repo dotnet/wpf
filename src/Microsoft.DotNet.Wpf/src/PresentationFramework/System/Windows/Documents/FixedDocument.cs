@@ -1041,7 +1041,7 @@ namespace System.Windows.Documents
             Debug.Assert(args.Ranges != null);
 
             DocumentsTrace.FixedTextOM.Highlight.Trace($"HightlightMoved From {0}-{0} To {0}-{0}");
-            Debug.Assert(args.Ranges.Count > 0 && ((TextSegment)args.Ranges[0]).Start.CompareTo(((TextSegment)args.Ranges[0]).End) < 0);
+            Debug.Assert(args.Ranges.Count > 0 && args.Ranges[0].Start.CompareTo(args.Ranges[0].End) < 0);
 
             // REVIEW:benwest:7/9/2004: This code is reseting the entire highlight data structure
             // on every highlight delta, which scales horribly.  It should be possible
@@ -1140,13 +1140,13 @@ namespace System.Windows.Documents
                 }
             }
 
-            ArrayList dirtyPages = new ArrayList();
-            IList ranges = args.Ranges;
+            List<int> dirtyPages = new List<int>();
+            IList<TextSegment> ranges = args.Ranges;
 
             // Find the dirty page
             for (int i = 0; i < ranges.Count; i++)
             {
-                TextSegment textSegment = (TextSegment)ranges[i];
+                TextSegment textSegment = ranges[i];
                 int startPage = this.FixedContainer.GetPageNumber(textSegment.Start);
                 int endPage =  this.FixedContainer.GetPageNumber(textSegment.End);
 

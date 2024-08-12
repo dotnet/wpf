@@ -11,7 +11,6 @@
 using System;
 using MS.Internal;
 using System.Diagnostics;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -565,7 +564,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             // Collection of changed content ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

@@ -414,7 +414,7 @@ namespace System.Windows.Documents
             }
 
             // List of changed ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

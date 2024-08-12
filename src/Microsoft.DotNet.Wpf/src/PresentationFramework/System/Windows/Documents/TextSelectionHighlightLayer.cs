@@ -8,7 +8,6 @@
 
 using System;
 using MS.Internal;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -353,7 +352,7 @@ namespace System.Windows.Documents
             }
 
             // Collection of changed content ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

@@ -5,6 +5,7 @@
 // Description: HWND-based Menu Proxy
 
 using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Globalization;
 using System.Text;
@@ -1326,25 +1327,24 @@ namespace MS.Internal.AutomationProxies
                         return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
                     }
 
-                    // Try to look for a Fxx
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    string accelerator = AccelatorFxx(menuText);
+                    // Try to look for an Fxx accelerator
+                    string accelerator = AccelatorFxx(menuRawText, out pos);
                     if (!string.IsNullOrEmpty(accelerator))
                     {
-                        pos = menuText.LastIndexOf(accelerator, StringComparison.OrdinalIgnoreCase);
                         if (pos >= 0)
                         {
-                            return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
+                            return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
                         }
                         else
                         {
                             // Wrong logic, we should be able to find the Fxx combination we just built
-                            System.Diagnostics.Debug.Assert(false, "Cannot find back the accelerator in the menu!");
+                            Debug.Assert(false, "Cannot find back the accelerator in the menu!");
                             return menuRawText;
                         }
                     }
 
-                    // Look for a bunch of Predefined keyword
+                    // Look for a bunch of Predefined keywords
+                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     for (int i = 0; i < s_keywordsAccelerators.Length; i++)
                     {
                         pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
@@ -2427,18 +2427,24 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Search in a menu if the menu item string finishes with an accelerator
-            // of the form Fxx (F5, F12, etc)
-            private static string AccelatorFxx(string menuText)
+            // of the form Fxx (F5, F12, etc.)
+            /// <summary>
+            /// Searches <paramref name="menuText"/> for accelerators in Fxx format, where xx ranges from 1 to 12. 
+            /// </summary>
+            /// <param name="menuText">The menu string to search accelerator in.</param>
+            /// <param name="pos">Starting position of the accelerator in <paramref name="menuText"/>.</param>
+            /// <returns>The formatted accelerator in "F1" to "F12" format.</returns>
+            private static string AccelatorFxx(string menuText, out int pos)
             {
                 int cChars = menuText.Length;
-                int pos = cChars - 1;
+                pos = cChars - 1;
 
                 // Get the function key number
                 while (pos > 0 && cChars - pos <= 2 && char.IsDigit(menuText[pos]))
                     pos--;
 
                 // Check that it is the form Fxx
-                if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
+                if (pos < cChars - 1 && pos > 0 && char.ToUpperInvariant(menuText[pos]) == 'F')
                 {
                     int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
                     if (iKey > 0 && iKey <= 12)
@@ -2718,15 +2724,15 @@ namespace MS.Internal.AutomationProxies
                         return accelerator;
                     }
 
-                    // Try to look for a Fxx
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    accelerator = AccelatorFxx(menuText);
+                    // Try to look for an Fxx accelerator
+                    accelerator = AccelatorFxx(menuRawText, out _);
                     if (!string.IsNullOrEmpty(accelerator))
                     {
                         return accelerator;
                     }
 
-                    // Look for a bunch of Predefined keyword
+                    // Look for a bunch of Predefined keywords
+                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     for (int i = 0; i < s_keywordsAccelerators.Length; i++)
                     {
                         pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);

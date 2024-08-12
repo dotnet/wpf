@@ -144,6 +144,16 @@ namespace System.Windows
             }
         }
 
+        internal IEnumerable<ResourceDictionary> OldDictionaries
+        {
+            get { return _oldDictionaries; }
+        }
+
+        internal IEnumerable<ResourceDictionary> NewDictionaries
+        {
+            get { return _newDictionaries; }
+        }
+
         // This flag is used to indicate that a theme change has occured
         internal bool  IsThemeChange
         {
@@ -197,6 +207,12 @@ namespace System.Windows
         internal bool IsResourceAddOperation
         {
             get { return _key != null || (_newDictionaries != null && _newDictionaries.Count > 0); }
+        }
+
+        // This flag is used to indicate if the current operation is a single resource update operation
+        internal bool IsIndividualResourceChange
+        {
+            get { return _key != null; }
         }
 
         // This member is used to identify the container when a style change happens

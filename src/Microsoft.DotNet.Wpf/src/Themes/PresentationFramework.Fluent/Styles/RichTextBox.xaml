@@ -9,6 +9,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
 
+    <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
+
     <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
         <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
         <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
@@ -52,7 +54,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
-                            BorderThickness="{StaticResource TextBoxAccentBorderThemeThickness}"
+                            BorderThickness="{StaticResource RichTextBoxAccentBorderThemeThickness}"
                             CornerRadius="{DynamicResource ControlCornerRadius}" />
                     </Grid>
                     <ControlTemplate.Triggers>

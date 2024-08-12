@@ -1317,18 +1317,17 @@ namespace MS.Internal.AutomationProxies
                     // Be cautious modifying this code, it must mirror the code for AcceleratorKeyProperty
                     // Try to look for a combination Ctrl or Alt + something
 
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-
                     if (AccelatorKeyCtrl(SR.KeyCtrl, menuRawText, out pos) != null ||
                         AccelatorKeyCtrl(SR.KeyControl, menuRawText, out pos) != null ||
                         AccelatorKeyCtrl(SR.KeyAlt, menuRawText, out pos) != null ||
                         AccelatorKeyCtrl(SR.KeyShift, menuRawText, out pos) != null ||
                         AccelatorKeyCtrl(SR.KeyWinKey, menuRawText, out pos) != null)
                     {
-                        return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
+                        return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
                     }
 
                     // Try to look for a Fxx
+                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator = AccelatorFxx(menuText);
                     if (!string.IsNullOrEmpty(accelerator))
                     {
@@ -2432,12 +2431,11 @@ namespace MS.Internal.AutomationProxies
             private static string AccelatorFxx(string menuText)
             {
                 int cChars = menuText.Length;
-                int pos;
+                int pos = cChars - 1;
 
                 // Get the function key number
-                for (pos = cChars - 1; pos > 0 && cChars - pos <= 2 && Char.IsDigit (menuText [pos]); pos--)
-                {
-                }
+                while (pos > 0 && cChars - pos <= 2 && char.IsDigit(menuText[pos]))
+                    pos--;
 
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
@@ -2448,6 +2446,7 @@ namespace MS.Internal.AutomationProxies
                         return $"F{iKey}";
                     }
                 }
+
                 return null;
             }
 
@@ -2708,7 +2707,6 @@ namespace MS.Internal.AutomationProxies
 
                     // Be cautious modifying this code, it must mirror the code for the Name Property
                     // Try to look for a combination Ctrl or Alt + something
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     string accelerator;
 
                     if ((accelerator = AccelatorKeyCtrl(SR.KeyCtrl, menuRawText, out _)) != null ||
@@ -2721,6 +2719,7 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Try to look for a Fxx
+                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
                     accelerator = AccelatorFxx(menuText);
                     if (!string.IsNullOrEmpty(accelerator))
                     {

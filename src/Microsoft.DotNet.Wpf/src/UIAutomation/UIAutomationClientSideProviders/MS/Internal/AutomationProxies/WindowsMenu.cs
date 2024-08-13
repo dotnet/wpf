@@ -1345,10 +1345,11 @@ namespace MS.Internal.AutomationProxies
 
                     // Look for a bunch of Predefined keywords
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    for (int i = 0; i < s_keywordsAccelerators.Length; i++)
+                    string[] keyWordAccelerators = GetKeywordsAccelerators();
+                    for (int i = 0; i < keyWordAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + s_keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuText.LastIndexOf(keyWordAccelerators[i], StringComparison.OrdinalIgnoreCase);
+                        if (pos > 0 && pos + keyWordAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
                         {
                             return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
                         }
@@ -1899,6 +1900,28 @@ namespace MS.Internal.AutomationProxies
                 return (Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_SEPARATOR) ||
                         Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBARBREAK) ||
                         Misc.IsBitSet(menuItemInfo.fType, NativeMethods.MF_MENUBREAK));
+            }
+
+            /// <summary>
+            /// Retrieves the localized keywords accelerators for <see cref="CultureInfo.CurrentUICulture"/>.
+            /// </summary>
+            private static string[] GetKeywordsAccelerators()
+            {
+                return [SR.KeyHome,
+                        SR.KeyEnd,
+                        SR.KeyDel,
+                        SR.KeyDelete,
+                        SR.KeyIns,
+                        SR.KeyInsert,
+                        SR.KeyPageUp,
+                        SR.KeyPageDown,
+                        SR.KeyEsc,
+                        SR.KeyScrLk,
+                        SR.KeyPause,
+                        SR.KeySysRq,
+                        SR.KeyPrtScn,
+                        SR.KeyTab,
+                        SR.KeyHelp];
             }
 
             // Retrieve type of menu item
@@ -2733,12 +2756,13 @@ namespace MS.Internal.AutomationProxies
 
                     // Look for a bunch of Predefined keywords
                     string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    for (int i = 0; i < s_keywordsAccelerators.Length; i++)
+                    string[] keyWordAccelerators = GetKeywordsAccelerators();
+                    for (int i = 0; i < keyWordAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(s_keywordsAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + s_keywordsAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuText.LastIndexOf(keyWordAccelerators[i], StringComparison.OrdinalIgnoreCase);
+                        if (pos > 0 && pos + keyWordAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
                         {
-                            return s_keywordsAccelerators[i];
+                            return keyWordAccelerators[i];
                         }
                     }
 
@@ -2756,25 +2780,6 @@ namespace MS.Internal.AutomationProxies
             // ------------------------------------------------------
 
             #region Private Fields
-
-            /// <summary>
-            /// Retrieves the localized keywords accelerators.
-            /// </summary>
-            private static readonly string[] s_keywordsAccelerators = [SR.KeyHome,
-                                                                       SR.KeyEnd,
-                                                                       SR.KeyDel,
-                                                                       SR.KeyDelete,
-                                                                       SR.KeyIns,
-                                                                       SR.KeyInsert,
-                                                                       SR.KeyPageUp,
-                                                                       SR.KeyPageDown,
-                                                                       SR.KeyEsc,
-                                                                       SR.KeyScrLk,
-                                                                       SR.KeyPause,
-                                                                       SR.KeySysRq,
-                                                                       SR.KeyPrtScn,
-                                                                       SR.KeyTab,
-                                                                       SR.KeyHelp];
 
             private enum MenuItemType
             {

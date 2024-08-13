@@ -1331,16 +1331,7 @@ namespace MS.Internal.AutomationProxies
                     string accelerator = AccelatorFxx(menuRawText, out pos);
                     if (!string.IsNullOrEmpty(accelerator))
                     {
-                        if (pos >= 0)
-                        {
-                            return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
-                        }
-                        else
-                        {
-                            // Wrong logic, we should be able to find the Fxx combination we just built
-                            Debug.Assert(false, "Cannot find back the accelerator in the menu!");
-                            return menuRawText;
-                        }
+                        return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
                     }
 
                     // Look for a bunch of Predefined keywords

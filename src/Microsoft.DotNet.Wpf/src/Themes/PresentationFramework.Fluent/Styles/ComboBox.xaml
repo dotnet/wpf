@@ -24,22 +24,6 @@
     <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
     <system:String x:Key="ComboBoxChevronDownGlyph">&#xE70D;</system:String>    
 
-    <Style x:Key="ComboBoxFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle
-                                Margin="-3"
-                                StrokeThickness="1"
-                                Stroke="{DynamicResource KeyboardFocusBorderColorBrush}"
-                                SnapsToDevicePixels="true"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
         <!--  Focus by parent element  -->
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -161,7 +145,7 @@
 
     <Style x:Key="DefaultComboBoxStyle" TargetType="{x:Type ComboBox}">
         <!--  Universal WPF UI focus  -->
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource ComboBoxFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI ContextMenu  -->
         <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
         <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
@@ -232,7 +216,7 @@
                                             FontSize="{StaticResource ComboBoxChevronSize}"
                                             Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"
                                             RenderTransformOrigin="0.5, 0.5"
-                                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                             Text ="{StaticResource ComboBoxChevronDownGlyph}">
                                             <TextBlock.RenderTransform>
                                                 <RotateTransform Angle="0" />

@@ -1734,12 +1734,17 @@ namespace System.Windows
         {
             _resourcesInitialized = true;
             
-            if(!ThemeManager.IgnoreAppResourcesChange)
+            // Sync needs to be performed only under the following conditions:
+            //  - the resource change event raised is due to a collection change
+            //      i.e. it is not a IsIndividualResourceAddOperation
+            //  - the event is not raised due to the change in Application.ThemeMode
+            //      i.e. SkipAppThemeModeSyncing is set to true
+            //  - if application's ThemeMode and Resources sync is enabled.
+            //      i.e. IsAppThemeModeSyncEnabled is set to true
+            if (!ThemeManager.SkipAppThemeModeSyncing 
+                    && ThemeManager.IsAppThemeModeSyncEnabled)
             {
-                if(ThemeManager.SyncThemeModeAndResources())
-                {
-                    return;
-                }
+                ThemeManager.SyncThemeMode();
             }
             
             // Invalidate ResourceReference properties on all the windows.

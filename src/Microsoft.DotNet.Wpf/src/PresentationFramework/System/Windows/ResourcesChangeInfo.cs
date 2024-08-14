@@ -144,16 +144,6 @@ namespace System.Windows
             }
         }
 
-        internal IEnumerable<ResourceDictionary> OldDictionaries
-        {
-            get { return _oldDictionaries; }
-        }
-
-        internal IEnumerable<ResourceDictionary> NewDictionaries
-        {
-            get { return _newDictionaries; }
-        }
-
         // This flag is used to indicate that a theme change has occured
         internal bool  IsThemeChange
         {

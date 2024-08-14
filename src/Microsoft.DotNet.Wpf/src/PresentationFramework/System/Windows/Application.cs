@@ -934,7 +934,7 @@ namespace System.Windows
 
                 if(_reloadFluentDictionary && !_resourcesInitialized)
                 {
-                    if(value != null)
+                    if(value != null && ThemeMode != ThemeMode.None)
                     {
                         value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     }

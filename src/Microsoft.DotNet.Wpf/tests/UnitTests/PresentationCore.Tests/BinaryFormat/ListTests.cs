@@ -9,63 +9,12 @@ using System.Windows;
 using FluentAssertions;
 using PresentationCore.Tests.TestUtilities;
 using PresentationCore.Tests.FluentAssertions;
+using System.Formats.Nrbf;
 
 namespace PresentationCore.Tests.BinaryFormat;
 
 public class ListTests
 {
-    [Fact]
-    public void BinaryFormattedObject_ParseEmptyArrayList()
-    {
-        BinaryFormattedObject format = new ArrayList().SerializeAndParse();
-        SystemClassWithMembersAndTypes systemClass = (SystemClassWithMembersAndTypes)format[1];
-
-        systemClass.Name.Should().Be(typeof(ArrayList).FullName);
-        systemClass.MemberNames.Should().BeEquivalentTo(new string[] { "_items", "_size", "_version" });
-        systemClass.MemberTypeInfo[0].Should().Be((BinaryType.ObjectArray, null));
-
-        format[2].Should().BeOfType<ArraySingleObject>();
-    }
-
-    [Theory]
-    [MemberData(nameof(ArrayList_Primitive_Data))]
-    public void BinaryFormattedObject_ParsePrimitivesArrayList(object value)
-    {
-        BinaryFormattedObject format = new ArrayList()
-        {
-            value
-        }.SerializeAndParse();
-
-        SystemClassWithMembersAndTypes systemClass = (SystemClassWithMembersAndTypes)format[1];
-
-        systemClass.Name.Should().Be(typeof(ArrayList).FullName);
-        systemClass.MemberNames.Should().BeEquivalentTo(new string[] { "_items", "_size", "_version" });
-        systemClass.MemberTypeInfo[0].Should().Be((BinaryType.ObjectArray, null));
-
-        ArraySingleObject array = (ArraySingleObject)format[2];
-        MemberPrimitiveTyped primitve = (MemberPrimitiveTyped)array[0];
-        primitve.Value.Should().Be(value);
-    }
-
-    [Fact]
-    public void BinaryFormattedObject_ParseStringArrayList()
-    {
-        BinaryFormattedObject format = new ArrayList()
-        {
-            "JarJar"
-        }.SerializeAndParse();
-
-        SystemClassWithMembersAndTypes systemClass = (SystemClassWithMembersAndTypes)format[1];
-
-        systemClass.Name.Should().Be(typeof(ArrayList).FullName);
-        systemClass.MemberNames.Should().BeEquivalentTo(new string[] { "_items", "_size", "_version" });
-        systemClass.MemberTypeInfo[0].Should().Be((BinaryType.ObjectArray, null));
-
-        ArraySingleObject array = (ArraySingleObject)format[2];
-        BinaryObjectString binaryString = (BinaryObjectString)array[0];
-        binaryString.Value.Should().Be("JarJar");
-    }
-
     public static TheoryData<object> ArrayList_Primitive_Data => new()
     {
         int.MaxValue,
@@ -123,50 +72,6 @@ public class ListTests
         }
     };
 
-    [Fact]
-    public void BinaryFormattedObject_ParseEmptyIntList()
-    {
-        BinaryFormattedObject format = new List<int>().SerializeAndParse();
-        SystemClassWithMembersAndTypes classInfo = (SystemClassWithMembersAndTypes)format[1];
-
-        // Note that T types are serialized as the mscorlib type.
-        classInfo.Name.Should().Be(
-            "System.Collections.Generic.List`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]");
-
-        classInfo.ClassInfo.MemberNames.Should().BeEquivalentTo(new string[]
-        {
-            "_items",
-            // This is something that wouldn't be needed if List<T> implemented ISerializable. If we format
-            // we can save any extra unused array spots.
-            "_size",
-            // It is a bit silly that _version gets serialized, it's only use is as a check to see if
-            // the collection is modified while it is being enumerated.
-            "_version"
-        });
-        classInfo.MemberTypeInfo[0].Should().Be((BinaryType.PrimitiveArray, PrimitiveType.Int32));
-        classInfo.MemberTypeInfo[1].Should().Be((BinaryType.Primitive, PrimitiveType.Int32));
-        classInfo.MemberTypeInfo[2].Should().Be((BinaryType.Primitive, PrimitiveType.Int32));
-        classInfo["_items"].Should().BeOfType<MemberReference>();
-        classInfo["_size"].Should().Be(0);
-        classInfo["_version"].Should().Be(0);
-
-        ArraySinglePrimitive array = (ArraySinglePrimitive)format[2];
-        array.Length.Should().Be(0);
-    }
-
-    [Fact]
-    public void BinaryFormattedObject_ParseEmptyStringList()
-    {
-        BinaryFormattedObject format = new List<string>().SerializeAndParse();
-        SystemClassWithMembersAndTypes classInfo = (SystemClassWithMembersAndTypes)format[1];
-        classInfo.ClassInfo.Name.Should().StartWith("System.Collections.Generic.List`1[[System.String,");
-        classInfo.MemberTypeInfo[0].Should().Be((BinaryType.StringArray, null));
-        classInfo["_items"].Should().BeOfType<MemberReference>();
-
-        ArraySingleString array = (ArraySingleString)format[2];
-        array.Length.Should().Be(0);
-    }
-
     [Theory]
     [MemberData(nameof(PrimitiveLists_TestData))]
     public void BinaryFormatWriter_TryWritePrimitiveList(IList list)
@@ -197,7 +102,7 @@ public class ListTests
     [MemberData(nameof(PrimitiveLists_TestData))]
     public void BinaryFormattedObjectExtensions_TryGetPrimitiveList(IList list)
     {
-        BinaryFormattedObject format = list.SerializeAndParse();
+        SerializationRecord format = list.SerializeAndParse();
         format.TryGetPrimitiveList(out object? deserialized).Should().BeTrue();
         deserialized.Should().BeEquivalentTo(list);
     }

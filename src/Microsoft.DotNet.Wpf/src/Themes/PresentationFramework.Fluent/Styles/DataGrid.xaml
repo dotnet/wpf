@@ -457,7 +457,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="12"
                                 Opacity="0"
-                                FontFamily="{DynamicResource SegoeFluentIcons}"
+                                FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                 Text="&#xE8CB;" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
@@ -700,7 +700,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="{StaticResource DataGridCheckBoxIconSize}"
                                         FontWeight="Bold"
-                                        FontFamily="{DynamicResource SegoeFluentIcons}"
+                                        FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                         Text="{StaticResource DataGridCheckBoxCheckedGlyph}"
                                         Visibility="Collapsed">
                                         <TextBlock.Foreground>

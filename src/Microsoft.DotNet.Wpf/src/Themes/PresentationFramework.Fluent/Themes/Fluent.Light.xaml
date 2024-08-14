@@ -8,13 +8,22 @@
     <Setter Property="Control.Template">
       <Setter.Value>
         <ControlTemplate>
-          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="1" />
+          <Rectangle RadiusX="4" RadiusY="4" Margin="-3" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="DefaultCollectionFocusVisualStyle">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle RadiusX="4" RadiusY="4" SnapsToDevicePixels="True" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" StrokeThickness="2" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
   <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" BasedOn="{StaticResource DefaultControlFocusVisualStyle}" />
-  <FontFamily x:Key="SegoeFluentIcons">Segoe Fluent Icons</FontFamily>
+  <FontFamily x:Key="SymbolThemeFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
   <Color x:Key="TextFillColorLightPrimary">#FFFFFF</Color>
   <Color x:Key="TextFillColorLightSecondary">#C5FFFFFF</Color>
   <Color x:Key="TextFillColorLightTertiary">#87FFFFFF</Color>
@@ -336,9 +345,9 @@
   <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <!--  Calendar  -->
   <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource TextFillColorPrimary}" />
-  <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-  <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+  <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource ControlFillColorInputActive}" />
+  <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemAccentColorDark1}" />
@@ -385,8 +394,8 @@
   <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--<SolidColorBrush x:Key="ComboBoxItemBorderBrush" Color="{StaticResource ControlElevationBorderBrush}" />-->
   <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
-  <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemAccentColorDark2}" />
-  <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource TextFillColorSecondary}" />
+  <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <SolidColorBrush x:Key="ComboBoxItemPillFillBrush" Color="{StaticResource SystemAccentColorDark1}" />
@@ -407,6 +416,14 @@
   <!--  DataGrid  -->
   <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+  <!--  DatePicker  -->
+  <SolidColorBrush x:Key="DatePickerForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource ControlFillColorDefault}" />
+  <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
+  <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
   <!--  DynamicScrollBar  -->
   <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
@@ -430,8 +447,8 @@
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundDisabled" Color="{StaticResource SubtleFillColorDisabled}" />
-  <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{StaticResource SystemAccentColorDark1}" />
-  <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.9" />
+  <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" Opacity="0.9" />
   <SolidColorBrush x:Key="HyperlinkButtonForegroundPressed" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.8" />
   <SolidColorBrush x:Key="HyperlinkButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  InfoBadge  -->
@@ -446,7 +463,7 @@
   <SolidColorBrush x:Key="InfoBarErrorSeverityIconBackground" Color="{StaticResource SystemFillColorCritical}" />
   <SolidColorBrush x:Key="InfoBarWarningSeverityIconBackground" Color="{StaticResource SystemFillColorCaution}" />
   <SolidColorBrush x:Key="InfoBarSuccessSeverityIconBackground" Color="{StaticResource SystemFillColorSuccess}" />
-  <SolidColorBrush x:Key="InfoBarInformationalSeverityIconBackground" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="InfoBarInformationalSeverityIconBackground" Color="{StaticResource SystemAccentColor}" />
   <!--  Label  -->
   <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  ListBox  -->
@@ -606,7 +623,7 @@
   <SolidColorBrush x:Key="ToggleSwitchStrokeOffPointerOver" Color="{StaticResource ControlStrongStrokeColorDefault}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOffDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{StaticResource SystemAccentColorDark1}" />
-  <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="ToggleSwitchStrokeOnDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="{StaticResource SystemAccentColorDark1}" Opacity="0.9" />
@@ -639,19 +656,8 @@
   <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
-  <Style x:Key="ButtonFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultButtonStyle" TargetType="{x:Type ButtonBase}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -693,8 +699,8 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style x:Key="DefaultAccentButtonStyle" TargetType="{x:Type Button}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}" />
+  <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
@@ -739,8 +745,11 @@
   <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}" />
   <!--  HINT: Day button style  -->
   <Style x:Key="DefaultCalendarDayButtonStyle" TargetType="CalendarDayButton">
-    <Setter Property="MinWidth" Value="30" />
-    <Setter Property="MinHeight" Value="30" />
+    <Setter Property="MinWidth" Value="40" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="MaxWidth" Value="60" />
+    <Setter Property="MaxHeight" Value="60" />
+    <Setter Property="Margin" Value="1" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -852,7 +861,10 @@
   <Style x:Key="DefaultCalendarButtonStyle" TargetType="CalendarButton">
     <Setter Property="MinWidth" Value="40" />
     <Setter Property="MinHeight" Value="40" />
-    <Setter Property="FontSize" Value="12" />
+    <Setter Property="MaxWidth" Value="70" />
+    <Setter Property="MaxHeight" Value="70" />
+    <Setter Property="Margin" Value="1" />
+    <Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Template">
@@ -935,68 +947,68 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CalendarItem}">
-          <Grid x:Name="PART_Root" Margin="12">
-            <Grid KeyboardNavigation.TabNavigation="Cycle">
+          <Grid x:Name="PART_Root">
+            <Grid KeyboardNavigation.TabNavigation="Local">
               <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
               <!--  HINT: Header with title and navigation buttons  -->
-              <Grid Grid.Row="0" Margin="8,0,8,14">
+              <Grid Grid.Row="0" KeyboardNavigation.TabIndex="0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="Bold" KeyboardNavigation.TabNavigation="Cycle" Foreground="{DynamicResource CalendarViewForeground}" />
-                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" KeyboardNavigation.TabNavigation="Cycle" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="7,6,3,7" Padding="8,7,8,8" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource CalendarViewForeground}" />
+                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
-                    <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+                    <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
-                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" KeyboardNavigation.TabNavigation="Contained" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
-                    <TextBlock FontSize="8" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+                    <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
               </Grid>
+              <Border Grid.Row="1" Height="0.5" Background="{DynamicResource CalendarViewBorderBrush}" />
               <!--  HINT: Day picker  -->
-              <Grid x:Name="PART_MonthView" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="None" Visibility="Visible">
+              <Grid x:Name="PART_MonthView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1" Visibility="Visible">
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
               </Grid>
-              <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid x:Name="PART_YearView" Visibility="Hidden" KeyboardNavigation.TabNavigation="None">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                  </Grid.ColumnDefinitions>
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                  </Grid.RowDefinitions>
-                </Grid>
-              </Border>
-              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed">
+              <Grid x:Name="PART_YearView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+              </Grid>
+              <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
                 <Rectangle.Fill>
                   <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
                 </Rectangle.Fill>
@@ -1018,7 +1030,7 @@
           </ControlTemplate.Triggers>
           <ControlTemplate.Resources>
             <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-              <TextBlock Margin="0,0,0,6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" Text="{Binding}" />
+              <TextBlock Margin="1" Padding="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" Text="{Binding}" />
             </DataTemplate>
           </ControlTemplate.Resources>
         </ControlTemplate>
@@ -1037,7 +1049,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Calendar}">
-          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{DynamicResource CalendarViewBackground}" BorderBrush="{DynamicResource CalendarViewBorderBrush}" BorderThickness="1" CornerRadius="8">
+          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{DynamicResource CalendarViewBackground}" BorderBrush="{DynamicResource CalendarViewBorderBrush}" BorderThickness="1" CornerRadius="4">
             <CalendarItem x:Name="PART_CalendarItem" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Style="{TemplateBinding CalendarItemStyle}" />
           </Border>
         </ControlTemplate>
@@ -1085,7 +1097,7 @@
               <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource CheckBoxHeight}" Height="{StaticResource CheckBoxWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Border x:Name="StrokeBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                   <Grid>
-                    <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource CheckBoxIconSize}" FontWeight="Bold" Foreground="{DynamicResource CheckBoxCheckGlyphForeground}" FontFamily="{DynamicResource SegoeFluentIcons}" Visibility="Collapsed" Text="{StaticResource CheckBoxCheckedGlyph}" />
+                    <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource CheckBoxIconSize}" FontWeight="Bold" Foreground="{DynamicResource CheckBoxCheckGlyphForeground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Visibility="Collapsed" Text="{StaticResource CheckBoxCheckedGlyph}" />
                   </Grid>
                 </Border>
               </Border>
@@ -1189,17 +1201,6 @@
   <system:Double x:Key="ComboBoxChevronSize">11.0</system:Double>
   <system:Double x:Key="ComboBoxPopupMinHeight">32.0</system:Double>
   <system:String x:Key="ComboBoxChevronDownGlyph"></system:String>
-  <Style x:Key="ComboBoxFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Focus by parent element  -->
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -1285,7 +1286,7 @@
   </Style>
   <Style x:Key="DefaultComboBoxStyle" TargetType="{x:Type ComboBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource ComboBoxFocusVisual}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
@@ -1330,7 +1331,7 @@
                     <ContentPresenter Name="PART_ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" IsHitTestVisible="False" TextElement.Foreground="{TemplateBinding Foreground}" />
                   </Grid>
                   <Grid Grid.Column="1" Margin="{StaticResource ComboBoxChevronMargin}">
-                    <TextBlock x:Name="ChevronIcon" Margin="0" VerticalAlignment="Center" FontSize="{StaticResource ComboBoxChevronSize}" Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}" RenderTransformOrigin="0.5, 0.5" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource ComboBoxChevronDownGlyph}">
+                    <TextBlock x:Name="ChevronIcon" Margin="0" VerticalAlignment="Center" FontSize="{StaticResource ComboBoxChevronSize}" Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}" RenderTransformOrigin="0.5, 0.5" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ComboBoxChevronDownGlyph}">
                       <TextBlock.RenderTransform>
                         <RotateTransform Angle="0" />
                       </TextBlock.RenderTransform>
@@ -1344,7 +1345,7 @@
                   </Grid>
                 </Grid>
                 <Popup x:Name="PART_Popup" MinWidth="{TemplateBinding ActualWidth}" VerticalAlignment="Center" AllowsTransparency="True" Focusable="False" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="{TemplateBinding Popup.Placement}" PopupAnimation="{TemplateBinding Popup.PopupAnimation}" VerticalOffset="1">
-                  <Border x:Name="DropDownBorder" Margin="0" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
+                  <Border x:Name="DropDownBorder" Margin="12,0,12,18" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
                     <!--Will revist this code while doing performance evaluation for dynamic resources.-->
                     <Border.RenderTransform>
                       <TranslateTransform />
@@ -1354,6 +1355,9 @@
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" TextElement.FontSize="{TemplateBinding FontSize}" />
                       </ScrollViewer>
                     </Grid>
+                    <Border.Effect>
+                      <DropShadowEffect BlurRadius="20" Direction="270" Opacity="0.25" ShadowDepth="6" />
+                    </Border.Effect>
                   </Border>
                 </Popup>
               </Grid>
@@ -1790,7 +1794,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="32" />
               </Grid.ColumnDefinitions>
               <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
-              <TextBlock x:Name="SortIcon" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Opacity="0" FontFamily="{DynamicResource SegoeFluentIcons}" Text="" />
+              <TextBlock x:Name="SortIcon" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Opacity="0" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="SortStates">
@@ -1956,7 +1960,7 @@
             <BulletDecorator.Bullet>
               <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource DataGridCheckBoxHeight}" Height="{StaticResource DataGridCheckBoxWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Grid>
-                  <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource DataGridCheckBoxIconSize}" FontWeight="Bold" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource DataGridCheckBoxCheckedGlyph}" Visibility="Collapsed">
+                  <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource DataGridCheckBoxIconSize}" FontWeight="Bold" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource DataGridCheckBoxCheckedGlyph}" Visibility="Collapsed">
                     <TextBlock.Foreground>
                       <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
                     </TextBlock.Foreground>
@@ -2056,16 +2060,8 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}" />
-    <Setter Property="Foreground">
-      <Setter.Value>
-        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
-      </Setter.Value>
-    </Setter>
-    <Setter Property="CaretBrush">
-      <Setter.Value>
-        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
-      </Setter.Value>
-    </Setter>
+    <Setter Property="Foreground" Value="{DynamicResource DatePickerTextBoxForeground}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource DatePickerTextBoxCaretBrush}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
@@ -2101,16 +2097,8 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="CalendarStyle" Value="{DynamicResource DefaultCalendarStyle}" />
-    <Setter Property="Foreground">
-      <Setter.Value>
-        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
-      </Setter.Value>
-    </Setter>
-    <Setter Property="Background">
-      <Setter.Value>
-        <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
-      </Setter.Value>
-    </Setter>
+    <Setter Property="Foreground" Value="{DynamicResource DatePickerForeground}" />
+    <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThemeThickness}" />
     <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
@@ -2124,6 +2112,7 @@
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -2134,7 +2123,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
               <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-                <Grid x:Name="PART_Root" FocusManager.FocusedElement="{Binding ElementName=PART_Button}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -2145,32 +2134,20 @@
                   <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
                   <Button x:Name="PART_Button" Grid.Column="1" Width="{StaticResource DatePickerCalendarButtonHeight}" Height="{StaticResource DatePickerCalendarButtonHeight}" Margin="{StaticResource DatePickerCalendarButtonMargin}" Padding="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DatePicker}}}" Cursor="Arrow" Focusable="True" IsTabStop="True">
                     <!--  WPF overrides paddings for button  -->
-                    <TextBlock Margin="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="{StaticResource DatePickerCalendarButtonIconSize}" Foreground="{TemplateBinding Foreground}" Text="{StaticResource CalendarGlyph}" />
+                    <TextBlock Margin="{StaticResource DatePickerCalendarButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{StaticResource DatePickerCalendarButtonIconSize}" Foreground="{TemplateBinding Foreground}" Text="{StaticResource CalendarGlyph}" />
                   </Button>
                 </Grid>
               </Border>
               <!--  The Accent Border is a separate element so that changes to the border thickness do not affect the position of the element  -->
-              <Border x:Name="AccentBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="{StaticResource DatePickerAccentBorderThemeThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-                <Border.BorderBrush>
-                  <SolidColorBrush Color="{DynamicResource ControlStrongStrokeColorDefault}" />
-                </Border.BorderBrush>
-              </Border>
+              <Border x:Name="AccentBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="{StaticResource DatePickerAccentBorderThemeThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}" BorderBrush="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
             </Grid>
             <Popup x:Name="PART_Popup" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False" />
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
               <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
-              <Setter TargetName="AccentBorder" Property="BorderBrush">
-                <Setter.Value>
-                  <SolidColorBrush Color="{DynamicResource SystemAccentColorSecondary}" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="ContentBorder" Property="Background">
-                <Setter.Value>
-                  <SolidColorBrush Color="{DynamicResource ControlFillColorInputActive}" />
-                </Setter.Value>
-              </Setter>
+              <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource DatePickerFocusedBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource DatePickerBackgroundFocused}" />
             </Trigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
@@ -2178,11 +2155,7 @@
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="IsKeyboardFocusWithin" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="ContentBorder" Property="Background">
-                <Setter.Value>
-                  <SolidColorBrush Color="{DynamicResource ControlFillColorSecondary}" />
-                </Setter.Value>
-              </Setter>
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource DatePickerBackgroundPointerOver}" />
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="True">
               <Setter Property="Cursor" Value="IBeam" />
@@ -2219,7 +2192,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronDownGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronDownGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2252,7 +2225,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronUpGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronUpGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2285,7 +2258,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronLeftGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronLeftGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2318,7 +2291,7 @@
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
         </Grid.RenderTransform>
-        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronRightGlyph}" />
+        <TextBlock x:Name="ControlChevronIcon" FontSize="{StaticResource ExpanderChevronSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource ExpanderChevronRightGlyph}" />
       </Grid>
     </Grid>
     <ControlTemplate.Triggers>
@@ -2340,17 +2313,6 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
-  <Style x:Key="ExpanderHeaderFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Border>
-            <Rectangle Margin="-3" StrokeThickness="1" Stroke="{DynamicResource KeyboardFocusBorderColorBrush}" SnapsToDevicePixels="true" />
-          </Border>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultExpanderStyle" TargetType="{x:Type Expander}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
@@ -2373,7 +2335,7 @@
         <ControlTemplate TargetType="{x:Type Expander}">
           <DockPanel>
             <Border x:Name="ToggleButtonBorder" DockPanel.Dock="Top" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{TemplateBinding Border.CornerRadius}">
-              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" />
+              <ToggleButton x:Name="HeaderSite" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Content="{TemplateBinding Header}" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding IsEnabled}" OverridesDefaultStyle="True" Template="{StaticResource DefaultExpanderToggleButtonDownStyle}" FocusVisualStyle="{DynamicResource DefaultControlFocusVisualStyle}" />
             </Border>
             <Grid x:Name="ContentPresenterGrid" DockPanel.Dock="Bottom" ClipToBounds="True">
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
@@ -2644,6 +2606,7 @@
     <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="12" />
     <Setter Property="Border.CornerRadius" Value="0" />
@@ -2732,6 +2695,7 @@
     <Setter Property="Margin" Value="0,0,0,2" />
     <Setter Property="Padding" Value="4" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -2906,7 +2870,7 @@
           <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
         </Grid.ColumnDefinitions>
         <Border x:Name="CheckBoxIconBorder" Grid.Column="0" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center" Background="{DynamicResource CheckBoxBackground}" BorderBrush="{DynamicResource CheckBoxBorderBrush}" BorderThickness="1" CornerRadius="4" Visibility="Collapsed">
-          <TextBlock x:Name="CheckBoxIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="16" Text="" TextAlignment="Center" />
+          <TextBlock x:Name="CheckBoxIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="16" Text="" TextAlignment="Center" />
         </Border>
         <ContentPresenter x:Name="Icon" Grid.Column="1" Margin="0,0,6,0" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
         <ContentPresenter Grid.Column="2" ContentSource="Header" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" />
@@ -2955,7 +2919,7 @@
           <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,6,0" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
           <ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" />
           <Grid Grid.Column="2">
-            <TextBlock x:Name="Chevron" Margin="0,3,0,0" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="{TemplateBinding FontSize}" Text="{StaticResource MenuItemChevronRightGlyph}" />
+            <TextBlock x:Name="Chevron" Margin="0,3,0,0" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{TemplateBinding FontSize}" Text="{StaticResource MenuItemChevronRightGlyph}" />
           </Grid>
         </Grid>
       </Border>
@@ -3015,7 +2979,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3072,7 +3036,7 @@
   </ContextMenu>
   <Style x:Key="DefaultPasswordBoxStyle" TargetType="{x:Type PasswordBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultPasswordBoxContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -3234,6 +3198,28 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RadioButton}">
           <Grid HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="MouseOver">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="1.167" Duration="0:0:0.25" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="1.167" Duration="0:0:0.25" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)" To="0.86" Duration="0:0:0.25" />
+                    <DoubleAnimation Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)" To="0.86" Duration="0:0:0.25" />
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="20" />
               <ColumnDefinition Width="*" />
@@ -3242,10 +3228,10 @@
               <Ellipse x:Name="OuterEllipse" Width="{StaticResource RadioButtonOuterEllipseSize}" Height="{StaticResource RadioButtonOuterEllipseSize}" Fill="{DynamicResource RadioButtonOuterEllipseFill}" Stroke="{DynamicResource RadioButtonOuterEllipseStroke}" StrokeThickness="{StaticResource RadioButtonStrokeThickness}" UseLayoutRounding="False" />
               <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
               <Ellipse x:Name="CheckOuterEllipse" Width="{StaticResource RadioButtonOuterEllipseSize}" Height="{StaticResource RadioButtonOuterEllipseSize}" Fill="{TemplateBinding Background}" Opacity="0" Stroke="{TemplateBinding Background}" StrokeThickness="{StaticResource RadioButtonStrokeThickness}" UseLayoutRounding="False" />
-              <Ellipse x:Name="CheckGlyph" Width="{StaticResource RadioButtonCheckGlyphSize}" Height="{StaticResource RadioButtonCheckGlyphSize}" Fill="{DynamicResource RadioButtonCheckGlyphFill}" Opacity="0" Stroke="{DynamicResource CircleElevationBorderBrush}" UseLayoutRounding="False">
-                <Ellipse.LayoutTransform>
-                  <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
-                </Ellipse.LayoutTransform>
+              <Ellipse x:Name="CheckGlyph" Width="{StaticResource RadioButtonCheckGlyphSize}" Height="{StaticResource RadioButtonCheckGlyphSize}" Fill="{DynamicResource RadioButtonCheckGlyphFill}" RenderTransformOrigin="0.5, 0.5" Opacity="0" Stroke="{DynamicResource CircleElevationBorderBrush}" UseLayoutRounding="False">
+                <Ellipse.RenderTransform>
+                  <ScaleTransform />
+                </Ellipse.RenderTransform>
               </Ellipse>
               <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
               <Border x:Name="PressedCheckGlyph" Width="4" Height="4" Background="{DynamicResource RadioButtonCheckGlyphFill}" BorderBrush="{DynamicResource CircleElevationBorderBrush}" CornerRadius="6" Opacity="0" UseLayoutRounding="False" />
@@ -3375,14 +3361,17 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultRepeatButtonStyle}" TargetType="{x:Type RepeatButton}" />
+  <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
   <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
     <Setter Property="MinHeight" Value="34" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Padding" Value="6,4" />
@@ -3392,9 +3381,12 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RichTextBox}">
-          <Border x:Name="MainBorder" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Focusable="False">
-            <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,2,0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Foreground="{TemplateBinding Foreground}" HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
-          </Border>
+          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+            <Border x:Name="MainBorder" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Focusable="False">
+              <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,2,0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Foreground="{TemplateBinding Foreground}" HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
+            </Border>
+            <Border x:Name="AccentBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="{StaticResource RichTextBoxAccentBorderThemeThickness}" CornerRadius="{DynamicResource ControlCornerRadius}" />
+          </Grid>
           <ControlTemplate.Triggers>
             <MultiTrigger>
               <MultiTrigger.Conditions>
@@ -3405,6 +3397,8 @@
               <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
             </MultiTrigger>
             <Trigger Property="IsFocused" Value="True">
+              <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
+              <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource TextControlFocusedBorderBrush}" />
               <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
             </Trigger>
           </ControlTemplate.Triggers>
@@ -3434,7 +3428,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RepeatButton}">
           <Border x:Name="Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Margin="{TemplateBinding Margin}" Background="{DynamicResource ScrollBarButtonBackground}" CornerRadius="6">
-            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{TemplateBinding FontSize}" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -4068,7 +4062,7 @@
   </Style>
   <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4145,7 +4139,7 @@
           <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
           <Button x:Name="ClearButton" Grid.Column="1" MinWidth="{StaticResource TextBoxClearButtonHeight}" MinHeight="{StaticResource TextBoxClearButtonHeight}" Margin="{StaticResource TextBoxClearButtonMargin}" Padding="{StaticResource TextBoxClearButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}" Cursor="Arrow" IsTabStop="False" Foreground="{DynamicResource TextControlButtonForeground}">
             <Button.Content>
-              <TextBlock FontSize="{TemplateBinding FontSize}" FontFamily="{DynamicResource SegoeFluentIcons}"></TextBlock>
+              <TextBlock FontSize="{TemplateBinding FontSize}" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
             </Button.Content>
           </Button>
         </Grid>
@@ -4200,7 +4194,7 @@
   </ControlTemplate>
   <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <!--  Universal WPF UI ContextMenu  -->
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4419,7 +4413,7 @@
         <ControlTemplate TargetType="{x:Type ToggleButton}">
           <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="0,3,3,0" SnapsToDevicePixels="true">
             <Grid>
-              <TextBlock Margin="0" VerticalAlignment="Bottom" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SegoeFluentIcons}" Text="{StaticResource ToolBarChevronDownGlyph}" />
+              <TextBlock Margin="0" VerticalAlignment="Bottom" Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ToolBarChevronDownGlyph}" />
               <ContentPresenter />
             </Grid>
           </Border>
@@ -4556,7 +4550,7 @@
   <system:String x:Key="TreeViewChevronRightGlyph"></system:String>
   <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -4568,7 +4562,7 @@
             <Grid.RenderTransform>
               <RotateTransform Angle="0" />
             </Grid.RenderTransform>
-            <TextBlock x:Name="ChevronIcon" VerticalAlignment="Center" FontSize="{StaticResource TreeViewItemChevronSize}" FontFamily="{DynamicResource SegoeFluentIcons}" HorizontalAlignment="Center" Text="{StaticResource TreeViewChevronRightGlyph}" />
+            <TextBlock x:Name="ChevronIcon" VerticalAlignment="Center" FontSize="{StaticResource TreeViewItemChevronSize}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource TreeViewChevronRightGlyph}" />
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsChecked" Value="True">
@@ -4594,7 +4588,7 @@
   </Style>
   <Style x:Key="DefaultTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
     <!--  Universal WPF UI focus  -->
-    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <!--  Universal WPF UI focus  -->
     <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />

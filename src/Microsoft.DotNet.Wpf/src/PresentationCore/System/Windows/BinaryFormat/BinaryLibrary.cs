@@ -16,7 +16,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class BinaryLibrary : IRecord<BinaryLibrary>
+    internal sealed class BinaryLibrary : IRecord
     {
         public Id LibraryId { get; }
         public string LibraryName { get; }
@@ -28,18 +28,6 @@ namespace System.Windows
         }
 
         public static RecordType RecordType => RecordType.BinaryLibrary;
-
-        static BinaryLibrary IBinaryFormatParseable<BinaryLibrary>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap)
-        {
-            BinaryLibrary record = new(
-                reader.ReadInt32(),
-                reader.ReadString());
-
-            recordMap[record.LibraryId] = record;
-            return record;
-        }
 
         public void Write(BinaryWriter writer)
         {

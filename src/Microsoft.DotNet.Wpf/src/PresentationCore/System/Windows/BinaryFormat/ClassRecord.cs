@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using System.IO;
 
 namespace System.Windows
 {
@@ -47,12 +46,6 @@ namespace System.Windows
         {
             ClassInfo = classInfo;
             MemberValues = memberValues;
-        }
-
-        private protected static List<object> ReadDataFromClassInfo(BinaryReader reader, RecordMap recordMap, ClassInfo info)
-        {
-            // Not sure what gets us into this state yet.
-            return ReadRecords(reader, recordMap, info.MemberNames.Count);
         }
     }
 }

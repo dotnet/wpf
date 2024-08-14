@@ -1735,20 +1735,43 @@ namespace System.Windows
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        // Cache the deferredResourceReference so that it can be validated
-                        // in case of a dictionary change prior to its inflation
-                        _deferredResourceReferences ??= new DeferredResourceReferenceList();
-
-                        if (_deferredResourceReferences.Get(resourceKey) is { } existingDeferredResourceReference
-                            && existingDeferredResourceReference.Dictionary == this)
+                        if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
                         {
-                            deferredResourceReference = existingDeferredResourceReference;
+                            if (_ownerApps is not null)
+                            {
+                                deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
+                            }
+                            else
+                            {
+                                deferredResourceReference = new DeferredResourceReference(this, resourceKey);
+                            }
+
+                            // Cache the deferredResourceReference so that it can be validated
+                            // in case of a dictionary change prior to its inflation
+                            if (_weakDeferredResourceReferences is null)
+                            {
+                                _weakDeferredResourceReferences = new WeakReferenceList();
+                            }
+
+                            _weakDeferredResourceReferences.Add(deferredResourceReference, true /*SkipFind*/);
                         }
                         else
                         {
-                            deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
+                            // Cache the deferredResourceReference so that it can be validated
+                            // in case of a dictionary change prior to its inflation
+                            _deferredResourceReferencesList ??= new DeferredResourceReferenceList();
 
-                            _deferredResourceReferences.AddOrSet(deferredResourceReference);
+                            if (_deferredResourceReferencesList.Get(resourceKey) is { } existingDeferredResourceReference
+                                && existingDeferredResourceReference.Dictionary == this)
+                            {
+                                deferredResourceReference = existingDeferredResourceReference;
+                            }
+                            else
+                            {
+                                deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
+
+                                _deferredResourceReferencesList.AddOrSet(deferredResourceReference);
+                            }
                         }
                     }
                     else
@@ -1771,35 +1794,55 @@ namespace System.Windows
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            if (_deferredResourceReferences is null)
+            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
-                return;
-            }
-
-            if (resourceKey is null)
-            {
-                foreach (DeferredResourceReference deferredResourceReference in _deferredResourceReferences)
+                if (_weakDeferredResourceReferences != null)
                 {
-                    Inflate(deferredResourceReference);
+                    foreach (Object o in _weakDeferredResourceReferences)
+                    {
+                        DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
+                        if (deferredResourceReference != null && (resourceKey == null || Object.Equals(resourceKey, deferredResourceReference.Key)))
+                        {
+                            // This will inflate the deferred reference, causing it
+                            // to be removed from the list.  The list may also be
+                            // purged of dead references.
+                            deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                        }
+                    }
                 }
             }
             else
             {
-                DeferredResourceReference deferredResourceReference = _deferredResourceReferences.Get(resourceKey);
-
-                Inflate(deferredResourceReference);
-            }
-
-            return;
-
-            void Inflate(DeferredResourceReference deferredResourceReference)
-            {
-                if (deferredResourceReference is not null)
+                if (_deferredResourceReferencesList is null)
                 {
-                    // This will inflate the deferred reference, causing it
-                    // to be removed from the list.  The list may also be
-                    // purged of dead references.
-                    deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                    return;
+                }
+
+                if (resourceKey is null)
+                {
+                    foreach (DeferredResourceReference deferredResourceReference in _deferredResourceReferencesList)
+                    {
+                        Inflate(deferredResourceReference);
+                    }
+                }
+                else
+                {
+                    DeferredResourceReference deferredResourceReference = _deferredResourceReferencesList.Get(resourceKey);
+
+                    Inflate(deferredResourceReference);
+                }
+
+                return;
+
+                void Inflate(DeferredResourceReference deferredResourceReference)
+                {
+                    if (deferredResourceReference is not null)
+                    {
+                        // This will inflate the deferred reference, causing it
+                        // to be removed from the list.  The list may also be
+                        // purged of dead references.
+                        deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                    }
                 }
             }
         }
@@ -2066,9 +2109,14 @@ namespace System.Windows
 
         #region Properties
 
-        internal DeferredResourceReferenceList DeferredResourceReferences
+        internal WeakReferenceList WeakDeferredResourceReferences
         {
-            get { return _deferredResourceReferences; }
+            get { return _weakDeferredResourceReferences; }
+        }
+
+        internal DeferredResourceReferenceList DeferredResourceReferencesList
+        {
+            get { return _deferredResourceReferencesList; }
         }
 
         #endregion Properties
@@ -2485,13 +2533,30 @@ namespace System.Windows
 
         private void  MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
         {
-            // copy the list
-            _deferredResourceReferences = loadedRD._deferredResourceReferences;
-
-            // redirect each entry toward its new owner
-            if (_deferredResourceReferences != null)
+            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
-                _deferredResourceReferences.ChangeDictionary(this);
+                // copy the list
+                _weakDeferredResourceReferences = loadedRD._weakDeferredResourceReferences;
+
+                // redirect each entry toward its new owner
+                if (_weakDeferredResourceReferences != null)
+                {
+                    foreach (DeferredResourceReference drr in _weakDeferredResourceReferences)
+                    {
+                        drr.Dictionary = this;
+                    }
+                }
+            }
+            else
+            {
+                // copy the list
+                _deferredResourceReferencesList = loadedRD._deferredResourceReferencesList;
+
+                // redirect each entry toward its new owner
+                if (_deferredResourceReferencesList != null)
+                {
+                    _deferredResourceReferencesList.ChangeDictionary(this);
+                }
             }
         }
 
@@ -2558,7 +2623,8 @@ namespace System.Windows
         private WeakReferenceList                         _ownerFEs = null;
         private WeakReferenceList                         _ownerFCEs = null;
         private WeakReferenceList                         _ownerApps = null;
-        private DeferredResourceReferenceList             _deferredResourceReferences = null;
+        private WeakReferenceList                         _weakDeferredResourceReferences = null;
+        private DeferredResourceReferenceList             _deferredResourceReferencesList = null;
         private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
         private Uri                                       _source = null;
         private Uri                                       _baseUri = null;

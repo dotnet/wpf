@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Formats.Nrbf;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using PresentationCore.Tests.TestUtilities;
@@ -61,23 +62,6 @@ public class HashtableTests
     }
 
     [Fact]
-    public void HashTable_CustomComparer()
-    {
-        Hashtable hashtable = new(new CustomHashCodeProvider(), StringComparer.OrdinalIgnoreCase)
-        {
-            { "This", "That" }
-        };
-
-        BinaryFormattedObject format = hashtable.SerializeAndParse();
-        format[1].Should().BeOfType<BinaryLibrary>();
-        format[2].Should().BeOfType<SystemClassWithMembersAndTypes>().Which.Name.Should().Be("System.Collections.Hashtable");
-        format[3].Should().BeOfType<SystemClassWithMembersAndTypes>().Which.Name.Should().Be("System.OrdinalComparer");
-        format[4].Should().BeOfType<ClassWithMembersAndTypes>().Which.Name.Should().Be("PresentationCore.Tests.BinaryFormat.HashtableTests+CustomHashCodeProvider");
-        format[5].Should().BeOfType<ArraySingleObject>();
-        format[6].Should().BeOfType<ArraySingleObject>();
-    }
-
-    [Fact]
     public void HashTable_CustomComparer_DoesNotRead()
     {
         Hashtable hashtable = new(new CustomHashCodeProvider(), StringComparer.OrdinalIgnoreCase)
@@ -85,8 +69,8 @@ public class HashtableTests
             { "This", "That" }
         };
 
-        BinaryFormattedObject format = hashtable.SerializeAndParse();
-        format.TryGetPrimitiveHashtable(out Hashtable? deserialized).Should().BeFalse();
+        SerializationRecord format = hashtable.SerializeAndParse();
+        format.TryGetPrimitiveHashtable(out object? deserialized).Should().BeFalse();
         deserialized.Should().BeNull();
     }
 
@@ -144,13 +128,13 @@ public class HashtableTests
     [MemberData(nameof(Hashtables_TestData))]
     public void BinaryFormattedObjectExtensions_TryGetPrimitiveHashtable(Hashtable hashtable)
     {
-        BinaryFormattedObject format = hashtable.SerializeAndParse();
-        format.TryGetPrimitiveHashtable(out Hashtable? deserialized).Should().BeTrue();
+        SerializationRecord format = hashtable.SerializeAndParse();
+        format.TryGetPrimitiveHashtable(out object? deserialized).Should().BeTrue();
 
-        deserialized!.Count.Should().Be(hashtable.Count);
+        ((Hashtable)deserialized!).Count.Should().Be(hashtable.Count);
         foreach (object? key in hashtable.Keys)
         {
-            deserialized[key].Should().Be(hashtable[key]);
+            ((Hashtable)deserialized)[key].Should().Be(hashtable[key]);
         }
     }
 
@@ -162,12 +146,12 @@ public class HashtableTests
         BinaryFormatWriter.WritePrimitiveHashtable(stream, hashtable);
         stream.Position = 0;
 
-        BinaryFormattedObject format = new(stream);
-        format.TryGetPrimitiveHashtable(out Hashtable? deserialized).Should().BeTrue();
-        deserialized!.Count.Should().Be(hashtable.Count);
+        SerializationRecord format = NrbfDecoder.Decode(stream);
+        format.TryGetPrimitiveHashtable(out object? deserialized).Should().BeTrue();
+        ((Hashtable)deserialized!).Count.Should().Be(hashtable.Count);
         foreach (object? key in hashtable.Keys)
         {
-            deserialized[key].Should().Be(hashtable[key]);
+            ((Hashtable)deserialized)[key].Should().Be(hashtable[key]);
         }
     }
 

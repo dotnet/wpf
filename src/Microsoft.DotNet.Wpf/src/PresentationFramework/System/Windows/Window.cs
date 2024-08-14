@@ -2378,6 +2378,11 @@ namespace System.Windows
                 Utilities.SafeDispose(ref _currentLargeIconHandle);
                 Utilities.SafeDispose(ref _currentSmallIconHandle);
                 Utilities.SafeRelease(ref _taskbarList);
+
+                if(ThemeMode != ThemeMode.None)
+                {
+                    ThemeManager.FluentEnabledWindows.Remove(this);
+                }
             }
             finally
             {
@@ -2578,27 +2583,12 @@ namespace System.Windows
 
             if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                if(ThemeManager.DeferSyncingThemeModeAndResources)
+                if (ThemeManager.IsFluentThemeEnabled)
                 {
-                    ThemeManager.DeferSyncingThemeModeAndResources = false;
-                    ThemeManager.SyncDeferredThemeModeAndResources();
+                    ThemeManager.ApplyStyleOnWindow(this);
                 }
 
-                if(ThemeManager.IsFluentThemeEnabled)
-                {
-
-                    if(ThemeManager.DeferredAppThemeLoading)
-                    {
-                        ThemeManager.OnApplicationThemeChanged(ThemeMode.None, Application.Current.ThemeMode);
-                        ThemeManager.DeferredAppThemeLoading = false;
-                    }
-                    else
-                    {
-                        ThemeManager.ApplyStyleOnWindow(this);
-                    }
-                }
-
-                if(_deferThemeLoading)
+                if (_deferThemeLoading)
                 {
                     _deferThemeLoading = false;
                     ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);

@@ -932,14 +932,14 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                if(ThemeManager.DeferredAppThemeLoading && !_resourcesInitialized)
+                if(_reloadFluentDictionary && !_resourcesInitialized)
                 {
-                    if(value != null)
+                    if(value != null && ThemeMode != ThemeMode.None)
                     {
-                        var uri = ThemeManager.GetThemeResource(ThemeMode);
-                        value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
+                        value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     }
-                    ThemeManager.DeferredAppThemeLoading = false;
+                    _reloadFluentDictionary = false;
+                    invalidateResources = true;
                 }
 
                 if (value != null)
@@ -990,10 +990,20 @@ namespace System.Windows
 
                 if(!_resourcesInitialized)
                 {
-                    // If the resources are not initializd, 
-                    // fluent dictionary included will be reset.
-                    // Hence, deferring the step.
-                    ThemeManager.DeferredAppThemeLoading = true;
+
+                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+
+                    // If the resources are not initializd, fluent dictionary
+                    // included in this operation will be reset.
+                    // Hence, we need to reload the fluent dictionary.
+                    _reloadFluentDictionary = true;
+
+                    // OnApplicationThemeChanged will trigger InvalidateResourceReferences
+                    // which will mark _resourcesInitialized = true, however since 
+                    // the value earlier was false, it means that Resources may not have been
+                    // parsed from BAML yet. Hence, we need to reset the value to false.
+                    _resourcesInitialized = false;
+
                     return;
                 }
 
@@ -1734,12 +1744,15 @@ namespace System.Windows
         {
             _resourcesInitialized = true;
             
-            if(!ThemeManager.IgnoreAppResourcesChange)
+            // Sync needs to be performed only under the following conditions:
+            //  - the resource change event raised is due to a collection change
+            //      i.e. it is not a IsIndividualResourceAddOperation
+            //  - the event is not raised due to the change in Application.ThemeMode
+            //      i.e. SkipAppThemeModeSyncing is set to true
+            if (!info.IsIndividualResourceChange
+                    && !ThemeManager.SkipAppThemeModeSyncing)
             {
-                if(ThemeManager.SyncApplicationThemeModeAndResources())
-                {
-                    return;
-                }
+                ThemeManager.SyncThemeMode();
             }
             
             // Invalidate ResourceReference properties on all the windows.
@@ -2485,6 +2498,7 @@ namespace System.Windows
 
         private ThemeMode                   _themeMode = ThemeMode.None;
         private bool                        _resourcesInitialized = false;
+        private bool                        _reloadFluentDictionary = false;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

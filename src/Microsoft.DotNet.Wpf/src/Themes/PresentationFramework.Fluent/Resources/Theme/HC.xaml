@@ -209,8 +209,8 @@
     <!--  Calendar  -->
     <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
@@ -289,6 +289,15 @@
     <!--  DataGrid  -->
     <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
+
+    <!--  DatePicker  -->
+    <SolidColorBrush x:Key="DatePickerForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
 
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="Transparent" />
@@ -475,9 +484,6 @@
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
-
-    <!--  ThumbRate  -->
-    <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />
 
     <!--  TimePicker  -->
     <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource SystemColorWindowColor}" />

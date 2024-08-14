@@ -15,7 +15,7 @@ namespace System.Windows
     ///   </see>
     ///  </para>
     /// </remarks>
-    internal sealed class SerializationHeader : IRecord<SerializationHeader>
+    internal sealed class SerializationHeader : IRecord
     {
         /// <summary>
         ///  The id of the root object record.
@@ -44,16 +44,6 @@ namespace System.Windows
             MajorVersion = 1,
             RootId = 1,
             HeaderId = -1,
-        };
-
-        static SerializationHeader IBinaryFormatParseable<SerializationHeader>.Parse(
-            BinaryReader reader,
-            RecordMap recordMap) => new()
-        {
-            RootId = reader.ReadInt32(),
-            HeaderId = reader.ReadInt32(),
-            MajorVersion = reader.ReadInt32(),
-            MinorVersion = reader.ReadInt32(),
         };
 
         public void Write(BinaryWriter writer)

@@ -2134,7 +2134,7 @@ namespace System.Windows
 
             if(_reloadFluentDictionary && !AreResourcesInitialized)
             {
-                if(value != null) 
+                if(value != null && ThemeMode != ThemeMode.None) 
                 {
                     value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     invalidateResources = true;

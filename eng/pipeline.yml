@@ -79,7 +79,6 @@ jobs:
         - name: _InternalRuntimeDownloadArgs
           value: ''
       - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-        - group: DotNetBuilds storage account read tokens
         - group: AzureDevOps-Artifact-Feeds-Pats
         - name: _InternalRuntimeDownloadArgs
           value: >-
@@ -139,14 +138,10 @@ jobs:
         clean: true
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
-      - ${{ if ne(variables['System.TeamProject'], 'public') }}:
-        - task: PowerShell@2
-          displayName: Setup Private Feeds Credentials
-          inputs:
-            filePath: $(Build.SourcesDirectory)/eng/common/SetupNugetSources.ps1
-            arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
-          env:
-            Token: $(dn-bot-dnceng-artifact-feeds-rw)
+      
+      - template: /eng/common/templates-official/steps/enable-internal-sources.yml
+      - template: /eng/common/templates-official/steps/enable-internal-runtimes.yml
+      
       # Use utility script to run script command dependent on agent OS
       - script: eng\scripts\cibuild.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
         displayName: Windows Build / Publish
@@ -156,7 +151,15 @@ jobs:
         #   (!_HelixPipeline) ||
         #   (_HelixPipeline && _PublicBuildPipeline && _ContinuousIntegrationTestsEnabled && _BuildConfig == Release)
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
-      - script: eng\scripts\ciunittest.cmd -configuration $(_BuildConfig) -prepareMachine $(_PublishArgs) $(_SignArgs) $(_OfficialBuildIdArgs) $(_PlatformArgs) $(_InternalRuntimeDownloadArgs)
+
+      - script: eng\scripts\ciunittest.cmd
+          -configuration $(_BuildConfig) 
+          -prepareMachine
+          $(_PublishArgs)
+          $(_SignArgs)
+          $(_OfficialBuildIdArgs)
+          $(_PlatformArgs)
+          $(_InternalRuntimeDownloadArgs)
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
       - task: PublishTestResults@2
@@ -198,6 +201,7 @@ jobs:
           targetType: 'inline'
           script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
         condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+
       - task: DownloadPipelineArtifact@2
         displayName: Fetch Test Binaries
         inputs:

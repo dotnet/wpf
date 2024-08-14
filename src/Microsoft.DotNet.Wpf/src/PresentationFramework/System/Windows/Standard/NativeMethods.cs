@@ -2632,11 +2632,12 @@ namespace Standard
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static HRESULT DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
+        public static bool DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
         {
             Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
             var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
-            return _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+            return dwmResult == HRESULT.S_OK;
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

@@ -20,6 +20,7 @@ namespace System.Windows
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Formats.Nrbf;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
@@ -1586,7 +1587,7 @@ namespace System.Windows
 
                         byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
                         inkStream.Position = 0;
-                        inkStream.Read(buffer, 0, NativeMethods.IntPtrToInt32(size));
+                        inkStream.ReadExactly(buffer);
 
                         istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
                         hr = NativeMethods.S_OK;
@@ -1684,12 +1685,25 @@ namespace System.Windows
                 using (binaryWriter = new BinaryWriter(stream))
                 {
                     binaryWriter.Write(_serializedObjectID);
+                    bool success = false;
+                    try
+                    {
+                        success = BinaryFormatWriter.TryWriteFrameworkObject(stream,data);
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException())
+                    {
+                        // Being extra cautious here, but the Try method above should never throw in normal circumstances.
+                        Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
+                    }
 
-                    formatter = new BinaryFormatter();
-
-                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                    formatter.Serialize(stream, data);
-                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    if(!success)
+                    {
+                        //Using Binary formatter
+                        formatter = new BinaryFormatter();
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                        formatter.Serialize(stream, data);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    }
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -1725,7 +1739,7 @@ namespace System.Windows
 
                 bytes = new byte[NativeMethods.IntPtrToInt32(size)];
                 stream.Position = 0;
-                stream.Read(bytes, 0, NativeMethods.IntPtrToInt32(size));
+                stream.ReadExactly(bytes);
                 Marshal.Copy(bytes, 0, ptr, NativeMethods.IntPtrToInt32(size));
             }
             finally
@@ -3046,8 +3060,24 @@ namespace System.Windows
 
                 if (isSerializedObject)
                 {
-                    BinaryFormatter formatter;
 
+                    long startPosition = stream.Position;
+                    try
+                    {
+                        if (NrbfDecoder.Decode(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
+                        {
+                            return val;
+                        }
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException()) 
+                    {
+                        // Couldn't parse for some reason, let the BinaryFormatter try to handle it.
+                        
+                    }
+
+                    // Using Binary formatter
+                    stream.Position = startPosition;
+                    BinaryFormatter formatter;
                     formatter = new BinaryFormatter();
                     if (restrictDeserialization)
                     {
@@ -3062,6 +3092,7 @@ namespace System.Windows
                     catch (RestrictedTypeDeserializationException)
                     {
                         value = null;
+                        // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]                     
                     }
                 }
                 else

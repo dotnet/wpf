@@ -16,7 +16,7 @@
 
     <system:Double x:Key="ControlContentThemeFontSize">14</system:Double>
     <CornerRadius x:Key="ControlCornerRadius">4,4,4,4</CornerRadius>
-    <CornerRadius x:Key="OverlayCornerRadius">4,4,4,4</CornerRadius>
+    <CornerRadius x:Key="OverlayCornerRadius">8,8,8,8</CornerRadius>
     <CornerRadius x:Key="PopupCornerRadius">8,8,8,8</CornerRadius>
 
     <!--
@@ -46,7 +46,7 @@
     <Thickness x:Key="ComboBoxEditableTextPadding">10,0,30,0</Thickness>
 
     <system:Double x:Key="ComboBoxMinHeight">24</system:Double>
-    <Thickness x:Key="ComboBoxPadding">12,1,0,3</Thickness>
+    <!-- <Thickness x:Key="ComboBoxPadding">12,1,0,3</Thickness> -->
     <system:Double x:Key="NavigationViewItemOnLeftMinHeight">32</system:Double>
 
 </ResourceDictionary>

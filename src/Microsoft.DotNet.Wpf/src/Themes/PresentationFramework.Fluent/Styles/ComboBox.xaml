@@ -93,7 +93,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="{StaticResource ComboBoxItemMargin}" />
         <Setter Property="Padding" Value="{StaticResource ComboBoxItemContentMargin}" />
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -217,7 +216,7 @@
                                             FontSize="{StaticResource ComboBoxChevronSize}"
                                             Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}"
                                             RenderTransformOrigin="0.5, 0.5"
-                                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                             Text ="{StaticResource ComboBoxChevronDownGlyph}">
                                             <TextBlock.RenderTransform>
                                                 <RotateTransform Angle="0" />
@@ -246,11 +245,12 @@
                                             FontSize="{TemplateBinding FontSize}"
                                             Foreground="{TemplateBinding Foreground}"
                                             IsReadOnly="{TemplateBinding IsReadOnly}"
-                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}" />
+                                            Style="{StaticResource DefaultComboBoxTextBoxStyle}"
+                                            AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" />
                                     </Grid>
                                 </Grid>
                                 <Popup
-                                    x:Name="Popup"
+                                    x:Name="PART_Popup"
                                     MinWidth="{TemplateBinding ActualWidth}"
                                     VerticalAlignment="Center"
                                     AllowsTransparency="True"
@@ -261,7 +261,7 @@
                                     VerticalOffset="1">
                                     <Border
                                         x:Name="DropDownBorder"
-                                        Margin="0"
+                                        Margin="12,0,12,18"
                                         Padding="0,4,0,6"
                                         Background="{DynamicResource ComboBoxDropDownBackground}"
                                         BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
@@ -288,6 +288,13 @@
                                                     TextElement.FontSize="{TemplateBinding FontSize}" />
                                             </ScrollViewer>
                                         </Grid>
+                                        <Border.Effect>
+                                            <DropShadowEffect
+                                                BlurRadius="20"
+                                                Direction="270"
+                                                Opacity="0.25"
+                                                ShadowDepth="6"/>
+                                        </Border.Effect>
                                     </Border>
                                 </Popup>
                             </Grid>
@@ -341,7 +348,7 @@
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="DropDownBorder" Property="MinHeight" Value="{StaticResource ComboBoxPopupMinHeight}" />
                         </Trigger>
-                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="False">
+                        <Trigger SourceName="PART_Popup" Property="Popup.AllowsTransparency" Value="False">
                             <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0" />
                         </Trigger>
                         <Trigger Property="IsGrouping" Value="True">

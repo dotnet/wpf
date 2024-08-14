@@ -1302,7 +1302,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (extra != 0)
             {
                 // No need to use checked{} here since we already made sure that extra is smaller than Int32Size
-                writer.Write(Padding, 0, CU.Int32Size - extra);
+                writer.Write(Padding.Slice(0, CU.Int32Size - extra));
             }
         }
 
@@ -1435,16 +1435,15 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         private const int MaxPublishLicenseHeaderLen = 4096;
 
-        private static readonly char[] Base32EncodingTable = {
+        private static ReadOnlySpan<char> Base32EncodingTable => [
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            '2', '3', '4', '5', '6', '7', '='
-            };
+            '2', '3', '4', '5', '6', '7', '='];
 
         //
         // Used to DWORD-align a stream after writing a string to it:
         //
-        private static readonly byte[] Padding = {0, 0, 0};
+        private static ReadOnlySpan<byte> Padding => [0, 0, 0];
 
         private const int SizeofByte  = 1;
 

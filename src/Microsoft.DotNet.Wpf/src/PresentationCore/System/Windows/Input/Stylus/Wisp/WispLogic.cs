@@ -33,7 +33,7 @@ namespace System.Windows.Input.StylusWisp
         {
             Statistics.FeaturesUsed |= StylusTraceLogger.FeatureFlags.WispStackEnabled;
 
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager); ;
+            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
             _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
             _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
             _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
@@ -885,7 +885,7 @@ namespace System.Windows.Input.StylusWisp
                         else if (input.Report.Type == InputType.Stylus)
                         {
                             RawStylusInputReport stylusInputReport = (RawStylusInputReport)input.Report;
-                            WispStylusDevice stylusDevice = stylusInputReport?.StylusDevice?.As<WispStylusDevice>(); ; // RTI sets this if it finds StylusDevice based on Id.
+                            WispStylusDevice stylusDevice = stylusInputReport?.StylusDevice?.As<WispStylusDevice>(); // RTI sets this if it finds StylusDevice based on Id.
                             bool cancelInput = true; // Only process if we see we have valid input data.
 
                             if (stylusInputReport.InputSource != null && stylusInputReport.PenContext != null)

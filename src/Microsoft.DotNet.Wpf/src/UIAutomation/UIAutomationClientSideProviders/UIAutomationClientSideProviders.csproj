@@ -122,6 +122,7 @@
     <NetCoreReference Include="System.Diagnostics.Process" />
     <NetCoreReference Include="System.Diagnostics.StackTrace" />
     <NetCoreReference Include="System.Diagnostics.Tools" />
+    <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
     <NetCoreReference Include="System.Resources.ResourceManager" />
     <NetCoreReference Include="System.Runtime" />

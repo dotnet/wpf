@@ -75,7 +75,7 @@
                 </Grid>
 
                 <Popup
-                    x:Name="Popup"
+                    x:Name="PART_Popup"
                     Grid.Row="1"
                     Grid.Column="0"
                     AllowsTransparency="True"
@@ -232,7 +232,7 @@
                         x:Name="CheckBoxIcon"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontFamily="{DynamicResource SegoeFluentIcons}"
+                        FontFamily="{DynamicResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Text=""
                         TextAlignment="Center" />
@@ -326,7 +326,7 @@
                             x:Name="Chevron"
                             Margin="0,3,0,0"
                             VerticalAlignment="Center"
-                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                             FontSize="{TemplateBinding FontSize}"
                             Text="{StaticResource MenuItemChevronRightGlyph}" />
                     </Grid>
@@ -334,7 +334,7 @@
             </Border>
 
             <Popup
-                x:Name="Popup"
+                x:Name="PART_Popup"
                 Grid.Row="1"
                 AllowsTransparency="True"
                 Focusable="False"
@@ -416,7 +416,7 @@
     </ControlTemplate>
 
     <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />

@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Formats.Nrbf;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -126,9 +127,25 @@ namespace MS.Internal.AppModel
                         {
                             // Convert the value of the DP into a byte array
                             MemoryStream byteStream = new MemoryStream();
-                            #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            this.Formatter.Serialize(byteStream, currentValue);
-                            #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+
+                            bool success = false;
+                            try
+                            {
+                                success = BinaryFormatWriter.TryWriteFrameworkObject(byteStream, currentValue);
+                            }
+                            catch (Exception ex) when (!ex.IsCriticalException())
+                            {
+                                // Being extra cautious here, but the Try method above should never throw in normal circumstances.
+                                Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
+                            }
+
+                            if(!success)
+                            {
+                                #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                                this.Formatter.Serialize(byteStream, currentValue);
+                                #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                            }
+                            
                             
                             bytes = byteStream.ToArray();
                             // Dispose the stream
@@ -238,9 +255,28 @@ namespace MS.Internal.AppModel
                     object newValue = null;
                     if (subStream._data != null)
                     {
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                        newValue = this.Formatter.Deserialize(new MemoryStream(subStream._data));
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                        using MemoryStream dataStream = new(subStream._data);
+
+                        try
+                        {
+                            NrbfDecoder.Decode(dataStream, leaveOpen: true).TryGetFrameworkObject(out object val);
+                            newValue = val;
+                        }
+                        catch (Exception ex) when (!ex.IsCriticalException())
+                        {
+                            // Being extra cautious here, but the Try method above should never throw in normal circumstances.
+                            Debug.Fail($"Unexpected exception reading binary formatted data. {ex.Message}");
+                        }
+
+                        //Using Binary formatter
+                        if(newValue == null)
+                        {
+                            dataStream.Position = 0;
+                            #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                            newValue = this.Formatter.Deserialize(dataStream);
+                            #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+                        }
+                        
                     }
                     element.SetValue(dp, newValue);
                 }

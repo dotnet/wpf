@@ -11,7 +11,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework">
 
     <Color x:Key="FallbackColor">#FFFF0000</Color>
@@ -19,11 +19,11 @@
     <Thickness x:Key="CheckBoxPadding">11,5,11,6</Thickness>
     <Thickness x:Key="CheckBoxBorderThemeThickness">1</Thickness>
     <Thickness x:Key="CheckBoxContentMargin">8,0,0,0</Thickness>
-    <system:Double x:Key="CheckBoxIconSize">14</system:Double>
-    <system:Double x:Key="CheckBoxHeight">22</system:Double>
-    <system:Double x:Key="CheckBoxWidth">22</system:Double>
-    <system:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</system:String>
-    <system:String x:Key="CheckBoxIndeterminateGlyph">&#xE9AE;</system:String>
+    <sys:Double x:Key="CheckBoxIconSize">14</sys:Double>
+    <sys:Double x:Key="CheckBoxHeight">22</sys:Double>
+    <sys:Double x:Key="CheckBoxWidth">22</sys:Double>
+    <sys:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</sys:String>
+    <sys:String x:Key="CheckBoxIndeterminateGlyph">&#xE9AE;</sys:String>
 
     <Style x:Key="DefaultCheckBoxStyle" TargetType="{x:Type CheckBox}">
         <!--  Universal WPF UI focus  -->
@@ -78,7 +78,7 @@
                                             FontSize="{StaticResource CheckBoxIconSize}"
                                             FontWeight="Bold"
                                             Foreground="{DynamicResource CheckBoxCheckGlyphForeground}"
-                                            FontFamily="{DynamicResource SegoeFluentIcons}"
+                                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
                                             Visibility="Collapsed"
                                             Text="{StaticResource CheckBoxCheckedGlyph}" />
                                     </Grid>

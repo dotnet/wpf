@@ -377,8 +377,6 @@ namespace System.Windows.Xps.Serialization
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterStart);
 
-            signalReleaseToFontService(writerType);
-
             //
             // Allow the packaging policy to release the stream
             //
@@ -394,6 +392,7 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
+            signalReleaseToFontService(writerType);
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterEnd);
         }
 

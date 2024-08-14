@@ -21,6 +21,8 @@
 //warnings 1634 and 1691. (From PreSharp Documentation)
 #pragma warning disable 1634, 1691
 
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -56,6 +58,7 @@ using MS.Utility;
 using MS.Win32;
 using Microsoft.Win32;
 using MS.Internal.Telemetry.PresentationFramework;
+using System.Diagnostics.CodeAnalysis;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -929,6 +932,16 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
+                if(_reloadFluentDictionary && !_resourcesInitialized)
+                {
+                    if(value != null && ThemeMode != ThemeMode.None)
+                    {
+                        value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    }
+                    _reloadFluentDictionary = false;
+                    invalidateResources = true;
+                }
+
                 if (value != null)
                 {
                     if (!value.ContainsOwner(this))
@@ -954,6 +967,48 @@ namespace System.Windows
         {
             get { return Resources; }
             set { Resources = value; }
+        }
+
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                return _themeMode;
+            }
+            set
+            {
+                VerifyAccess();
+                if (!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+                
+                ThemeMode oldValue = _themeMode;
+                _themeMode = value;
+
+                if(!_resourcesInitialized)
+                {
+
+                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+
+                    // If the resources are not initializd, fluent dictionary
+                    // included in this operation will be reset.
+                    // Hence, we need to reload the fluent dictionary.
+                    _reloadFluentDictionary = true;
+
+                    // OnApplicationThemeChanged will trigger InvalidateResourceReferences
+                    // which will mark _resourcesInitialized = true, however since 
+                    // the value earlier was false, it means that Resources may not have been
+                    // parsed from BAML yet. Hence, we need to reset the value to false.
+                    _resourcesInitialized = false;
+
+                    return;
+                }
+
+                ThemeManager.OnApplicationThemeChanged(oldValue, value);
+            }
         }
 
         bool IQueryAmbient.IsAmbientPropertyAvailable(string propertyName)
@@ -1687,6 +1742,19 @@ namespace System.Windows
 
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
+            _resourcesInitialized = true;
+            
+            // Sync needs to be performed only under the following conditions:
+            //  - the resource change event raised is due to a collection change
+            //      i.e. it is not a IsIndividualResourceAddOperation
+            //  - the event is not raised due to the change in Application.ThemeMode
+            //      i.e. SkipAppThemeModeSyncing is set to true
+            if (!info.IsIndividualResourceChange
+                    && !ThemeManager.SkipAppThemeModeSyncing)
+            {
+                ThemeManager.SyncApplicationThemeMode();
+            }
+            
             // Invalidate ResourceReference properties on all the windows.
             // we Clone() the collection b/c if we don't then some other thread can be
             // modifying the collection while we iterate over it
@@ -2427,6 +2495,10 @@ namespace System.Windows
 
         private bool                        _ownDispatcherStarted;
         private NavigationService           _navService;
+
+        private ThemeMode                   _themeMode = ThemeMode.None;
+        private bool                        _resourcesInitialized = false;
+        private bool                        _reloadFluentDictionary = false;
 
         private SecurityCriticalDataForSet<MimeType> _appMimeType;
         private IServiceProvider            _serviceProvider;

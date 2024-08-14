@@ -189,7 +189,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
 
                     byte[] data = new byte[ropSize];
-                    stream.Read (data, 0, (int)ropSize);
+                    stream.ReadExactly(data);
 
                     if (data != null && data.Length > 0)
                     {

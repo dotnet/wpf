@@ -35,7 +35,7 @@ namespace System.Windows.Markup
     public sealed class RuntimeNamePropertyAttribute: Attribute
     {
         /// <summary/>
-        public RuntimeNamePropertyAttribute(string name)
+        public RuntimeNamePropertyAttribute(string? name)
         {
             Name = name;
         }
@@ -45,7 +45,7 @@ namespace System.Windows.Markup
         /// the class, this property needs to be of type string and have
         /// both get and set access
         /// </summary>
-        public string Name { get; }
+        public string? Name { get; }
     }
 #endif
 

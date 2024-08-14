@@ -78,7 +78,7 @@ namespace MS.Internal.Controls.StickyNote
             s_xmlTokeFullNames = new Dictionary<XmlToken, string>();
 
             // Fill in the name dictionary.
-            foreach (XmlToken val in Enum.GetValues(typeof(XmlToken)))
+            foreach (XmlToken val in Enum.GetValues<XmlToken>())
             {
                 AddXmlTokenNames(val);
             }

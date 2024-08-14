@@ -281,14 +281,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
             return;
         }
 
-        private static readonly byte[] Base64HeaderBytes
-                                            = new byte[]{(byte)'b',
-                                                        (byte)'a',
-                                                        (byte)'s',
-                                                        (byte)'e',
-                                                        (byte)'6',
-                                                        (byte)'4',
-                                                        (byte)':'};
+        private static ReadOnlySpan<byte> Base64HeaderBytes => [(byte)'b',
+                                                                (byte)'a',
+                                                                (byte)'s',
+                                                                (byte)'e',
+                                                                (byte)'6',
+                                                                (byte)'4',
+                                                                (byte)':'];
 
 #if OLD_ISF
         /// <summary>
@@ -2113,15 +2112,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             long currentPosition = data.Position;
             try
             {
-                byte[] isfBase64PrefixBytes = Base64HeaderBytes;
-                if (data.Length < isfBase64PrefixBytes.Length)
+                if (data.Length < Base64HeaderBytes.Length)
                 {
                     return false;
                 }
 
-                for (int x = 0; x < isfBase64PrefixBytes.Length; x++)
+                for (int x = 0; x < Base64HeaderBytes.Length; x++)
                 {
-                    if ((byte)data.ReadByte() != isfBase64PrefixBytes[x])
+                    if ((byte)data.ReadByte() != Base64HeaderBytes[x])
                     {
                         return false;
                     }

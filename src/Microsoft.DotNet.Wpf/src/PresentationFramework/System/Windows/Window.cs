@@ -7,6 +7,8 @@
 // Description: Implements the base Avalon Window class
 //
 
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,9 +30,11 @@ using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
 using Microsoft.Win32;
+using System.Diagnostics.CodeAnalysis;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
+using SNM = Standard.NativeMethods;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -557,6 +561,46 @@ namespace System.Windows
         //
         //---------------------------------------------------
         #region Public Properties
+
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                VerifyContextAndObjectState();
+                return _themeMode;
+            }
+            set
+            {
+                VerifyContextAndObjectState();
+
+                if(!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+                
+                ThemeMode oldTheme = _themeMode;
+                _themeMode = value;
+                
+                if(!AreResourcesInitialized)
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    AreResourcesInitialized = false;
+
+                    _reloadFluentDictionary = true;
+                }
+
+                if(IsSourceWindowNull)
+                {
+                    _deferThemeLoading = true;
+                }
+                else
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                }
+            }
+        }
 
         /// <summary>
         /// DependencyProperty for TaskbarItemInfo
@@ -1900,7 +1944,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnSourceInitialized(...) for
+        ///     the event. If you override this method - you need to call base.OnSourceInitialized(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1922,7 +1966,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnActivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1940,7 +1984,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnDeactivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnDeactivated(EventArgs e)
@@ -1958,7 +2002,7 @@ namespace System.Windows
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers
         ///     that subclass the event. If you override this method - you need to call
-        ///     Base.OnClosed(...) for the corresponding event to be raised.
+        ///     base.OnStateChanged(...) for the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnStateChanged(EventArgs e)
         {
@@ -1974,7 +2018,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnLocationChanged(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnLocationChanged(EventArgs e)
@@ -1992,7 +2036,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosing(...) for
+        ///     the event. If you override this method - you need to call base.OnClosing(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosing(CancelEventArgs e)
@@ -2009,7 +2053,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnClosed(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosed(EventArgs e)
@@ -2082,6 +2126,22 @@ namespace System.Windows
             Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
             Point ptDeviceUnits = _swh.CompositionTarget.TransformToDevice.Transform(ptLogicalUnits);
             return ptDeviceUnits;
+        }
+
+        internal void AddFluentDictionary(ResourceDictionary value, out bool invalidateResources)
+        {
+            invalidateResources = false;
+
+            if(_reloadFluentDictionary && !AreResourcesInitialized)
+            {
+                if(value != null && ThemeMode != ThemeMode.None) 
+                {
+                    value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    invalidateResources = true;
+                }
+
+                _reloadFluentDictionary = false;
+            }
         }
 
         internal static bool VisibilityToBool(Visibility v)
@@ -2317,6 +2377,11 @@ namespace System.Windows
                 Utilities.SafeDispose(ref _currentLargeIconHandle);
                 Utilities.SafeDispose(ref _currentSmallIconHandle);
                 Utilities.SafeRelease(ref _taskbarList);
+
+                if(ThemeMode != ThemeMode.None)
+                {
+                    ThemeManager.FluentEnabledWindows.Remove(this);
+                }
             }
             finally
             {
@@ -2515,10 +2580,18 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
-            if (Standard.Utility.IsOSWindows11OrNewer && ThemeManager.IsFluentThemeEnabled)
+            if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                ThemeManager.InitializeFluentTheme();
-                ThemeManager.ApplySystemTheme(this, true);
+                if (ThemeManager.IsFluentThemeEnabled)
+                {
+                    ThemeManager.ApplyStyleOnWindow(this);
+                }
+
+                if (_deferThemeLoading)
+                {
+                    _deferThemeLoading = false;
+                    ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                }
             }
 
             // Sub classes can have different intialization. RBW does very minimalistic
@@ -2527,6 +2600,23 @@ namespace System.Windows
 
             // Fire SourceInitialized event
             OnSourceInitialized(EventArgs.Empty);
+        }
+
+        internal void SetImmersiveDarkMode(bool useDarkMode)
+        {
+            if(!Standard.Utility.IsOSWindows11OrNewer) return;
+
+            if(_useDarkMode == useDarkMode) return;
+
+            IntPtr handle = CriticalHandle;
+            if (handle != IntPtr.Zero)
+            {
+                bool succeeded = SNM.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useDarkMode);
+                if(succeeded)
+                {
+                    _useDarkMode = useDarkMode;
+                }
+            }
         }
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
@@ -3216,6 +3306,19 @@ namespace System.Windows
         {
             get { return false; }
         }
+
+        internal bool AreResourcesInitialized
+        {
+            get
+            {
+                return _resourcesInitialized;
+            }
+            set
+            {
+                _resourcesInitialized = value;
+            }
+        }
+
         #endregion Internal Properties
 
         //----------------------------------------------
@@ -3577,19 +3680,6 @@ namespace System.Windows
                 else
                 {
                     App.NonAppWindowsInternal.Add(this);
-                }
-            }
-
-            // TODO : Remove when Fluent theme is enabled by default
-            if (ThemeManager.IsFluentThemeEnabled)
-            {
-                if(WindowBackdropManager.IsBackdropEnabled)
-                {
-                    SetResourceReference(StyleProperty, typeof(Window));
-                }
-                else
-                {
-                    SetResourceReference(StyleProperty, "BackdropDisabledWindowStyle");
                 }
             }
         }
@@ -7152,7 +7242,9 @@ namespace System.Windows
 
         private SourceWindowHelper  _swh;                               // object that will hold the window
         private Window              _ownerWindow;                       // owner window
-
+        private bool _reloadFluentDictionary = false;
+        private bool _resourcesInitialized = false;
+        
         // keeps track of the owner hwnd
         // we need this one b/c a owner/parent
         // can be set through the WindowInteropHandler
@@ -7194,6 +7286,11 @@ namespace System.Windows
         private double              _actualTop = Double.NaN;
 
         private double              _actualLeft = Double.NaN;
+
+
+        private ThemeMode           _themeMode = ThemeMode.None;
+        internal bool               _deferThemeLoading = false;
+        private bool                _useDarkMode = false;
 
         //Never expose this at any cost
         private bool                        _inTrustedSubWindow;

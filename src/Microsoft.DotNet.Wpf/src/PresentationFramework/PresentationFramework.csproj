@@ -1087,7 +1087,7 @@
     <Compile Include="System\Windows\Documents\XamlToRtfWriter.cs" />
     <Compile Include="System\Windows\Documents\XPSS0ValidatingLoader.cs" />
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
-    <Compile Include="System\Windows\DwmColorization.cs" />
+    <Compile Include="System\Windows\AccentColorHelper.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
@@ -1342,6 +1342,9 @@
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
     <Compile Include="System\Windows\ThemeManager.cs" />
+    <Compile Include="System\Windows\FluentThemeState.cs" />
+    <Compile Include="System\Windows\ThemeMode.cs" />
+    <Compile Include="System\Windows\ThemeModeConverter.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />
     <Compile Include="System\Windows\Thickness.cs" />
@@ -1429,6 +1432,7 @@
     <ProjectReference Include="$(WpfCycleBreakersDir)PresentationUI\PresentationUI-PresentationFramework-impl-cycle.csproj" />
     <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj" />
+    <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
   </ItemGroup>
 
   <ItemGroup>

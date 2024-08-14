@@ -13,6 +13,7 @@
         <Setter Property="Foreground" Value="{DynamicResource ListBoxItemForeground}" />
         <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="Border.CornerRadius" Value="0" />
@@ -33,7 +34,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource ListBoxItemSelectedBackgroundThemeBrush}" />
-                            <!-- <Setter Property="Foreground" Value="{DynamicResource ListBoxItemSelectedForegroundThemeBrush}" /> -->
+                            <Setter Property="Foreground" Value="{DynamicResource ListBoxItemSelectedForegroundThemeBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

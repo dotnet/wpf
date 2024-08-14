@@ -272,7 +272,7 @@ namespace MS.Internal.AppModel
             : base(info, context)
         {
             _pageFunctionId = (Guid)info.GetValue("_pageFunctionId", typeof(Guid));
-            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid)); ;
+            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid));
         }
 
         //

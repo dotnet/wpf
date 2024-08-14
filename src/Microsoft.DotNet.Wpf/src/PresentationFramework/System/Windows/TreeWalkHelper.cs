@@ -459,9 +459,13 @@ namespace System.Windows
 
             // Here we are syncing the window's Theme mode if resource dictionary changes.
             // The IgnoreWindowResourcesChange is a flag set to make sure the ThemeMode change does not cause an infinite loop of resource changes.
-            if(fe is Window currentWindow && !ThemeManager.IgnoreWindowResourcesChange)
+            if(fe is Window currentWindow)
             {
-                ThemeManager.SyncWindowThemeModeAndResources(currentWindow);
+                currentWindow.AreResourcesInitialized = true;
+                if(!ThemeManager.IgnoreWindowResourcesChange)
+                {
+                    ThemeManager.SyncWindowThemeModeAndResources(currentWindow);
+                }
             }
 
             // We're interested in changes to the Template property that occur during

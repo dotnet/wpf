@@ -583,6 +583,14 @@ namespace System.Windows
                 ThemeMode oldTheme = _themeMode;
                 _themeMode = value;
                 
+                if(!AreResourcesInitialized)
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    AreResourcesInitialized = false;
+
+                    ReloadFluentDictionary = true;
+                }
+
                 if(IsSourceWindowNull)
                 {
                     _deferThemeLoading = true;
@@ -2120,6 +2128,23 @@ namespace System.Windows
             return ptDeviceUnits;
         }
 
+        internal void AddFluentDictionary(ResourceDictionary value, out bool invalidateResources)
+        {
+            invalidateResources = false;
+
+            if(this.ReloadFluentDictionary && !this.AreResourcesInitialized)
+            {
+                if(value != null) 
+                {
+                    var uri = ThemeManager.GetThemeResource(this.ThemeMode);
+                    value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
+                    invalidateResources = true;
+                }
+
+                this.ReloadFluentDictionary = false;
+            }
+        }
+
         internal static bool VisibilityToBool(Visibility v)
         {
             switch (v)
@@ -3292,6 +3317,31 @@ namespace System.Windows
         {
             get { return false; }
         }
+
+        private bool ReloadFluentDictionary
+        {
+            get
+            {
+                return _reloadFluentDictionary;
+            }
+            set
+            {
+                _reloadFluentDictionary = value;
+            }
+        }
+
+        internal bool AreResourcesInitialized
+        {
+            get
+            {
+                return _resourcesInitialized;
+            }
+            set
+            {
+                _resourcesInitialized = value;
+            }
+        }
+
         #endregion Internal Properties
 
         //----------------------------------------------
@@ -7215,7 +7265,9 @@ namespace System.Windows
 
         private SourceWindowHelper  _swh;                               // object that will hold the window
         private Window              _ownerWindow;                       // owner window
-
+        private bool _reloadFluentDictionary = false;
+        private bool _resourcesInitialized = false;
+        
         // keeps track of the owner hwnd
         // we need this one b/c a owner/parent
         // can be set through the WindowInteropHandler

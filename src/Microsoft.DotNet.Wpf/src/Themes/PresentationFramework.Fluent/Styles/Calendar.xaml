@@ -488,6 +488,8 @@
         <Setter Property="Foreground" Value="{DynamicResource CalendarViewForeground}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
@@ -499,6 +501,8 @@
                         Background="{DynamicResource CalendarViewBackground}"
                         BorderBrush="{DynamicResource CalendarViewBorderBrush}"
                         BorderThickness="1"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
                         CornerRadius="4">
                         <CalendarItem
                             x:Name="PART_CalendarItem"

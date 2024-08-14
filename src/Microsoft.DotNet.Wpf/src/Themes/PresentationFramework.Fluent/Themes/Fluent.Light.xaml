@@ -1339,7 +1339,7 @@
                   </Grid>
                 </Grid>
                 <Popup x:Name="PART_Popup" MinWidth="{TemplateBinding ActualWidth}" VerticalAlignment="Center" AllowsTransparency="True" Focusable="False" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="{TemplateBinding Popup.Placement}" PopupAnimation="{TemplateBinding Popup.PopupAnimation}" VerticalOffset="1">
-                  <Border x:Name="DropDownBorder" Margin="0" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
+                  <Border x:Name="DropDownBorder" Margin="12,0,12,18" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
                     <!--Will revist this code while doing performance evaluation for dynamic resources.-->
                     <Border.RenderTransform>
                       <TranslateTransform />
@@ -1349,6 +1349,9 @@
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" TextElement.FontSize="{TemplateBinding FontSize}" />
                       </ScrollViewer>
                     </Grid>
+                    <Border.Effect>
+                      <DropShadowEffect BlurRadius="20" Direction="270" Opacity="0.25" ShadowDepth="6" />
+                    </Border.Effect>
                   </Border>
                 </Popup>
               </Grid>

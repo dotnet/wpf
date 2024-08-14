@@ -939,6 +939,7 @@ namespace System.Windows
                         value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     }
                     _reloadFluentDictionary = false;
+                    invalidateResources = true;
                 }
 
                 if (value != null)

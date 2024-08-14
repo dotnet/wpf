@@ -351,9 +351,9 @@
   <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <!--  Calendar  -->
   <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource TextFillColorPrimary}" />
-  <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-  <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+  <SolidColorBrush x:Key="CalendarViewBackground" Color="{StaticResource ControlFillColorInputActive}" />
+  <SolidColorBrush x:Key="CalendarViewBorderBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+  <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemAccentColorLight2}" />
@@ -750,8 +750,11 @@
   <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}" />
   <!--  HINT: Day button style  -->
   <Style x:Key="DefaultCalendarDayButtonStyle" TargetType="CalendarDayButton">
-    <Setter Property="MinWidth" Value="30" />
-    <Setter Property="MinHeight" Value="30" />
+    <Setter Property="MinWidth" Value="40" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="MaxWidth" Value="60" />
+    <Setter Property="MaxHeight" Value="60" />
+    <Setter Property="Margin" Value="1" />
     <Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -863,7 +866,10 @@
   <Style x:Key="DefaultCalendarButtonStyle" TargetType="CalendarButton">
     <Setter Property="MinWidth" Value="40" />
     <Setter Property="MinHeight" Value="40" />
-    <Setter Property="FontSize" Value="12" />
+    <Setter Property="MaxWidth" Value="70" />
+    <Setter Property="MaxHeight" Value="70" />
+    <Setter Property="Margin" Value="1" />
+    <Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Template">
@@ -946,67 +952,67 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CalendarItem}">
-          <Grid x:Name="PART_Root" Margin="12">
+          <Grid x:Name="PART_Root">
             <Grid KeyboardNavigation.TabNavigation="Local">
               <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
               <!--  HINT: Header with title and navigation buttons  -->
-              <Grid Grid.Row="0" Margin="8,0,8,14" KeyboardNavigation.TabIndex="0">
+              <Grid Grid.Row="0" KeyboardNavigation.TabIndex="0">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="-6,0,0,0" Padding="6,2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" />
-                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="0,0,8,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="7,6,3,7" Padding="8,7,8,8" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource CalendarViewForeground}" />
+                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
-                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
               </Grid>
+              <Border Grid.Row="1" Height="0.5" Background="{DynamicResource CalendarViewBorderBrush}" />
               <!--  HINT: Day picker  -->
-              <Grid x:Name="PART_MonthView" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1" Visibility="Visible">
+              <Grid x:Name="PART_MonthView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1" Visibility="Visible">
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
               </Grid>
-              <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
-                <Grid x:Name="PART_YearView" Visibility="Hidden">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                  </Grid.ColumnDefinitions>
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                  </Grid.RowDefinitions>
-                </Grid>
-              </Border>
+              <Grid x:Name="PART_YearView" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+              </Grid>
               <Rectangle x:Name="PART_DisabledVisual" Grid.Row="0" Grid.RowSpan="2" Opacity="0" RadiusX="2" RadiusY="2" Stretch="Fill" Stroke="Transparent" StrokeThickness="0" Visibility="Collapsed" KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.TabIndex="1">
                 <Rectangle.Fill>
                   <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
@@ -1029,7 +1035,7 @@
           </ControlTemplate.Triggers>
           <ControlTemplate.Resources>
             <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-              <TextBlock Margin="0,0,0,6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" Text="{Binding}" />
+              <TextBlock Margin="1" Padding="12" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource CalendarViewForeground}" Text="{Binding}" />
             </DataTemplate>
           </ControlTemplate.Resources>
         </ControlTemplate>
@@ -1048,7 +1054,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Calendar}">
-          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{DynamicResource CalendarViewBackground}" BorderBrush="{DynamicResource CalendarViewBorderBrush}" BorderThickness="1" CornerRadius="8">
+          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{DynamicResource CalendarViewBackground}" BorderBrush="{DynamicResource CalendarViewBorderBrush}" BorderThickness="1" CornerRadius="4">
             <CalendarItem x:Name="PART_CalendarItem" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Style="{TemplateBinding CalendarItemStyle}" />
           </Border>
         </ControlTemplate>

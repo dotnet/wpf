@@ -588,7 +588,7 @@ namespace System.Windows
                     ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
                     AreResourcesInitialized = false;
 
-                    ReloadFluentDictionary = true;
+                    _reloadFluentDictionary = true;
                 }
 
                 if(IsSourceWindowNull)
@@ -2132,16 +2132,16 @@ namespace System.Windows
         {
             invalidateResources = false;
 
-            if(this.ReloadFluentDictionary && !this.AreResourcesInitialized)
+            if(_reloadFluentDictionary && !AreResourcesInitialized)
             {
                 if(value != null) 
                 {
-                    var uri = ThemeManager.GetThemeResource(this.ThemeMode);
+                    var uri = ThemeManager.GetThemeResource(ThemeMode);
                     value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
                     invalidateResources = true;
                 }
 
-                this.ReloadFluentDictionary = false;
+                _reloadFluentDictionary = false;
             }
         }
 
@@ -3316,18 +3316,6 @@ namespace System.Windows
         bool IWindowService.UserResized
         {
             get { return false; }
-        }
-
-        private bool ReloadFluentDictionary
-        {
-            get
-            {
-                return _reloadFluentDictionary;
-            }
-            set
-            {
-                _reloadFluentDictionary = value;
-            }
         }
 
         internal bool AreResourcesInitialized

@@ -1752,7 +1752,7 @@ namespace System.Windows
             if (!info.IsIndividualResourceChange
                     && !ThemeManager.SkipAppThemeModeSyncing)
             {
-                ThemeManager.SyncThemeMode();
+                ThemeManager.SyncApplicationThemeMode();
             }
             
             // Invalidate ResourceReference properties on all the windows.

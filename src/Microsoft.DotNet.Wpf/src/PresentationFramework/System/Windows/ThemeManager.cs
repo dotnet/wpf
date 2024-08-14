@@ -124,7 +124,7 @@ internal static class ThemeManager
         ApplyFluentOnWindow(window);
     }
 
-    internal static bool SyncThemeMode()
+    internal static bool SyncApplicationThemeMode()
     {
         ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
 
@@ -137,7 +137,7 @@ internal static class ThemeManager
         return false;
     }
 
-    internal static void SyncWindowThemeModeAndResources(Window window)
+    internal static void SyncWindowThemeMode(Window window)
     {
         ThemeMode themeMode = GetThemeModeFromResourceDictionary(window.Resources);
 

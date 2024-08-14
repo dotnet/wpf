@@ -464,7 +464,7 @@ namespace System.Windows
                 currentWindow.AreResourcesInitialized = true;
                 if(!ThemeManager.IgnoreWindowResourcesChange)
                 {
-                    ThemeManager.SyncWindowThemeModeAndResources(currentWindow);
+                    ThemeManager.SyncWindowThemeMode(currentWindow);
                 }
             }
 

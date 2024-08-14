@@ -2136,8 +2136,7 @@ namespace System.Windows
             {
                 if(value != null) 
                 {
-                    var uri = ThemeManager.GetThemeResource(ThemeMode);
-                    value.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = uri });
+                    value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     invalidateResources = true;
                 }
 

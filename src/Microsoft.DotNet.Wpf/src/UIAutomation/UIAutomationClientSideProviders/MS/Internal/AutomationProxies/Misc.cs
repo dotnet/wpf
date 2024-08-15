@@ -7,6 +7,7 @@
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 using System;
+using System.Globalization;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1641,7 +1642,7 @@ namespace MS.Internal.AutomationProxies
 
             // Update '&' index and slice it out
             ampersandIndex -= (value.Length - trimmed.Length);
-            return string.Create(null, stackalloc char[128], $"{trimmed.Slice(0, ampersandIndex)}{trimmed.Slice(ampersandIndex + 1)}");
+            return string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"{trimmed.Slice(0, ampersandIndex)}{trimmed.Slice(ampersandIndex + 1)}");
         }
 
         internal static void ThrowWin32ExceptionsIfError(int errorCode)

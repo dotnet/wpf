@@ -1509,7 +1509,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     case MenuType.System:
                         {
-                            return $"{SR.KeyAlt} + {SR.KeySpace}";
+                            return string.Create(CultureInfo.InvariantCulture, stackalloc char[32], $"{SR.KeyAlt} + {SR.KeySpace}");
                         }
                     case MenuType.Submenu:
                     case MenuType.SystemPopup:
@@ -2426,13 +2426,14 @@ namespace MS.Internal.AutomationProxies
                         if (pos + keywordLength + 2 == menuTextLength)
                         {
                             // Uppercase the letter, f.e. "Ctrl + a" to "Ctrl+A"
-                            return $"{sKeyword} + {char.ToUpperInvariant(menuRawText[menuTextLength - 1])}";
+                            return string.Create(CultureInfo.InvariantCulture, stackalloc char[24], $"{sKeyword} + {char.ToUpperInvariant(menuRawText[menuTextLength - 1])}");
                         }
                         else
                         {
                             // Take the remaining string from the menuText
                             // e.g. Alt+Enter
-                            return $"{sKeyword} + {menuRawText.AsSpan(pos + keywordLength + 1, menuTextLength - (pos + keywordLength + 1))}";
+                            return string.Create(CultureInfo.InvariantCulture, stackalloc char[48],
+                                                 $"{sKeyword} + {menuRawText.AsSpan(pos + keywordLength + 1, menuTextLength - (pos + keywordLength + 1))}");
                         }
                     }
                 }
@@ -2460,11 +2461,11 @@ namespace MS.Internal.AutomationProxies
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && char.ToUpperInvariant(menuText[pos]) == 'F')
                 {
-                    int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
+                    ReadOnlySpan<char> key = menuText.AsSpan(pos + 1, cChars - (pos + 1));
+                    int iKey = int.Parse(key, CultureInfo.InvariantCulture);
+
                     if (iKey > 0 && iKey <= 12)
-                    {
-                        return $"F{iKey}";
-                    }
+                        return string.Create(CultureInfo.InvariantCulture, stackalloc char[3], $"F{key}");
                 }
 
                 return null;

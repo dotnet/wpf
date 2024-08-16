@@ -24,7 +24,6 @@ namespace System.Windows
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
-    [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>

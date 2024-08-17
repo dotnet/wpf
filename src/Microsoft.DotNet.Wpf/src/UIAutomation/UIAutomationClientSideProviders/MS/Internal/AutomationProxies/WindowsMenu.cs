@@ -1335,14 +1335,13 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Look for a bunch of Predefined keywords
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    string[] keyWordAccelerators = GetKeywordsAccelerators();
-                    for (int i = 0; i < keyWordAccelerators.Length; i++)
+                    string[] keywordAccelerators = GetKeywordsAccelerators();
+                    for (int i = 0; i < keywordAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(keyWordAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + keyWordAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuRawText.LastIndexOf(keywordAccelerators[i], StringComparison.InvariantCultureIgnoreCase);
+                        if (pos > 0 && pos + keywordAccelerators[i].Length == menuRawText.Length && (menuRawText[pos - 1] == '\a' || menuRawText[pos - 1] == '\t'))
                         {
-                            return menuRawText.Substring(0, SkipMenuSpaceChar(menuText, pos));
+                            return menuRawText.Substring(0, SkipMenuSpaceChar(menuRawText, pos));
                         }
                     }
 
@@ -2747,14 +2746,13 @@ namespace MS.Internal.AutomationProxies
                     }
 
                     // Look for a bunch of Predefined keywords
-                    string menuText = menuRawText.ToLower(CultureInfo.InvariantCulture);
-                    string[] keyWordAccelerators = GetKeywordsAccelerators();
-                    for (int i = 0; i < keyWordAccelerators.Length; i++)
+                    string[] keywordAccelerators = GetKeywordsAccelerators();
+                    for (int i = 0; i < keywordAccelerators.Length; i++)
                     {
-                        pos = menuText.LastIndexOf(keyWordAccelerators[i], StringComparison.OrdinalIgnoreCase);
-                        if (pos > 0 && pos + keyWordAccelerators[i].Length == menuText.Length && (menuText[pos - 1] == '\a' || menuText[pos - 1] == '\t'))
+                        pos = menuRawText.LastIndexOf(keywordAccelerators[i], StringComparison.InvariantCultureIgnoreCase);
+                        if (pos > 0 && pos + keywordAccelerators[i].Length == menuRawText.Length && (menuRawText[pos - 1] == '\a' || menuRawText[pos - 1] == '\t'))
                         {
-                            return keyWordAccelerators[i];
+                            return keywordAccelerators[i];
                         }
                     }
 

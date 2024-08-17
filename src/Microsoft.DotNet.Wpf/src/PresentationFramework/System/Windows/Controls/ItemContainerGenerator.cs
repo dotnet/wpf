@@ -2684,28 +2684,26 @@ namespace System.Windows.Controls
         // this could probably be optimized
         void OnItemsReplaced(IList oldItems, IList newItems, int index)
         {
+            // Handle replacements for the overlapping part
             for (int i = 0; i < Math.Min(oldItems.Count, newItems.Count); i++)
             {
                 OnItemReplaced(oldItems[i], newItems[i], index + i);
             }
 
+            // Handle extra removals (oldItems has more elements)
             if (oldItems.Count > newItems.Count)
             {
-                int offset = oldItems.Count - newItems.Count;
-                int removeIndex = newItems.Count + index;
-                for (int i = offset + 1; i < oldItems.Count; i++)
+                for (int i = oldItems.Count - 1; i >= newItems.Count; i--)
                 {
-                    OnItemRemoved(oldItems[i], removeIndex);
+                    OnItemRemoved(oldItems[i], index + i);
                 }
             }
+            // Handle extra additions (newItems has more elements)
             else if (newItems.Count > oldItems.Count)
             {
-                int offset = newItems.Count - oldItems.Count;
-                int insertIndex = index + newItems.Count;
-                for (int i = offset + 1; i < oldItems.Count; i++)
+                for (int i = oldItems.Count; i < newItems.Count; i++)
                 {
-                    OnItemAdded(newItems[i], insertIndex);
-                    insertIndex++;
+                    OnItemAdded(newItems[i], index + i);
                 }
             }
         }

@@ -198,7 +198,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
             ArgumentNullException.ThrowIfNull(startNode);
 
-            if (DataIdElementName != locatorPart.PartType)
+            if (s_dataIdElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // Initial value
@@ -235,10 +235,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override XmlQualifiedName[] GetLocatorPartTypes()
-        {
-            return (XmlQualifiedName[])LocatorPartTypeNames.Clone();
-        }
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => new(in s_dataIdElementName);
 
         #endregion Public Methods
 
@@ -412,7 +409,7 @@ namespace MS.Internal.Annotations.Anchoring
             if ((nodeId == null) || (nodeId.Length == 0))
                 return null;
 
-            ContentLocatorPart part = new ContentLocatorPart(DataIdElementName);
+            ContentLocatorPart part = new ContentLocatorPart(s_dataIdElementName);
 
             part.NameValuePairs.Add(ValueAttributeName, nodeId);
             return part;
@@ -454,17 +451,10 @@ namespace MS.Internal.Annotations.Anchoring
         ///     This is internal and available to the processor that
         ///     is closely aligned with this handler.
         /// </summary>
-        private static readonly XmlQualifiedName DataIdElementName = new XmlQualifiedName("DataId", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
+        private static readonly XmlQualifiedName s_dataIdElementName = new("DataId", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
 
         //the name of the value attribute
         private const String ValueAttributeName = "Value";
-
-        // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames =
-                new XmlQualifiedName[]
-                {
-                    DataIdElementName
-                };
 
         #endregion Private Fields
     }

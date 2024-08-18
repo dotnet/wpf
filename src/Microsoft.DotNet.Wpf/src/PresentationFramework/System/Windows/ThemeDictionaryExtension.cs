@@ -134,7 +134,7 @@ namespace System.Windows
                 {
                     ReadOnlySpan<char> nameSpan = resourceName.AsSpan();
                     if (nameSpan.Split(splitRegions, '/') < 2)
-                        throw new ArgumentOutOfRangeException();
+                        throw new IndexOutOfRangeException();
 
                     return GenerateUri(info.AssemblyName, resourceName, nameSpan[splitRegions[1]]);
                 }

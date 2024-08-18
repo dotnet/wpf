@@ -630,9 +630,9 @@ namespace System.Windows.Annotations
 
                     case AnnotationXmlConstants.Attributes.TypeName:
                         ReadOnlySpan<char> typeName = value.AsSpan();
-                        int regionsLength = typeName.Split(segments, Colon);
+                        int segmentsLength = typeName.Split(segments, Colon);
 
-                        if (regionsLength == 1) // Contains only name
+                        if (segmentsLength == 1) // Contains only name
                         {
                             ReadOnlySpan<char> name = typeName[segments[0]].Trim();
                             if (name.IsEmpty)
@@ -642,7 +642,7 @@ namespace System.Windows.Annotations
                             }
                             _typeName = new XmlQualifiedName(name.ToString());
                         }
-                        else if (regionsLength == 2) //Contains both namespace:name
+                        else if (segmentsLength == 2) //Contains both namespace:name
                         {
                             ReadOnlySpan<char> @namespace = typeName[segments[0]].Trim();
                             ReadOnlySpan<char> name = typeName[segments[1]].Trim();

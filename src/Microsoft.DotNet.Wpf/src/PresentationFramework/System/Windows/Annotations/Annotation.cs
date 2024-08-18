@@ -597,7 +597,7 @@ namespace System.Windows.Annotations
         {
             Invariant.Assert(reader != null, "No reader passed in.");
 
-            Span<Range> splitRegions = stackalloc Range[3];
+            Span<Range> segments = stackalloc Range[3];
 
             // Read all the attributes
             while (reader.MoveToNextAttribute())
@@ -630,28 +630,28 @@ namespace System.Windows.Annotations
 
                     case AnnotationXmlConstants.Attributes.TypeName:
                         ReadOnlySpan<char> typeName = value.AsSpan();
-                        int regionsLength = typeName.Split(splitRegions, Colon);
+                        int regionsLength = typeName.Split(segments, Colon);
 
-                        if (regionsLength == 1)
+                        if (regionsLength == 1) // Contains only name
                         {
-                            ReadOnlySpan<char> firstPart = typeName[splitRegions[0]].Trim();
-                            if (firstPart.IsEmpty)
+                            ReadOnlySpan<char> name = typeName[segments[0]].Trim();
+                            if (name.IsEmpty)
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(firstPart.ToString());
+                            _typeName = new XmlQualifiedName(name.ToString());
                         }
-                        else if (regionsLength == 2)
+                        else if (regionsLength == 2) //Contains both namespace:name
                         {
-                            ReadOnlySpan<char> firstPart = typeName[splitRegions[0]].Trim();
-                            ReadOnlySpan<char> secondPart = typeName[splitRegions[1]].Trim();
-                            if (firstPart.IsEmpty || secondPart.IsEmpty)
+                            ReadOnlySpan<char> @namespace = typeName[segments[0]].Trim();
+                            ReadOnlySpan<char> name = typeName[segments[1]].Trim();
+                            if (@namespace.IsEmpty || name.IsEmpty)
                             {
                                 // One colon, prefix or suffix is empty string or whitespace
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(firstPart.ToString(), reader.LookupNamespace(secondPart.ToString()));
+                            _typeName = new XmlQualifiedName(name.ToString(), reader.LookupNamespace(@namespace.ToString()));
                         }
                         else
                         {

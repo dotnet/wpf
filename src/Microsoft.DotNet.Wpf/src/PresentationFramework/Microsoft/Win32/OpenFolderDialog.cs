@@ -57,9 +57,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Resets all properties to their default values.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public override void Reset()
         {
             base.Reset();

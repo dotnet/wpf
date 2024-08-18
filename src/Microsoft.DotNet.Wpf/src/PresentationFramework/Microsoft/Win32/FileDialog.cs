@@ -23,7 +23,6 @@ using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
 
-
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -193,7 +192,7 @@ namespace Microsoft.Win32
                 {
                     // UNDONE : This broke the save file dialog.
                     //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    MutableItemNames = new string[] { value };
+                    MutableItemNames = [value];
                 }
             }
         }
@@ -281,9 +280,7 @@ namespace Microsoft.Win32
             {
                 if (value != null)
                 {
-                    // Use Ordinal here as per FxCop CA1307
-                    if (value.StartsWith(".", StringComparison.Ordinal)) // Allow calling code to provide
-                                                                         // extensions like ".ext" -
+                    if (value.StartsWith('.')) // Allow calling code to provide extensions like ".ext" -
                     {
                         value = value.Substring(1);    // but strip out the period to leave only "ext"
                     }
@@ -310,9 +307,6 @@ namespace Microsoft.Win32
         ///  Thrown in the setter if the new filter string does not have an even number of tokens
         ///  separated by the vertical bar character '|' (that is, the new filter string is invalid.)
         /// </exception>
-        /// <remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public string Filter
         {
             get
@@ -337,10 +331,11 @@ namespace Microsoft.Win32
                         // This implicitly requires there to be at least one vertical bar in
                         // the filter string - or else formats.Length will be 1, resulting in an
                         // ArgumentException.
+                        int formatsCount = 0;
+                        foreach (Range range in updatedFilter.AsSpan().Split('|'))
+                            formatsCount++;
 
-                        string[] formats = updatedFilter.Split('|');
-
-                        if (formats.Length % 2 != 0)
+                        if (formatsCount % 2 != 0)
                         {
                             throw new ArgumentException(SR.FileDialogInvalidFilter);
                         }
@@ -438,10 +433,7 @@ namespace Microsoft.Win32
         /// </summary>
         protected override void OnItemOk(CancelEventArgs e)
         {
-            if (FileOk != null)
-            {
-                FileOk(this, e);
-            }
+            FileOk?.Invoke(this, e);
         }
 
         #endregion Protected Methods
@@ -609,18 +601,17 @@ namespace Microsoft.Win32
                     if (AddExtension && !Path.HasExtension(fileName))
                     {
                         // Loop through all extensions, starting with the default extension
-                        for (int j = 0; j < extensions.Length; j++)
+                        foreach (string extension in extensions)
                         {
                             // Assert for a valid extension
-                            Invariant.Assert(!extensions[j].StartsWith('.'),
-                                        "FileDialog.GetFilterExtensions should not return things starting with '.'");
+                            Invariant.Assert(!extension.StartsWith('.'), "FileDialog.GetFilterExtensions should not return things starting with '.'");
 
                             string currentExtension = Path.GetExtension(fileName);
 
                             // Assert to make sure Path.GetExtension behaves as we think it should, returning
                             // "" if the string is empty and something beginnign with . otherwise.
                             Invariant.Assert(currentExtension.Length == 0 || currentExtension.StartsWith('.'),
-                                         "Path.GetExtension should return something that starts with '.'");
+                                             "Path.GetExtension should return something that starts with '.'");
 
                             // Because we check Path.HasExtension above, files should
                             // theoretically not have extensions at this stage - but
@@ -631,14 +622,14 @@ namespace Microsoft.Win32
                             // of the filename in s.
 
                             string newFilename;
-                            if (extensions[j].AsSpan().IndexOfAny('*', '?') != -1)
+                            if (extension.AsSpan().IndexOfAny('*', '?') != -1)
                             {
                                 // we don't want to append the extension if it contains wild cards
                                 newFilename = fileName.Substring(0, fileName.Length - currentExtension.Length);
                             }
                             else
                             {
-                                newFilename = $"{fileName.AsSpan(0, fileName.Length - currentExtension.Length)}.{extensions[j]}";
+                                newFilename = $"{fileName.AsSpan(0, fileName.Length - currentExtension.Length)}.{extension}";
                             }
 
                             // If FOS_FILEMUSTEXIST is not set, or if it is set but the filename we generated
@@ -681,25 +672,22 @@ namespace Microsoft.Win32
         {
             // Expecting pipe delimited filter string pairs.
             // First is the label, second is semi-colon delimited list of extensions.
-            var extensions = new List<COMDLG_FILTERSPEC>();
+            COMDLG_FILTERSPEC[] extensions = null;
 
             if (!string.IsNullOrEmpty(filter))
             {
                 string[] tokens = filter.Split('|');
-                if (0 == tokens.Length % 2)
+                if (tokens.Length % 2 == 0)
                 {
-                    for (int i = 1; i < tokens.Length; i += 2)
+                    extensions = new COMDLG_FILTERSPEC[tokens.Length / 2];
+                    for (int i = 0; i < extensions.Length; i++)
                     {
-                        extensions.Add(
-                            new COMDLG_FILTERSPEC
-                            {
-                                pszName = tokens[i - 1],
-                                pszSpec = tokens[i],
-                            });
+                        extensions[i] = new(tokens[i * 2], tokens[i * 2 + 1]);
                     }
                 }
             }
-            return extensions.ToArray();
+
+            return extensions ?? Array.Empty<COMDLG_FILTERSPEC>();
         }
 
         #endregion Private Methods

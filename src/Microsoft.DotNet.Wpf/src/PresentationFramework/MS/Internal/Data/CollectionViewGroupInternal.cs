@@ -528,10 +528,8 @@ namespace MS.Internal.Data
             // Use null name place holder.
             nameKey ??= s_nullGroupNameKey;
 
-            if (_nameToGroupMap == null)
-            {
-                _nameToGroupMap = new Dictionary<object, WeakReference>();
-            }
+            // The dictionary is not initialized until first addition 
+            _nameToGroupMap ??= new Dictionary<object, WeakReference>();
 
             // Add to the map. Use WeakReference to avoid memory leaks
             // in case some one calls ProtectedItems.Remove instead of

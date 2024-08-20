@@ -25,11 +25,7 @@ namespace MS.Internal.Globalization
         // internal methods
         //-----------------------------
 
-        internal static void UpdateTree(
-            BamlTree tree,
-            BamlTreeMap treeMap,
-            BamlLocalizationDictionary dictionary
-            )
+        internal static void UpdateTree(BamlTree tree, BamlTreeMap treeMap, BamlLocalizationDictionary dictionary)
         {
             Debug.Assert(tree != null && tree.Root != null, "Empty Tree!");
             Debug.Assert(treeMap != null, "Empty map!");
@@ -40,7 +36,7 @@ namespace MS.Internal.Globalization
                 return;
 
             // create a tree map to be used for update
-            BamlTreeUpdateMap updateMap = new BamlTreeUpdateMap(treeMap, tree);
+            BamlTreeUpdateMap updateMap = new(treeMap, tree);
 
             //
             // a) Create baml tree nodes for missing child place holders and properties.
@@ -49,13 +45,12 @@ namespace MS.Internal.Globalization
             //
             CreateMissingBamlTreeNode(dictionary, updateMap);
 
-
             // 
             // b) Look through each translation and make modification to the tree
             //    At this step, new nodes are linked to the tree if applicable.
             //            
             BamlLocalizationDictionaryEnumerator enumerator = dictionary.GetEnumerator();
-            ArrayList deferredResources = new ArrayList();
+            List<DictionaryEntry> deferredResources = new();
             while (enumerator.MoveNext())
             {
                 if (!ApplyChangeToBamlTree(enumerator.Key, enumerator.Value, updateMap))
@@ -71,7 +66,7 @@ namespace MS.Internal.Globalization
             //
             for (int i = 0; i < deferredResources.Count; i++)
             {
-                DictionaryEntry entry = (DictionaryEntry)deferredResources[i];
+                DictionaryEntry entry = deferredResources[i];
                 ApplyChangeToBamlTree(
                     (BamlLocalizableResourceKey)entry.Key,
                     (BamlLocalizableResource)entry.Value,

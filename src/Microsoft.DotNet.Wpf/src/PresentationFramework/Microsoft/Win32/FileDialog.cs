@@ -329,13 +329,11 @@ namespace Microsoft.Win32
                         // file extensions.
                         //
                         // This implicitly requires there to be at least one vertical bar in
-                        // the filter string - or else formats.Length will be 1, resulting in an
+                        // the filter string - or else formatsCount will be 1, resulting in an
                         // ArgumentException.
-                        int formatsCount = 0;
-                        foreach (Range range in updatedFilter.AsSpan().Split('|'))
-                            formatsCount++;
+                        int formatsCount = updatedFilter.AsSpan().Count('|');
 
-                        if (formatsCount % 2 != 0)
+                        if (formatsCount % 2 == 0)
                         {
                             throw new ArgumentException(SR.FileDialogInvalidFilter);
                         }

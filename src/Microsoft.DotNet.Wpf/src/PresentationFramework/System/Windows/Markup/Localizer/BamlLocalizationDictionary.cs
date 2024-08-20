@@ -6,17 +6,8 @@
 //  Contents:  BamlLocalizationDictionary and BamlLocalizationDictionaryEnumerator
 //
 
-using System;
-using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Markup;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
-using System.Windows.Input;
 
 namespace System.Windows.Markup.Localizer
 {
@@ -51,9 +42,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public DictionaryEntry Entry
         {
-            get{                
-                return (DictionaryEntry) _enumerator.Current;
-            }
+            get => (DictionaryEntry)_enumerator.Current;
         }
 
         /// <summary>
@@ -61,9 +50,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public BamlLocalizableResourceKey Key
         {
-            get{
-                return (BamlLocalizableResourceKey) Entry.Key;
-            }
+            get => (BamlLocalizableResourceKey)Entry.Key;
         }
 
         /// <summary>
@@ -71,9 +58,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public BamlLocalizableResource Value
         {
-            get{
-                return (BamlLocalizableResource) Entry.Value;
-            }
+            get => (BamlLocalizableResource)Entry.Value;
         }
 
         /// <summary>
@@ -81,10 +66,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public DictionaryEntry Current
         {
-            get 
-            {
-                return this.Entry;
-            }
+            get => Entry;
         }
 
         //------------------------------------
@@ -97,7 +79,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>object </value>
         object IEnumerator.Current
         {
-            get { return this.Current; }
+            get => Current;
         }
 
         /// <summary>
@@ -106,7 +88,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>key</value>
         object IDictionaryEnumerator.Key
         {
-            get { return this.Key; }
+            get => Key;
         }
         
         /// <summary>
@@ -115,15 +97,34 @@ namespace System.Windows.Markup.Localizer
         /// <value>value</value>
         object IDictionaryEnumerator.Value
         {
-            get { return this.Value; }
+            get => Value;
         }        
         
         //---------------------------------------
         // Private
         //---------------------------------------
-        private IEnumerator _enumerator;
+        private readonly IEnumerator _enumerator;
     }
 
+    /// <summary>
+    /// Proxy structure that will help compiler pick our enumerator for foreach.
+    /// </summary>
+    internal readonly struct BamlLocalizationDictEnumerator
+    {
+        private readonly BamlLocalizationDictionary _dictionary;
+
+        public BamlLocalizationDictEnumerator(BamlLocalizationDictionary dictionary)
+        {
+            _dictionary = dictionary;
+        }
+
+        /// <summary>
+        /// Method that returns the underlying generic struct-based enumerator.
+        /// </summary>
+        /// <returns>Struct-based enumerator for the dictionary.</returns>
+        public Dictionary<BamlLocalizableResourceKey, BamlLocalizableResource>.Enumerator GetEnumerator() => _dictionary.GetStructEnumerator();
+
+    }
 
     /// <summary>
     /// Enumerator that enumerates all the localizable resources in 
@@ -140,12 +141,21 @@ namespace System.Windows.Markup.Localizer
         }
 
         /// <summary>
+        /// Method that returns the underlying generic struct-based enumerator.
+        /// </summary>
+        /// <returns>Struct-based enumerator for the dictionary.</returns>
+        internal Dictionary<BamlLocalizableResourceKey, BamlLocalizableResource>.Enumerator GetStructEnumerator()
+        {
+            return _dictionary.GetEnumerator();
+        }
+
+        /// <summary>
         /// gets value indicating whether the dictionary has fixed size
         /// </summary>
         /// <value>true for fixed size, false otherwise.</value>
         public bool IsFixedSize
         {
-            get { return false; }
+            get => false;
         }
 
         /// <summary>
@@ -154,7 +164,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>true for readonly, false otherwise.</value>
         public bool IsReadOnly
         {
-            get { return false;}
+            get => false;
         }
 
         /// <summary>
@@ -167,9 +177,8 @@ namespace System.Windows.Markup.Localizer
         /// </remarks>
         public BamlLocalizableResourceKey RootElementKey
         {
-            get { return _rootElementKey; }
+            get => _rootElementKey;
         }
-
         
         /// <summary>
         /// gets the collection of keys
@@ -177,9 +186,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>a collection of keys</value>
         public ICollection Keys
         {
-            get {
-                  return ((IDictionary)_dictionary).Keys;
-            }
+            get => ((IDictionary)_dictionary).Keys;
         }
 
         /// <summary>
@@ -188,9 +195,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>a collection of values</value>
         public ICollection Values
         {
-            get {
-                return ((IDictionary)_dictionary).Values;
-            }
+            get => ((IDictionary)_dictionary).Values;
         }
 
         /// <summary>
@@ -258,9 +263,7 @@ namespace System.Windows.Markup.Localizer
         /// <returns>the enumerator for the dictionary</returns>
         public BamlLocalizationDictionaryEnumerator GetEnumerator()
         {
-            return new BamlLocalizationDictionaryEnumerator(
-                ((IDictionary)_dictionary).GetEnumerator()
-                );
+            return new BamlLocalizationDictionaryEnumerator(((IDictionary)_dictionary).GetEnumerator());
         }
 
         /// <summary>
@@ -269,10 +272,7 @@ namespace System.Windows.Markup.Localizer
         /// <value>number of localizable resources</value>
         public int Count
         {
-            get 
-            {
-                return _dictionary.Count;
-            }
+            get => _dictionary.Count;
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace System.Windows.Markup.Localizer
                         "arrayIndex", 
                         "array"
                     ),
-                    "arrayIndex"
+                    nameof(arrayIndex)
                 );
             }
 
@@ -307,10 +307,10 @@ namespace System.Windows.Markup.Localizer
                 );
              }
             
-            foreach(KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)
+            foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)
             {
-                DictionaryEntry entry = new DictionaryEntry(pair.Key, pair.Value);
-                array[arrayIndex++]   = entry;
+                DictionaryEntry entry = new(pair.Key, pair.Value);
+                array[arrayIndex++] = entry;
             }            
         }
 
@@ -351,10 +351,7 @@ namespace System.Windows.Markup.Localizer
             }
         }
 
-        IDictionaryEnumerator IDictionary.GetEnumerator()
-        {
-            return this.GetEnumerator();   
-        }
+        IDictionaryEnumerator IDictionary.GetEnumerator() => GetEnumerator();
 
         void ICollection.CopyTo(Array array, int index)
         {    
@@ -364,7 +361,7 @@ namespace System.Windows.Markup.Localizer
                     SR.Format(
                       SR.Collection_CopyTo_ArrayCannotBeMultidimensional
                     ), 
-                    "array"
+                    nameof(array)
                 );
             }
             
@@ -373,45 +370,31 @@ namespace System.Windows.Markup.Localizer
 
         int ICollection.Count
         {
-            get 
-            {
-                return Count;
-            }
+            get => Count;
         }
 
         object ICollection.SyncRoot
         {
-            get
-            {
-                return ((IDictionary)_dictionary).SyncRoot;
-            }
+            get => ((IDictionary)_dictionary).SyncRoot;
         }
 
         bool ICollection.IsSynchronized
         {
-            get
-            {
-                return ((IDictionary)_dictionary).IsSynchronized;
-            }
+            get => ((IDictionary)_dictionary).IsSynchronized;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         #endregion
         //------------------------------
         // internal functions
         //------------------------------
         internal BamlLocalizationDictionary Copy()
         {
-            BamlLocalizationDictionary newDictionary = new BamlLocalizationDictionary();
+            BamlLocalizationDictionary newDictionary = new();
             foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)
             {
-                BamlLocalizableResource resourceCopy = 
-                    pair.Value == null ?
-                    null :
-                    new BamlLocalizableResource(pair.Value);
+                BamlLocalizableResource resourceCopy = pair.Value == null ? null : new BamlLocalizableResource(pair.Value);
 
                 newDictionary.Add(pair.Key, resourceCopy);
             }            
@@ -428,10 +411,10 @@ namespace System.Windows.Markup.Localizer
         }
         
         //------------------------------
-        // private member
+        // private members
         //------------------------------
-        private IDictionary<BamlLocalizableResourceKey, BamlLocalizableResource> _dictionary;           
-        private BamlLocalizableResourceKey  _rootElementKey;              
+        private readonly Dictionary<BamlLocalizableResourceKey, BamlLocalizableResource> _dictionary;           
+        private BamlLocalizableResourceKey _rootElementKey;              
     }
 }
 

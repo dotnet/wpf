@@ -3,17 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.ComponentModel;
 using System.Xml;
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
 
@@ -49,13 +44,13 @@ namespace MS.Internal.Globalization
             // b) Look through each translation and make modification to the tree
             //    At this step, new nodes are linked to the tree if applicable.
             //            
-            BamlLocalizationDictionaryEnumerator enumerator = dictionary.GetEnumerator();
-            List<DictionaryEntry> deferredResources = new();
-            while (enumerator.MoveNext())
+            BamlLocalizationDictEnumerator dictionaryEnumerator = new(dictionary);
+            List<KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource>> deferredResources = new();
+            foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> item in dictionaryEnumerator)
             {
-                if (!ApplyChangeToBamlTree(enumerator.Key, enumerator.Value, updateMap))
+                if (!ApplyChangeToBamlTree(item.Key, item.Value, updateMap))
                 {
-                    deferredResources.Add(enumerator.Entry);
+                    deferredResources.Add(item);
                 }
             }
 
@@ -66,25 +61,18 @@ namespace MS.Internal.Globalization
             //
             for (int i = 0; i < deferredResources.Count; i++)
             {
-                DictionaryEntry entry = deferredResources[i];
-                ApplyChangeToBamlTree(
-                    (BamlLocalizableResourceKey)entry.Key,
-                    (BamlLocalizableResource)entry.Value,
-                    updateMap
-                    );
+                KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> entry = deferredResources[i];
+                ApplyChangeToBamlTree(entry.Key, entry.Value, updateMap);
             }
         }
 
-        private static void CreateMissingBamlTreeNode(
-            BamlLocalizationDictionary dictionary,
-            BamlTreeUpdateMap treeMap
-            )
+        private static void CreateMissingBamlTreeNode(BamlLocalizationDictionary dictionary, BamlTreeUpdateMap treeMap)
         {
-            BamlLocalizationDictionaryEnumerator enumerator = dictionary.GetEnumerator();
-            while (enumerator.MoveNext())
+            BamlLocalizationDictEnumerator dictionaryEnumerator = new(dictionary);
+            foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> item in dictionaryEnumerator)
             {
-                BamlLocalizableResourceKey key = enumerator.Key;
-                BamlLocalizableResource resource = enumerator.Value;
+                BamlLocalizableResourceKey key = item.Key;
+                BamlLocalizableResource resource = item.Value;
 
                 // get the baml tree node from the tree
                 BamlTreeNode node = treeMap.MapKeyToBamlTreeNode(key);
@@ -270,7 +258,8 @@ namespace MS.Internal.Globalization
             IList<BamlTreeNode> newChildren
             )
         {
-            if (newChildren == null) return;
+            if (newChildren == null)
+                return;
 
             List<BamlTreeNode> oldChildren = parent.Children;
 

@@ -32,7 +32,7 @@ namespace MS.Internal.Globalization
     /// this class in charges of creating mappings to the
     /// loclaizable resources and tree nodes.
     /// </summary>
-    internal class BamlTreeMap
+    internal sealed class BamlTreeMap
     {
         //----------------------------------
         // internal Constructor
@@ -85,10 +85,8 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal BamlTreeNode MapKeyToBamlTreeNode(BamlLocalizableResourceKey key, BamlTree tree)
         {
-            if (_keyToBamlNodeIndexMap.Contains(key))
-            {
-                return tree[(int)_keyToBamlNodeIndexMap[key]];
-            }
+            if (_keyToBamlNodeIndexMap.TryGetValue(key, out int bamlNodeIndex))
+                return tree[bamlNodeIndex];
 
             return null;
         }
@@ -98,10 +96,8 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal BamlStartElementNode MapUidToBamlTreeElementNode(string uid, BamlTree tree)
         {
-            if (_uidToBamlNodeIndexMap.Contains(uid))
-            {
-                return tree[(int)_uidToBamlNodeIndexMap[uid]] as BamlStartElementNode;
-            }
+            if (_uidToBamlNodeIndexMap.TryGetValue(uid, out int bamlNodeIndex))
+                return tree[bamlNodeIndex] as BamlStartElementNode;
 
             return null;
         }
@@ -118,8 +114,8 @@ namespace MS.Internal.Globalization
             // create the table based on the treesize passed in
             // the hashtable is for look-up during update
             _resolver.InitLocalizabilityCache();
-            _keyToBamlNodeIndexMap = new Hashtable(_tree.Size);
-            _uidToBamlNodeIndexMap = new Hashtable(_tree.Size / 2);
+            _keyToBamlNodeIndexMap = new Dictionary<BamlLocalizableResourceKey, int>(_tree.Size);
+            _uidToBamlNodeIndexMap = new Dictionary<string, int>(_tree.Size / 2);
             _localizableResources = new BamlLocalizationDictionary();
 
             for (int i = 0; i < _tree.Size; i++)
@@ -127,7 +123,8 @@ namespace MS.Internal.Globalization
                 BamlTreeNode currentNode = _tree[i];
 
                 // a node may be marked as unidentifiable if it or its parent has a duplicate uid.
-                if (currentNode.Unidentifiable) continue; // skip unidentifiable nodes
+                if (currentNode.Unidentifiable)
+                    continue; // skip unidentifiable nodes
 
                 if (currentNode.NodeType == BamlNodeType.StartElement)
                 {
@@ -144,7 +141,7 @@ namespace MS.Internal.Globalization
                     if (currentNode.NodeType == BamlNodeType.StartElement)
                     {
                         // store uid mapping to the corresponding element node
-                        if (_uidToBamlNodeIndexMap.ContainsKey(key.Uid))
+                        if (!_uidToBamlNodeIndexMap.TryAdd(key.Uid, i))
                         {
                             _resolver.RaiseErrorNotifyEvent(
                                 new BamlLocalizerErrorNotifyEventArgs(
@@ -165,10 +162,6 @@ namespace MS.Internal.Globalization
                             }
 
                             continue; // skip the duplicate node
-                        }
-                        else
-                        {
-                            _uidToBamlNodeIndexMap.Add(key.Uid, i);
                         }
                     }
 
@@ -281,13 +274,14 @@ namespace MS.Internal.Globalization
         //---------------------------------
         // private members
         //---------------------------------
-        private Hashtable _keyToBamlNodeIndexMap;       // _key to baml node. Key is integer. Not using Generic on value type for perf reason
-        private Hashtable _uidToBamlNodeIndexMap;
-        private LocalizableResourceBuilder _localizableResourceBuilder;
-
+        private Dictionary<BamlLocalizableResourceKey, int> _keyToBamlNodeIndexMap;
+        private Dictionary<string, int> _uidToBamlNodeIndexMap;
         private BamlLocalizationDictionary _localizableResources;
-        private BamlTree _tree;
-        private InternalBamlLocalizabilityResolver _resolver;
+
+        private readonly LocalizableResourceBuilder _localizableResourceBuilder;
+        private readonly InternalBamlLocalizabilityResolver _resolver;
+        private readonly BamlTree _tree;
+
     }
 
 

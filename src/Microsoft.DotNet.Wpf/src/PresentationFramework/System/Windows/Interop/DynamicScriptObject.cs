@@ -285,8 +285,7 @@ namespace System.Windows.Interop
             // model, we rather throw instead. This Try-method allows internal lookups without directly
             // throwing on non-fatal "member not found" situations, as we might want to have more complex
             // fallback logic (as in ToString).
-            int dispid;
-            if (!TryGetDispIdForMember(memberName, cacheDispId, out dispid))
+            if (!TryGetDispIdForMember(memberName, cacheDispId, out int dispId))
             {
                 return false;
             }
@@ -358,7 +357,7 @@ namespace System.Windows.Interop
                             // by the CLR. Therefore we also check for the IsCOMObject property. It also seems
                             // COM interop special-cases DateTime as it's not revealed to be visible by any
                             // of the first two checks below.
-                            if (!MarshalLocal.IsTypeVisibleFromCom(argType) && 
+                            if (!Marshal.IsTypeVisibleFromCom(argType) && 
                                 !argType.IsCOMObject && argType != typeof(DateTime))
                             {
                                 throw new ArgumentException(SR.NeedToBeComVisible);
@@ -371,7 +370,7 @@ namespace System.Windows.Interop
                 }
 
                 NativeMethods.EXCEPINFO exInfo = new NativeMethods.EXCEPINFO();
-                HRESULT hr = InvokeOnScriptObject(dispid, flags, dp, exInfo, out result);
+                HRESULT hr = InvokeOnScriptObject(dispId, flags, dp, exInfo, out result);
 
                 if (hr.Failed)
                 {

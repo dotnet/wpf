@@ -8,6 +8,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.Windows.Markup.Localizer
 {
@@ -253,8 +254,19 @@ namespace System.Windows.Markup.Localizer
         /// <returns></returns>
         public bool Contains(BamlLocalizableResourceKey key)
         {
-            ArgumentNullException.ThrowIfNull(key);
             return _dictionary.ContainsKey(key);
+        }
+
+        /// <summary>
+        /// Determines whether the dictionary contains the localizable resource with the specified <paramref name="key"/>
+        /// and returns the <paramref name="value"/> if it does.
+        /// </summary>
+        /// <param name="key">The key to retrieve <paramref name="value"/> for.</param>
+        /// <param name="value">If <see langword="true"/>, returns the value for the specified <paramref name="key"/>, otherwise <see langword="null"/>.</param>
+        /// <returns></returns>
+        internal bool TryGetValue(BamlLocalizableResourceKey key, [MaybeNullWhen(false)] out BamlLocalizableResource value)
+        {
+            return _dictionary.TryGetValue(key, out value);
         }
 
         /// <summary>

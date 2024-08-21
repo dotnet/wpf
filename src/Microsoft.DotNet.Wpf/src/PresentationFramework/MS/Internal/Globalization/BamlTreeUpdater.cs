@@ -210,9 +210,9 @@ namespace MS.Internal.Globalization
                 case BamlNodeType.StartElement:
                     {
                         string source = null;
-                        if (treeMap.LocalizationDictionary.Contains(key))
+                        if (treeMap.LocalizationDictionary.TryGetValue(key, out BamlLocalizableResource value))
                         {
-                            source = treeMap.LocalizationDictionary[key].Content;
+                            source = value.Content;
                         }
 
                         if (resource.Content != source)

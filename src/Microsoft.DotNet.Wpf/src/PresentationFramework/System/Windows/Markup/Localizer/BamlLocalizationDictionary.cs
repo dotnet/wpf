@@ -19,7 +19,7 @@ namespace System.Windows.Markup.Localizer
     {
         internal BamlLocalizationDictionaryEnumerator(IEnumerator enumerator)
         {
-            _enumerator = enumerator;         
+            _enumerator = enumerator;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace System.Windows.Markup.Localizer
         //------------------------------------
         // Interfaces
         //------------------------------------
-        
+
         /// <summary>
         /// Return the current object
         /// </summary>
@@ -91,7 +91,7 @@ namespace System.Windows.Markup.Localizer
         {
             get => Key;
         }
-        
+
         /// <summary>
         /// Value 
         /// </summary>
@@ -99,8 +99,8 @@ namespace System.Windows.Markup.Localizer
         object IDictionaryEnumerator.Value
         {
             get => Value;
-        }        
-        
+        }
+
         //---------------------------------------
         // Private
         //---------------------------------------
@@ -132,7 +132,7 @@ namespace System.Windows.Markup.Localizer
     /// a baml stream
     /// </summary>
     public sealed class BamlLocalizationDictionary : IDictionary
-    {        
+    {
         /// <summary>
         /// Constructor that creates an empty baml resource dictionary
         /// </summary>
@@ -180,7 +180,7 @@ namespace System.Windows.Markup.Localizer
         {
             get => _rootElementKey;
         }
-        
+
         /// <summary>
         /// gets the collection of keys
         /// </summary>
@@ -206,15 +206,15 @@ namespace System.Windows.Markup.Localizer
         /// <returns>BamlLocalizableResource object identified by the key</returns>
         public BamlLocalizableResource this[BamlLocalizableResourceKey key]
         {
-            get 
-            { 
+            get
+            {
                 ArgumentNullException.ThrowIfNull(key);
                 return _dictionary[key];
             }
             set
             {
                 ArgumentNullException.ThrowIfNull(key);
-                _dictionary[key] = value;                
+                _dictionary[key] = value;
             }
         }
 
@@ -298,39 +298,26 @@ namespace System.Windows.Markup.Localizer
 
             if (arrayIndex >= array.Length)
             {
-                throw new ArgumentException(
-                    SR.Format(
-                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
-                        "array"
-                    ),
-                    nameof(arrayIndex)
-                );
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "arrayIndex", "array"), nameof(arrayIndex));
             }
 
             if (Count > (array.Length - arrayIndex))
             {
-                throw new ArgumentException(
-                    SR.Format(
-                        SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, 
-                        "arrayIndex", 
-                        "array"
-                    )
-                );
-             }
-            
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, "arrayIndex", "array"));
+            }
+
             foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)
             {
                 DictionaryEntry entry = new(pair.Key, pair.Value);
                 array[arrayIndex++] = entry;
-            }            
+            }
         }
 
         #region interface ICollection, IEnumerable, IDictionary
         //------------------------------
         // interface functions
         //------------------------------      
-        
+
         bool IDictionary.Contains(object key)
         {
             ArgumentNullException.ThrowIfNull(key);
@@ -340,13 +327,13 @@ namespace System.Windows.Markup.Localizer
         void IDictionary.Add(object key, object value)
         {
             ArgumentNullException.ThrowIfNull(key);
-            ((IDictionary) _dictionary).Add(key, value);
+            ((IDictionary)_dictionary).Add(key, value);
         }
 
         void IDictionary.Remove(object key)
         {
             ArgumentNullException.ThrowIfNull(key);
-            ((IDictionary) _dictionary).Remove(key);
+            ((IDictionary)_dictionary).Remove(key);
         }
 
         object IDictionary.this[object key]
@@ -359,24 +346,19 @@ namespace System.Windows.Markup.Localizer
             set
             {
                 ArgumentNullException.ThrowIfNull(key);
-                ((IDictionary)_dictionary)[key] = value;  
+                ((IDictionary)_dictionary)[key] = value;
             }
         }
 
         IDictionaryEnumerator IDictionary.GetEnumerator() => GetEnumerator();
 
         void ICollection.CopyTo(Array array, int index)
-        {    
+        {
             if (array != null && array.Rank != 1)
             {
-                throw new ArgumentException(
-                    SR.Format(
-                      SR.Collection_CopyTo_ArrayCannotBeMultidimensional
-                    ), 
-                    nameof(array)
-                );
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_ArrayCannotBeMultidimensional), nameof(array));
             }
-            
+
             CopyTo(array as DictionaryEntry[], index);
         }
 
@@ -409,7 +391,7 @@ namespace System.Windows.Markup.Localizer
                 BamlLocalizableResource resourceCopy = pair.Value == null ? null : new BamlLocalizableResource(pair.Value);
 
                 newDictionary.Add(pair.Key, resourceCopy);
-            }            
+            }
 
             newDictionary._rootElementKey = _rootElementKey;
 
@@ -421,12 +403,12 @@ namespace System.Windows.Markup.Localizer
         {
             _rootElementKey = key;
         }
-        
+
         //------------------------------
         // private members
         //------------------------------
-        private readonly Dictionary<BamlLocalizableResourceKey, BamlLocalizableResource> _dictionary;           
-        private BamlLocalizableResourceKey _rootElementKey;              
+        private readonly Dictionary<BamlLocalizableResourceKey, BamlLocalizableResource> _dictionary;
+        private BamlLocalizableResourceKey _rootElementKey;
     }
 }
 

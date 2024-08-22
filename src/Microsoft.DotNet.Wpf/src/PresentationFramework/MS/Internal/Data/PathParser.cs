@@ -58,13 +58,14 @@ namespace MS.Internal.Data
         }
     }
 
-    internal class PathParser
+    internal sealed class PathParser
     {
         private string _error;
-        public string Error { get { return _error; } }
-        private void SetError(string id, params object[] args) { _error = SR.Format(SR.GetResourceString(id), args); }
+        public string Error => _error;
+        private void SetError(string id, params object[] args) => _error = SR.Format(SR.GetResourceString(id), args);
 
         private enum State { Init, DrillIn, Prop, Done };
+        private enum IndexerState { BeginParam, ParenString, ValueString, Done }
 
         // Each level of the path consists of
         //      a property or indexer:
@@ -140,7 +141,7 @@ namespace MS.Internal.Data
                                 break;
                             default:
                                 SetError(nameof(SR.PathSyntax), _path.Substring(0, _index), _path.Substring(_index));
-                                return s_emptyInfo;
+                                return Array.Empty<SourceValueInfo>();
                         }
                         _state = State.Prop;
                         break;
@@ -175,13 +176,13 @@ namespace MS.Internal.Data
             }
             else
             {
-                result = s_emptyInfo;
+                result = Array.Empty<SourceValueInfo>();
             }
 
             return result;
         }
 
-        void AddProperty()
+        private void AddProperty()
         {
             int start = _index;
             int level = 0;
@@ -222,9 +223,6 @@ namespace MS.Internal.Data
 
             StartNewLevel();
         }
-
-
-        private enum IndexerState { BeginParam, ParenString, ValueString, Done }
 
         private void AddIndexer()
         {
@@ -379,7 +377,7 @@ namespace MS.Internal.Data
             StartNewLevel();
         }
 
-        void StartNewLevel()
+        private void StartNewLevel()
         {
             _state = (_index < _n) ? State.DrillIn : State.Done;
             _drillIn = DrillIn.Never;
@@ -400,8 +398,6 @@ namespace MS.Internal.Data
         private const char EscapeChar = '^';
 
         private readonly List<SourceValueInfo> _sourceValueInfos = new();
-
-        private static readonly SourceValueInfo[] s_emptyInfo = Array.Empty<SourceValueInfo>();
     }
 }
 

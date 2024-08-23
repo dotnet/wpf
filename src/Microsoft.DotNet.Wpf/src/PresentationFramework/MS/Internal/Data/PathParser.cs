@@ -147,20 +147,15 @@ namespace MS.Internal.Data
                         break;
 
                     case State.Prop:
-                        bool isIndexer = false;
                         switch (c)
                         {
-                            case '[':
-                                isIndexer = true;
+                            case '[': // Indexer follows
+                                AddIndexer();
                                 break;
-                            default:
+                            default: // Property follows
+                                AddProperty();
                                 break;
-                        }
-
-                        if (isIndexer)
-                            AddIndexer();
-                        else
-                            AddProperty();
+                        }                           
 
                         break;
                 }

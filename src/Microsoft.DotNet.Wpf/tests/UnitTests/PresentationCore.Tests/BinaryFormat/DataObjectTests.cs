@@ -46,7 +46,7 @@ public class DataObjectTests
         }
         finally
         {
-           
+            Clipboard.Clear();
         }
     }
 

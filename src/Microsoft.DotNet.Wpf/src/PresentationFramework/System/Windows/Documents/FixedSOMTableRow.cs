@@ -55,7 +55,7 @@ namespace System.Windows.Documents
             */
             for (int i = 0; i < _semanticBoxes.Count; i++)
             {
-                _semanticBoxes[i].Render(dc, label + ":" + i.ToString(), debugVisual);
+                _semanticBoxes[i].Render(dc, $"{label}:{i}", debugVisual);
             }
 
         }

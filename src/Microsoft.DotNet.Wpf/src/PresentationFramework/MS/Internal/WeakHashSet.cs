@@ -48,10 +48,7 @@ namespace MS.Internal
                 count++;
             }
 
-            if (count + arrayIndex > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - count);
 
             foreach (T item in this)
             {

@@ -10,6 +10,7 @@
       PresentationFramework.Classic;
       PresentationFramework.Luna;
       PresentationFramework.Royale;
+      PresentationFramework.Fluent;
       ReachFramework;
       System.Windows.Controls.Ribbon;
       System.Windows.Input.Manipulations;

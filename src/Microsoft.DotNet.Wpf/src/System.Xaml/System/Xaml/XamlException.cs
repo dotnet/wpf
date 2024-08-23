@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Runtime.Serialization;
 using System.Security;
 using MS.Internal.Xaml.Parser;
@@ -99,7 +101,7 @@ namespace System.Xaml
 
         internal XamlParseException(int lineNumber, int linePosition, string message)
             : base(message, null, lineNumber, linePosition) { }
-        
+
         // FxCop required these.
         public XamlParseException() { }
 
@@ -141,7 +143,7 @@ namespace System.Xaml
     {
         public XamlMember DuplicateMember { get; set; }
         public XamlType ParentType { get; set; }
-        
+
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)

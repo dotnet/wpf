@@ -78,7 +78,7 @@ namespace MS.Internal.Controls.StickyNote
             s_xmlTokeFullNames = new Dictionary<XmlToken, string>();
 
             // Fill in the name dictionary.
-            foreach (XmlToken val in Enum.GetValues(typeof(XmlToken)))
+            foreach (XmlToken val in Enum.GetValues<XmlToken>())
             {
                 AddXmlTokenNames(val);
             }
@@ -557,7 +557,7 @@ namespace MS.Internal.Controls.StickyNote
                 case XmlToken.Text:
                 case XmlToken.Ink:
                     {
-                        s_xmlTokeFullNames.Add(token, AnnotationXmlConstants.Prefixes.BaseSchemaPrefix + ":" + xmlName);
+                        s_xmlTokeFullNames.Add(token, $"{AnnotationXmlConstants.Prefixes.BaseSchemaPrefix}:{xmlName}");
                     }
                     break;
 

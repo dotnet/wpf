@@ -4581,8 +4581,7 @@ namespace System.Windows.Documents
             "td"
         };
 
-        internal static int[] HtmlLengths = new int[]
-        {
+        internal static ReadOnlySpan<int> HtmlLengths => [
             0,    // unknown
             0,    // text
             4,    // span
@@ -4595,7 +4594,7 @@ namespace System.Windows.Documents
             6,    // tbody
             2,    // tr
             2     // td
-        };
+        ];
 
         internal static string[] XamlNames = new string[]
         {
@@ -5432,7 +5431,7 @@ namespace System.Windows.Documents
 
         internal void AppendInlineXamlPostfix(ConverterState converterState)
         {
-            Xaml = Xaml + "</Span>";
+            Xaml = $"{Xaml}</Span>";
         }
 
         internal void AppendImageXamlPrefix()
@@ -8163,7 +8162,7 @@ namespace System.Windows.Documents
                     int uriSourceEndIndex = dnImage.Xaml.IndexOf('\"', uriSourceIndex + 11);
 
                     string imageXaml = dnImage.Xaml.Substring(0, uriSourceIndex);
-                    imageXaml += "UriSource=\"" + pictureUri + "\"";
+                    imageXaml += $"UriSource=\"{pictureUri}\"";
                     imageXaml += dnImage.Xaml.Substring(uriSourceEndIndex + 1);
 
                     dnImage.Xaml = imageXaml;
@@ -8210,7 +8209,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
+                            dn.Xaml = $"{dnInstruction.Xaml}{dn.Xaml}</Hyperlink>";
                         }
                     }
 
@@ -8238,7 +8237,7 @@ namespace System.Windows.Documents
                         if (dn.Type == DocumentNodeType.dnParagraph && !dn.IsTerminated)
                         {
                             Debug.Assert(dn.ChildCount == 0);
-                            dn.Xaml = dnInstruction.Xaml + dn.Xaml + "</Hyperlink>";
+                            dn.Xaml = $"{dnInstruction.Xaml}{dn.Xaml}</Hyperlink>";
                         }
                     }
                 }
@@ -8641,7 +8640,7 @@ namespace System.Windows.Documents
                     {
                         // Read the windows metafile from the rtf content and then convert it
                         // to bitmap data then save it as PNG on the container image part
-                        MemoryStream metafileStream = new MemoryStream(); ;
+                        MemoryStream metafileStream = new MemoryStream();
 
                         using (metafileStream)
                         {

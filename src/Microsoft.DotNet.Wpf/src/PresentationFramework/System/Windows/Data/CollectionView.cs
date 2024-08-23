@@ -545,8 +545,8 @@ namespace System.Windows.Data
         {
             VerifyRefreshNotDeferred();
 
-            if (position < -1 || position > Count)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, Count);
 
             // ignore request to move onto the placeholder
             IEditableCollectionView ecv = this as IEditableCollectionView;

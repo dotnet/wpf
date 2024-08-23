@@ -105,10 +105,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void RemoveAt(int index)
         {
-            if (index < 0 || index >= InternalCount)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
             VerifyAPIReadWrite(_collection[index]);
 
@@ -150,10 +148,9 @@ namespace System.Windows.Media.Media3D
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             _collection.CopyTo(array, index);
         }
@@ -167,10 +164,9 @@ namespace System.Windows.Media.Media3D
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             if (array.Rank != 1)
             {
@@ -263,10 +259,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-                if (index < 0 || index >= InternalCount)
-                {
-                    throw new ArgumentOutOfRangeException("index");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
                 VerifyAPIForAdd(value);
 

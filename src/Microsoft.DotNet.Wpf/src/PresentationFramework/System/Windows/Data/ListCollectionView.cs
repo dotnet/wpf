@@ -199,8 +199,8 @@ namespace System.Windows.Data
         {
             VerifyRefreshNotDeferred();
 
-            if (position < -1 || position > InternalCount)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, InternalCount);
 
 
             if (position != CurrentPosition || !IsCurrentInSync)

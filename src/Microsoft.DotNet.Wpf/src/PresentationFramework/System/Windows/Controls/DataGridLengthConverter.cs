@@ -169,7 +169,7 @@ namespace System.Windows.Controls
 
                 // Star has one special case when value is "1.0" in which the value can be dropped.
                 case DataGridLengthUnitType.Star:
-                    return DoubleUtil.IsOne(length.Value) ? "*" : Convert.ToString(length.Value, cultureInfo) + "*";
+                    return DoubleUtil.IsOne(length.Value) ? "*" : $"{Convert.ToString(length.Value, cultureInfo)}*";
 
                 // Print out the numeric value. "px" can be omitted.
                 default:

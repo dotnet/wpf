@@ -63,10 +63,8 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if ((value < 1) || (value > 100))
-                {
-                    throw new System.ArgumentOutOfRangeException("value", SR.Format(SR.ParameterMustBeBetween, 1, 100));
-                }
+                ArgumentOutOfRangeException.ThrowIfLessThan(value, 1);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 100);
 
                 _qualityLevel = value;
             }

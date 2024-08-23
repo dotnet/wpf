@@ -646,10 +646,7 @@ namespace MS.Internal.Printing.Configuration
 
         private void VerifyAccess()
         {
-            if (_deviceHandle == null)
-            {
-                throw new ObjectDisposedException("PTProvider");
-            }
+            ObjectDisposedException.ThrowIf(_deviceHandle is null, typeof(PTProvider));
         }
 
         #endregion Private Methods

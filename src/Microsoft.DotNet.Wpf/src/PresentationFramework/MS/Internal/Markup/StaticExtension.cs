@@ -51,7 +51,7 @@ namespace MS.Internal.Markup
             object value;
             if (MemberType != null)
             {
-                value = SystemResourceKey.GetSystemResourceKey(MemberType.Name + "." + Member);
+                value = SystemResourceKey.GetSystemResourceKey($"{MemberType.Name}.{Member}");
                 if (value != null)
                 {
                     return value;

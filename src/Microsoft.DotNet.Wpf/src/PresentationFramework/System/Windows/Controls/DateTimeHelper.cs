@@ -214,7 +214,7 @@ namespace System.Windows.Controls
                 bool isRightToLeft = fe.FlowDirection==FlowDirection.RightToLeft;
                 int decadeRight = isRightToLeft?decade:(decade+9);
                 int decadeLeft =  isRightToLeft?(decade+9):decade;
-                result = decadeLeft.ToString(format) + "-" + decadeRight.ToString(format);
+                result = $"{decadeLeft.ToString(format)}-{decadeRight.ToString(format)}";
             }
 
             return result;

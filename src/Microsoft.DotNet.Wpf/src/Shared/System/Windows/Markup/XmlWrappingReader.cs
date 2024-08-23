@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Xml;
 using System.Xml.Schema;
@@ -13,7 +15,7 @@ namespace MS.Internal.Markup
 #elif SYSTEM_XAML
 namespace System.Xaml
 #else
-namespace System.Windows.Markup 
+namespace System.Windows.Markup
 #endif
 {
     internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver {
@@ -23,8 +25,8 @@ namespace System.Windows.Markup
         protected XmlReader               _reader;
         protected IXmlLineInfo            _readerAsIXmlLineInfo;
         protected IXmlNamespaceResolver   _readerAsResolver;
-    
-// 
+
+//
 // Constructor
 //
         internal XmlWrappingReader( XmlReader baseReader ) {
@@ -105,7 +107,7 @@ namespace System.Windows.Markup
         public override void Close() {
             _reader.Close();
         }
-        
+
         public override void Skip() {
             _reader.Skip();
         }
@@ -160,7 +162,7 @@ namespace System.Windows.Markup
             }
         }
 
-        public virtual int LinePosition { 
+        public virtual int LinePosition {
             get {
                 return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
             }
@@ -181,5 +183,5 @@ namespace System.Windows.Markup
         }
     }
 }
-    
+
 

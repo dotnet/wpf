@@ -496,8 +496,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void CheckDisposed()
         {
-            if (_disposed)
-                throw new ObjectDisposedException("Stream");
+            ObjectDisposedException.ThrowIf(_disposed, typeof(Stream));
         }
 
 

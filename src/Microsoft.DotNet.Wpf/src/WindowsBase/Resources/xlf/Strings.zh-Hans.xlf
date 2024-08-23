@@ -1292,11 +1292,6 @@
         <target state="translated">指定的引用对象与预定义的 Package 专属引用冲突。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">参数值必须介于“{0}”到“{1}”之间。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentContainerClosed">
         <source>Cannot access part because parent package was closed.</source>
         <target state="translated">由于父包已关闭，因此无法访问部分包。</target>

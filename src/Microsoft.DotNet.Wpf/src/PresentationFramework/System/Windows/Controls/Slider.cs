@@ -1052,6 +1052,74 @@ namespace System.Windows.Controls
             }
         }
 
+        private void UpdateSelectedRangeElementSize()
+        {
+            if (Track == null)
+            {
+                return;
+            }
+
+            FrameworkElement rangeElement = this.SelectedRangeElement as FrameworkElement;
+
+            if (rangeElement == null)
+            {
+                return;
+            }
+
+            Size trackSize = Track.RenderSize;
+            Size thumbSize = (Track.Thumb != null) ? Track.Thumb.RenderSize : new Size(0d, 0d);
+            double range = Maximum - Minimum;
+            double valueToSize;
+
+            if (Orientation == Orientation.Horizontal)
+            {
+                // Calculate part size for HorizontalSlider
+                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Width, thumbSize.Width)))
+                {
+                    valueToSize = 0d;
+                }
+                else
+                {
+                    valueToSize = Math.Max(0.0, (trackSize.Width - thumbSize.Width) / range);
+                }
+
+                rangeElement.Width = ((Value - Minimum) * valueToSize);
+
+                if (IsDirectionReversed)
+                {
+                    // Canvas.SetLeft(rangeElement, (thumbSize.Width * 0.5) + (Maximum - Value) * valueToSize);
+                    Canvas.SetRight(rangeElement, (thumbSize.Width * 0.5));
+                }
+                else
+                {
+                    Canvas.SetLeft(rangeElement, (thumbSize.Width * 0.5));
+                }
+            }
+            else
+            {
+                // Calculate part size for VerticalSlider
+                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Height, thumbSize.Height)))
+                {
+                    valueToSize = 0d;
+                }
+                else
+                {
+                    valueToSize = Math.Max(0.0, (trackSize.Height - thumbSize.Height) / range);
+                }
+
+                rangeElement.Height = ((Value - Minimum) * valueToSize);
+                
+                if (IsDirectionReversed)
+                {
+                    Canvas.SetTop(rangeElement, (thumbSize.Height * 0.5));
+                }
+                else
+                {
+                    Canvas.SetBottom(rangeElement, (thumbSize.Height * 0.5));
+                }
+            }
+
+        }
 
         /// <summary>
         /// Gets or sets reference to Slider's Track element.
@@ -1082,6 +1150,18 @@ namespace System.Windows.Controls
             set
             {
                 _selectionRangeElement = value;
+            }
+        }
+
+        internal FrameworkElement SelectedRangeElement
+        {
+            get
+            {
+                return _selectedRangeElement;
+            }
+            set
+            {
+                _selectedRangeElement = value;
             }
         }
 
@@ -1252,6 +1332,7 @@ namespace System.Windows.Controls
             Size size = base.ArrangeOverride(finalSize);
 
             UpdateSelectionRangeElementPositionAndSize();
+            UpdateSelectedRangeElementSize();
 
             return size;
         }
@@ -1265,6 +1346,7 @@ namespace System.Windows.Controls
         {
             base.OnValueChanged(oldValue, newValue);
             UpdateSelectionRangeElementPositionAndSize();
+            UpdateSelectedRangeElementSize();
         }
 
         /// <summary>
@@ -1275,6 +1357,7 @@ namespace System.Windows.Controls
             base.OnApplyTemplate();
 
             SelectionRangeElement = GetTemplateChild(SelectionRangeElementName) as FrameworkElement;
+            SelectedRangeElement = GetTemplateChild(SelectedRangeElementName) as FrameworkElement;
             Track = GetTemplateChild(TrackName) as Track;
 
             if (_autoToolTip != null)
@@ -1373,9 +1456,11 @@ namespace System.Windows.Controls
 
         private const string TrackName = "PART_Track";
         private const string SelectionRangeElementName = "PART_SelectionRange";
+        private const string SelectedRangeElementName = "PART_SelectedRange";
 
         // Slider required parts
         private FrameworkElement _selectionRangeElement;
+        private FrameworkElement _selectedRangeElement;
         private Track _track;
         private ToolTip _autoToolTip = null;
         private object _thumbOriginalToolTip = null;

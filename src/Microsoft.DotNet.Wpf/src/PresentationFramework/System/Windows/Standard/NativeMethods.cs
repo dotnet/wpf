@@ -387,6 +387,7 @@ namespace Standard
         CYFOCUSBORDER = 84,
         TABLETPC = 86,
         MEDIACENTER = 87,
+        CXPADDEDBORDER = 92,
         REMOTESESSION = 0x1000,
         REMOTECONTROL = 0x2001,
     }
@@ -1051,22 +1052,41 @@ namespace Standard
     internal enum DWMWA
     {
         NCRENDERING_ENABLED = 1,
-        NCRENDERING_POLICY,
-        TRANSITIONS_FORCEDISABLED,
-        ALLOW_NCPAINT,
-        CAPTION_BUTTON_BOUNDS,
-        NONCLIENT_RTL_LAYOUT,
-        FORCE_ICONIC_REPRESENTATION,
-        FLIP3D_POLICY,
-        EXTENDED_FRAME_BOUNDS,
+        NCRENDERING_POLICY = 2,
+        TRANSITIONS_FORCEDISABLED = 3,
+        ALLOW_NCPAINT = 4,
+        CAPTION_BUTTON_BOUNDS = 5,
+        NONCLIENT_RTL_LAYOUT = 6,
+        FORCE_ICONIC_REPRESENTATION = 7,
+        FLIP3D_POLICY = 8,
+        EXTENDED_FRAME_BOUNDS = 9,
+        HAS_ICONIC_BITMAP = 10,
+        DISALLOW_PEEK = 11,
+        EXCLUDED_FROM_PEEK = 12,
+        CLOAK = 13,
+        CLOAKED = 14,
+        FREEZE_REPRESENTATION = 15,
+        PASSIVE_UPDATE_MODE = 16,
+        USE_HOSTBACKDROPBRUSH = 17,
+        USE_IMMERSIVE_DARK_MODE = 20,
+        WINDOW_CORNER_PREFERENCE = 33,
+        BORDER_COLOR = 34,
+        CAPTION_COLOR = 35,
+        TEXT_COLOR = 36,
+        VISIBLE_FRAME_BORDER_THICKNESS = 37,
+        SYSTEMBACKDROP_TYPE = 38,
+    }
 
-        // New to Windows 7:
-
-        HAS_ICONIC_BITMAP,
-        DISALLOW_PEEK,
-        EXCLUDED_FROM_PEEK,
-
-        // LAST
+    /// <summary>
+    /// DWM_SYSTEMBACKDROP_TYPE.  DWMSBT_*
+    /// </summary>
+    internal enum DWMSBT : uint
+    {
+        DWMSBT_AUTO = 0,
+        DWMSBT_NONE = 1,
+        DWMSBT_MAINWINDOW = 2,
+        DWMSBT_TRANSIENTWINDOW = 3,
+        DWMSBT_TABBEDWINDOW = 4
     }
 
     /// <summary>
@@ -2539,10 +2559,19 @@ namespace Standard
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hwnd);
+        
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("dwmapi.dll", PreserveSig = false)]
+        public static extern int DwmGetWindowAttribute(
+            IntPtr hWnd,
+            DWMWA dwAttributeToGet,
+            ref int pvAttributeValue,
+            int cbAttribute
+        );
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
@@ -2592,7 +2621,24 @@ namespace Standard
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
-        private static extern void _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
+        private static extern HRESULT _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static HRESULT DwmSetWindowAttributeSystemBackdropType(IntPtr hwnd, DWMSBT dwBackdropType)
+        {
+            Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
+            var dwmWindowAttribute = (int)dwBackdropType;
+            return _DwmSetWindowAttribute(hwnd, DWMWA.SYSTEMBACKDROP_TYPE, ref dwmWindowAttribute, Marshal.SizeOf(typeof(int)));
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static bool DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
+        {
+            Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
+            var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
+            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, Marshal.SizeOf(typeof(int)));
+            return dwmResult == HRESULT.S_OK;
+        }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)

@@ -111,10 +111,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <param name="applicationGestures"></param>
         internal ApplicationGesture[] SetEnabledGestures(IEnumerable<ApplicationGesture> applicationGestures)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("NativeRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(NativeRecognizer));
 
             //validate and get an array out
             ApplicationGesture[] enabledGestures =
@@ -138,10 +135,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns></returns>
         internal GestureRecognitionResult[] Recognize(StrokeCollection strokes)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("NativeRecognizer");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(NativeRecognizer));
 
             //
             // note that we validate this argument from GestureRecognizer 

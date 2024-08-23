@@ -7,6 +7,8 @@
 // Description: Implements the base Avalon Window class
 //
 
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,9 +29,12 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
+using Microsoft.Win32;
+using System.Diagnostics.CodeAnalysis;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
+using SNM = Standard.NativeMethods;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -556,6 +562,46 @@ namespace System.Windows
         //---------------------------------------------------
         #region Public Properties
 
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                VerifyContextAndObjectState();
+                return _themeMode;
+            }
+            set
+            {
+                VerifyContextAndObjectState();
+
+                if(!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+                
+                ThemeMode oldTheme = _themeMode;
+                _themeMode = value;
+                
+                if(!AreResourcesInitialized)
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    AreResourcesInitialized = false;
+
+                    _reloadFluentDictionary = true;
+                }
+
+                if(IsSourceWindowNull)
+                {
+                    _deferThemeLoading = true;
+                }
+                else
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                }
+            }
+        }
+
         /// <summary>
         /// DependencyProperty for TaskbarItemInfo
         /// </summary>
@@ -913,7 +959,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Top
         {
             get
@@ -964,7 +1010,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Left
         {
             get
@@ -1898,25 +1944,29 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnSourceInitialized(...) for
+        ///     the event. If you override this method - you need to call base.OnSourceInitialized(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
         protected virtual void OnSourceInitialized(EventArgs e)
         {
             VerifyContextAndObjectState();
+
+            // Setting WindowBackdrop 
+            WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
+
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
 
         /// <summary>
-        ///     This even fires when window is activated. This event is non cancelable and is
+        ///     This event fires when window is activated. This event is non cancelable and is
         ///     for user infromational purposes
         /// </summary>
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnActivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1934,7 +1984,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnDeactivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnDeactivated(EventArgs e)
@@ -1952,7 +2002,7 @@ namespace System.Windows
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers
         ///     that subclass the event. If you override this method - you need to call
-        ///     Base.OnClosed(...) for the corresponding event to be raised.
+        ///     base.OnStateChanged(...) for the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnStateChanged(EventArgs e)
         {
@@ -1968,7 +2018,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnLocationChanged(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnLocationChanged(EventArgs e)
@@ -1986,7 +2036,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosing(...) for
+        ///     the event. If you override this method - you need to call base.OnClosing(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosing(CancelEventArgs e)
@@ -2003,7 +2053,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnClosed(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosed(EventArgs e)
@@ -2076,6 +2126,22 @@ namespace System.Windows
             Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
             Point ptDeviceUnits = _swh.CompositionTarget.TransformToDevice.Transform(ptLogicalUnits);
             return ptDeviceUnits;
+        }
+
+        internal void AddFluentDictionary(ResourceDictionary value, out bool invalidateResources)
+        {
+            invalidateResources = false;
+
+            if(_reloadFluentDictionary && !AreResourcesInitialized)
+            {
+                if(value != null && ThemeMode != ThemeMode.None) 
+                {
+                    value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    invalidateResources = true;
+                }
+
+                _reloadFluentDictionary = false;
+            }
         }
 
         internal static bool VisibilityToBool(Visibility v)
@@ -2311,6 +2377,11 @@ namespace System.Windows
                 Utilities.SafeDispose(ref _currentLargeIconHandle);
                 Utilities.SafeDispose(ref _currentSmallIconHandle);
                 Utilities.SafeRelease(ref _taskbarList);
+
+                if(ThemeMode != ThemeMode.None)
+                {
+                    ThemeManager.FluentEnabledWindows.Remove(this);
+                }
             }
             finally
             {
@@ -2509,12 +2580,43 @@ namespace System.Windows
                 UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
             }
 
+            if (Standard.Utility.IsOSWindows10OrNewer)
+            {
+                if (ThemeManager.IsFluentThemeEnabled)
+                {
+                    ThemeManager.ApplyStyleOnWindow(this);
+                }
+
+                if (_deferThemeLoading)
+                {
+                    _deferThemeLoading = false;
+                    ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                }
+            }
+
             // Sub classes can have different intialization. RBW does very minimalistic
             // stuff in its override
             SetupInitialState(requestedTop, requestedLeft, requestedWidth, requestedHeight);
 
             // Fire SourceInitialized event
             OnSourceInitialized(EventArgs.Empty);
+        }
+
+        internal void SetImmersiveDarkMode(bool useDarkMode)
+        {
+            if(!Standard.Utility.IsOSWindows11OrNewer) return;
+
+            if(_useDarkMode == useDarkMode) return;
+
+            IntPtr handle = CriticalHandle;
+            if (handle != IntPtr.Zero)
+            {
+                bool succeeded = SNM.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useDarkMode);
+                if(succeeded)
+                {
+                    _useDarkMode = useDarkMode;
+                }
+            }
         }
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
@@ -3012,6 +3114,42 @@ namespace System.Windows
         //----------------------------------------------
         #region Internal Properties
 
+        /// <summary>
+        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
+        /// </summary>
+        internal WindowBackdropType WindowBackdropType
+        {
+            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
+            set => SetValue(WindowBackdropTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="WindowBackdropType"/>.
+        /// </summary>
+        internal static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
+            nameof(WindowBackdropType),
+            typeof(WindowBackdropType),
+            typeof(Window),
+            new PropertyMetadata(
+                WindowBackdropType.MainWindow, 
+                new PropertyChangedCallback(OnBackdropTypeChanged)));
+
+        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not Window window)
+            {
+                return;
+            }
+
+            if (e.OldValue == e.NewValue)
+            {
+                return;
+            }
+
+            WindowBackdropManager.SetBackdrop(window, (WindowBackdropType)e.NewValue);
+        }
+
+
         internal bool HwndCreatedButNotShown
         {
             get
@@ -3168,6 +3306,19 @@ namespace System.Windows
         {
             get { return false; }
         }
+
+        internal bool AreResourcesInitialized
+        {
+            get
+            {
+                return _resourcesInitialized;
+            }
+            set
+            {
+                _resourcesInitialized = value;
+            }
+        }
+
         #endregion Internal Properties
 
         //----------------------------------------------
@@ -3762,8 +3913,8 @@ namespace System.Windows
             double workAreaWidthDeviceUnits = workAreaRectDeviceUnits.right - workAreaRectDeviceUnits.left;
             double workAreaHeightDeviceUnits = workAreaRectDeviceUnits.bottom - workAreaRectDeviceUnits.top;
 
-            Debug.Assert(workAreaWidthDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaWidth ({0})for monitor ({1}) is negative", hMonitor, workAreaWidthDeviceUnits));
-            Debug.Assert(workAreaHeightDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaHeight ({0}) for monitor ({1}) is negative", hMonitor, workAreaHeightDeviceUnits));
+            Debug.Assert(workAreaWidthDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaWidth ({hMonitor})for monitor ({workAreaWidthDeviceUnits}) is negative"));
+            Debug.Assert(workAreaHeightDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaHeight ({hMonitor}) for monitor ({workAreaHeightDeviceUnits}) is negative"));
 
             leftDeviceUnits = (workAreaRectDeviceUnits.left + ((workAreaWidthDeviceUnits - currentSizeDeviceUnits.Width) / 2));
             topDeviceUnits = (workAreaRectDeviceUnits.top + ((workAreaHeightDeviceUnits - currentSizeDeviceUnits.Height) / 2));
@@ -5818,7 +5969,7 @@ namespace System.Windows
                     wp.rcNormalPosition_right = wp.rcNormalPosition_left + currentWidth;
                     break;
                 default:
-                    Debug.Assert(false, String.Format("specifiedRestoreBounds can't be {0}", specifiedRestoreBounds));
+                    Debug.Assert(false, $"specifiedRestoreBounds can't be {specifiedRestoreBounds}");
                     break;
             }
 
@@ -7091,7 +7242,9 @@ namespace System.Windows
 
         private SourceWindowHelper  _swh;                               // object that will hold the window
         private Window              _ownerWindow;                       // owner window
-
+        private bool _reloadFluentDictionary = false;
+        private bool _resourcesInitialized = false;
+        
         // keeps track of the owner hwnd
         // we need this one b/c a owner/parent
         // can be set through the WindowInteropHandler
@@ -7133,6 +7286,11 @@ namespace System.Windows
         private double              _actualTop = Double.NaN;
 
         private double              _actualLeft = Double.NaN;
+
+
+        private ThemeMode           _themeMode = ThemeMode.None;
+        internal bool               _deferThemeLoading = false;
+        private bool                _useDarkMode = false;
 
         //Never expose this at any cost
         private bool                        _inTrustedSubWindow;
@@ -7800,8 +7958,6 @@ namespace System.Windows
 
         #endregion DTypeThemeStyleKey
     }
-
-
 
     #region Enums
 

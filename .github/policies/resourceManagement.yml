@@ -1,0 +1,414 @@
+id: 
+name: GitOps.PullRequestIssueManagement
+description: GitOps.PullRequestIssueManagement primitive
+owner: 
+resource: repository
+disabled: false
+where: 
+configuration:
+  resourceManagementConfiguration:
+    scheduledSearches:
+    - description: Close stale issues and pull requests
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isPullRequest
+      - isOpen
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      - noActivitySince:
+          days: 7
+      - isIssue
+      actions:
+      - closeIssue
+      - removeMilestone
+    - description: Add no recent activity label to issues and pull requests
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isPullRequest
+      - isOpen
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      - noActivitySince:
+          days: 14
+      - isNotLabeledWith:
+          label: ':zzz: no-recent-activity'
+      - isIssue
+      actions:
+      - addLabel:
+          label: ':zzz: no-recent-activity'
+      - addReply:
+          reply: >-
+            This submission has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **14 days**. 
+
+
+            It will be closed if no further activity occurs **within 7 days of this comment**.
+    - description: Add draft label
+      frequencies:
+      - hourly:
+          hour: 4
+      filters:
+      - isDraftPullRequest
+      - isNotLabeledWith:
+          label: draft
+      actions:
+      - addLabel:
+          label: draft
+    - description: Remove draft label
+      frequencies:
+      - hourly:
+          hour: 4
+      filters:
+      - isNotDraftPullRequest
+      - hasLabel:
+          label: draft
+      actions:
+      - removeLabel:
+          label: draft
+    - description: Close stale issues
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isIssue
+      - isOpen
+      - hasLabel:
+          label: needs-author-feedback
+      - hasLabel:
+          label: no-recent-activity
+      - noActivitySince:
+          days: 3
+      actions:
+      - closeIssue
+    - description: Add no recent activity label to issues
+      frequencies:
+      - hourly:
+          hour: 3
+      filters:
+      - isIssue
+      - isOpen
+      - hasLabel:
+          label: needs-author-feedback
+      - noActivitySince:
+          days: 4
+      - isNotLabeledWith:
+          label: no-recent-activity
+      actions:
+      - addLabel:
+          label: no-recent-activity
+      - addReply:
+          reply: This issue has been automatically marked as stale because it has marked as requiring author feedback but has not had any activity for **4 days**. It will be closed if no further activity occurs **within 3 days of this comment**. Thank you for your contributions!
+    - description: Move 'open' area-servicing-approved bugs back to Triage (milestone = empty) every month(30 days) for status update to community
+      frequencies:
+      - weekday:
+          day: Monday
+          time: 8:0
+      filters:
+      - isOpen
+      - hasLabel:
+          label: netfx-servicing-approved
+      actions:
+      - removeMilestone
+      - addReply:
+          reply: "@dotnet/wpf-developers,  It's time to give an update to the community. "
+    eventResponderTasks:
+    - if:
+      - payloadType: Pull_Request
+      - isAction:
+          action: Opened
+      then:
+      - addCodeFlowLink
+      description: Add a CodeFlow link to new pull requests
+    - if:
+      - payloadType: Pull_Request_Review
+      - isAction:
+          action: Submitted
+      - isReviewState:
+          reviewState: Changes_requested
+      then:
+      - addLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      description: Add needs author feedback label to pull requests when changes are requested
+    - if:
+      - payloadType: Pull_Request
+      - isActivitySender:
+          issueAuthor: True
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      then:
+      - removeLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      description: Remove needs author feedback label when the author responds to a pull request
+    - if:
+      - payloadType: Issue_Comment
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      then:
+      - removeLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      description: Remove needs author feedback label when the author comments on a pull request
+    - if:
+      - payloadType: Pull_Request_Review
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      then:
+      - removeLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      description: Remove needs author feedback label when the author responds to a pull request review comment
+    - if:
+      - payloadType: Pull_Request
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      then:
+      - removeLabel:
+          label: ':zzz: no-recent-activity'
+      description: Remove no recent activity label from pull requests
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      then:
+      - removeLabel:
+          label: ':zzz: no-recent-activity'
+      description: Remove no recent activity label when a pull request is commented on
+    - if:
+      - payloadType: Pull_Request_Review
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      then:
+      - removeLabel:
+          label: ':zzz: no-recent-activity'
+      description: Remove no recent activity label when a pull request is reviewed
+    - if:
+      - payloadType: Pull_Request
+      - hasLabel:
+          label: ':octocat:  automerge'
+      then:
+      - enableAutoMerge:
+          mergeMethod: Squash
+      description: Automatically merge pull requests
+    - if:
+      - payloadType: Pull_Request
+      - labelRemoved:
+          label: ':octocat:  automerge'
+      then:
+      - disableAutoMerge
+      description: Automatically merge pull requests
+    - if:
+      - payloadType: Pull_Request
+      then:
+      - inPrLabel:
+          label: ':construction: work in progress'
+      description: In-PR label
+    - if:
+      - payloadType: Pull_Request
+      - targetsBranch:
+          branch: main
+      - and:
+        - isAction:
+            action: Closed
+        - isMerged
+        - not:
+            titleContains:
+              pattern: '[main] Update dependencies'
+              isRegex: False
+      then:
+      - addMilestone:
+          milestone: 7.0 Preview4
+      description: Apply milestone '7.0' to PRs on the main branch
+      triggerOnOwnActions: true
+    - if:
+      - payloadType: Pull_Request
+      - isActivitySender:
+          user: dotnet-maestro[bot]
+          issueAuthor: False
+      - isAction:
+          action: Opened
+      then:
+      - approvePullRequest:
+          comment: Go, you big red fire engine!
+      description: Auto-approve maestro PRs
+    - if:
+      - payloadType: Pull_Request
+      - labelAdded:
+          label: ':octocat:  automerge'
+      - or:
+        - activitySenderHasPermission:
+            permission: Admin
+        - activitySenderHasPermission:
+            permission: Write
+      then:
+      - approvePullRequest:
+          comment: Happy to oblige
+      description: Auto-approve auto-merge PRs
+    - if:
+      - payloadType: Issue_Comment
+      then:
+      - cleanEmailReply
+      description: Cleanse emails
+    - if:
+      - payloadType: Pull_Request
+      then:
+      - assignTo:
+          author: True
+      description: Assign PRs to authors
+    - if:
+      - payloadType: Issue_Comment
+      - isActivitySender:
+          issueAuthor: True
+      - hasLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      then:
+      - removeLabel:
+          label: ':mailbox_with_no_mail: waiting-author-feedback'
+      description: Remove needs author feedback label when the author comments on an issue
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      then:
+      - removeLabel:
+          label: ':zzz: no-recent-activity'
+      description: Remove no recent activity label when an issue is commented on
+    - if:
+      - payloadType: Issues
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: ':zzz: no-recent-activity'
+      then:
+      - removeLabel:
+          label: ':zzz: no-recent-activity'
+      description: Remove no recent activity label from issue
+    - if:
+      - payloadType: Issues
+      - isAction:
+          action: Closed
+      then:
+      - removeMilestone
+      description: Remove closed issues from milestones
+    - if:
+      - payloadType: Pull_Request
+      - isAssignedToUser:
+          user: dotnet-bot
+      - titleContains:
+          pattern: OneLocBuild
+          isRegex: False
+      - isAction:
+          action: Opened
+      then:
+      - approvePullRequest:
+          comment: Go, you big red fire engine!
+      - addLabel:
+          label: ':octocat:  automerge'
+      description: Auto-approve OneLocBuild PRs
+      triggerOnOwnActions: true
+    - if:
+      - payloadType: Pull_Request
+      - isAction:
+          action: Opened
+      then:
+      - addLabel:
+          label: PR
+      - requestReview:
+          reviewer: dipeshmsft
+      - requestReview:
+          reviewer: singhashish-wpf
+      - requestReview:
+          reviewer: dotnet/wpf-developers
+      - requestReview:
+          reviewer: SamBent
+      description: Add PR Label to new Pull Requests
+    - if:
+      - payloadType: Issues
+      - labelAdded:
+          label: declined
+      then:
+      - addReply:
+          reply: We appreciate the feedback, however this doesn’t currently align to the project’s goals and [roadmap](https://github.com/dotnet/wpf/blob/master/roadmap.md) and so will be automatically closed. Thank you for your contributions!
+      - closeIssue
+      description: When "declined" label is added, close and respond
+    - if:
+      - payloadType: Issues
+      - not:
+          isAction:
+            action: Closed
+      - hasLabel:
+          label: no-recent-activity
+      then:
+      - removeLabel:
+          label: no-recent-activity
+      description: Remove no recent activity label from issues
+    - if:
+      - payloadType: Issue_Comment
+      - hasLabel:
+          label: no-recent-activity
+      - isAction:
+          action: Edited
+      then:
+      - removeLabel:
+          label: no-recent-activity
+      description: Remove no recent activity label when an issue is commented on
+    - if:
+      - payloadType: Pull_Request
+      - hasLabel:
+          label: auto_merge
+      then:
+      - enableAutoMerge:
+          mergeMethod: Squash
+      description: Auto merge PR's marked auto_merge when all checks have passed
+    - if:
+      - payloadType: Pull_Request
+      - labelRemoved:
+          label: auto_merge
+      then:
+      - disableAutoMerge
+      description: Auto merge PR's marked auto_merge when all checks have passed
+    - if:
+      - payloadType: Pull_Request
+      - labelAdded:
+          label: Servicing-consider
+      then:
+      - addReply:
+          reply: >-
+            Hi @${issueAuthor}. Please make sure you've updated the PR description to use the [Shiproom Template](https://dev.azure.com/devdiv/DevDiv/_wiki/wikis/DevDiv.wiki/545/NET-Servicing#pr-template). Also, make sure this PR is not marked as a draft and is ready-to-merge.
+
+
+            To learn more about how to prepare a servicing PR [click here](https://aka.ms/aspnet/servicing).
+      description: Use servicing template for `servicing-consider` issues
+    - if:
+      - payloadType: Pull_Request
+      - isAction:
+          action: Opened
+      - activitySenderHasPermission:
+          permission: Read
+      - not:
+          isActivitySender:
+            user: dotnet-maestro
+            issueAuthor: False
+      - not:
+          isActivitySender:
+            user: dotnet-maestro-bot
+            issueAuthor: False
+      then:
+      - addLabel:
+          label: Community Contribution
+      description: Label community PRs with `community contribution` label
+onFailure: 
+onSuccess:

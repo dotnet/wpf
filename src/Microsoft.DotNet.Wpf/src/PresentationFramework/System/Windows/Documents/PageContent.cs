@@ -83,7 +83,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRoot Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -115,7 +115,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRootAsync Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
 //             VerifyAccess();
@@ -155,7 +155,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace(string.Format("PageContent.GetPageRootAsyncCancel Source={0}", Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source));
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
@@ -541,8 +541,8 @@ namespace System.Windows.Documents
 
                     if (uriToLoad != null)
                     {
-                        _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);			    
-                        
+                        _LoadPageImpl(((IUriContext)this).BaseUri, uriToLoad, out p, out pageStream);
+
                         if (p == null || p.IsInitialized)
                         {
                             pageStream.Close();
@@ -580,7 +580,7 @@ namespace System.Windows.Documents
             {
                 p = (FixedPage)_pageRef.Target;
             }
-        
+
             return p;
         }
 
@@ -593,7 +593,7 @@ namespace System.Windows.Documents
                 _pendingStreams.Remove(sender);
             }
         }
-    
+
         internal static void _LoadPageImpl(Uri baseUri, Uri uriToLoad, out FixedPage fixedPage, out Stream pageStream)
         {
             ContentType mimeType;

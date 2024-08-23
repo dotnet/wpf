@@ -247,8 +247,8 @@ namespace System.Windows.Media
             VerifyChangeable();
 
             // Validate the index.
-            if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, Count);
 
             // We can't have two items with same style, weight, stretch.
             if (FindItem(item) >= 0)
@@ -354,8 +354,8 @@ namespace System.Windows.Media
 
         private void RangeCheck(int index)
         {
-            if (index < 0 || index >= _count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _count);
         }
 
         private void VerifyChangeable()

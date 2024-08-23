@@ -154,7 +154,7 @@ HRESULT RectFToGDIRect(Rect % boundsF, Int32Rect % rect)   // Lower-right exclus
     // 2 pixels in size, and does not touch any pixels in column
     // 3 or row 3:
 
-    Debug::Assert((rect.Width >= 0) && (rect.Height >= 0));
+    Debug::Assert((rect.Width >= 0) && (rect.Height >= 0), "Rectangle dimensions should not be negative. Width: " + rect.Width + ", Height: " + rect.Height);
 
     if (fSucceeded)
         return S_OK;
@@ -250,7 +250,7 @@ TransformBounds(
 
     delete [] vertex;
 
-    Debug::Assert((left <= right) && (top <= bottom));
+    Debug::Assert((left <= right) && (top <= bottom), "Invalid rectangle bounds. Left: " + left + ", Right: " + right + ", Top: " + top + ", Bottom: " + bottom);
 
     bounds.X      = left;
     bounds.Y      = top;
@@ -291,10 +291,10 @@ bool IntersectRect(
     )
 {
     // we want normalized rects here
-    Debug::Assert(prcSrc1.Width >= 0);
-    Debug::Assert(prcSrc2.Width >= 0);
-    Debug::Assert(prcSrc1.Height >= 0);
-    Debug::Assert(prcSrc2.Height >= 0);
+    Debug::Assert(prcSrc1.Width >= 0, "prcSrc1 width should not be negative. Width: " + prcSrc1.Width);
+    Debug::Assert(prcSrc2.Width >= 0, "prcSrc2 width should not be negative. Width: " + prcSrc2.Width);
+    Debug::Assert(prcSrc1.Height >= 0, "prcSrc1 height should not be negative. Height: " + prcSrc1.Height);
+    Debug::Assert(prcSrc2.Height >= 0, "prcSrc2 height should not be negative. Height: " + prcSrc2.Height);
 
     int w  = min(prcSrc1.X + prcSrc1.Width, prcSrc2.X + prcSrc2.Width) - max(prcSrc1.X, prcSrc2.X);
 

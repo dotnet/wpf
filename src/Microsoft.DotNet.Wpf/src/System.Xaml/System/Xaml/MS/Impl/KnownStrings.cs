@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml.MS.Impl
 {
     internal static class KnownStrings
@@ -33,7 +35,7 @@ namespace System.Xaml.MS.Impl
         public const string DefaultPrefix = "p";
 
         public const string ReferenceName = "__ReferenceID";
-        public static readonly char[] WhitespaceChars = new char[] { ' ', '\t', '\n', '\r', '\f' };
+        public static ReadOnlySpan<char> WhitespaceChars => [' ', '\t', '\n', '\r', '\f'];
         public const char SpaceChar = ' ';
         public const char TabChar = '\t';
         public const char NewlineChar = '\n';

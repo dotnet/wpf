@@ -276,6 +276,7 @@ namespace System.Windows.Interop
                 //      DPI_AWARENESS_CONTEXT (DpiAwarenessContext property)
                 //      Window DPI scale (CurrentDpiScale field)
                 InitializeDpiAwarenessAndDpiScales();
+                CheckAndDisableSpecialCharacterLigature();
 
                 _worldTransform = new MatrixTransform(
                     new Matrix(
@@ -309,6 +310,14 @@ namespace System.Windows.Interop
                     VisualTarget_DetachFromHwnd(hwnd);
                 }
             }
+        }
+
+        /// <summary>
+        /// Disables hyphen ligatures if user has exlicitly wants it
+        /// </summary>
+        private void CheckAndDisableSpecialCharacterLigature()
+        {
+            NativeMethodsSetLastError.LsDisableSpecialCharacterLigature(CoreAppContextSwitches.DisableSpecialCharacterLigature);
         }
 
         /// <summary>
@@ -2028,7 +2037,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return OSVersionHelper.IsOsWindows10RS1OrGreater; ;
+                return OSVersionHelper.IsOsWindows10RS1OrGreater;
             }
         }
 

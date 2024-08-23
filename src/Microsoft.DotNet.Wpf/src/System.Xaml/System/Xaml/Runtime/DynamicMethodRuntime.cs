@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,9 +30,9 @@ namespace MS.Internal.Xaml.Runtime
 
     internal class DynamicMethodRuntime : ClrObjectRuntime
     {
-        const BindingFlags BF_AllInstanceMembers = 
+        const BindingFlags BF_AllInstanceMembers =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-        const BindingFlags BF_AllStaticMembers = 
+        const BindingFlags BF_AllStaticMembers =
             BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
         static MethodInfo s_GetTypeFromHandleMethod;
@@ -44,7 +46,7 @@ namespace MS.Internal.Xaml.Runtime
         Assembly _localAssembly;
 
         Type _localType;
-        
+
         XamlSchemaContext _schemaContext;
 
         // We cache based on MemberInfo instead of XamlMember for two reasons:
@@ -285,7 +287,7 @@ namespace MS.Internal.Xaml.Runtime
             // We have to emit an indirect call through reflection to avoid the helper getting
             // inlined into the dynamic method, and potentially executing without access to private
             // members on the target type.
-            Emit_LateBoundInvoke(ilGenerator, targetType, KnownStrings.CreateDelegateHelper, 
+            Emit_LateBoundInvoke(ilGenerator, targetType, KnownStrings.CreateDelegateHelper,
                 helperFlags | BindingFlags.InvokeMethod, 1, 0, 2);
             Emit_CastTo(ilGenerator, typeof(Delegate));
             ilGenerator.Emit(OpCodes.Ret);
@@ -303,7 +305,7 @@ namespace MS.Internal.Xaml.Runtime
             ilGenerator.Emit(OpCodes.Ldarg_1);
             ilGenerator.Emit(OpCodes.Ldarg_2);
             MethodInfo method = typeof(Delegate).GetMethod(KnownStrings.CreateDelegate,
-                BindingFlags.Static | BindingFlags.Public, null, 
+                BindingFlags.Static | BindingFlags.Public, null,
                 new Type[] { typeof(Type), typeof(object), typeof(string) }, null);
             ilGenerator.Emit(OpCodes.Call, method);
             ilGenerator.Emit(OpCodes.Ret);
@@ -313,7 +315,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(ConstructorInfo ctor)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(ctor.DeclaringType.Name + "Ctor", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod(ctor.DeclaringType.Name + "Ctor",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -321,16 +323,16 @@ namespace MS.Internal.Xaml.Runtime
             ilGenerator.Emit(OpCodes.Newobj, ctor);
             UnloadArguments(ilGenerator, locals);
             ilGenerator.Emit(OpCodes.Ret);
-            
+
             return (FactoryDelegate)dynamicMethod.CreateDelegate(typeof(FactoryDelegate));
         }
 
         private FactoryDelegate CreateFactoryDelegate(MethodInfo factory)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(factory.Name + "Factory", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod(factory.Name + "Factory",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
-            
+
             LocalBuilder[] locals = LoadArguments(ilGenerator, factory);
             ilGenerator.Emit(OpCodes.Call, factory);
             Emit_BoxIfValueType(ilGenerator, factory.ReturnType);
@@ -350,7 +352,7 @@ namespace MS.Internal.Xaml.Runtime
             }
 
             // We need to handle vararg matches (and optional parameters?)
-            
+
             ParameterInfo[] parameters = method.GetParameters();
             Type[] paramTypes = new Type[parameters.Length];
             LocalBuilder[] locals = new LocalBuilder[paramTypes.Length];
@@ -401,18 +403,18 @@ namespace MS.Internal.Xaml.Runtime
         }
 
         // The methods below don't properly handle non-Runtime reflection classes
-        
+
         // Note that CreateGetDelegate fails verification for value types (and probably shouldn't)
         private PropertyGetDelegate CreateGetDelegate(MethodInfo getter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(getter.Name + "Getter", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod(getter.Name + "Getter",
                 typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
             Type targetType = getter.IsStatic ? getter.GetParameters()[0].ParameterType : GetTargetType(getter);
             ilGenerator.Emit(OpCodes.Ldarg_0);
             Emit_CastTo(ilGenerator, targetType);
-            
+
             Emit_Call(ilGenerator, getter);
             Emit_BoxIfValueType(ilGenerator, getter.ReturnType);
             ilGenerator.Emit(OpCodes.Ret);
@@ -423,7 +425,7 @@ namespace MS.Internal.Xaml.Runtime
         // Note that CreateSetDelegate fails verification for value types (and probably shouldn't)
         private PropertySetDelegate CreateSetDelegate(MethodInfo setter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(setter.Name + "Setter", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod(setter.Name + "Setter",
                 typeof(void), typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -551,7 +553,7 @@ namespace MS.Internal.Xaml.Runtime
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
             //Emits: typeof(targetType).InvokeMember(
-            //           methodName, bindingFlags, null, ldarg_targetArgNum, 
+            //           methodName, bindingFlags, null, ldarg_targetArgNum,
             //           new object[] { ldarg_paramArgNums });
 
             Emit_TypeOf(ilGenerator, targetType);

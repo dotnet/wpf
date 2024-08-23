@@ -129,6 +129,32 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(ItemAutomationPeerKeepsItsItemAliveSwitchName, ref _ItemAutomationPeerKeepsItsItemAlive);
             }
         }
+    
+    
+        // Switch to opt-out Fluent theme Window Backdrop feature
+        internal const string DisableFluentThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop";
+        private static int _DisableFluentThemeWindowBackdrop;
+        public static bool DisableFluentThemeWindowBackdrop
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableFluentThemeWindowBackdropSwitchName, ref _DisableFluentThemeWindowBackdrop);
+            }
+        }
+
+
+        // Switch to disable DynamicResource optimizations
+        internal const string DisableDynamicResourceOptimizationSwitchName = "Switch.System.Windows.Controls.DisableDynamicResourceOptimization";
+        private static int _DisableDynamicResourceOptimization;
+        public static bool DisableDynamicResourceOptimization
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDynamicResourceOptimizationSwitchName, ref _DisableDynamicResourceOptimization);
+            }
+        }
     }
 
 #pragma warning restore 436

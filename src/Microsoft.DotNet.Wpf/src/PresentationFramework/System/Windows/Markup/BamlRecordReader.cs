@@ -4236,7 +4236,7 @@ namespace System.Windows.Markup
             object value = FindResourceInParentChain(resourceNameObject, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
             if (value == DependencyProperty.UnsetValue)
             {
-                ThrowException(nameof(SR.ParserNoResource) , "{" + resourceNameObject.ToString() + "}");
+                ThrowException(nameof(SR.ParserNoResource) , $"{{{resourceNameObject}}}");
             }
 
             return value;
@@ -4248,8 +4248,7 @@ namespace System.Windows.Markup
                 null != context.ExpectedType)
             {
                 Debug.Assert(!context.CreateUsingTypeConverter,
-                    "We had expected to use a TypeConverter for this " + context.ExpectedType.FullName +
-                    " but somebody is trying to create one now without using a TypeConverter.  If TypeConverter is the correct way, fix the code calling this method.  If not, fix the 'should we use a TypeConverter?' logic in XamlReaderHelper.");
+                    $"We had expected to use a TypeConverter for this {context.ExpectedType.FullName} but somebody is trying to create one now without using a TypeConverter.  If TypeConverter is the correct way, fix the code calling this method.  If not, fix the 'should we use a TypeConverter?' logic in XamlReaderHelper.");
 
                 context.ObjectData = CreateInstanceFromType(context.ExpectedType,
                                                  context.ExpectedTypeId, true);
@@ -5161,14 +5160,14 @@ namespace System.Windows.Markup
             BamlAttributeInfoRecord attribInfo = PiOrAttribInfo as BamlAttributeInfoRecord;
             if (attribInfo != null)
             {
-                return attribInfo.OwnerType.Name + "." + attribInfo.Name;
+                return $"{attribInfo.OwnerType.Name}.{attribInfo.Name}";
             }
             else
             {
                 PropertyInfo pi = PiOrAttribInfo as PropertyInfo;
                 if (pi != null)
                 {
-                    return pi.DeclaringType.Name + "." + pi.Name;
+                    return $"{pi.DeclaringType.Name}.{pi.Name}";
                 }
                 else
                 {

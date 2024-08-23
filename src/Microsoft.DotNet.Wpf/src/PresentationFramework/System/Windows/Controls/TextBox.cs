@@ -76,6 +76,8 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+            
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -97,6 +99,7 @@ namespace System.Windows.Controls
 
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
+
         }
 
         #endregion Constructors
@@ -235,10 +238,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
 
@@ -261,10 +262,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             int line;
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
@@ -294,10 +293,8 @@ namespace System.Windows.Controls
                 return -1;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointerStart = GetStartPositionOfLine(lineIndex);
             TextPointer textPointerEnd = GetEndPositionOfLine(lineIndex);
@@ -372,10 +369,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             TextPointer textPointer = GetStartPositionOfLine(lineIndex);
             Rect rect;
@@ -402,10 +397,8 @@ namespace System.Windows.Controls
                 return null; // sentinel value
             }
 
-            if (lineIndex < 0 || lineIndex >= LineCount)
-            {
-                throw new ArgumentOutOfRangeException("lineIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(lineIndex, LineCount);
 
             startOfLine = GetStartPositionOfLine(lineIndex);
             endOfLine = GetEndPositionOfLine(lineIndex);
@@ -441,10 +434,8 @@ namespace System.Windows.Controls
         /// <returns>leading or trailing edge rectangle of the given character, or Rect.Empty if no layout information is available.</returns>
         public Rect GetRectFromCharacterIndex(int charIndex, bool trailingEdge)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             // Start by moving to an insertion position in backward direction.
             // This ensures that when the character at charIndex is part of a surrogate pair or multi-byte character,
@@ -487,10 +478,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public SpellingError GetSpellingError(int charIndex)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             TextPointer position = this.TextContainer.CreatePointerAtOffset(charIndex, LogicalDirection.Forward);
             SpellingError spellingError = this.TextEditor.GetSpellingErrorAtPosition(position, LogicalDirection.Forward);
@@ -560,10 +549,8 @@ namespace System.Windows.Controls
         /// </remarks>
         public int GetNextSpellingErrorCharacterIndex(int charIndex, LogicalDirection direction)
         {
-            if (charIndex < 0 || charIndex > this.TextContainer.SymbolCount)
-            {
-                throw new ArgumentOutOfRangeException("charIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(charIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(charIndex, this.TextContainer.SymbolCount);
 
             if (this.TextContainer.SymbolCount == 0)
             {
@@ -961,6 +948,50 @@ namespace System.Windows.Controls
             {
                 return new Typography(this);
             }
+        }
+
+        /// <summary>
+        /// Property for <see cref="TemplateButtonCommand"/>.
+        /// </summary>
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+            nameof(TemplateButtonCommand),
+            typeof(RoutedCommand),
+            typeof(TextBox),
+            new PropertyMetadata(EditingCommands.Clear)
+        );
+
+        #region Properties
+
+        /// <summary>
+        /// Command triggered after clicking the button.
+        /// </summary>
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
+
+        #endregion
+
+        /// <summary>
+        /// Triggered when the user clicks the clear text button.
+        /// </summary>
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute =  !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
+        {
+            if (Text.Length > 0)
+                Text = string.Empty;
         }
 
         #endregion Public Properties
@@ -1935,6 +1966,7 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
 
         #endregion Private Fields
     }

@@ -200,7 +200,7 @@ HRESULT CGDIRenderTarget::DrawBitmap_PassThrough(
     int                nImageHeight
     )
 {
-    Debug::Assert(pIBitmap != nullptr);
+    Debug::Assert(pIBitmap != nullptr, "pIBitmap should not be null.");
 
     HRESULT hr = E_NOTIMPL;
 
@@ -363,8 +363,8 @@ PixelFormat GetLoadFormat(PixelFormat format)
 
 HRESULT  CGDIRenderTarget::DrawBitmap(BitmapSource ^ pImage, array<Byte>^ buffer, Rect rectDest)
 {
-    Debug::Assert(pImage != nullptr);
-    Debug::Assert(!rectDest.IsEmpty);
+    Debug::Assert(pImage != nullptr, "pImage should not be null");
+    Debug::Assert(!rectDest.IsEmpty, "rectDest should not be empty");
 
     // Compute destination bounding rectangle in measure units, then transform to device units.
     // Afterwards clip.
@@ -639,7 +639,7 @@ private:
         Brush^ callbackBrush
         )
     {
-        Debug::Assert(callback != nullptr);
+        Debug::Assert(callback != nullptr, "callback should not be null.");
 
         _transform = transform;
 
@@ -1066,7 +1066,7 @@ HRESULT CGDIRenderTarget::StrokePath(
     IN Brush              ^pStrokeBrush
     )
 {
-    Debug::Assert(pPen != nullptr);
+    Debug::Assert(pPen != nullptr, "pPen should not be null.");
 
     Int32Rect drawbounds;
 
@@ -1178,7 +1178,7 @@ HRESULT CGDIRenderTarget::StrokePath(
         }
         else
         {
-            Debug::Assert(false, "PathGeometry.GetWidenedPathGeometry failed.");
+            Debug::Fail("PathGeometry.GetWidenedPathGeometry failed.");
         }
     }
 
@@ -1409,7 +1409,7 @@ void GenerateGradientBandVertices(
     IN Color% color
     )
 {
-    Debug::Assert((vertexOffset + 2) <= vertices->Length);
+    Debug::Assert((vertexOffset + 2) <= vertices->Length, "Vertex offset is out of bounds");
 
     // vertices differ only in y coordinate
     vertices[vertexOffset++].Fill(
@@ -1434,7 +1434,8 @@ void GenerateGradientBandTriangles(
     IN int vertexOffset
     )
 {
-    Debug::Assert((indexOffset + 6) <= indices->Length);
+    Debug::Assert((indexOffset + 6) <= indices->Length,
+    "Assertion failed: indexOffset + 6 should be less than or equal to indices->Length.");
 
     // first triangle starts at bottom vertex
     for (int i = 0; i < 3; i++)
@@ -1486,12 +1487,12 @@ HRESULT CGDIRenderTarget::FillLinearGradient(
     }
     else if (gradientBrush->GradientStops == nullptr || gradientBrush->GradientStops->Count == 0)
     {
-        Debug::Assert(false, "Empty LinearGradientBrush, should've been culled");
+        Debug::Fail("Empty LinearGradientBrush, should've been culled");
         return S_OK;
     }
     else if (gradientBrush->GradientStops->Count == 1)
     {
-        Debug::Assert(false, "Single-stop LinearGradientBrush, should've been converted to SolidColorBrush");
+        Debug::Fail("Single-stop LinearGradientBrush, should've been converted to SolidColorBrush");
         return FillPath(geometry, gcnew SolidColorBrush(gradientBrush->GradientStops[0]->Color));
     }
 
@@ -1537,11 +1538,11 @@ HRESULT CGDIRenderTarget::FillLinearGradient(
             break;
 
         default:
-            Debug::Assert(false, "Unknown GradientSpreadMethod");
+            Debug::Fail("Unknown GradientSpreadMethod");
             return E_NOTIMPL;
     }
 
-    Debug::Assert(lastGroupIndex >= firstGroupIndex);
+    Debug::Assert(lastGroupIndex >= firstGroupIndex, "lastGroupIndex should be greater than or equal to firstGroupIndex.");
 
     // Number of gradient bands (regions filled with gradient between 2 colors).
     // Handle padding spread method by adding edge bands.
@@ -1774,7 +1775,7 @@ HRESULT CGDIRenderTarget::RasterizeBrush(
     double               ScaleY
     )
 {
-    Debug::Assert(pFillBrush != nullptr);
+    Debug::Assert(pFillBrush != nullptr, "pFillBrush cannot be null.");
     
     HRESULT hr = S_OK;
 
@@ -1990,7 +1991,7 @@ HRESULT CGDIRenderTarget::RasterizeShape(
 
             if (SUCCEEDED(hr))
             {
-                Debug::Assert(nRemain == 0);
+                Debug::Assert(nRemain == 0, "nRemain should be zero.");
             }
 
             if (clipPushed)

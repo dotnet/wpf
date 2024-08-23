@@ -27,7 +27,7 @@ namespace System.Windows.Markup
         /// Creates a new UidPropertyAttribute with the given string as
         /// the property name.
         /// </summary>
-        public UidPropertyAttribute(string name)
+        public UidPropertyAttribute(string? name)
         {
             Name = name;
         }
@@ -35,6 +35,6 @@ namespace System.Windows.Markup
         /// <summary>
         /// The name of the property that is designated to accept the x:Uid value
         /// </summary>
-        public string Name { get; }
-    }    
+        public string? Name { get; }
+    }
 }

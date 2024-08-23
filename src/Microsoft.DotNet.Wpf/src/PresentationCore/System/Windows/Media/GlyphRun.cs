@@ -453,9 +453,7 @@ namespace System.Windows.Media
             }
             else
             {
-                if (double.IsNaN(renderingEmSize))
-                    throw new ArgumentOutOfRangeException("renderingEmSize", SR.ParameterValueCannotBeNaN);
-
+                ArgumentOutOfRangeException.ThrowIfEqual(renderingEmSize, double.NaN);
                 ArgumentOutOfRangeException.ThrowIfNegative(renderingEmSize);
                 ArgumentNullException.ThrowIfNull(glyphTypeface);
                 ArgumentNullException.ThrowIfNull(glyphIndices);

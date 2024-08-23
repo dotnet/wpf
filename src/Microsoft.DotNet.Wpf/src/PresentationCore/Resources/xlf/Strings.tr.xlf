@@ -2522,21 +2522,6 @@
         <target state="translated">Sayfa numarası negatif olamaz.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Parametre değeri '{0}' ile '{1}' arasında olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Parametre değeri sonlu olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">Parametre değeri bir sayı olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' dizesi ayrıştırılırken yanlış '{0}' biçimi bulundu.</target>

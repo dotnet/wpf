@@ -189,8 +189,8 @@ namespace MS.Internal.Annotations
         void ICollection<KeyValuePair<string, string>>.CopyTo(KeyValuePair<string, string>[] target, int startIndex)
         {
             ArgumentNullException.ThrowIfNull(target);
-            if (startIndex < 0 || startIndex > target.Length)
-                throw new ArgumentOutOfRangeException("startIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startIndex, target.Length);
 
             ((ICollection<KeyValuePair<string, string>>)_nameValues).CopyTo(target, startIndex);
         }

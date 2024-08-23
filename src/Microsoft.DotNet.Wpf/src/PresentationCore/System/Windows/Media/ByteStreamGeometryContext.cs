@@ -296,10 +296,7 @@ namespace System.Windows.Media
         {
             VerifyAccess();
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("ByteStreamGeometryContext");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(ByteStreamGeometryContext));
         }
 
         /// <summary>

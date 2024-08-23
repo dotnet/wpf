@@ -339,10 +339,7 @@ namespace MS.Internal
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(nameof(ReaderWriterLockSlimWrapper));
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(ReaderWriterLockSlimWrapper));
 
             try
             {

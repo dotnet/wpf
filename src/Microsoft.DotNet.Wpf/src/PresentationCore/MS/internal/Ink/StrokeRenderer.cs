@@ -317,7 +317,7 @@ namespace MS.Internal.Ink
                                     //  | |----|     |
                                     //  |------------|
                                     //
-                                    prevPrevStrokeNode = iterator[index - 1, prevPrevStrokeNode.Index - 1]; ;
+                                    prevPrevStrokeNode = iterator[index - 1, prevPrevStrokeNode.Index - 1];
                                     prevPrevStrokeNodeBounds = Rect.Union(prevStrokeNodeBounds, prevPrevStrokeNodeBounds);
 
                                     // at this point prevPrevStrokeNodeBounds already contains this node

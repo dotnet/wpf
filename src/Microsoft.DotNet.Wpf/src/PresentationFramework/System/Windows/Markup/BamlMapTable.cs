@@ -839,7 +839,7 @@ namespace System.Windows.Markup
             {
                 if (propName == null)
                 {
-                    propName = attributeInfo.OwnerType.FullName + "." + attributeInfo.Name;
+                    propName = $"{attributeInfo.OwnerType.FullName}.{attributeInfo.Name}";
                 }
 
                 ThrowException(nameof(SR.ParserNoPropType), propName);
@@ -1285,7 +1285,7 @@ namespace System.Windows.Markup
         {
             Debug.Assert(ownerTypeName != null);
             Debug.Assert(attributeName != null);
-            return ownerTypeName + "." + attributeName;
+            return $"{ownerTypeName}.{attributeName}";
         }
 
         // Return the attribute info record that corresponds to the passed type and field name.

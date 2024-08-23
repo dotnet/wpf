@@ -68,10 +68,7 @@ namespace System.Windows.Documents
         public bool MoveNext()
         {
             // If _textSegments has been disposed, throw exception
-            if (_textSegments == null)
-            {
-                throw new ObjectDisposedException("HostedElements");
-            }
+            ObjectDisposedException.ThrowIf(_textSegments == null, typeof(HostedElements));
 
             if (_textSegments.Count == 0)
                 return false;

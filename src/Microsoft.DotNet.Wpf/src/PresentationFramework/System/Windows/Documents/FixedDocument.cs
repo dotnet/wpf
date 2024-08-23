@@ -18,7 +18,7 @@ namespace System.Windows.Documents
     using System.Windows;               // DependencyID etc.
     using System.Windows.Automation.Peers;    // AutomationPeer
     using System.Windows.Documents;     // DocumentPaginator
-    using System.Windows.Documents.DocumentStructures;    
+    using System.Windows.Documents.DocumentStructures;
     using System.Windows.Media;         // Visual
     using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
     using System.Windows.Shapes;        // Glyphs
@@ -63,7 +63,7 @@ namespace System.Windows.Documents
         {
             FocusableProperty.OverrideMetadata(typeof(FixedDocument), new FrameworkPropertyMetadata(true));
             NavigationService.NavigationServiceProperty.OverrideMetadata(
-                        typeof(FixedDocument), 
+                        typeof(FixedDocument),
                         new FrameworkPropertyMetadata(new PropertyChangedCallback(FixedHyperLink.OnNavigationServiceChanged)));
         }
 
@@ -153,7 +153,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("Page {0} Deferred", _pages.Count));
+                DocumentsTrace.FixedFormat.FixedDocument.Trace($"Page {_pages.Count} Deferred");
                 if (_partialPage == null)
                 {
                     _partialPage = fp;
@@ -221,7 +221,7 @@ namespace System.Windows.Documents
                 // Metro defines all external page are 1 based. All internals are 0 based.
                 //
                 pageNumber --;
-                
+
                 uiElementRet = GetFixedPage(pageNumber);
                 rootFixedPage = GetFixedPage(pageNumber);
             }
@@ -323,7 +323,7 @@ namespace System.Windows.Documents
         /// </param>
         internal DocumentPage GetPage(int pageNumber)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPage({0})", pageNumber));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPage({pageNumber})");
 
             // Make sure that the call is in the right context.
 //             Dispatcher.VerifyAccess();
@@ -368,7 +368,7 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
         internal void GetPageAsync(int pageNumber, object userState)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsync({0}, {1})", pageNumber, userState));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsync({pageNumber}, {userState})");
 
             // Make sure that the call is in the right context.
 //             Dispatcher.VerifyAccess();
@@ -397,7 +397,7 @@ namespace System.Windows.Documents
                 _NotifyGetPageAsyncCompleted(DocumentPage.Missing, pageNumber, null, false, userState);
             }
         }
-        
+
         /// <summary>
         /// <see cref="DynamicDocumentPaginator.GetPageNumber"/>
         /// </summary>
@@ -424,7 +424,7 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentNullException">userState is NULL.</exception>
         internal void CancelAsync(object userState)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsyncCancel([{userState}])");
 //             Dispatcher.VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -454,7 +454,7 @@ namespace System.Windows.Documents
             {
                 throw new ArgumentException(SR.FixedDocumentExpectsDependencyObject);
             }
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDF.GetContentPositionForElement({0})", element));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDF.GetContentPositionForElement({element})");
             // Make sure that the call is in the right context.
 //             Dispatcher.VerifyAccess();
 
@@ -581,7 +581,7 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty PrintTicketProperty
             = DependencyProperty.RegisterAttached("PrintTicket", typeof(object), typeof(FixedDocument),
                                                   new FrameworkPropertyMetadata((object)null));
-        
+
         /// <summary>
         /// Get/Set PrintTicket Property
         /// </summary>
@@ -652,7 +652,7 @@ namespace System.Windows.Documents
             {
                 return SyncGetPage(index, false /*forceReload*/);
             }
-            DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("SyncGetPageWithCheck {0} is invalid page", index));
+            DocumentsTrace.FixedFormat.FixedDocument.Trace($"SyncGetPageWithCheck {index} is invalid page");
             return null;
         }
 
@@ -661,7 +661,7 @@ namespace System.Windows.Documents
         // Assumes index is valid
         internal FixedPage SyncGetPage(int index, bool forceReload)
         {
-            DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("SyncGetPage {0}", index));
+            DocumentsTrace.FixedFormat.FixedDocument.Trace($"SyncGetPage {index}");
             Debug.Assert(IsValidPageIndex(index));
 
             PageContentCollection pc = this.Pages;
@@ -730,7 +730,7 @@ namespace System.Windows.Documents
         // displaying page, we should remove this function.
         internal bool GetPageSize(ref Size pageSize, int pageNumber)
         {
-            DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("GetPageSize {0}", pageNumber));
+            DocumentsTrace.FixedFormat.FixedDocument.Trace($"GetPageSize {pageNumber}");
             if (pageNumber < Pages.Count)
             {
                 // NOTE: it is wrong to call this method when page is outstanding.
@@ -745,7 +745,7 @@ namespace System.Windows.Documents
 #if DEBUG
                 else
                 {
-                    DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("====== GetPageSize {0}  Warning sync call made while async outstanding =====", pageNumber));
+                    DocumentsTrace.FixedFormat.FixedDocument.Trace($"====== GetPageSize {pageNumber}  Warning sync call made while async outstanding =====");
                 }
 #endif
 
@@ -896,8 +896,8 @@ namespace System.Windows.Documents
                 }
             }
         }
-        
-        
+
+
         internal static StoryFragments GetStoryFragments(FixedPage fixedPage)
         {
             object o = null;
@@ -1013,7 +1013,7 @@ namespace System.Windows.Documents
             PageContent pc = (PageContent)sender;
             if (pc == _partialPage)
             {
-                DocumentsTrace.FixedFormat.FixedDocument.Trace(string.Format("Loaded Page {0}", _pages.Count));
+                DocumentsTrace.FixedFormat.FixedDocument.Trace($"Loaded Page {_pages.Count}");
                 _partialPage.Initialized -= new EventHandler(OnPageLoaded);
                 _pages.Add(_partialPage);
                 _partialPage = null;
@@ -1040,7 +1040,7 @@ namespace System.Windows.Documents
             Debug.Assert(args != null);
             Debug.Assert(args.Ranges != null);
 
-            DocumentsTrace.FixedTextOM.Highlight.Trace(string.Format("HightlightMoved From {0}-{1} To {2}-{3}",0, 0, 0, 0));
+            DocumentsTrace.FixedTextOM.Highlight.Trace($"HightlightMoved From {0}-{0} To {0}-{0}");
             Debug.Assert(args.Ranges.Count > 0 && ((TextSegment)args.Ranges[0]).Start.CompareTo(((TextSegment)args.Ranges[0]).End) < 0);
 
             // REVIEW:benwest:7/9/2004: This code is reseting the entire highlight data structure
@@ -1051,7 +1051,7 @@ namespace System.Windows.Documents
             ITextContainer tc = this.FixedContainer;
             Highlights highlights = null;
 
-            // If this document is part of a FixedDocumentSequence, we should use 
+            // If this document is part of a FixedDocumentSequence, we should use
             // the highlights that have been set on the sequence.
             FixedDocumentSequence parent = this.Parent as FixedDocumentSequence;
             if (parent != null)
@@ -1062,7 +1062,7 @@ namespace System.Windows.Documents
             StaticTextPointer highlightTransitionPosition;
             StaticTextPointer highlightRangeStart;
             object selected;
-            
+
             //Find out if any highlights have been removed. We need to invalidate those pages
             List<FixedPage> oldHighlightPages = new List<FixedPage>();
             foreach (FixedPage page in _highlights.Keys)
@@ -1160,7 +1160,7 @@ namespace System.Windows.Documents
             }
 
             ICollection<FixedPage> newHighlightPages = _highlights.Keys as ICollection<FixedPage>;
-            
+
             //Also dirty the pages that had highlights before but not anymore
             foreach (FixedPage page in oldHighlightPages)
             {
@@ -1196,7 +1196,7 @@ namespace System.Windows.Documents
         {
             GetPageAsyncRequest asyncRequest = (GetPageAsyncRequest)arg;
             PageContent pc = asyncRequest.PageContent;
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncDelegate {0}", Pages.IndexOf(pc)));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsyncDelegate {Pages.IndexOf(pc)}");
             // Initiate request for page if necessary
             if (!_pendingPages.Contains(pc))
             {
@@ -1215,7 +1215,7 @@ namespace System.Windows.Documents
 
         private void OnGetPageRootCompleted(object sender, GetPageRootCompletedEventArgs args)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.OnGetPageRootCompleted {0}", Pages.IndexOf((PageContent)sender)));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.OnGetPageRootCompleted {Pages.IndexOf((PageContent)sender)}");
             // Mark this page as no longer pending
             PageContent pc = (PageContent)sender;
             pc.GetPageRootCompleted -= new GetPageRootCompletedEventHandler(OnGetPageRootCompleted);
@@ -1265,7 +1265,7 @@ namespace System.Windows.Documents
         // Notify the caller of IDFAsync.MeasurePageAsync
         private void _NotifyGetPageAsyncCompleted(DocumentPage page, int pageNumber, Exception error, bool cancelled, object userState)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP._NotifyGetPageAsyncCompleted {0} {1} {2} {3} {4}", page, pageNumber, error, cancelled, userState));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP._NotifyGetPageAsyncCompleted {page} {pageNumber} {error} {cancelled} {userState}");
             _paginator.NotifyGetPageCompleted(new GetPageCompletedEventArgs(
                                                page,
                                                pageNumber,
@@ -1275,7 +1275,7 @@ namespace System.Windows.Documents
                                                ));
         }
 
-       
+
         #endregion Private Methods
 
         //--------------------------------------------------------------------
@@ -1307,7 +1307,7 @@ namespace System.Windows.Documents
         private FixedDocumentPaginator _paginator;
         private DocumentReference _documentReference;
         private bool _hasExplicitStructure;
-        
+
         private const string _structureRelationshipName       = "http://schemas.microsoft.com/xps/2005/06/documentstructure";
         private const string _storyFragmentsRelationshipName  = "http://schemas.microsoft.com/xps/2005/06/storyfragments";
         private static readonly ContentType _storyFragmentsContentType = new ContentType("application/vnd.ms-package.xps-storyfragments+xml");
@@ -1356,7 +1356,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Ctors
-        internal FixedDocumentPage(FixedDocument panel, FixedPage page, Size fixedSize, int index) : 
+        internal FixedDocumentPage(FixedDocument panel, FixedPage page, Size fixedSize, int index) :
             base(page, fixedSize, new Rect(fixedSize), new Rect(fixedSize))
         {
             Debug.Assert(panel != null && page != null);
@@ -1411,7 +1411,7 @@ namespace System.Windows.Documents
 
         public override Visual Visual
         {
-            get 
+            get
             {
                 if (!_layedOut)
                 {
@@ -1424,7 +1424,7 @@ namespace System.Windows.Documents
                         e.Arrange(new Rect(base.Size));
                     }
                 }
-                return base.Visual; 
+                return base.Visual;
             }
         }
 

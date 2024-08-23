@@ -332,8 +332,8 @@ namespace MS.Internal.IO.Packaging
         internal static Stream CreateUserScopedIsolatedStorageFileStreamWithRandomName(int retryCount, out String fileName)
         {
             // negative is illegal and place an upper limit of 100
-            if (retryCount < 0 || retryCount > 100)
-                throw new ArgumentOutOfRangeException("retryCount");
+            ArgumentOutOfRangeException.ThrowIfNegative(retryCount);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(retryCount, 100);
 
             Stream s = null;
             fileName = null;
@@ -803,8 +803,7 @@ namespace MS.Internal.IO.Packaging
 
             void CheckDisposed()
             {
-                if (_disposed)
-                    throw new ObjectDisposedException("ReliableIsolatedStorageFileFolder");
+                ObjectDisposedException.ThrowIf(_disposed, typeof(ReliableIsolatedStorageFileFolder));
             }
 
             //------------------------------------------------------

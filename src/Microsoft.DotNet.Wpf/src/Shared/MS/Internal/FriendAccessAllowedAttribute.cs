@@ -10,7 +10,7 @@ using System;
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
 #elif PRESENTATION_CORE
-namespace MS.Internal.PresentationCore 
+namespace MS.Internal.PresentationCore
 #elif PRESENTATIONFRAMEWORK
 namespace MS.Internal.PresentationFramework
 #elif PRESENTATION_CFF_RASTERIZER

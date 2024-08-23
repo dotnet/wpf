@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     // This is the simplest implementation of a Node based XamlWriter.
@@ -13,7 +15,7 @@ namespace System.Xaml
         XamlNodeAddDelegate _addDelegate;
         XamlLineInfoAddDelegate _addLineInfoDelegate;
         XamlSchemaContext _schemaContext;
-        
+
         public WriterDelegate(XamlNodeAddDelegate add, XamlLineInfoAddDelegate addlineInfoDelegate, XamlSchemaContext xamlSchemaContext)
         {
             _addDelegate = add;
@@ -114,10 +116,7 @@ namespace System.Xaml
 
         private void ThrowIsDisposed()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlWriter"); // Can't say ReaderMultiIndexDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlWriter)); // Can't say ReaderMultiIndexDelegate because its internal.
         }
 
     }

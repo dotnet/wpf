@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -421,6 +420,7 @@
     <Compile Include="System\Windows\Annotations\Storage\AnnotationStore.cs" />
     <Compile Include="System\Windows\Annotations\Storage\StoreContentChangedEventArgs.cs" />
     <Compile Include="System\Windows\Annotations\Storage\XmlStreamStore.cs" />
+    <Compile Include="System\Windows\Appearance\WindowBackdropManager.cs" />
     <Compile Include="System\Windows\Application.cs" />
     <Compile Include="System\Windows\AttachedPropertyBrowsableForChildrenAttribute.cs" />
     <Compile Include="System\Windows\Automation\Peers\ButtonAutomationPeer.cs" />
@@ -1088,6 +1088,7 @@
     <Compile Include="System\Windows\Documents\XamlToRtfWriter.cs" />
     <Compile Include="System\Windows\Documents\XPSS0ValidatingLoader.cs" />
     <Compile Include="System\Windows\Documents\ZoomPercentageConverter.cs" />
+    <Compile Include="System\Windows\AccentColorHelper.cs" />
     <Compile Include="System\Windows\DynamicResourceExtension.cs" />
     <Compile Include="System\Windows\DynamicResourceExtensionConverter.cs" />
     <Compile Include="System\Windows\EventSetter.cs" />
@@ -1341,6 +1342,10 @@
     <Compile Include="System\Windows\TemplatePartAttribute.cs" />
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
+    <Compile Include="System\Windows\ThemeManager.cs" />
+    <Compile Include="System\Windows\FluentThemeState.cs" />
+    <Compile Include="System\Windows\ThemeMode.cs" />
+    <Compile Include="System\Windows\ThemeModeConverter.cs" />
     <Compile Include="System\Windows\ThemeDictionaryExtension.cs" />
     <Compile Include="System\Windows\ThemeInfoAttribute.cs" />
     <Compile Include="System\Windows\Thickness.cs" />
@@ -1358,6 +1363,7 @@
     <Compile Include="System\Windows\VisualStateManager.cs" />
     <Compile Include="System\Windows\VisualTransition.cs" />
     <Compile Include="System\Windows\Window.cs" />
+    <Compile Include="System\Windows\WindowBackdropType.cs" />
     <Compile Include="System\Windows\WindowCollection.cs" />
   </ItemGroup>
 
@@ -1427,6 +1433,7 @@
     <ProjectReference Include="$(WpfCycleBreakersDir)PresentationUI\PresentationUI-PresentationFramework-impl-cycle.csproj" />
     <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Printing\ref\System.Printing-ref.csproj" />
+    <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
   </ItemGroup>
 
   <ItemGroup>

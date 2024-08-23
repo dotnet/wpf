@@ -2522,21 +2522,6 @@
         <target state="translated">El número de página no puede ser negativo.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">El valor del parámetro debe estar comprendido entre "{0}" y "{1}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">El valor del parámetro debe ser finito.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">El valor del parámetro debe ser un número.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">Se encontró un formato incorrecto "{0}" al analizar la cadena "{1}".</target>

@@ -30,7 +30,6 @@ namespace Standard
     internal static partial class Utility
     {
         private static readonly Version _osVersion = Environment.OSVersion.Version;
-        private static readonly Version _presentationFrameworkVersion = Assembly.GetAssembly(typeof(Window)).GetName().Version;
 
         /// <summary>Convert a native integer that represent a color with an alpha channel into a Color struct.</summary>
         /// <param name="color">The integer that represents the color.  Its bits are of the format 0xAARRGGBB.</param>
@@ -108,16 +107,34 @@ namespace Standard
         }
 
         /// <summary>
+        /// Whether the operating system version is greater than or equal to 6.2.
+        /// </summary>
+        public static bool IsOSWindows8OrNewer => _osVersion >= new Version(6, 2);
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 10.0* (build 10240).
+        /// </summary>
+        public static bool IsOSWindows10OrNewer => _osVersion.Build >= 10240;
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22000).
+        /// </summary>
+        public static bool IsOSWindows11OrNewer => _osVersion.Build >= 22000;
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to 11.0* (build 22621).
+        /// </summary>
+        public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
+
+
+        /// <summary>
         /// Is this using WPF4?
         /// </summary>
         /// <remarks>
         /// There are a few specific bugs in Window in 3.5SP1 and below that require workarounds
         /// when handling WM_NCCALCSIZE on the HWND.
         /// </remarks>
-        public static bool IsPresentationFrameworkVersionLessThan4
-        {
-            get { return _presentationFrameworkVersion < new Version(4, 0); }
-        }
+        public static bool IsPresentationFrameworkVersionLessThan4 => false;
 
         public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
         {

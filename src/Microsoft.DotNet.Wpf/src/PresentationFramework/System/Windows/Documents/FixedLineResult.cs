@@ -14,7 +14,7 @@ namespace System.Windows.Documents
     using System.Collections;
     using System.Diagnostics;
     using System.Globalization;
-    
+
 
     //=====================================================================
     /// <summary>
@@ -35,7 +35,7 @@ namespace System.Windows.Documents
             _layoutBox = layoutBox;
         }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
@@ -64,7 +64,7 @@ namespace System.Windows.Documents
         /// <returns>string - A string representation of this object</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "FLR[{0}:{1}][{2}][{3}]", Start.ToString(), End.ToString(), BaseLine, _layoutBox);
+            return string.Create(CultureInfo.InvariantCulture, $"FLR[{Start}:{End}][{BaseLine}][{_layoutBox}]");
         }
 #endif
 

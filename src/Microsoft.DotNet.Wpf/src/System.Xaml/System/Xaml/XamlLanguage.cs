@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -123,7 +125,7 @@ namespace System.Xaml
             new Lazy<XamlDirective>(() => GetXamlDirective(x_AsyncRecords,
                 String, BuiltInValueConverter.Int32, AllowedMemberLocations.Attribute), true);
         private static Lazy<XamlDirective> s_arguments =
-            new Lazy<XamlDirective>(() => GetXamlDirective(x_Arguments, 
+            new Lazy<XamlDirective>(() => GetXamlDirective(x_Arguments,
                 s_listOfObject.Value, null, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_class =
             new Lazy<XamlDirective>(() => GetXamlDirective(x_Class));
@@ -132,21 +134,21 @@ namespace System.Xaml
         private static Lazy<XamlDirective> s_code =
             new Lazy<XamlDirective>(() => GetXamlDirective(x_Code));
         private static Lazy<XamlDirective> s_connectionId =
-            new Lazy<XamlDirective>(() => GetXamlDirective(x_ConnectionId, 
+            new Lazy<XamlDirective>(() => GetXamlDirective(x_ConnectionId,
                 s_string.Value, BuiltInValueConverter.Int32, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_factoryMethod =
-            new Lazy<XamlDirective>(() => GetXamlDirective(x_FactoryMethod, 
+            new Lazy<XamlDirective>(() => GetXamlDirective(x_FactoryMethod,
                 s_string.Value, BuiltInValueConverter.String, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_fieldModifier =
             new Lazy<XamlDirective>(() => GetXamlDirective(x_FieldModifier));
         private static Lazy<XamlDirective> s_items =
-            new Lazy<XamlDirective>(() => GetXamlDirective(x_Items, 
+            new Lazy<XamlDirective>(() => GetXamlDirective(x_Items,
                 s_listOfObject.Value, null, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_initialization =
             new Lazy<XamlDirective>(() => GetXamlDirective(x_Initialization,
                 s_object.Value, null, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_key =
-            new Lazy<XamlDirective>(() => GetXamlDirective(x_Key, 
+            new Lazy<XamlDirective>(() => GetXamlDirective(x_Key,
                 s_object.Value, BuiltInValueConverter.String, AllowedMemberLocations.Any), true);
         private static Lazy<XamlDirective> s_members =
             new Lazy<XamlDirective>(() => GetXamlDirective(x_Members,
@@ -197,7 +199,7 @@ namespace System.Xaml
         public static XamlType Int32 { get { return s_int32.Value; } }
         public static XamlType Boolean { get { return s_boolean.Value; } }
         public static XamlType XData { get { return s_xDataHolder.Value; } }
-        
+
         public static XamlType Object { get { return s_object.Value; } }
         public static XamlType Char { get { return s_char.Value; } }
         public static XamlType Single { get { return s_single.Value; } }
@@ -370,7 +372,7 @@ namespace System.Xaml
         }
 
         // The XAML names of MemberDefinition and PropertyDefinition don't match their CLR type names.
-        // LookupXamlType will still find them in the XAML namespace, but they won't be found through 
+        // LookupXamlType will still find them in the XAML namespace, but they won't be found through
         // clr-namespace lookup. This method handles that special case.
         internal static Type LookupClrNamespaceType(AssemblyNamespacePair nsPair, string typeName)
         {
@@ -388,7 +390,7 @@ namespace System.Xaml
             }
             return null;
         }
-        
+
         internal static XamlDirective LookupXmlDirective(string name)
         {
             switch (name)
@@ -414,7 +416,7 @@ namespace System.Xaml
         {
             XamlDirective[] result = new XamlDirective[]
                 { Arguments, AsyncRecords, Class, Code, ClassModifier, ConnectionId, FactoryMethod, FieldModifier,
-                    Key, Initialization, Items, Members, ClassAttributes, Name, PositionalParameters, Shared, Subclass, 
+                    Key, Initialization, Items, Members, ClassAttributes, Name, PositionalParameters, Shared, Subclass,
                     SynchronousMode, TypeArguments, Uid, UnknownContent, Base, Lang, Space};
             return new ReadOnlyCollection<XamlDirective>(result);
         }
@@ -424,7 +426,7 @@ namespace System.Xaml
             // System.Xaml and WindowsBase
             Assembly[] assemblies = new Assembly[]
                 { typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly };
-            XamlSchemaContextSettings settings = 
+            XamlSchemaContextSettings settings =
                 new XamlSchemaContextSettings { SupportMarkupExtensionsWithDuplicateArity = true };
             XamlSchemaContext result = new XamlSchemaContext(assemblies, settings);
             return result;
@@ -462,7 +464,7 @@ namespace System.Xaml
     }
 
 
-#if TARGETTING35SP1   
+#if TARGETTING35SP1
     public delegate T Initializer<T>();
 
     public struct Lazy<T> where T : class

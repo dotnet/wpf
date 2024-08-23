@@ -181,8 +181,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal void UpdateTablets()
         {
-            if (_tablets == null)
-                throw new ObjectDisposedException("TabletDeviceCollection");
+            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
 
             // This method can be re-entered in a way that can cause deadlock
             // This can happen if multiple WM_DEVICECHANGE
@@ -402,8 +401,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal bool HandleTabletAdded(uint wisptisIndex, ref uint tabletIndexChanged)
         {
-            if (_tablets == null)
-                throw new ObjectDisposedException("TabletDeviceCollection");
+            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
 
             tabletIndexChanged = UInt32.MaxValue;
 
@@ -506,8 +504,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal uint HandleTabletRemoved(uint wisptisIndex)
         {
-            if (_tablets == null)
-                throw new ObjectDisposedException("TabletDeviceCollection");
+            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
 
             // if mouse tabletdevice then ignore it.
             if (wisptisIndex == _indexMouseTablet)
@@ -594,8 +591,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal WispStylusDevice UpdateStylusDevices(int tabletId, int stylusId)
         {
-            if (_tablets == null)
-                throw new ObjectDisposedException("TabletDeviceCollection");
+            ObjectDisposedException.ThrowIf(_tablets == null, typeof(TabletDeviceCollection));
 
             for (int iTablet = 0, cTablets = _tablets.Length; iTablet < cTablets; iTablet++)
             {

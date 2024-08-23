@@ -196,7 +196,7 @@ namespace System.Windows
                     return Convert.ToString(fl.Value, cultureInfo);
 
                 default:
-                    return Convert.ToString(fl.Value, cultureInfo) + " " + fl.FigureUnitType.ToString();
+                    return $"{Convert.ToString(fl.Value, cultureInfo)} {fl.FigureUnitType}";
             }
         }
 

@@ -420,6 +420,18 @@ namespace System.Windows.Documents
         // Default ContextMenu for TextBox and RichTextBox.
         private class EditorContextMenu : ContextMenu
         {
+            public EditorContextMenu() : base()
+            {
+                if(ThemeManager.IsFluentThemeEnabled)
+                {
+                    SetResourceReference(StyleProperty, typeof(ContextMenu));
+                }
+                else
+                {
+                    // Default to previous behavior where we did nothing.
+                }
+            }
+
             // Initialize the context menu.
             // Creates a new instance.
             internal void AddMenuItems(TextEditor textEditor)

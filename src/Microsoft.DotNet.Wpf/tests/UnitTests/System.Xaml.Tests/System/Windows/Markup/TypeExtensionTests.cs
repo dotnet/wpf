@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
@@ -207,7 +208,7 @@ public class TypeExtensionTests
 
     private class CustomServiceProvider : IServiceProvider
     {
-        public Func<Type, object>? ServiceAction { get; set; }
+        public Func<Type, object> ServiceAction { get; set; }
 
         public object GetService(Type serviceType)
         {
@@ -222,7 +223,7 @@ public class TypeExtensionTests
 
     private class CustomXamlTypeResolver : IXamlTypeResolver
     {
-        public Func<string, Type>? ResolveAction { get; set; }
+        public Func<string, Type> ResolveAction { get; set; }
 
         public Type Resolve(string qualifiedTypeName)
         {

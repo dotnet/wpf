@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -653,18 +655,18 @@ namespace MS.Internal.Xaml
             Debug.Assert(length1 > 0 && length2 > 0);
 
             ReorderInfo[] temp = new ReorderInfo[length1];
-            
+
             // Copy first half into temp storage.
             //             srcArray,      srcIdx, destArray, destIdx, length
             Array.Copy(_sortingInfoArray, beginning, temp,       0,      length1);
 
             // Copy second half up where the first half was.
             //             srcArray,      srcIdx,    destArray,     destIdx,  length
-            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning,  length2); 
+            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning,  length2);
 
             // Copy first half out of temp storage in after the first half
             //        srcArray, srcIdx, destArray,        destIdx,         length
-            Array.Copy(temp,      0,  _sortingInfoArray, beginning + length2, length1); 
+            Array.Copy(temp,      0,  _sortingInfoArray, beginning + length2, length1);
         }
 
         private bool AdvanceTo(int start, XamlNodeType nodeType, int searchDepth, out int end)

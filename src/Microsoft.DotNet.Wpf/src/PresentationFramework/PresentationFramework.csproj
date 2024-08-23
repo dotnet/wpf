@@ -38,7 +38,9 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
-    <Compile Include="$(WpfCommonDir)\src\MS\Internal\PixelUnit.cs" Link="MS\Internal\PixelUnit.cs" />
+    <Compile Include="$(WpfCommonDir)\src\MS\Internal\PixelUnit.cs">
+        <Link>MS\Internal\PixelUnit.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs" />
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CommonDependencyPropertyAttribute.cs" />

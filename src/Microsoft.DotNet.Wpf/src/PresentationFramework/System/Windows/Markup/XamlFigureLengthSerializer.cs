@@ -186,7 +186,7 @@ namespace System.Windows.Markup
             out double       value,
             out FigureUnitType unit)
         {
-            ReadOnlySpan<char> valueSpan = s.Trim().AsSpan();
+            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
 
             value = 0.0;
             unit = FigureUnitType.Pixel;

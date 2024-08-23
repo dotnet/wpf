@@ -1436,7 +1436,7 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultComboBoxItemStyle}" TargetType="{x:Type ComboBoxItem}" />
   <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="{x:Type ComboBox}" />
-  <Style x:Key="DefaultContextMenu" TargetType="{x:Type ContextMenu}">
+  <Style x:Key="DefaultContextMenuStyle" TargetType="{x:Type ContextMenu}">
     <Setter Property="TextElement.Foreground" Value="{DynamicResource ContextMenuForeground}" />
     <Setter Property="Foreground" Value="{DynamicResource ContextMenuForeground}" />
     <Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
@@ -1477,7 +1477,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style BasedOn="{StaticResource DefaultContextMenu}" TargetType="{x:Type ContextMenu}" />
+  <Style BasedOn="{StaticResource DefaultContextMenuStyle}" TargetType="{x:Type ContextMenu}" />
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   <system:Double x:Key="DefaultDataGridFontSize">14</system:Double>
   <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>

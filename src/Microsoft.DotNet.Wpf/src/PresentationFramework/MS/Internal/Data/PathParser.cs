@@ -161,20 +161,8 @@ namespace MS.Internal.Data
                 }
             }
 
-
-            SourceValueInfo[] result;
-
-            if (_error == null)
-            {
-                result = new SourceValueInfo[_sourceValueInfos.Count];
-                _sourceValueInfos.CopyTo(result);
-            }
-            else
-            {
-                result = Array.Empty<SourceValueInfo>();
-            }
-
-            return result;
+            // If an error has occurred, we return an empty array instead
+            return _error is null ? _sourceValueInfos.ToArray() : Array.Empty<SourceValueInfo>();
         }
 
         private void AddProperty()

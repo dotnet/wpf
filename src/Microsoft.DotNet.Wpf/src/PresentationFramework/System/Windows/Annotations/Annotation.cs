@@ -630,11 +630,11 @@ namespace System.Windows.Annotations
 
                     case AnnotationXmlConstants.Attributes.TypeName:
                         ReadOnlySpan<char> typeName = value.AsSpan();
-                        int segmentsLength = typeName.Split(segments, Colon);
+                        int segmentsLength = typeName.Split(segments, Colon, StringSplitOptions.TrimEntries);
 
                         if (segmentsLength == 1) // Contains only name
                         {
-                            ReadOnlySpan<char> name = typeName[segments[0]].Trim();
+                            ReadOnlySpan<char> name = typeName[segments[0]];
                             if (name.IsEmpty)
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
@@ -644,8 +644,8 @@ namespace System.Windows.Annotations
                         }
                         else if (segmentsLength == 2) //Contains both namespace:name
                         {
-                            ReadOnlySpan<char> @namespace = typeName[segments[0]].Trim();
-                            ReadOnlySpan<char> name = typeName[segments[1]].Trim();
+                            ReadOnlySpan<char> @namespace = typeName[segments[0]];
+                            ReadOnlySpan<char> name = typeName[segments[1]];
                             if (@namespace.IsEmpty || name.IsEmpty)
                             {
                                 // One colon, prefix or suffix is empty string or whitespace

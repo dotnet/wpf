@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Text;
+using System.ComponentModel;
+using System.Globalization;
 using System.Xaml;
 
 namespace System.Windows.Markup
@@ -19,11 +19,9 @@ namespace System.Windows.Markup
     public class DateTimeValueSerializer : ValueSerializer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.ComponentModel.DateTimeConverter"></see> class.
+        /// Initializes a new instance of the <see cref="DateTimeConverter" /> class.
         /// </summary>
-        public DateTimeValueSerializer()
-        {
-        }
+        public DateTimeValueSerializer() { }
 
         /// <summary>
         /// Indicate that we do convert DateTime's from string.
@@ -36,7 +34,7 @@ namespace System.Windows.Markup
         public override bool CanConvertToString(object? value, IValueSerializerContext? context) => value is DateTime;
 
         /// <summary>
-        /// Converts the given value object to a <see cref="T:System.DateTime"></see>.
+        /// Converts the given value object to a <see cref="DateTime" />.
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext? context)
         {
@@ -61,17 +59,18 @@ namespace System.Windows.Markup
         }
 
         /// <summary>
-        /// Converts the given value object to a <see cref="T:System.DateTime"></see> using the arguments.
+        /// Converts the given value object to a <see cref="DateTime" /> using the arguments.
         /// </summary>
         public override string ConvertToString(object? value, IValueSerializerContext? context)
         {
-            if (value is null || !(value is DateTime dateTime))
+            if (value is not DateTime dateTime)
             {
                 throw GetConvertToException(value, typeof(string));
             }
 
             // Build up the format string to be used in DateTime.ToString()
-            var formatString = new StringBuilder("yyyy-MM-dd");
+            DefaultInterpolatedStringHandler formatSpan = new(5, 0, CultureInfo.CurrentCulture, stackalloc char[38]);
+            formatSpan.AppendLiteral("yyyy-MM-dd");
             if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
                 // The time portion of this DateTime is exactly at midnight.
@@ -80,7 +79,7 @@ namespace System.Windows.Markup
                 // we'll have to include the time.
                 if (dateTime.Kind != DateTimeKind.Unspecified)
                 {
-                    formatString.Append("'T'HH':'mm");
+                    formatSpan.AppendLiteral("'T'HH':'mm");
                 }
             }
             else
@@ -88,15 +87,15 @@ namespace System.Windows.Markup
                 long digitsAfterSecond = dateTime.Ticks % 10000000;
                 int second = dateTime.Second;
                 // We're going to write out at least the hours/minutes
-                formatString.Append("'T'HH':'mm");
+                formatSpan.AppendLiteral("'T'HH':'mm");
                 if (second != 0 || digitsAfterSecond != 0)
                 {
                     // need to write out seconds
-                    formatString.Append("':'ss");
+                    formatSpan.AppendLiteral("':'ss");
                     if (digitsAfterSecond != 0)
                     {
                         // need to write out digits after seconds
-                        formatString.Append("'.'FFFFFFF");
+                        formatSpan.AppendLiteral("'.'FFFFFFF");
                     }
                 }
             }
@@ -104,10 +103,10 @@ namespace System.Windows.Markup
             // Add the format specifier that indicates we want the DateTimeKind to be
             // included in the output formulation -- UTC gets written out with a "Z",
             // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
-            formatString.Append('K');
+            formatSpan.AppendLiteral("K");
 
             // We've finally got our format string built, we can create the string.
-            return dateTime.ToString(formatString.ToString(), TypeConverterHelper.InvariantEnglishUS);
+            return dateTime.ToString(formatSpan.ToString(), CultureInfo.InvariantCulture);
         }
     }
 }

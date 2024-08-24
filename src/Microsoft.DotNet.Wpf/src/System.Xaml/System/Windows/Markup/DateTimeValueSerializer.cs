@@ -48,14 +48,12 @@ namespace System.Windows.Markup
                 return DateTime.MinValue;
             }
 
-            // Get a DateTimeFormatInfo and set the formatting style for round-tripping
-            // and to trim the string.
-            DateTimeFormatInfo dateTimeFormatInfo = (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(typeof(DateTimeFormatInfo))!;
+            // Set the formatting style for round-tripping and to trim the string.
             const DateTimeStyles DateTimeStyles = DateTimeStyles.RoundtripKind
-                      | DateTimeStyles.NoCurrentDateDefault
-                      | DateTimeStyles.AllowLeadingWhite
-                      | DateTimeStyles.AllowTrailingWhite;
-            return DateTime.Parse(value, dateTimeFormatInfo, DateTimeStyles);
+                                                | DateTimeStyles.NoCurrentDateDefault
+                                                | DateTimeStyles.AllowLeadingWhite
+                                                | DateTimeStyles.AllowTrailingWhite;
+            return DateTime.Parse(value, DateTimeFormatInfo.InvariantInfo, DateTimeStyles);
         }
 
         /// <summary>
@@ -106,7 +104,7 @@ namespace System.Windows.Markup
             formatSpan.AppendLiteral("K");
 
             // We've finally got our format string built, we can create the string.
-            return dateTime.ToString(formatSpan.ToString(), CultureInfo.InvariantCulture);
+            return dateTime.ToString(formatSpan.ToString(), DateTimeFormatInfo.InvariantInfo);
         }
     }
 }

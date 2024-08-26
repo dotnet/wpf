@@ -5,7 +5,7 @@
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Globalization;
-using System.Xaml;
+using System.Diagnostics;
 
 namespace System.Windows.Markup
 {
@@ -66,9 +66,13 @@ namespace System.Windows.Markup
                 throw GetConvertToException(value, typeof(string));
             }
 
-            // Build up the format string to be used in DateTime.ToString()
-            DefaultInterpolatedStringHandler formatSpan = new(5, 0, CultureInfo.CurrentCulture, stackalloc char[38]);
-            formatSpan.AppendLiteral("yyyy-MM-dd");
+            // Build up the format string to be used in DateTime.TryParse()
+            Span<char> dateTimeSpan = stackalloc char[28];
+            Span<char> formatSpan = stackalloc char[36];
+            int formatLength = 0;
+
+            "yyyy-MM-dd".CopyTo(formatSpan);
+            formatLength += 10;
             if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
                 // The time portion of this DateTime is exactly at midnight.
@@ -77,7 +81,8 @@ namespace System.Windows.Markup
                 // we'll have to include the time.
                 if (dateTime.Kind != DateTimeKind.Unspecified)
                 {
-                    formatSpan.AppendLiteral("'T'HH':'mm");
+                    "'T'HH':'mm".CopyTo(formatSpan.Slice(formatLength));
+                    formatLength += 10;
                 }
             }
             else
@@ -85,15 +90,18 @@ namespace System.Windows.Markup
                 long digitsAfterSecond = dateTime.Ticks % 10000000;
                 int second = dateTime.Second;
                 // We're going to write out at least the hours/minutes
-                formatSpan.AppendLiteral("'T'HH':'mm");
+                "'T'HH':'mm".CopyTo(formatSpan.Slice(formatLength));
+                formatLength += 10;
                 if (second != 0 || digitsAfterSecond != 0)
                 {
-                    // need to write out seconds
-                    formatSpan.AppendLiteral("':'ss");
+                    // Need to write out seconds
+                    "':'ss".CopyTo(formatSpan.Slice(formatLength));
+                    formatLength += 5;
                     if (digitsAfterSecond != 0)
                     {
-                        // need to write out digits after seconds
-                        formatSpan.AppendLiteral("'.'FFFFFFF");
+                        // Need to write out digits after seconds
+                        "'.'FFFFFFF".CopyTo(formatSpan.Slice(formatLength));
+                        formatLength += 10;
                     }
                 }
             }
@@ -101,10 +109,17 @@ namespace System.Windows.Markup
             // Add the format specifier that indicates we want the DateTimeKind to be
             // included in the output formulation -- UTC gets written out with a "Z",
             // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
-            formatSpan.AppendLiteral("K");
+            "K".CopyTo(formatSpan.Slice(formatLength));
+            formatLength++;
 
             // We've finally got our format string built, we can create the string.
-            return dateTime.ToString(formatSpan.ToString(), DateTimeFormatInfo.InvariantInfo);
+            // Note: Technically there's no way this should ever fail, MinSupportedDateTime/MaxSupportedDateTime
+            // on InvariantCulture is the same as the Min/Max value for DateTime itself, that means
+            // we covered ArgumentOutOfRangeException from ToString(); and FormatException is covered here.
+            if (!dateTime.TryFormat(dateTimeSpan, out _, formatSpan.Slice(0, formatLength), DateTimeFormatInfo.InvariantInfo))
+                Debug.Assert(false, "TryFormat has failed");
+
+            return new string(dateTimeSpan);
         }
     }
 }

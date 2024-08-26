@@ -116,10 +116,10 @@ namespace System.Windows.Markup
             // Note: Technically there's no way this should ever fail, MinSupportedDateTime/MaxSupportedDateTime
             // on InvariantCulture is the same as the Min/Max value for DateTime itself, that means
             // we covered ArgumentOutOfRangeException from ToString(); and FormatException is covered here.
-            if (!dateTime.TryFormat(dateTimeSpan, out _, formatSpan.Slice(0, formatLength), DateTimeFormatInfo.InvariantInfo))
+            if (!dateTime.TryFormat(dateTimeSpan, out int charsWritten, formatSpan.Slice(0, formatLength), DateTimeFormatInfo.InvariantInfo))
                 Debug.Assert(false, "TryFormat has failed");
 
-            return new string(dateTimeSpan);
+            return new string(dateTimeSpan.Slice(0, charsWritten));
         }
     }
 }

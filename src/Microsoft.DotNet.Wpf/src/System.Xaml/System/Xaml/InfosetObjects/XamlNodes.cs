@@ -115,7 +115,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = NodeType.ToString(TypeConverterHelper.InvariantEnglishUS);
+            string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
             switch(NodeType)
             {
             case XamlNodeType.StartObject:

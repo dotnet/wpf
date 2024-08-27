@@ -66,13 +66,15 @@ namespace System.Windows.Markup
                 throw GetConvertToException(value, typeof(string));
             }
 
-            // Build up the format string to be used in DateTime.TryParse()
-            Span<char> dateTimeSpan = stackalloc char[28];
-            Span<char> formatSpan = stackalloc char[36];
-            int formatLength = 0;
+            // We always append format specifier that indicates we want the DateTimeKind
+            // to be included in the output formulation -- UTC gets written out with a "Z",
+            // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
+            const string YearMonthDay = "yyyy-MM-ddK";
+            const string DateWithHoursMinutes = "yyyy-MM-dd'T'HH':'mmK";
+            const string FullDateTime = "yyyy-MM-dd'T'HH':'mm':'ssK";
+            const string FullDateTimeWithFraction = "yyyy-MM-dd'T'HH':'mm':'ss'.'FFFFFFFK";
 
-            "yyyy-MM-dd".CopyTo(formatSpan);
-            formatLength += 10;
+            string formatString = YearMonthDay;
             if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
                 // The time portion of this DateTime is exactly at midnight.
@@ -81,45 +83,29 @@ namespace System.Windows.Markup
                 // we'll have to include the time.
                 if (dateTime.Kind != DateTimeKind.Unspecified)
                 {
-                    "'T'HH':'mm".CopyTo(formatSpan.Slice(formatLength));
-                    formatLength += 10;
+                    formatString = DateWithHoursMinutes;
                 }
             }
             else
             {
                 long digitsAfterSecond = dateTime.Ticks % 10000000;
                 int second = dateTime.Second;
+
                 // We're going to write out at least the hours/minutes
-                "'T'HH':'mm".CopyTo(formatSpan.Slice(formatLength));
-                formatLength += 10;
+                formatString = DateWithHoursMinutes;
                 if (second != 0 || digitsAfterSecond != 0)
                 {
                     // Need to write out seconds
-                    "':'ss".CopyTo(formatSpan.Slice(formatLength));
-                    formatLength += 5;
+                    formatString = FullDateTime;
                     if (digitsAfterSecond != 0)
                     {
-                        // Need to write out digits after seconds
-                        "'.'FFFFFFF".CopyTo(formatSpan.Slice(formatLength));
-                        formatLength += 10;
+                        // need to write out digits after seconds
+                        formatString = FullDateTimeWithFraction;
                     }
                 }
             }
 
-            // Add the format specifier that indicates we want the DateTimeKind to be
-            // included in the output formulation -- UTC gets written out with a "Z",
-            // and Local gets written out with e.g. "-08:00" for Pacific Standard Time.
-            "K".CopyTo(formatSpan.Slice(formatLength));
-            formatLength++;
-
-            // We've finally got our format string built, we can create the string.
-            // Note: Technically there's no way this should ever fail, MinSupportedDateTime/MaxSupportedDateTime
-            // on InvariantCulture is the same as the Min/Max value for DateTime itself, that means
-            // we covered ArgumentOutOfRangeException from ToString(); and FormatException is covered here.
-            if (!dateTime.TryFormat(dateTimeSpan, out int charsWritten, formatSpan.Slice(0, formatLength), DateTimeFormatInfo.InvariantInfo))
-                Debug.Assert(false, "TryFormat has failed");
-
-            return new string(dateTimeSpan.Slice(0, charsWritten));
+            return dateTime.ToString(formatString, DateTimeFormatInfo.InvariantInfo);
         }
     }
 }

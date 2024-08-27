@@ -272,9 +272,12 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteInterfaces.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\FontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\IFontSourceCollection.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />

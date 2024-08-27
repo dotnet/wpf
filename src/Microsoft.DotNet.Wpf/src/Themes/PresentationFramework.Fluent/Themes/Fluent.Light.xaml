@@ -344,6 +344,16 @@
   <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+  <!--  Time  -->
+  <SolidColorBrush x:Key="TimeViewForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="TimeViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+  <SolidColorBrush x:Key="TimeViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <SolidColorBrush x:Key="TimeViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+  <SolidColorBrush x:Key="TimeViewSelectedBackground" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="TimeViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="TimeViewNowBackground" Color="{StaticResource SystemAccentColorDark1}" />
+  <SolidColorBrush x:Key="TimeViewNowForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+  <SolidColorBrush x:Key="TimeViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  Card / CardAction / CardColor / CardExpander  -->
   <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="CardBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
@@ -4227,45 +4237,319 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />
   <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="{x:Type TextBox}" />
-  <Style x:Key="DefautltTimePickerStyle" TargetType="{x:Type TimePicker}">
-    <Setter Property="Background" Value="Green" />
-    <Setter Property="Foreground" Value="Red" />
-    <Setter Property="BorderBrush" Value="Black" />
+  <!-- Style for the Accept and Cancel buttons -->
+  <Style x:Key="AcceptCancelButtonStyle" TargetType="Button">
+    <Setter Property="FontSize" Value="18" />
+    <Setter Property="Height" Value="Auto" />
+    <Setter Property="Margin" Value="5" />
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="White" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Background">
+      <Setter.Value>
+        <SolidColorBrush Color="#333333" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid Background="{TemplateBinding Background}">
+            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10">
+              <!-- Rounded corners -->
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <!-- Trigger to change background when mouse is over the button -->
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background">
+          <Setter.Value>
+            <SolidColorBrush Color="#555555" />
+            <!-- Darker gray on hover -->
+          </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#777777" />
+        <!-- Change border color on hover -->
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <!-- Style for ListBoxes displaying time components -->
+  <Style x:Key="TimeListBoxStyle" TargetType="ListBox">
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="Width" Value="60" />
+    <Setter Property="Height" Value="Auto" />
+    <Setter Property="MaxHeight" Value="200" />
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="White" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Background">
+      <Setter.Value>
+        <SolidColorBrush Color="#333333" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="#333333" />
+    <!-- Border color for ListBox items -->
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="ItemTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <Border Background="Transparent" BorderBrush="#333333" BorderThickness="1" CornerRadius="5" Margin="2">
+            <!-- Rounded corners and border for ListBox items -->
+            <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="ListBoxItem">
+          <Setter Property="Height" Value="30" />
+          <Setter Property="VerticalContentAlignment" Value="Center" />
+          <Setter Property="HorizontalContentAlignment" Value="Center" />
+          <Setter Property="Margin" Value="2" />
+        </Style>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ListBox">
+          <Grid>
+            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Hidden">
+              <ItemsPresenter />
+            </ScrollViewer>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!-- Style for the overall Time control -->
+  <Style x:Key="DefaultTimeStyle" TargetType="{x:Type Time}">
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="White" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Background" Value="#333333" />
+    <Setter Property="BorderBrush" Value="#333333" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Time}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2" CornerRadius="5">
+            <Border.Style>
+              <Style TargetType="Border">
+                <Style.Triggers>
+                  <!-- Trigger to change border color on mouse hover -->
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#333333" />
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </Border.Style>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="HourListBox" Grid.Column="0" Style="{StaticResource TimeListBoxStyle}" />
+                <ListBox x:Name="MinuteListBox" Grid.Column="1" Style="{StaticResource TimeListBoxStyle}" />
+                <ListBox x:Name="AmPmListBox" Grid.Column="2" Style="{StaticResource TimeListBoxStyle}" />
+              </Grid>
+              <!-- Accept and Cancel Buttons -->
+              <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AcceptButton" Grid.Column="0" Style="{StaticResource AcceptCancelButtonStyle}" Content="✓" Command="{Binding AcceptCommand}" />
+                <Button x:Name="CancelButton" Grid.Column="1" Style="{StaticResource AcceptCancelButtonStyle}" Content="✕" Command="{Binding CancelCommand}" />
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!-- Apply the default time style -->
+  <Style BasedOn="{StaticResource DefaultTimeStyle}" TargetType="{x:Type Time}" />
+  <Thickness x:Key="TimePickerBorderThemeThickness">1,1,1,0</Thickness>
+  <Thickness x:Key="TimePickerAccentBorderThemeThickness">0,0,0,1</Thickness>
+  <Thickness x:Key="TimePickerLeftIconMargin">10,8,0,0</Thickness>
+  <Thickness x:Key="TimePickerRightIconMargin">0,8,10,0</Thickness>
+  <Thickness x:Key="TimePickerTimeButtonMargin">0,5,4,0</Thickness>
+  <Thickness x:Key="TimePickerTimeButtonPadding">0,0,0,0</Thickness>
+  <sys:Double x:Key="TimePickerTimeButtonHeight">24</sys:Double>
+  <sys:Double x:Key="TimePickerTimeButtonIconSize">14</sys:Double>
+  <sys:String x:Key="TimeGlyph"></sys:String>
+  <Style x:Key="DefaultTimePickerTextBoxStyle" TargetType="{x:Type TimePickerTextBox}">
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TimePicker}}}" />
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="CaretBrush">
+      <Setter.Value>
+        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type TimePickerTextBox}">
+          <Grid>
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup Name="WatermarkStates">
+                <VisualState Name="Unwatermarked" />
+                <VisualState Name="Watermarked">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="PART_Watermark" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border Margin="{TemplateBinding Margin}">
+              <Decorator x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <Border Margin="{TemplateBinding Margin}">
+              <ContentControl x:Name="PART_Watermark" Opacity="0" Margin="{TemplateBinding Padding}" Focusable="False" IsHitTestVisible="False">
+                <TextBlock Text="Select a date" Foreground="{DynamicResource TextFillColorSecondary}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" IsHitTestVisible="False" />
+              </ContentControl>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="DefaultTimePickerStyle" TargetType="{x:Type TimePicker}">
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+    <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
+    <Setter Property="TimeStyle" Value="{DynamicResource DefaultTimeStyle}" />
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Background">
+      <Setter.Value>
+        <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+    <Setter Property="BorderThickness" Value="{StaticResource TimePickerBorderThemeThickness}" />
+    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
+    <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
+    <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
+    <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TimePicker}">
           <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-              <StackPanel Orientation="Horizontal">
-                <ComboBox x:Name="HoursComboBox" Width="50" />
-                <TextBlock Text=":" VerticalAlignment="Center" />
-                <ComboBox x:Name="MinutesComboBox" Width="50" />
-                <ComboBox x:Name="AmPmComboBox" Width="50" />
-              </StackPanel>
-            </Border>
-            <Button x:Name="PART_Button" Grid.Column="1" Width="24" Height="24" Margin="0,5,4,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent">
-              <TextBlock Background="{TemplateBinding Background}" Text="" FontFamily="Segoe Fluent Icons" FontSize="14" />
-            </Button>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+              <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+                <Grid x:Name="PART_Root" FocusManager.FocusedElement="{Binding ElementName=PART_Button}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <Grid Grid.Column="0">
+                    <TimePickerTextBox x:Name="PART_TextBox" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ContextMenu="{TemplateBinding ContextMenu}" Focusable="{TemplateBinding Focusable}" Foreground="{TemplateBinding Foreground}" />
+                  </Grid>
+                  <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
+                  <Button x:Name="PART_Button" Grid.Column="1" Width="{StaticResource TimePickerTimeButtonHeight}" Height="{StaticResource TimePickerTimeButtonHeight}" Margin="{StaticResource TimePickerTimeButtonMargin}" Padding="{StaticResource TimePickerTimeButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" AutomationProperties.Name="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TimePicker}}}" Cursor="Arrow" Focusable="True" IsTabStop="True">
+                    <!--  WPF overrides paddings for button  -->
+                    <TextBlock Margin="{StaticResource TimePickerTimeButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SegoeFluentIcons}" FontSize="{StaticResource TimePickerTimeButtonIconSize}" Foreground="{TemplateBinding Foreground}" Text="{StaticResource TimeGlyph}" />
+                  </Button>
+                </Grid>
+              </Border>
+              <!--  The Accent Border is a separate element so that changes to the border thickness do not affect the position of the element  -->
+              <Border x:Name="AccentBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="{StaticResource TimePickerAccentBorderThemeThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+                <Border.BorderBrush>
+                  <SolidColorBrush Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+                </Border.BorderBrush>
+              </Border>
+            </Grid>
+            <Popup x:Name="PART_Popup" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False" />
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Blue" />
+              <Setter TargetName="AccentBorder" Property="BorderThickness" Value="0,0,0,2" />
+              <Setter TargetName="AccentBorder" Property="BorderBrush">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource SystemAccentColorSecondary}" />
+                </Setter.Value>
+              </Setter>
+              <Setter TargetName="ContentBorder" Property="Background">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource ControlFillColorInputActive}" />
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsEnabled" Value="True" />
+                <Condition Property="IsMouseOver" Value="True" />
+                <Condition Property="IsKeyboardFocusWithin" Value="False" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="ContentBorder" Property="Background">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource ControlFillColorSecondary}" />
+                </Setter.Value>
+              </Setter>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="True">
+              <Setter Property="Cursor" Value="IBeam" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Foreground" Value="Gray" />
-              <Setter TargetName="ContentBorder" Property="Background" Value="LightGray" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="Gray" />
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+              <Setter TargetName="AccentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+              <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  <Style BasedOn="{StaticResource DefautltTimePickerStyle}" TargetType="{x:Type TimePicker}" />
+  <Style BasedOn="{StaticResource DefaultTimePickerTextBoxStyle}" TargetType="{x:Type TimePickerTextBox}" />
+  <Style BasedOn="{StaticResource DefaultTimePickerStyle}" TargetType="{x:Type TimePicker}" />
   <Thickness x:Key="ToggleButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ToggleButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ToggleButtonIconMargin">0,0,8,0</Thickness>

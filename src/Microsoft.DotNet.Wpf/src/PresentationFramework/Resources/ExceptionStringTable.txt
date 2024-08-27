@@ -1489,6 +1489,11 @@ DatePickerTextBox_DefaultWatermarkText=<Enter text here>
 DatePicker_DropDownButtonName=Show Calendar
 DatePicker_WatermarkText=Select a date
 
+TimePickerAutomationPeer_LocalizedControlType=time picker
+TimePickerTextBox_DefaultWatermarkText=<Enter text here>
+TimePicker_DropDownButtonName=Show Calendar
+TimePicker_WatermarkText=Select a time
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ;                    DataGrid and DatePicker Exception Strings

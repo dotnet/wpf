@@ -213,9 +213,20 @@
     <SolidColorBrush x:Key="CalendarViewItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
-    <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
-    <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CalendarViewNowBackground" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CalendarViewNowForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+
+    <!--  Time  -->
+    <SolidColorBrush x:Key="TimeViewForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="TimeViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+    <SolidColorBrush x:Key="TimeViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+    <SolidColorBrush x:Key="TimeViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+    <SolidColorBrush x:Key="TimeViewSelectedBackground" Color="{StaticResource SystemAccentColorLight3}" />
+    <SolidColorBrush x:Key="TimeViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorLight3}" />
+    <SolidColorBrush x:Key="TimeViewTodayBackground" Color="{StaticResource SystemAccentColorLight3}" />
+    <SolidColorBrush x:Key="TimeViewTodayForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="TimeViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
 
     <!--  Card / CardAction / CardColor / CardExpander  -->
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource SystemColorWindowColor}" />

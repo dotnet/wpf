@@ -345,6 +345,17 @@
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
     <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
 
+    <!--  Time  -->
+    <SolidColorBrush x:Key="TimeViewForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="TimeViewBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+    <SolidColorBrush x:Key="TimeViewBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+    <SolidColorBrush x:Key="TimeViewItemBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+    <SolidColorBrush x:Key="TimeViewSelectedBackground" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="TimeViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="TimeViewNowBackground" Color="{StaticResource SystemAccentColorDark1}" />
+    <SolidColorBrush x:Key="TimeViewNowForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="TimeViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+
     <!--  Card / CardAction / CardColor / CardExpander  -->
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="CardBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />

@@ -45,7 +45,7 @@
     <StyleXaml Include="..\XAML\RibbonWindow.xaml" />
   </ItemGroup>
 
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets'))" />
 
   <Target Name="Build"
           DependsOnTargets="GenerateThemes" />

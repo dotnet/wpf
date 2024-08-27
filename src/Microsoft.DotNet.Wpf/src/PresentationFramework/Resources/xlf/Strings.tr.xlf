@@ -5898,6 +5898,36 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">ThemeDictionaryExtension yalnızca ResourceDictionary'deki Source özelliğine uygulanabilir.</target>
         <note />
       </trans-unit>
+      <trans-unit id="TimePickerAutomationPeer_LocalizedControlType">
+        <source>time picker</source>
+        <target state="new">time picker</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimePickerTextBox_DefaultWatermarkText">
+        <source>&lt;Enter text here&gt;</source>
+        <target state="new">&lt;Enter text here&gt;</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimePickerTextBox_TemplatePartIsOfIncorrectType">
+        <source>The template part {0} is not an instance of {1}.</source>
+        <target state="new">The template part {0} is not an instance of {1}.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimePicker_DropDownButtonName">
+        <source>Show Calendar</source>
+        <target state="new">Show Calendar</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimePicker_OnSelectedDateFormatChanged_InvalidValue">
+        <source>TimePickerFormat value is not valid.</source>
+        <target state="new">TimePickerFormat value is not valid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="TimePicker_WatermarkText">
+        <source>Select a time</source>
+        <target state="new">Select a time</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToStringFormatString_Control">
         <source>{0}: {1}</source>
         <target state="translated">{0}: {1}</target>

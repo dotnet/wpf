@@ -606,8 +606,6 @@
     <Compile Include="System\Windows\Controls\DataGridTextColumn.cs" />
     <Compile Include="System\Windows\Controls\DataTemplateSelector.cs" />
     <Compile Include="System\Windows\Controls\DatePicker.cs" />
-    <Compile Include="System\Windows\Controls\TimePicker.cs" />
-    <Compile Include="System\Windows\Controls\TimePickerTextBox.cs" />
     <Compile Include="System\Windows\Controls\DatePickerDateValidationErrorEventArgs.cs" />
     <Compile Include="System\Windows\Controls\DatePickerFormat.cs" />
     <Compile Include="System\Windows\Controls\DateTimeHelper.cs" />
@@ -769,6 +767,11 @@
     <Compile Include="System\Windows\Controls\TextChangedEventArgs.cs" />
     <Compile Include="System\Windows\Controls\TextRangeAdaptor.cs" />
     <Compile Include="System\Windows\Controls\TextSearch.cs" />
+    <Compile Include="System\Windows\Controls\Time.cs" />
+    <Compile Include="System\Windows\Controls\TimePicker.cs" />
+    <Compile Include="System\Windows\Controls\TimePickerTextBox.cs" />
+    <Compile Include="System\Windows\Controls\TimePickerTimeValidationErrorEventArgs.cs" />
+    <Compile Include="System\Windows\Controls\TimePickerFormat.cs" />
     <Compile Include="System\Windows\Controls\ToolBar.cs" />
     <Compile Include="System\Windows\Controls\ToolBarTray.cs" />
     <Compile Include="System\Windows\Controls\ToolTip.cs" />

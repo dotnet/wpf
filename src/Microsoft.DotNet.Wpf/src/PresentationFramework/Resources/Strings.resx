@@ -762,6 +762,24 @@
   <data name="DatePicker_WatermarkText" xml:space="preserve">
     <value>Select a date</value>
   </data>
+  <data name="TimePickerAutomationPeer_LocalizedControlType" xml:space="preserve">
+    <value>time picker</value>
+  </data>
+  <data name="TimePickerTextBox_DefaultWatermarkText" xml:space="preserve">
+    <value>&lt;Enter text here&gt;</value>
+  </data>
+  <data name="TimePickerTextBox_TemplatePartIsOfIncorrectType" xml:space="preserve">
+    <value>The template part {0} is not an instance of {1}.</value>
+  </data>
+  <data name="TimePicker_DropDownButtonName" xml:space="preserve">
+    <value>Show Calendar</value>
+  </data>
+  <data name="TimePicker_OnSelectedDateFormatChanged_InvalidValue" xml:space="preserve">
+    <value>TimePickerFormat value is not valid.</value>
+  </data>
+  <data name="TimePicker_WatermarkText" xml:space="preserve">
+    <value>Select a time</value>
+  </data>
   <data name="DeferringLoaderNoContext" xml:space="preserve">
     <value>Deferring loader '{0}' requires that '{1}' be implemented in the IServiceProvider.</value>
   </data>

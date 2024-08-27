@@ -56,7 +56,8 @@ namespace MS.Internal.Telemetry.PresentationFramework
         ViewBox =           0x0000008000000000,
         WebBrowser =        0x0000010000000000,
         WrapPanel =         0x0000020000000000,
-        FlowDocument =      0x0000040000000000
+        FlowDocument =      0x0000040000000000,
+        TimePicker =        0x0000080000000000
     }
 
     internal static class ControlsTraceLogger

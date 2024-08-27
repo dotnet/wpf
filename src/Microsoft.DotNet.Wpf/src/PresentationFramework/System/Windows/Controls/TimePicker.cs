@@ -1,6 +1,9 @@
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace System.Windows.Controls
 {
@@ -8,74 +11,246 @@ namespace System.Windows.Controls
     {
         static TimePicker()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePicker), new FrameworkPropertyMetadata(typeof(TimePicker)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePicker),
+                new FrameworkPropertyMetadata(typeof(TimePicker)));
+        }
+
+        public TimePicker()
+        {
+            this.Loaded += OnLoaded;
+            _previousTime = DateTime.Now; // Initialize _previousTime here
+        }
+
+        #region Properties
+
+        public static readonly DependencyProperty SelectedTimeFormatProperty =
+            DependencyProperty.Register("SelectedTimeFormat", typeof(string), typeof(TimePicker));
+
+        public string SelectedTimeFormat
+        {
+            get { return (string)GetValue(SelectedTimeFormatProperty); }
+            set { SetValue(SelectedTimeFormatProperty, value); }
+        }
+
+        public static readonly DependencyProperty TimeStyleProperty =
+            DependencyProperty.Register("TimeStyle", typeof(Style), typeof(TimePicker));
+
+        public Style TimeStyle
+        {
+            get { return (Style)GetValue(TimeStyleProperty); }
+            set { SetValue(TimeStyleProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedTimeProperty =
-            DependencyProperty.Register("SelectedTime", typeof(DateTime?), typeof(TimePicker), new PropertyMetadata(null));
+            DependencyProperty.Register(
+                nameof(SelectedTime),
+                typeof(DateTime?),
+                typeof(TimePicker),
+                new FrameworkPropertyMetadata(null, OnSelectedTimeChanged));
 
         public DateTime? SelectedTime
         {
-            get { return (DateTime?)GetValue(SelectedTimeProperty); }
-            set { SetValue(SelectedTimeProperty, value); }
+            get => (DateTime?)GetValue(SelectedTimeProperty);
+            set => SetValue(SelectedTimeProperty, value);
         }
 
-        public static readonly DependencyProperty ClockStyleProperty =
-            DependencyProperty.Register("ClockStyle", typeof(Style), typeof(TimePicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty TimeFormatProperty =
+            DependencyProperty.Register(
+                nameof(TimeFormat),
+                typeof(TimePickerFormat),
+                typeof(TimePicker),
+                new FrameworkPropertyMetadata(TimePickerFormat.Short, OnTimeFormatChanged));
 
-        public Style ClockStyle
+        public TimePickerFormat TimeFormat
         {
-            get { return (Style)GetValue(ClockStyleProperty); }
-            set { SetValue(ClockStyleProperty, value); }
+            get => (TimePickerFormat)GetValue(TimeFormatProperty);
+            set => SetValue(TimeFormatProperty, value);
         }
+
+        private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TimePicker picker)
+            {
+                picker.UpdateTimeControl();
+            }
+        }
+
+        private static void OnTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TimePicker picker)
+            {
+                picker.UpdateTimeControl();
+            }
+        }
+
+        #endregion
+
+        #region Private Fields
+
+        private Time _timeControl;
+        private bool _isPopupOpen;
+        private DateTime _previousTime; // Use non-nullable DateTime
+
+        #endregion
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            InitializeTimeComponents();
-        }
 
-        private void InitializeTimeComponents()
-        {
-            var hoursComboBox = GetTemplateChild("HoursComboBox") as ComboBox;
-            var minutesComboBox = GetTemplateChild("MinutesComboBox") as ComboBox;
-            var amPmComboBox = GetTemplateChild("AmPmComboBox") as ComboBox;
+            var textBox = GetTemplateChild("PART_TextBox") as TextBox;
+            var dropDownButton = GetTemplateChild("PART_Button") as Button;
+            var popup = GetTemplateChild("PART_Popup") as Popup;
 
-            if (hoursComboBox != null && minutesComboBox != null && amPmComboBox != null)
+            if (textBox != null)
             {
-                for (int i = 1; i <= 12; i++)
-                    hoursComboBox.Items.Add(i);
+                textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+            }
 
-                for (int i = 0; i < 60; i++)
-                    minutesComboBox.Items.Add(i.ToString("00"));
+            if (dropDownButton != null)
+            {
+                dropDownButton.Click += DropDownButton_Click;
+            }
 
-                amPmComboBox.Items.Add("AM");
-                amPmComboBox.Items.Add("PM");
-
-                hoursComboBox.SelectionChanged += TimeComponentChanged;
-                minutesComboBox.SelectionChanged += TimeComponentChanged;
-                amPmComboBox.SelectionChanged += TimeComponentChanged;
+            if (popup != null)
+            {
+                popup.Opened += Popup_Opened;
+                popup.Closed += Popup_Closed;
             }
         }
 
-        private void TimeComponentChanged(object sender, SelectionChangedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var hoursComboBox = GetTemplateChild("HoursComboBox") as ComboBox;
-            var minutesComboBox = GetTemplateChild("MinutesComboBox") as ComboBox;
-            var amPmComboBox = GetTemplateChild("AmPmComboBox") as ComboBox;
+            UpdateTimeControl();
+        }
 
-            if (hoursComboBox.SelectedItem != null && minutesComboBox.SelectedItem != null && amPmComboBox.SelectedItem != null)
+        private void DropDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            var popup = GetTemplateChild("PART_Popup") as Popup;
+            if (popup != null)
             {
-                int hours = (int)hoursComboBox.SelectedItem;
-                int minutes = int.Parse((string)minutesComboBox.SelectedItem);
-                string ampm = (string)amPmComboBox.SelectedItem;
+                _isPopupOpen = !_isPopupOpen;
+                popup.IsOpen = _isPopupOpen;
+            }
+        }
 
-                if (ampm == "PM" && hours != 12)
-                    hours += 12;
-                else if (ampm == "AM" && hours == 12)
-                    hours = 0;
+        private void Popup_Opened(object sender, EventArgs e)
+        {
+            InitializeTimeControl(); // Ensure _timeControl is initialized
 
-                SelectedTime = new DateTime(1, 1, 1, hours, minutes, 0);
+            var popup = GetTemplateChild("PART_Popup") as Popup;
+            if (popup != null)
+            {
+                if (_timeControl != null)
+                {
+                    if (SelectedTime.HasValue)
+                    {
+                        _timeControl.SelectedTime = SelectedTime.Value;
+                    }
+                    _timeControl.DataContext = this;
+
+                    popup.Child = _timeControl; // Add _timeControl to the Popup's visual tree
+                }
+            }
+        }
+
+        private void Popup_Closed(object sender, EventArgs e)
+        {
+            _isPopupOpen = false;
+
+            // Clear the Popup's content to remove the _timeControl
+            var popup = GetTemplateChild("PART_Popup") as Popup;
+            if (popup != null)
+            {
+                popup.Child = null;
+            }
+        }
+
+        private void TimeControl_AcceptButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (_timeControl != null)
+            {
+                SelectedTime = _timeControl.SelectedTime;
+                UpdateTextBox();
+
+                _isPopupOpen = false;
+                var popup = GetTemplateChild("PART_Popup") as Popup;
+                if (popup != null)
+                {
+                    popup.IsOpen = false;
+                }
+            }
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    DateTime? newTime = ParseText(textBox.Text);
+                    if (newTime.HasValue)
+                    {
+                        SelectedTime = newTime.Value;
+                        _previousTime = newTime.Value; // Update _previousTime when valid input is parsed
+                    }
+                    else
+                    {
+                        textBox.Text = _previousTime.ToString("hh:mm tt");
+                    }
+                }
+            }
+        }
+
+        private void UpdateTextBox()
+        {
+            var textBox = GetTemplateChild("PART_TextBox") as TextBox;
+            if (textBox != null)
+            {
+                textBox.Text = SelectedTime?.ToString("hh:mm tt") ?? string.Empty;
+            }
+        }
+
+        private void UpdateTimeControl()
+        {
+            if (_timeControl != null)
+            {
+                _timeControl.SelectedTime = SelectedTime.GetValueOrDefault();
+                _timeControl.DataContext = this;
+                UpdateTextBox();
+            }
+        }
+
+        private void TimeControl_CancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            _isPopupOpen = false;
+            var popup = GetTemplateChild("PART_Popup") as Popup;
+            if (popup != null)
+            {
+                popup.IsOpen = false;
+            }
+        }
+
+        private void InitializeTimeControl()
+        {
+            _timeControl = new Time();
+            if (_timeControl != null)
+            {
+                _timeControl.AcceptButtonClick += TimeControl_AcceptButtonClick;
+                _timeControl.CancelButtonClick += TimeControl_CancelButtonClick;
+            }
+        }
+
+        private DateTime? ParseText(string text)
+        {
+            try
+            {
+                var dtfi = CultureInfo.CurrentCulture.DateTimeFormat;
+                return DateTime.Parse(text, dtfi);
+            }
+            catch (FormatException)
+            {
+                return null;
             }
         }
     }

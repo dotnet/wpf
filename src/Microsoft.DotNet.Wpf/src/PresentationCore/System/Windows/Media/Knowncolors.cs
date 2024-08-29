@@ -815,7 +815,7 @@ namespace System.Windows.Media
             // Use NumberStyles.AllowHexSpecifier instead of NumberStyles.HexNumber because NumberStyles.HexNumber
             // trims the whitespaces when we already trim it in the code above and we don't consider values
             // with whitespaces between the "#" and the hex value to be valid values.
-            if (argbSpan.StartsWith('#') && uint.TryParse(argbSpan[1..], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint uintValue))
+            if (argbSpan.StartsWith('#') && uint.TryParse(argbSpan[1..], NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out uint uintValue))
             {
                 KnownColor color = (KnownColor)uintValue;
 

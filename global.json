@@ -4,7 +4,7 @@
     "runtimes": {
       "dotnet": [
         "2.1.7",
-        "$(VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion)"
+        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
       ]
     },
     "vs": {

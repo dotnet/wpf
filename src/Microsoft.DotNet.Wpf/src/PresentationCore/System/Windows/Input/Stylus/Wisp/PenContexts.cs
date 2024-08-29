@@ -502,7 +502,7 @@ namespace System.Windows.Input
                 elementHasCapture = false;  // force true hittesting to be done!
             }
             
-            if (!elementHasCapture && inputReport.Data != null && inputReport.Data.Length >= pointLength)
+            if (!elementHasCapture && inputReport.Data != null && inputReport.Data.Length >= pointLength && _plugInCollectionList.Count > 0)
             {
                 int[] data = inputReport.Data;
                 System.Diagnostics.Debug.Assert(data.Length % pointLength == 0);

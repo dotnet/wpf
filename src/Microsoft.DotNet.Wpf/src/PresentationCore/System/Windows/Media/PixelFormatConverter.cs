@@ -41,14 +41,9 @@ namespace System.Windows.Media
         /// <summary>
         /// test
         /// </summary>
-        public new object ConvertFromString(String value)
+        public new object ConvertFromString(string value)
         {
-            if ( null == value)
-            {
-                return null;
-            }
-
-            return new PixelFormat (value);
+            return value is not null ? new PixelFormat(value) : null;
         }
 
         /// <summary>

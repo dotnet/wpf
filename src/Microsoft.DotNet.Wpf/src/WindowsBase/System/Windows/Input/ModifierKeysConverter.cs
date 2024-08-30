@@ -109,6 +109,22 @@ namespace System.Windows.Input
             if (!IsDefinedModifierKeys(modifiers))
                 throw new InvalidEnumArgumentException(nameof(value), (int)modifiers, typeof(ModifierKeys));
 
+            // This is a fast path for when only a single modifier (or none) is set, which is a very common scenario.
+            // Therefore we want a fast path with an allocation free return, taking advantage of interned strings.
+            return modifiers switch
+            {
+                ModifierKeys.None => string.Empty,
+                ModifierKeys.Control => "Ctrl",
+                ModifierKeys.Alt => "Alt",
+                ModifierKeys.Shift => "Shift",
+                ModifierKeys.Windows => "Windows",
+                // Since we were not able to match a single modifier alone, there must be multiple modifiers involved.
+                _ => ConvertMultipleModifiers(modifiers),
+            };
+        }
+
+        private static string ConvertMultipleModifiers(ModifierKeys modifiers)
+        {
             // Ctrl+Alt+Windows+Shift is the maximum char length, though the composition of such value is improbable
             Span<char> modifierSpan = stackalloc char[22];
             int totalLength = 0;

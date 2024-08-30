@@ -110,7 +110,11 @@ namespace System.Windows.Input
             };
         }
 
-        // Helper like Enum.IsDefined, for MouseAction.
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{MouseAction}(MouseAction)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="mouseAction">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="mouseAction"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
         internal static bool IsDefinedMouseAction(MouseAction mouseAction)
         {
             return mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick;

@@ -22,15 +22,8 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // We can only handle string
+            return sourceType == typeof(string);
         }
 
         /// <summary>

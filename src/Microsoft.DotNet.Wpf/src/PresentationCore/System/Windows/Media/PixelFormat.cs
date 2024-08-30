@@ -241,91 +241,36 @@ namespace System.Windows.Media
             _guidFormat = PixelFormat.GetGuidFromFormat(_format);
         }
 
-        static private Guid GetGuidFromFormat(PixelFormatEnum format)
+        static private Guid GetGuidFromFormat(PixelFormatEnum format) => format switch
         {
-            switch (format)
-            {
-                case PixelFormatEnum.Default:
-                    return WICPixelFormatGUIDs.WICPixelFormatDontCare;
-
-                case PixelFormatEnum.Indexed1:
-                    return WICPixelFormatGUIDs.WICPixelFormat1bppIndexed;
-
-                case PixelFormatEnum.Indexed2:
-                    return WICPixelFormatGUIDs.WICPixelFormat2bppIndexed;
-
-                case PixelFormatEnum.Indexed4:
-                    return WICPixelFormatGUIDs.WICPixelFormat4bppIndexed;
-
-                case PixelFormatEnum.Indexed8:
-                    return WICPixelFormatGUIDs.WICPixelFormat8bppIndexed;
-
-                case PixelFormatEnum.BlackWhite:
-                    return WICPixelFormatGUIDs.WICPixelFormatBlackWhite;
-
-                case PixelFormatEnum.Gray2:
-                    return WICPixelFormatGUIDs.WICPixelFormat2bppGray;
-
-                case PixelFormatEnum.Gray4:
-                    return WICPixelFormatGUIDs.WICPixelFormat4bppGray;
-
-                case PixelFormatEnum.Gray8:
-                    return WICPixelFormatGUIDs.WICPixelFormat8bppGray;
-
-                case PixelFormatEnum.Bgr555:
-                    return WICPixelFormatGUIDs.WICPixelFormat16bppBGR555;
-
-                case PixelFormatEnum.Bgr565:
-                    return WICPixelFormatGUIDs.WICPixelFormat16bppBGR565;
-
-                case PixelFormatEnum.Bgr24:
-                    return WICPixelFormatGUIDs.WICPixelFormat24bppBGR;
-
-                case PixelFormatEnum.Rgb24:
-                    return WICPixelFormatGUIDs.WICPixelFormat24bppRGB;
-
-                case PixelFormatEnum.Bgr101010:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppBGR101010;
-
-                case PixelFormatEnum.Bgr32:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppBGR;
-
-                case PixelFormatEnum.Bgra32:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppBGRA;
-
-                case PixelFormatEnum.Pbgra32:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppPBGRA;
-
-                case PixelFormatEnum.Rgb48:
-                    return WICPixelFormatGUIDs.WICPixelFormat48bppRGB;
-
-                case PixelFormatEnum.Rgba64:
-                    return WICPixelFormatGUIDs.WICPixelFormat64bppRGBA;
-
-                case PixelFormatEnum.Prgba64:
-                    return WICPixelFormatGUIDs.WICPixelFormat64bppPRGBA;
-
-                case PixelFormatEnum.Gray16:
-                    return WICPixelFormatGUIDs.WICPixelFormat16bppGray;
-
-                case PixelFormatEnum.Gray32Float:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppGrayFloat;
-
-                case PixelFormatEnum.Rgb128Float:
-                    return WICPixelFormatGUIDs.WICPixelFormat128bppRGBFloat;
-
-                case PixelFormatEnum.Rgba128Float:
-                    return WICPixelFormatGUIDs.WICPixelFormat128bppRGBAFloat;
-
-                case PixelFormatEnum.Prgba128Float:
-                    return WICPixelFormatGUIDs.WICPixelFormat128bppPRGBAFloat;
-
-                case PixelFormatEnum.Cmyk32:
-                    return WICPixelFormatGUIDs.WICPixelFormat32bppCMYK;
-            }
-
-            throw new System.ArgumentException (SR.Format(SR.Image_BadPixelFormat, format), nameof(format));
-        }
+            PixelFormatEnum.Default => WICPixelFormatGUIDs.WICPixelFormatDontCare,
+            PixelFormatEnum.Indexed1 => WICPixelFormatGUIDs.WICPixelFormat1bppIndexed,
+            PixelFormatEnum.Indexed2 => WICPixelFormatGUIDs.WICPixelFormat2bppIndexed,
+            PixelFormatEnum.Indexed4 => WICPixelFormatGUIDs.WICPixelFormat4bppIndexed,
+            PixelFormatEnum.Indexed8 => WICPixelFormatGUIDs.WICPixelFormat8bppIndexed,
+            PixelFormatEnum.BlackWhite => WICPixelFormatGUIDs.WICPixelFormatBlackWhite,
+            PixelFormatEnum.Gray2 => WICPixelFormatGUIDs.WICPixelFormat2bppGray,
+            PixelFormatEnum.Gray4 => WICPixelFormatGUIDs.WICPixelFormat4bppGray,
+            PixelFormatEnum.Gray8 => WICPixelFormatGUIDs.WICPixelFormat8bppGray,
+            PixelFormatEnum.Bgr555 => WICPixelFormatGUIDs.WICPixelFormat16bppBGR555,
+            PixelFormatEnum.Bgr565 => WICPixelFormatGUIDs.WICPixelFormat16bppBGR565,
+            PixelFormatEnum.Bgr24 => WICPixelFormatGUIDs.WICPixelFormat24bppBGR,
+            PixelFormatEnum.Rgb24 => WICPixelFormatGUIDs.WICPixelFormat24bppRGB,
+            PixelFormatEnum.Bgr101010 => WICPixelFormatGUIDs.WICPixelFormat32bppBGR101010,
+            PixelFormatEnum.Bgr32 => WICPixelFormatGUIDs.WICPixelFormat32bppBGR,
+            PixelFormatEnum.Bgra32 => WICPixelFormatGUIDs.WICPixelFormat32bppBGRA,
+            PixelFormatEnum.Pbgra32 => WICPixelFormatGUIDs.WICPixelFormat32bppPBGRA,
+            PixelFormatEnum.Rgb48 => WICPixelFormatGUIDs.WICPixelFormat48bppRGB,
+            PixelFormatEnum.Rgba64 => WICPixelFormatGUIDs.WICPixelFormat64bppRGBA,
+            PixelFormatEnum.Prgba64 => WICPixelFormatGUIDs.WICPixelFormat64bppPRGBA,
+            PixelFormatEnum.Gray16 => WICPixelFormatGUIDs.WICPixelFormat16bppGray,
+            PixelFormatEnum.Gray32Float => WICPixelFormatGUIDs.WICPixelFormat32bppGrayFloat,
+            PixelFormatEnum.Rgb128Float => WICPixelFormatGUIDs.WICPixelFormat128bppRGBFloat,
+            PixelFormatEnum.Rgba128Float => WICPixelFormatGUIDs.WICPixelFormat128bppRGBAFloat,
+            PixelFormatEnum.Prgba128Float => WICPixelFormatGUIDs.WICPixelFormat128bppPRGBAFloat,
+            PixelFormatEnum.Cmyk32 => WICPixelFormatGUIDs.WICPixelFormat32bppCMYK,
+            _ => throw new ArgumentException(SR.Format(SR.Image_BadPixelFormat, format), nameof(format))
+        };
 
         private PixelFormatFlags FormatFlags
         {
@@ -603,88 +548,35 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="pixelFormatEnum"></param>
         /// <returns></returns>
-        internal static PixelFormat GetPixelFormat(PixelFormatEnum pixelFormatEnum)
+        internal static PixelFormat GetPixelFormat(PixelFormatEnum pixelFormatEnum) => pixelFormatEnum switch
         {
-            switch (pixelFormatEnum)
-            {
-                case PixelFormatEnum.Indexed1:
-                    return PixelFormats.Indexed1;
-
-                case PixelFormatEnum.Indexed2:
-                    return PixelFormats.Indexed2;
-
-                case PixelFormatEnum.Indexed4:
-                    return PixelFormats.Indexed4;
-
-                case PixelFormatEnum.Indexed8:
-                    return PixelFormats.Indexed8;
-
-                case PixelFormatEnum.BlackWhite:
-                    return PixelFormats.BlackWhite;
-
-                case PixelFormatEnum.Gray2:
-                    return PixelFormats.Gray2;
-
-                case PixelFormatEnum.Gray4:
-                    return PixelFormats.Gray4;
-
-                case PixelFormatEnum.Gray8:
-                    return PixelFormats.Gray8;
-
-                case PixelFormatEnum.Bgr555:
-                    return PixelFormats.Bgr555;
-
-                case PixelFormatEnum.Bgr565:
-                    return PixelFormats.Bgr565;
-
-                case PixelFormatEnum.Bgr101010:
-                    return PixelFormats.Bgr101010;
-
-                case PixelFormatEnum.Bgr24:
-                    return PixelFormats.Bgr24;
-
-                case PixelFormatEnum.Rgb24:
-                    return PixelFormats.Rgb24;
-
-                case PixelFormatEnum.Bgr32:
-                    return PixelFormats.Bgr32;
-
-                case PixelFormatEnum.Bgra32:
-                    return PixelFormats.Bgra32;
-
-                case PixelFormatEnum.Pbgra32:
-                    return PixelFormats.Pbgra32;
-
-                case PixelFormatEnum.Rgb48:
-                    return PixelFormats.Rgb48;
-
-                case PixelFormatEnum.Rgba64:
-                    return PixelFormats.Rgba64;
-
-                case PixelFormatEnum.Prgba64:
-                    return PixelFormats.Prgba64;
-
-                case PixelFormatEnum.Gray16:
-                    return PixelFormats.Gray16;
-
-                case PixelFormatEnum.Gray32Float:
-                    return PixelFormats.Gray32Float;
-
-                case PixelFormatEnum.Rgb128Float:
-                    return PixelFormats.Rgb128Float;
-
-                case PixelFormatEnum.Rgba128Float:
-                    return PixelFormats.Rgba128Float;
-
-                case PixelFormatEnum.Prgba128Float:
-                    return PixelFormats.Prgba128Float;
-
-                case PixelFormatEnum.Cmyk32:
-                    return PixelFormats.Cmyk32;
-            }
-
-            return PixelFormats.Default;
-        }
+            PixelFormatEnum.Indexed1 => PixelFormats.Indexed1,
+            PixelFormatEnum.Indexed2 => PixelFormats.Indexed2,
+            PixelFormatEnum.Indexed4 => PixelFormats.Indexed4,
+            PixelFormatEnum.Indexed8 => PixelFormats.Indexed8,
+            PixelFormatEnum.BlackWhite => PixelFormats.BlackWhite,
+            PixelFormatEnum.Gray2 => PixelFormats.Gray2,
+            PixelFormatEnum.Gray4 => PixelFormats.Gray4,
+            PixelFormatEnum.Gray8 => PixelFormats.Gray8,
+            PixelFormatEnum.Bgr555 => PixelFormats.Bgr555,
+            PixelFormatEnum.Bgr565 => PixelFormats.Bgr565,
+            PixelFormatEnum.Bgr101010 => PixelFormats.Bgr101010,
+            PixelFormatEnum.Bgr24 => PixelFormats.Bgr24,
+            PixelFormatEnum.Rgb24 => PixelFormats.Rgb24,
+            PixelFormatEnum.Bgr32 => PixelFormats.Bgr32,
+            PixelFormatEnum.Bgra32 => PixelFormats.Bgra32,
+            PixelFormatEnum.Pbgra32 => PixelFormats.Pbgra32,
+            PixelFormatEnum.Rgb48 => PixelFormats.Rgb48,
+            PixelFormatEnum.Rgba64 => PixelFormats.Rgba64,
+            PixelFormatEnum.Prgba64 => PixelFormats.Prgba64,
+            PixelFormatEnum.Gray16 => PixelFormats.Gray16,
+            PixelFormatEnum.Gray32Float => PixelFormats.Gray32Float,
+            PixelFormatEnum.Rgb128Float => PixelFormats.Rgb128Float,
+            PixelFormatEnum.Rgba128Float => PixelFormats.Rgba128Float,
+            PixelFormatEnum.Prgba128Float => PixelFormats.Prgba128Float,
+            PixelFormatEnum.Cmyk32 => PixelFormats.Cmyk32,
+            _ => PixelFormats.Default,
+        };
 
         static private PixelFormatFlags GetPixelFormatFlagsFromGuid(Guid pixelFormatGuid)
         {
@@ -814,165 +706,62 @@ namespace System.Windows.Media
             return result;
         }
 
-        static private PixelFormatFlags GetPixelFormatFlagsFromEnum(PixelFormatEnum pixelFormatEnum)
+        static private PixelFormatFlags GetPixelFormatFlagsFromEnum(PixelFormatEnum pixelFormatEnum) => pixelFormatEnum switch
         {
-            switch (pixelFormatEnum)
-            {
-                case PixelFormatEnum.Default:
-                    return PixelFormatFlags.BitsPerPixelUndefined;
-
-                case PixelFormatEnum.Indexed1:
-                    return PixelFormatFlags.BitsPerPixel1 | PixelFormatFlags.Palettized;
-
-                case PixelFormatEnum.Indexed2:
-                    return PixelFormatFlags.BitsPerPixel2 | PixelFormatFlags.Palettized;
-
-                case PixelFormatEnum.Indexed4:
-                    return PixelFormatFlags.BitsPerPixel4 | PixelFormatFlags.Palettized;
-
-                case PixelFormatEnum.Indexed8:
-                    return PixelFormatFlags.BitsPerPixel8 | PixelFormatFlags.Palettized;
-
-                case PixelFormatEnum.BlackWhite:
-                    return PixelFormatFlags.BitsPerPixel1 | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Gray2:
-                    return PixelFormatFlags.BitsPerPixel2 | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Gray4:
-                    return PixelFormatFlags.BitsPerPixel4 | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Gray8:
-                    return PixelFormatFlags.BitsPerPixel8 | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Bgr555:
-                    return PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR;
-
-                case PixelFormatEnum.Bgr565:
-                    return PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR;
-
-                case PixelFormatEnum.Bgr101010:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR;
-
-                case PixelFormatEnum.Bgr24:
-                    return PixelFormatFlags.BitsPerPixel24 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR;
-
-                case PixelFormatEnum.Rgb24:
-                    return PixelFormatFlags.BitsPerPixel24 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderRGB;
-
-                case PixelFormatEnum.Bgr32:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR;
-
-                case PixelFormatEnum.Bgra32:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderABGR;
-
-                case PixelFormatEnum.Pbgra32:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderABGR;
-
-                case PixelFormatEnum.Rgb48:
-                    return PixelFormatFlags.BitsPerPixel48 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderRGB;
-
-                case PixelFormatEnum.Rgba64:
-                    return PixelFormatFlags.BitsPerPixel64 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderARGB;
-
-                case PixelFormatEnum.Prgba64:
-                    return PixelFormatFlags.BitsPerPixel64 | PixelFormatFlags.IsSRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderARGB;
-
-                case PixelFormatEnum.Gray16:
-                    return PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Gray32Float:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsScRGB | PixelFormatFlags.IsGray;
-
-                case PixelFormatEnum.Rgb128Float:
-                    return PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB;
-
-                case PixelFormatEnum.Rgba128Float:
-                    return PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderARGB;
-
-                case PixelFormatEnum.Prgba128Float:
-                    return PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderARGB;
-
-                case PixelFormatEnum.Cmyk32:
-                    return PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsCMYK;
-            }
-
+            PixelFormatEnum.Default => PixelFormatFlags.BitsPerPixelUndefined,
+            PixelFormatEnum.Indexed1 => PixelFormatFlags.BitsPerPixel1 | PixelFormatFlags.Palettized,
+            PixelFormatEnum.Indexed2 => PixelFormatFlags.BitsPerPixel2 | PixelFormatFlags.Palettized,
+            PixelFormatEnum.Indexed4 => PixelFormatFlags.BitsPerPixel4 | PixelFormatFlags.Palettized,
+            PixelFormatEnum.Indexed8 => PixelFormatFlags.BitsPerPixel8 | PixelFormatFlags.Palettized,
+            PixelFormatEnum.BlackWhite => PixelFormatFlags.BitsPerPixel1 | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Gray2 => PixelFormatFlags.BitsPerPixel2 | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Gray4 => PixelFormatFlags.BitsPerPixel4 | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Gray8 => PixelFormatFlags.BitsPerPixel8 | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Bgr555 => PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR,
+            PixelFormatEnum.Bgr565 => PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR,
+            PixelFormatEnum.Bgr101010 => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR,
+            PixelFormatEnum.Bgr24 => PixelFormatFlags.BitsPerPixel24 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR,
+            PixelFormatEnum.Rgb24 => PixelFormatFlags.BitsPerPixel24 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderRGB,
+            PixelFormatEnum.Bgr32 => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderBGR,
+            PixelFormatEnum.Bgra32 => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderABGR,
+            PixelFormatEnum.Pbgra32 => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsSRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderABGR,
+            PixelFormatEnum.Rgb48 => PixelFormatFlags.BitsPerPixel48 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderRGB,
+            PixelFormatEnum.Rgba64 => PixelFormatFlags.BitsPerPixel64 | PixelFormatFlags.IsSRGB | PixelFormatFlags.ChannelOrderARGB,
+            PixelFormatEnum.Prgba64 => PixelFormatFlags.BitsPerPixel64 | PixelFormatFlags.IsSRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderARGB,
+            PixelFormatEnum.Gray16 => PixelFormatFlags.BitsPerPixel16 | PixelFormatFlags.IsSRGB | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Gray32Float => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsScRGB | PixelFormatFlags.IsGray,
+            PixelFormatEnum.Rgb128Float => PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB,
+            PixelFormatEnum.Rgba128Float => PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderARGB,
+            PixelFormatEnum.Prgba128Float => PixelFormatFlags.BitsPerPixel128 | PixelFormatFlags.IsScRGB | PixelFormatFlags.Premultiplied | PixelFormatFlags.ChannelOrderARGB,
+            PixelFormatEnum.Cmyk32 => PixelFormatFlags.BitsPerPixel32 | PixelFormatFlags.IsCMYK,
             // 3rd party pixel format -- we don't expose anything about it.
-            return PixelFormatFlags.BitsPerPixelUndefined;
-        }
+            _ => PixelFormatFlags.BitsPerPixelUndefined,
+        };
 
-        static private UInt32 GetBitsPerPixelFromEnum(PixelFormatEnum pixelFormatEnum)
+        static private UInt32 GetBitsPerPixelFromEnum(PixelFormatEnum pixelFormatEnum) => pixelFormatEnum switch
         {
-            switch (pixelFormatEnum)
-            {
-                case PixelFormatEnum.Default:
-                    return 0;
-
-                case PixelFormatEnum.Indexed1:
-                    return 1;
-
-                case PixelFormatEnum.Indexed2:
-                    return 2;
-
-                case PixelFormatEnum.Indexed4:
-                    return 4;
-
-                case PixelFormatEnum.Indexed8:
-                    return 8;
-
-                case PixelFormatEnum.BlackWhite:
-                    return 1;
-
-                case PixelFormatEnum.Gray2:
-                    return 2;
-
-                case PixelFormatEnum.Gray4:
-                    return 4;
-
-                case PixelFormatEnum.Gray8:
-                    return 8;
-
-                case PixelFormatEnum.Bgr555:
-                case PixelFormatEnum.Bgr565:
-                    return 16;
-
-                case PixelFormatEnum.Bgr101010:
-                    return 32;
-
-                case PixelFormatEnum.Bgr24:
-                case PixelFormatEnum.Rgb24:
-                    return 24;
-
-                case PixelFormatEnum.Bgr32:
-                case PixelFormatEnum.Bgra32:
-                case PixelFormatEnum.Pbgra32:
-                    return 32;
-
-                case PixelFormatEnum.Rgb48:
-                    return 48;
-
-                case PixelFormatEnum.Rgba64:
-                case PixelFormatEnum.Prgba64:
-                    return 64;
-
-                case PixelFormatEnum.Gray16:
-                    return 16;
-
-                case PixelFormatEnum.Gray32Float:
-                    return 32;
-
-                case PixelFormatEnum.Rgb128Float:
-                case PixelFormatEnum.Rgba128Float:
-                case PixelFormatEnum.Prgba128Float:
-                    return 128;
-
-                case PixelFormatEnum.Cmyk32:
-                    return 32;
-            }
-
+            PixelFormatEnum.Default => 0,
+            PixelFormatEnum.Indexed1 => 1,
+            PixelFormatEnum.Indexed2 => 2,
+            PixelFormatEnum.Indexed4 => 4,
+            PixelFormatEnum.Indexed8 => 8,
+            PixelFormatEnum.BlackWhite => 1,
+            PixelFormatEnum.Gray2 => 2,
+            PixelFormatEnum.Gray4 => 4,
+            PixelFormatEnum.Gray8 => 8,
+            PixelFormatEnum.Bgr555 or PixelFormatEnum.Bgr565 => 16,
+            PixelFormatEnum.Bgr101010 => 32,
+            PixelFormatEnum.Bgr24 or PixelFormatEnum.Rgb24 => 24,
+            PixelFormatEnum.Bgr32 or PixelFormatEnum.Bgra32 or PixelFormatEnum.Pbgra32 => 32,
+            PixelFormatEnum.Rgb48 => 48,
+            PixelFormatEnum.Rgba64 or PixelFormatEnum.Prgba64 => 64,
+            PixelFormatEnum.Gray16 => 16,
+            PixelFormatEnum.Gray32Float => 32,
+            PixelFormatEnum.Rgb128Float or PixelFormatEnum.Rgba128Float or PixelFormatEnum.Prgba128Float => 128,
+            PixelFormatEnum.Cmyk32 => 32,
             // 3rd party pixel format -- we don't expose anything about it.
-            return 0;
-        }
+            _ => 0,
+        };
 
         [NonSerialized]
         private PixelFormatFlags _flags;

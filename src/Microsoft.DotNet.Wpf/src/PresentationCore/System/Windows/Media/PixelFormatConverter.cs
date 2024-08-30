@@ -23,14 +23,8 @@ namespace System.Windows.Media
         /// </summary>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
-            if (t == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // We can only handle string
+            return t == typeof(string);
         }
 
         /// <summary>

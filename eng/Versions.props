@@ -120,6 +120,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>10.0.0-alpha.1.24427.3</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>10.0.0-alpha.1.24429.2</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

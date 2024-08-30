@@ -76,30 +76,23 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source != null && source is string)
+            if (source is not string mouseAction)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> mouseActionToken = mouseAction.AsSpan().Trim();
+            return mouseActionToken switch
             {
-                string mouseActionToken = ((string)source).Trim();
-                mouseActionToken = mouseActionToken.ToUpper(CultureInfo.InvariantCulture);
-                if (mouseActionToken == String.Empty)
-                    return MouseAction.None;
-                
-                MouseAction mouseAction = MouseAction.None;
-                switch (mouseActionToken)
-                {
-                    case "NONE"             : mouseAction = MouseAction.None; break;
-                    case "LEFTCLICK"        : mouseAction = MouseAction.LeftClick; break;
-                    case "RIGHTCLICK"       : mouseAction = MouseAction.RightClick; break;
-                    case "MIDDLECLICK"      : mouseAction = MouseAction.MiddleClick; break;
-                    case "WHEELCLICK"       : mouseAction = MouseAction.WheelClick; break;
-                    case "LEFTDOUBLECLICK"  : mouseAction = MouseAction.LeftDoubleClick; break;
-                    case "RIGHTDOUBLECLICK" : mouseAction = MouseAction.RightDoubleClick; break;
-                    case "MIDDLEDOUBLECLICK": mouseAction = MouseAction.MiddleDoubleClick; break;
-                    default :
-                        throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken));
-                }
-                return mouseAction;
-            }
-            throw GetConvertFromException(source);
+                _ when mouseActionToken.IsEmpty => MouseAction.None, //Special casing as produced by "ConvertTo"
+                _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
+                _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
+                _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
+                _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
+                _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
+                _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
+                _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
+                _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
+                _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
+            };     
         }
 
         /// <summary>

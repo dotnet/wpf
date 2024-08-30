@@ -114,35 +114,29 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value != null)
+            if (destinationType == typeof(string) && value is not null)
             {
-                MouseAction mouseActionValue  = (MouseAction)value ;
-                if (MouseActionConverter.IsDefinedMouseAction(mouseActionValue))
+                return (MouseAction)value switch
                 {
-                    string mouseAction = null;
-                    switch (mouseActionValue)
-                    {
-                        case MouseAction.None             : mouseAction=String.Empty; break;
-                        case MouseAction.LeftClick        : mouseAction="LeftClick"; break;
-                        case MouseAction.RightClick       : mouseAction="RightClick"; break;
-                        case MouseAction.MiddleClick      : mouseAction="MiddleClick"; break;
-                        case MouseAction.WheelClick       : mouseAction="WheelClick"; break;
-                        case MouseAction.LeftDoubleClick  : mouseAction="LeftDoubleClick"; break;
-                        case MouseAction.RightDoubleClick : mouseAction="RightDoubleClick"; break;
-                        case MouseAction.MiddleDoubleClick: mouseAction="MiddleDoubleClick"; break;
-                    }
-                    if (mouseAction != null)
-                        return mouseAction;
-                }
-                throw new InvalidEnumArgumentException("value", (int)mouseActionValue, typeof(MouseAction));
+                    MouseAction.None => string.Empty,
+                    MouseAction.LeftClick => "LeftClick",
+                    MouseAction.RightClick => "RightClick",
+                    MouseAction.MiddleClick => "MiddleClick",
+                    MouseAction.WheelClick => "WheelClick",
+                    MouseAction.LeftDoubleClick => "LeftDoubleClick",
+                    MouseAction.RightDoubleClick => "RightDoubleClick",
+                    MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
+                    _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
+                };
             }
+
             throw GetConvertToException(value,destinationType);
         }
 
-        // Helper like Enum.IsDefined,  for MouseAction.
+        // Helper like Enum.IsDefined, for MouseAction.
         internal static bool IsDefinedMouseAction(MouseAction mouseAction)
         {
-            return (mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick);
+            return mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick;
         }
     }
 }

@@ -9,21 +9,15 @@
 //              to the *Type* that the string represents 
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Input;
-using MS.Utility;
 
 using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// MouseAction - Converter class for converting between a string and the Type of a MouseAction
+    /// Converter class for converting between a <see langword="string"/> and <see cref="MouseAction"/>.
     /// </summary>
     public class MouseActionConverter : TypeConverter
     {

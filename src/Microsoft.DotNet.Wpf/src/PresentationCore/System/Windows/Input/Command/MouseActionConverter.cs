@@ -18,7 +18,7 @@ using System.Windows;
 using System.Windows.Input;
 using MS.Utility;
 
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -28,11 +28,11 @@ namespace System.Windows.Input
     public class MouseActionConverter : TypeConverter
     {
         ///<summary>
-        /// CanConvertFrom - Used to check whether we can convert a string into a MouseAction
+        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="MouseAction"/>.
         ///</summary>
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
-        ///<returns>true if the given type can be converted, false otherwise</returns>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
@@ -46,13 +46,12 @@ namespace System.Windows.Input
             }
         }
 
-
-        ///<summary>
-        ///TypeConverter method override. 
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion	is possible</returns>
+        /// <summary>
+        /// Used to check whether we can convert specified value to <see langword="string"/>.
+        /// </summary>
+        /// <param name="context">ITypeDescriptorContext</param>
+        /// <param name="destinationType">Type to convert to</param>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
@@ -61,19 +60,19 @@ namespace System.Windows.Input
                 // When invoked by the serialization engine we can convert to string only for known type
                 if (context != null && context.Instance != null)
                 {
-                    return (MouseActionConverter.IsDefinedMouseAction((MouseAction)context.Instance));
-                 }
+                    return IsDefinedMouseAction((MouseAction)context.Instance);
+                }
             }
             return false;
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="MouseAction"/> represensation.
         /// </summary>
         /// <param name="context">Parser Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="source">MouseAction String</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="MouseAction"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string mouseAction)
@@ -92,17 +91,17 @@ namespace System.Windows.Input
                 _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
                 _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
                 _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
-            };     
+            };
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Converts a <paramref name="value"/> of <see cref="MouseAction"/> to its <see langword="string"/> represensation.
         /// </summary>
         /// <param name="context">Serialization Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="value">MouseAction value </param>
         /// <param name="destinationType">Type to Convert</param>
-        /// <returns>string if parameter is a MouseAction</returns>
+        /// <returns>A <see langword="string"/> representing the <see cref="MouseAction"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);

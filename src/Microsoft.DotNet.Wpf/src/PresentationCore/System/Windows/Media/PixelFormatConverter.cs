@@ -65,24 +65,19 @@ namespace System.Windows.Media
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
-
             ArgumentNullException.ThrowIfNull(value);
 
-            if (!(value is PixelFormat))
-            {
-                throw new ArgumentException(SR.Format(SR.General_Expected_Type,"PixelFormat"));
-            }
+            if (value is not PixelFormat pixelFormat)
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type, nameof(PixelFormat)));
 
             if (destinationType == typeof(InstanceDescriptor))
             {
-                ConstructorInfo ci = typeof(PixelFormat).GetConstructor(new Type[]{typeof(string)});
-                PixelFormat p = (PixelFormat)value;
-                return new InstanceDescriptor(ci, new object[]{p.ToString()});
+                ConstructorInfo ci = typeof(PixelFormat).GetConstructor(new Type[] { typeof(string) });
+                return new InstanceDescriptor(ci, new object[] { pixelFormat.ToString() });
             }
             else if (destinationType == typeof(string))
             {
-                PixelFormat p = (PixelFormat)value;
-                return p.ToString ();
+                return pixelFormat.ToString();
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

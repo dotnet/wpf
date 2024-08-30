@@ -35,13 +35,7 @@ namespace System.Windows.Media
         /// <returns>true if conversion is possible</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string))
-            {
-                return true;
-            }
-
-            return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>

@@ -64,13 +64,39 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source is string)
+            if (source is not string stringSource)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> modifiersToken = stringSource.AsSpan().Trim();
+
+            // Empty token means there were no modifiers, exit early
+            if (modifiersToken.IsEmpty)
+                return ModifierKeys.None;
+
+            // Split modifier keys by the delimiter
+            ModifierKeys modifiers = ModifierKeys.None;
+            foreach (Range token in modifiersToken.Split('+'))
             {
-                string modifiersToken = ((string)source).Trim();
-                ModifierKeys modifiers = GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
-                return modifiers;
+                ReadOnlySpan<char> modifier = modifiersToken[token].Trim();
+
+                // This would be a case where we have a token like "Ctrl + " for example,
+                // which itself is invalid but we choose to support this malformed behaviour.
+                if (modifier.IsEmpty)
+                    break;
+
+                modifiers |= modifier switch
+                {
+                    _ when modifier.Equals("Ctrl", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Control,
+                    _ when modifier.Equals("Control", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Control,
+                    _ when modifier.Equals("Win", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Windows,
+                    _ when modifier.Equals("Windows", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Windows,
+                    _ when modifier.Equals("Alt", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Alt,
+                    _ when modifier.Equals("Shift", StringComparison.OrdinalIgnoreCase) => ModifierKeys.Shift,
+                    _ => throw new NotSupportedException(SR.Format(SR.Unsupported_Modifier, modifier.ToString()))
+                };
             }
-            throw GetConvertFromException(source);
+
+            return modifiers;        
         }
 
         /// <summary>
@@ -129,52 +155,6 @@ namespace System.Windows.Input
             return new string(modifierSpan.Slice(0, totalLength));
         }
 
-        private ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
-        {
-            ModifierKeys modifiers = ModifierKeys.None;
-            if (modifiersToken.Length != 0)
-            {
-                int offset = 0;
-                do
-                {
-                    offset = modifiersToken.IndexOf(Modifier_Delimiter);
-                    string token = (offset < 0) ? modifiersToken : modifiersToken.Substring(0, offset);
-                    token = token.Trim();
-                    token = token.ToUpper(culture);
-
-                    if (token == String.Empty)
-                        break;
-
-                    switch (token)
-                    {
-                        case "CONTROL" :
-                        case "CTRL" : 
-                            modifiers |= ModifierKeys.Control;
-                            break;
-
-                        case "SHIFT" : 
-                            modifiers |= ModifierKeys.Shift;
-                            break;
-
-                        case "ALT":
-                            modifiers |= ModifierKeys.Alt;
-                            break;
-
-                        case "WINDOWS":
-                        case "WIN":
-                            modifiers |= ModifierKeys.Windows;
-                            break;
-
-                        default:
-                            throw new NotSupportedException(SR.Format(SR.Unsupported_Modifier, token));
-                    }
-
-                    modifiersToken = modifiersToken.Substring(offset + 1);
-                } while (offset != -1);
-            }
-            return modifiers;
-        }
-
         /// <summary>
         ///     Check for Valid enum, as any int can be casted to the enum.
         /// </summary>
@@ -182,8 +162,6 @@ namespace System.Windows.Input
         {
             return (modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
         }
-
-	    private const char Modifier_Delimiter = '+';
 
         private static ModifierKeys ModifierKeysFlag  =  ModifierKeys.Windows | ModifierKeys.Shift | 
                                                          ModifierKeys.Alt     | ModifierKeys.Control ;

@@ -49,14 +49,9 @@ namespace System.Windows.Media
         /// <summary>
         /// test
         /// </summary>
-        public override object ConvertFrom(ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object o)
+        public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo ci, object o)
         {
-            if ( null == o)
-            {
-                return null;
-            }
-
-            return new PixelFormat(o as string);
+            return o is not null ? new PixelFormat(o as string) : null;
         }
 
         /// <summary>

@@ -86,49 +86,47 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string))
+            // We can only convert to string
+            if (destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
+
+            // Check whether value falls within defined set
+            ModifierKeys modifiers = (ModifierKeys)value;
+            if (!IsDefinedModifierKeys(modifiers))
+                throw new InvalidEnumArgumentException(nameof(value), (int)modifiers, typeof(ModifierKeys));
+
+            // Ctrl+Alt+Windows+Shift is the maximum char length, though the composition of such value is improbable
+            Span<char> modifierSpan = stackalloc char[22];
+            int totalLength = 0;
+
+            if (modifiers.HasFlag(ModifierKeys.Control))
+                AppendWithDelimiter("Ctrl", ref totalLength, ref modifierSpan);
+
+            if (modifiers.HasFlag(ModifierKeys.Alt))
+                AppendWithDelimiter("Alt", ref totalLength, ref modifierSpan);
+
+            if (modifiers.HasFlag(ModifierKeys.Windows))
+                AppendWithDelimiter("Windows", ref totalLength, ref modifierSpan);
+
+            if (modifiers.HasFlag(ModifierKeys.Shift))
+                AppendWithDelimiter("Shift", ref totalLength, ref modifierSpan);
+
+            //Helper function to concatenate modifiers
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            static void AppendWithDelimiter(string literal, ref int totalLength, ref Span<char> modifierSpan)
             {
-                ModifierKeys modifiers = (ModifierKeys)value;
-
-                if (!IsDefinedModifierKeys(modifiers))
-                    throw new InvalidEnumArgumentException("value", (int)modifiers, typeof(ModifierKeys));
-                else
+                // If this is not the first modifier in the span, we prepend a delimiter (e.g. Ctrl -> Ctrl+Alt)
+                if (totalLength > 0)
                 {
-                    string strModifiers = "";
-
-                    if ((modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-                    {
-                        strModifiers += MatchModifiers(ModifierKeys.Control);
-                    }
-
-                    if ((modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
-                    {
-                        if (strModifiers.Length > 0) 
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Alt);
-                    }
-
-                    if ((modifiers & ModifierKeys.Windows) == ModifierKeys.Windows)
-                    {
-                        if (strModifiers.Length > 0)
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Windows); ;
-                    }
-
-                    if ((modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
-                    {
-                        if (strModifiers.Length > 0)
-                            strModifiers += Modifier_Delimiter;
-
-                        strModifiers += MatchModifiers(ModifierKeys.Shift); ;
-                    }
-
-                    return strModifiers;
+                    "+".CopyTo(modifierSpan.Slice(totalLength));
+                    totalLength++;
                 }
+
+                literal.CopyTo(modifierSpan.Slice(totalLength));
+                totalLength += literal.Length;
             }
-            throw GetConvertToException(value,destinationType);
+
+            return new string(modifierSpan.Slice(0, totalLength));
         }
 
         private ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
@@ -189,18 +187,5 @@ namespace System.Windows.Input
 
         private static ModifierKeys ModifierKeysFlag  =  ModifierKeys.Windows | ModifierKeys.Shift | 
                                                          ModifierKeys.Alt     | ModifierKeys.Control ;
-
-        internal static string MatchModifiers(ModifierKeys modifierKeys)
-        {
-            string modifiers = String.Empty; 
-            switch (modifierKeys)
-            {
-                case ModifierKeys.Control: modifiers="Ctrl";break;
-                case ModifierKeys.Shift  : modifiers="Shift";break;
-                case ModifierKeys.Alt    : modifiers="Alt";break;
-                case ModifierKeys.Windows: modifiers="Windows";break;
-            }
-            return modifiers;
-        }
     }
 }

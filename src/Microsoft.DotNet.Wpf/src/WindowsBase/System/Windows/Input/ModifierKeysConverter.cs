@@ -34,17 +34,15 @@ namespace System.Windows.Input
         /// <returns>true if conversion is possible</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            // We can convert to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null && 
-					context.Instance is ModifierKeys)
-                {
-                    return (IsDefinedModifierKeys((ModifierKeys)context.Instance));
-                }
-            }
-            return false;
+            // We can convert to a string
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context is null || context.Instance is not ModifierKeys modifiers)
+                return false;
+
+            return IsDefinedModifierKeys(modifiers);           
         }
 
         /// <summary>

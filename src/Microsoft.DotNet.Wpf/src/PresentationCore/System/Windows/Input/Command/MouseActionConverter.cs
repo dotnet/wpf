@@ -114,23 +114,21 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value is not null)
-            {
-                return (MouseAction)value switch
-                {
-                    MouseAction.None => string.Empty,
-                    MouseAction.LeftClick => "LeftClick",
-                    MouseAction.RightClick => "RightClick",
-                    MouseAction.MiddleClick => "MiddleClick",
-                    MouseAction.WheelClick => "WheelClick",
-                    MouseAction.LeftDoubleClick => "LeftDoubleClick",
-                    MouseAction.RightDoubleClick => "RightDoubleClick",
-                    MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
-                    _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
-                };
-            }
+            if (value is null || destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
 
-            throw GetConvertToException(value,destinationType);
+            return (MouseAction)value switch
+            {
+                MouseAction.None => string.Empty,
+                MouseAction.LeftClick => "LeftClick",
+                MouseAction.RightClick => "RightClick",
+                MouseAction.MiddleClick => "MiddleClick",
+                MouseAction.WheelClick => "WheelClick",
+                MouseAction.LeftDoubleClick => "LeftDoubleClick",
+                MouseAction.RightDoubleClick => "RightDoubleClick",
+                MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
+                _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
+            };
         }
 
         // Helper like Enum.IsDefined, for MouseAction.

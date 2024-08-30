@@ -35,15 +35,8 @@ namespace System.Windows.Input
         ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // We can only handle string
+            return sourceType == typeof(string);
         }
 
         /// <summary>
@@ -54,16 +47,16 @@ namespace System.Windows.Input
         /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    return IsDefinedMouseAction((MouseAction)context.Instance);
-                }
-            }
-            return false;
+            // We can convert to an InstanceDescriptor or to a string
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context is null || context.Instance is null)
+                return false;
+
+            // Make sure the value falls within defined set
+            return IsDefinedMouseAction((MouseAction)context.Instance);
         }
 
         /// <summary>
@@ -81,7 +74,7 @@ namespace System.Windows.Input
             ReadOnlySpan<char> mouseActionToken = mouseAction.AsSpan().Trim();
             return mouseActionToken switch
             {
-                _ when mouseActionToken.IsEmpty => MouseAction.None, //Special casing as produced by "ConvertTo"
+                _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
                 _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
                 _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
                 _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,

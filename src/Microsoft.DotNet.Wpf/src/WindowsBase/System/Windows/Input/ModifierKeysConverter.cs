@@ -9,18 +9,16 @@ using System.Globalization;             // for CultureInfo
 namespace System.Windows.Input
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Modifiers
+    /// Converter class for converting between a <see langword="string"/> and <see cref="ModifierKeys"/>.
     /// </summary>
-    /// <ExternalAPI/> 
     public class ModifierKeysConverter : TypeConverter
     {
         /// <summary>
-        /// CanConvertFrom()
+        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="ModifierKeys"/>.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        ///<param name="context">ITypeDescriptorContext</param>
+        ///<param name="sourceType">type to convert from</param>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string
@@ -28,11 +26,11 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// TypeConverter method override. 
+        /// Used to check whether we can convert specified value to <see langword="string"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to a string
@@ -43,17 +41,16 @@ namespace System.Windows.Input
             if (context is null || context.Instance is not ModifierKeys modifiers)
                 return false;
 
-            return IsDefinedModifierKeys(modifiers);           
+            return IsDefinedModifierKeys(modifiers);
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="ModifierKeys"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Parser Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="source">ModifierKeys String</param>
+        /// <returns>A <see cref="ModifierKeys"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string stringSource)
@@ -88,18 +85,17 @@ namespace System.Windows.Input
                 };
             }
 
-            return modifiers;        
+            return modifiers;
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Converts a <paramref name="value"/> of <see cref="ModifierKeys"/> to its <see langword="string"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Serialization Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="value">ModifierKeys value</param>
+        /// <param name="destinationType">Type to Convert</param>
+        /// <returns>A <see langword="string"/> representing the <see cref="ModifierKeys"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
@@ -148,8 +144,11 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        ///     Check for Valid enum, as any int can be casted to the enum.
+        /// Check whether values in <paramref name="modifierKeys"/> are valid, as any number can be casted to the enum.
         /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the given <paramref name="modifierKeys"/> are all members of <see cref="ModifierKeys"/>, <see langword="false"/> otherwise.
+        /// </returns>
         public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
         {
             return modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~(int)ModifiersAllBitsSet) == 0);

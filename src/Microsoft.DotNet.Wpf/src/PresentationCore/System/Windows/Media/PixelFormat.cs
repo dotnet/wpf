@@ -201,132 +201,44 @@ namespace System.Windows.Media
         /// <param name="pixelFormatString"></param>
         internal PixelFormat(string pixelFormatString)
         {
-            PixelFormatEnum format = PixelFormatEnum.Default;
-
             ArgumentNullException.ThrowIfNull(pixelFormatString);
 
-            string upperPixelFormatString = pixelFormatString.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
-
-            switch (upperPixelFormatString)
+            string format = pixelFormatString;
+            _format = format switch
             {
-                case "DEFAULT":
-                    format = PixelFormatEnum.Default;
-                    break;
+                _ when format.Equals("Default", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Default,
+                _ when format.Equals("Extended", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Extended,
+                _ when format.Equals("Indexed1", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Indexed1,
+                _ when format.Equals("Indexed2", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Indexed2,
+                _ when format.Equals("Indexed4", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Indexed4,
+                _ when format.Equals("Indexed8", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Indexed8,
+                _ when format.Equals("BlackWhite", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.BlackWhite,
+                _ when format.Equals("Gray2", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Gray2,
+                _ when format.Equals("Gray4", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Gray4,
+                _ when format.Equals("Gray8", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Gray8,
+                _ when format.Equals("Bgr555", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgr555,
+                _ when format.Equals("Bgr565", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgr565,
+                _ when format.Equals("Bgr24", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgr24,
+                _ when format.Equals("Rgb24", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Rgb24,
+                _ when format.Equals("Bgr101010", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgr101010,
+                _ when format.Equals("Bgr32", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgr32,
+                _ when format.Equals("Bgra32", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Bgra32,
+                _ when format.Equals("Pbgra32", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Pbgra32,
+                _ when format.Equals("Rgb48", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Rgb48,
+                _ when format.Equals("Rgba64", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Rgba64,
+                _ when format.Equals("Prgba64", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Prgba64,
+                _ when format.Equals("Gray16", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Gray16,
+                _ when format.Equals("Gray32Float", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Gray32Float,
+                _ when format.Equals("Rgb128Float", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Rgb128Float,
+                _ when format.Equals("Rgba128Float", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Rgba128Float,
+                _ when format.Equals("Prgba128Float", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Prgba128Float,
+                _ when format.Equals("Cmyk32", StringComparison.OrdinalIgnoreCase) => PixelFormatEnum.Cmyk32,
+                _ => throw new ArgumentException(SR.Format(SR.Image_BadPixelFormat, pixelFormatString), nameof(pixelFormatString)),
+            };
 
-                case "EXTENDED":
-                    format = PixelFormatEnum.Extended;
-                    break;
-
-                case "INDEXED1":
-                    format = PixelFormatEnum.Indexed1;
-                    break;
-
-                case "INDEXED2":
-                    format = PixelFormatEnum.Indexed2;
-                    break;
-
-                case "INDEXED4":
-                    format = PixelFormatEnum.Indexed4;
-                    break;
-
-                case "INDEXED8":
-                    format = PixelFormatEnum.Indexed8;
-                    break;
-
-                case "BLACKWHITE":
-                    format = PixelFormatEnum.BlackWhite;
-                    break;
-
-                case "GRAY2":
-                    format = PixelFormatEnum.Gray2;
-                    break;
-
-                case "GRAY4":
-                    format = PixelFormatEnum.Gray4;
-                    break;
-
-                case "GRAY8":
-                    format = PixelFormatEnum.Gray8;
-                    break;
-
-                case "BGR555":
-                    format = PixelFormatEnum.Bgr555;
-                    break;
-
-                case "BGR565":
-                    format = PixelFormatEnum.Bgr565;
-                    break;
-
-                case "BGR24":
-                    format = PixelFormatEnum.Bgr24;
-                    break;
-
-                case "RGB24":
-                    format = PixelFormatEnum.Rgb24;
-                    break;
-
-                case "BGR101010":
-                    format = PixelFormatEnum.Bgr101010;
-                    break;
-
-                case "BGR32":
-                    format = PixelFormatEnum.Bgr32;
-                    break;
-
-                case "BGRA32":
-                    format = PixelFormatEnum.Bgra32;
-                    break;
-
-                case "PBGRA32":
-                    format = PixelFormatEnum.Pbgra32;
-                    break;
-
-                case "RGB48":
-                    format = PixelFormatEnum.Rgb48;
-                    break;
-
-                case "RGBA64":
-                    format = PixelFormatEnum.Rgba64;
-                    break;
-
-                case "PRGBA64":
-                    format = PixelFormatEnum.Prgba64;
-                    break;
-
-                case "GRAY16":
-                    format = PixelFormatEnum.Gray16;
-                    break;
-
-                case "GRAY32FLOAT":
-                    format = PixelFormatEnum.Gray32Float;
-                    break;
-
-                case "RGB128FLOAT":
-                    format = PixelFormatEnum.Rgb128Float;
-                    break;
-
-                case "RGBA128FLOAT":
-                    format = PixelFormatEnum.Rgba128Float;
-                    break;
-
-                case "PRGBA128FLOAT":
-                    format = PixelFormatEnum.Prgba128Float;
-                    break;
-
-                case "CMYK32":
-                    format = PixelFormatEnum.Cmyk32;
-                    break;
-
-                default:
-                    throw new System.ArgumentException (SR.Format(SR.Image_BadPixelFormat, pixelFormatString),
-                            nameof(pixelFormatString));
-            }
-
-            _format = format;
-
-            _flags = GetPixelFormatFlagsFromEnum(format);
-            _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = PixelFormat.GetGuidFromFormat(format);
+            _flags = GetPixelFormatFlagsFromEnum(_format);
+            _bitsPerPixel = GetBitsPerPixelFromEnum(_format);
+            _guidFormat = PixelFormat.GetGuidFromFormat(_format);
         }
 
         static private Guid GetGuidFromFormat(PixelFormatEnum format)

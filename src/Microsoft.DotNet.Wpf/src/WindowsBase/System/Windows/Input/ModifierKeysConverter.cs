@@ -151,10 +151,13 @@ namespace System.Windows.Input
         /// </summary>
         public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
         {
-            return (modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
+            return modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~(int)ModifiersAllBitsSet) == 0);
         }
 
-        private static ModifierKeys ModifierKeysFlag  =  ModifierKeys.Windows | ModifierKeys.Shift | 
-                                                         ModifierKeys.Alt     | ModifierKeys.Control ;
+        /// <summary>
+        /// Specifies all bits of the <see cref="ModifierKeys"/> enum set.
+        /// </summary>
+        private const ModifierKeys ModifiersAllBitsSet = ModifierKeys.Windows | ModifierKeys.Shift | ModifierKeys.Alt | ModifierKeys.Control;
+
     }
 }

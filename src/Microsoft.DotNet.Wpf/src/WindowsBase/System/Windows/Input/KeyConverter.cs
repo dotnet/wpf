@@ -2,24 +2,35 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-using System.Globalization;
+//
+//
+// Description: KeyConverter - Converts a Key string
+// to the *Type* that the string represents and vice-versa
+//
+
+using System;
+using System.ComponentModel;    // for TypeConverter
+using System.Globalization;     // for CultureInfo
+using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Markup;
+using MS.Utility;
+using MS.Internal.WindowsBase;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Key
+    /// Converter class for converting between a <see langword="string"/> and <see cref="Key"/>.
     /// </summary>
-    /// <ExternalAPI/>
     public class KeyConverter : TypeConverter
     {
-        /// <summary>
-        /// CanConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        ///<summary>
+        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="Key"/>.
+        ///</summary>
+        ///<param name="context">ITypeDescriptorContext</param>
+        ///<param name="sourceType">type to convert from</param>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string
@@ -27,11 +38,11 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// TypeConverter method override. 
+        /// Used to check whether we can convert specified value to <see langword="string"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to a string
@@ -46,38 +57,36 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="Key"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Parser Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="source">Key String</param>
+        /// <returns>A <see cref="Key"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string stringSource)
                 throw GetConvertFromException(source);
-            
+
             ReadOnlySpan<char> fullName = stringSource.AsSpan().Trim();
-            return GetKeyFromString(fullName);      
+            return GetKeyFromString(fullName);
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Converts a <paramref name="value"/> of <see cref="Key"/> to its <see langword="string"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Serialization Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="value">Key value </param>
+        /// <param name="destinationType">Type to Convert</param>
+        /// <returns>A <see langword="string"/> representing the <see cref="Key"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
             if (value is null || destinationType != typeof(string))
                 throw GetConvertToException(value, destinationType);
-       
+
             Key key = (Key)value;
             return key switch
             {
@@ -89,7 +98,7 @@ namespace System.Windows.Input
                 Key.Back => "Backspace",
                 Key.LineFeed => "Clear",
                 Key.Escape => "Esc",
-                // We will add some heavy used interned strings too (F10-F12)
+                // We will add some heavily used interned strings (F10-F12)
                 Key.F10 => "F10",
                 Key.F11 => "F11",
                 Key.F12 => "F12",
@@ -100,6 +109,11 @@ namespace System.Windows.Input
             };
         }
 
+        /// <summary>
+        /// Helper function that performs the conversion of <paramref name="keyToken"/> to the <see cref="Key"/> enum.
+        /// </summary>
+        /// <param name="keyToken">The string to convert from.</param>
+        /// <returns>A <see cref="Key"/> value corresponding to the specified string, <see cref="Key.None"/> if <paramref name="keyToken"/> was empty.</returns>
         private static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
         {
             // If the token is empty, we presume "None" as our value but it is a success
@@ -307,6 +321,11 @@ namespace System.Windows.Input
             return Enum.Parse<Key>(keyToken, true);
         }
 
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{Key}(Key)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="key">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="key"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
         private static bool IsDefinedKey(Key key)
         {
             return key >= Key.None && key <= Key.DeadCharProcessed;

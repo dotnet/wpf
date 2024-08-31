@@ -75,31 +75,29 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value != null)
+            if (value is null || destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
+       
+            Key key = (Key)value;
+            return key switch
             {
-                Key key = (Key)value;
-                if (key == Key.None)
-                {
-                    return String.Empty;
-                }
-
-                if (key >= Key.D0 && key <= Key.D9)
-                {
-                    return Char.ToString((char)(int)(key - Key.D0 + '0'));
-                }
-
-                if (key >= Key.A && key <= Key.Z)
-                {
-                    return Char.ToString((char)(int)(key - Key.A + 'A'));
-                }
-
-                String strKey = MatchKey(key, culture);
-                if (strKey != null)
-                {
-                    return strKey;
-                }
-            }
-            throw GetConvertToException(value, destinationType);
+                Key.None => string.Empty,
+                // This is a fast path for common keys before resort to Enum<Key>.ToString()
+                >= Key.D0 and <= Key.D9 => char.ToString((char)(key - Key.D0 + '0')),
+                >= Key.A and <= Key.Z => char.ToString((char)(key - Key.A + 'A')),
+                // We format some keys differently than defined in the enum
+                Key.Back => "Backspace",
+                Key.LineFeed => "Clear",
+                Key.Escape => "Esc",
+                // We will add some heavy used interned strings too (F10-F12)
+                Key.F10 => "F10",
+                Key.F11 => "F11",
+                Key.F12 => "F12",
+                // Last resort, use Enum<Key>.ToString() if the range is defined
+                _ when IsDefinedKey(key) => key.ToString(),
+                // Everything else failed, we throw an exception
+                _ => throw GetConvertToException(value, destinationType)
+            };
         }
 
         private static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
@@ -309,23 +307,9 @@ namespace System.Windows.Input
             return Enum.Parse<Key>(keyToken, true);
         }
 
-        private static string MatchKey(Key key, CultureInfo culture)
+        private static bool IsDefinedKey(Key key)
         {
-            if (key == Key.None)
-                return String.Empty;
-            else
-            {
-                switch (key)
-                {
-                    case Key.Back: return "Backspace";
-                    case Key.LineFeed: return "Clear";
-                    case Key.Escape: return "Esc";
-                }
-            }
-            if ((int)key >= (int)Key.None && (int)key <= (int)Key.DeadCharProcessed)
-                return key.ToString();
-            else
-                return null;
+            return key >= Key.None && key <= Key.DeadCharProcessed;
         }
     }
 }

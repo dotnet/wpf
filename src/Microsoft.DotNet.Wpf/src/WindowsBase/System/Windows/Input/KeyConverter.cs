@@ -8,14 +8,9 @@
 // to the *Type* that the string represents and vice-versa
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Markup;
-using MS.Utility;
+
 using MS.Internal.WindowsBase;
 
 namespace System.Windows.Input

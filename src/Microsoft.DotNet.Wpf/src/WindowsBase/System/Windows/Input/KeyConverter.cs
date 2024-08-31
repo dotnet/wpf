@@ -53,7 +53,7 @@ namespace System.Windows.Input
             if (context is null || context.Instance is not Key key)
                 return false;
 
-            return key >= Key.None && key <= Key.DeadCharProcessed;
+            return IsDefinedKey(key);
         }
 
         /// <summary>

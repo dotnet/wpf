@@ -132,16 +132,16 @@ namespace System.Windows.Input
                     throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken.ToString(), typeof(Key)));
             }
 
-            // Special path for F1-F9 (switch would take 600 B in code size for no benefit)
-            char secondChar = keyToken[1];
-            if (keyToken.Length == 2 && firstChar == 'F' && (secondChar > '0' && secondChar <= '9'))
-                return Key.F1 + secondChar - '1';
-
             // It is a special key or an invalid one, we're gonna find out
             switch (keyToken.Length)
             {
                 case 2:
-                    if (keyToken.Equals("BS", StringComparison.OrdinalIgnoreCase))
+                    // Special path for F1-F9 (switch would take 600 B in code size for no benefit)
+                    char secondChar = keyToken[1];
+                    if (firstChar == 'F' && (secondChar > '0' && secondChar <= '9'))
+                        return Key.F1 + secondChar - '1';
+                    // We've got one more special case for Key.Back/Backspace -> "BS"
+                    if (firstChar == 'B' && (secondChar is 'S' or 's'))
                         return Key.Back;
                     break;
                 case 3:

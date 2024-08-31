@@ -55,20 +55,11 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source is string)
-            {
-                string fullName = ((string)source).Trim();
-                object key = GetKey(fullName, CultureInfo.InvariantCulture);
-                if (key != null)
-                {
-                    return ((Key)key);
-                }
-                else
-                {
-                    throw new NotSupportedException(SR.Format(SR.Unsupported_Key, fullName));
-                }
-            }
-            throw GetConvertFromException(source);
+            if (source is not string stringSource)
+                throw GetConvertFromException(source);
+            
+            ReadOnlySpan<char> fullName = stringSource.AsSpan().Trim();
+            return GetKeyFromString(fullName);      
         }
 
         /// <summary>
@@ -111,92 +102,211 @@ namespace System.Windows.Input
             throw GetConvertToException(value, destinationType);
         }
 
-        private object GetKey(string keyToken, CultureInfo culture)
+        private static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
         {
-            if (keyToken.Length == 0)
-            {
+            // If the token is empty, we presume "None" as our value but it is a success
+            if (keyToken.IsEmpty)
                 return Key.None;
-            }
-            else
-            {
-                keyToken = keyToken.ToUpper(culture);
-                if (keyToken.Length == 1 && Char.IsLetterOrDigit(keyToken[0]))
-                {
-                    if (Char.IsDigit(keyToken[0]) && (keyToken[0] >= '0' && keyToken[0] <= '9'))
-                    {
-                        return ((int)(Key)(Key.D0 + keyToken[0] - '0'));
-                    }
-                    else if (Char.IsLetter(keyToken[0]) && (keyToken[0] >= 'A' && keyToken[0] <= 'Z'))
-                    {
-                        return ((int)(Key)(Key.A + keyToken[0] - 'A'));
-                    }
-                    else
-                    {
-                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken, typeof(Key)));
-                    }
-                }
-                else
-                {
-                    Key keyFound = (Key)(-1);
-                    switch (keyToken)
-                    {
-                        case "ENTER": keyFound = Key.Return; break;
-                        case "ESC": keyFound = Key.Escape; break;
-                        case "PGUP": keyFound = Key.PageUp; break;
-                        case "PGDN": keyFound = Key.PageDown; break;
-                        case "PRTSC": keyFound = Key.PrintScreen; break;
-                        case "INS": keyFound = Key.Insert; break;
-                        case "DEL": keyFound = Key.Delete; break;
-                        case "WINDOWS": keyFound = Key.LWin; break;
-                        case "WIN": keyFound = Key.LWin; break;
-                        case "LEFTWINDOWS": keyFound = Key.LWin; break;
-                        case "RIGHTWINDOWS": keyFound = Key.RWin; break;
-                        case "APPS": keyFound = Key.Apps; break;
-                        case "APPLICATION": keyFound = Key.Apps; break;
-                        case "BREAK": keyFound = Key.Cancel; break;
-                        case "BACKSPACE": keyFound = Key.Back; break;
-                        case "BKSP": keyFound = Key.Back; break;
-                        case "BS": keyFound = Key.Back; break;
-                        case "SHIFT": keyFound = Key.LeftShift; break;
-                        case "LEFTSHIFT": keyFound = Key.LeftShift; break;
-                        case "RIGHTSHIFT": keyFound = Key.RightShift; break;
-                        case "CONTROL": keyFound = Key.LeftCtrl; break;
-                        case "CTRL": keyFound = Key.LeftCtrl; break;
-                        case "LEFTCTRL": keyFound = Key.LeftCtrl; break;
-                        case "RIGHTCTRL": keyFound = Key.RightCtrl; break;
-                        case "ALT": keyFound = Key.LeftAlt; break;
-                        case "LEFTALT": keyFound = Key.LeftAlt; break;
-                        case "RIGHTALT": keyFound = Key.RightAlt; break;
-                        case "SEMICOLON": keyFound = Key.OemSemicolon; break;
-                        case "PLUS": keyFound = Key.OemPlus; break;
-                        case "COMMA": keyFound = Key.OemComma; break;
-                        case "MINUS": keyFound = Key.OemMinus; break;
-                        case "PERIOD": keyFound = Key.OemPeriod; break;
-                        case "QUESTION": keyFound = Key.OemQuestion; break;
-                        case "TILDE": keyFound = Key.OemTilde; break;
-                        case "OPENBRACKETS": keyFound = Key.OemOpenBrackets; break;
-                        case "PIPE": keyFound = Key.OemPipe; break;
-                        case "CLOSEBRACKETS": keyFound = Key.OemCloseBrackets; break;
-                        case "QUOTES": keyFound = Key.OemQuotes; break;
-                        case "BACKSLASH": keyFound = Key.OemBackslash; break;
-                        case "FINISH": keyFound = Key.OemFinish; break;
-                        case "ATTN": keyFound = Key.Attn; break;
-                        case "CRSEL": keyFound = Key.CrSel; break;
-                        case "EXSEL": keyFound = Key.ExSel; break;
-                        case "ERASEEOF": keyFound = Key.EraseEof; break;
-                        case "PLAY": keyFound = Key.Play; break;
-                        case "ZOOM": keyFound = Key.Zoom; break;
-                        case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
-                    }
 
-                    if ((int)keyFound != -1)
-                    {
-                        return keyFound;
-                    }
-                    return null;
-                }
+            // In case we're dealing with a lowercase character, we uppercase it
+            char firstChar = keyToken[0];
+            if (firstChar >= 'a' && firstChar <= 'z')
+                firstChar ^= (char)0x20;
+
+            // If this is a single-character we're dealing with, match digits/letters
+            if (keyToken.Length == 1 && char.IsLetterOrDigit(firstChar))
+            {
+                // Match a digit (0-9) or an ASCII letter (lower/uppercase)
+                if (char.IsDigit(firstChar) && (firstChar >= '0' && firstChar <= '9'))
+                    return Key.D0 + firstChar - '0';
+                else if (char.IsLetter(firstChar) && (firstChar >= 'A' && firstChar <= 'Z'))
+                    return Key.A + firstChar - 'A';
+                else
+                    throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken.ToString(), typeof(Key)));
             }
+
+            // Special path for F1-F9 (switch would take 600 B in code size for no benefit)
+            char secondChar = keyToken[1];
+            if (keyToken.Length == 2 && firstChar == 'F' && (secondChar > '0' && secondChar <= '9'))
+                return Key.F1 + secondChar - '1';
+
+            // It is a special key or an invalid one, we're gonna find out
+            switch (keyToken.Length)
+            {
+                case 2:
+                    if (keyToken.Equals("BS", StringComparison.OrdinalIgnoreCase))
+                        return Key.Back;
+                    break;
+                case 3:
+                    switch (firstChar)
+                    {
+                        case 'A':
+                            if (keyToken.Equals("Alt", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftAlt;
+                            break;
+                        case 'D':
+                            if (keyToken.Equals("Del", StringComparison.OrdinalIgnoreCase))
+                                return Key.Delete;
+                            break;
+                        case 'E':
+                            if (keyToken.Equals("Esc", StringComparison.OrdinalIgnoreCase))
+                                return Key.Escape;
+                            break;
+                        case 'F':
+                            if (keyToken.Equals("F10", StringComparison.OrdinalIgnoreCase))
+                                return Key.F10;
+                            if (keyToken.Equals("F11", StringComparison.OrdinalIgnoreCase))
+                                return Key.F11;
+                            if (keyToken.Equals("F12", StringComparison.OrdinalIgnoreCase))
+                                return Key.F12;
+                            break;
+                        case 'I':
+                            if (keyToken.Equals("INS", StringComparison.OrdinalIgnoreCase))
+                                return Key.Insert;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("Pa1", StringComparison.OrdinalIgnoreCase))
+                                return Key.Pa1;
+                            break;
+                        case 'W':
+                            if (keyToken.Equals("Win", StringComparison.OrdinalIgnoreCase))
+                                return Key.LWin;
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (firstChar)
+                    {
+                        case 'A':
+                            if (keyToken.Equals("Apps", StringComparison.OrdinalIgnoreCase))
+                                return Key.Apps;
+                            if (keyToken.Equals("Attn", StringComparison.OrdinalIgnoreCase))
+                                return Key.Attn;
+                            break;
+                        case 'B':
+                            if (keyToken.Equals("BKSP", StringComparison.OrdinalIgnoreCase))
+                                return Key.Back;
+                            break;
+                        case 'C':
+                            if (keyToken.Equals("Ctrl", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftCtrl;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("PGDN", StringComparison.OrdinalIgnoreCase))
+                                return Key.PageDown;
+                            if (keyToken.Equals("PGUP", StringComparison.OrdinalIgnoreCase))
+                                return Key.PageUp;
+                            if (keyToken.Equals("Pipe", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemPipe;
+                            if (keyToken.Equals("Play", StringComparison.OrdinalIgnoreCase))
+                                return Key.Play;
+                            if (keyToken.Equals("Plus", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemPlus;
+                            break;
+                        case 'Z':
+                            if (keyToken.Equals("Zoom", StringComparison.OrdinalIgnoreCase))
+                                return Key.Zoom;
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (firstChar)
+                    {
+                        case 'B':
+                            if (keyToken.Equals("Break", StringComparison.OrdinalIgnoreCase))
+                                return Key.Cancel;
+                            break;
+                        case 'C':
+                            if (keyToken.Equals("Comma", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemComma;
+                            if (keyToken.Equals("CrSel", StringComparison.OrdinalIgnoreCase))
+                                return Key.CrSel;
+                            break;
+                        case 'E':
+                            if (keyToken.Equals("Enter", StringComparison.OrdinalIgnoreCase))
+                                return Key.Return;
+                            if (keyToken.Equals("ExSel", StringComparison.OrdinalIgnoreCase))
+                                return Key.ExSel;
+                            break;
+                        case 'M':
+                            if (keyToken.Equals("Minus", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemMinus;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("PRTSC", StringComparison.OrdinalIgnoreCase))
+                                return Key.PrintScreen;
+                            break;
+                        case 'S':
+                            if (keyToken.Equals("Shift", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftShift;
+                            break;
+                        case 'T':
+                            if (keyToken.Equals("Tilde", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemTilde;
+                            break;
+                    }
+                    break;
+                case 6:
+                    if (keyToken.Equals("Finish", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemFinish;
+                    if (keyToken.Equals("Period", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemPeriod;
+                    if (keyToken.Equals("Quotes", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemQuotes;
+                    break;
+                case 7:
+                    if (keyToken.Equals("Control", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftCtrl;
+                    if (keyToken.Equals("LeftAlt", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftAlt;
+                    if (keyToken.Equals("Windows", StringComparison.OrdinalIgnoreCase))
+                        return Key.LWin;
+                    break;
+                case 8:
+                    if (keyToken.Equals("EraseEof", StringComparison.OrdinalIgnoreCase))
+                        return Key.EraseEof;
+                    if (keyToken.Equals("LeftCtrl", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftCtrl;
+                    if (keyToken.Equals("Question", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemQuestion;
+                    if (keyToken.Equals("RightAlt", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightAlt;
+                    break;
+                case 9:
+                    if (keyToken.Equals("Backslash", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemBackslash;
+                    if (keyToken.Equals("Backspace", StringComparison.OrdinalIgnoreCase))
+                        return Key.Back;
+                    if (keyToken.Equals("LeftShift", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftShift;
+                    if (keyToken.Equals("RightCtrl", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightCtrl;
+                    if (keyToken.Equals("Semicolon", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemSemicolon;
+                    break;
+                case 10:
+                    if (keyToken.Equals("RightShift", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightShift;
+                    break;
+                case 11:
+                    if (keyToken.Equals("Application", StringComparison.OrdinalIgnoreCase))
+                        return Key.Apps;
+                    if (keyToken.Equals("LeftWindows", StringComparison.OrdinalIgnoreCase))
+                        return Key.LWin;
+                    break;
+                case 12:
+                    if (keyToken.Equals("OpenBrackets", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemOpenBrackets;
+                    if (keyToken.Equals("RightWindows", StringComparison.OrdinalIgnoreCase))
+                        return Key.RWin;
+                    break;
+                case 13:
+                    if (keyToken.Equals("CloseBrackets", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemCloseBrackets;
+                    break;
+            }
+
+            return Enum.Parse<Key>(keyToken, true);
         }
 
         private static string MatchKey(Key key, CultureInfo culture)

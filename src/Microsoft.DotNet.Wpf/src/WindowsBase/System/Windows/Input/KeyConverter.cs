@@ -45,10 +45,10 @@ namespace System.Windows.Input
                 return false;
 
             // When invoked by the serialization engine we can convert to string only for known type
-            if (context is null || context.Instance is not Key key)
+            if (context is null || context.Instance is null)
                 return false;
 
-            return IsDefinedKey(key);
+            return IsDefinedKey((Key)context.Instance);
         }
 
         /// <summary>

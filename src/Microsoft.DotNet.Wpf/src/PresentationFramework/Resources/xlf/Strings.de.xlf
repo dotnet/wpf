@@ -4818,11 +4818,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">Der Parameter "{0}" besitzt den Wert "{1}", der sich nicht im gültigen Bereich zwischen "{2}" und "{3}" befindet.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">SandboxExternalContent kann bei Verwendung mit teilweiser Vertrauenswürdigkeit nicht auf "true" festgelegt werden.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">Eine Suche zur angegebenen Position kann nicht ausgeführt werden.</target>

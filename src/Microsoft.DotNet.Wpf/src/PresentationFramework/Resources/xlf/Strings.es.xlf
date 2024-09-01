@@ -4818,11 +4818,6 @@ Do you want to replace it?</source>
         <target state="translated">El parámetro "{0}" tiene el valor "{1}", que no se encuentra dentro del intervalo válido comprendido entre "{2}" y "{3}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">No se puede establecer SandboxExternalContent en verdadero en una confianza parcial.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">No se puede realizar una llamada en la posición especificada.</target>

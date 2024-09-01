@@ -4818,11 +4818,6 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">'{0}' parametresi '{2}' - '{3}' geçerli aralığı dışında kalan '{1}' değerine sahip.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">Verilen konumda aranamıyor.</target>

@@ -4818,11 +4818,6 @@ Do you want to replace it?</source>
         <target state="translated">'{0}' 參數的值為 '{1}'，其不在 '{2}' 到 '{3}' 的有效範圍內。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">在部分信任的情況下，無法將 SandboxExternalContent 設定為 True。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">無法搜尋至指定位置。</target>

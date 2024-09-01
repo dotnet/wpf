@@ -4818,11 +4818,6 @@ Do you want to replace it?</source>
         <target state="translated">'{0}' 매개 변수에 '{1}' 값이 있으며 해당 값이 유효한 '{2}' ~ '{3}' 범위에 있지 않습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">부분 신뢰에서 SandboxExternalContent를 true로 설정할 수 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">지정한 위치를 찾을 수 없습니다.</target>

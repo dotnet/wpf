@@ -4818,11 +4818,6 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Parametr „{0}” ma wartość „{1}”, która nie należy do zakresu prawidłowych wartości od „{2}” do „{3}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Nie można ustawić właściwości SandboxExternalContent na true w częściowej relacji zaufania.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">Nie można przejść do podanej pozycji.</target>

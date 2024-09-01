@@ -4818,11 +4818,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Parametr {0} má hodnotu {1}, která není v platném rozsahu {2} až {3}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Vlastnost SandboxExternalContent nelze nastavit na hodnotu true v částečném vztahu důvěryhodnosti.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekFailed">
         <source>Cannot seek to given position.</source>
         <target state="translated">Nelze vyhledat danou pozici.</target>

@@ -2035,9 +2035,6 @@
   <data name="SearchText" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
-  </data>
   <data name="SeekNegative" xml:space="preserve">
     <value>Cannot set seek pointer to a negative position.</value>
   </data>

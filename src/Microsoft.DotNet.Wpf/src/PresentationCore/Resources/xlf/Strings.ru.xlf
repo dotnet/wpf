@@ -2847,11 +2847,6 @@
         <target state="translated">Найти</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Не удается задать значение "true" для SandboxExternalContent при частично доверительных отношениях.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekNegative">
         <source>Cannot set seek pointer to a negative position.</source>
         <target state="translated">Невозможно установить указатель поиска в отрицательную позицию.</target>

@@ -2847,11 +2847,6 @@
         <target state="translated">Wyszukiwanie</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Nie można ustawić właściwości SandboxExternalContent na true w częściowej relacji zaufania.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekNegative">
         <source>Cannot set seek pointer to a negative position.</source>
         <target state="translated">Wskaźnika wyszukiwania nie można ustawić na pozycji ujemnej.</target>

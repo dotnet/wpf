@@ -2847,11 +2847,6 @@
         <target state="translated">Arama</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekNegative">
         <source>Cannot set seek pointer to a negative position.</source>
         <target state="translated">Arama işaretçisi negatif konuma ayarlanamaz.</target>

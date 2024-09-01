@@ -2847,11 +2847,6 @@
         <target state="translated">検索対象</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekNegative">
         <source>Cannot set seek pointer to a negative position.</source>
         <target state="translated">負の位置にシーク ポインターを設定できません。</target>

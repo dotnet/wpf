@@ -2847,11 +2847,6 @@
         <target state="translated">Búsqueda</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">No se puede establecer SandboxExternalContent en verdadero en una confianza parcial.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SeekNegative">
         <source>Cannot set seek pointer to a negative position.</source>
         <target state="translated">No se puede establecer el puntero de llamada en una posición negativa.</target>

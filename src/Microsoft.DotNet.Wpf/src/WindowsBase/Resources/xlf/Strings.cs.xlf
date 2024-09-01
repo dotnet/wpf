@@ -2247,11 +2247,6 @@
         <target state="translated">Cíl není MediaPermission.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Cíl není WebBrowserPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Vlákno nemůže čekat na operace, které jsou už spuštěné ve stejném vlákně.</target>

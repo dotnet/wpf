@@ -2247,11 +2247,6 @@
         <target state="translated">Das Ziel ist kein MediaPermission-Objekt.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Das Ziel ist kein WebBrowserPermission-Objekt.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Ein Thread kann nicht auf Vorgänge warten, die bereits im gleichen Thread ausgeführt werden.</target>

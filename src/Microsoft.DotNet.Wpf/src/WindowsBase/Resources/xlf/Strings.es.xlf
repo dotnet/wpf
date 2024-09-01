@@ -2247,11 +2247,6 @@
         <target state="translated">El destino no es un elemento MediaPermission.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">El destino no es un elemento WebBrowserPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Un subproceso no puede esperar en las operaciones que ya se están ejecutando en el mismo subproceso.</target>

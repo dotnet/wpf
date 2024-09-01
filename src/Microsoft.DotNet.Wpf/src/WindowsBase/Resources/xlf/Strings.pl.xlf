@@ -2247,11 +2247,6 @@
         <target state="translated">Obiekt docelowy nie jest typu MediaPermission.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Obiekt docelowy nie jest typu WebBrowserPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Wątek nie może czekać na operacje już uruchomione w tym samym wątku.</target>

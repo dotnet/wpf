@@ -2247,11 +2247,6 @@
         <target state="translated">Hedef bir MediaPermission değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Hedef bir WebBrowserPermission değil.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Bir iş parçacığı aynı iş parçacığı üzerinde çalışmakta olan işlemlerde bekleyemez.</target>

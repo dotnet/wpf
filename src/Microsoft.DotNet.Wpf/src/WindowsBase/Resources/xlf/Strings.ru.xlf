@@ -2247,11 +2247,6 @@
         <target state="translated">Конечный объект не является MediaPermission.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Конечный объект не является WebBrowserPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Поток не может ожидать операции, которые уже выполняются в том же потоке.</target>

@@ -827,11 +827,6 @@
         <target state="translated">O URI da parte não é válido de acordo com aas regras definidas na especificação Open Packaging Conventions.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">Estado de permissão inválido.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">A prioridade especificada não é válida.</target>

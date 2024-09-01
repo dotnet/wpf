@@ -1539,9 +1539,6 @@
   <data name="ReachOutOfRange" xml:space="preserve">
     <value>'{0}' index is beyond maximum '{1}'.</value>
   </data>
-  <data name="InvalidPermissionState" xml:space="preserve">
-    <value>Permission state is not valid.</value>
-  </data>
   <data name="BadXml" xml:space="preserve">
     <value>'{0}' attribute is not valid XML.</value>
   </data>

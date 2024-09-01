@@ -827,11 +827,6 @@
         <target state="translated">Open Packaging Conventions 사양에 정의된 규칙을 기준으로 파트 URI가 잘못되었습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">권한 상태가 잘못되었습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">지정한 속성이 잘못되었습니다.</target>

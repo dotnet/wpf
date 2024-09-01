@@ -827,11 +827,6 @@
         <target state="translated">Identifikátor URI součásti není platný podle pravidel definovaných ve specifikaci Open Packaging Conventions.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">Stav oprávnění je neplatný.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">Zadané priorita není platná.</target>

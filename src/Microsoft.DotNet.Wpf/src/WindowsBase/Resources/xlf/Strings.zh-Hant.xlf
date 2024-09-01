@@ -827,11 +827,6 @@
         <target state="translated">根據開放式封裝慣例 (Open Packaging Convention) 規格中所定義的規則，組件 URI 無效。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">使用權限狀態無效。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">指定的優先順序無效。</target>

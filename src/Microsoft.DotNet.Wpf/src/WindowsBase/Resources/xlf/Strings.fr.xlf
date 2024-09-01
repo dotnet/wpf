@@ -827,11 +827,6 @@
         <target state="translated">L'URI du composant est non valide, conformément aux règles définies dans la spécification Open Packaging Conventions.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Niveau d'autorisation non valide.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">État d'autorisation non valide.</target>

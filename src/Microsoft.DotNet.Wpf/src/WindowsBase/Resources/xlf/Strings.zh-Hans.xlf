@@ -827,11 +827,6 @@
         <target state="translated">根据开放打包约定规范中定义的规则，部分 URI 无效。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">权限级别无效。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">权限状态无效。</target>

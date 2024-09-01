@@ -1545,9 +1545,6 @@
   <data name="BadXml" xml:space="preserve">
     <value>'{0}' attribute is not valid XML.</value>
   </data>
-  <data name="InvalidPermissionLevel" xml:space="preserve">
-    <value>Permission level is not valid.</value>
-  </data>
   <data name="XCRChoiceOnlyInAC" xml:space="preserve">
     <value>Choice is valid only in AlternateContent.</value>
   </data>

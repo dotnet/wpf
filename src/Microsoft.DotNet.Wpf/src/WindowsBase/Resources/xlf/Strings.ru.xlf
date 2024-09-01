@@ -827,11 +827,6 @@
         <target state="translated">URI части является недопустимым согласно правилам, определенным в спецификации Open Packaging Conventions.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Отсутствуют соответствующие права доступа.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">Недопустимое состояние прав доступа.</target>

@@ -827,11 +827,6 @@
         <target state="translated">L'URI della parte non è valido in base alle regole definite nella specifica Open Packaging Conventions.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Livello di autorizzazione non valido</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">Stato di autorizzazione non valido</target>

@@ -827,11 +827,6 @@
         <target state="translated">Identyfikator URI części jest nieprawidłowy według specyfikacji otwartych konwencji pakietów.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Nieprawidłowy poziom uprawnień.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">Nieprawidłowy stan uprawnień.</target>

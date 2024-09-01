@@ -827,11 +827,6 @@
         <target state="translated">パート URI は、Open Packaging Conventions 仕様で定義されたルールにより無効です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">アクセス許可のレベルが有効ではありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">アクセス許可の状態が有効ではありません。</target>

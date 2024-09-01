@@ -827,11 +827,6 @@
         <target state="translated">El URI de la parte no es válido según las reglas definidas en la especificación de Convenciones de empaquetado abierto.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Nivel de permiso no válido.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionState">
         <source>Permission state is not valid.</source>
         <target state="translated">Estado de permiso no válido.</target>

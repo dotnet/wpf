@@ -2413,11 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">型別 '{0}' 不是有效的 PageFunction 型別。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">無效的 Point 值。</target>

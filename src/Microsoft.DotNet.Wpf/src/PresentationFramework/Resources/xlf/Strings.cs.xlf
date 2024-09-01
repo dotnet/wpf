@@ -2413,11 +2413,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Typ {0} není platným typem třídy PageFunction.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Typ oprávnění je neplatný. Očekávaný typ je {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Neplatná hodnota Point.</target>

@@ -2413,11 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">型 '{0}' は、有効な PageFunction 型ではありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">無効な Point 値です。</target>

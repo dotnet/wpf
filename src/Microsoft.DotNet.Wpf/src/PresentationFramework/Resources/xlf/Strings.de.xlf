@@ -2413,11 +2413,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">Typ "{0}" ist kein gültiger PageFunction-Typ.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Ungültiger Berechtigungstyp. Erwartet wurde "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Ungültiger Point-Wert.</target>

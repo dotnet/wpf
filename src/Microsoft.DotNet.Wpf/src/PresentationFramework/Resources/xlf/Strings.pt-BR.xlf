@@ -2413,11 +2413,6 @@ Deseja substituí-lo?</target>
         <target state="translated">O tipo '{0}' não é um tipo PageFunction válido.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">O tipo de permissão não é válido. Era esperado '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Valor de Point inválido.</target>

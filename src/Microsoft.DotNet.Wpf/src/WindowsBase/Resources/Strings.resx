@@ -1746,9 +1746,6 @@
   <data name="Enumerator_VerifyContext" xml:space="preserve">
     <value>No current object to return.</value>
   </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
   <data name="StringEmpty" xml:space="preserve">
     <value>Parameter cannot be a zero-length string.</value>
   </data>

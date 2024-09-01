@@ -450,9 +450,6 @@
   <data name="InvalidExpression" space_="preserve">
     <value>Invalid expression: '{0}'</value>
   </data>
-  <data name="InvalidPermissionStateValue" space_="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
   <data name="InvalidPermissionType" space_="preserve">
     <value>Permission type is not valid. Expected '{0}'.</value>
   </data>

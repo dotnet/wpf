@@ -1137,11 +1137,6 @@
         <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">無効なセキュリティ XML です。必要な属性 '{0}' がありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">この serviceType は、既に別のサービスに登録されています。</target>

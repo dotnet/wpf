@@ -1137,11 +1137,6 @@
         <target state="translated">Vlastnost SandboxExternalContent nelze nastavit na hodnotu true v částečném vztahu důvěryhodnosti.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">Neplatné zabezpečení XML. Chybí očekávaný atribut {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">Tento objekt serviceType je již registrován u jiné služby.</target>

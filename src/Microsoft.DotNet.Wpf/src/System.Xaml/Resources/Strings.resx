@@ -798,9 +798,6 @@
   <data name="SecurityExceptionForSettingSandboxExternalToTrue" space_="preserve">
     <value>Cannot set SandboxExternalContent to true in partial trust.</value>
   </data>
-  <data name="SecurityXmlMissingAttribute" space_="preserve">
-    <value>Invalid security XML. Missing expected attribute '{0}'.</value>
-  </data>
   <data name="ServiceTypeAlreadyAdded" space_="preserve">
     <value>This serviceType is already registered to another service.</value>
   </data>

@@ -1137,11 +1137,6 @@
         <target state="translated">부분 신뢰에서 SandboxExternalContent를 true로 설정할 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">보안 XML이 잘못되었습니다. 필요한 특성 '{0}'이(가) 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">이 serviceType이 다른 서비스에 이미 등록되었습니다.</target>

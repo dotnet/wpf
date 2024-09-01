@@ -1137,11 +1137,6 @@
         <target state="translated">无法在部分信任中将 SandboxExternalContent 设置为 true。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">安全 XML 无效。缺少要求的特性“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">此 serviceType 已注册到其他服务。</target>

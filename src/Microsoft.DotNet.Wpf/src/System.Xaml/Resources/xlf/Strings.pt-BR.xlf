@@ -1137,11 +1137,6 @@
         <target state="translated">Não é possível definir SandboxExternalContent como verdadeiro em confiança parcial.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">XML de segurança inválido. Atributo esperado ausente '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">O serviceType já está registrado em outro serviço.</target>

@@ -1782,11 +1782,6 @@
         <target state="translated">Имя компонента не соответствует типу содержимого.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Недопустимый тип разрешений. Требуется "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Нажим может принимать значения от 0 до 1.</target>

@@ -1782,11 +1782,6 @@
         <target state="translated">Bölüm adı içerik türüyle uyumlu değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">İzin türü geçerli değil. Beklenen '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Basınç 0 ile 1 arasında bir değer olmalıdır.</target>

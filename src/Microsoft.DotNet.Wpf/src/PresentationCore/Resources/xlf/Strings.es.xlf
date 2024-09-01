@@ -1782,11 +1782,6 @@
         <target state="translated">El nombre de la parte no se corresponde con su tipo de contenido.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">El tipo de permiso no es válido. Se esperaba '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">La presión debe ser un valor comprendido entre 0 y 1.</target>

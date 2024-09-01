@@ -1782,11 +1782,6 @@
         <target state="translated">部分名稱未對應到其內容類型。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">壓力必須是介於 0 到 1 之間的值。</target>

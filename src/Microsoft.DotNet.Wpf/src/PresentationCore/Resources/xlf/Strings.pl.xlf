@@ -1782,11 +1782,6 @@
         <target state="translated">Nazwa części nie odpowiada typowi jej zawartości.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Nieprawidłowy typ uprawnień. Oczekiwano „{0}”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Nacisk musi mieć wartość pomiędzy 0 a 1.</target>

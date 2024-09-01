@@ -1210,9 +1210,6 @@
   <data name="InvalidPartName" xml:space="preserve">
     <value>The part name does not correspond to its content type.</value>
   </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
   <data name="InvalidPressureValue" xml:space="preserve">
     <value>Pressure must be a value between 0 and 1.</value>
   </data>

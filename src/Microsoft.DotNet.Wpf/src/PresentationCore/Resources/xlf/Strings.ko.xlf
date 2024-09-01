@@ -1782,11 +1782,6 @@
         <target state="translated">부분 이름이 해당 콘텐츠 형식과 일치하지 않습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">사용 권한 형식이 잘못되었습니다. '{0}'이(가) 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">압력은 0과 1 사이의 값이어야 합니다.</target>

@@ -1782,11 +1782,6 @@
         <target state="translated">Název součásti neodpovídá typu jejího obsahu.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Typ oprávnění je neplatný. Očekávaný typ je {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Tlak musí být hodnota v rozsahu 0 až 1.</target>

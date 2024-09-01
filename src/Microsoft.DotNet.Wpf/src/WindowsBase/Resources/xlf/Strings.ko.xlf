@@ -2242,11 +2242,6 @@
         <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">대상이 MediaPermission이 아닙니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">스레드는 같은 스레드에서 이미 실행 중인 작업에 대해 대기할 수 없습니다.</target>

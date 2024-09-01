@@ -2242,11 +2242,6 @@
         <target state="translated">Параметр не может представлять собой строку нулевой длины.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">Конечный объект не является MediaPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Поток не может ожидать операции, которые уже выполняются в том же потоке.</target>

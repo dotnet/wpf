@@ -2242,11 +2242,6 @@
         <target state="translated">參數不能是零長度字串。</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">目標並非 MediaPermission。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">執行緒無法等待已在相同執行緒上執行的作業。</target>

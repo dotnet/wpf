@@ -2242,11 +2242,6 @@
         <target state="translated">パラメーターを長さゼロの文字列にすることはできません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">ターゲットは MediaPermission ではありません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">スレッドは、同じスレッドで既に実行されている操作を待機することはできません。</target>

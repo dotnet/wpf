@@ -2242,11 +2242,6 @@
         <target state="translated">O parâmetro não pode ser uma cadeia de caracteres de comprimento zero.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">O destino não é uma MediaPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Um thread não pode aguardar operações que já estão em execução no mesmo thread.</target>

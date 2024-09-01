@@ -2242,11 +2242,6 @@
         <target state="translated">Le paramètre ne peut pas être une chaîne nulle.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">La cible n'est pas un MediaPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Un thread ne peut pas attendre sur des opérations déjà en cours d'exécution sur le même thread.</target>

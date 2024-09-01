@@ -1542,9 +1542,6 @@
   <data name="InvalidPermissionState" xml:space="preserve">
     <value>Permission state is not valid.</value>
   </data>
-  <data name="TargetNotMediaPermissionLevel" xml:space="preserve">
-    <value>Target is not a MediaPermission.</value>
-  </data>
   <data name="BadXml" xml:space="preserve">
     <value>'{0}' attribute is not valid XML.</value>
   </data>

@@ -2242,11 +2242,6 @@
         <target state="translated">Il parametro non può essere una stringa di lunghezza zero.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">La destinazione non è un elemento MediaPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Un thread non può mettersi in attesa per operazioni già in esecuzione sullo stesso thread.</target>

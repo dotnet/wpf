@@ -2242,11 +2242,6 @@
         <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
         <note />
       </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">Obiekt docelowy nie jest typu MediaPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">
         <source>A thread cannot wait on operations already running on the same thread.</source>
         <target state="translated">Wątek nie może czekać na operacje już uruchomione w tym samym wątku.</target>

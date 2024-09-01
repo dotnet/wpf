@@ -1210,9 +1210,6 @@
   <data name="InvalidPartName" xml:space="preserve">
     <value>The part name does not correspond to its content type.</value>
   </data>
-  <data name="InvalidPermissionStateValue" xml:space="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
   <data name="InvalidPermissionType" xml:space="preserve">
     <value>Permission type is not valid. Expected '{0}'.</value>
   </data>

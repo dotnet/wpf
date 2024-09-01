@@ -1142,11 +1142,6 @@
         <target state="translated">XML di sicurezza non valido. Attributo previsto '{0}' mancante.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">XML di sicurezza non valido. Tag imprevisto '{0}', previsto '{1}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlUnexpectedValue">
         <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
         <target state="translated">XML di sicurezza non valido. Valore imprevisto '{0}' nell'attributo '{1}', previsto '{2}'.</target>

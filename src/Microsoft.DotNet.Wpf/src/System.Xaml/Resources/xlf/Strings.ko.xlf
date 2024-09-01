@@ -1142,11 +1142,6 @@
         <target state="translated">보안 XML이 잘못되었습니다. 필요한 특성 '{0}'이(가) 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">보안 XML이 잘못되었습니다. 예기치 못한 '{0}' 태그입니다. '{1}'이(가) 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlUnexpectedValue">
         <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
         <target state="translated">보안 XML이 잘못되었습니다. '{1}' 특성에 예기치 못한 '{0}' 값이 있습니다. '{2}'이(가) 필요합니다.</target>

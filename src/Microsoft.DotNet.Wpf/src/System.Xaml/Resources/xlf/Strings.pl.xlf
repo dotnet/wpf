@@ -1142,11 +1142,6 @@
         <target state="translated">Nieprawidłowy kod XML zabezpieczeń. Brak oczekiwanego atrybutu „{0}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">Nieprawidłowy kod XML zabezpieczeń. Nieoczekiwany tag „{0}”, oczekiwano tagu „{1}”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlUnexpectedValue">
         <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
         <target state="translated">Nieprawidłowy kod XML zabezpieczeń. Nieoczekiwana wartość „{0}” w atrybucie „{1}”, oczekiwano wartości „{2}”.</target>

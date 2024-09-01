@@ -1142,11 +1142,6 @@
         <target state="translated">安全 XML 无效。缺少要求的特性“{0}”。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">安全 XML 无效。意外标记“{0}”，应为“{1}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="SecurityXmlUnexpectedValue">
         <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
         <target state="translated">安全 XML 无效。特性“{1}”中的意外值“{0}”，应为“{2}”。</target>

@@ -352,7 +352,6 @@ ExpectedQualifiedTypeName=Type name '{0}' is not assembly-qualified. You can obt
 ExpectedQualifiedAssemblyName=Assembly name '{0}' is not fully qualified. The Name, Version, Culture, and PublicKeyToken must all be provided.
 
 ; XamlLoadPermission
-SecurityXmlUnexpectedTag=Invalid security XML. Unexpected tag '{0}', expected '{1}'.
 SecurityXmlUnexpectedValue=Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.
 SecurityXmlMissingAttribute=Invalid security XML. Missing expected attribute '{0}'.
 

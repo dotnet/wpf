@@ -557,11 +557,6 @@
         <target state="translated">Expression non valide : '{0}'</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Type d'autorisation non valide. Type attendu '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">L'argument de type '{0}' n'est pas un type valide.</target>

@@ -557,11 +557,6 @@
         <target state="translated">'{0}' 식이 잘못되었습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">사용 권한 형식이 잘못되었습니다. '{0}'이(가) 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">형식 인수 {0}이(가) 올바른 형식이 아닙니다.</target>

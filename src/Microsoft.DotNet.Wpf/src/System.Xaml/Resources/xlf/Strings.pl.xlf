@@ -557,11 +557,6 @@
         <target state="translated">Nieprawidłowe wyrażenie: „{0}”</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Nieprawidłowy typ uprawnień. Oczekiwano „{0}”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">Argument typu „{0}” nie jest prawidłowym typem.</target>

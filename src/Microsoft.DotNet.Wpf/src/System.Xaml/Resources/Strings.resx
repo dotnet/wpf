@@ -450,9 +450,6 @@
   <data name="InvalidExpression" space_="preserve">
     <value>Invalid expression: '{0}'</value>
   </data>
-  <data name="InvalidPermissionType" space_="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
   <data name="InvalidTypeArgument" space_="preserve">
     <value>Type argument '{0}' is not a valid type.</value>
   </data>

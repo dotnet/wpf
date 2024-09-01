@@ -557,11 +557,6 @@
         <target state="translated">无效的表达式:“{0}”</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">权限类型无效。应为“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">类型参数“{0}”不是有效的类型。</target>

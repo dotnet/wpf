@@ -557,11 +557,6 @@
         <target state="translated">無效的運算式: '{0}'</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidTypeArgument">
         <source>Type argument '{0}' is not a valid type.</source>
         <target state="translated">型別引數 '{0}' 不是有效的型別。</target>

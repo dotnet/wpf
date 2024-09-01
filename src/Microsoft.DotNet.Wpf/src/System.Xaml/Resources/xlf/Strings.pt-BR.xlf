@@ -1122,11 +1122,6 @@
         <target state="translated">SchemaContext não pode ser nulo.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Não é possível definir SandboxExternalContent como verdadeiro em confiança parcial.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">O serviceType já está registrado em outro serviço.</target>

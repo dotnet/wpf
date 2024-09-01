@@ -789,9 +789,6 @@
   <data name="SchemaContextNull" space_="preserve">
     <value>SchemaContext cannot be null.</value>
   </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" space_="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
-  </data>
   <data name="ServiceTypeAlreadyAdded" space_="preserve">
     <value>This serviceType is already registered to another service.</value>
   </data>

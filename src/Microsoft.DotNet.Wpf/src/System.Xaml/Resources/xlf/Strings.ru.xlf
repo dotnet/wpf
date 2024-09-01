@@ -1122,11 +1122,6 @@
         <target state="translated">Свойство SchemaContext не может быть неопределенным (null).</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Не удается задать значение "true" для SandboxExternalContent при частично доверительных отношениях.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">Этот тип serviceType уже зарегистрирован для другой службы.</target>

@@ -832,11 +832,6 @@
         <target state="translated">État d'autorisation non valide.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Valeur de PermissionState '{0}' non valide pour cette autorisation.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPermissionType">
         <source>Permission type is not valid. Expected '{0}'.</source>
         <target state="translated">Type d'autorisation non valide. Type attendu '{0}'.</target>

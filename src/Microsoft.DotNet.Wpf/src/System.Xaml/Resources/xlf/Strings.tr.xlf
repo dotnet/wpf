@@ -1142,11 +1142,6 @@
         <target state="translated">Geçersiz güvenlik XML'si. Beklenen '{0}' özniteliği eksik.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">Geçersiz güvenlik XML'si. '{1}' özniteliğinde '{0}' değeri beklenmiyordu; '{2}' bekleniyordu.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">Bu serviceType başka bir hizmete zaten kaydedildi.</target>

@@ -1142,11 +1142,6 @@
         <target state="translated">Neplatné zabezpečení XML. Chybí očekávaný atribut {0}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">Neplatné zabezpečení XML. Neočekávaná hodnota {0} v atributu {1}, byla očekávána hodnota {2}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">Tento objekt serviceType je již registrován u jiné služby.</target>

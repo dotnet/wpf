@@ -1142,11 +1142,6 @@
         <target state="translated">無效的安全性 XML。遺漏所需的屬性 '{0}'。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">無效的安全性 XML。屬性 '{1}' 中有未預期的值 '{0}'，應該是 '{2}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">此 serviceType 已在其他服務登錄。</target>

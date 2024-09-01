@@ -1142,11 +1142,6 @@
         <target state="translated">Недействительный XML безопасности. Отсутствует обязательный атрибут "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">Недействительный XML безопасности. Непредвиденное значение "{0}" в атрибуте "{1}"; требуется "{2}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">Этот тип serviceType уже зарегистрирован для другой службы.</target>

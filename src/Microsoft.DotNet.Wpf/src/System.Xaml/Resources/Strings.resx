@@ -801,9 +801,6 @@
   <data name="SecurityXmlMissingAttribute" space_="preserve">
     <value>Invalid security XML. Missing expected attribute '{0}'.</value>
   </data>
-  <data name="SecurityXmlUnexpectedValue" space_="preserve">
-    <value>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</value>
-  </data>
   <data name="ServiceTypeAlreadyAdded" space_="preserve">
     <value>This serviceType is already registered to another service.</value>
   </data>

@@ -1142,11 +1142,6 @@
         <target state="translated">無効なセキュリティ XML です。必要な属性 '{0}' がありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">無効なセキュリティ XML です。属性 '{1}' に予期しない値 '{0}' があります。'{2}' が必要です。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">
         <source>This serviceType is already registered to another service.</source>
         <target state="translated">この serviceType は、既に別のサービスに登録されています。</target>

@@ -427,11 +427,6 @@
         <target state="translated">無法寫入處於目前狀態的位置參數。寫入器無法以屬性形式寫入位置參數，因為寫入器已開始寫入項目，而且寫入器也無法展開此位置參數，因為包含此位置參數的標記延伸上沒有預設建構函式。請嘗試將先前節點資料流中的位置參數成員，移到 XamlXmlWriter 仍然可以寫入屬性的地方。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">必須是 XamlLoadPermission 類型的權限。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">必須是型別 ObjectMarkupInfo 的值。</target>

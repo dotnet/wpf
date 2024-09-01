@@ -427,11 +427,6 @@
         <target state="translated">Не удается записать позиционные параметры в текущем состоянии.  Запись позиционных параметров в форме атрибутов невозможна, поскольку объект записи уже начал записывать элементы, либо он не может развернуть позиционные параметры из-за отсутствия конструктора по умолчанию в расширении разметки, содержащем позиционные параметры.  Попробуйте переместить член позиционного параметра ближе к началу потока узлов туда, где XamlXmlWriter все еще записывает атрибуты.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Ожидалось разрешение типа XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Ожидалось значение типа ObjectMarkupInfo.</target>

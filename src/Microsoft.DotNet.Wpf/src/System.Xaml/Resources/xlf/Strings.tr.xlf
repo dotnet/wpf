@@ -427,11 +427,6 @@
         <target state="translated">Geçerli durumda konum parametreleri yazılamıyor. Yazıcı öznitelik formuna konum parametrelerini yazamıyor çünkü yazıcı öğeleri yazmaya başladı ancak konum parametrelerini içeren işaretleme uzantısında varsayılan oluşturucunun bulunmaması nedeniyle yazıcı konum parametrelerini genişletemedi. Konum parametresi üyesini düğüm akışında XamlXmlWriter'ın hala öznitelikleri yazabildiği önceki bir yere taşımayı deneyin.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Beklenen XamlLoadPermission türündeki izin.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">ObjectMarkupInfo türünün beklenen değeri.</target>

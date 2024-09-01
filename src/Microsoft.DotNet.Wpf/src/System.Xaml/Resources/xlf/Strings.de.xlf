@@ -427,11 +427,6 @@
         <target state="translated">Im aktuellen Zustand können keine Positionsparameter geschrieben werden. Die Positionsparameter können nicht in Attributform geschrieben werden, da vom Writer mit dem Schreiben von Elementen begonnen wurde, und die Positionsparameter können aufgrund eines fehlenden Standardkonstruktors in der Markuperweiterung, die die Positionsparameter enthält, nicht erweitert werden. Verschieben Sie den Positionsparametermember im Knotenstream weiter nach vorne an eine Position, an der von XamlXmlWriter nach wie vor Attribute geschrieben werden können.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Es wurde eine Berechtigung vom Typ "XamlLoadPermission" erwartet.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Es wurde ein Wert vom Typ "ObjectMarkupInfo" erwartet.</target>

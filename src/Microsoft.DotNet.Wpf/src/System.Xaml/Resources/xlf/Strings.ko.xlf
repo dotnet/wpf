@@ -427,11 +427,6 @@
         <target state="translated">현재 상태에서 위치 매개 변수를 쓸 수 없습니다. 작성기가 요소를 쓰기 시작했기 때문에 특성 형식으로 위치 매개 변수를 쓰지 못할 뿐 아니라 위치 매개 변수를 포함하는 태그 확장에서 기본 생성자가 없기 때문에 작성기가 위치 매개 변수를 확장할 수도 없습니다. 노드 스트림의 초반에 XamlXmlWriter가 특성을 쓸 수 있는 위치로 위치 매개 변수 멤버를 이동해 보십시오.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">XamlLoadPermission 형식의 권한이 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">ObjectMarkupInfo 형식의 값이 필요합니다.</target>

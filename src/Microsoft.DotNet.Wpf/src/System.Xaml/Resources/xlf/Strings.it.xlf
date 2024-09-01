@@ -427,11 +427,6 @@
         <target state="translated">Impossibile scrivere parametri posizionali nello stato corrente. Il writer non può scrivere i parametri posizionali in forma di attributo perché è già stata avviata la scrittura di elementi, né espandere i parametri posizionali a causa della mancanza di un costruttore predefinito sull'estensione di markup contenente i parametri posizionali. Provare a spostare il membro del parametro posizionale in una posizione precedente nel flusso del nodo dove XamlXmlWriter è ancora in grado di scrivere attributi.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Prevista autorizzazione di tipo XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Previsto valore di tipo ObjectMarkupInfo.</target>

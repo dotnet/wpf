@@ -427,11 +427,6 @@
         <target state="translated">V aktuálním stavu nelze zapsat poziční parametry. Modul pro zápis nemůže zapsat poziční parametry do formuláře atributů, protože modul pro zápis začal zapisovat elementy, a nemůže ani rozbalit poziční atributy z důvodu chybějícího výchozího konstruktoru pro rozšíření značek, které obsahuje tyto poziční parametry. Zkuste přesunout člena pozičních parametrů více dopředu v datovém proudu uzlu na místo, kde modul XamlXmlWriter ještě může zapisovat atributy.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Bylo očekáváno oprávnění typu XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Byla očekávána hodnota typu ObjectMarkupInfo.</target>

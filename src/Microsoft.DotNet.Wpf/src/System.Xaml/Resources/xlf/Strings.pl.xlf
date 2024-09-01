@@ -427,11 +427,6 @@
         <target state="translated">Nie można zapisać parametrów pozycyjnych w bieżącym stanie. Moduł zapisujący nie może zapisać parametrów pozycyjnych w formie atrybutu, ponieważ został uruchomiony w trybie zapisywania elementów, i nie może rozwinąć parametrów pozycyjnych z powodu braku domyślnego konstruktora w rozszerzeniu znacznika, które zawiera parametry pozycyjne. Spróbuj przenieść element członkowski parametrów pozycyjnych do miejsca znajdującego się wcześniej w strumieniu węzłów, takiego, w którym obiekt XamlXmlWriter będzie mógł nadal zapisywać atrybuty.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Oczekiwano uprawnienia typu XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Oczekiwano wartości typu ObjectMarkupInfo.</target>

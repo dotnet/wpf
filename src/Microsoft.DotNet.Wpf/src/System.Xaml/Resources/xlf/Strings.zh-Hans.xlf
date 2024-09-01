@@ -427,11 +427,6 @@
         <target state="translated">无法在当前状态下写入位置参数。编写器无法以特性的形式写入位置参数，因为编写器是为写入元素而启动的；编写器也无法展开位置参数，原因是包含位置参数的标记扩展中缺少默认构造函数。尝试在节点流中向前移动位置参数成员，将其放置在 XamlXmlWriter 仍可以写入特性的位置。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">类型 XamlLoadPermission 的预期权限。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">类型 ObjectMarkupInfo 的预期值。</target>

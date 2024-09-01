@@ -427,11 +427,6 @@
         <target state="translated">現在の状態では位置指定パラメーターを出力できません。ライターは要素の出力を開始しているため、属性形式の位置指定パラメーターを書き出すことはできません。また、位置指定パラメーターを含むマークアップ拡張に既定のコンストラクターがないため、位置指定パラメーターを展開することもできません。位置指定パラメーター メンバーをノード ストリームの前の方へ移動して、XamlXmlWriter が属性を出力できる位置に配置してください。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">XamlLoadPermission 型のアクセス許可が必要です。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">ObjectMarkupInfo 型の値が必要です。</target>

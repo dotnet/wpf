@@ -427,11 +427,6 @@
         <target state="translated">Impossible d'écrire des paramètres positionnels dans l'état actuel. L'enregistreur ne peut pas écrire les paramètres positionnels sous forme d'attribut, car il a commencé à écrire des éléments. L'enregistreur ne peut pas non plus développer les paramètres positionnels en raison de l'absence d'un constructeur par défaut sur l'extension de balisage qui contient les paramètres positionnels. Essayez de déplacer le membre de paramètre positionnel plus haut dans le flux de nœud, à un endroit où XamlXmlWriter peut encore écrire des attributs.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Autorisation attendue de type XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Valeur attendue de type ObjectMarkupInfo.</target>

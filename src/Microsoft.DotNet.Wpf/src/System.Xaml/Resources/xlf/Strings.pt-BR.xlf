@@ -427,11 +427,6 @@
         <target state="translated">Não é possível gravar parâmetros posicionais no estado atual. O gravador não pode gravar os parâmetros posicionais na forma de atributo, pois começou a gravar elementos; ele também não pode expandir os parâmetros posicionais devido à ausência de um construtor padrão na extensão de marcação que contém os parâmetros. Tente mover o associado de parâmetro posicional para uma posição anterior no fluxo do nó, para um local em que XamlXmlWriter ainda possa gravar atributos.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Esperada permissão do tipo XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Esperado valor do tipo ObjectMarkupInfo.</target>

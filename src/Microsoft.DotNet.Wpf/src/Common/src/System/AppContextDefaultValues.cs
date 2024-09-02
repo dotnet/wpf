@@ -74,22 +74,7 @@ namespace System
         /// <returns>TargetFrameworkMoniker on .NET Framework and .NET Core 3.0+; null on .NET Core 2.2 or older runtimes</returns>
         private static string GetTargetFrameworkMoniker()
         {
-            try
-            {
-                var pSetupInformation = typeof(AppDomain).GetProperty("SetupInformation");
-                object appDomainSetup = pSetupInformation?.GetValue(AppDomain.CurrentDomain);
-                Type tAppDomainSetup = Type.GetType("System.AppDomainSetup");
-                var pTargetFrameworkName = tAppDomainSetup?.GetProperty("TargetFrameworkName");
-
-                return
-                    appDomainSetup != null ?
-                    pTargetFrameworkName?.GetValue(appDomainSetup) as string :
-                    null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return AppContext.TargetFrameworkName;
         }
 
         // This code was a constructor copied from the FrameworkName class, which is located in System.dll.

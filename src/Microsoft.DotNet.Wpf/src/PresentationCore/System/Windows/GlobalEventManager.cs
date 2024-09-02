@@ -424,6 +424,11 @@ namespace System.Windows
 
         #region Global Index for RoutedEvent and EventPrivateKey
 
+        /// <summary>
+        /// Increments the global counter for <see cref="RoutedEvent"/> and <see cref="EventPrivateKey"/> storage.
+        /// </summary>
+        /// <returns>Globally unique index for the event within the application.</returns>
+        /// <exception cref="InvalidOperationException">Thrown in case the index is bigger than <see cref="int.MaxValue"/>.</exception>
         internal static int GetNextAvailableGlobalIndex()
         {
             // Prevent GlobalIndex from overflow. RoutedEvents are meant to be static members and are to be registered 
@@ -437,7 +442,9 @@ namespace System.Windows
             return (int)newIndex;
         }
 
-        // Access must be synchronized
+        /// <summary>
+        /// Access must be done atomically, currently only accessed via <see cref="GetNextAvailableGlobalIndex"/> method.
+        /// </summary>
         private static uint s_globalEventIndex = uint.MinValue;
 
         #endregion

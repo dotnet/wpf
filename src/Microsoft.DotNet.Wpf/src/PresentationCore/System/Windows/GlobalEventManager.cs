@@ -471,7 +471,7 @@ namespace System.Windows
         // This is the cached value for the DType of DependencyObject
         private static DependencyObjectType _dependencyObjectType = DependencyObjectType.FromSystemTypeInternal(typeof(DependencyObject));
 
-        internal static object Synchronized = new object();
+        internal static readonly Lock Synchronized = new();
 
         #endregion Data
     }

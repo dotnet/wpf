@@ -441,12 +441,6 @@ namespace System.Windows
             return index;
         }
 
-        // Must be called from within a lock of GlobalEventManager.Synchronized
-        internal static object EventFromGlobalIndex(int globalIndex)
-        {
-            return _globalIndexToEventMap[globalIndex];
-        }
-
         // must be used within a lock of GlobalEventManager.Synchronized
         private static ArrayList _globalIndexToEventMap = new ArrayList(100); // figure out what this number is in a typical scenario
 

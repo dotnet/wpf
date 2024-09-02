@@ -22,7 +22,7 @@ namespace System.Windows
         /// </summary>
         public EventPrivateKey()
         {
-            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex(this);
+            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex();
         }
 
         internal int GlobalIndex

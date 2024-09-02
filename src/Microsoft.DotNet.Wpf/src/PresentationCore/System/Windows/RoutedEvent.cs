@@ -129,7 +129,7 @@ namespace System.Windows
             _handlerType = handlerType;
             _ownerType = ownerType;
 
-            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex(this);
+            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex();
         }
 
         /// <summary>

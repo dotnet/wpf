@@ -424,7 +424,7 @@ namespace System.Windows
 
         #region Global Index for RoutedEvent and EventPrivateKey
 
-        internal static int GetNextAvailableGlobalIndex(object value)
+        internal static int GetNextAvailableGlobalIndex()
         {
             // Prevent GlobalIndex from overflow. RoutedEvents are meant to be static members and are to be registered 
             // only via static constructors. However there is no cheap way of ensuring this, without having to do a stack walk. Hence 

@@ -19,15 +19,19 @@ namespace System
     {
         public static void PopulateDefaultValues()
         {
-            string platformIdentifier, profile;
-            int version;
-
-            ParseTargetFrameworkName(out platformIdentifier, out profile, out version);
+#if NETFX
+            // Get Target Framework information
+            ParseTargetFrameworkName(out string platformIdentifier, out string profile, out int version);
 
             // Call into each library to populate their default switches
             PopulateDefaultValuesPartial(platformIdentifier, profile, version);
+#else
+            // Call into each library to populate their default switches
+            // ".NETCoreApp,Version=v3.0"
+            PopulateDefaultValuesPartial(".NETCoreApp", string.Empty, 30000);
+#endif
         }
-
+#if NETFX
         /// <summary>
         /// We have this separate method for getting the parsed elements out of the TargetFrameworkName so we can
         /// more easily support this on other platforms.
@@ -181,7 +185,7 @@ namespace System
 
             return true;
         }
-
+#endif
         // This is a partial method. Platforms (such as Desktop) can provide an implementation of it that will read override value
         // from whatever mechanism is available on that platform. If no implementation is provided, the compiler is going to remove the calls
         // to it from the code

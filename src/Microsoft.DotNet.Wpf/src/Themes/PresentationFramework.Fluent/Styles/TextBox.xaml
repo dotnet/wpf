@@ -22,22 +22,6 @@
     <system:Double x:Key="TextBoxClearButtonHeight">24</system:Double>
     <system:String x:Key="ClearGlyph">&#xE894;</system:String>
 
-    <Style x:Key="DefaultTextBoxScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid>
-                        <ScrollContentPresenter Margin="0" CanContentScroll="{TemplateBinding CanContentScroll}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -88,8 +72,7 @@
                                     CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                     IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                    IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
-                                    Style="{StaticResource DefaultTextBoxScrollViewerStyle}"
+                                    IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"                                
                                     TextElement.Foreground="{TemplateBinding Foreground}"
                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                             </Grid>
@@ -160,7 +143,6 @@
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
-                            Style="{StaticResource DefaultTextBoxScrollViewerStyle}"
                             TextElement.Foreground="{TemplateBinding Foreground}"
                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                     </Grid>

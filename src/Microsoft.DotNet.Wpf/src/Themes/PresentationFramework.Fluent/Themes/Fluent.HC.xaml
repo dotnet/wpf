@@ -4024,21 +4024,6 @@
   <Thickness x:Key="TextBoxClearButtonPadding">0,0,0,0</Thickness>
   <system:Double x:Key="TextBoxClearButtonHeight">24</system:Double>
   <system:String x:Key="ClearGlyph"></system:String>
-  <Style x:Key="DefaultTextBoxScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
-    <Setter Property="Margin" Value="0" />
-    <Setter Property="Padding" Value="0" />
-    <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ScrollViewer}">
-          <Grid>
-            <ScrollContentPresenter Margin="0" CanContentScroll="{TemplateBinding CanContentScroll}" />
-          </Grid>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
   <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
     <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -4070,7 +4055,7 @@
           <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" Style="{StaticResource DefaultTextBoxScrollViewerStyle}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
               </Grid>
             </Border>
             <!--  The Accent Border is a separate element so that changes to the border thickness do not affect the position of the element  -->
@@ -4113,7 +4098,7 @@
             <ColumnDefinition Width="Auto" />
           </Grid.ColumnDefinitions>
           <Grid Grid.Column="0" Margin="{TemplateBinding Padding}">
-            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" Style="{StaticResource DefaultTextBoxScrollViewerStyle}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
           </Grid>
           <!--  Buttons and Icons have no padding from the main element to allow absolute positions if height is larger than the text entry zone  -->
           <Button x:Name="ClearButton" Grid.Column="1" MinWidth="{StaticResource TextBoxClearButtonHeight}" MinHeight="{StaticResource TextBoxClearButtonHeight}" Margin="{StaticResource TextBoxClearButtonMargin}" Padding="{StaticResource TextBoxClearButtonPadding}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=TemplateButtonCommand, RelativeSource={RelativeSource TemplatedParent}}" Cursor="Arrow" IsTabStop="False" Foreground="{DynamicResource TextControlButtonForeground}">

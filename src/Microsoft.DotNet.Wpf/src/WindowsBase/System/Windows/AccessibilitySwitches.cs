@@ -224,28 +224,17 @@ namespace System.Windows
         {
             if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
             {
-                // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
-                // Otherwise we should inform the developer, via an exception, to enable all the flags.
                 bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
                 bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
                 bool netFx472 = UseNetFx472CompatibleAccessibilityFeatures;
 
-                bool? lastFlag = null;
-                bool foundInvalidSwitchState = false;
-                ReadOnlySpan<bool> orderedFlagValues = [netFx47, netFx471, netFx472];
-
-                foreach (bool flag in orderedFlagValues)
-                {
-                    if (foundInvalidSwitchState = (!flag && lastFlag == true))
-                    {
-                        break;
-                    }
-
-                    lastFlag = flag;
-                }
-
-                if (foundInvalidSwitchState)
-                {
+                // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
+                // Otherwise we should inform the developer, via an exception, to enable all the flags.
+                if (!((netFx47 == false && netFx471 == false && netFx472 == false) ||
+                      (netFx47 == false && netFx471 == false && netFx472 == true) ||
+                      (netFx47 == false && netFx471 == true && netFx472 == true) ||
+                      (netFx47 == true && netFx471 == true && netFx472 == true)))
+                { 
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
                     DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);

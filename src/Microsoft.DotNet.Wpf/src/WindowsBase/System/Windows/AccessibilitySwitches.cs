@@ -226,16 +226,15 @@ namespace System.Windows
             {
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.
-                var orderedFlagValues =
-                typeof(AccessibilitySwitches).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
-                .Where(x => x.Name.EndsWith("CompatibleAccessibilityFeatures"))
-                .OrderBy(x => x.Name.Remove(x.Name.IndexOf("CompatibleAccessibilityFeatures", 0)), StringComparer.OrdinalIgnoreCase)
-                .Select(x => (bool)x.GetValue(null));
+                bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
+                bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
+                bool netFx472 = UseNetFx472CompatibleAccessibilityFeatures;
 
                 bool? lastFlag = null;
                 bool foundInvalidSwitchState = false;
+                ReadOnlySpan<bool> orderedFlagValues = [netFx47, netFx471, netFx472];
 
-                foreach (var flag in orderedFlagValues)
+                foreach (bool flag in orderedFlagValues)
                 {
                     if (foundInvalidSwitchState = (!flag && lastFlag == true))
                     {

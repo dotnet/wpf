@@ -71,10 +71,6 @@ namespace System
         /// <summary>
         ///  This is equivalent to calling <code>AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName</code>
         /// </summary>
-        /// <remarks>
-        /// <code>AppDomain.CurrentDomain.SetupInformation</code> is not available until .NET Core 3.0, but we 
-        /// have a need to run this code in .NET Core 2.2, we attempt to obtain this information via Reflection.
-        /// </remarks>
         /// <returns>TargetFrameworkMoniker on .NET Framework and .NET Core 3.0+; null on .NET Core 2.2 or older runtimes</returns>
         private static string GetTargetFrameworkMoniker()
         {

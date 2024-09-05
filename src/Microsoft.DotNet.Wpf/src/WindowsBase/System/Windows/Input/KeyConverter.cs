@@ -123,10 +123,10 @@ namespace System.Windows.Input
             // If this is a single-character we're dealing with, match digits/letters
             if (keyToken.Length == 1 && char.IsLetterOrDigit(firstChar))
             {
-                // Match a digit (0-9) or an ASCII letter (lower/uppercase)
-                if (char.IsDigit(firstChar) && (firstChar >= '0' && firstChar <= '9'))
+                // Match an ASCII digit or an ASCII letter (lower/uppercase)
+                if (char.IsAsciiDigit(firstChar)) // 0 - 9
                     return Key.D0 + firstChar - '0';
-                else if (char.IsLetter(firstChar) && (firstChar >= 'A' && firstChar <= 'Z'))
+                else if (char.IsAsciiLetterUpper(firstChar)) // A - Z
                     return Key.A + firstChar - 'A';
                 else
                     throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken.ToString(), typeof(Key)));

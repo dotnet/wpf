@@ -15,6 +15,7 @@
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
   </ItemGroup>
 
 </Project>

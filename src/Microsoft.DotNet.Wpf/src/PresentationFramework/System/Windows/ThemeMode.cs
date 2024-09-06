@@ -36,8 +36,8 @@ namespace System.Windows
         /// and it means that Fluent theme will not be applied on the Application or Window.
         /// </summary>
         /// <remarks>
-        /// In case, when Application.ThemeNode is not set to None,
-        /// even if Window.ThemeMode is set to None, the Fluent theme will be applied on the Window.
+        /// In case, when <see cref="Application.ThemeMode"/> is not set to None,
+        /// even if <see cref="Window.ThemeMode"/> is set to None, the Fluent theme will be applied on the Window.
         /// </remarks>
         public static ThemeMode None => new ThemeMode();
 

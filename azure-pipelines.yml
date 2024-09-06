@@ -43,7 +43,7 @@ extends:
         enabled: true
       tsa:
         enabled: true
-        configFile: '$(Build.SourcesDirectory)/eng/tsa-options.json'
+        configFile: '$(Build.SourcesDirectory)/eng/tsaoptions.json'
     featureFlags:
       autoBaseline: true
     pool:

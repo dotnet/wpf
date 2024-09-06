@@ -49,7 +49,7 @@ jobs:
       - name: Codeql.TSAEnabled
         value: ${{ parameters.TSAEnabled }}
       - name: Codeql.TSAOptionsPath
-        value: $(Build.SourcesDirectory)/eng/tsa-options.json
+        value: $(Build.SourcesDirectory)/eng/tsaoptions.json
       - name: _TeamName
         value: DotNetCore
       - name: _SignType

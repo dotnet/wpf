@@ -591,14 +591,21 @@ namespace System.Windows
 
                 // Build the handler list such that handlers added
                 // via OverrideMetadata are called last (base invocation first)
-                Delegate[] handlers = baseMetadata.PropertyChangedCallback.GetInvocationList();
-                if (handlers.Length > 0)
+                PropertyChangedCallback headHandler = null;
+                foreach (PropertyChangedCallback handler in Delegate.EnumerateInvocationList(baseMetadata.PropertyChangedCallback))
                 {
-                    PropertyChangedCallback headHandler = (PropertyChangedCallback)handlers[0];
-                    for (int i = 1; i < handlers.Length; i++)
+                    if (headHandler is null)
                     {
-                        headHandler += (PropertyChangedCallback)handlers[i];
+                        headHandler = handler;
                     }
+                    else
+                    {
+                        headHandler += handler;
+                    }
+                }
+
+                if (headHandler is not null)
+                {
                     headHandler += _propertyChangedCallback;
                     _propertyChangedCallback = headHandler;
                 }

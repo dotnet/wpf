@@ -425,12 +425,21 @@ namespace System.Windows
         {
             get
             {
+                return ConvertFontHeight(SystemParameters.NonClientMetrics.lfMessageFont.lfHeight);
+            }
+        }
+
+        internal static double ThemeMessageFontSize
+        {
+            get
+            {
                 // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
                 if(ThemeManager.IsFluentThemeEnabled)
                 {
-                    return ConvertFontHeight(SystemParameters.NonClientMetrics.lfMessageFont.lfHeight * ThemeManager.DefaultFluentFontSizeFactor) ;
+                    return MessageFontSize * ThemeManager.DefaultFluentFontSizeFactor ;
                 }
-                return ConvertFontHeight(SystemParameters.NonClientMetrics.lfMessageFont.lfHeight);
+
+                return MessageFontSize;
             }
         }
 
@@ -1021,22 +1030,6 @@ namespace System.Windows
                 // Could not get the DPI to convert the size, using the hardcoded fallback value
                 return FallbackFontSize;
             }
-        }
-
-        private static double ConvertFontHeight(double height)
-        {
-            int dpi = SystemParameters.Dpi;
-
-            if (dpi != 0)
-            {
-                return (double)(Math.Abs(height) * 96 / dpi);
-            }
-            else
-            {
-                // Could not get the DPI to convert the size, using the hardcoded fallback value
-                return FallbackFontSize;
-            }
-
         }
 
         private const double FallbackFontSize = 11.0;   // To use if unable to get the system size

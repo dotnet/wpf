@@ -94,7 +94,9 @@ namespace System.Windows
         /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
         /// <param name="value">The ThemeMode to convert.</param>
         /// <param name="destinationType">The type to which to convert the ThemeMode instance.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The object which was constructoed.
+        /// </returns>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,
                                          object value,

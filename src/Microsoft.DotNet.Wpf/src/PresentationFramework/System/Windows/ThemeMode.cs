@@ -31,8 +31,8 @@ namespace System.Windows
     public readonly struct ThemeMode : IEquatable<ThemeMode>
     {
         /// <summary>
-        /// Predefined theme mode : None.
-        /// This is the default value for Application.ThemeMode and Window.ThemeMode
+        /// Predefined theme mode: None.
+        /// This is the default value for <see cref="Application.ThemeMode"/> and <see cref="Window.ThemeMode"/>
         /// and it means that Fluent theme will not be applied on the Application or Window.
         /// </summary>
         /// <remarks>
@@ -40,24 +40,24 @@ namespace System.Windows
         /// even if Window.ThemeMode is set to None, the Fluent theme will be applied on the Window.
         /// </remarks>
         public static ThemeMode None => new ThemeMode();
-        
+
         /// <summary>
-        /// Predefined theme mode : Light.
-        /// Whenever this mode is set on Application or Window, 
+        /// Predefined theme mode: Light.
+        /// Whenever this mode is set on <see cref="Application"/> or <see cref="Window"/>,
         /// Fluent Light theme will be applied.
         /// </summary>
         public static ThemeMode Light => new ThemeMode("Light");
         
         /// <summary>
-        /// Predefined theme mode : Dark.
-        /// Whenever this mode is set on Application or Window,
+        /// Predefined theme mode: Dark.
+        /// Whenever this mode is set on <see cref="Application"/> or <see cref="Window"/>,
         /// Fluent Dark theme will be applied.
         /// </summary>
         public static ThemeMode Dark => new ThemeMode("Dark");
-        
+
         /// <summary>
         /// Perdefined theme mode : System.
-        /// Whenever this mode is set on Application or Window,
+        /// Whenever this mode is set on <see cref="Application"/> or <see cref="Window"/>,
         /// Fluent theme will be applied based on the system theme.
         /// </summary>
         public static ThemeMode System => new ThemeMode("System");

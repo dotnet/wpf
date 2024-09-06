@@ -282,19 +282,6 @@ namespace System.Xaml
         }
 #endif //!REACHFRAMEWORK
 
-#if PRESENTATION_CORE
-
-        /// <summary>
-        ///     This function is a wrapper for CultureInfo.GetCultureInfoByIetfLanguageTag().
-        ///     The wrapper works around a bug in that routine, which causes it to throw
-        ///     a SecurityException in Partial Trust.
-        /// </summary>
-        static internal CultureInfo GetCultureInfoByIetfLanguageTag(string languageTag)
-        {
-            return CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
-        }
-#endif //PRESENTATIONCORE
-
         internal const string IMAGE = "image";
     }
 

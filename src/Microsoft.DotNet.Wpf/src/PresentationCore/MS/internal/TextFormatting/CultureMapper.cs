@@ -60,7 +60,7 @@ namespace MS.Internal.TextFormatting
                             try
                             {
                                 CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
-                                specificCulture = SafeSecurityHelper.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
+                                specificCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
                             }
                             catch (ArgumentException)
                             {

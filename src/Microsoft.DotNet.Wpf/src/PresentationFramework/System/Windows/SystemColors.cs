@@ -348,6 +348,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   System accent color that is set by the user in OS settings.
+        /// </summary>
         public static Color AccentColor
         {
             get
@@ -356,6 +359,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Light shade of system accent color.
+        /// </summary>
         public static Color AccentColorLight1
         {
             get
@@ -364,6 +370,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Lighter shade of system accent color.
+        /// </summary>
         public static Color AccentColorLight2
         {
             get
@@ -372,6 +381,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Lightest shade of system accent color.
+        /// </summary>
         public static Color AccentColorLight3
         {
             get
@@ -380,6 +392,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Dark shade of system accent color.
+        /// </summary>
         public static Color AccentColorDark1
         {
             get
@@ -388,6 +403,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Darker shade of system accent color.
+        /// </summary>
         public static Color AccentColorDark2
         {
             get
@@ -396,6 +414,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Darkest shade of system accent color.
+        /// </summary>
         public static Color AccentColorDark3
         {
             get
@@ -894,6 +915,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColor System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorKey
         {
             get
@@ -907,6 +931,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorLight1 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight1Key
         {
             get
@@ -920,6 +947,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorLight2 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight2Key
         {
             get
@@ -933,6 +963,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColorLight3 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight3Key
         {
             get
@@ -946,6 +979,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorDark1 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark1Key
         {
             get
@@ -959,6 +995,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorDark2 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark2Key
         {
             get
@@ -972,6 +1011,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColorDark3 System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark3Key
         {
             get
@@ -1361,6 +1403,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to system accent color ( )
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorBrush
         {
             get
@@ -1376,6 +1424,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorLight1"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorLight1Brush
         {
             get
@@ -1391,6 +1445,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorLight2"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorLight2Brush
         {
             get
@@ -1406,6 +1466,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorLight3"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorLight3Brush
         {
             get
@@ -1421,6 +1487,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorDark1"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorDark1Brush
         {
             get
@@ -1436,6 +1508,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorDark2"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorDark2Brush
         {
             get
@@ -1451,6 +1529,12 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///   Brush corresponding to <see cref="AccentColorDark3"/> color
+        /// </summary>
+        /// <remarks>
+        ///   When <see cref="SystemParameters.HighContrast"/> is true, it returns <see cref="SystemColors.HighlightTextBrush"/>.
+        /// </remarks>
         public static SolidColorBrush AccentColorDark3Brush
         {
             get
@@ -1996,6 +2080,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorBrush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorBrushKey
         {
             get
@@ -2009,6 +2096,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColorLight1Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight1BrushKey
         {
             get
@@ -2022,6 +2112,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorLight2Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight2BrushKey
         {
             get
@@ -2035,6 +2128,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorLight3Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorLight3BrushKey
         {
             get
@@ -2048,6 +2144,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColorDark1Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark1BrushKey
         {
             get
@@ -2061,6 +2160,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///    AccentColorDark2Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark2BrushKey
         {
             get
@@ -2074,6 +2176,9 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        ///     AccentColorDark3Brush System Resource Key
+        /// </summary>
         public static ResourceKey AccentColorDark3BrushKey
         {
             get

@@ -9,12 +9,16 @@
     <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-    <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
-          CopyToOutputDirectory="PreserveNewest"
-          Visible="False" />
-  </ItemGroup>
+  <Target Name="IncludeNativeDependencies"
+          BeforeTargets="AssignTargetPaths"
+          Returns="@(None)">
+    <ItemGroup>
+      <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
+      <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
+            CopyToOutputDirectory="PreserveNewest"
+            Visible="False" />
+    </ItemGroup>
+  </Target>
 
   <Target Name="RemoveWindowsBaseNetCoreAppReference"
           AfterTargets="ResolveTargetingPackAssets"

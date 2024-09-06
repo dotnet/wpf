@@ -192,7 +192,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty FontSizeProperty =
                 TextElement.FontSizeProperty.AddOwner(
                         typeof(Control),
-                        new FrameworkPropertyMetadata(SystemFonts.MessageFontSize,
+                        new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize,
                             FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>

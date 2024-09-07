@@ -85,6 +85,9 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\ResourceIDHelper.cs">
       <Link>Shared\MS\Internal\ResourceIDHelper.cs</Link>
     </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
+      <Link>Shared\MS\Internal\ReflectionUtils.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
       <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
     </Compile>

@@ -6,10 +6,13 @@ using System.Reflection;
 
 namespace MS.Internal
 {
+    /// <summary>
+    /// Provides utilities for working with reflection efficiently.
+    /// </summary>
     internal static class ReflectionUtils
     {
         /// <summary>
-        ///  Given an assembly, returns the partial name of the assembly.
+        ///  Given an <paramref name="assembly"/>, returns the partial/simple name of the assembly.
         /// </summary>
         internal static string GetAssemblyPartialName(Assembly assembly)
         {

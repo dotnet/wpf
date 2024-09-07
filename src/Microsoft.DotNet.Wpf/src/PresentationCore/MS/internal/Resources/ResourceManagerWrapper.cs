@@ -234,7 +234,7 @@ namespace MS.Internal.Resources
                 {
                     string manifestResourceName;
 
-                    manifestResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + UnLocalizableResourceNameSuffix;
+                    manifestResourceName = ReflectionUtils.GetAssemblyPartialName(_assembly) + UnLocalizableResourceNameSuffix;
 
                     ResourceManager manager = new ResourceManager(manifestResourceName, this._assembly);
                     _resourceSet = manager.GetResourceSet(CultureInfo.InvariantCulture, true, false);
@@ -256,7 +256,7 @@ namespace MS.Internal.Resources
                 {
                     string baseResourceName;  // Our build system always generate a resource base name "$(AssemblyShortname).g"
 
-                    baseResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + LocalizableResourceNameSuffix;
+                    baseResourceName = ReflectionUtils.GetAssemblyPartialName(_assembly) + LocalizableResourceNameSuffix;
 
                     _resourceManager = new ResourceManager(baseResourceName, this._assembly);
                 }

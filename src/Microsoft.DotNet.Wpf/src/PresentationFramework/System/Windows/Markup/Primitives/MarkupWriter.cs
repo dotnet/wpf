@@ -1610,14 +1610,14 @@ namespace System.Windows.Markup.Primitives
                 {
                     if (type.Namespace == null)
                     {
-                        result = $"{clrUriPrefix};assembly={type.Assembly.GetName().Name}";
+                        result = $"{clrUriPrefix};assembly={ReflectionUtils.GetAssemblyPartialName(type.Assembly)}";
                     }
                     else
                     {
                         Dictionary<string, string> namespaceToUri = GetMappingsFor(type.Assembly);
                         if (!namespaceToUri.TryGetValue(type.Namespace, out result))
                         {
-                            result = $"{clrUriPrefix}{type.Namespace};assembly={type.Assembly.GetName().Name}";
+                            result = $"{clrUriPrefix}{type.Namespace};assembly={ReflectionUtils.GetAssemblyPartialName(type.Assembly)}";
                         }
                     }
                 }

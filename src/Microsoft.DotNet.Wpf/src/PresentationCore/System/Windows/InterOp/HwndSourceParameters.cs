@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using MS.Win32;
+using System.Windows.Media;
 using System.Windows.Input;
 
 namespace System.Windows.Interop
@@ -418,7 +419,7 @@ namespace System.Windows.Interop
         /// <remarks>Not intended to be tested outside test code</remarks>
         internal static void SetPlatformSupportsTransparentChildWindowsForTestingOnly(bool value)
         {
-            if (string.Equals(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
+            if (string.Equals(ReflectionUtils.GetAssemblyPartialName(Assembly.GetEntryAssembly()), "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
             {
                 _platformSupportsTransparentChildWindows = value;
             }

@@ -3735,7 +3735,7 @@ namespace System.Windows.Documents
                                     // If both entries specify charset, they must match.
                                     if (lhs_tag.Length > 0 && rhs_tag.Length > 0)
                                     {
-                                        if (string.Compare(lhs_tag, rhs_tag, StringComparison.OrdinalIgnoreCase) == 0)
+                                        if (string.Equals(lhs_tag, rhs_tag, StringComparison.OrdinalIgnoreCase))
                                         {
                                             bAdd = true;
                                         }

@@ -417,8 +417,7 @@ namespace MS.Internal.IO.Packaging
             //MoveToNextAttribute is the same as MoveToFirstAttribute.
             while (reader.MoveToNextAttribute())
             {
-                if (String.CompareOrdinal(reader.Name, XmlNamespace) != 0 &&
-                    String.CompareOrdinal(reader.Prefix, XmlNamespace) != 0)
+                if (!string.Equals(reader.Name, XmlNamespace, StringComparison.Ordinal) && !string.Equals(reader.Prefix, XmlNamespace, StringComparison.Ordinal))
                     readerCount++;
             }
 

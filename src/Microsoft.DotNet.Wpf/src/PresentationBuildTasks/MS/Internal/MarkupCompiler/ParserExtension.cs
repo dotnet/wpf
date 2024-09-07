@@ -497,7 +497,7 @@ namespace MS.Internal
                             {
                                 // This direct comparison is ok to do in pass2 as it has already been validated in pass1.
                                 // This is to avoid a costly instantiation of the CodeDomProvider in pass2.
-                                _isInternalRoot = string.Compare("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase) != 0;
+                                _isInternalRoot = !string.Equals("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase);
                             }
                         }
                     }

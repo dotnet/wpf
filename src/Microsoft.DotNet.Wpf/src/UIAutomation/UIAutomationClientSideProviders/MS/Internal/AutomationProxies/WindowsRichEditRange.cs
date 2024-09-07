@@ -729,7 +729,7 @@ namespace MS.Internal.AutomationProxies
                     else
                     {
                         // on subsequent iterations compare if the font name is the same.
-                        if (string.Compare(name, unitRange.Font.Name, StringComparison.Ordinal) != 0)
+                        if (!string.Equals(name, unitRange.Font.Name, StringComparison.Ordinal))
                         {
                             return TextPattern.MixedAttributeValue;
                         }

@@ -7220,7 +7220,7 @@ namespace System.Windows.Controls
                             // get the index of existing descriptor to replace it
                             for (int i = 0; i < Items.SortDescriptions.Count; i++)
                             {
-                                if (string.Compare(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) == 0 &&
+                                if (string.Equals(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) &&
                                     (GroupingSortDescriptionIndices == null ||
                                     !GroupingSortDescriptionIndices.Contains(i)))
                                 {

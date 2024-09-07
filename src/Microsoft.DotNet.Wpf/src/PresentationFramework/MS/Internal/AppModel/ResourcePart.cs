@@ -132,12 +132,12 @@ namespace MS.Internal.AppModel
                 {
                     // We do not allow the use of .baml in any Avalon public APIs. This is the code pass needed to go through for loading baml file.
                     // Throw here we will catch all those cases.
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                     }
 
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         // try baml extension first since it's our most common senario.
                         string newName = Path.ChangeExtension(_name, ResourceContainer.BamlExt);

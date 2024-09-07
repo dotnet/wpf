@@ -253,7 +253,7 @@ namespace System.Windows.Documents
                         {
                             string error = TextRangeBase.GetTextInternal(errorStart, errorEnd, ref charArray);
 
-                            if (String.Compare(word, error, true /* ignoreCase */, _defaultCulture) == 0)
+                            if (string.Compare(word, error, ignoreCase: true, _defaultCulture) == 0)
                             {
                                 _statusTable.MarkCleanRange(errorStart, errorEnd);
                             }

@@ -28,11 +28,11 @@ namespace System.Windows
         protected override string GetLocalizedString(string value)
         {
             // Return a localized version of the custom category
-            if (String.Compare(value, "Content", StringComparison.Ordinal) == 0)
+            if (string.Equals(value, "Content", StringComparison.Ordinal))
                 return SR.DesignerMetadata_CustomCategory_Content;
-            else if(String.Compare(value, "Accessibility", StringComparison.Ordinal) == 0)
+            else if (string.Equals(value, "Accessibility", StringComparison.Ordinal))
                 return SR.DesignerMetadata_CustomCategory_Accessibility;
-            else /*if(String.Compare(value, "Navigation", StringComparison.Ordinal) == 0)*/
+            else // if (string.Equals(value, "Navigation", StringComparison.Ordinal))
                 return SR.DesignerMetadata_CustomCategory_Navigation;
         }
     }

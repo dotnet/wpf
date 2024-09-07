@@ -972,7 +972,7 @@ namespace MS.Internal.FontCache
 
             int IComparer<LocalizedName>.Compare(LocalizedName x, LocalizedName y)
             {
-                return String.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
+                return string.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
             }
 
             #endregion

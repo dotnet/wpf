@@ -2412,7 +2412,7 @@ namespace System.Windows
                     Invariant.Assert(fileInBamlConvert != null, "fileInBamlConvert should not be null");
                     Invariant.Assert(fileCurrent != null, "fileCurrent should not be null");
 
-                    if (String.Compare(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase))
                     {
                         //
                         // This is the root element of the xaml page which is being loaded to creat a tree
@@ -2439,7 +2439,7 @@ namespace System.Windows
                         if (Math.Abs(diff) == 1)
                         {
                             // Check whether the file name is the same.
-                            if (String.Compare(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase) == 0)
+                            if (string.Equals(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase))
                             {
                                 string component = (diff == 1) ? bamlConvertUriSegments[1] : curUriSegments[1];
 

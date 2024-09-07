@@ -129,7 +129,7 @@ namespace System.Windows.Markup
             {
                 int probe = (high + low) / 2;
                 Type probeType = KnownTypes.Types[probe];
-                int cmp = String.CompareOrdinal(typeShortName, probeType.Name);
+                int cmp = string.CompareOrdinal(typeShortName, probeType.Name);
                 if (cmp == 0)
                 {
                     // Found a potential match.  Now compare the namespaces & assembly to be sure

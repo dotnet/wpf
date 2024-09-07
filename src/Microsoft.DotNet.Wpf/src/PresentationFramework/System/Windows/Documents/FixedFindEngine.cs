@@ -395,12 +395,11 @@ namespace System.Windows.Documents
                         {
                             unicodeStr = xmlReader.GetAttribute("UnicodeString");
 
-                            if (!String.IsNullOrEmpty(unicodeStr))
+                            if (!string.IsNullOrEmpty(unicodeStr))
                             {
                                 string sidewaysString = xmlReader.GetAttribute("IsSideways");
                                 isSideways = false;
-                                if (sidewaysString != null &&
-                                    String.Compare(sidewaysString, Boolean.TrueString, StringComparison.OrdinalIgnoreCase) == 0)
+                                if (sidewaysString != null && string.Equals(sidewaysString, bool.TrueString, StringComparison.OrdinalIgnoreCase))
                                 {
                                     isSideways = true;
                                 }

@@ -270,7 +270,7 @@ namespace MS.Internal.Automation
 
             foreach (string str in BadImplClassnames)
             {
-                if (String.Compare(className, str, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(className, str, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
 

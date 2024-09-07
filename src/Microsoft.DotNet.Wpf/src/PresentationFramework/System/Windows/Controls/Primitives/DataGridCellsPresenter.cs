@@ -395,16 +395,16 @@ namespace System.Windows.Controls.Primitives
                     e.Property == DataGridColumn.VisibilityProperty ||
                     e.Property == DataGrid.CellsPanelHorizontalOffsetProperty ||
                     e.Property == DataGrid.HorizontalScrollOffsetProperty ||
-                    string.Compare(propertyName, "ViewportWidth", StringComparison.Ordinal) == 0 ||
-                    string.Compare(propertyName, "DelayedColumnWidthComputation", StringComparison.Ordinal) == 0)
+                    string.Equals(propertyName, "ViewportWidth", StringComparison.Ordinal) ||
+                    string.Equals(propertyName, "DelayedColumnWidthComputation", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange();
                 }
-                else if (string.Compare(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal) == 0)
+                else if (string.Equals(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ false);
                 }
-                else if (string.Compare(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal) == 0)
+                else if (string.Equals(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal))
                 {
                     InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ true);
                 }

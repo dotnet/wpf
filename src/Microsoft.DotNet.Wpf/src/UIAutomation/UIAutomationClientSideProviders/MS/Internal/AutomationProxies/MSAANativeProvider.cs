@@ -130,11 +130,11 @@ namespace MS.Internal.AutomationProxies
         // needed based on a window handle, object and child ids.
         // It returns an IRawElementProviderSimple implementation for a native IAccessible object
         // or null if the hwnd doesn't natively implement IAccessible.
-        internal static IRawElementProviderSimple Create (IntPtr hwnd, int idChild, int idObject)
+        internal static IRawElementProviderSimple Create(IntPtr hwnd, int idChild, int idObject)
         {
 #if DEBUG
 //            // uncomment this if you want to prevent unwanted interactions with the debugger in Whidbey.
-//            if (string.Compare(hwnd.ProcessName, "devenv.exe", StringComparison.OrdinalIgnoreCase) == 0)
+//            if (string.Equals(hwnd.ProcessName, "devenv.exe", StringComparison.OrdinalIgnoreCase))
 //            {
 //                return null;
 //            }
@@ -367,7 +367,7 @@ namespace MS.Internal.AutomationProxies
                 // two different AutomationElements representing the same underlying
                 // UI in MCE may incorrectly compare as FALSE.
                 string className = Misc.GetClassName(_hwnd);
-                if(String.Compare(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase) == 0)
+                if(string.Equals(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase))
                     _isMCE = TristateBool.TestedTrue;
                 else
                     _isMCE = TristateBool.TestedFalse;
@@ -1066,7 +1066,7 @@ namespace MS.Internal.AutomationProxies
 
             foreach (string str in BadImplClassnames)
             {
-                if (String.Compare(className, str, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(className, str, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
 

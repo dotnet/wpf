@@ -3220,7 +3220,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (UnsafeNativeMethods.GetClassName(new HandleRef(null, lastHwnd), sb, NativeMethods.MAX_PATH) != 0)
                     {
-                        if (String.Compare(sb.ToString(), WebOCWindowClassName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(sb.ToString(), WebOCWindowClassName, StringComparison.OrdinalIgnoreCase))
                         {
                             break;
                         }

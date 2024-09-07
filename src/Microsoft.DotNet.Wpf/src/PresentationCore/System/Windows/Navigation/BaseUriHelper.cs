@@ -327,7 +327,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (string.Equals(ReflectionUtils.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
+                        return ReflectionUtils.GetAssemblyPartialName(assembly).Equals(assemblyName, StringComparison.OrdinalIgnoreCase);
                     }
                     else
                     {

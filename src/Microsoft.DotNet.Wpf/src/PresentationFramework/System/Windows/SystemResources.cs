@@ -580,7 +580,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    _assemblyName = ReflectionUtils.GetAssemblyPartialName(assembly);
+                    _assemblyName = ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
                 }
             }
 

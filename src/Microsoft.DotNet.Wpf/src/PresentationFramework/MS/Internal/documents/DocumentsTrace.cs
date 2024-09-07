@@ -120,8 +120,8 @@ namespace MS.Internal.Documents
         public DocumentsTrace(string switchName)
         {
 #if DEBUG
-            string name = ReflectionUtils.GetAssemblyPartialName(Assembly.GetCallingAssembly());
-            _switch = new BooleanSwitch(switchName, $"[{name}]");
+            ReadOnlySpan<char> shortAssemblyName = ReflectionUtils.GetAssemblyPartialName(Assembly.GetCallingAssembly());
+            _switch = new BooleanSwitch(switchName, $"[{shortAssemblyName}]");
 #endif
         }
 

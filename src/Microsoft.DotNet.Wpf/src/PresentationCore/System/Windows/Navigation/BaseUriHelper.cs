@@ -340,7 +340,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
+                        return (string.Equals(ReflectionUtils.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
                     }
                     else
                     {

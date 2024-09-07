@@ -54,7 +54,7 @@ namespace MS.Internal
 
             ReadOnlySpan<char> nameSlice = fullName;
             // Skip any escaped commas in the name if present
-            int escapedComma = fullName.LastIndexOf("\\,");
+            int escapedComma = fullName.LastIndexOf("\\,", StringComparison.Ordinal);
             if (escapedComma != -1)
                 nameSlice = nameSlice.Slice(escapedComma + 2);
 

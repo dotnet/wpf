@@ -2107,8 +2107,7 @@ namespace System.Windows.Baml2006
         // keep it this way since it is exposed publicly via the Namespace property, Baml2006ReaderInternal provides the full Assembly name.
         internal virtual ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
-            string assemblyLongName = assembly.FullName;
-            return assemblyLongName.AsSpan(0, assemblyLongName.IndexOf(','));
+            return ReflectionUtils.GetAssemblyPartialName(assembly);
         }
 
         // (prefix, namespaceUri)

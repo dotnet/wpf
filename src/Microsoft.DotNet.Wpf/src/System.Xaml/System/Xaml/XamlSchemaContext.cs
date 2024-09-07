@@ -1041,8 +1041,7 @@ namespace System.Xaml
 
             if (!assemblyMappings.TryGetValue(clrNs, out result))
             {
-                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ?
-                    assembly.FullName : GetAssemblyShortName(assembly);
+                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
                 string xmlns = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);
                 List<string> list = new List<string>();
                 list.Add(xmlns);
@@ -1200,14 +1199,6 @@ namespace System.Xaml
         #endregion
 
         #region Helper Methods
-
-        // Given an assembly, return the assembly short name.  We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
-        internal static string GetAssemblyShortName(Assembly assembly)
-        {
-            string assemblyLongName = assembly.FullName;
-            string assemblyShortName = assemblyLongName.Substring(0, assemblyLongName.IndexOf(','));
-            return assemblyShortName;
-        }
 
         internal static ConcurrentDictionary<K, V> CreateDictionary<K, V>()
         {

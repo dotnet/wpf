@@ -382,7 +382,6 @@ namespace System.Windows.Documents
             xmlReader.MoveToContent();
 
             StringBuilder pageString = new StringBuilder();
-            bool isSideways = false;
             string unicodeStr = null;
             
             while (xmlReader.Read())
@@ -398,11 +397,7 @@ namespace System.Windows.Documents
                             if (!string.IsNullOrEmpty(unicodeStr))
                             {
                                 string sidewaysString = xmlReader.GetAttribute("IsSideways");
-                                isSideways = false;
-                                if (sidewaysString != null && string.Equals(sidewaysString, bool.TrueString, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    isSideways = true;
-                                }
+                                bool isSideways = string.Equals(sidewaysString, "True", StringComparison.OrdinalIgnoreCase);
                                 
                                 if (reverseRTL)
                                 {

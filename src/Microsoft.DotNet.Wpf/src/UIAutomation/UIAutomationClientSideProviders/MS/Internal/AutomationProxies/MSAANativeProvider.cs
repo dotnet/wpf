@@ -367,7 +367,7 @@ namespace MS.Internal.AutomationProxies
                 // two different AutomationElements representing the same underlying
                 // UI in MCE may incorrectly compare as FALSE.
                 string className = Misc.GetClassName(_hwnd);
-                if(string.Equals(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase))
                     _isMCE = TristateBool.TestedTrue;
                 else
                     _isMCE = TristateBool.TestedFalse;

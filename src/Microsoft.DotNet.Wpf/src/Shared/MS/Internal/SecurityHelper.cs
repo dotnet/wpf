@@ -191,24 +191,6 @@ internal static class SecurityHelper
                 System.Windows.MessageBox.Show(text, title, buttons, image);
             }
         }
-        /// <summary>
-        /// A helper method to do the necessary work to display a standard MessageBox.  This method performs
-        /// and necessary elevations to make the dialog work as well.
-        /// </summary>
-        internal
-        static
-        void
-        ShowMessageBoxHelper(
-            IntPtr parentHwnd,
-            string text,
-            string title,
-            System.Windows.MessageBoxButton buttons,
-            System.Windows.MessageBoxImage image
-            )
-        {
-            // NOTE: the last param must always be MessageBoxOptions.None for this to be considered TreatAsSafe
-            System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
-        }
 #endif
 
 #if WINDOWS_BASE

@@ -73,9 +73,6 @@ namespace System.Xaml
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
 
-#if TARGETTING35SP1
-#else
-#endif
 #pragma warning disable CS0672 // Member overrides obsolete member
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -167,9 +164,6 @@ namespace System.Xaml
             ParentType = (XamlType)info.GetValue("ParentType", typeof(XamlType));
         }
 
-#if TARGETTING35SP1
-#else
-#endif
 #pragma warning disable CS0672 // Member overrides obsolete member
 #pragma warning disable SYSLIB0051 // Type or member is obsolete
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

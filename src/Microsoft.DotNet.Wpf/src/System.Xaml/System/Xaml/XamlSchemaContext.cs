@@ -14,9 +14,7 @@ using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
 using MS.Internal.Xaml.Parser;
-#if !TARGETTING35SP1
 using System.Collections.Concurrent;
-#endif
 
 namespace System.Xaml
 {
@@ -1361,17 +1359,11 @@ namespace System.Xaml
                 }
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Hook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Unhook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;

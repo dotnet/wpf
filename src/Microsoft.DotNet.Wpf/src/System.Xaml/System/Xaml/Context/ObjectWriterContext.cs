@@ -48,11 +48,7 @@ namespace MS.Internal.Xaml.Context
                 XAML3.INameScopeDictionary rootNameScopeDictionary = null;
                 if (rootNameScope == null)
                 {
-#if TARGETTING35SP1
-                    rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                     rootNameScopeDictionary = new NameScope();
-#endif
                 }
                 else
                 {
@@ -90,11 +86,7 @@ namespace MS.Internal.Xaml.Context
             XAML3.INameScopeDictionary rootNameScopeDictionary = null;
             if (rootNameScope == null)
             {
-#if TARGETTING35SP1
-                rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 rootNameScopeDictionary = new NameScope();
-#endif
             }
             else
             {
@@ -814,11 +806,7 @@ namespace MS.Internal.Xaml.Context
                         if (frame.Depth == SavedDepth + 1 &&
                             _settings != null && !_settings.RegisterNamesOnExternalNamescope)
                         {
-#if TARGETTING35SP1
-                            frame.NameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             frame.NameScopeDictionary = new NameScope();
-#endif
                         }
                         else
                         {
@@ -912,11 +900,7 @@ namespace MS.Internal.Xaml.Context
                         XAML3.INameScope nameScope = (XAML3.INameScope)_runtime.GetValue(inst, nameScopeProperty, false);
                         if (nameScope == null)
                         {
-#if TARGETTING35SP1
-                            nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             nameScopeDictionary = new NameScope();
-#endif
                             _runtime.SetValue(inst, nameScopeProperty, nameScopeDictionary);
                         }
                         else
@@ -942,11 +926,7 @@ namespace MS.Internal.Xaml.Context
             // for our own usage.  For IXamlNameResolver() to use.
             if (nameScopeDictionary == null)
             {
-#if TARGETTING35SP1
-                nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 nameScopeDictionary = new NameScope();
-#endif
             }
 
             rootFrame.NameScopeDictionary = nameScopeDictionary;

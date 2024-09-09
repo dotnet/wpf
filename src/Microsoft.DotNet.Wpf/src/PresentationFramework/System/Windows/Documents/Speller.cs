@@ -189,7 +189,7 @@ namespace System.Windows.Documents
             List<string> suggestions = new(4);
             CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
-            if (culture is not null || _spellerInterop.CanSpellCheck(culture))
+            if (culture is not null && _spellerInterop.CanSpellCheck(culture))
             {
                 ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out ITextPointer contentStart, out ITextPointer contextStart);
                 ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out ITextPointer contentEnd, out ITextPointer contextEnd);

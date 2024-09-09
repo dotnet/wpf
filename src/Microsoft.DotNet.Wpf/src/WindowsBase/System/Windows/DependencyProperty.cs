@@ -977,7 +977,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(name);
             ArgumentNullException.ThrowIfNull(ownerType);
 
-            while ((dp == null) && (ownerType != null))
+            while (ownerType != null)
             {
                 // Ensure static constructor of type has run
                 SecurityHelper.RunClassConstructor(ownerType);

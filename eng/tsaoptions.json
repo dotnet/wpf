@@ -4,7 +4,7 @@
     "projectName": "DEVDIV",
     "areaPath": "DevDiv\\NET Fundamentals\\NET Partners\\WPF\\Security\\SDL",
     "iterationPath": "DevDiv",
-    "notificationAliases": [ "wpf-netcore-dev@microsoft.com" ],
+    "notificationAliases": [ "wpfdev@microsoft.com" ],
     "repositoryName":"wpf",
     "codebaseName": "wpf"
 }

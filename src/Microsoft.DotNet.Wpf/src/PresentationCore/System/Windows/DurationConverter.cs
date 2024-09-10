@@ -34,15 +34,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (   destinationType == typeof(InstanceDescriptor)
-                || destinationType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>

@@ -22,14 +22,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
-            if (t == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return t == typeof(string);
         }
 
         /// <summary>

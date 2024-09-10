@@ -578,8 +578,8 @@ namespace System.Windows
         /// The default value is <see cref="ThemeMode.None"/>.
         ///     
         /// <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
-        ///     Syncing is done in order to avoid UI inconsistencies, where the window is in dark mode but the 
-        ///     controls within are in light mode or vice versa.
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode 
+        ///     but the windows are in light mode or vice versa. 
         ///     
         ///     Setting this property loads the Fluent theme dictionaries in the window resources.
         ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries

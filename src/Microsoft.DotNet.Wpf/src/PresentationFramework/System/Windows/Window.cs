@@ -563,8 +563,10 @@ namespace System.Windows
         #region Public Properties
 
         /// <summary>
-        /// The ThemeMode property is used to set the Fluent theme mode of the application.
-        /// Setting this property controls if Fluent is loaded in Light, Dark or System mode. 
+        /// Gets or sets the Fluent theme mode of the window.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode. 
         /// It also controls the application of backdrop and darkmode on window.
         /// The four values for the ThemeMode enum are :
         ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded.
@@ -574,15 +576,14 @@ namespace System.Windows
         ///
         /// These values are predefined in <see cref="ThemeMode"/> struct
         /// The default value is <see cref="ThemeMode.None"/>.
-        /// </summary>
-        /// <remarks>
-        ///     <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
+        ///     
+        /// <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
         ///     Syncing is done in order to avoid UI inconsistencies, where the window is in dark mode but the 
         ///     controls within are in light mode or vice versa.
         ///     
-        ///     Setting this property will load the Fluent theme dictionaries in the application resources.
-        ///     So, if you are setting this property, it is preferrable to not include Fluent theme dictionaries
-        ///     in the application resources manually. If you do, the Fluent theme dictionaries added in the application
+        ///     Setting this property loads the Fluent theme dictionaries in the window resources.
+        ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
+        ///     in the window resources manually. If you do, the Fluent theme dictionaries added in the window
         ///     resources will take precedence over the ones added by setting this property.
         ///     
         ///     This property is experimental and may be removed in future versions.

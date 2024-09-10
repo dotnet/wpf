@@ -20,8 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace System.Windows
 {
     /// <summary>
-    /// ThemeModeConverter - Converter class for converting instances 
-    /// of other types to and from ThemeMode instances.
+    /// Converts instances of other types to and from ThemeMode instances.
     /// </summary>
     [Experimental("WPF0001")]
     public class ThemeModeConverter: TypeConverter
@@ -30,12 +29,12 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type.
+        /// Determines whether or not this class can convert from a given type.
         /// </summary>
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
         /// <param name="sourceType">The Type being queried for support.</param>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// <see langword="true" /> if the converter can convert from the provided type; otherwise, <see langword="false" />.
         /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
@@ -43,12 +42,12 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// CanConvertTo - Returns whether or not this class can convert to a given type.
+        /// Determines whether or not this class can convert to a given type.
         /// </summary>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
         /// <returns>
-        /// bool - True if this converter can convert to the provided type, false if not.
+        /// <see langword="true" /> if this converter can convert to the provided type; otherwise, <see langword="false" />.
         /// </returns>
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
         {
@@ -57,16 +56,16 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// ConvertFrom - Attempts to convert to a ThemeMode from the given object
+        /// Attempts to convert to a ThemeMode from the specified object
         /// </summary>
         /// <exception cref="ArgumentNullException">
-        /// An ArgumentNullException is thrown if the example object is null.
+        /// The example object is <see langword="null" />.
         /// </exception>
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
         /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
         /// <param name="source">The object to convert to a ThemeMode.</param>
         /// <returns>
-        /// ThemeMode instance which was constructed.
+        /// The new ThemeMode instance.
         /// </returns>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
                                            CultureInfo cultureInfo, 
@@ -81,21 +80,20 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// ConvertTo - Attempts to convert a ThemeMode to the given type
+        /// Attempts to convert a ThemeMode object to the specified type.
         /// </summary>
         /// <exception cref="ArgumentNullException">
-        /// An ArgumentNullException is thrown if the example object is null.
+        /// <paramref name="value" />  is <see langword="null" />.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// An ArgumentException is thrown if the object is not null and is not a ThemeMode,
-        /// or if the destinationType isn't one of the valid destination types.
+        /// <paramref name="value" /> is not a ThemeMode, or <paramref name="destinationType" /> isn't a valid destination type.
         /// </exception>
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
         /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
         /// <param name="value">The ThemeMode to convert.</param>
         /// <param name="destinationType">The type to which to convert the ThemeMode instance.</param>
         /// <returns>
-        /// The object which was constructoed.
+        /// The newly constructed object.
         /// </returns>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
                                          CultureInfo cultureInfo,

@@ -8,6 +8,7 @@ parameters:
   # Defaults to true
   runAsPublic: true
   repoName: dotnet/wpf
+  TSAEnabled: true
 
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
@@ -53,6 +54,10 @@ jobs:
       variables:
         - name: Codeql.Enabled
           value: true
+        - name: Codeql.TSAEnabled
+          value: ${{ parameters.TSAEnabled }}
+        - name: Codeql.TSAOptionsPath
+          value: $(Build.SourcesDirectory)/eng/tsaoptions.json
         # needed for signing
         - name: _TeamName
           value: DotNetCore

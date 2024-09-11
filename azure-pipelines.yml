@@ -38,6 +38,12 @@ resources:
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    sdl:
+      policheck:
+        enabled: true
+      tsa:
+        enabled: true
+        configFile: '$(Build.SourcesDirectory)/eng/tsaoptions.json'
     featureFlags:
       autoBaseline: true
     pool:
@@ -62,6 +68,3 @@ extends:
           enableSigningValidation: false
           enableNugetValidation: false
           enableSourceLinkValidation: false
-          SDLValidationParameters:
-            enable: false
-            params: ' -SourceToolsList @("policheck","credscan") -TsaInstanceURL $(_TsaInstanceURL) -TsaProjectName $(_TsaProjectName) -TsaNotificationEmail $(_TsaNotificationEmail) -TsaCodebaseAdmin $(_TsaCodebaseAdmin) -TsaBugAreaPath $(_TsaBugAreaPath) -TsaIterationPath $(_TsaIterationPath) -TsaRepositoryName "wpf" -TsaCodebaseName "wpf" -TsaPublish $True'

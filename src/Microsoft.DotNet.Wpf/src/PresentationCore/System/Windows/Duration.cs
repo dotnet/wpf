@@ -31,9 +31,8 @@ namespace System.Windows
         public Duration(TimeSpan timeSpan)
         {
             if (timeSpan < TimeSpan.Zero)
-            {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
-            }
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
+            
             _durationType = DurationType.TimeSpan;
             _timeSpan = timeSpan;
         }
@@ -68,9 +67,8 @@ namespace System.Windows
         public static implicit operator Duration(TimeSpan timeSpan)
         {
             if (timeSpan < TimeSpan.Zero)
-            {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
-            }
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
+            
             return new Duration(timeSpan);
         }
 
@@ -365,7 +363,7 @@ namespace System.Windows
         {
             get
             {
-                return (_durationType == DurationType.TimeSpan);
+                return _durationType == DurationType.TimeSpan;
             }
         }
 

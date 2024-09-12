@@ -21,6 +21,7 @@
   "native-tools": {
     "strawberry-perl": "5.28.1.1-1",
     "net-framework-48-ref-assemblies": "0.0.0.1",
+    "windows-sdk-d3d-redist": "1.0.0",
     "dotnet-api-docs_net6.0": "0.0.0.4"
   }
 }

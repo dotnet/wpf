@@ -483,7 +483,7 @@ namespace System.Windows
         {
             if (HasTimeSpan)
             {
-                return TypeDescriptor.GetConverter(_timeSpan).ConvertToString(_timeSpan);
+                return _timeSpan.ToString();
             }
             else if (_durationType == DurationType.Forever)
             {

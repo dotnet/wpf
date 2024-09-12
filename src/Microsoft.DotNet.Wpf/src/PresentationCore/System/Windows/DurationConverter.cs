@@ -4,43 +4,48 @@
 
 //
 
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.ComponentModel;
 using System.Globalization;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Windows
 {
     /// <summary>
-    /// Provides a type converter to convert Duration to and from other representations.
+    /// Provides a type converter to convert from <see cref="Duration"/> to <see langword="string"/> and vice versa.
     /// </summary>
     public class DurationConverter : TypeConverter
     {
         /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type
+        /// Returns whether this class can convert specific <see cref="Type"/> into <see cref="Duration"/>.
         /// </summary>
-        /// <ExternalAPI/>
+        /// <param name="td">Context information used for conversion.</param>
+        /// <param name="t">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
             return t == typeof(string);
         }
 
         /// <summary>
-        /// TypeConverter method override.
+        /// Returns whether this class can convert specified value to <see langword="string"/>.
         /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
-        /// <ExternalAPI/>
+        /// <param name="context">Context information used for conversion.</param>
+        /// <param name="destinationType">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
-        /// ConvertFrom
+        /// Converts <paramref name="value"/> of <see langword="string"/> type to its <see cref="Duration"/> represensation.
         /// </summary>
-        /// <ExternalAPI/>
+        /// <param name="td">Context information used for conversion.</param>
+        /// <param name="cultureInfo">The culture specifier to use.</param>
+        /// <param name="value">The string to convert from.</param>
+        /// <returns>A <see cref="Duration"/> representing the <see langword="string"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo cultureInfo, object value)
         {
             // In case value is not a string, we can try to check InstanceDescriptor or we just throw NotSupportedException
@@ -81,57 +86,47 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// TypeConverter method implementation.
+        /// Converts a <paramref name="value"/> of <see cref="Duration"/> to its <see langword="string"/> represensation.
         /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="cultureInfo">current culture (see CLR specs)</param>
-        /// <param name="value">value to convert from</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>converted value</returns>
-        /// <ExternalAPI/>
-        public override object ConvertTo(
-            ITypeDescriptorContext context, 
-            CultureInfo cultureInfo, 
-            object value, 
-            Type destinationType)
+        /// <param name="context">Context information used for conversion.</param>
+        /// <param name="cultureInfo">The culture specifier to use, currently ignored during conversion.</param>
+        /// <param name="value">Duration value to convert from.</param>
+        /// <param name="destinationType">Type being evaluated for conversion.</param>
+        /// <returns>A <see langword="string"/> representing the <see cref="Duration"/> specified by <paramref name="value"/>.</returns>
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo cultureInfo, object value, Type destinationType)
         {
-            if (destinationType != null && value is Duration)
+            ArgumentNullException.ThrowIfNull(destinationType);
+
+            // Base calls do return string.Empty if value is null instead of throwing
+            if (value is null)
+                return string.Empty;
+
+            // Check that we actually support the conversion
+            if (value is not Duration duration || (destinationType != typeof(InstanceDescriptor) && destinationType != typeof(string)))
+                throw GetConvertToException(value, destinationType);
+
+            // For string we may currently use the type override
+            if (destinationType == typeof(string))
+                return duration.ToString();
+
+            // InstanceDescriptor reflection magic
+            if (duration.HasTimeSpan)
             {
-                Duration durationValue = (Duration)value;
-
-                if (destinationType == typeof(InstanceDescriptor))
-                {
-                    MemberInfo mi;
-
-                    if (durationValue.HasTimeSpan)
-                    {
-                        mi = typeof(Duration).GetConstructor(new Type[] { typeof(TimeSpan) });
-
-                        return new InstanceDescriptor(mi, new object[] { durationValue.TimeSpan });
-                    }
-                    else if (durationValue == Duration.Forever)
-                    {
-                        mi = typeof(Duration).GetProperty("Forever");
-
-                        return new InstanceDescriptor(mi, null);
-                    }
-                    else
-                    {
-                        Debug.Assert(durationValue == Duration.Automatic);  // Only other legal duration type
-
-                        mi = typeof(Duration).GetProperty("Automatic");
-
-                        return new InstanceDescriptor(mi, null);
-                    }
-                }
-                else if (destinationType == typeof(string))
-                {
-                    return durationValue.ToString();
-                }
+                MemberInfo mi = typeof(Duration).GetConstructor(new Type[] { typeof(TimeSpan) });
+                return new InstanceDescriptor(mi, new object[] { duration.TimeSpan });
             }
+            else if (duration == Duration.Forever)
+            {
+                MemberInfo mi = typeof(Duration).GetProperty("Forever");
+                return new InstanceDescriptor(mi, null);
+            }
+            else
+            {
+                Debug.Assert(duration == Duration.Automatic); // Only other legal duration type
 
-            // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
-            return base.ConvertTo(context, cultureInfo, value, destinationType);
+                MemberInfo mi = typeof(Duration).GetProperty("Automatic");
+                return new InstanceDescriptor(mi, null);
+            }
         }
     }
 }

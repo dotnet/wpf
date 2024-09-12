@@ -41,34 +41,43 @@ namespace System.Windows
         /// ConvertFrom
         /// </summary>
         /// <ExternalAPI/>
-        public override object ConvertFrom(
-            ITypeDescriptorContext td, 
-            CultureInfo cultureInfo, 
-            object value)
+        public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo cultureInfo, object value)
         {
-            string stringValue = value as string;
+            // In case value is not a string, we can try to check InstanceDescriptor or we just throw NotSupportedException
+            if (value is not string stringValue)
+                return base.ConvertFrom(td, cultureInfo, value);
 
-            // Override the converter for sentinel values
-            if (stringValue != null)
-            {
-                stringValue = stringValue.Trim();
-                if (stringValue == "Automatic")
-                {
-                    return Duration.Automatic;
-                }
-                else if (stringValue == "Forever")
-                {
-                    return Duration.Forever;
-                }
-            }
+            // Sanitize the input
+            ReadOnlySpan<char> valueSpan = stringValue.AsSpan().Trim();
 
-            TimeSpan duration = TimeSpan.Zero;
-            if(_timeSpanConverter == null)
+            // In case it is not a pre-defined value, we will try to parse the TimeSpan and if it throws,
+            // we will catch it as TimeSpanConverter does and rethrow with the inner exception information.
+            if (valueSpan.Equals("Automatic", StringComparison.Ordinal))
+                return Duration.Automatic;
+            else if (valueSpan.Equals("Forever", StringComparison.Ordinal))
+                return Duration.Forever;
+            else
+                return ParseTimeSpan(valueSpan, cultureInfo);
+        }
+
+        /// <summary>
+        /// Faciliaties parsing from <paramref name="valueSpan"/> to <see cref="TimeSpan"/> and initializes new <see cref="Duration"/> instance.
+        /// </summary>
+        /// <param name="valueSpan">The string to convert from.</param>
+        /// <param name="cultureInfo">The culture specifier to use.</param>
+        /// <returns>A newly initialized <see cref="Duration"/> instance from the <paramref name="valueSpan"/> string.</returns>
+        /// <remarks>This function is decoupled from the <see cref="ConvertFrom(ITypeDescriptorContext, CultureInfo, object)"/> for performance reasons.</remarks>
+        /// <exception cref="FormatException">Thrown when parsing of <paramref name="valueSpan"/> to <see cref="TimeSpan"/> instance fails.</exception>
+        private static Duration ParseTimeSpan(ReadOnlySpan<char> valueSpan, CultureInfo cultureInfo)
+        {
+            try
             {
-                 _timeSpanConverter = new TimeSpanConverter();
+                return new Duration(TimeSpan.Parse(valueSpan, cultureInfo));
             }
-            duration = (TimeSpan)_timeSpanConverter.ConvertFrom(td, cultureInfo, value);
-            return new Duration(duration);
+            catch (FormatException e)
+            {
+                throw new FormatException($"{valueSpan} is not a valid value for {nameof(TimeSpan)}.", e);
+            }
         }
 
         /// <summary>
@@ -124,6 +133,5 @@ namespace System.Windows
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
             return base.ConvertTo(context, cultureInfo, value, destinationType);
         }
-        private static TimeSpanConverter _timeSpanConverter;
     }
 }

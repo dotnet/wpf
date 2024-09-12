@@ -10,7 +10,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -32,7 +32,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
                 throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
-            
+
             _durationType = DurationType.TimeSpan;
             _timeSpan = timeSpan;
         }
@@ -68,7 +68,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
                 throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
-            
+
             return new Duration(timeSpan);
         }
 
@@ -395,20 +395,12 @@ namespace System.Windows
         /// Returns the TimeSpan value that this Duration represents.
         /// </summary>
         /// <value>The TimeSpan value that this Duration represents.</value>
-        /// <exception cref="System.InvalidOperationException">Thrown if this Duration represents null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if this Duration represents null.</exception>
         public TimeSpan TimeSpan
         {
             get
             {
-                if (HasTimeSpan)
-                {
-                    return _timeSpan;
-                }
-                else
-                {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Format(SR.Timing_NotTimeSpan, this));
-                }
+                return HasTimeSpan ? _timeSpan : throw new InvalidOperationException(SR.Format(SR.Timing_NotTimeSpan, this));
             }
         }
 

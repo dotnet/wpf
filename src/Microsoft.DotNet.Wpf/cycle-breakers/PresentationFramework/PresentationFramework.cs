@@ -1893,16 +1893,18 @@ namespace System.Windows
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class TriggerBase : System.Windows.DependencyObject
     {
-        internal TriggerBase() { }
+        public TriggerBase() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.TriggerActionCollection EnterActions { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.TriggerActionCollection ExitActions { get { throw null; } }
+        public virtual bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField) { throw null; }
+        public TriggerCondition[] TriggerConditions { get { throw null; } set { throw null; } }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public sealed partial class TriggerCollection : System.Collections.ObjectModel.Collection<System.Windows.TriggerBase>
     {
-        internal TriggerCollection() { }
+        public TriggerCollection() { }
         public bool IsSealed { get { throw null; } }
         protected override void ClearItems() { }
         protected override void InsertItem(int index, System.Windows.TriggerBase item) { }

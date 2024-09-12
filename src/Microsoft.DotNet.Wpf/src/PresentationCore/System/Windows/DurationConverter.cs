@@ -101,9 +101,10 @@ namespace System.Windows
             if (value is not Duration duration || (destinationType != typeof(InstanceDescriptor) && destinationType != typeof(string)))
                 return base.ConvertTo(context, cultureInfo, value, destinationType);
 
-            // For string we may currently use the type override
+            // The current behaviour produces culture-invariant result in case of a Duration with HasTimeSpan,
+            // whereas ConvertFrom accepts localized input, provided the correct cultureInfo was supplied.
             if (destinationType == typeof(string))
-                return duration.ToString();
+                return duration.ToStringInvariant();
 
             // InstanceDescriptor reflection magic
             if (duration.HasTimeSpan)

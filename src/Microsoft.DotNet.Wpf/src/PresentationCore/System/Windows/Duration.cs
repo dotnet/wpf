@@ -479,14 +479,7 @@ namespace System.Windows
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
         {
-            if (HasTimeSpan)
-            {
-                return _timeSpan.GetHashCode();
-            }
-            else
-            {
-                return _durationType.GetHashCode() + 17;
-            }
+            return HasTimeSpan ? _timeSpan.GetHashCode() : _durationType.GetHashCode() + 17;
         }
 
         /// <summary>

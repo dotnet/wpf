@@ -8,6 +8,7 @@
 #pragma warning disable 1634, 1691
 
 using System.ComponentModel;
+using System.Diagnostics;
 
 using SR=MS.Internal.PresentationCore.SR;
 
@@ -18,10 +19,10 @@ namespace System.Windows
     /// This structure may represent a TimeSpan, Automatic, or Forever value.
     /// </summary>
     [TypeConverter(typeof(DurationConverter))]
-    public struct Duration
+    public readonly struct Duration
     {
-        private TimeSpan _timeSpan;
-        private DurationType _durationType;
+        private readonly TimeSpan _timeSpan;
+        private readonly DurationType _durationType;
 
         /// <summary>
         /// Creates a Duration from a TimeSpan.
@@ -37,6 +38,17 @@ namespace System.Windows
             _timeSpan = timeSpan;
         }
 
+        /// <summary>
+        /// Private constructor, server for creation of <see cref="Duration.Automatic"/> and <see cref="Duration.Forever"/> only.
+        /// </summary>
+        /// <param name="durationType">Only <see cref="Duration.Automatic"/> and <see cref="Duration.Forever"/> values are permitted.</param>
+        private Duration(DurationType durationType)
+        {
+            Debug.Assert(durationType == DurationType.Automatic || durationType == DurationType.Forever);
+
+            _durationType = durationType;
+        }
+
         #region Operators
 
         //
@@ -46,7 +58,7 @@ namespace System.Windows
         // Any comparision with Automatic returns false, except for ==.
         // Unlike NaN, Automatic == Automatic is true.
         //
-  
+
 
         /// <summary>
         /// Implicitly creates a Duration from a TimeSpan.
@@ -365,10 +377,7 @@ namespace System.Windows
         {
             get
             {
-                Duration duration = new Duration();
-                duration._durationType = DurationType.Automatic;
-
-                return duration;
+                return new Duration(DurationType.Automatic);
             }
         }
 
@@ -380,10 +389,7 @@ namespace System.Windows
         {
             get
             {
-                Duration duration = new Duration();
-                duration._durationType = DurationType.Forever;
-
-                return duration;
+                return new Duration(DurationType.Forever);
             }
         }
 

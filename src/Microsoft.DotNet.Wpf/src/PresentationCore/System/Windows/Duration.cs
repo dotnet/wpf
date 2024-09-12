@@ -433,20 +433,9 @@ namespace System.Windows
         /// </summary>
         /// <param name="value"></param>
         /// <returns>true if value is a Duration and is equal to this instance; otherwise false.</returns>
-        public override bool Equals(Object value)
+        public override bool Equals(object value)
         {
-            if (value == null)
-            {
-                return false;
-            }
-            else if (value is Duration)
-            {
-                return Equals((Duration)value);
-            }
-            else
-            {
-                return false;
-            }
+            return value is Duration duration && Equals(duration);
         }
 
         /// <summary>

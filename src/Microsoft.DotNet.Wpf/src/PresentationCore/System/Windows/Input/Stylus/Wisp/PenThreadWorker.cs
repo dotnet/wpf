@@ -1160,7 +1160,7 @@ namespace System.Windows.Input
                 while (!__disposed)
                 {
 #if TRACEPTW
-                    Debug.WriteLine(String.Format("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop"));
+                    Debug.WriteLine("PenThreadWorker::ThreadProc():  Update __penContextWeakRefList loop");
 #endif
 
                     // We need to ensure that the PenIMC COM objects can be used from this thread.
@@ -1195,7 +1195,7 @@ namespace System.Windows.Input
                     while (true)
                     {
 #if TRACEPTW
-                        Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - handle event loop"));
+                        Debug.WriteLine("PenThreadWorker::ThreadProc - handle event loop");
 #endif
                         // get next event
                         int     evt;
@@ -1229,9 +1229,9 @@ namespace System.Windows.Input
                         {
                             // dispatch the event
 #if TRACEPTW
-                            Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FireEvent [evt={0}, stylusId={1}]", evt, stylusPointerId));
+                            Debug.WriteLine($"PenThreadWorker::ThreadProc - FireEvent [evt={evt}, stylusId={stylusPointerId}]");
 #endif
-                            
+
                             // This comment addresses and IndexOutOfRangeException in PenThreadWorker which is related and likely caused by the above.
                             // This index is safe as long as there are no corruption issues within PenIMC.  There have been
                             // instances of IndexOutOfRangeExceptions from this code but this should not occur in practice.
@@ -1248,7 +1248,7 @@ namespace System.Windows.Input
                         else
                         {
 #if TRACEPTW
-                            Debug.WriteLine (String.Format("PenThreadWorker::ThreadProc - FlushInput"));
+                            Debug.WriteLine("PenThreadWorker::ThreadProc - FlushInput");
 #endif
                             FlushCache(true);
 

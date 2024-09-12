@@ -52,25 +52,13 @@ namespace MS.Internal.AppModel
 
         protected override Stream GetStreamCore(FileMode mode, FileAccess access)
         {
-#if DEBUG
-            if (SiteOfOriginContainer._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
-                        ": SiteOfOriginPart: Getting stream.");
-#endif
+            SiteOfOriginContainer.Trace("SiteOfOriginPart: Getting stream.");
             return GetStreamAndSetContentType(false);
         }
 
         protected override string GetContentTypeCore()
         {
-#if DEBUG
-            if (SiteOfOriginContainer._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
-                        ": SiteOfOriginPart: Getting content type.");
-#endif
+            SiteOfOriginContainer.Trace("SiteOfOriginPart: Getting content type.");
             
             GetStreamAndSetContentType(true);
             return _contentType.ToString();
@@ -92,13 +80,7 @@ namespace MS.Internal.AppModel
             {
                 if (onlyNeedContentType && _contentType != MS.Internal.ContentType.Empty)
                 {
-#if DEBUG
-                    if (SiteOfOriginContainer._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + 
-                                ": SiteOfOriginPart: Getting content type and using previously determined value");
-#endif
+                    SiteOfOriginContainer.Trace("SiteOfOriginPart: Getting content type and using previously determined value");
                     return null;
                 }
                 
@@ -108,13 +90,7 @@ namespace MS.Internal.AppModel
                 // the next time GetStreamCore() is called.
                 if (_cacheStream != null)
                 {
-#if DEBUG
-                    if (SiteOfOriginContainer._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId +
-                                "SiteOfOriginPart: Using Cached stream");
-#endif
+                    SiteOfOriginContainer.Trace("SiteOfOriginPart: Using Cached stream");
                     Stream temp = _cacheStream;
                     _cacheStream = null;
                     return temp;
@@ -122,26 +98,14 @@ namespace MS.Internal.AppModel
 
                 if (_absoluteLocation == null)
                 {
-#if DEBUG
-                    if (SiteOfOriginContainer._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation(
-                                DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                                Environment.CurrentManagedThreadId + 
-                                ": SiteOfOriginPart: Determining absolute uri for this resource");
-#endif
+                    SiteOfOriginContainer.Trace("SiteOfOriginPart: Determining absolute uri for this resource");
                     string original = Uri.ToString();
                     Invariant.Assert(original[0] == '/');
                     string uriMinusInitialSlash = original.Substring(1); // trim leading '/'
                     _absoluteLocation = new Uri(SiteOfOriginContainer.SiteOfOrigin, uriMinusInitialSlash);
                 }
 
-#if DEBUG
-                if (SiteOfOriginContainer._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation(
-                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            Environment.CurrentManagedThreadId + 
-                            ": SiteOfOriginPart: Making web request to " + _absoluteLocation);
-#endif
+                SiteOfOriginContainer.Trace($"SiteOfOriginPart: Making web request to {_absoluteLocation}");
                 
                 // For performance reasons it is better to open local files directly
                 // rather than make a FileWebRequest.
@@ -161,13 +125,7 @@ namespace MS.Internal.AppModel
 
         private Stream HandleFileSource(bool onlyNeedContentType)
         {
-#if DEBUG
-            if (SiteOfOriginContainer._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
-                        ": Opening local file " + _absoluteLocation);
-#endif
+            SiteOfOriginContainer.Trace($"SiteOfOriginPart: Opening local file {_absoluteLocation}");
             if (_contentType == MS.Internal.ContentType.Empty)
             {
                 _contentType = MS.Internal.MimeTypeMapper.GetMimeTypeFromUri(Uri);                
@@ -185,23 +143,11 @@ namespace MS.Internal.AppModel
             WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(_absoluteLocation);
             Stream responseStream = response.GetResponseStream();
 
-#if DEBUG
-            if (SiteOfOriginContainer._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation(
-                        DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                        Environment.CurrentManagedThreadId + 
-                        ": Successfully retrieved stream from " + _absoluteLocation);
-#endif
+            SiteOfOriginContainer.Trace($"SiteOfOriginPart: Successfully retrieved stream from {_absoluteLocation}");
 
             if (_contentType == MS.Internal.ContentType.Empty)
             {
-#if DEBUG
-                if (SiteOfOriginContainer._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation(
-                            DateTime.Now.ToLongTimeString() + " " + DateTime.Now.Millisecond + " " +
-                            Environment.CurrentManagedThreadId + 
-                            ": SiteOfOriginPart: Setting _contentType");
-#endif                    
+                SiteOfOriginContainer.Trace($"SiteOfOriginPart: Setting {nameof(_contentType)}");
 
                 _contentType = WpfWebRequestHelper.GetContentType(response);
             }

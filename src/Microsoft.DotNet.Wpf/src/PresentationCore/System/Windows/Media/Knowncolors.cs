@@ -175,7 +175,7 @@ namespace System.Windows.Media
             KnownColor[] knownColorValues = Enum.GetValues<KnownColor>();
             foreach (KnownColor colorValue in knownColorValues)
             {
-                string aRGBString = String.Format("#{0,8:X8}", (uint)colorValue);
+                string aRGBString = $"#{(uint)colorValue,8:X8}";
                 s_knownArgbColors[aRGBString] = colorValue;
             }
         }

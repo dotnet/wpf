@@ -491,12 +491,7 @@ namespace System.Windows.Media.Animation
             // Helper to get the numeric list separator for a given culture.
             char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(formatProvider);
 
-            return String.Format(
-                formatProvider, 
-                "{1}{0}{2}",
-                separator,
-                _controlPoint1,
-                _controlPoint2);
+            return string.Create(formatProvider, $"{_controlPoint1}{separator}{_controlPoint2}");
         }
 
         #endregion

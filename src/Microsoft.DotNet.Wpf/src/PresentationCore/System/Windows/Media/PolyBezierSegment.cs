@@ -41,7 +41,7 @@ namespace System.Windows.Media
         /// </returns>
         internal override string ConvertToString(string format, IFormatProvider provider)
         {
-            return (Points != null) ? "C" + Points.ConvertToString(format, provider) : "";
+            return (Points != null) ? $"C{Points.ConvertToString(format, provider)}" : "";
         }
     }
 }

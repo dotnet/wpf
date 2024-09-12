@@ -97,13 +97,9 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            // Base calls do return string.Empty if value is null instead of throwing
-            if (value is null)
-                return string.Empty;
-
-            // Check that we actually support the conversion
+            // Check that we actually support the conversion, NULL value results in string.Empty, others throw
             if (value is not Duration duration || (destinationType != typeof(InstanceDescriptor) && destinationType != typeof(string)))
-                throw GetConvertToException(value, destinationType);
+                return base.ConvertTo(context, cultureInfo, value, destinationType);
 
             // For string we may currently use the type override
             if (destinationType == typeof(string))

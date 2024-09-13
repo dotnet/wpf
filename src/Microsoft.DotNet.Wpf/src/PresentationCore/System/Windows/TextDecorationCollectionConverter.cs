@@ -48,17 +48,11 @@ namespace System.Windows
         /// <returns> the converted value of the input object </returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object input)
         {
-            if (input == null)
-            {
+            if (input is null)
                 throw GetConvertFromException(input);
-            }
 
-            string value = input as string; 
-            
-            if (null == value)
-            {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(input));
-            }                       
+            if (input is not string value)
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(input));                     
                         
             return ConvertFromString(value);            
         }

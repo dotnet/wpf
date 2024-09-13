@@ -22,15 +22,10 @@ namespace System.Windows
         /// <returns> false will always be returned because TextDecorations cannot be converted to any other type. </returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor))
-            {
-                return true;
-            }
-
-            // return false for any other target type. Don't call base.CanConvertTo() because it would be confusing 
-            // in some cases. For example, for destination typeof(String), base convertor just converts the TDC to the 
-            // string full name of the type. 
-            return false; 
+            // Return false for any other target type. Don't call base.CanConvertTo() because it would be confusing 
+            // in some cases. For example, for destination typeof(string), base TypeConveter just converts the
+            // ITypeDescriptorContext to the full name string of the given type.
+            return destinationType == typeof(InstanceDescriptor);
         }
 
         /// <summary>

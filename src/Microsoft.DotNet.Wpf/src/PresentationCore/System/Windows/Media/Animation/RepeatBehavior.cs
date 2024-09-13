@@ -161,16 +161,9 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <param name="value"></param>
         /// <returns>true if value is a RepeatBehavior and is equal to this instance; otherwise false.</returns>
-        public override bool Equals(Object value)
+        public override bool Equals(object value)
         {
-            if (value is RepeatBehavior)
-            {
-                return this.Equals((RepeatBehavior)value);
-            }
-            else
-            {
-                return false;
-            }
+            return value is RepeatBehavior behavior && Equals(behavior);
         }
 
         /// <summary>

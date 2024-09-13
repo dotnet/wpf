@@ -36,12 +36,7 @@ namespace System.Windows
         /// <returns> true if it can convert from sourceType to TextDecorations, false otherwise </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-
-            return false;
+            return sourceType == typeof(string);
         }
 
         /// <summary>

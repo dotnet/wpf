@@ -145,34 +145,6 @@ namespace System.Windows
 
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
             return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-        //---------------------------------
-        // Private members
-        //---------------------------------
-
-        //
-        // Predefined valid names for TextDecorations
-        // Names should be normalized to be upper case
-        //
-        private const string None    = "NONE";
-        private const char Separator = ',';        
-        
-        private static readonly string[] TextDecorationNames = new string[] {            
-            "OVERLINE",  
-            "BASELINE",
-            "UNDERLINE",
-            "STRIKETHROUGH"
-            };
-
-        // Predefined TextDecorationCollection values. It should match 
-        // the TextDecorationNames array
-        private static readonly TextDecorationCollection[] PredefinedTextDecorations = 
-            new TextDecorationCollection[] {
-                TextDecorations.OverLine,
-                TextDecorations.Baseline,
-                TextDecorations.Underline,
-                TextDecorations.Strikethrough           
-                };       
-}             
+        }     
+    }             
 }

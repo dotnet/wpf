@@ -36,12 +36,8 @@ namespace System.Windows.Media.Animation
         /// <param name="count">The number of iterations specified by this RepeatBehavior.</param>
         public RepeatBehavior(double count)
         {
-            if (   Double.IsInfinity(count)
-                || double.IsNaN(count)
-                || count < 0.0)
-            {
-                throw new ArgumentOutOfRangeException("count", SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
-            }
+            if (double.IsInfinity(count) || double.IsNaN(count) || count < 0.0)
+                throw new ArgumentOutOfRangeException(nameof(count), SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
 
             _repeatDuration = new TimeSpan(0);
             _iterationCount = count;
@@ -56,9 +52,7 @@ namespace System.Windows.Media.Animation
         public RepeatBehavior(TimeSpan duration)
         {
             if (duration < new TimeSpan(0))
-            {
-                throw new ArgumentOutOfRangeException("duration", SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
-            }
+                throw new ArgumentOutOfRangeException(nameof(duration), SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
 
             _iterationCount = 0.0;
             _repeatDuration = duration;

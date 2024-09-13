@@ -152,15 +152,13 @@ namespace System.Windows
         {
             if (destinationType == typeof(InstanceDescriptor) && value is IEnumerable<TextDecoration>)
             {
-                ConstructorInfo ci = typeof(TextDecorationCollection).GetConstructor(
-                    new Type[]{typeof(IEnumerable<TextDecoration>)}
-                    );
-                    
-                return new InstanceDescriptor(ci, new object[]{value});                
+                ConstructorInfo ci = typeof(TextDecorationCollection).GetConstructor(new Type[] { typeof(IEnumerable<TextDecoration>) });
+
+                return new InstanceDescriptor(ci, new object[] { value });
             }
 
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
-            return base.ConvertTo(context, culture, value, destinationType);              
+            return base.ConvertTo(context, culture, value, destinationType);
         }
 
         //---------------------------------

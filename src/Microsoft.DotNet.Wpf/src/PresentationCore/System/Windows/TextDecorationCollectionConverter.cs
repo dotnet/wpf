@@ -69,75 +69,61 @@ namespace System.Windows
         /// string. The operation is case-insensitive. 
         /// </remarks>
         public static new TextDecorationCollection ConvertFromString(string text)
-        {   
-            if (text == null)
-            {
-               return null;
-            }
+        {
+            if (text is null)
+                return null;
 
-            TextDecorationCollection textDecorations = new TextDecorationCollection();
+            // Define constants that will make sure the match has been unique
+            const byte OverlineMatch = 1 << 0;
+            const byte BaselineMatch = 1 << 1;
+            const byte UnderlineMatch = 1 << 2;
+            const byte StrikethroughMatch = 1 << 3;
 
-            // Flags indicating which Predefined textDecoration has alrady been added.
-            byte MatchedTextDecorationFlags = 0;
-            
-            // Start from the 1st non-whitespace character
-            // Negative index means error is encountered
-            int index = AdvanceToNextNonWhiteSpace(text, 0);                 
-            while (index >= 0 && index < text.Length)
+            // Flags indicating which pre-defined TextDecoration have been matched
+            byte matchedDecorations = 0;
+
+            // Sanitize the input
+            ReadOnlySpan<char> decorationsSpan = text.AsSpan().Trim();
+
+            // Test for "None", which equals to empty collection and needs to be specified alone
+            if (decorationsSpan.IsEmpty || decorationsSpan.Equals("None", StringComparison.OrdinalIgnoreCase))
+                return new TextDecorationCollection();
+
+            // Create new collection, save allocations
+            TextDecorationCollection textDecorations = new(1 + decorationsSpan.Count(','));
+
+            // Go through each item in the input and match accordingly
+            foreach (Range segment in decorationsSpan.Split(','))
             {
-                if (Match(None, text, index))
+                ReadOnlySpan<char> decoration = decorationsSpan[segment].Trim();
+
+                if (decoration.Equals("Overline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & OverlineMatch) == 0)
                 {
-                    // Matched "None" in the input
-                    index = AdvanceToNextNonWhiteSpace(text, index + None.Length);                    
-                    if (textDecorations.Count > 0 || index < text.Length)
-                    {                        
-                        // Error: "None" can only be specified by its own
-                        index = -1;                        
-                    }
+                    textDecorations.Add(TextDecorations.OverLine[0]);
+                    matchedDecorations |= OverlineMatch;
+                }
+                else if (decoration.Equals("Baseline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & BaselineMatch) == 0)
+                {
+                    textDecorations.Add(TextDecorations.Baseline[0]);
+                    matchedDecorations |= BaselineMatch;
+                }
+                else if (decoration.Equals("Underline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & UnderlineMatch) == 0)
+                {
+                    textDecorations.Add(TextDecorations.Underline[0]);
+                    matchedDecorations |= UnderlineMatch;
+                }
+                else if (decoration.Equals("Strikethrough", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & StrikethroughMatch) == 0)
+                {
+                    textDecorations.Add(TextDecorations.Strikethrough[0]);
+                    matchedDecorations |= StrikethroughMatch;
                 }
                 else
                 {
-                    // Match the input with one of the predefined text decoration names
-                    int i;
-                    for(i = 0; 
-                           i < TextDecorationNames.Length 
-                        && !Match(TextDecorationNames[i], text, index);
-                       i++
-                    );
-
-                    if (i < TextDecorationNames.Length)
-                    {
-                        // Found a match within the predefined names
-                        if ((MatchedTextDecorationFlags & (1 << i)) > 0)
-                        {
-                            // Error: The matched value is duplicated.
-                            index = -1;
-                        }
-                        else
-                        {
-                            // Valid match. Add to the collection and remember that this text decoration
-                            // has been added
-                            textDecorations.Add(PredefinedTextDecorations[i]);
-                            MatchedTextDecorationFlags |= (byte)(1 << i);
-
-                            // Advance to the start of next name
-                            index = AdvanceToNextNameStart(text, index + TextDecorationNames[i].Length);                            
-                        }
-                    }
-                    else
-                    {
-                        // Error: no match found in the predefined names
-                        index = -1;
-                    }
+                    throw new ArgumentException(SR.Format(SR.InvalidTextDecorationCollectionString, text));
                 }
             }
 
-            if (index < 0)
-            {
-                throw new ArgumentException(SR.Format(SR.InvalidTextDecorationCollectionString, text));
-            }
-            
-            return textDecorations;            
+            return textDecorations;
         }        
 
         /// <summary>

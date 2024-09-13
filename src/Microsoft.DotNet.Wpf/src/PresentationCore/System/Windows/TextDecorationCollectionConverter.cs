@@ -148,69 +148,6 @@ namespace System.Windows
         }
 
         //---------------------------------
-        // Private methods
-        //---------------------------------
-        /// <summary>
-        /// Match the input against a predefined pattern from certain index onwards
-        /// </summary>
-        private static bool Match(string pattern, string input, int index)
-        {
-            int i = 0;
-            for (;
-                    i < pattern.Length
-                 && index + i < input.Length
-                 && pattern[i] == Char.ToUpperInvariant(input[index + i]);
-                 i++) ;
-
-            return (i == pattern.Length);
-        }
-
-        /// <summary>
-        /// Advance to the start of next name
-        /// </summary>
-        private static int AdvanceToNextNameStart(string input, int index)
-        {
-            // Two names must be seperated by a comma and optionally spaces
-            int separator = AdvanceToNextNonWhiteSpace(input, index);
-
-            int nextNameStart;
-            if (separator >= input.Length)
-            {
-                // reach the end
-                nextNameStart = input.Length;
-            }
-            else
-            {
-                if (input[separator] == Separator)
-                {                    
-                    nextNameStart = AdvanceToNextNonWhiteSpace(input, separator + 1);
-                    if (nextNameStart >= input.Length)
-                    {
-                        // Error: Separator is at the end of the input
-                        nextNameStart = -1;
-                    }
-                }
-                else
-                {
-                    // Error: There is a non-whitespace, non-separator character following
-                    // the matched value
-                    nextNameStart = -1;
-                }
-            }
-
-            return nextNameStart;
-        }
-
-        /// <summary>
-        /// Advance to the next non-whitespace character
-        /// </summary>
-        private static int AdvanceToNextNonWhiteSpace(string input, int index)
-        {
-            for (; index < input.Length && Char.IsWhiteSpace(input[index]); index++) ;
-            return (index > input.Length) ? input.Length : index;
-        }
-
-        //---------------------------------
         // Private members
         //---------------------------------
 

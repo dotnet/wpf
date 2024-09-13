@@ -107,10 +107,8 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (_type != RepeatBehaviorType.IterationCount)
-                {
+                if (!HasCount)
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotIterationCount, this));
-                }
 
                 return _iterationCount;
             }
@@ -125,7 +123,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (_type != RepeatBehaviorType.RepeatDuration)
+                if (!HasDuration)
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotRepeatDuration, this));
 
                 return _repeatDuration;

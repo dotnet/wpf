@@ -810,6 +810,8 @@ namespace System.Windows.Media
 #if !PBTCOMPILER
         internal static KnownColor ArgbStringToKnownColor(string argbString)
         {
+            ArgumentNullException.ThrowIfNull(argbString);
+
             ReadOnlySpan<char> argbSpan = argbString.AsSpan().Trim();
 
             // Use NumberStyles.AllowHexSpecifier instead of NumberStyles.HexNumber because NumberStyles.HexNumber

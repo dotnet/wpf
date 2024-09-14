@@ -210,7 +210,7 @@ namespace System.Windows.Markup
                 {
                     //  Note: this is NOT a culture specific comparison.
                     //  this is by design: we want the same unit string table to work across all cultures.
-                    if (valueSpan.EndsWith(UnitStrings[i].Name, StringComparison.Ordinal))
+                    if (valueSpan.EndsWith(UnitStrings[i].Name, StringComparison.OrdinalIgnoreCase))
                     {
                         strLenUnit = UnitStrings[i].Name.Length;
                         unit = UnitStrings[i].UnitType;

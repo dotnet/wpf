@@ -328,15 +328,10 @@ namespace MS.Internal.AppModel
             {
                 string key = assemblyName + assemblyVersion + assemblyKey;
 
-                s_registeredResourceManagers.TryGetValue(key, out rmwResult);
-
                 // first time. Add this to the hash table
-                if (rmwResult == null)
+                if (!s_registeredResourceManagers.TryGetValue(key, out rmwResult))
                 {
-                    Assembly assembly;
-
-                    assembly = BaseUriHelper.GetLoadedAssembly(assemblyName, assemblyVersion, assemblyKey);
-
+                    Assembly assembly = BaseUriHelper.GetLoadedAssembly(assemblyName, assemblyVersion, assemblyKey);
                     if (assembly.Equals(Application.ResourceAssembly))
                     {
                         // This Uri maps to Application Entry assembly even though it has ";component".

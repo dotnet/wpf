@@ -292,7 +292,7 @@ namespace MS.Internal.AppModel
             }
         }
 
-        private void UpdateCachedRMW(string key, Assembly assembly)
+        private static void UpdateCachedRMW(string key, Assembly assembly)
         {
             if (s_registeredResourceManagers.TryGetValue(key, out ResourceManagerWrapper value))
             {
@@ -313,7 +313,7 @@ namespace MS.Internal.AppModel
         // <param name="partName">The name of the file in the resource manager</param>
         // <param name="isContentFile">A flag to indicate that this path is a known loose file at compile time</param>
         // <returns></returns>
-        private ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
+        private static ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
         {
             string assemblyName;
             string assemblyVersion;

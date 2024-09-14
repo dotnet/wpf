@@ -326,7 +326,8 @@ namespace MS.Internal.AppModel
 
             if (!String.IsNullOrEmpty(assemblyName))
             {
-                string key = assemblyName + assemblyVersion + assemblyKey;
+                // Create the key, this will rarely get over 128 chars in my experience
+                string key = string.Create(null, stackalloc char [128], $"{assemblyName}{assemblyVersion}{assemblyKey}");
 
                 // first time. Add this to the hash table
                 if (!s_registeredResourceManagers.TryGetValue(key, out rmwResult))

@@ -294,13 +294,13 @@ namespace MS.Internal.AppModel
 
         private void UpdateCachedRMW(string key, Assembly assembly)
         {
-            if (s_registeredResourceManagers.ContainsKey(key))
+            if (s_registeredResourceManagers.TryGetValue(key, out ResourceManagerWrapper value))
             {
                 // Update the ResourceManagerWrapper with the new assembly. 
                 // Note Package caches Part and Part holds on to ResourceManagerWrapper. Package does not provide a way for 
                 // us to update their cache, so we update the assembly that the ResourceManagerWrapper holds on to. This way the 
                 // Part cached in the Package class can reference the new dll too. 
-                s_registeredResourceManagers[key].Assembly = assembly;
+                value.Assembly = assembly;
             }
         }
 

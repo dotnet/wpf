@@ -294,13 +294,13 @@ namespace MS.Internal.AppModel
 
         private void UpdateCachedRMW(string key, Assembly assembly)
         {
-            if (_registeredResourceManagers.ContainsKey(key))
+            if (s_registeredResourceManagers.ContainsKey(key))
             {
                 // Update the ResourceManagerWrapper with the new assembly. 
                 // Note Package caches Part and Part holds on to ResourceManagerWrapper. Package does not provide a way for 
                 // us to update their cache, so we update the assembly that the ResourceManagerWrapper holds on to. This way the 
                 // Part cached in the Package class can reference the new dll too. 
-                _registeredResourceManagers[key].Assembly = assembly;
+                s_registeredResourceManagers[key].Assembly = assembly;
             }
         }
 
@@ -328,7 +328,7 @@ namespace MS.Internal.AppModel
             {
                 string key = assemblyName + assemblyVersion + assemblyKey;
 
-                _registeredResourceManagers.TryGetValue(key.ToLowerInvariant(), out rmwResult);
+                s_registeredResourceManagers.TryGetValue(key.ToLowerInvariant(), out rmwResult);
 
                 // first time. Add this to the hash table
                 if (rmwResult == null)
@@ -348,7 +348,7 @@ namespace MS.Internal.AppModel
                         rmwResult = new ResourceManagerWrapper(assembly);
                     }
 
-                    _registeredResourceManagers[key.ToLowerInvariant()] = rmwResult;
+                    s_registeredResourceManagers[key.ToLowerInvariant()] = rmwResult;
                 }
             }
 
@@ -384,7 +384,7 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private static Dictionary<string, ResourceManagerWrapper> _registeredResourceManagers = new Dictionary<string, ResourceManagerWrapper>();
+        private static Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new();
         private static ResourceManagerWrapper _applicationResourceManagerWrapper = null;
         private static FileShare _fileShare = FileShare.Read;
         private static bool assemblyLoadhandlerAttached = false;

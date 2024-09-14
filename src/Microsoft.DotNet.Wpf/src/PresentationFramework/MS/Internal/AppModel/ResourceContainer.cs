@@ -44,18 +44,18 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                if (_applicationResourceManagerWrapper == null)
+                if (s_applicationResourceManagerWrapper == null)
                 {
                     // load main excutable assembly
                     Assembly asmApplication = Application.ResourceAssembly;
 
                     if (asmApplication != null)
                     {
-                        _applicationResourceManagerWrapper = new ResourceManagerWrapper(asmApplication);
+                        s_applicationResourceManagerWrapper = new ResourceManagerWrapper(asmApplication);
                     }
                 }
 
-                return _applicationResourceManagerWrapper;
+                return s_applicationResourceManagerWrapper;
             }
         }
 
@@ -68,7 +68,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                return _fileShare;
+                return s_fileShare;
             }
         }
 
@@ -200,10 +200,10 @@ namespace MS.Internal.AppModel
             // old version dll when a newer one is loaded. So whenever the AssemblyLoad event is fired, we will need to update the cache 
             // with the newly loaded assembly. This is currently only for designer so not needed for browser hosted apps. 
             // Attach the event handler before the first time we get the ResourceManagerWrapper.
-            if (!assemblyLoadhandlerAttached)
+            if (!s_assemblyLoadhandlerAttached)
             {
                 AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(OnAssemblyLoadEventHandler);
-                assemblyLoadhandlerAttached = true;
+                s_assemblyLoadhandlerAttached = true;
             }
 
             ResourceManagerWrapper rmWrapper = GetResourceManagerWrapper(uri, out partName, out isContentFile);
@@ -379,10 +379,11 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private static Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.OrdinalIgnoreCase);
-        private static ResourceManagerWrapper _applicationResourceManagerWrapper = null;
-        private static FileShare _fileShare = FileShare.Read;
-        private static bool assemblyLoadhandlerAttached = false;
+        private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly FileShare s_fileShare = FileShare.Read;
+
+        private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;
+        private static bool s_assemblyLoadhandlerAttached = false;
 
         #endregion Private Members
 

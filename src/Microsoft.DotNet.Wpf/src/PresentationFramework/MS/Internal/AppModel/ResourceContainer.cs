@@ -250,7 +250,6 @@ namespace MS.Internal.AppModel
                 AssemblyName assemblyInfo = new AssemblyName(assembly.FullName);
 
                 string assemblyName = assemblyInfo.Name;
-                string assemblyKey = string.Empty;
                 string key = assemblyName;
 
                 // Check if this newly loaded assembly is in the cache. If so, update the cache.
@@ -271,20 +270,16 @@ namespace MS.Internal.AppModel
                     UpdateCachedRMW(key, args.LoadedAssembly);
                 }
 
-                byte[] reqKeyToken = assemblyInfo.GetPublicKeyToken();
-                for (int i = 0; i < reqKeyToken.Length; i++)
+                byte[] publicKeyToken = assemblyInfo.GetPublicKeyToken();
+                Span<char> assemblyKey = stackalloc char[16];
+                if (Convert.TryToHexStringLower(publicKeyToken, assemblyKey, out int charsWritten) && charsWritten == 16)
                 {
-                    assemblyKey += reqKeyToken[i].ToString("x", NumberFormatInfo.InvariantInfo);
-                }
-
-                if (!String.IsNullOrEmpty(assemblyKey))
-                {
-                    key = key + assemblyKey;
+                    key = $"{key}{assemblyKey}";
 
                     // Check Name + Version + KeyToken
                     UpdateCachedRMW(key, args.LoadedAssembly);
 
-                    key = assemblyName + assemblyKey;
+                    key = $"{assemblyName}{assemblyKey}";
 
                     // Check Name + KeyToken
                     UpdateCachedRMW(key, args.LoadedAssembly);

@@ -247,42 +247,39 @@ namespace MS.Internal.AppModel
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
             if ((!assembly.ReflectionOnly))
             {
-                AssemblyName assemblyInfo = new AssemblyName(assembly.FullName);
+                AssemblyName assemblyInfo = new(assembly.FullName);
 
                 string assemblyName = assemblyInfo.Name;
-                string key = assemblyName;
+                string assemblyNameVersion = null;
 
                 // Check if this newly loaded assembly is in the cache. If so, update the cache.
                 // If it is not in cache, do not do anything. It will be added on demand.
-                // The key could be Name, Name + Version, Name + PublicKeyToken, or Name + Version + PublicKeyToken.  
+                // The key could be Name; Name + Version; Name + PublicKeyToken; or Name + Version + PublicKeyToken.  
                 // Otherwise, update the cache with the newly loaded dll.
 
-                // First check Name. 
-                UpdateCachedRMW(key, args.LoadedAssembly);
+                // First check the Name
+                UpdateCachedRMW(assemblyName, assembly);
 
-                string assemblyVersion = assemblyInfo.Version.ToString();
-
-                if (!String.IsNullOrEmpty(assemblyVersion))
+                // While Version uses 32bit values for each respective field, RuntimeAssembly, AssemblyName nor metadata
+                // allows for AssemblyVersion (not to be confused with file) values bigger than UInt16.MaxValue - 1.
+                // Therefore our final length in chars is 5x4 for fields and 3x1 for the separators, 1x scratch space
+                Span<char> scratchBuffer = stackalloc char[24];
+                if (assemblyInfo.Version.TryFormat(scratchBuffer, out int charsWritten))
                 {
-                    key = key + assemblyVersion;
-
                     // Check Name + Version
-                    UpdateCachedRMW(key, args.LoadedAssembly);
+                    assemblyNameVersion = $"{assemblyName}{scratchBuffer.Slice(0, charsWritten)}";
+                    UpdateCachedRMW(assemblyNameVersion, assembly);
                 }
 
                 byte[] publicKeyToken = assemblyInfo.GetPublicKeyToken();
-                Span<char> assemblyKey = stackalloc char[16];
-                if (Convert.TryToHexStringLower(publicKeyToken, assemblyKey, out int charsWritten) && charsWritten == 16)
+                if (Convert.TryToHexStringLower(publicKeyToken, scratchBuffer, out charsWritten) && charsWritten == 16)
                 {
-                    key = $"{key}{assemblyKey}";
-
                     // Check Name + Version + KeyToken
-                    UpdateCachedRMW(key, args.LoadedAssembly);
-
-                    key = $"{assemblyName}{assemblyKey}";
+                    if (!string.IsNullOrEmpty(assemblyNameVersion))
+                        UpdateCachedRMW($"{assemblyNameVersion}{scratchBuffer.Slice(0, charsWritten)}", assembly);
 
                     // Check Name + KeyToken
-                    UpdateCachedRMW(key, args.LoadedAssembly);
+                    UpdateCachedRMW($"{assemblyName}{scratchBuffer.Slice(0, charsWritten)}", assembly);
                 }
             }
         }
@@ -322,7 +319,7 @@ namespace MS.Internal.AppModel
             if (!String.IsNullOrEmpty(assemblyName))
             {
                 // Create the key, this will rarely get over 128 chars in my experience
-                string key = string.Create(null, stackalloc char [128], $"{assemblyName}{assemblyVersion}{assemblyKey}");
+                string key = string.Create(null, stackalloc char[128], $"{assemblyName}{assemblyVersion}{assemblyKey}");
 
                 // first time. Add this to the hash table
                 if (!s_registeredResourceManagers.TryGetValue(key, out rmwResult))

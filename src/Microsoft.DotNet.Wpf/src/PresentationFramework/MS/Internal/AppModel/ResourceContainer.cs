@@ -247,10 +247,12 @@ namespace MS.Internal.AppModel
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
             if (!assembly.ReflectionOnly)
             {
-                AssemblyName assemblyInfo = new(assembly.FullName);
+                ReadOnlySpan<char> assemblyName = ReflectionUtils.GetAssemblyPartialName(assembly);
+                ReflectionUtils.GetAssemblyVersionPlusToken(assembly, out ReadOnlySpan<char> assemblyVersion, out ReadOnlySpan<char> assemblyToken);
+                int totalLength = assemblyName.Length + assemblyVersion.Length + assemblyToken.Length;
 
-                string assemblyName = assemblyInfo.Name;
-                string assemblyNameVersion = null;
+                Span<char> key = totalLength <= 256 ? stackalloc char[totalLength] : new char[totalLength];
+                assemblyName.CopyTo(key);
 
                 // Check if this newly loaded assembly is in the cache. If so, update the cache.
                 // If it is not in cache, do not do anything. It will be added on demand.
@@ -260,33 +262,32 @@ namespace MS.Internal.AppModel
                 // First check the Name
                 UpdateCachedRMW(assemblyName, assembly);
 
-                // While Version uses 32bit values for each respective field, RuntimeAssembly, AssemblyName nor metadata
-                // allows for AssemblyVersion (not to be confused with file) values bigger than UInt16.MaxValue - 1.
-                // Therefore our final length in chars is 5x4 for fields and 3x1 for the separators, 1x scratch space
-                Span<char> scratchBuffer = stackalloc char[24];
-                if (assemblyInfo.Version.TryFormat(scratchBuffer, out int charsWritten))
+                // Check Name + Version
+                if (!assemblyVersion.IsEmpty)
                 {
-                    // Check Name + Version
-                    assemblyNameVersion = $"{assemblyName}{scratchBuffer.Slice(0, charsWritten)}";
-                    UpdateCachedRMW(assemblyNameVersion, assembly);
+                    assemblyVersion.CopyTo(key.Slice(assemblyName.Length));
+                    UpdateCachedRMW(key.Slice(0, assemblyName.Length + assemblyVersion.Length), assembly);
                 }
 
-                byte[] publicKeyToken = assemblyInfo.GetPublicKeyToken();
-                if (Convert.TryToHexStringLower(publicKeyToken, scratchBuffer, out charsWritten) && charsWritten == 16)
+                if (!assemblyToken.IsEmpty)
                 {
                     // Check Name + Version + KeyToken
-                    if (!string.IsNullOrEmpty(assemblyNameVersion))
-                        UpdateCachedRMW($"{assemblyNameVersion}{scratchBuffer.Slice(0, charsWritten)}", assembly);
+                    if (!assemblyVersion.IsEmpty)
+                    {
+                        assemblyToken.CopyTo(key.Slice(assemblyName.Length + assemblyVersion.Length));
+                        UpdateCachedRMW(key.Slice(0, totalLength), assembly);
+                    }
 
                     // Check Name + KeyToken
-                    UpdateCachedRMW($"{assemblyName}{scratchBuffer.Slice(0, charsWritten)}", assembly);
+                    assemblyToken.CopyTo(key.Slice(assemblyName.Length));
+                    UpdateCachedRMW(key.Slice(0, assemblyName.Length + assemblyToken.Length), assembly);
                 }
             }
         }
 
-        private static void UpdateCachedRMW(string key, Assembly assembly)
+        private static void UpdateCachedRMW(ReadOnlySpan<char> key, Assembly assembly)
         {
-            if (s_registeredResourceManagers.TryGetValue(key, out ResourceManagerWrapper value))
+            if (s_registeredResourceManagersLookup.TryGetValue(key, out ResourceManagerWrapper value))
             {
                 // Update the ResourceManagerWrapper with the new assembly. 
                 // Note Package caches Part and Part holds on to ResourceManagerWrapper. Package does not provide a way for 
@@ -368,6 +369,7 @@ namespace MS.Internal.AppModel
         #region Private Members
 
         private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, ResourceManagerWrapper>.AlternateLookup<ReadOnlySpan<char>> s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
         private static readonly FileShare s_fileShare = FileShare.Read;
 
         private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;

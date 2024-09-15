@@ -245,7 +245,7 @@ namespace MS.Internal.AppModel
             // We do not care about assemblies loaded into the reflection-only context or the Gaced assemblies.
             // For example, in Sparkle whenever a project is built all dependent assemblies will be loaded reflection only.
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
-            if ((!assembly.ReflectionOnly))
+            if (!assembly.ReflectionOnly)
             {
                 AssemblyName assemblyInfo = new(assembly.FullName);
 
@@ -307,14 +307,10 @@ namespace MS.Internal.AppModel
         // <returns></returns>
         private static ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
         {
-            string assemblyName;
-            string assemblyVersion;
-            string assemblyKey;
             ResourceManagerWrapper rmwResult = ApplicationResourceManagerWrapper;
-
             isContentFile = false;
 
-            BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
+            BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out string assemblyName, out string assemblyVersion, out string assemblyKey);
 
             if (!String.IsNullOrEmpty(assemblyName))
             {
@@ -328,7 +324,6 @@ namespace MS.Internal.AppModel
                     if (assembly.Equals(Application.ResourceAssembly))
                     {
                         // This Uri maps to Application Entry assembly even though it has ";component".
-
                         rmwResult = ApplicationResourceManagerWrapper;
                     }
                     else
@@ -340,7 +335,7 @@ namespace MS.Internal.AppModel
                 }
             }
 
-            if ((rmwResult == ApplicationResourceManagerWrapper))
+            if (rmwResult == ApplicationResourceManagerWrapper)
             {
                 if (rmwResult != null)
                 {

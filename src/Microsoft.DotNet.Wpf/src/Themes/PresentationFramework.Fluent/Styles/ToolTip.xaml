@@ -11,7 +11,7 @@
 
     <Thickness x:Key="ToolTipBorderPadding">9,6,9,8</Thickness>
     <sys:Double x:Key="ToolTipMaxWidth">320</sys:Double>
-    <sys:Double x:Key="ToolTipBorderThemeThickness">1</sys:Double>
+    <Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
 
     <Style x:Key="DefaultToolTipStyle" TargetType="{x:Type ToolTip}">
         <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />

@@ -205,6 +205,8 @@
                                             Content="{TemplateBinding SelectionBoxItem}"
                                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                            ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                             IsHitTestVisible="False"
                                             TextElement.Foreground="{TemplateBinding Foreground}" />
                                     </Grid>

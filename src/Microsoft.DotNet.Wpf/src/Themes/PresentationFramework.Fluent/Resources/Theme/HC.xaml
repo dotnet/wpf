@@ -360,6 +360,8 @@
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
 
     <!--  ListView  -->
+    <SolidColorBrush x:Key="ListViewBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="ListViewBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="ListViewItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ListViewItemPillFillBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
@@ -400,6 +402,10 @@
     <SolidColorBrush x:Key="NavigationViewItemForegroundLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!-- Page -->
+    <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="PageBackground" Color="Transparent" />
+
     <!--  ProgressBar  -->
     <SolidColorBrush x:Key="ProgressBarForeground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ProgressBarBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -415,7 +421,13 @@
     <!--  RadioButton  -->
     <SolidColorBrush x:Key="RadioButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="RadioButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonBackground" Color="Transparent"/>
+    <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="Transparent"/>
+    <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="Transparent"/>
+    <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{StaticResource SystemColorHighlightColor}" />
@@ -427,8 +439,10 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseFillDisabled" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStroke" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightColor}"/>
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemColorHighlightColor}" />
@@ -443,6 +457,11 @@
     <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+
+    <!-- ScrollBar -->
+    <SolidColorBrush x:Key="ScrollBarTrackFill" Color="Transparent" />
+    <SolidColorBrush x:Key="ScrollBarTrackStroke" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="ScrollBarTrackFillPointerOver" Color="{StaticResource SystemColorWindowColor}" />   
 
     <!--  Separator  -->
     <SolidColorBrush x:Key="SeparatorBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />

@@ -16,6 +16,7 @@
 
     <sys:Double x:Key="LineButtonHeight">12</sys:Double>
     <sys:Double x:Key="LineButtonWidth">12</sys:Double>
+    <sys:Double x:Key="ScrollBarButtonArrowIconFontSize">8</sys:Double>
 
     <system:String x:Key="ScrollBarCaretUpGlyph">&#xEDDB;</system:String>
     <system:String x:Key="ScrollBarCaretDownGlyph">&#xEDDC;</system:String>    
@@ -26,7 +27,7 @@
         <Setter Property="Foreground" Value="{DynamicResource ScrollBarButtonArrowForeground}" />
         <Setter Property="Width" Value="{StaticResource LineButtonWidth}" />
         <Setter Property="Height" Value="{StaticResource LineButtonHeight}" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="{StaticResource ScrollBarButtonArrowIconFontSize}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -129,7 +130,8 @@
                 Grid.RowSpan="3"
                 Width="12"
                 HorizontalAlignment="Center"
-                Background="{DynamicResource ScrollBarTrackFillPointerOver}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="6"
                 Opacity="0" />
             <RepeatButton
@@ -144,7 +146,7 @@
             <Track
                 x:Name="PART_Track"
                 Grid.Row="1"
-                Width="6"
+                Width="4"
                 IsDirectionReversed="True">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
@@ -180,7 +182,7 @@
                             <DoubleAnimation
                                 Storyboard.TargetName="PART_Track"
                                 Storyboard.TargetProperty="Width"
-                                From="6"
+                                From="4"
                                 To="8"
                                 Duration="{StaticResource ScrollAnimationDuration}" />
                             <DoubleAnimation
@@ -211,7 +213,7 @@
                                 Storyboard.TargetName="PART_Track"
                                 Storyboard.TargetProperty="Width"
                                 From="8"
-                                To="6"
+                                To="4"
                                 Duration="{StaticResource ScrollAnimationDuration}" />
                             <DoubleAnimation
                                 Storyboard.TargetName="PART_Border"
@@ -250,7 +252,8 @@
                 Grid.ColumnSpan="3"
                 Height="12"
                 VerticalAlignment="Center"
-                Background="{DynamicResource ScrollBarButtonBackground}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="6"
                 Opacity="0" />
 
@@ -266,7 +269,7 @@
             <Track
                 x:Name="PART_Track"
                 Grid.Column="1"
-                Height="6"
+                Height="4"
                 VerticalAlignment="Center"
                 IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
@@ -294,13 +297,14 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFillPointerOver}" />
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 Storyboard.TargetName="PART_Track"
                                 Storyboard.TargetProperty="Height"
-                                From="6"
+                                From="4"
                                 To="8"
                                 Duration="{StaticResource ScrollAnimationDuration}" />
                             <DoubleAnimation
@@ -331,7 +335,7 @@
                                 Storyboard.TargetName="PART_Track"
                                 Storyboard.TargetProperty="Height"
                                 From="8"
-                                To="6"
+                                To="4"
                                 Duration="{StaticResource ScrollAnimationDuration}" />
                             <DoubleAnimation
                                 Storyboard.TargetName="PART_Border"
@@ -359,7 +363,8 @@
     </ControlTemplate>
 
     <Style x:Key="DefaultScrollBarStyle" TargetType="{x:Type ScrollBar}">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFill}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ScrollBarTrackStroke}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -367,11 +372,11 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto" />
-                <Setter Property="Height" Value="14" />
+                <Setter Property="Height" Value="12" />
                 <Setter Property="Template" Value="{StaticResource HorizontalScrollBarTemplate}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Width" Value="14" />
+                <Setter Property="Width" Value="12" />
                 <Setter Property="Height" Value="Auto" />
                 <Setter Property="Template" Value="{StaticResource VerticalScrollBarTemplate}" />
             </Trigger>

@@ -12,7 +12,9 @@
     <Style x:Key="DefaultListViewStyle" TargetType="{x:Type ListView}">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource ListViewBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ListViewBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
@@ -31,28 +33,34 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
-                    <Grid>
-                        <ScrollViewer
-                            x:Name="PART_ContentHost"
-                            CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                        <Rectangle
-                            x:Name="PART_DisabledVisual"
-                            Opacity="0"
-                            RadiusX="2"
-                            RadiusY="2"
-                            Stretch="Fill"
-                            Stroke="Transparent"
-                            StrokeThickness="0"
-                            Visibility="Collapsed">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Grid>
+                    <Border
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Padding="{TemplateBinding Padding}"
+                                CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                            <Rectangle
+                                x:Name="PART_DisabledVisual"
+                                Opacity="0"
+                                RadiusX="2"
+                                RadiusY="2"
+                                Stretch="Fill"
+                                Stroke="Transparent"
+                                StrokeThickness="0"
+                                Visibility="Collapsed">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsGrouping" Value="True">
                             <Setter Property="ScrollViewer.CanContentScroll" Value="False" />

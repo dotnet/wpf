@@ -9,11 +9,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Thickness x:Key="ContextMenuBorderThickness">1</Thickness>
+
     <Style x:Key="DefaultContextMenuStyle" TargetType="{x:Type ContextMenu}">
         <Setter Property="TextElement.Foreground" Value="{DynamicResource ContextMenuForeground}" />
         <Setter Property="Foreground" Value="{DynamicResource ContextMenuForeground}" />
         <Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContextMenuBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource ContextMenuBorderThickness}" />
         <Setter Property="MinWidth" Value="140" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0" />
@@ -30,7 +33,7 @@
                         Padding="0,3,0,3"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="1"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="8">
                         <Border.RenderTransform>
                             <TranslateTransform />

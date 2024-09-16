@@ -1369,7 +1369,7 @@
                   </Grid>
                 </Grid>
                 <Popup x:Name="PART_Popup" MinWidth="{TemplateBinding ActualWidth}" VerticalAlignment="Center" AllowsTransparency="True" Focusable="False" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="{TemplateBinding Popup.Placement}" PopupAnimation="{TemplateBinding Popup.PopupAnimation}" VerticalOffset="1">
-                  <Border x:Name="DropDownBorder" Margin="12,0,12,18" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
+                  <Border x:Name="DropDownBorder" Padding="0,4,0,6" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="1.5" CornerRadius="{DynamicResource PopupCornerRadius}" SnapsToDevicePixels="True">
                     <!--Will revist this code while doing performance evaluation for dynamic resources.-->
                     <Border.RenderTransform>
                       <TranslateTransform />
@@ -3978,6 +3978,7 @@
     <Setter Property="Foreground" Value="{DynamicResource TabViewForeground}" />
     <Setter Property="Background" Value="{DynamicResource TabViewBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TabViewBorderBrush}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0,1,0,0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -4003,8 +4004,8 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
@@ -4015,7 +4016,7 @@
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid x:Name="Root">
             <Border x:Name="Border" MinWidth="180" MinHeight="36" Margin="0" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
-              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
+              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
             </Border>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="SelectionStates">
@@ -4535,7 +4536,7 @@
   </Style>
   <Thickness x:Key="ToolTipBorderPadding">9,6,9,8</Thickness>
   <sys:Double x:Key="ToolTipMaxWidth">320</sys:Double>
-  <sys:Double x:Key="ToolTipBorderThemeThickness">1</sys:Double>
+  <Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
   <Style x:Key="DefaultToolTipStyle" TargetType="{x:Type ToolTip}">
     <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />
     <Setter Property="Height" Value="Auto" />

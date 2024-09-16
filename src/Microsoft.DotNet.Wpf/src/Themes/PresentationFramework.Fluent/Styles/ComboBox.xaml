@@ -263,7 +263,6 @@
                                     VerticalOffset="1">
                                     <Border
                                         x:Name="DropDownBorder"
-                                        Margin="12,0,12,18"
                                         Padding="0,4,0,6"
                                         Background="{DynamicResource ComboBoxDropDownBackground}"
                                         BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"

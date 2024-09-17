@@ -204,7 +204,7 @@ internal static class ThemeManager
         return rd;
     }
 
-    internal static bool IsFluentThemeDictionayIncluded()
+    internal static bool IsFluentThemeDictionaryIncluded()
     {
         return Application.Current != null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
     }

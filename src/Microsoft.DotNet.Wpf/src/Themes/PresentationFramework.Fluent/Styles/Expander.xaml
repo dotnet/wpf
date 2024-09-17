@@ -289,7 +289,7 @@
                                 DockPanel.Dock="Top"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1"
+                                BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
                             <ToggleButton
                                         x:Name="HeaderSite"
@@ -301,7 +301,13 @@
                                         HorizontalContentAlignment="Stretch"
                                         VerticalContentAlignment="Center"
                                         Content="{TemplateBinding Header}"
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                        FontFamily="{TemplateBinding FontFamily}"
                                         FontSize="{TemplateBinding FontSize}"
+                                        FontStyle="{TemplateBinding FontStyle}"
+                                        FontStretch="{TemplateBinding FontStretch}"
+                                        FontWeight="{TemplateBinding FontWeight}"
                                         Foreground="{TemplateBinding Foreground}"
                                         IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                                         IsEnabled="{TemplateBinding IsEnabled}"

@@ -25,9 +25,10 @@
         <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <!--  Universal WPF UI focus  -->
-        <Setter Property="Background" Value="{DynamicResource RadioButtonOuterEllipseCheckedStroke}" />
+        <Setter Property="Background" Value="{DynamicResource RadioButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource RadioButtonForeground}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrush}" />
+        <Setter Property="Border.CornerRadius" Value="4" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="{StaticResource RadioButtonPadding}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -44,25 +45,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <Grid
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        Background="Transparent">
-
+                    <Border x:Name="RootBorder"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding Border.CornerRadius}">
+                        
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)"
-                                            To="1"
-                                            Duration="0:0:0.25" />
+                                        Storyboard.TargetName="CheckGlyph"
+                                        Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleX)"
+                                        To="1"
+                                        Duration="0:0:0.25" />
                                         <DoubleAnimation
-                                            Storyboard.TargetName="CheckGlyph"
-                                            Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
-                                            To="1"
-                                            Duration="0:0:0.25" />
+                                        Storyboard.TargetName="CheckGlyph"
+                                        Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
+                                        To="1"
+                                        Duration="0:0:0.25" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
@@ -77,9 +79,9 @@
                                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(ScaleTransform.ScaleY)"
                                             To="1.167"
                                             Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="CheckGlyph"
@@ -95,65 +97,67 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Height="32" VerticalAlignment="Top">
-                            <Ellipse
-                                x:Name="OuterEllipse"
-                                Width="{StaticResource RadioButtonOuterEllipseSize}"
-                                Height="{StaticResource RadioButtonOuterEllipseSize}"
-                                Fill="{DynamicResource RadioButtonOuterEllipseFill}"
-                                Stroke="{DynamicResource RadioButtonOuterEllipseStroke}"
-                                StrokeThickness="{StaticResource RadioButtonStrokeThickness}"
-                                UseLayoutRounding="False" />
-                            <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
-                            <Ellipse
-                                x:Name="CheckOuterEllipse"
-                                Width="{StaticResource RadioButtonOuterEllipseSize}"
-                                Height="{StaticResource RadioButtonOuterEllipseSize}"
-                                Fill="{TemplateBinding Background}"
-                                Opacity="0"
-                                Stroke="{TemplateBinding Background}"
-                                StrokeThickness="{StaticResource RadioButtonStrokeThickness}"
-                                UseLayoutRounding="False" />
-                            <Ellipse
-                                x:Name="CheckGlyph"
-                                Width="{StaticResource RadioButtonCheckGlyphSize}"
-                                Height="{StaticResource RadioButtonCheckGlyphSize}"
-                                Fill="{DynamicResource RadioButtonCheckGlyphFill}"
-                                RenderTransformOrigin="0.5, 0.5"
-                                Opacity="0"
-                                Stroke="{DynamicResource CircleElevationBorderBrush}"
-                                UseLayoutRounding="False">
-                                <Ellipse.RenderTransform>
-                                    <ScaleTransform />
-                                </Ellipse.RenderTransform>
-                            </Ellipse>
-                            <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
-                            <Border
-                                x:Name="PressedCheckGlyph"
-                                Width="4"
-                                Height="4"
-                                Background="{DynamicResource RadioButtonCheckGlyphFill}"
-                                BorderBrush="{DynamicResource CircleElevationBorderBrush}"
-                                CornerRadius="6"
-                                Opacity="0"
-                                UseLayoutRounding="False" />
-
+                            
+                        <Grid x:Name="RootGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Height="32" VerticalAlignment="Top">
+                                <Ellipse
+                                    x:Name="OuterEllipse"
+                                    Width="20"
+                                    Height="20"
+                                    Fill="{DynamicResource RadioButtonOuterEllipseFill}"
+                                    Stroke="{DynamicResource RadioButtonOuterEllipseStroke}"
+                                    StrokeThickness="{StaticResource RadioButtonStrokeThickness}"
+                                    UseLayoutRounding="False" />
+                                <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
+                                <Ellipse
+                                    x:Name="CheckOuterEllipse"
+                                    Width="20"
+                                    Height="20"
+                                    Fill="{DynamicResource RadioButtonOuterEllipseCheckedFill}"
+                                    Opacity="0"
+                                    Stroke="{DynamicResource RadioButtonOuterEllipseCheckedStroke}"
+                                    StrokeThickness="{StaticResource RadioButtonStrokeThickness}"
+                                    UseLayoutRounding="False" />
+                                <Ellipse
+                                    x:Name="CheckGlyph"
+                                    Width="{StaticResource RadioButtonCheckGlyphSize}"
+                                    Height="{StaticResource RadioButtonCheckGlyphSize}"
+                                    Fill="{DynamicResource RadioButtonCheckGlyphFill}"
+                                    RenderTransformOrigin="0.5, 0.5"
+                                    Opacity="0"
+                                    Stroke="{DynamicResource CircleElevationBorderBrush}"
+                                    UseLayoutRounding="False">
+                                    <Ellipse.RenderTransform>
+                                        <ScaleTransform />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
+                                <Border
+                                    x:Name="PressedCheckGlyph"
+                                    Width="4"
+                                    Height="4"
+                                    Background="{DynamicResource RadioButtonCheckGlyphFill}"
+                                    BorderBrush="{DynamicResource CircleElevationBorderBrush}"
+                                    CornerRadius="6"
+                                    Opacity="0"
+                                    UseLayoutRounding="False" />
+    
+                            </Grid>
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Grid.Column="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
                         </Grid>
-                        <ContentPresenter
-                            x:Name="ContentPresenter"
-                            Grid.Column="1"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            TextElement.Foreground="{TemplateBinding Foreground}" />
-                    </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -164,6 +168,8 @@
                             <Setter TargetName="CheckGlyph" Property="Opacity" Value="1.0" />
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillPressed}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseStrokePressed}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPressed}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource RadioButtonBackgroundPressed}" />
                         </MultiTrigger>
 
                         <Trigger Property="IsChecked" Value="True">
@@ -181,6 +187,9 @@
                                 <Condition Property="IsEnabled" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillPointerOver}" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseStrokePointerOver}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPointerOver}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource RadioButtonBackgroundPointerOver}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -189,9 +198,12 @@
                                 <Condition Property="IsEnabled" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseFillPointerOver}" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource RadioButtonOuterEllipseStrokePointerOver}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPointerOver}" />
                             <!--<Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePointerOver}" />-->
                             <Setter TargetName="PressedCheckGlyph" Property="Background" Value="{DynamicResource RadioButtonOuterEllipseCheckedStrokePointerOver}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPointerOver}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource RadioButtonBackgroundPointerOver}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -201,6 +213,8 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPressed}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedFillPressed}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrushPressed}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource RadioButtonBackgroundPressed}" />
                             <Setter TargetName="PressedCheckGlyph" Property="Background" Value="{DynamicResource RadioButtonCheckOuterEllipseCheckedStrokePressed}" />
                         </MultiTrigger>
                         <MultiTrigger>

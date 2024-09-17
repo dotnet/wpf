@@ -4,14 +4,25 @@
     Copyright (C) Leszek Pomianowski and WPF UI Contributors.
     All Rights Reserved.
 -->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <system:Double x:Key="ListViewItemMinHeight">40</system:Double>
+    <system:Double x:Key="ListViewItemMinWidth">88</system:Double>
+
 
     <Style x:Key="DefaultListViewItemStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="Foreground" Value="{DynamicResource ListViewItemForeground}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="{StaticResource ListViewItemMinHeight}" />
+        <Setter Property="MinWidth" Value="{StaticResource ListViewItemMinWidth}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Margin" Value="0,0,0,2" />
-        <Setter Property="Padding" Value="4" />
+        <Setter Property="Padding" Value="16,0,12,0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <Setter Property="Template">
@@ -21,11 +32,15 @@
                         x:Name="Border"
                         Margin="0"
                         Padding="0"
-                        Background="Transparent"
-                        BorderThickness="1"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding Border.CornerRadius}">
                         <Grid>
-                            <ContentPresenter Margin="{TemplateBinding Padding}" />
+                            <ContentPresenter 
+                                Margin="{TemplateBinding Padding}" 
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             <Rectangle
                                 x:Name="ActiveRectangle"
                                 Width="3"

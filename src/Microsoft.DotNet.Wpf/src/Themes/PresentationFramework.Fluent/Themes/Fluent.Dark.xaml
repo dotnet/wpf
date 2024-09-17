@@ -430,6 +430,7 @@
   <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
   <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+  <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <!--  DynamicScrollBar  -->
   <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
@@ -2119,10 +2120,13 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style x:Key="DatePickerCalendarStyle" BasedOn="{StaticResource DefaultCalendarStyle}" TargetType="{x:Type Calendar}">
+    <Setter Property="Background" Value="{DynamicResource DatePickerPopupBackground}" />
+  </Style>
   <Style x:Key="DefaultDatePickerStyle" TargetType="{x:Type DatePicker}">
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
-    <Setter Property="CalendarStyle" Value="{DynamicResource DefaultCalendarStyle}" />
+    <Setter Property="CalendarStyle" Value="{DynamicResource DatePickerCalendarStyle}" />
     <Setter Property="Foreground" Value="{DynamicResource DatePickerForeground}" />
     <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -3562,6 +3566,7 @@
     </Grid>
     <ControlTemplate.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFillPointerOver}" />
         <Trigger.EnterActions>
           <BeginStoryboard>
             <Storyboard>

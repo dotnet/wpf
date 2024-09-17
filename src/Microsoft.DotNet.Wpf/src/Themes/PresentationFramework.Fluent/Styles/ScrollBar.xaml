@@ -176,6 +176,7 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFillPointerOver}" />
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>

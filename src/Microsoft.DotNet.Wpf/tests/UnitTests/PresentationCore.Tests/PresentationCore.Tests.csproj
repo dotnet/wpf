@@ -7,6 +7,8 @@
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+    <!-- SYSLIB5005: System.Formats.Nrbf is experimental -->
+    <NoWarn>$(NoWarn);SYSLIB5005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

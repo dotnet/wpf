@@ -63,7 +63,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding Border.CornerRadius}">
                             <Grid
-                                Margin="{TemplateBinding Padding}"
+                                
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <ScrollViewer
@@ -72,7 +72,8 @@
                                     CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                     IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                    IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"                                
+                                    IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
+                                    Padding="{TemplateBinding Padding}"                                
                                     TextElement.Foreground="{TemplateBinding Foreground}"
                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                             </Grid>
@@ -135,7 +136,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" Margin="{TemplateBinding Padding}">
+                    <Grid Grid.Column="0">
                         <ScrollViewer
                             x:Name="PART_ContentHost"
                             VerticalAlignment="Center"
@@ -143,6 +144,7 @@
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
+                            Padding="{TemplateBinding Padding}"                                
                             TextElement.Foreground="{TemplateBinding Foreground}"
                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                     </Grid>

@@ -28,14 +28,15 @@
                 Grid.Row="1"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="0,1,0,0"
+                BorderThickness="{TemplateBinding BorderThickness}"
                 CornerRadius="0,4,4,4"
                 KeyboardNavigation.DirectionalNavigation="Contained"
                 KeyboardNavigation.TabIndex="2"
                 KeyboardNavigation.TabNavigation="Local">
                 <ContentPresenter
                     x:Name="PART_SelectedContentHost"
-                    Margin="0"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ContentSource="SelectedContent"
@@ -70,14 +71,15 @@
                 Grid.Row="0"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="0,0,0,1"
+                BorderThickness="{TemplateBinding BorderThickness}"
                 CornerRadius="0,4,4,4"
                 KeyboardNavigation.DirectionalNavigation="Contained"
                 KeyboardNavigation.TabIndex="2"
                 KeyboardNavigation.TabNavigation="Local">
                 <ContentPresenter
                     x:Name="PART_SelectedContentHost"
-                    Margin="0"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ContentSource="SelectedContent"
@@ -112,14 +114,15 @@
                 Grid.Column="1"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="1,0,0,0"
+                BorderThickness="{TemplateBinding BorderThickness}"
                 CornerRadius="0,4,4,4"
                 KeyboardNavigation.DirectionalNavigation="Contained"
                 KeyboardNavigation.TabIndex="2"
                 KeyboardNavigation.TabNavigation="Local">
                 <ContentPresenter
                     x:Name="PART_SelectedContentHost"
-                    Margin="0"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ContentSource="SelectedContent"
@@ -154,14 +157,15 @@
                 Grid.Column="0"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="0,0,1,0"
+                BorderThickness="{TemplateBinding BorderThickness}"
                 CornerRadius="0,4,4,4"
                 KeyboardNavigation.DirectionalNavigation="Contained"
                 KeyboardNavigation.TabIndex="2"
                 KeyboardNavigation.TabNavigation="Local">
                 <ContentPresenter
                     x:Name="PART_SelectedContentHost"
-                    Margin="0"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ContentSource="SelectedContent"
@@ -179,20 +183,26 @@
         <Setter Property="Foreground" Value="{DynamicResource TabViewForeground}" />
         <Setter Property="Background" Value="{DynamicResource TabViewBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TabViewBorderBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource DefaultTopTabControlStyle}" />
             <Style.Triggers>
                 <Trigger Property="TabStripPlacement" Value="Bottom">
                     <Setter Property="Template" Value="{StaticResource DefaultBottomTabControlStyle}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
                 </Trigger>
 
                 <Trigger Property="TabStripPlacement" Value="Left">
                     <Setter Property="Template" Value="{StaticResource DefaultLeftTabControlStyle}" />
+                    <Setter Property="BorderThickness" Value="1,0,0,0" />
                 </Trigger>
 
                 <Trigger Property="TabStripPlacement" Value="Right">
                     <Setter Property="Template" Value="{StaticResource DefaultRightTabControlStyle}" />
+                    <Setter Property="BorderThickness" Value="0,0,1,0" />
                 </Trigger>
             </Style.Triggers>
     </Style>
@@ -202,8 +212,8 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="True" />
@@ -225,10 +235,11 @@
                             CornerRadius="8,8,0,0">
                             <ContentPresenter
                                 x:Name="ContentSite"
-                                Margin="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                 ContentSource="Header"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                Margin="{TemplateBinding Padding}"
                                 RecognizesAccessKey="True" />
                         </Border>
                         <VisualStateManager.VisualStateGroups>

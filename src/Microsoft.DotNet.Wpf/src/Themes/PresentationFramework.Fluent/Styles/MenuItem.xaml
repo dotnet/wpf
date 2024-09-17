@@ -46,7 +46,9 @@
         <Border
             x:Name="Border"
             Margin="4"
-            Background="Transparent"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
             CornerRadius="6">
             <Grid>
                 <Grid.RowDefinitions>
@@ -64,6 +66,7 @@
                         Grid.Column="0"
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Content="{TemplateBinding Icon}" />
                     <ContentPresenter
                         x:Name="HeaderPresenter"
@@ -71,6 +74,8 @@
                         VerticalAlignment="Center"
                         ContentSource="Header"
                         RecognizesAccessKey="True"
+                        Margin="{TemplateBinding Padding}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         TextElement.Foreground="{TemplateBinding Foreground}" />
                 </Grid>
 
@@ -158,7 +163,9 @@
         <Border
             x:Name="Border"
             Margin="4"
-            Background="Transparent"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
             CornerRadius="6">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
@@ -169,6 +176,7 @@
                     x:Name="Icon"
                     Grid.Column="0"
                     Margin="0,0,6,0"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     VerticalAlignment="Center"
                     Content="{TemplateBinding Icon}" />
                 <ContentPresenter
@@ -176,6 +184,8 @@
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     ContentSource="Header"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     RecognizesAccessKey="True"
                     TextElement.Foreground="{TemplateBinding Foreground}" />
             </Grid>
@@ -206,7 +216,9 @@
         <Border
             x:Name="Border"
             Margin="4,1,4,1"
-            Background="Transparent"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
             CornerRadius="4">
             <Grid Margin="8,6,8,6">
                 <Grid.ColumnDefinitions>
@@ -243,12 +255,15 @@
                     Grid.Column="1"
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     Content="{TemplateBinding Icon}" />
 
                 <ContentPresenter
                     Grid.Column="2"
                     ContentSource="Header"
                     RecognizesAccessKey="True"
+                    Margin="{TemplateBinding Padding}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     TextElement.Foreground="{TemplateBinding Foreground}" />
 
                 <TextBlock
@@ -300,7 +315,9 @@
                 x:Name="Border"
                 Grid.Row="1"
                 Margin="4,1,4,1"
-                BorderThickness="1"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="4">
                 <Grid x:Name="MenuItemContent" Margin="8,6,8,6">
                     <Grid.ColumnDefinitions>
@@ -313,11 +330,14 @@
                         Grid.Column="0"
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Content="{TemplateBinding Icon}" />
 
                     <ContentPresenter
                         x:Name="HeaderHost"
                         Grid.Column="1"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Margin="{TemplateBinding Padding}"
                         ContentSource="Header"
                         RecognizesAccessKey="True" />
 
@@ -416,8 +436,13 @@
     </ControlTemplate>
 
     <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>

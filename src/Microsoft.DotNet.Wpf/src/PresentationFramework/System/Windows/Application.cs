@@ -969,6 +969,32 @@ namespace System.Windows
             set { Resources = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the Fluent theme mode of the application.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode. 
+        /// It also controls the application of backdrop and darkmode on window.
+        /// The four values for the ThemeMode enum are :
+        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded.
+        ///     <see cref="ThemeMode.System"/> - Fluent theme is loaded based on the system theme.
+        ///     <see cref="ThemeMode.Light"/> - Fluent theme is loaded in Light mode.
+        ///     <see cref="ThemeMode.Dark"/> - Fluent theme is loaded in Dark mode.
+        ///
+        /// These values are predefined in <see cref="ThemeMode"/> struct
+        ///
+        /// The default value is <see cref="ThemeMode.None"/>.
+        ///     <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode 
+        ///     but the windows are in light mode or vice versa. 
+        ///     
+        ///     Setting this property loads the Fluent theme dictionaries in the application resources.
+        ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
+        ///     in the application resources manually. If you do, the Fluent theme dictionaries added in the application
+        ///     resources will take precedence over the ones added by setting this property.
+        ///     
+        ///     This property is experimental and may be removed in future versions.
+        /// </remarks>
         [Experimental("WPF0001")]
         [TypeConverter(typeof(ThemeModeConverter))]
         public ThemeMode ThemeMode

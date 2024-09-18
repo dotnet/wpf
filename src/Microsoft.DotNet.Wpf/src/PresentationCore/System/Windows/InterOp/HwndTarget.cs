@@ -542,7 +542,7 @@ namespace System.Windows.Interop
                     "hwnd"
                     );
             }
-            else if (processId != SafeNativeMethods.GetCurrentProcessId())
+            else if (processId != Environment.ProcessId)
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowProcess,

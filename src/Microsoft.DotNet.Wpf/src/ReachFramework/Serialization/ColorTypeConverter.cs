@@ -185,10 +185,10 @@ namespace System.Windows.Xps.Serialization
 
                 sb.AppendFormat(provider, "ContextColor {0} ", uriString);
                 sb.AppendFormat(provider, "{1:R}{0}", separator, color.ScA);
-                for (int i = 0; i < color.GetNativeColorValues().GetLength(0); ++i)
+                for (int i = 0; i < color.GetNativeColorValues().Length; ++i)
                 {
                     sb.AppendFormat(provider, "{0:R}", color.GetNativeColorValues()[i]);
-                    if (i < color.GetNativeColorValues().GetLength(0) - 1)
+                    if (i < color.GetNativeColorValues().Length - 1)
                     {
                         sb.AppendFormat(provider, "{0}", separator);
                     }
@@ -329,12 +329,12 @@ namespace System.Windows.Xps.Serialization
                         
                     XpsResourceStream resourceStream = manager.AcquireResourceStream(typeof(ColorContext), colorContextMimeType.ToString());
 
-                    byte [] buffer = new byte[512];
+                    byte[] buffer = new byte[512];
 
                     Stream profileStream = colorContext.OpenProfileStream();
                     int count;
                     
-                    while ( (count = profileStream.Read( buffer, 0, buffer.GetLength(0)) ) > 0 )
+                    while ( (count = profileStream.Read( buffer, 0, buffer.Length) ) > 0 )
                     {
                         resourceStream.Stream.Write(buffer,0,count);
                     }

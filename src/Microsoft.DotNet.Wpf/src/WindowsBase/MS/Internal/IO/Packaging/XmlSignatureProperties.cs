@@ -382,7 +382,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>-1 if not found</returns>
         private static int GetIndex(String format)
         {
-            for (int i = 0; i < _dateTimePatternMap.GetLength(0); i++)
+            for (int i = 0; i < _dateTimePatternMap.Length; i++)
             {
                 if (string.Equals(_dateTimePatternMap[i].Format, format, StringComparison.Ordinal))
                 {

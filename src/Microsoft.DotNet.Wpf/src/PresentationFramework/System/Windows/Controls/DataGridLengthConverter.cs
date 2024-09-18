@@ -196,14 +196,14 @@ namespace System.Windows.Controls
         /// </remarks>
         private static DataGridLength ConvertFromString(string s, CultureInfo cultureInfo)
         {
-            string goodString = s.Trim().ToLowerInvariant();
+            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
 
             // Check if the string matches any of the descriptive unit types.
             // In these cases, there is no need to parse a value.
             for (int i = 0; i < NumDescriptiveUnits; i++)
             {
                 string unitString = _unitStrings[i];
-                if (goodString == unitString)
+                if (valueSpan.Equals(unitString, StringComparison.OrdinalIgnoreCase))
                 {
                     return new DataGridLength(1.0, (DataGridLengthUnitType)i);
                 }
@@ -211,7 +211,6 @@ namespace System.Windows.Controls
 
             double value = 0.0;
             DataGridLengthUnitType unit = DataGridLengthUnitType.Pixel;
-            int strLen = goodString.Length;
             int strLenUnit = 0;
             double unitFactor = 1.0;
 
@@ -223,7 +222,7 @@ namespace System.Windows.Controls
 
                 // Note: This is NOT a culture specific comparison.
                 // This is by design: we want the same unit string table to work across all cultures.
-                if (goodString.EndsWith(unitString, StringComparison.Ordinal))
+                if (valueSpan.EndsWith(unitString, StringComparison.OrdinalIgnoreCase))
                 {
                     strLenUnit = unitString.Length;
                     unit = (DataGridLengthUnitType)i;
@@ -234,24 +233,18 @@ namespace System.Windows.Controls
             // Couldn't match a standard unit type, try a non-standard unit type.
             if (strLenUnit == 0)
             {
-                numUnitStrings = _nonStandardUnitStrings.Length;
-                for (int i = 0; i < numUnitStrings; i++)
+                PixelUnit pixelUnit;
+                if (PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
+                    || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
+                    || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
                 {
-                    string unitString = _nonStandardUnitStrings[i];
-
-                    // Note: This is NOT a culture specific comparison.
-                    // This is by design: we want the same unit string table to work across all cultures.
-                    if (goodString.EndsWith(unitString, StringComparison.Ordinal))
-                    {
-                        strLenUnit = unitString.Length;
-                        unitFactor = PixelUnitFactors[i];
-                        break;
-                    }
+                    strLenUnit = pixelUnit.Name.Length;
+                    unitFactor = pixelUnit.Factor;
                 }
             }
 
             // Check if there is a numerical value to parse
-            if (strLen == strLenUnit)
+            if (valueSpan.Length == strLenUnit)
             {
                 // There is no numerical value to parse
                 if (unit == DataGridLengthUnitType.Star)
@@ -267,7 +260,7 @@ namespace System.Windows.Controls
                     (unit == DataGridLengthUnitType.Pixel) || DoubleUtil.AreClose(unitFactor, 1.0),
                     "unitFactor should not be other than 1.0 unless the unit type is Pixel.");
 
-                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                ReadOnlySpan<char> valueString = valueSpan.Slice(0, valueSpan.Length - strLenUnit);
                 value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
 
@@ -276,16 +269,5 @@ namespace System.Windows.Controls
 
         private static string[] _unitStrings = { "auto", "px", "sizetocells", "sizetoheader", "*" };
         private const int NumDescriptiveUnits = 3;
-
-        // This array contains strings for unit types not included in the standard set
-        private static string[] _nonStandardUnitStrings = { "in", "cm", "pt" };
-
-        // These are conversion factors to transform other units to pixels
-        private static ReadOnlySpan<double> PixelUnitFactors =>
-        [ 
-            96.0,             // Pixels per Inch
-            96.0 / 2.54,      // Pixels per Centimeter
-            96.0 / 72.0,      // Pixels per Point 
-        ];
     }
 }

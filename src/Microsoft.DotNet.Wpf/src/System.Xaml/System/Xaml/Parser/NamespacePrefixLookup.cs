@@ -28,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
             // we really shouldn't generate extraneous new namespaces
             string newPrefix;
             do {
-                newPrefix = "prefix" + n++;
+                newPrefix = $"prefix{n++}";
             } while (_nsResolver(newPrefix) != null);
             _newNamespaces.Add(new NamespaceDeclaration(ns, newPrefix));
             return newPrefix;

@@ -2192,7 +2192,7 @@ namespace System.Xaml
                 string rootNamespace = SchemaContext.GetRootNamespace(rootInstanceType.Assembly);
                 if (!string.IsNullOrEmpty(rootNamespace))
                 {
-                    className = rootNamespace + "." + className;
+                    className = $"{rootNamespace}.{className}";
                 }
                 if (rootInstanceType.FullName != className)
                 {

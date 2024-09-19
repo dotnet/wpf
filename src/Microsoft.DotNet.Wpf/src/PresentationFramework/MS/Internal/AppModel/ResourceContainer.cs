@@ -261,17 +261,21 @@ namespace MS.Internal.AppModel
             ResourceManagerWrapper rmwResult = ApplicationResourceManagerWrapper;
             isContentFile = false;
 
-            BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out string assemblyName, out string assemblyVersion, out string assemblyKey);
+            BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out string assemblyName, out string assemblyVersion, out string assemblyToken);
 
             if (!string.IsNullOrEmpty(assemblyName))
             {
-                // Create the key, this will rarely get over 128 chars in my experience
-                string key = string.Create(null, stackalloc char[128], $"{assemblyName}{assemblyVersion}{assemblyKey}");
+                // Create the key, in format of $"{assemblyName}{assemblyVersion}{assemblyToken}"
+                int totalLength = assemblyName.Length + assemblyVersion.Length + assemblyToken.Length;
+                Span<char> key = totalLength <= 256 ? stackalloc char[totalLength] : new char[totalLength];
+                assemblyName.CopyTo(key);
+                assemblyVersion.CopyTo(key.Slice(assemblyName.Length));
+                assemblyToken.CopyTo(key.Slice(assemblyName.Length + assemblyVersion.Length));
 
-                // first time. Add this to the hash table
-                if (!s_registeredResourceManagers.TryGetValue(key, out rmwResult))
+                // First time; add this to the dictionary and create the wrapper if its not the application entry assembly
+                if (!s_registeredResourceManagersLookup.TryGetValue(key.Slice(0, totalLength), out rmwResult))
                 {
-                    Assembly assembly = BaseUriHelper.GetLoadedAssembly(assemblyName, assemblyVersion, assemblyKey);
+                    Assembly assembly = BaseUriHelper.GetLoadedAssembly(assemblyName, assemblyVersion, assemblyToken);
                     if (assembly.Equals(Application.ResourceAssembly))
                     {
                         // This Uri maps to Application Entry assembly even though it has ";component".
@@ -282,7 +286,7 @@ namespace MS.Internal.AppModel
                         rmwResult = new ResourceManagerWrapper(assembly);
                     }
 
-                    s_registeredResourceManagers[key] = rmwResult;
+                    s_registeredResourceManagersLookup[key.Slice(0, totalLength)] = rmwResult;
                 }
             }
 

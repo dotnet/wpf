@@ -202,7 +202,7 @@ namespace MS.Internal.AppModel
                 int totalLength = assemblyName.Length + assemblyVersion.Length + assemblyToken.Length;
 
                 Span<char> key = totalLength <= 256 ? stackalloc char[totalLength] : new char[totalLength];
-                assemblyName.CopyTo(key);
+                assemblyName.ToLowerInvariant(key);
 
                 // Check if this newly loaded assembly is in the cache. If so, update the cache.
                 // If it is not in cache, do not do anything. It will be added on demand.
@@ -210,7 +210,7 @@ namespace MS.Internal.AppModel
                 // Otherwise, update the cache with the newly loaded dll.
 
                 // Firstly, check the Name
-                UpdateCachedRMW(assemblyName, assembly);
+                UpdateCachedRMW(key.Slice(0, assemblyName.Length), assembly);
 
                 // Check Name + Version
                 if (!assemblyVersion.IsEmpty)
@@ -268,7 +268,7 @@ namespace MS.Internal.AppModel
                 // Create the key, in format of $"{assemblyName}{assemblyVersion}{assemblyToken}"
                 int totalLength = assemblyName.Length + assemblyVersion.Length + assemblyToken.Length;
                 Span<char> key = totalLength <= 256 ? stackalloc char[totalLength] : new char[totalLength];
-                assemblyName.CopyTo(key);
+                assemblyName.AsSpan().ToLowerInvariant(key);
                 assemblyVersion.CopyTo(key.Slice(assemblyName.Length));
                 assemblyToken.CopyTo(key.Slice(assemblyName.Length + assemblyVersion.Length));
 
@@ -322,7 +322,7 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, ResourceManagerWrapper>.AlternateLookup<ReadOnlySpan<char>> s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
         private static readonly FileShare s_fileShare = FileShare.Read;
 

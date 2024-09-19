@@ -257,7 +257,7 @@ namespace System.Windows.Controls
             {
                 // Parse a numerical value
                 Debug.Assert(
-                    (unit == DataGridLengthUnitType.Pixel) || DoubleUtil.AreClose(unitFactor, 1.0),
+                    (unit == DataGridLengthUnitType.Pixel) || DoubleUtil.IsOne(unitFactor),
                     "unitFactor should not be other than 1.0 unless the unit type is Pixel.");
 
                 ReadOnlySpan<char> valueString = valueSpan.Slice(0, valueSpan.Length - strLenUnit);

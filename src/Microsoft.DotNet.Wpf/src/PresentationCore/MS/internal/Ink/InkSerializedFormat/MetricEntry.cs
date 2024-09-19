@@ -324,7 +324,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 if( Int32.MinValue == propertyInfo.Minimum &&
                     Int32.MaxValue == propertyInfo.Maximum &&
                     StylusPointPropertyUnit.None == propertyInfo.Unit &&
-                    DoubleUtil.AreClose(1.0, propertyInfo.Resolution) )
+                    DoubleUtil.IsOne(propertyInfo.Resolution) )
                     return false;
                 else
                     return true;

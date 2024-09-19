@@ -95,7 +95,7 @@ namespace MS.Win32
             // Register will fail if the string gets over 255 in length.
             // So limit each part to a reasonable amount.
             string appName;
-            var currentDomainFriendlyName = AppDomain.CurrentDomain.FriendlyName;
+            string currentDomainFriendlyName = AppDomain.CurrentDomain.FriendlyName;
             if (null != currentDomainFriendlyName && 128 <= currentDomainFriendlyName.Length)
                 appName = currentDomainFriendlyName[..128];
             else

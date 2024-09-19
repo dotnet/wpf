@@ -57,7 +57,7 @@ namespace MS.Internal.Controls
             desiredTransform.Children.Add(transform);
 
             // Check if we need translate the adorner.
-            if (!DoubleUtil.AreClose(_offsetX, 0) || !DoubleUtil.AreClose(_offsetY, 0))
+            if (!DoubleUtil.IsZero(_offsetX) || !DoubleUtil.IsZero(_offsetY))
             {
                 desiredTransform.Children.Add(new TranslateTransform(_offsetX, _offsetY));
             }

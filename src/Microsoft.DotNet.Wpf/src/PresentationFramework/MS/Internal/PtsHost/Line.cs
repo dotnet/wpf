@@ -514,7 +514,7 @@ namespace MS.Internal.PtsHost
             {
                 // Verify that offset shift is 0 for this case. We should never shift offsets when ellipses are
                 // rendered.
-                Invariant.Assert(DoubleUtil.AreClose(delta, 0));
+                Invariant.Assert(DoubleUtil.IsZero(delta));
                 System.Windows.Media.TextFormatting.TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, TextParagraph.Properties));
                 Invariant.Assert(line.HasCollapsed, "Line has not been collapsed");
                 textBounds = line.GetTextBounds(cp, cch);
@@ -1008,7 +1008,7 @@ namespace MS.Internal.PtsHost
             if (_line.HasOverflowed && TextParagraph.Properties.TextTrimming != TextTrimming.None)
             {
                 // We should not shift offset in this case
-                Invariant.Assert(DoubleUtil.AreClose(delta, 0));
+                Invariant.Assert(DoubleUtil.IsZero(delta));
                 System.Windows.Media.TextFormatting.TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, TextParagraph.Properties));
                 Invariant.Assert(line.HasCollapsed, "Line has not been collapsed");
                 textBounds = line.GetTextBounds(cp, cch);

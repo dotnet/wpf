@@ -107,7 +107,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         internal bool InRibbonModeCanLineUp()
         {
-            return !DoubleUtil.AreClose(VerticalOffset, 0.0);
+            return !DoubleUtil.IsZero(VerticalOffset);
         }
 
         internal bool InRibbonModeCanLineDown()

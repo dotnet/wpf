@@ -148,7 +148,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         if (tabGroupHeader.Visibility == Visibility.Visible && tabGroupHeader.ArrangeWidth > 0)
                         {
                             double startX = tabGroupHeader.ArrangeX;
-                            if (DoubleUtil.AreClose(startX, 0.0))
+                            if (DoubleUtil.IsZero(startX))
                             {
                                 // For the first group, draw to the left as well
                                 drawingContext.DrawLine(separatorPen, new Point(startX, ActualHeight), new Point(startX, this.ActualHeight + separatorHeight));

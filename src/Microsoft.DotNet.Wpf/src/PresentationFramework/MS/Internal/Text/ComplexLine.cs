@@ -273,7 +273,7 @@ namespace MS.Internal.Text
                 if (_line.HasOverflowed && _owner.ParagraphProperties.TextTrimming != TextTrimming.None)
                 {
                     // We should not shift offset in this case
-                    Invariant.Assert(DoubleUtil.AreClose(delta, 0));
+                    Invariant.Assert(DoubleUtil.IsZero(delta));
                     System.Windows.Media.TextFormatting.TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
                     Invariant.Assert(line.HasCollapsed, "Line has not been collapsed");
 

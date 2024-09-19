@@ -1117,8 +1117,8 @@ namespace MS.Internal
                 }
                 itemPixelSize.Width = Math.Max(desiredSize.Width, itemPixelSize.Width);
 
-                if (DoubleUtil.AreClose(itemDesiredSizes.PixelSizeAfterViewport.Height, 0) &&
-                    DoubleUtil.AreClose(itemDesiredSizes.PixelSizeInViewport.Height, 0) &&
+                if (DoubleUtil.IsZero(itemDesiredSizes.PixelSizeAfterViewport.Height) &&
+                    DoubleUtil.IsZero(itemDesiredSizes.PixelSizeInViewport.Height) &&
                     DoubleUtil.GreaterThanZero(itemDesiredSizes.PixelSizeBeforeViewport.Height))
                 {
                     if (!correctionComputed)

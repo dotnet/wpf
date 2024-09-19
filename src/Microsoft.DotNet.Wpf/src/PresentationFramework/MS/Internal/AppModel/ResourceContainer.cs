@@ -17,19 +17,23 @@ using System.IO;
 using System.Reflection;
 using System.Globalization;
 using System.Windows;
+using System.Reflection;
+using System.IO.Packaging;
 using System.Windows.Navigation;
+using System.Collections.Generic;
+
 using MS.Internal.Resources;
 
 namespace MS.Internal.AppModel
 {
-    // <summary>
-    // ResourceContainer is an implementation of the abstract Package class. 
-    // It contains nontrivial overrides for GetPartCore and Exists.
-    // Many of the methods on Package are not applicable to loading application 
-    // resources, so the ResourceContainer implementations of these methods throw 
-    // the NotSupportedException.
-    // </summary>
-    internal class ResourceContainer : System.IO.Packaging.Package
+    /// <summary>
+    /// ResourceContainer is an implementation of the abstract Package class. 
+    /// It contains nontrivial overrides for GetPartCore and Exists.
+    /// Many of the methods on Package are not applicable to loading application 
+    /// resources, so the ResourceContainer implementations of these methods throw 
+    /// the NotSupportedException.
+    /// </summary>
+    internal sealed class ResourceContainer : Package
     {
         //------------------------------------------------------
         //
@@ -38,7 +42,6 @@ namespace MS.Internal.AppModel
         //------------------------------------------------------
 
         #region Static Methods
-
 
         internal static ResourceManagerWrapper ApplicationResourceManagerWrapper
         {
@@ -59,11 +62,10 @@ namespace MS.Internal.AppModel
             }
         }
 
-        // <summary>
-        //  The FileShare mode to use for opening loose files.  Currently this defaults to FileShare.Read
-        //  Today it is not changed.  If we decide that this should change in the future we can easily add
-        //  a seter here.
-        // </summary>
+        /// <summary>
+        /// The FileShare mode to use for opening loose files. Currently this defaults to <see cref="FileShare.Read"/>
+        /// Today it is not changed. If we decide that this should change in the future we can easily add a setter here.
+        /// </summary>
         internal static FileShare FileShare
         {
             get
@@ -82,41 +84,31 @@ namespace MS.Internal.AppModel
 
         #region Public Constructors
 
-        // <summary>
-        // Default Constructor
-        // </summary>
-        internal ResourceContainer() : base(FileAccess.Read)
-        {
-        }
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        internal ResourceContainer() : base(FileAccess.Read) { }
 
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
-        // None  
+        #endregion     
 
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------        
-
         #region Public Methods
 
-        // <summary>
-        // This method always returns true.  This is because ResourceManager does not have a
-        // simple way to check if a resource exists without loading the resource stream (or failing to)
-        // so checking if a resource exists would be a very expensive task.
-        // A part will later be constructed and returned by GetPart().  This part class contains
-        // a ResourceManager which may or may not contain the requested resource.  When someone 
-        // calls GetStream() on PackagePart then we will attempt to get the stream for the named resource 
-        // and potentially fail.
-        // </summary>
-        // <param name="uri"></param>
-        // <returns></returns>
+        /// <summary>
+        /// This method always returns true.  This is because ResourceManager does not have a
+        /// simple way to check if a resource exists without loading the resource stream (or failing to)
+        /// so checking if a resource exists would be a very expensive task.
+        /// A part will later be constructed and returned by GetPart().  This part class contains
+        /// a ResourceManager which may or may not contain the requested resource.  When someone 
+        /// calls GetStream() on PackagePart then we will attempt to get the stream for the named resource 
+        /// and potentially fail.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
         public override bool PartExists(Uri uri)
         {
             return true;
@@ -126,24 +118,9 @@ namespace MS.Internal.AppModel
 
         //------------------------------------------------------
         //
-        //  Public Events
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
-        //  Internal Constructors
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
         //  Internal Properties
         //
         //------------------------------------------------------
-
         #region Internal Members
 
         internal const string XamlExt = ".xaml";
@@ -151,72 +128,45 @@ namespace MS.Internal.AppModel
 
         #endregion
 
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
-        //  Internal Events
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
-        //  Protected Constructors
-        //
-        //------------------------------------------------------
-        // None
-
         //------------------------------------------------------
         //
         //  Protected Methods
         //
         //------------------------------------------------------
-
         #region Protected Methods
 
-        // <summary>
-        // This method creates a part containing the name of the resource and 
-        // the resource manager that should contain it.  If the resource manager 
-        // does not contain the requested part then when GetStream() is called on
-        // the part it will return null.
-        // </summary>
-        // <param name="uri"></param>
-        // <returns></returns>
-
+        /// <summary>
+        /// This method creates a part containing the name of the resource and 
+        /// the resource manager that should contain it.  If the resource manager 
+        /// does not contain the requested part then when GetStream() is called on
+        /// the part it will return null.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
         protected override PackagePart GetPartCore(Uri uri)
         {
-            string partName;
-            bool isContentFile;
-
             // AppDomain.AssemblyLoad event handler for standalone apps. This is added specifically for designer (Sparkle) scenario.
             // We use the assembly name to fetch the cached resource manager. With this mechanism we will still get resource from the 
             // old version dll when a newer one is loaded. So whenever the AssemblyLoad event is fired, we will need to update the cache 
             // with the newly loaded assembly. This is currently only for designer so not needed for browser hosted apps. 
             // Attach the event handler before the first time we get the ResourceManagerWrapper.
-            if (!s_assemblyLoadhandlerAttached)
+            if (!s_assemblyLoadHandlerAttached)
             {
                 AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(OnAssemblyLoadEventHandler);
-                s_assemblyLoadhandlerAttached = true;
+                s_assemblyLoadHandlerAttached = true;
             }
 
-            ResourceManagerWrapper rmWrapper = GetResourceManagerWrapper(uri, out partName, out isContentFile);
+            ResourceManagerWrapper rmWrapper = GetResourceManagerWrapper(uri, out string partName, out bool isContentFile);
 
             // If the part name was specified as Content at compile time then we will try to load
-            // the file directly.  Otherwise we assume the user is looking for a resource.
+            // the file directly. Otherwise we assume the user is looking for a resource.
             if (isContentFile)
             {
                 return new ContentFilePart(this, uri);
             }
             else
             {
-                // Uri mapps to a resource stream.
+                // Uri maps to a resource stream.
 
                 // Make sure the resource id is exactly same as the one we used to create Resource 
                 // at compile time.
@@ -236,13 +186,13 @@ namespace MS.Internal.AppModel
 
         #region Private Methods
 
-        // AppDomain.AssemblyLoad event handler. Check whether the assembly's resourcemanager has
+        // AppDomain.AssemblyLoad event handler. Check whether the assembly's ResourceManager has
         // been added to the cache. If it has, we need to update the cache with the newly loaded dll.
         private void OnAssemblyLoadEventHandler(object sender, AssemblyLoadEventArgs args)
         {
             Assembly assembly = args.LoadedAssembly;
             // This is specific for designer (Sparkle) scenario: rebuild and reload dll using Load(Byte[]).
-            // We do not care about assemblies loaded into the reflection-only context or the Gaced assemblies.
+            // We do not care about assemblies loaded into the reflection-only context or the GACed assemblies.
             // For example, in Sparkle whenever a project is built all dependent assemblies will be loaded reflection only.
             // We do no care about those. Only when a assembly is loaded into the execution context, we will need to update the cache. 
             if (!assembly.ReflectionOnly)
@@ -259,7 +209,7 @@ namespace MS.Internal.AppModel
                 // The key could be Name; Name + Version; Name + PublicKeyToken; or Name + Version + PublicKeyToken.  
                 // Otherwise, update the cache with the newly loaded dll.
 
-                // First check the Name
+                // Firstly, check the Name
                 UpdateCachedRMW(assemblyName, assembly);
 
                 // Check Name + Version
@@ -297,15 +247,15 @@ namespace MS.Internal.AppModel
             }
         }
 
-        // <summary>
-        // Searches the available ResourceManagerWrapper list for one that matches the given Uri.
-        // It could be either ResourceManagerWrapper for specific libary assembly or Application
-        // main assembly. Package enforces that all Uri will be correctly formated.
-        // </summary>
-        // <param name="uri">Assumed to be relative</param>
-        // <param name="partName">The name of the file in the resource manager</param>
-        // <param name="isContentFile">A flag to indicate that this path is a known loose file at compile time</param>
-        // <returns></returns>
+        /// <summary>
+        /// Searches the available ResourceManagerWrapper list for one that matches the given Uri.
+        /// It could be either ResourceManagerWrapper for specific library assembly or Application
+        /// main assembly. Package enforces that all Uri will be correctly formatted.
+        /// </summary>
+        /// <param name="uri">Assumed to be relative</param>
+        /// <param name="partName">The name of the file in the resource manager</param>
+        /// <param name="isContentFile">A flag to indicate that this path is a known loose file at compile time</param>
+        /// <returns></returns>
         private static ResourceManagerWrapper GetResourceManagerWrapper(Uri uri, out string partName, out bool isContentFile)
         {
             ResourceManagerWrapper rmwResult = ApplicationResourceManagerWrapper;
@@ -313,7 +263,7 @@ namespace MS.Internal.AppModel
 
             BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out string assemblyName, out string assemblyVersion, out string assemblyKey);
 
-            if (!String.IsNullOrEmpty(assemblyName))
+            if (!string.IsNullOrEmpty(assemblyName))
             {
                 // Create the key, this will rarely get over 128 chars in my experience
                 string key = string.Create(null, stackalloc char[128], $"{assemblyName}{assemblyVersion}{assemblyKey}");
@@ -373,7 +323,7 @@ namespace MS.Internal.AppModel
         private static readonly FileShare s_fileShare = FileShare.Read;
 
         private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;
-        private static bool s_assemblyLoadhandlerAttached = false;
+        private static bool s_assemblyLoadHandlerAttached = false;
 
         #endregion Private Members
 

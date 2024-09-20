@@ -1111,9 +1111,8 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultCalendarStyle}" TargetType="{x:Type Calendar}" />
   <Color x:Key="FallbackColor">#FFFF0000</Color>
-  <Thickness x:Key="CheckBoxPadding">11,5,11,6</Thickness>
   <Thickness x:Key="CheckBoxBorderThickness">1</Thickness>
-  <Thickness x:Key="CheckBoxContentMargin">8,0,0,0</Thickness>
+  <Thickness x:Key="CheckBoxPadding">8,5,0,0</Thickness>
   <sys:Double x:Key="CheckBoxIconSize">14</sys:Double>
   <sys:Double x:Key="CheckBoxSize">20</sys:Double>
   <sys:String x:Key="CheckBoxCheckedGlyph"></sys:String>
@@ -1157,7 +1156,7 @@
                   </Grid>
                 </Border>
               </Border>
-              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" Margin="{StaticResource CheckBoxContentMargin}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>

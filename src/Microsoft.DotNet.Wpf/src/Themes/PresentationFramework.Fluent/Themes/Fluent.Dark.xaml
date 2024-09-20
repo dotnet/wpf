@@ -291,22 +291,16 @@
       <GradientStop Offset="0.50" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
-    <LinearGradientBrush.RelativeTransform>
-      <ScaleTransform CenterY="0.5" ScaleY="-1" />
-    </LinearGradientBrush.RelativeTransform>
+  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
-      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
-    <LinearGradientBrush.RelativeTransform>
-      <ScaleTransform CenterY="0.5" ScaleY="-1" />
-    </LinearGradientBrush.RelativeTransform>
+  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
-      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+      <GradientStop Offset="0.05" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
   <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />

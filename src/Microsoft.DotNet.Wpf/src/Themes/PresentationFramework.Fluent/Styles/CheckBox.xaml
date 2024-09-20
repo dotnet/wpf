@@ -16,9 +16,8 @@
 
     <Color x:Key="FallbackColor">#FFFF0000</Color>
 
-    <Thickness x:Key="CheckBoxPadding">11,5,11,6</Thickness>
     <Thickness x:Key="CheckBoxBorderThickness">1</Thickness>
-    <Thickness x:Key="CheckBoxContentMargin">8,0,0,0</Thickness>
+    <Thickness x:Key="CheckBoxPadding">8,5,0,0</Thickness>
     <sys:Double x:Key="CheckBoxIconSize">14</sys:Double>
     <sys:Double x:Key="CheckBoxSize">20</sys:Double>
     <sys:String x:Key="CheckBoxCheckedGlyph">&#xE73E;</sys:String>
@@ -91,7 +90,7 @@
                             <ContentPresenter
                                 x:Name="ContentPresenter"
                                 Grid.Column="1"
-                                Margin="{StaticResource CheckBoxContentMargin}"
+                                Margin="{TemplateBinding Padding}"
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

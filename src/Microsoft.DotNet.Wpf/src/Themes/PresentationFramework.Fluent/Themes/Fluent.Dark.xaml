@@ -1337,7 +1337,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ComboBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" Grid.Row="0" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <!--
@@ -2149,7 +2149,7 @@
               <RowDefinition Height="*" />
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+            <Grid Grid.Row="0">
               <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                   <Grid.ColumnDefinitions>
@@ -3102,7 +3102,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type PasswordBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <Grid.ColumnDefinitions>
@@ -3437,7 +3437,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RichTextBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="MainBorder" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Focusable="False">
               <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,2,0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Foreground="{TemplateBinding Foreground}" HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
             </Border>
@@ -4139,7 +4139,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" Padding="{TemplateBinding Padding}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
@@ -4177,7 +4177,7 @@
     </Setter>
   </Style>
   <ControlTemplate x:Key="DefaultTextBoxControlTemplate" TargetType="{x:Type TextBox}">
-    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+    <Grid>
       <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
           <Grid.ColumnDefinitions>

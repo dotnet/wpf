@@ -50,7 +50,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                    <Grid>
                         <Border
                             x:Name="ContentBorder"
                             MinWidth="{TemplateBinding MinWidth}"
@@ -118,7 +118,7 @@
 
 
     <ControlTemplate x:Key="DefaultTextBoxControlTemplate" TargetType="{x:Type TextBox}">
-        <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+        <Grid>
             <Border
                 x:Name="ContentBorder"
                 MinWidth="{TemplateBinding MinWidth}"

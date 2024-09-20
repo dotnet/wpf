@@ -20,9 +20,9 @@ namespace MS.Internal
 {
     internal static class FloatUtil
     {
-        internal const float FLT_EPSILON = 1.192092896E-07f;
-        internal const float FLT_MAX_PRECISION = 0x00FFFFFF;
-        internal const float INVERSE_FLT_MAX_PRECISION = 1.0f / FLT_MAX_PRECISION;
+        private const float FLT_EPSILON = 1.192092896E-07f;
+        private const float FLT_MAX_PRECISION = 0x00FFFFFF;
+        private const float INVERSE_FLT_MAX_PRECISION = 1.0f / FLT_MAX_PRECISION;
 
         /// <summary>
         /// AreClose

@@ -83,7 +83,7 @@
 
     <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 
-    <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
     <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -233,21 +233,49 @@
     <SolidColorBrush x:Key="CardFooterBackground" Color="{StaticResource SystemColorWindowColor}" />
 
     <!--  CheckBox  -->
-    <SolidColorBrush x:Key="CheckBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
-    <SolidColorBrush x:Key="CheckBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxForegroundUnchecked" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminate" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUnchecked" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminate" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundUnchecked" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundUncheckedPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundUncheckedPressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminate" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminatePointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminatePressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundChecked" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundCheckedPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBackgroundCheckedPressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushUnchecked" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushUncheckedPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushUncheckedPressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminate" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminatePointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminatePressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushChecked" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushCheckedPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxBorderBrushCheckedPressed" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
 
     <!--  ColorPicker  -->
     <!--  TODO  -->
@@ -608,7 +636,7 @@
 
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
-    <Color x:Key="SubtleFillColorTransparent">Transparent</Color>
+    <Color x:Key="SystemColorWindowColor">Transparent</Color>
     <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
     <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
     <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>

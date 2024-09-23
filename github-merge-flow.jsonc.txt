@@ -1,0 +1,11 @@
+// IMPORTANT: This file is read by the merge flow from main branch only. 
+{
+    "merge-flow-configurations": {
+        
+        // Automate merging runtime release/9.0-rc2 branch back to release/9.0
+        "release/9.0-rc2":{
+            "MergeToBranch": "release/9.0",
+            "ExtraSwitches": "-QuietComments"
+        }
+    }
+}

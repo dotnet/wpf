@@ -501,8 +501,6 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
                         CornerRadius="4">
                         <CalendarItem
                             x:Name="PART_CalendarItem"

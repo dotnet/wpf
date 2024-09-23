@@ -70,8 +70,6 @@
   <system:Double x:Key="ContentControlFontSize">14</system:Double>
   <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
   <system:Double x:Key="TextControlThemeMinWidth">0</system:Double>
-  <system:Double x:Key="ListViewItemMinHeight">32</system:Double>
-  <system:Double x:Key="TreeViewItemMinHeight">24</system:Double>
   <system:Double x:Key="TreeViewItemMultiSelectCheckBoxMinHeight">24</system:Double>
   <system:Double x:Key="TreeViewItemPresenterMargin">0</system:Double>
   <system:Double x:Key="TreeViewItemPresenterPadding">0</system:Double>
@@ -293,22 +291,16 @@
       <GradientStop Offset="0.50" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
-    <LinearGradientBrush.RelativeTransform>
-      <ScaleTransform CenterY="0.5" ScaleY="-1" />
-    </LinearGradientBrush.RelativeTransform>
+  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
-      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
-    <LinearGradientBrush.RelativeTransform>
-      <ScaleTransform CenterY="0.5" ScaleY="-1" />
-    </LinearGradientBrush.RelativeTransform>
+  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
-      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+      <GradientStop Offset="0.05" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
   <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -374,21 +366,49 @@
   <SolidColorBrush x:Key="CardBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <SolidColorBrush x:Key="CardFooterBackground" Color="{StaticResource CardBackgroundFillColorSecondary}" />
   <!--  CheckBox  -->
-  <SolidColorBrush x:Key="CheckBoxBackground" Color="{StaticResource ControlAltFillColorSecondary}" />
-  <SolidColorBrush x:Key="CheckBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
-  <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="{StaticResource ControlStrongStrokeColorDefault}" />
-  <SolidColorBrush x:Key="CheckBoxCheckBorderBrush" Color="{StaticResource SubtleFillColorTransparent}" />
-  <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
-  <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundPressed" Color="{StaticResource TextOnAccentFillColorSecondary}" />
+  <SolidColorBrush x:Key="CheckBoxForegroundUnchecked" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource TextFillColorDisabled}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{StaticResource ControlAltFillColorSecondary}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminate" Color="{StaticResource SystemAccentColorLight2}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
   <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
   <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
-  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
-  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
-  <SolidColorBrush x:Key="CheckBoxCheckBorderBrushUncheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
-  <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUnchecked" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPressed" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
   <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
-  <SolidColorBrush x:Key="CheckBoxForegroundUncheckedDisabled" Color="{StaticResource TextFillColorDisabled}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminate" Color="{StaticResource SystemAccentColorLight2}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{StaticResource SystemAccentColorLight2}" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
+  <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundUnchecked" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundUncheckedPointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundUncheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminate" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminatePointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundIndeterminatePressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundChecked" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundCheckedPointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBackgroundCheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushUnchecked" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushUncheckedPointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushUncheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminate" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminatePointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushIndeterminatePressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushChecked" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushCheckedPointerOver" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxBorderBrushCheckedPressed" Color="{StaticResource SubtleFillColorTransparent}" />
+  <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+  <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundPressed" Color="{StaticResource TextOnAccentFillColorSecondary}" />
+  <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  ColorPicker  -->
   <!--  TODO  -->
   <!--  ComboBox  -->
@@ -1074,7 +1094,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Calendar}">
-          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" CornerRadius="4">
+          <Border x:Name="PART_Root" Margin="0" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
             <CalendarItem x:Name="PART_CalendarItem" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Style="{TemplateBinding CalendarItemStyle}" />
           </Border>
         </ControlTemplate>
@@ -1083,52 +1103,54 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultCalendarStyle}" TargetType="{x:Type Calendar}" />
   <Color x:Key="FallbackColor">#FFFF0000</Color>
-  <Thickness x:Key="CheckBoxPadding">11,5,11,6</Thickness>
-  <Thickness x:Key="CheckBoxBorderThemeThickness">1</Thickness>
-  <Thickness x:Key="CheckBoxContentMargin">8,0,0,0</Thickness>
+  <Thickness x:Key="CheckBoxBorderThickness">1</Thickness>
+  <Thickness x:Key="CheckBoxPadding">8,5,0,0</Thickness>
   <sys:Double x:Key="CheckBoxIconSize">14</sys:Double>
-  <sys:Double x:Key="CheckBoxHeight">22</sys:Double>
-  <sys:Double x:Key="CheckBoxWidth">22</sys:Double>
+  <sys:Double x:Key="CheckBoxSize">20</sys:Double>
   <sys:String x:Key="CheckBoxCheckedGlyph"></sys:String>
   <sys:String x:Key="CheckBoxIndeterminateGlyph"></sys:String>
+  <sys:Double x:Key="CheckBoxHeight">32</sys:Double>
+  <sys:Double x:Key="CheckBoxMinWidth">120</sys:Double>
   <Style x:Key="DefaultCheckBoxStyle" TargetType="{x:Type CheckBox}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
-    <Setter Property="Background" Value="{DynamicResource CheckBoxBackground}" />
-    <Setter Property="Foreground" Value="{DynamicResource CheckBoxForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrush}" />
-    <Setter Property="BorderThickness" Value="{StaticResource CheckBoxBorderThemeThickness}" />
+    <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundUnchecked}" />
+    <Setter Property="Foreground" Value="{DynamicResource CheckBoxForegroundUnchecked}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUnchecked}" />
+    <Setter Property="BorderThickness" Value="{StaticResource CheckBoxBorderThickness}" />
     <Setter Property="Padding" Value="{StaticResource CheckBoxPadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
-    <Setter Property="MinWidth" Value="120" />
-    <Setter Property="MinHeight" Value="32" />
+    <Setter Property="MinWidth" Value="{StaticResource CheckBoxMinWidth}" />
+    <Setter Property="MinHeight" Value="{StaticResource CheckBoxHeight}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CheckBox}">
-          <BulletDecorator HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="Transparent">
-            <BulletDecorator.Bullet>
-              <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource CheckBoxHeight}" Height="{StaticResource CheckBoxWidth}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-                <Border x:Name="StrokeBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+          <Border x:Name="RootBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+            <Grid x:Name="RootGrid">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Border x:Name="ControlBorderIconPresenter" Width="{StaticResource CheckBoxSize}" Height="{StaticResource CheckBoxSize}" VerticalAlignment="Center" Background="{DynamicResource CheckBoxCheckBackgroundFillUnchecked}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+                <Border x:Name="StrokeBorder" BorderBrush="{DynamicResource CheckBoxCheckBackgroundStrokeUnchecked}" BorderThickness="{StaticResource CheckBoxBorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                   <Grid>
                     <TextBlock x:Name="ControlIcon" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{StaticResource CheckBoxIconSize}" FontWeight="Bold" Foreground="{DynamicResource CheckBoxCheckGlyphForeground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" Visibility="Collapsed" Text="{StaticResource CheckBoxCheckedGlyph}" />
                   </Grid>
                 </Border>
               </Border>
-            </BulletDecorator.Bullet>
-            <ContentPresenter x:Name="ContentPresenter" Margin="{StaticResource CheckBoxContentMargin}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
-          </BulletDecorator>
+              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+            </Grid>
+          </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="Content" Value="{x:Null}">
               <Setter TargetName="ContentPresenter" Property="Margin" Value="0" />
@@ -1138,25 +1160,36 @@
               <Setter TargetName="ContentPresenter" Property="Margin" Value="0" />
               <Setter Property="MinWidth" Value="30" />
             </Trigger>
+            <!--Indeterminate Normal-->
             <Trigger Property="IsChecked" Value="{x:Null}">
               <Setter TargetName="ControlIcon" Property="Text" Value="{StaticResource CheckBoxIndeterminateGlyph}" />
               <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
-              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminate}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminate}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushIndeterminate}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundIndeterminate}" />
             </Trigger>
+            <!--Checked Normal-->
             <Trigger Property="IsChecked" Value="True">
               <Setter TargetName="ControlIcon" Property="Visibility" Value="Visible" />
               <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillChecked}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeChecked}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushChecked}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundChecked}" />
             </Trigger>
+            <!--Unchecked PointerOver-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="IsChecked" Value="False" />
                 <Condition Property="IsPressed" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="StrokeBorder" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedPointerOver}" />
+              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedPointerOver}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeUncheckedPointerOver}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUncheckedPointerOver}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundUncheckedPointerOver}" />
             </MultiTrigger>
+            <!--Unchecked Pressed-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
@@ -1164,28 +1197,36 @@
                 <Condition Property="IsPressed" Value="True" />
               </MultiTrigger.Conditions>
               <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedPressed}" />
-              <Setter TargetName="StrokeBorder" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedPointerOver}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrushUncheckedPressed}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeUncheckedPressed}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUncheckedPressed}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundUncheckedPressed}" />
             </MultiTrigger>
+            <!--Indeterminate PointerOver-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="IsChecked" Value="{x:Null}" />
                 <Condition Property="IsPressed" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPointerOver}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminatePointerOver}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminatePointerOver}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushIndeterminatePointerOver}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundIndeterminatePointerOver}" />
             </MultiTrigger>
+            <!--Indeterminate Pressed-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="IsChecked" Value="{x:Null}" />
                 <Condition Property="IsPressed" Value="True" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPressed}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillIndeterminatePressed}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeIndeterminatePressed}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushIndeterminatePressed}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundIndeterminatePressed}" />
               <Setter TargetName="ControlIcon" Property="Foreground" Value="{DynamicResource CheckBoxCheckGlyphForegroundPressed}" />
             </MultiTrigger>
+            <!--Checked PointerOver-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
@@ -1193,8 +1234,11 @@
                 <Condition Property="IsPressed" Value="False" />
               </MultiTrigger.Conditions>
               <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPointerOver}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeCheckedPointerOver}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushCheckedPointerOver}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundCheckedPointerOver}" />
             </MultiTrigger>
+            <!--Checked Pressed-->
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
@@ -1202,14 +1246,19 @@
                 <Condition Property="IsPressed" Value="True" />
               </MultiTrigger.Conditions>
               <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillCheckedPressed}" />
-              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBorderBrush}" />
+              <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeCheckedPressed}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushCheckedPressed}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundCheckedPressed}" />
               <Setter TargetName="ControlIcon" Property="Foreground" Value="{DynamicResource CheckBoxCheckGlyphForegroundPressed}" />
             </MultiTrigger>
+            <!--Disabled-->
             <Trigger Property="IsEnabled" Value="False">
               <Setter TargetName="ControlBorderIconPresenter" Property="Background" Value="{DynamicResource CheckBoxCheckBackgroundFillUncheckedDisabled}" />
               <Setter TargetName="StrokeBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxCheckBackgroundStrokeUncheckedDisabled}" />
               <Setter TargetName="ControlIcon" Property="Foreground" Value="{DynamicResource CheckBoxForegroundUncheckedDisabled}" />
               <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+              <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUncheckedPressed}" />
+              <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CheckBoxBackgroundUncheckedPressed}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -1339,7 +1388,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ComboBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" Grid.Row="0" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <!--
@@ -2151,7 +2200,7 @@
               <RowDefinition Height="*" />
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+            <Grid Grid.Row="0">
               <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
                 <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                   <Grid.ColumnDefinitions>
@@ -3104,7 +3153,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type PasswordBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <Grid.ColumnDefinitions>
@@ -3439,7 +3488,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RichTextBox}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="MainBorder" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Focusable="False">
               <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,2,0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Foreground="{TemplateBinding Foreground}" HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
             </Border>
@@ -4141,7 +4190,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
-          <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+          <Grid>
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
               <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                 <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" Padding="{TemplateBinding Padding}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
@@ -4179,7 +4228,7 @@
     </Setter>
   </Style>
   <ControlTemplate x:Key="DefaultTextBoxControlTemplate" TargetType="{x:Type TextBox}">
-    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+    <Grid>
       <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
           <Grid.ColumnDefinitions>

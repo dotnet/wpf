@@ -103,10 +103,7 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid
-                            Grid.Row="0"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <Grid Grid.Row="0">
                             <Border
                                 x:Name="ContentBorder"
                                 MinWidth="{TemplateBinding MinWidth}"

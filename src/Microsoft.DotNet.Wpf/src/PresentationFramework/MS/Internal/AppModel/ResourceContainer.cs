@@ -95,7 +95,8 @@ namespace MS.Internal.AppModel
         //
         //  Public Methods
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
+
         #region Public Methods
 
         /// <summary>
@@ -118,10 +119,11 @@ namespace MS.Internal.AppModel
 
         //------------------------------------------------------
         //
-        //  Internal Properties
+        //  Internal Constants
         //
         //------------------------------------------------------
-        #region Internal Members
+
+        #region Internal Constants
 
         internal const string XamlExt = ".xaml";
         internal const string BamlExt = ".baml";
@@ -133,6 +135,7 @@ namespace MS.Internal.AppModel
         //  Protected Methods
         //
         //------------------------------------------------------
+
         #region Protected Methods
 
         /// <summary>
@@ -206,7 +209,7 @@ namespace MS.Internal.AppModel
 
                 // Check if this newly loaded assembly is in the cache. If so, update the cache.
                 // If it is not in cache, do not do anything. It will be added on demand.
-                // The key could be Name; Name + Version; Name + PublicKeyToken; or Name + Version + PublicKeyToken.  
+                // The key could be Name, Name + Version, Name + PublicKeyToken, or Name + Version + PublicKeyToken.  
                 // Otherwise, update the cache with the newly loaded dll.
 
                 // Firstly, check the Name

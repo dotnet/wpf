@@ -73,7 +73,7 @@ namespace MS.Internal.FontCache
             if (isSingleSupportedFile || !Util.IsEnumerableFontUriScheme(_uri))
             {
                 _fontSources = new List<Text.TextInterface.IFontSource>(1);                
-                _fontSources.Add(new FontSource(_uri, false, isComposite));
+                _fontSources.Add(new FontSource(_uri, isComposite));
             }
             else
             {
@@ -129,7 +129,7 @@ namespace MS.Internal.FontCache
                     {
                         foreach (string file in files)
                         {
-                            fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), false, true));
+                            fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
                         }
                     }
                     else
@@ -138,7 +138,7 @@ namespace MS.Internal.FontCache
                         foreach (string file in files)
                         {                            
                             if (Util.IsSupportedFontExtension(Path.GetExtension(file), out isComposite))
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), false, isComposite));
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
                         }
                     }
                 }
@@ -162,12 +162,12 @@ namespace MS.Internal.FontCache
                             if (String.IsNullOrEmpty(resourceName))
                             {
                                 isComposite = Util.IsCompositeFont(Path.GetExtension(_uri.AbsoluteUri));
-                                fontSources.Add(new FontSource(_uri, false, isComposite));
+                                fontSources.Add(new FontSource(_uri, isComposite));
                             }
                             else
                             {
                                 isComposite = Util.IsCompositeFont(Path.GetExtension(resourceName));
-                                fontSources.Add(new FontSource(new Uri(_uri, resourceName), false, isComposite));
+                                fontSources.Add(new FontSource(new Uri(_uri, resourceName), isComposite));
                             }
                         }
                     }

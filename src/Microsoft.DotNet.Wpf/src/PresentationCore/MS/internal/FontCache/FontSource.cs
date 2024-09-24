@@ -39,7 +39,7 @@ namespace MS.Internal.FontCache
         
         public IFontSource Create(string uriString)
         {
-            return new FontSource(new Uri(uriString), false);
+            return new FontSource(new Uri(uriString));
         }
     }
 
@@ -57,28 +57,27 @@ namespace MS.Internal.FontCache
 
         #region Constructors
 
-        public FontSource(Uri fontUri, bool skipDemand)
+        public FontSource(Uri fontUri)
         {
-            Initialize(fontUri, skipDemand, false, isInternalCompositeFont: false);
+            Initialize(fontUri, false, isInternalCompositeFont: false);
         }
 
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite)
+        public FontSource(Uri fontUri, bool isComposite)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont: false);
+            Initialize(fontUri, isComposite, isInternalCompositeFont: false);
         }
 
         /// <summary>
         /// Allows WPF to construct its internal CompositeFonts from resource URIs.
         /// </summary>
         /// <param name="fontUri"></param>
-        /// <param name="skipDemand"></param>
         /// <param name="isComposite"></param>
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        public FontSource(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont);
+            Initialize(fontUri, isComposite, isInternalCompositeFont);
         }
 
-        private void Initialize(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        private void Initialize(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
             _fontUri = fontUri;
             _isComposite = isComposite;
@@ -100,7 +99,13 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Use this to ensure we don't call Uri.IsFile on a relative URI.
         /// </summary>
-        public bool IsFile { get { return !_isInternalCompositeFont && _fontUri.IsFile; } }
+        public bool IsFile
+        {
+            get
+            {
+                return !_isInternalCompositeFont && _fontUri.IsFile;
+            }
+        }
 
         public bool IsComposite
         {

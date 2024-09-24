@@ -251,7 +251,6 @@ namespace MS.Internal.FontCache
                         if (_systemCompositeFonts[index] == null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
-                                                                   skipDemand:true,
                                                                    isComposite:true,
                                                                    isInternalCompositeFont:true);
 

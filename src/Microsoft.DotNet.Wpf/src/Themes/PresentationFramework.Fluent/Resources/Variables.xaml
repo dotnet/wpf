@@ -34,8 +34,6 @@
     <system:Double x:Key="ContentControlFontSize">14</system:Double>
     <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
     <system:Double x:Key="TextControlThemeMinWidth">0</system:Double>
-    <system:Double x:Key="ListViewItemMinHeight">32</system:Double>
-    <system:Double x:Key="TreeViewItemMinHeight">24</system:Double>
     <system:Double x:Key="TreeViewItemMultiSelectCheckBoxMinHeight">24</system:Double>
     <system:Double x:Key="TreeViewItemPresenterMargin">0</system:Double>
     <system:Double x:Key="TreeViewItemPresenterPadding">0</system:Double>

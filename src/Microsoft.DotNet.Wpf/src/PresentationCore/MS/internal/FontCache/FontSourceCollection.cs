@@ -126,55 +126,14 @@ namespace MS.Internal.FontCache
                     bool isOnlyCompositeFontFiles = false;
                     if (_isFileSystemFolder)
                     {
-                        if (_isWindowsFonts)
+                        if (_tryGetCompositeFontsOnly)
                         {
-                            if (_tryGetCompositeFontsOnly)
-                            {
-                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                                isOnlyCompositeFontFiles = true;
-                            }
-                            else
-                            {
-                                // fontPaths accumulates font file paths obtained from the registry and the file system
-                                // This collection is a set, i.e. only keys matter, not values.
-                                HashSet<string> fontPaths = new HashSet<string>(512, StringComparer.OrdinalIgnoreCase);
-
-                                using (RegistryKey fontsKey = Registry.LocalMachine.OpenSubKey(InstalledWindowsFontsRegistryKey))
-                                {
-                                    // The registry key should be present on a valid Windows installation.
-                                    Invariant.Assert(fontsKey != null);
-
-                                    foreach (string fontValue in fontsKey.GetValueNames())
-                                    {
-                                        string fileName = fontsKey.GetValue(fontValue) as string;
-                                        if (fileName != null)
-                                        {
-                                            // See if the path doesn't contain any directory information.
-                                            // Shell uses the same method to determine whether to prepend the path with %windir%\fonts.
-                                            if (Path.GetFileName(fileName) == fileName)
-                                                fileName = Path.Combine(Util.WindowsFontsLocalPath, fileName);
-
-                                            fontPaths.Add(fileName);
-                                        }
-                                    }
-                                }
-
-                                fontPaths.UnionWith(Directory.EnumerateFiles(_uri.LocalPath));
-
-                                files = fontPaths;
-                            }
-}
+                            files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                            isOnlyCompositeFontFiles = true;                               
+                        }
                         else
                         {
-                            if (_tryGetCompositeFontsOnly)
-                            {
-                                files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                                isOnlyCompositeFontFiles = true;                               
-                            }
-                            else
-                            {
-                                files = Directory.GetFiles(_uri.LocalPath);
-                            }
+                            files = Directory.GetFiles(_uri.LocalPath);
                         }
                     }
                     else

@@ -81,7 +81,6 @@ namespace MS.Internal.FontCache
         private void Initialize(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
         {
             _fontUri = fontUri;
-            _skipDemand = skipDemand;
             _isComposite = isComposite;
             _isInternalCompositeFont = isInternalCompositeFont;
             Invariant.Assert(_isInternalCompositeFont || _fontUri.IsAbsoluteUri);
@@ -432,8 +431,6 @@ namespace MS.Internal.FontCache
         private bool _isInternalCompositeFont;
 
         private Uri     _fontUri;
-
-        private bool    _skipDemand;
 
         private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
 

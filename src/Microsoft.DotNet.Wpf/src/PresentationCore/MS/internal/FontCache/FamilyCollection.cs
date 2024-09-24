@@ -90,7 +90,7 @@ namespace MS.Internal.FontCache
             {
                 if (_userCompositeFonts == null)
                 {
-                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, false, true));
+                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, true));
                 }
                 return _userCompositeFonts;
             }

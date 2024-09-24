@@ -40,7 +40,7 @@ namespace MS.Internal.FontCache
 
         public IFontSourceCollection Create(string uriString)
         {
-            return new FontSourceCollection(new Uri(uriString), false);
+            return new FontSourceCollection(new Uri(uriString));
         }
     }
 
@@ -49,17 +49,17 @@ namespace MS.Internal.FontCache
     /// </summary>
     internal class FontSourceCollection : IFontSourceCollection
     {
-        public FontSourceCollection(Uri folderUri, bool isWindowsFonts)
+        public FontSourceCollection(Uri folderUri)
         {
-            Initialize(folderUri, isWindowsFonts, false);
+            Initialize(folderUri, false);
         }
 
-        public FontSourceCollection(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
+        public FontSourceCollection(Uri folderUri, bool tryGetCompositeFontsOnly)
         {
-            Initialize(folderUri, isWindowsFonts, tryGetCompositeFontsOnly);
+            Initialize(folderUri, tryGetCompositeFontsOnly);
         }
 
-        private void Initialize(Uri folderUri, bool isWindowsFonts, bool tryGetCompositeFontsOnly)
+        private void Initialize(Uri folderUri, bool tryGetCompositeFontsOnly)
         {
             _uri = folderUri;
             _tryGetCompositeFontsOnly = tryGetCompositeFontsOnly;

@@ -3086,7 +3086,7 @@ namespace System.Windows
                     try
                     {
                         #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                        // CodeQL [SM04191] : This is used to handle necessary clipboard operations and cannot be achieved without BinaryFormatter.
+                        // CodeQL [SM03722, SM04191] : This is used to handle necessary clipboard operations and cannot be achieved without BinaryFormatter.
                         value = formatter.Deserialize(stream);
                         #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }

@@ -105,7 +105,7 @@ public class HashtableTests
         using var formatterScope = new BinaryFormatterScope(enable: true);
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
         BinaryFormatter formatter = new();
-        // CodeQL [SM04191] : This is testing a case around latest implementation of Binary Formatter.
+        // CodeQL [SM03722, SM04191] : This is testing a case around latest implementation of Binary Formatter.
         Hashtable deserialized = (Hashtable)formatter.Deserialize(stream);
 #pragma warning restore SYSLIB0011
 

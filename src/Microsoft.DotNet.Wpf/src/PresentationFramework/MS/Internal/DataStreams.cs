@@ -273,6 +273,7 @@ namespace MS.Internal.AppModel
                         {
                             dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                            // CodeQL [SM04191] : This is used to handle necessary navigation operations and cannot be achieved without BinaryFormatter.
                             newValue = this.Formatter.Deserialize(dataStream);
                             #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }

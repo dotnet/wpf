@@ -8,8 +8,8 @@
 //
 
 using System.IO;
+using System.Collections.Generic;
 
-using Microsoft.Win32;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -174,6 +174,6 @@ namespace MS.Internal.FontCache
         private volatile IList<IFontSource>  _fontSources;
 
         // Flag to indicate that only composite fonts in the provided URI location should be retrieved.        
-        private bool                               _tryGetCompositeFontsOnly;
+        private bool                         _tryGetCompositeFontsOnly;
     }
 }

@@ -265,25 +265,7 @@ namespace MS.Internal.FontCache
     {
         internal const int nullOffset = -1;
 
-        internal static string CompositeFontExtension
-        {
-            get
-            {
-                return SupportedExtensions[0];
-            }
-        }
-
-        private static readonly string[] SupportedExtensions = new string[]
-            {
-                // .COMPOSITEFONT must remain the first entry in this array
-                // because IsSupportedFontExtension and IsCompositeFont relies on this.
-                ".COMPOSITEFONT",
-                ".OTF",
-                ".TTC",
-                ".TTF",
-                ".TTE"
-            };
-
+        internal const string CompositeFontExtension = ".COMPOSITEFONT";
         
         private static readonly char[] InvalidFileNameChars = Path.GetInvalidFileNameChars();
 
@@ -518,24 +500,45 @@ namespace MS.Internal.FontCache
             return new Uri(canonicalPathUri + '#' + faceIndexString);
         }
 
-        internal static bool IsSupportedFontExtension(string extension, out bool isComposite)
+        /// <summary> Compares the input value with ".OTF", ".TTC", ".TTF", ".TTE" extensions in case-insensitive manner.
+        /// <para> Also returns in <paramref name="isComposite"/> whether the extension <see cref="IsCompositeFont(ReadOnlySpan{char})"/>.
+        /// </para> </summary>
+        /// <param name="extension">The extension string to compare against.</param>
+        /// <param name="isComposite"><see langword="true"/> is the extension is a composite font, <see langword="false"/> otherwise.</param>
+        /// <returns><see langword="true"/> if the provided extension is one of the supported ones, <see langword="false"/> otherwise.</returns>
+        internal static bool IsSupportedFontExtension(ReadOnlySpan<char> extension, out bool isComposite)
         {
-            for (int i = 0; i < SupportedExtensions.Length; ++i)
+            if (isComposite = IsCompositeFont(extension))
+                return true;
+
+            return extension switch
             {
-                string supportedExtension = SupportedExtensions[i];
-                if (string.Equals(extension, supportedExtension, StringComparison.OrdinalIgnoreCase))
-                {
-                    isComposite = (i == 0); // First array entry is *.CompositeFont
-                    return true;
-                }
-            }
-            isComposite = false;
-            return false;
+                _ when extension.Equals(".OTF", StringComparison.OrdinalIgnoreCase) => true,
+                _ when extension.Equals(".TTC", StringComparison.OrdinalIgnoreCase) => true,
+                _ when extension.Equals(".TTF", StringComparison.OrdinalIgnoreCase) => true,
+                _ when extension.Equals(".TTE", StringComparison.OrdinalIgnoreCase) => true,
+                _ => false
+            };
         }
 
-        internal static bool IsCompositeFont(string extension)
+        /// <summary>
+        /// Compares the input value with ".COMPOSITEFONT" extension in case-insensitive manner.
+        /// </summary>
+        /// <param name="extension">The extension string to compare against.</param>
+        /// <returns><see langword="true"/> if the provided extension is a composite font, <see langword="false"/> otherwise.</returns>
+        internal static bool IsCompositeFont(ReadOnlySpan<char> extension)
         {
-            return (string.Equals(extension, CompositeFontExtension, StringComparison.OrdinalIgnoreCase));
+            return extension.Equals(CompositeFontExtension, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Returns path extension from the given <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The uri to extract extension from.</param>
+        /// <returns>A <see cref="ReadOnlySpan{char}"/> containing the path extension.</returns>
+        internal static ReadOnlySpan<char> GetUriExtension(Uri uri)
+        {
+            return Path.GetExtension(uri.GetComponents(UriComponents.Path, UriFormat.Unescaped).AsSpan());
         }
 
         internal static bool IsEnumerableFontUriScheme(Uri fontLocation)
@@ -577,12 +580,6 @@ namespace MS.Internal.FontCache
             // Note that we make an assumption here that local drive letters stay the same across user sessions.
             // Also, we rely on session 0 not having access to any of the mapped drives.
             return !fontLocation.IsAbsoluteUri || !fontLocation.IsFile || fontLocation.IsUnc;
-        }
-
-        internal static string GetUriExtension(Uri uri)
-        {
-            string unescapedPath = uri.GetComponents(UriComponents.Path, UriFormat.Unescaped);
-            return Path.GetExtension(unescapedPath);
         }
 
         /// <summary>

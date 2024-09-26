@@ -32,7 +32,6 @@
         <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource TextBoxBorderThemeThickness}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -246,7 +245,6 @@
         <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource TextBoxBorderThemeThickness}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />

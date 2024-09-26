@@ -204,6 +204,11 @@ internal static class ThemeManager
         return rd;
     }
 
+    internal static bool IsFluentThemeDictionaryIncluded()
+    {
+        return Application.Current != null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
+    }
+
     #endregion
 
 
@@ -323,7 +328,7 @@ internal static class ThemeManager
 
     internal static bool IgnoreWindowResourcesChange { get; set; } = false;
 
-    internal static double DefaultFluentThemeFontSize => 14;
+    internal const double DefaultFluentFontSizeFactor = 14.0 / 12.0 ;
 
     internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
 

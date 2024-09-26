@@ -710,7 +710,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -753,7 +752,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -1124,7 +1122,6 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="Hand" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
@@ -1367,7 +1364,6 @@
     <Setter Property="Background" Value="{DynamicResource ComboBoxBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ComboBoxBorderThemeThickness}" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -1926,7 +1922,6 @@
     <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="FontSize" Value="{StaticResource DefaultDataGridFontSize}" />
     <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
     <Setter Property="ScrollViewer.PanningMode" Value="Both" />
@@ -2021,7 +2016,6 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Cursor" Value="Hand" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
     <Setter Property="Focusable" Value="True" />
@@ -2180,7 +2174,6 @@
     <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThemeThickness}" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -2403,7 +2396,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="IsExpanded" Value="False" />
@@ -2647,7 +2639,6 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
@@ -3138,7 +3129,6 @@
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource PasswordBoxBorderThemeThickness}" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -3282,7 +3272,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="MinWidth" Value="120" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
@@ -3437,7 +3426,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -3482,7 +3470,6 @@
     <Setter Property="MinHeight" Value="34" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Padding" Value="6,4" />
-    <Setter Property="FontSize" Value="14" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
@@ -4172,7 +4159,6 @@
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource TextBoxBorderThemeThickness}" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -4304,7 +4290,6 @@
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource TextBoxBorderThemeThickness}" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -4339,7 +4324,6 @@
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="FontWeight" Value="Normal" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -4703,7 +4687,6 @@
     <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />
     <Setter Property="Margin" Value="0,0,0,2" />
     <Setter Property="Padding" Value="4" />
-    <Setter Property="FontSize" Value="{StaticResource TreeViewItemFontSize}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
     <Setter Property="IsTabStop" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />

@@ -539,8 +539,10 @@ namespace System.Windows.Media
         /// <returns></returns>
         internal static PixelFormat GetPixelFormat(Guid pixelFormatGuid)
         {
-            byte[] guidBytes = pixelFormatGuid.ToByteArray();
-            return GetPixelFormat( (PixelFormatEnum)guidBytes[guidBytes.Length-1] );
+            Span<byte> guidBytes = stackalloc byte[16];
+            pixelFormatGuid.TryWriteBytes(guidBytes);
+
+            return GetPixelFormat((PixelFormatEnum)guidBytes[15]);
         }
 
         /// <summary>

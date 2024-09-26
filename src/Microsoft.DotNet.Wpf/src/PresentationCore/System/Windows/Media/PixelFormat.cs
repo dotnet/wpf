@@ -582,125 +582,89 @@ namespace System.Windows.Media
         {
             PixelFormatFlags result = PixelFormatFlags.BitsPerPixelUndefined;
 
-            if (pixelFormatGuid.CompareTo(WICPixelFormatPhotonFirst) >= 0 &&
-                            pixelFormatGuid.CompareTo(WICPixelFormatPhotonLast) <= 0)
+            if (pixelFormatGuid.CompareTo(WICPixelFormatPhotonFirst) >= 0 && pixelFormatGuid.CompareTo(WICPixelFormatPhotonLast) <= 0)
             {
-                byte[] b = pixelFormatGuid.ToByteArray();
+                Span<byte> guidBytes = stackalloc byte[16];
+                pixelFormatGuid.TryWriteBytes(guidBytes);
 
-                switch (b[15])
+                result = guidBytes[15] switch
                 {
-                    case 0x1D:  // GUID_WICPixelFormat64bppRGBAFixedPoint
-                        result = PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x1E:  // GUID_WICPixelFormat128bppRGBAFixedPoint
-                        result = PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x1F:  // GUID_WICPixelFormat64bppCMYK
-                        result = PixelFormatFlags.IsCMYK;
-                        break;
-                    case 0x20:  // GUID_WICPixelFormat24bpp3Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x21:  // GUID_WICPixelFormat32bpp4Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x22:  // GUID_WICPixelFormat40bpp5Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x23:  // GUID_WICPixelFormat48bpp6Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x24:  // GUID_WICPixelFormat56bpp7Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x25:  // GUID_WICPixelFormat64bpp8Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x26:  // GUID_WICPixelFormat48bpp3Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x27:  // GUID_WICPixelFormat64bpp4Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x28:  // GUID_WICPixelFormat80bpp5Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x29:  // GUID_WICPixelFormat96bpp6Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x2A:  // GUID_WICPixelFormat112bpp7Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x2B:  // GUID_WICPixelFormat128bpp8Channels
-                        result = PixelFormatFlags.IsNChannel;
-                        break;
-                    case 0x2C:  // GUID_WICPixelFormat40bppCMYKAlpha
-                        result = PixelFormatFlags.IsCMYK | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x2D:  // GUID_WICPixelFormat80bppCMYKAlpha
-                        result = PixelFormatFlags.IsCMYK | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x2E:  // GUID_WICPixelFormat32bpp3ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x2F:  // GUID_WICPixelFormat40bpp4ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x30:  // GUID_WICPixelFormat48bpp5ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x31:  // GUID_WICPixelFormat56bpp6ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x32:  // GUID_WICPixelFormat64bpp7ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x33:  // GUID_WICPixelFormat72bpp8ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x34:  // GUID_WICPixelFormat64bpp3ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x35:  // GUID_WICPixelFormat80bpp4ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x36:  // GUID_WICPixelFormat96bpp5ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x37:  // GUID_WICPixelFormat112bpp6ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x38:  // GUID_WICPixelFormat128bpp7ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x39:  // GUID_WICPixelFormat144bpp8ChannelsAlpha
-                        result = PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha;
-                        break;
-                    case 0x3A:  // GUID_WICPixelFormat64bppRGBAHalf
-                        result = PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x3B:  // GUID_WICPixelFormat48bppRGBHalf
-                        result = PixelFormatFlags.ChannelOrderRGB | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x3D:  // GUID_WICPixelFormat32bppRGBE
-                        result = PixelFormatFlags.ChannelOrderRGB | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x3E:  // GUID_WICPixelFormat16bppGrayHalf
-                        result = PixelFormatFlags.IsGray | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x3F:  // GUID_WICPixelFormat32bppGrayFixedPoint
-                        result = PixelFormatFlags.IsGray | PixelFormatFlags.IsScRGB;
-                        break;
-                    case 0x40:  // GUID_WICPixelFormat64bppRGBFixedPoint
-                        result = PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB;
-                        break;
-                    case 0x41:  // GUID_WICPixelFormat128bppRGBFixedPoint
-                        result = PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB;
-                        break;
-                    case 0x42:  // GUID_WICPixelFormat64bppRGBHalf
-                        result = PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB;
-                        break;
-                }
+                    // GUID_WICPixelFormat64bppRGBAFixedPoint
+                    0x1D => PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat128bppRGBAFixedPoint
+                    0x1E => PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat64bppCMYK
+                    0x1F => PixelFormatFlags.IsCMYK,
+                    // GUID_WICPixelFormat24bpp3Channels
+                    0x20 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat32bpp4Channels
+                    0x21 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat40bpp5Channels
+                    0x22 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat48bpp6Channels
+                    0x23 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat56bpp7Channels
+                    0x24 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat64bpp8Channels
+                    0x25 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat48bpp3Channels
+                    0x26 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat64bpp4Channels
+                    0x27 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat80bpp5Channels
+                    0x28 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat96bpp6Channels
+                    0x29 => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat112bpp7Channels
+                    0x2A => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat128bpp8Channels
+                    0x2B => PixelFormatFlags.IsNChannel,
+                    // GUID_WICPixelFormat40bppCMYKAlpha
+                    0x2C => PixelFormatFlags.IsCMYK | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat80bppCMYKAlpha
+                    0x2D => PixelFormatFlags.IsCMYK | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat32bpp3ChannelsAlpha
+                    0x2E => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat40bpp4ChannelsAlpha
+                    0x2F => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat48bpp5ChannelsAlpha
+                    0x30 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat56bpp6ChannelsAlpha
+                    0x31 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat64bpp7ChannelsAlpha
+                    0x32 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat72bpp8ChannelsAlpha
+                    0x33 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat64bpp3ChannelsAlpha
+                    0x34 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat80bpp4ChannelsAlpha
+                    0x35 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat96bpp5ChannelsAlpha
+                    0x36 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat112bpp6ChannelsAlpha
+                    0x37 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat128bpp7ChannelsAlpha
+                    0x38 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat144bpp8ChannelsAlpha
+                    0x39 => PixelFormatFlags.IsNChannel | PixelFormatFlags.NChannelAlpha,
+                    // GUID_WICPixelFormat64bppRGBAHalf
+                    0x3A => PixelFormatFlags.ChannelOrderARGB | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat48bppRGBHalf
+                    0x3B => PixelFormatFlags.ChannelOrderRGB | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat32bppRGBE
+                    0x3D => PixelFormatFlags.ChannelOrderRGB | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat16bppGrayHalf
+                    0x3E => PixelFormatFlags.IsGray | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat32bppGrayFixedPoint
+                    0x3F => PixelFormatFlags.IsGray | PixelFormatFlags.IsScRGB,
+                    // GUID_WICPixelFormat64bppRGBFixedPoint
+                    0x40 => PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB,
+                    // GUID_WICPixelFormat128bppRGBFixedPoint
+                    0x41 => PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB,
+                    // GUID_WICPixelFormat64bppRGBHalf
+                    0x42 => PixelFormatFlags.IsScRGB | PixelFormatFlags.ChannelOrderRGB,
+                    _ => PixelFormatFlags.BitsPerPixelUndefined
+                };
             }
 
             return result;

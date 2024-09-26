@@ -207,9 +207,5 @@ namespace MS.Internal.FontCache
 
         // Flag to indicate that only composite fonts in the provided URI location should be retrieved.        
         private bool                               _tryGetCompositeFontsOnly;
-
-        private const string InstalledWindowsFontsRegistryKey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
-        private const string InstalledWindowsFontsRegistryKeyFullPath = @"HKEY_LOCAL_MACHINE\" + InstalledWindowsFontsRegistryKey;
+    }
 }
-}
-

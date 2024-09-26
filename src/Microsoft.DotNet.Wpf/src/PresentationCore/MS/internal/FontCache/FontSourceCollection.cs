@@ -82,64 +82,54 @@ namespace MS.Internal.FontCache
 
             lock (this)
             {
-                List<Text.TextInterface.IFontSource> fontSources;
+                List<IFontSource> fontSources;
                 if (_uri.IsFile)
-                {
-                    ICollection<string> files;
-                    bool isOnlyCompositeFontFiles = false;
+                {              
                     if (_isFileSystemFolder)
                     {
                         if (_tryGetCompositeFontsOnly)
                         {
-                            files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                            isOnlyCompositeFontFiles = true;                               
+                            string[] files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                            fontSources = new List<IFontSource>(files.Length);
+
+                            foreach (string file in files)
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, true));
                         }
                         else
                         {
-                            files = Directory.GetFiles(_uri.LocalPath);
-                        }
-                    }
-                    else
-                    {
-                        files = new string[1] {_uri.LocalPath};
-                    }
+                            string[] files = Directory.GetFiles(_uri.LocalPath);
+                            fontSources = new List<IFontSource>(files.Length);
 
-                    fontSources = new List<Text.TextInterface.IFontSource>(files.Count);
-                    if (isOnlyCompositeFontFiles)
-                    {
-                        foreach (string file in files)
-                        {
-                            fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
+                            foreach (string file in files)
+                            {
+                                if (Util.IsSupportedFontExtension(Path.GetExtension(file), out bool isComposite))
+                                    fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
+                            }
                         }
                     }
                     else
                     {
-                        bool isComposite;
-                        foreach (string file in files)
-                        {                            
-                            if (Util.IsSupportedFontExtension(Path.GetExtension(file), out isComposite))
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
-                        }
+                        fontSources = new List<IFontSource>(1);
+                        if (Util.IsSupportedFontExtension(Path.GetExtension(_uri.LocalPath), out bool isComposite))
+                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), _isWindowsFonts, isComposite));
                     }
                 }
                 else
                 {
                     List<string> resourceEntries = FontResourceCache.LookupFolder(_uri);
 
-                    if (resourceEntries == null)
-                        fontSources = new List<Text.TextInterface.IFontSource>(0);
-                    else
+                    if (resourceEntries is not null)
                     {
                         bool isComposite = false;
 
                         // Enumerate application resources, content files and container structure.
-                        fontSources = new List<Text.TextInterface.IFontSource>(resourceEntries.Count);
+                        fontSources = new List<IFontSource>(resourceEntries.Count);
 
                         foreach (string resourceName in resourceEntries)
                         {
                             // If resourceName is an empty string, this means that the _uri is a full file name;
                             // otherwise resourceName is a file name within a folder.
-                            if (String.IsNullOrEmpty(resourceName))
+                            if (string.IsNullOrEmpty(resourceName))
                             {
                                 isComposite = Util.IsCompositeFont(Path.GetExtension(_uri.AbsoluteUri));
                                 fontSources.Add(new FontSource(_uri, isComposite));
@@ -150,6 +140,10 @@ namespace MS.Internal.FontCache
                                 fontSources.Add(new FontSource(new Uri(_uri, resourceName), isComposite));
                             }
                         }
+                    }
+                    else
+                    {
+                        fontSources = new List<IFontSource>(0);
                     }
                 }
 

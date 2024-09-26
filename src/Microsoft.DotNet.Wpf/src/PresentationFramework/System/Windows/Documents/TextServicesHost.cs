@@ -369,21 +369,13 @@ namespace System.Windows.Documents
             textstore.EditSinkCookie = editSinkCookie;
             textstore.EditCookie = editCookie;
 
-            // If Scope of this textstore already has a focus, we need to call SetFocus()
-            // in order to put this DIM on Cicero's focus. TextStore.OnGotFocus() calls
-            // ITfThreadMgr::SetFocus();
-            if (textstore.UiScope.IsKeyboardFocused)
-            {
-                textstore.OnGotFocus();
-            }
-
             _registeredtextstorecount++;
         }
 
         // Deactivate and release ThreadManager.
         private void DeactivateThreadManager()
         {
-            if (_threadManager != null) 
+            if (_threadManager != null)
             {
                 if (_threadManager.Value != null)
                 {

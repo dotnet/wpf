@@ -86,7 +86,7 @@ namespace MS.Internal.FontCache
                     {
                         if (_tryGetCompositeFontsOnly)
                         {
-                            string[] files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
+                            string[] files = Directory.GetFiles(_uri.LocalPath, $"*{Util.CompositeFontExtension}");
                             fontSources = new List<IFontSource>(files.Length);
 
                             foreach (string file in files)

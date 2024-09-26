@@ -872,11 +872,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// SaveUseLicense has removed any existing use licenses for this
         /// user before calling this internal function.
         /// </remarks>
-        internal void
-        SaveUseLicenseForUser(
-            ContentUser user,
-            UseLicense useLicense
-            )
+        internal void SaveUseLicenseForUser(ContentUser user, UseLicense useLicense)
         {
             //
             // Generate a unique name for the use license stream, and create the stream.
@@ -1007,10 +1003,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>
         /// This function dose NOT produce a proper Base32Encoding since it will NOT produce proper padding.
         /// </remarks>
-        private static char[]
-        Base32EncodeWithoutPadding(
-            byte[] bytes
-            )
+        private static ReadOnlySpan<char> Base32EncodeWithoutPadding(ReadOnlySpan<byte> bytes, Span<char> initialBuffer)
         {
             int numBytes = bytes.Length;
             int numBits  = checked (numBytes * 8);
@@ -1020,7 +1013,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (numBits % 5 != 0)
                 ++numChars;
 
-            char[] chars = new char[numChars];
+            Span<char> chars = initialBuffer.Length >= numChars ? initialBuffer.Slice(0, numChars) : new char[numChars];
 
             for (int iChar = 0; iChar < numChars; ++iChar)
             {
@@ -1055,8 +1048,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         private static string MakeUseLicenseStreamName()
         {
-            return LicenseStreamNamePrefix +
-                       new string(Base32EncodeWithoutPadding(Guid.NewGuid().ToByteArray()));
+            Span<byte> guidBytes = stackalloc byte[16];
+            Guid.NewGuid().TryWriteBytes(guidBytes);
+
+            return $"{LicenseStreamNamePrefix}{Base32EncodeWithoutPadding(guidBytes, stackalloc char[26])}";
         }
 
         /// <summary>

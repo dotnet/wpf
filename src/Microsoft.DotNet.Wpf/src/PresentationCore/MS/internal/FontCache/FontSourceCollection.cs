@@ -95,13 +95,12 @@ namespace MS.Internal.FontCache
                         }
                         else
                         {
-                            string[] files = Directory.GetFiles(_uri.LocalPath);
-                            fontSources = new List<IFontSource>(files.Length);
+                            fontSources = new List<IFontSource>(8);
 
-                            foreach (string file in files)
+                            foreach (string file in Util.EnumerateFontsInDirectory(_uri.LocalPath))
                             {
-                                if (Util.IsSupportedFontExtension(Path.GetExtension(file.AsSpan()), out bool isComposite))
-                                    fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
+                                bool isComposite = Util.IsCompositeFont(file);
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
                             }
                         }
                     }

@@ -18,6 +18,7 @@ using MS.Win32;
 using MS.Internal.PresentationCore;
 
 using Microsoft.Win32.SafeHandles;
+using System.IO.Enumeration;
 
 namespace MS.Internal.FontCache
 {
@@ -539,6 +540,29 @@ namespace MS.Internal.FontCache
         internal static ReadOnlySpan<char> GetUriExtension(Uri uri)
         {
             return Path.GetExtension(uri.GetComponents(UriComponents.Path, UriFormat.Unescaped).AsSpan());
+        }
+
+        /// <summary> Enumerates files in the directory specified by <paramref name="path"/> similarly as <see cref="Directory.GetFiles(string)"/> would.
+        /// <para> Only files which are supported based on their extension (calling <see cref="IsSupportedFontExtension(ReadOnlySpan{char}, out bool)"/>) are returned.
+        /// </para> </summary>
+        /// <param name="path">The directory where to enumerate files from.</param>
+        /// <returns>An enumerator of supported font files in the specified directory.</returns>
+        internal static FileSystemEnumerable<string> EnumerateFontsInDirectory(string path)
+        {
+            return new FileSystemEnumerable<string>(path, (ref FileSystemEntry entry) => entry.ToSpecifiedFullPath(),
+                   new EnumerationOptions { AttributesToSkip = FileAttributes.None, IgnoreInaccessible = false })
+            {
+                ShouldIncludePredicate = (ref FileSystemEntry entry) =>
+                {
+                    if (entry.IsDirectory)
+                        return false;
+
+                    if (IsSupportedFontExtension(Path.GetExtension(entry.FileName), out _))
+                        return true;
+
+                    return false;
+                }
+            };
         }
 
         internal static bool IsEnumerableFontUriScheme(Uri fontLocation)

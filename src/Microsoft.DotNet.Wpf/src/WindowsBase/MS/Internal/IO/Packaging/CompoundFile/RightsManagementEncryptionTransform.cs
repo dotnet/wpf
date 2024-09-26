@@ -741,9 +741,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // If the type-prefixed name is not in a valid format, a FileFormatException
             // will be thrown.
             //
-            AuthenticationType authenticationType;
-            string userName;
-            ParseTypePrefixedUserName(typePrefixedUserName, out authenticationType, out userName);
+            ParseTypePrefixedUserName(typePrefixedUserName, out AuthenticationType authenticationType, out string userName);
             user = new ContentUser(userName, authenticationType);
 
             //
@@ -1083,21 +1081,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="userName">
         /// The user's ID.
         /// </param>
-        private static void
-        ParseTypePrefixedUserName(
-            string typePrefixedUserName,
-            out AuthenticationType authenticationType,
-            out string userName
-            )
+        private static void ParseTypePrefixedUserName(string typePrefixedUserName, out AuthenticationType authenticationType, out string userName)
         {
-            //
             // We don't actually know the authentication type yet, and we might find that
             // the type-prefixed user name doesn't even specify a valid authentication
             // type. But we have to assign to authenticationType because it's an out
             // parameter.
-            //
-            authenticationType = AuthenticationType.Windows;
-
             int colonIndex = typePrefixedUserName.IndexOf(':');
             if (colonIndex < 1 || colonIndex >= typePrefixedUserName.Length - 1)
             {
@@ -1107,33 +1096,15 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // No need to use checked{} here since colonIndex cannot be >= to (max int - 1)
             userName = typePrefixedUserName.Substring(colonIndex + 1);
 
-            string authenticationTypeString = typePrefixedUserName.Substring(0, colonIndex);
-            bool validEnum = false;
+            // Usernames: Case-Insensitive comparison
+            ReadOnlySpan<char> authenticationSpan = typePrefixedUserName.AsSpan(0, colonIndex);
 
-            // user names: case-insensitive comparison
-            if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Windows), StringComparison.OrdinalIgnoreCase))
-            {
+            if (authenticationSpan.Equals(nameof(AuthenticationType.Windows), StringComparison.OrdinalIgnoreCase))
                 authenticationType = AuthenticationType.Windows;
-                validEnum = true;
-            }
-            else if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Passport), StringComparison.OrdinalIgnoreCase))
-            {
+            else if (authenticationSpan.Equals(nameof(AuthenticationType.Passport), StringComparison.OrdinalIgnoreCase))
                 authenticationType = AuthenticationType.Passport;
-                validEnum = true;
-            }
-
-            //
-            // Didn't find a matching enumeration constant.
-            //
-            if (!validEnum)
-            {
-                throw new FileFormatException(
-                                SR.Format(
-                                    SR.InvalidAuthenticationTypeString,
-                                    typePrefixedUserName
-                                    )
-                                );
-            }
+            else // Didn't find a matching enumeration constant.
+                throw new FileFormatException(SR.Format(SR.InvalidAuthenticationTypeString, typePrefixedUserName));
         }
 
         /// <summary>
@@ -1210,9 +1181,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // If the type-prefixed name is not in a valid format, a FileFormatException
             // will be thrown.
             //
-            AuthenticationType authenticationType;
-            string userName;
-            ParseTypePrefixedUserName(typePrefixedUserName, out authenticationType, out userName);
+            ParseTypePrefixedUserName(typePrefixedUserName, out AuthenticationType authenticationType, out string userName);
             return new ContentUser(userName, authenticationType);
         }
 

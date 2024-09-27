@@ -1827,7 +1827,7 @@ namespace System.Windows.Data
 
             lock (SyncRoot)
             {
-                lock(_changeLogLock)
+                lock (_changeLogLock)
                 {
                     if (_changeLog == null)
                     {
@@ -1863,16 +1863,10 @@ namespace System.Windows.Data
             int currentIndex = 0;
             bool mustDeferProcessing = false;
             long beginTime = DateTime.Now.Ticks;
-            int startCount = changeLog.Count;
 
-            for ( ; currentIndex < changeLog.Count && !(mustDeferProcessing); currentIndex++)
+            for ( ; currentIndex < changeLog.Count && !mustDeferProcessing; currentIndex++)
             {
-                NotifyCollectionChangedEventArgs args = changeLog[currentIndex] as NotifyCollectionChangedEventArgs;
-
-                if (args != null)
-                {
-                    ProcessCollectionChanged(args);
-                }
+                ProcessCollectionChanged(changeLog[currentIndex]);
 
                 if (!processAll)
                 {
@@ -1883,7 +1877,7 @@ namespace System.Windows.Data
             if (mustDeferProcessing && currentIndex < changeLog.Count)
             {
                 // create an unprocessed subset of changeLog
-                changeLog.RemoveRange(0,currentIndex);
+                changeLog.RemoveRange(0, currentIndex);
                 return changeLog;
             }
 

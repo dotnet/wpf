@@ -1819,7 +1819,7 @@ namespace System.Windows.Data
         ///     processed.
         /// </summary>
         /// <param name="changeLog">
-        ///     ArrayList of NotifyCollectionChangedEventArgs that could not be precessed.
+        ///     List of NotifyCollectionChangedEventArgs that could not be precessed.
         /// </param>
         private void DeferProcessing(List<NotifyCollectionChangedEventArgs> changeLog)
         {
@@ -1829,14 +1829,7 @@ namespace System.Windows.Data
             {
                 lock (_changeLogLock)
                 {
-                    if (_changeLog == null)
-                    {
-                        _changeLog = new List<NotifyCollectionChangedEventArgs>(changeLog);
-                    }
-                    else
-                    {
-                        _changeLog.InsertRange(0, changeLog);
-                    }
+                    _changeLog.InsertRange(0, changeLog);
 
                     if (_databindOperation != null)
                     {

@@ -647,7 +647,7 @@ namespace System.Windows.Documents
                         typeof(double),
                         typeof(TextElement),
                         new FrameworkPropertyMetadata(
-                                SystemFonts.MessageFontSize,
+                                SystemFonts.ThemeMessageFontSize,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits),
                         new ValidateValueCallback(IsValidFontSize));
 

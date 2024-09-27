@@ -320,7 +320,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty FontSizeProperty =
                 TextElement.FontSizeProperty.AddOwner(
                         typeof(DataGridTextColumn),
-                        new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, DataGridColumn.NotifyPropertyChangeForRefreshContent));
+                        new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, DataGridColumn.NotifyPropertyChangeForRefreshContent));
 
         /// <summary>
         ///     The size of the desired font.

@@ -2584,6 +2584,11 @@ namespace System.Windows.Data
                                                 : (IList)(new ArrayList(size));
                 lsList = localList as LiveShapingList;
 
+                if (lsList != null)
+                {
+                    lsList.LiveShapingDirty += new EventHandler(OnLiveShapingDirty);
+                }
+
                 // filter the collection's array into the local array
                 for (int k = 0; k < size; ++k)
                 {
@@ -2605,11 +2610,6 @@ namespace System.Windows.Data
                 if (ActiveComparer != null)
                 {
                     localList.Sort(ActiveComparer);
-                }
-
-                if (lsList != null)
-                {
-                    lsList.LiveShapingDirty += new EventHandler(OnLiveShapingDirty);
                 }
 
                 _internalList = localList;

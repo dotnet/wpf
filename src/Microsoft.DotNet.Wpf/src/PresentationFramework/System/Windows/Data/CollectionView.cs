@@ -1212,7 +1212,7 @@ namespace System.Windows.Data
         /// </notes>
         protected void ClearPendingChanges()
         {
-            lock(_changeLog.SyncRoot)
+            lock (_changeLogLock)
             {
                 _changeLog.Clear();
                 _tempChangeLog.Clear();
@@ -1231,7 +1231,7 @@ namespace System.Windows.Data
         /// </notes>
         protected void ProcessPendingChanges()
         {
-            lock(_changeLog.SyncRoot)
+            lock (_changeLogLock)
             {
                 ProcessChangeLog(_changeLog, true);
                 _changeLog.Clear();
@@ -1821,17 +1821,17 @@ namespace System.Windows.Data
         /// <param name="changeLog">
         ///     ArrayList of NotifyCollectionChangedEventArgs that could not be precessed.
         /// </param>
-        private void DeferProcessing(ICollection changeLog)
+        private void DeferProcessing(List<NotifyCollectionChangedEventArgs> changeLog)
         {
             Debug.Assert(changeLog != null && changeLog.Count > 0, "don't defer when there's no work");
 
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock(_changeLogLock)
                 {
                     if (_changeLog == null)
                     {
-                        _changeLog = new ArrayList(changeLog);
+                        _changeLog = new List<NotifyCollectionChangedEventArgs>(changeLog);
                     }
                     else
                     {
@@ -1858,7 +1858,7 @@ namespace System.Windows.Data
         /// <param name="changeLog">
         ///     List of NotifyCollectionChangedEventArgs that is to be processed.
         /// </param>
-        private ICollection ProcessChangeLog(ArrayList changeLog, bool processAll=false)
+        private List<NotifyCollectionChangedEventArgs> ProcessChangeLog(List<NotifyCollectionChangedEventArgs> changeLog, bool processAll = false)
         {
             int currentIndex = 0;
             bool mustDeferProcessing = false;
@@ -1911,9 +1911,9 @@ namespace System.Windows.Data
         // Post a change on the UI thread Dispatcher and updated the _changeLog.
         private void PostChange(NotifyCollectionChangedEventArgs args)
         {
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock (_changeLogLock)
                 {
                     // we can ignore everything before a Reset
                     if (args.Action == NotifyCollectionChangedAction.Reset)
@@ -1952,18 +1952,18 @@ namespace System.Windows.Data
         {
             // work on a private copy of the change log, so that other threads
             // can add to the main change log
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock (_changeLogLock)
                 {
                     _databindOperation = null;
                     _tempChangeLog = _changeLog;
-                    _changeLog = new ArrayList();
+                    _changeLog = new List<NotifyCollectionChangedEventArgs>();
                 }
             }
 
             // process the changes
-            ICollection unprocessedChanges = ProcessChangeLog(_tempChangeLog);
+            List<NotifyCollectionChangedEventArgs> unprocessedChanges = ProcessChangeLog(_tempChangeLog);
 
             // if changes remain (because we ran out of time), reschedule them
             if (unprocessedChanges != null && unprocessedChanges.Count > 0)
@@ -2158,8 +2158,10 @@ namespace System.Windows.Data
         //------------------------------------------------------
         #region Private Fields
 
-        ArrayList               _changeLog = new ArrayList();
-        ArrayList               _tempChangeLog = EmptyArrayList;
+        private readonly Lock _changeLogLock = new();
+
+        List<NotifyCollectionChangedEventArgs> _changeLog = new();
+        List<NotifyCollectionChangedEventArgs> _tempChangeLog = EmptyArrayList;
         DataBindOperation       _databindOperation;
         object                  _vmData;            // view manager's private data
         IEnumerable             _sourceCollection;  // the underlying collection
@@ -2177,7 +2179,7 @@ namespace System.Windows.Data
         object                  _syncObject = new object();
         DataBindEngine          _engine;
         int                     _timestamp;
-        static readonly ArrayList EmptyArrayList = new ArrayList();
+        static readonly List<NotifyCollectionChangedEventArgs> EmptyArrayList = new();
         static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
         internal static readonly object NoNewItem = new NamedObject("NoNewItem");
 

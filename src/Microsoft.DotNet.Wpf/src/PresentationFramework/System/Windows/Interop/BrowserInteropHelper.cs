@@ -4,24 +4,12 @@
 
 //
 // Description: Implements Avalon BrowserInteropHelper class, which helps
-//              interop with the browser
+//              interop with the browser. Deprecated as XBAP is not supported.
 //
 
-using System;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using System.Security;
-using System.Diagnostics;
-using MS.Internal;
 using MS.Win32;
-using System.Windows.Input;
+using MS.Internal;
 using MS.Internal.AppModel;
-using MS.Internal.Interop;
-using System.Threading;
-
-using SafeSecurityHelper=MS.Internal.PresentationFramework.SafeSecurityHelper;
 
 namespace System.Windows.Interop
 {
@@ -38,20 +26,7 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the IOleClientSite interface
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
-        public static object ClientSite
-        {
-            get
-            {
-
-                object oleClientSite = null;
-
-
-                return oleClientSite;
-            }
-        }
+        public static object ClientSite => null;
 
         /// <summary>
         /// Gets a script object that provides access to the HTML window object,
@@ -71,12 +46,6 @@ namespace System.Windows.Interop
         /// That's why they are still separate. Also, this one is public.
         /// </remarks>
         public static bool IsBrowserHosted => false;
-
-        internal static HostingFlags HostingFlags 
-        { 
-            get { return _hostingFlags; }
-            set { _hostingFlags = value; }
-        }
         
         /// <summary>
         /// Returns the Uri used to launch the application.
@@ -97,23 +66,15 @@ namespace System.Windows.Interop
         {
             get
             {
-                Application app = Application.Current;
-                return app != null && app.MimeType == MimeType.Markup;
+                return Application.Current?.MimeType == MimeType.Markup;
             }
         }
-
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
         /// Also returns false if not browser-hosted.
         /// </summary>
-        internal static bool IsHostedInIEorWebOC
-        {
-            get
-            {
-                return (HostingFlags & HostingFlags.hfHostedInIEorWebOC) != 0;
-            }
-        }
+        internal static bool IsHostedInIEorWebOC => false;
 
         /// <summary>
         /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
@@ -154,93 +115,10 @@ namespace System.Windows.Interop
             }
         }
 
-        private static void InitializeHostHtmlDocumentServiceProvider(DynamicScriptObject scriptObject)
-        {
-            // The service provider is used for Internet Explorer IDispatchEx use.
-            if (   IsHostedInIEorWebOC
-                && scriptObject.ScriptObject is UnsafeNativeMethods.IHTMLWindow4
-                && _hostHtmlDocumentServiceProvider == null)
-            {
-                // We use the IDispatch infrastructure to gain access to the document DOM node where
-                // the IServiceProvider lives that was recommended to us by IE people. Notice during
-                // this call the HostHtmlDocumentServiceProvider property here is still null, so this
-                // first request is made (and succeeds properly) without the service provider in place.
-                object document;
-                bool foundDoc = scriptObject.TryFindMemberAndInvokeNonWrapped("document",
-                                                                              NativeMethods.DISPATCH_PROPERTYGET,
-                                                                              true  /* cache DISPID, why not? */,
-                                                                              null, /* arguments */
-                                                                              out document);
-
-                // The fact the host script is required to be a IHTMLWindow4 here ensures there is
-                // document property and because we're dealing with IE, we know it has a service
-                // provider on it.
-                Invariant.Assert(foundDoc);
-                _hostHtmlDocumentServiceProvider = (UnsafeNativeMethods.IServiceProvider)document;
-
-                // See HostHtmlDocumentServiceProvider property get accessor for more information on the use of
-                // this field to ensure we got a valid service provider.
-                _initializedHostScript = true;
-            }
-        }
-
-        private static void HostFilterInput(ref MSG msg, ref bool handled)
-        {
-            WindowMessage message = (WindowMessage)msg.message;
-            // The host gets to see input, keyboard and mouse messages.
-            if (message == WindowMessage.WM_INPUT ||
-                (message >= WindowMessage.WM_KEYFIRST && message <= WindowMessage.WM_IME_KEYLAST) ||
-                (message >= WindowMessage.WM_MOUSEFIRST && message <= WindowMessage.WM_MOUSELAST))
-            {
-                if (MS.Win32.NativeMethods.S_OK == ForwardTranslateAccelerator(ref msg, false))
-                {
-                    handled = true;
-                }
-            }
-        }
-
-        /// <summary> This hook gets a "last chance" to handle a key. Such applicaton-unhandled
-        /// keys are forwarded to the browser frame.
-        /// </summary>
-        internal static IntPtr PostFilterInput(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (!handled)
-            {
-                if ((WindowMessage)msg >= WindowMessage.WM_KEYFIRST && (WindowMessage)msg <= WindowMessage.WM_IME_KEYLAST)
-                {
-                    MSG m = new MSG(hwnd, msg, wParam, lParam, SafeNativeMethods.GetMessageTime(), 0, 0);
-                    if (MS.Win32.NativeMethods.S_OK == ForwardTranslateAccelerator(ref m, true))
-                    {
-                        handled = true;
-                    }
-                }
-            }
-            return IntPtr.Zero;
-        }
-
-        internal static void InitializeHostFilterInput()
-        {
-            ComponentDispatcher.ThreadFilterMessage +=
-                                new ThreadMessageEventHandler(HostFilterInput);
-        }
-
-        private static void EnsureScriptInteropAllowed()
-        {
-            if (_isScriptInteropDisabled == null)
-            {
-                _isScriptInteropDisabled = SafeSecurityHelper.IsFeatureDisabled(SafeSecurityHelper.KeyToRead.ScriptInteropDisable);
-            }
-        }
-
-        private static HostingFlags _hostingFlags;
         private static bool _isInitialViewerNavigation;
-        private static bool? _isScriptInteropDisabled;
         
         private static UnsafeNativeMethods.IServiceProvider _hostHtmlDocumentServiceProvider;
         private static bool _initializedHostScript;
-
-        [DllImport(ExternDll.PresentationHostDll, EntryPoint="ForwardTranslateAccelerator")]
-        private static extern int ForwardTranslateAccelerator(ref MSG pMsg, bool appUnhandled);
     }
 }
 

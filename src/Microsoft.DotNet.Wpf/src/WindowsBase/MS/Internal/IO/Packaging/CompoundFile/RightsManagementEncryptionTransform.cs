@@ -649,11 +649,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// If the RM information in this file cannot be read by the current version of
         /// this class.
         /// </exception>
-        internal void
-        EnumUseLicenseStreams(
-            UseLicenseStreamCallback callback,
-            object param
-            )
+        internal void EnumUseLicenseStreams(UseLicenseStreamCallback callback, object param)
         {
             ArgumentNullException.ThrowIfNull(callback);
 
@@ -662,11 +658,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             foreach (StreamInfo si in _useLicenseStorage.GetStreams())
             {
                 // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-                if (String.CompareOrdinal(
-                                LicenseStreamNamePrefix.ToUpperInvariant(), 0,
-                                si.Name.ToUpperInvariant(), 0,
-                                LicenseStreamNamePrefixLength
-                                ) == 0)
+                if (si.Name.StartsWith(LicenseStreamNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     callback(this, si, param, ref stop);
                     if (stop)
@@ -1342,7 +1334,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         // All use licenses reside in streams whose names begin with this prefix:
         //
         private const string LicenseStreamNamePrefix = "EUL-";
-        private static readonly int    LicenseStreamNamePrefixLength = LicenseStreamNamePrefix.Length;
 
         //
         // The RM version information for the current version of this class.

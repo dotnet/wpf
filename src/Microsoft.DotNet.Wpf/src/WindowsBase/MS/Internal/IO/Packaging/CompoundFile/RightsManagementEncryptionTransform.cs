@@ -1041,7 +1041,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Span<byte> guidBytes = stackalloc byte[16];
             Guid.NewGuid().TryWriteBytes(guidBytes);
 
-            return $"{LicenseStreamNamePrefix}{Base32EncodeWithoutPadding(guidBytes, stackalloc char[26])}";
+            return string.Concat(LicenseStreamNamePrefix, Base32EncodeWithoutPadding(guidBytes, stackalloc char[26]));
         }
 
         /// <summary>

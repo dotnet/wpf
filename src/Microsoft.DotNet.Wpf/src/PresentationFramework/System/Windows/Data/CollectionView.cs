@@ -1971,7 +1971,7 @@ namespace System.Windows.Data
                 DeferProcessing(unprocessedChanges);
             }
 
-            _tempChangeLog = EmptyArrayList;
+            _tempChangeLog = s_emptyList;
 
             return null;
         }
@@ -2160,8 +2160,9 @@ namespace System.Windows.Data
 
         private readonly Lock _changeLogLock = new();
 
-        List<NotifyCollectionChangedEventArgs> _changeLog = new();
-        List<NotifyCollectionChangedEventArgs> _tempChangeLog = EmptyArrayList;
+        private List<NotifyCollectionChangedEventArgs> _changeLog = new();
+        private List<NotifyCollectionChangedEventArgs> _tempChangeLog = s_emptyList;
+
         DataBindOperation       _databindOperation;
         object                  _vmData;            // view manager's private data
         IEnumerable             _sourceCollection;  // the underlying collection
@@ -2179,7 +2180,8 @@ namespace System.Windows.Data
         object                  _syncObject = new object();
         DataBindEngine          _engine;
         int                     _timestamp;
-        static readonly List<NotifyCollectionChangedEventArgs> EmptyArrayList = new();
+
+        private static readonly List<NotifyCollectionChangedEventArgs> s_emptyList = new();
         static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
         internal static readonly object NoNewItem = new NamedObject("NoNewItem");
 

@@ -10,7 +10,6 @@ using System;
 using MS.Internal;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -194,7 +193,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal SpellerHighlightChangedEventArgs(ITextPointer start, ITextPointer end)
@@ -210,7 +209,7 @@ namespace System.Windows.Documents
             }
 
             // Collection of changed content ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

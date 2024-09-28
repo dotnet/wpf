@@ -71,12 +71,6 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
-        /// Also returns false if not browser-hosted.
-        /// </summary>
-        internal static bool IsHostedInIEorWebOC => false;
-
-        /// <summary>
         /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
         /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
         /// reasons why both IsViewer and IsViewerNavigation are necessary, however.

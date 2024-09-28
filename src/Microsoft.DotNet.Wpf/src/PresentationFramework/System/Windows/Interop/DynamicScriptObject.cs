@@ -114,18 +114,7 @@ namespace System.Windows.Interop
         public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
         {
             ArgumentNullException.ThrowIfNull(binder);
-
             ArgumentNullException.ThrowIfNull(indexes);
-
-            // IE supports a default member for indexers. Try that first. This accommodates for indexing
-            // in collection types, using a default method called "item".
-            if (BrowserInteropHelper.IsHostedInIEorWebOC)
-            {
-                if (TryFindMemberAndInvoke(null, NativeMethods.DISPATCH_METHOD, false /* no DISPID caching */, indexes, out result))
-                {
-                    return true;
-                }
-            }
 
             // We fall back to property lookup given the first argument of the indices. This accommodates
             // for arrays (e.g. d.x[0]) and square-bracket-style property lookup (e.g. d.document["title"]).
@@ -137,7 +126,7 @@ namespace System.Windows.Interop
             object index = indexes[0];
             if (index == null)
             {
-                throw new ArgumentOutOfRangeException("indexes");
+                throw new ArgumentOutOfRangeException(nameof(indexes));
             }
 
             result = InvokeAndReturn(index.ToString(), NativeMethods.DISPATCH_PROPERTYGET, false /* no DISPID caching */, null);

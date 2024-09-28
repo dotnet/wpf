@@ -61,7 +61,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _isInitialViewerNavigation;
+                return IsViewer && _isInitialViewerNavigation;
             }
             set
             {

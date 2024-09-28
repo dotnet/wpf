@@ -91,29 +91,6 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
-        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
-        /// </summary>
-        internal static bool IsViewer => false;
-
-        /// <summary>
-        /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
-        /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
-        /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
-        /// </summary>
-        internal static bool IsInitialViewerNavigation
-        {
-            get // Because IsViewer is always false, the value of _isInitialViewerNavigation does not matter
-            {
-                return IsViewer && _isInitialViewerNavigation;
-            }
-            set
-            {
-                _isInitialViewerNavigation = value;
-            }
-        }
-
-        /// <summary>
         /// Retrieves the IServiceProvider object for the browser we're hosted in.
         /// This is used for IDispatchEx operations in the script interop feature.
         /// Critical: Returns critical type UnsafeNativeMethods.IServiceProvider
@@ -214,7 +191,6 @@ namespace System.Windows.Interop
         }
 
         private static HostingFlags _hostingFlags;
-        private static bool _isInitialViewerNavigation;
         private static bool? _isScriptInteropDisabled;
         
         private static UnsafeNativeMethods.IServiceProvider _hostHtmlDocumentServiceProvider;

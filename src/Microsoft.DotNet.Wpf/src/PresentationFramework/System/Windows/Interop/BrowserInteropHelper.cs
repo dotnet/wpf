@@ -18,11 +18,6 @@ namespace System.Windows.Interop
     /// </summary>
     public static class BrowserInteropHelper
     {
-        static BrowserInteropHelper()
-        {
-            IsInitialViewerNavigation = true;
-        }
-
         /// <summary>
         /// Returns the IOleClientSite interface
         /// </summary>
@@ -59,7 +54,7 @@ namespace System.Windows.Interop
         /// </summary>
         internal static bool IsInitialViewerNavigation
         {
-            get
+            get // Because IsViewer is always false, the value of _isInitialViewerNavigation does not matter
             {
                 return IsViewer && _isInitialViewerNavigation;
             }

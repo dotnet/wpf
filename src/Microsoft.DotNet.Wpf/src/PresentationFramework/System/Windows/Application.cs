@@ -1756,10 +1756,11 @@ namespace System.Windows
             InvalidateResourceReferenceOnWindowCollection(NonAppWindowsInternal.Clone(), info);
         }
 
-        // Creates and returns a NavigationWindow for standalone cases
-        // For browser hosted cases, returns the existing RootBrowserWindow which
-        //   is created before the application.Run is called.
-        internal NavigationWindow GetAppWindow()
+        /// <summary>
+        /// Creates and returns a NavigationWindow for standalone cases
+        /// </summary>
+        /// <returns></returns>
+        internal static NavigationWindow GetAppWindow()
         {
             NavigationWindow appWin = new NavigationWindow();
 
@@ -2247,11 +2248,9 @@ namespace System.Windows
 
         private void ConfigAppWindowAndRootElement(object root, Uri uri)
         {
-            Window w = root as Window;
-            if (w == null)
+            if (root is not Window wnd)
             {
-                //Creates and returns a NavigationWindow for standalone cases
-                //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
+                //Creates and returns a NavigationWindow
                 NavigationWindow appWin = GetAppWindow();
 
                 //Since we cancel PreBPReady event here, the other navigation events won't fire twice.
@@ -2273,9 +2272,9 @@ namespace System.Windows
                 // if Visibility has not been set, we set it to true
                 // Also check whether the window is already closed when we get here - applications could close the window
                 // in its constructor.
-                if (!w.IsVisibilitySet && !w.IsDisposed)
+                if (!wnd.IsVisibilitySet && !wnd.IsDisposed)
                 {
-                    w.Visibility = Visibility.Visible;
+                    wnd.Visibility = Visibility.Visible;
                 }
             }
         }

@@ -314,7 +314,7 @@ namespace System.Windows.Media
         /// <summary>
         /// GetHashCode - Returns a hash code
         /// </summary>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return Guid.GetHashCode();
         }
@@ -333,7 +333,7 @@ namespace System.Windows.Media
         /// <summary>
         /// The pixel format mask information for each channel.
         /// </summary>
-        public IList<PixelFormatChannelMask> Masks
+        public readonly IList<PixelFormatChannelMask> Masks
         {
             get
             {
@@ -390,7 +390,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal IntPtr CreatePixelFormatInfo()
+        internal readonly IntPtr CreatePixelFormatInfo()
         {
             IntPtr componentInfo = IntPtr.Zero;
             IntPtr pixelFormatInfo = IntPtr.Zero;
@@ -408,7 +408,7 @@ namespace System.Windows.Media
                     if (hr == (int)WinCodecErrors.WINCODEC_ERR_COMPONENTINITIALIZEFAILURE ||
                         hr == (int)WinCodecErrors.WINCODEC_ERR_COMPONENTNOTFOUND)
                     {
-                        throw new System.NotSupportedException(SR.Image_NoPixelFormatFound);
+                        throw new NotSupportedException(SR.Image_NoPixelFormatFound);
                     }
                     HRESULT.Check(hr);
 
@@ -459,7 +459,7 @@ namespace System.Windows.Media
                     _bitsPerPixel = bpp;
                 }
 
-                return (int) _bitsPerPixel;
+                return (int)_bitsPerPixel;
             }
         }
 

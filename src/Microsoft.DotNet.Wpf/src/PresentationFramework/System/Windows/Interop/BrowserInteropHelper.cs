@@ -50,25 +50,7 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the Uri used to launch the application.
         /// </summary>
-        public static Uri Source
-        {
-            get
-            {
-                return SiteOfOriginContainer.BrowserSource;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
-        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
-        /// </summary>
-        internal static bool IsViewer
-        {
-            get
-            {
-                return Application.Current?.MimeType == MimeType.Markup;
-            }
-        }
+        public static Uri Source => null;
 
         /// <summary>
         /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
@@ -79,7 +61,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return IsViewer && _isInitialViewerNavigation;
+                return _isInitialViewerNavigation;
             }
             set
             {

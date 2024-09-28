@@ -32,7 +32,6 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Resources;
 using System.Threading;
 
@@ -221,28 +220,6 @@ namespace System.Windows
         {
             VerifyAccess();
             return RunInternal(window);
-        }
-
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        internal object GetService(Type serviceType)
-        {
-            // this is called only from OleCmdHelper and it gets
-            // service for IBrowserCallbackServices which is internal.
-            // This call is made on the App thread.
-            //
-            VerifyAccess();
-            object service = null;
-
-            if (ServiceProvider != null)
-            {
-                service = ServiceProvider.GetService(serviceType);
-            }
-            return service;
         }
 
         /// <summary>
@@ -1685,11 +1662,13 @@ namespace System.Windows
             }
         }
 
-        //
-        // This function is called from the public Run methods to start the application.
-        // ApplicationProxyInternal.Run method calls this method directly to bypass the check
-        // for browser hosted application in the public Run() method
-        //
+        /// <summary>
+        /// This function is called from the public Run methods to start the application.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         internal int RunInternal(Window window)
         {
             VerifyAccess();
@@ -1904,30 +1883,6 @@ namespace System.Windows
                 }
             }
         }
-
-        // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
-        // All of these are on the app thread
-        internal IServiceProvider ServiceProvider
-        {
-            private get
-            {
-                VerifyAccess();
-                if (_serviceProvider != null)
-                {
-                    return _serviceProvider;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                VerifyAccess();
-                _serviceProvider = value ;
-            }
-        }
-
 
         // is called by NavigationService to detect TopLevel container
         // We check there to call this only if NavigationService is on
@@ -2279,8 +2234,6 @@ namespace System.Windows
                 {
                     Dispatcher.CriticalInvokeShutdown();
                 }
-
-                ServiceProvider = null;
             }
         }
 
@@ -2504,8 +2457,6 @@ namespace System.Windows
         private ThemeMode                   _themeMode = ThemeMode.None;
         private bool                        _resourcesInitialized = false;
         private bool                        _reloadFluentDictionary = false;
-
-        private IServiceProvider            _serviceProvider;
 
         private bool                        _appIsShutdown;
         private int                         _exitCode;

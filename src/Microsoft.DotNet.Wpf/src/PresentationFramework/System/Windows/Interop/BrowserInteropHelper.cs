@@ -96,6 +96,12 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
+        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
+        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
+        /// </summary>
+        internal static bool IsViewer => false;
+
+        /// <summary>
         /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
         /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
         /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
@@ -104,7 +110,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _isInitialViewerNavigation;
+                return IsViewer && _isInitialViewerNavigation;
             }
             set
             {

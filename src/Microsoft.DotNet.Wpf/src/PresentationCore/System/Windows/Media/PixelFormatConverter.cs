@@ -9,18 +9,17 @@ using System.Globalization;
 
 namespace System.Windows.Media
 {
-    #region PixelFormatConverter
-    //------------------------------------------------------------------------------
-    // PixelFormatConverter
-    //------------------------------------------------------------------------------
     /// <summary>
-    /// PixelFormatConverter
+    /// Provides a type converter to convert from <see cref="PixelFormat"/> to <see langword="string"/> and vice versa.
     /// </summary>
     public sealed class PixelFormatConverter : TypeConverter
     {
         /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type
+        /// Returns whether this class can convert specific <see cref="Type"/> into <see cref="PixelFormat"/>.
         /// </summary>
+        /// <param name="td">Context information used for conversion.</param>
+        /// <param name="t">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> if the given <paramref name="t"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
             // We can only handle string
@@ -28,40 +27,48 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// TypeConverter method override.
+        /// Returns whether this class can convert specified value to <see langword="string"/> or <see cref="InstanceDescriptor"/>.
         /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
+        /// <param name="context">Context information used for conversion.</param>
+        /// <param name="destinationType">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> when <paramref name="destinationType"/> specified is
+        /// <see langword="string"/> or <see cref="InstanceDescriptor"/>, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>
-        /// test
+        /// Converts <paramref name="o"/> of <see langword="string"/> type to its <see cref="PixelFormat"/> represensation.
         /// </summary>
+        /// <param name="value">The pixel format name to convert from.</param>
+        /// <returns>A new instance of <see cref="PixelFormat"/> or <see langword="null"/> if the provided <paramref name="value"/> was <see langword="null"/>.</returns>
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Hiding method of TypeConverter.ConvertFromString(string)")]
         public new object ConvertFromString(string value)
         {
             return value is not null ? new PixelFormat(value) : null;
         }
 
         /// <summary>
-        /// test
+        /// Converts <paramref name="o"/> of <see langword="string"/> type to its <see cref="PixelFormat"/> represensation.
         /// </summary>
+        /// <param name="td">Context information used for conversion, ignored.</param>
+        /// <param name="ci">The culture specifier to use, ignored.</param>        
+        /// <param name="o">The string to convert from.</param>
+        /// <returns>A new instance of <see cref="PixelFormat"/> or <see langword="null"/> if the provided <paramref name="value"/> was <see langword="null"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo ci, object o)
         {
             return o is not null ? new PixelFormat(o as string) : null;
         }
 
         /// <summary>
-        /// TypeConverter method implementation.
+        /// Converts a <paramref name="value"/> of <see cref="PixelFormat"/> to the specified <paramref name="destinationType"/>.
         /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="culture">current culture (see CLR specs)</param>
-        /// <param name="value">value to convert from</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>converted value</returns>
+        /// <param name="context">Context information used for conversion.</param>
+        /// <param name="culture">The culture specifier to use.</param>
+        /// <param name="value"><see cref="PixelFormat"/> value to convert from.</param>
+        /// <param name="destinationType">Type being evaluated for conversion.</param>
+        /// <returns>A <see langword="string"/> or <see cref="InstanceDescriptor"/> representing the <see cref="PixelFormat"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
@@ -83,5 +90,4 @@ namespace System.Windows.Media
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
-#endregion // PixelFormatConverter
 }

@@ -88,10 +88,7 @@ namespace MS.Internal.AppModel
             // For all other cases ( evil protocols etc). 
             // We will demand. 
             //
-            // The check of IsInitialViewerNavigation is necessary because viewer applications will probably
-            // need to call Navigate on the URI they receive, but we want them to be able to do it in partial trust.
-            if (!BrowserInteropHelper.IsInitialViewerNavigation &&
-                  ((fIsTopLevel && isKnownScheme) || fIsMailTo))
+            if ((fIsTopLevel && isKnownScheme) || fIsMailTo)
             {
                 if (!isKnownScheme && fIsMailTo) // unnecessary if - but being paranoid. 
                 {

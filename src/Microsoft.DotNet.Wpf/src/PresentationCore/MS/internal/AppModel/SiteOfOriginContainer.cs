@@ -60,18 +60,6 @@ namespace MS.Internal.AppModel
                 return siteOfOrigin;
             }
         }
-       
-        internal static Uri BrowserSource
-        {
-            get
-            {
-                return _browserSource;
-            }
-            set
-            {    
-               _browserSource = value; 
-            }
-        }
    
         #endregion
 
@@ -208,17 +196,6 @@ namespace MS.Internal.AppModel
 
         #endregion
 
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Members
-
-        private static Uri _browserSource;
-
-        #endregion Private Members
 
         //------------------------------------------------------
         //

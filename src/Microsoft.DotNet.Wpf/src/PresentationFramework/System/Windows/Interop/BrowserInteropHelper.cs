@@ -77,31 +77,11 @@ namespace System.Windows.Interop
             get { return _hostingFlags; }
             set { _hostingFlags = value; }
         }
-        
+
         /// <summary>
         /// Returns the Uri used to launch the application.
         /// </summary>
-        public static Uri Source
-        {
-            get
-            {
-                return SiteOfOriginContainer.BrowserSource;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
-        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
-        /// </summary>
-        internal static bool IsViewer
-        {
-            get
-            {
-                Application app = Application.Current;
-                return app != null && app.MimeType == MimeType.Markup;
-            }
-        }
-
+        public static Uri Source => null;
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
@@ -124,7 +104,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return IsViewer && _isInitialViewerNavigation;
+                return _isInitialViewerNavigation;
             }
             set
             {

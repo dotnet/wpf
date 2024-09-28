@@ -1680,7 +1680,6 @@ namespace System.Windows
                 }
 
                 PreloadedPackages.Clear();
-                AppSecurityManager.ClearSecurityManager();
 
                 _appIsShutdown = true; // mark app as shutdown
             }
@@ -1906,23 +1905,6 @@ namespace System.Windows
             }
         }
 
-        //This property indicates what type of an application was created. We use this
-        //to determine whether to update the address bar or not for toplevel navigations
-        //Since we don't currently have support to represent a proper relative uri
-        //for .xps or .deploy or browser hosted exes, we limit address bar
-        //updates to xaml navigations.
-        //In the future, IBrowserCallbackServices and this should be moved to use RootBrowserWindow
-        //instead of being in the application. For example,if a standalone window is created
-        //in the same application, we still try to use IBrowserCallbackServices in the
-        //standalone window. Need to ensure only RootBrowserWindow knows about browser hosting,
-        //rest of the appmodel code should be agnostic to hosting process.
-        //This will be cleaned up with the RootBrowserWindow cleanup.
-        internal MimeType MimeType
-        {
-            get { return _appMimeType; }
-            set { _appMimeType = value; }
-        }
-
         // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
         // All of these are on the app thread
         internal IServiceProvider ServiceProvider
@@ -1968,10 +1950,7 @@ namespace System.Windows
         {
             get
             {
-                //If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
-                // If we are browser hosted, BrowserCallbackServices.IsShuttingDown checks to see if the browser is shutting us down,
-                // even if we may not be shutting down the Application yet. Check this to avoid reentrance issues between the time that
-                // browser is shutting us down and that Application.Shutdown (CriticalShutdown) is invoked.
+                // If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
                 if (_isShuttingDown)
                 {
                     return _isShuttingDown;
@@ -2526,7 +2505,6 @@ namespace System.Windows
         private bool                        _resourcesInitialized = false;
         private bool                        _reloadFluentDictionary = false;
 
-        private MimeType                    _appMimeType;
         private IServiceProvider            _serviceProvider;
 
         private bool                        _appIsShutdown;

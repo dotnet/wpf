@@ -567,12 +567,12 @@ namespace System.Windows.Interop
             //
             // That is why we switch to invoking the script via IDispatch with SUCS on the methods.
 
-            if (_scriptObjectEx != null)
+            if (_scriptObjectEx != null) // TODO: This code path is never taken outside XBAP
             {
                 // This case takes care of IE hosting where the use of IDispatchEx is recommended by IE people
                 // since the service provider object we can pass here is used by the browser to enforce cross-
                 // zone scripting mitigations. 
-                return _scriptObjectEx.InvokeEx(dispid, Thread.CurrentThread.CurrentCulture.LCID, flags, dp, out result, exInfo, BrowserInteropHelper.HostHtmlDocumentServiceProvider);
+                return _scriptObjectEx.InvokeEx(dispid, Thread.CurrentThread.CurrentCulture.LCID, flags, dp, out result, exInfo, null);
             }
             else
             {

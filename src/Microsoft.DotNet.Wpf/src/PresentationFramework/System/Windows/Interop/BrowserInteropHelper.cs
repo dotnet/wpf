@@ -87,32 +87,7 @@ namespace System.Windows.Interop
             }
         }
 
-        /// <summary>
-        /// Retrieves the IServiceProvider object for the browser we're hosted in.
-        /// This is used for IDispatchEx operations in the script interop feature.
-        /// Critical: Returns critical type UnsafeNativeMethods.IServiceProvider
-        /// </summary>
-        internal static UnsafeNativeMethods.IServiceProvider HostHtmlDocumentServiceProvider
-        {
-            get
-            {
-                // HostHtmlDocumentServiceProvider is used by DynamicScriptObject for IDispatchEx
-                // operations in case of IE. During initialization we get the document node from
-                // the DOM to obtain the required service provider. During this short timeframe
-                // it's valid to have a null-value returned here. In all other cases, we make sure
-                // not to run with a null service provider for sake of security.
-                // See InitializeHostHtmlDocumentServiceProvider as well.
-                /* TODO: straighten this with browser flags to check only when hosted in IE */
-                Invariant.Assert(!(_initializedHostScript && _hostHtmlDocumentServiceProvider == null));
-
-                return _hostHtmlDocumentServiceProvider;
-            }
-        }
-
         private static bool _isInitialViewerNavigation;
-        
-        private static UnsafeNativeMethods.IServiceProvider _hostHtmlDocumentServiceProvider;
-        private static bool _initializedHostScript;
     }
 }
 

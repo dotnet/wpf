@@ -7,6 +7,7 @@
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using System;
+using System.Linq;
 using System.Security;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,14 +81,14 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask?.ToArray();
             }
         }
 
         /// <summary>
         /// op_equality - returns whether or not the two pixel format channel masks are equal
         /// </summary>
-        public static bool operator == (PixelFormatChannelMask left, PixelFormatChannelMask right)
+        public static bool operator ==(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
             return Equals(left, right);
         }
@@ -103,7 +104,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_inequality - returns whether or not the two pixel format channel masks are not equal
         /// </summary>
-        public static bool operator != (PixelFormatChannelMask left, PixelFormatChannelMask right)
+        public static bool operator !=(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
             return !(left == right);
         }

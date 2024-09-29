@@ -62,8 +62,10 @@ namespace System.Windows.Media
     /// <summary>
     /// Describes the bit mask and shift for a specific pixelformat
     /// </summary>
-    public struct PixelFormatChannelMask
+    public readonly struct PixelFormatChannelMask
     {
+        private readonly byte[] _mask;
+
         internal PixelFormatChannelMask(byte[] mask)
         {
             Debug.Assert(mask != null);
@@ -148,8 +150,6 @@ namespace System.Windows.Media
 
             return hash;
         }
-
-        private byte[] _mask;
     }
 
     /// <summary>

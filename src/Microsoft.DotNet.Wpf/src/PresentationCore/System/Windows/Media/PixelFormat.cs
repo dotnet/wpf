@@ -97,23 +97,7 @@ namespace System.Windows.Media
         /// </summary>
         public static bool Equals(PixelFormatChannelMask left, PixelFormatChannelMask right)
         {
-            int leftNumChannels  =  left._mask != null ?  left._mask.Length : 0;
-            int rightNumChannels = right._mask != null ? right._mask.Length : 0;
-
-            if (leftNumChannels != rightNumChannels)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < leftNumChannels; ++i)
-            {
-                if (left._mask[i] != right._mask[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return left._mask.AsSpan().SequenceEqual(right._mask);
         }
 
         /// <summary>

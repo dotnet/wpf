@@ -14,18 +14,10 @@
 //
 
 using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Security;
-using Microsoft.Win32;
-using System.IO.Packaging;
-using System.Windows;
-using System.Windows.Interop;
-using MS.Internal.Utility;
 using MS.Win32;
+using System.Windows;
+using MS.Internal.Utility;
 using System.Runtime.InteropServices;
-using MS.Internal.Documents.Application;
 
 namespace MS.Internal.AppModel
 {
@@ -38,9 +30,6 @@ namespace MS.Internal.AppModel
 
     internal static class AppSecurityManager
     {
-        #region Internal Methods
-
-
         ///<summary> 
         ///     Safely launch the browser if you can. 
         ///     If you can't demand unmanaged code permisison. 
@@ -149,27 +138,5 @@ namespace MS.Internal.AppModel
                 throw new InvalidOperationException(SR.FailToLaunchDefaultBrowser,
                     new System.ComponentModel.Win32Exception(/*uses the last Win32 error*/));
         }
-
-        #endregion Internal Methods
-
-        #region Private Methods
-
-        [ComImport, ComVisible(false), Guid("7b8a2d94-0ac9-11d1-896c-00c04Fb6bfc4")]
-        internal class InternetSecurityManager { }
-
-
-        #endregion Private Methods
-
-        #region Private Fields
-
-        private const string RefererHeader = "Referer: ";
-
-        private const string BrowserOpenCommandLookupKey = "htmlfile\\shell\\open\\command";
-
-        // Object to be used for locking.  Using typeof(Util) causes an FxCop
-        // violation DoNotLockOnObjectsWithWeakIdentity
-        private static readonly object _lockObj = new object();
-
-        #endregion Private Fields
     }
 }

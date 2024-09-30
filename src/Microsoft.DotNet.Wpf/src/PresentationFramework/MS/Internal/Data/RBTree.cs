@@ -183,7 +183,7 @@ namespace MS.Internal.Data
                 // into three pieces:
                 //  "red" (item < pivot), "green" (item == pivot), "blue" (item > pivot)
                 // This is the famous "Dutch National Flag" problem, named by Dijkstra
-                // in honor of his country's flag, which has three vertical stripes
+                // in honor of his country/region's flag, which has three vertical stripes
                 // of different colors (I don't remember the Dutch colors, so I'm using
                 // red, greeen, and blue, like the bits in a pixel color.)
                 //

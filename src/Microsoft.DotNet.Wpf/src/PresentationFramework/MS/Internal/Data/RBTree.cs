@@ -182,10 +182,7 @@ namespace MS.Internal.Data
                 // the goal of 3-way pivoting is to swap items so as to divide the list
                 // into three pieces:
                 //  "red" (item < pivot), "green" (item == pivot), "blue" (item > pivot)
-                // This is the famous "Dutch National Flag" problem, named by Dijkstra
-                // in honor of his country/region's flag, which has three vertical stripes
-                // of different colors (I don't remember the Dutch colors, so I'm using
-                // red, greeen, and blue, like the bits in a pixel color.)
+                // This is the famous "Dutch National Flag" problem, coined by Dijkstra.
                 //
                 // The following algorithm seems to be the best in practice.  It's not
                 // widely known - I reinvented it based on memories of a conversation

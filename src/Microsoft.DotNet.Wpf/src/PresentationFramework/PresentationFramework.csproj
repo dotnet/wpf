@@ -107,7 +107,6 @@
     <Compile Include="MS\Internal\Annotations\XmlElementCollection.cs" />
     <Compile Include="MS\Internal\AppModel\AppModelKnownContentFactory.cs" />
     <Compile Include="MS\Internal\AppModel\AppSecurityManager.cs" />
-    <Compile Include="MS\Internal\AppModel\AssemblyFilter.cs" />
     <Compile Include="MS\Internal\AppModel\BamlStream.cs" />
     <Compile Include="MS\Internal\AppModel\ComGuids.cs" />
     <Compile Include="MS\Internal\AppModel\ContentFilePart.cs" />

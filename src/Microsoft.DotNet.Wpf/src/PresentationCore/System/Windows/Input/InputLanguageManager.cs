@@ -287,7 +287,7 @@ namespace System.Windows.Input
                     return null;
                 }
 
-                return (IEnumerable)_source.InputLanguageList;
+                return _source.InputLanguageList;
             }
         }
 

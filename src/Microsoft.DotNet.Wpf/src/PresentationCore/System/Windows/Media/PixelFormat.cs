@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 
 using SR=MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Media
 {
@@ -169,7 +170,7 @@ namespace System.Windows.Media
                 // Compare only the first 15 bytes of the GUID.  If the first
                 // 15 bytes match the WIC pixel formats, then the 16th byte
                 // will be the format enum value.
-                Debug.Assert(Marshal.SizeOf(typeof(Guid)) == 16);
+                Debug.Assert(Unsafe.SizeOf<Guid>() == 16);
                 int compareCount = 15;
                 
                 bool fBuiltIn = true;

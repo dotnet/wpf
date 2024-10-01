@@ -505,7 +505,7 @@ namespace MS.Internal.Ink.GestureRecognition
             Debug.Assert(propertyGuids.Length == StylusPointDescription.RequiredCountOfProperties);
 
             // Get the packet description
-            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * Marshal.SizeOf(typeof(Int32)));
+            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * sizeof(Int32));
             packetDescription.cPacketProperties = (uint)propertyGuids.Length;
 
             //
@@ -554,7 +554,7 @@ namespace MS.Internal.Ink.GestureRecognition
             int packetCount = rawPackets.Length;
             if (packetCount != 0)
             {
-                countOfBytes = packetCount * Marshal.SizeOf(typeof(Int32));
+                countOfBytes = packetCount * sizeof(Int32);
                 packets = Marshal.AllocCoTaskMem(countOfBytes);
                 Marshal.Copy(rawPackets, 0, packets, packetCount);
             }

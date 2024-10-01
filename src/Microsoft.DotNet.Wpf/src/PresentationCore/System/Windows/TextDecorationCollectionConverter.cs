@@ -77,14 +77,8 @@ namespace System.Windows
             if (text is null)
                 return null;
 
-            // Define constants that will make sure the match has been unique
-            const byte OverlineMatch = 1 << 0;
-            const byte BaselineMatch = 1 << 1;
-            const byte UnderlineMatch = 1 << 2;
-            const byte StrikethroughMatch = 1 << 3;
-
             // Flags indicating which pre-defined TextDecoration have been matched
-            byte matchedDecorations = 0;
+            Decorations matchedDecorations = Decorations.None;
 
             // Sanitize the input
             ReadOnlySpan<char> decorationsSpan = text.AsSpan().Trim();
@@ -95,31 +89,29 @@ namespace System.Windows
 
             // Create new collection, save re-allocations
             TextDecorationCollection textDecorations = new(1 + decorationsSpan.Count(','));
-
-            // Go through each item in the input and match accordingly
             foreach (Range segment in decorationsSpan.Split(','))
             {
                 ReadOnlySpan<char> decoration = decorationsSpan[segment].Trim();
 
-                if (decoration.Equals("Overline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & OverlineMatch) == 0)
+                if (decoration.Equals("Overline", StringComparison.OrdinalIgnoreCase) && !matchedDecorations.HasFlag(Decorations.OverlineMatch))
                 {
                     textDecorations.Add(TextDecorations.OverLine[0]);
-                    matchedDecorations |= OverlineMatch;
+                    matchedDecorations |= Decorations.OverlineMatch;
                 }
-                else if (decoration.Equals("Baseline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & BaselineMatch) == 0)
+                else if (decoration.Equals("Baseline", StringComparison.OrdinalIgnoreCase) && !matchedDecorations.HasFlag(Decorations.BaselineMatch))
                 {
                     textDecorations.Add(TextDecorations.Baseline[0]);
-                    matchedDecorations |= BaselineMatch;
+                    matchedDecorations |= Decorations.BaselineMatch;
                 }
-                else if (decoration.Equals("Underline", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & UnderlineMatch) == 0)
+                else if (decoration.Equals("Underline", StringComparison.OrdinalIgnoreCase) && !matchedDecorations.HasFlag(Decorations.UnderlineMatch))
                 {
                     textDecorations.Add(TextDecorations.Underline[0]);
-                    matchedDecorations |= UnderlineMatch;
+                    matchedDecorations |= Decorations.UnderlineMatch;
                 }
-                else if (decoration.Equals("Strikethrough", StringComparison.OrdinalIgnoreCase) && (matchedDecorations & StrikethroughMatch) == 0)
+                else if (decoration.Equals("Strikethrough", StringComparison.OrdinalIgnoreCase) && !matchedDecorations.HasFlag(Decorations.StrikethroughMatch))
                 {
                     textDecorations.Add(TextDecorations.Strikethrough[0]);
-                    matchedDecorations |= StrikethroughMatch;
+                    matchedDecorations |= Decorations.StrikethroughMatch;
                 }
                 else
                 {
@@ -149,6 +141,19 @@ namespace System.Windows
 
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
             return base.ConvertTo(context, culture, value, destinationType);
+        }
+
+        /// <summary>
+        /// Abstraction helper of matched decorations during conversion.
+        /// </summary>
+        [Flags]
+        private enum Decorations : byte
+        {
+            None = 0,
+            OverlineMatch = 1 << 0,
+            BaselineMatch = 1 << 1,
+            UnderlineMatch = 1 << 2,
+            StrikethroughMatch = 1 << 3,
         }
     }
 }

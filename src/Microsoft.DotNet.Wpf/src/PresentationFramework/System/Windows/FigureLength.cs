@@ -100,11 +100,11 @@ namespace System.Windows
         {
             // Check value
             if (double.IsNaN(value))
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, nameof(value)));
             else if (double.IsInfinity(value))
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, nameof(value)));
             else if (value < 0.0)
-                throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, "value"));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, nameof(value)));
 
             // Check unitType
             if (type is FigureUnitType.Content or FigureUnitType.Page)
@@ -116,7 +116,7 @@ namespace System.Windows
             else if (type is FigureUnitType.Auto)
                 value = 1.0; // Value is ignored in case of "Auto" and defaulted to "1.0"
             else
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, nameof(type)));
 
             _unitValue = value;
             _unitType = type;

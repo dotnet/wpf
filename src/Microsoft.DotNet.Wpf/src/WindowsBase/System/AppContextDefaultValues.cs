@@ -7,54 +7,21 @@ using System.Windows;
 
 namespace System
 {
-    // There are cases where we have multiple assemblies that are going to import this file and 
-    // if they are going to also have InternalsVisibleTo between them, there will be a compiler warning
-    // that the type is found both in the source and in a referenced assembly. The compiler will prefer 
-    // the version of the type defined in the source
-    //
-    // In order to disable the warning for this type we are disabling this warning for this entire file.
-    #pragma warning disable 436 
-
     /// <summary>
     /// Default values for app-compat quirks used within WindowsBase.
     /// Also see BaseAppContextSwitches
     /// </summary>
     internal static partial class AppContextDefaultValues
     {
-        static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int targetFrameworkVersion)
-        {
-            switch (platformIdentifier)
-            {
-                case ".NETFramework":
-                    {
-                        if (targetFrameworkVersion <= 40502)
-                        {
-                            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchDoNotUseCulturePreservingDispatcherOperations, true);
-                        }
-
-                        if (targetFrameworkVersion <= 40700)
-                        {
-                            LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchUseSha1AsDefaultHashAlgorithmForDigitalSignatures, true);
-                        }
-                    }
-                    break;
-
-                case ".NETCoreApp":
-                    {
-                        InitializeNetFxSwitchDefaultsForNetCoreRuntime();
-                    }
-                    break;
-            }
-
-            // Ensure we set all the accessibility switch defaults
-            AccessibilitySwitches.SetSwitchDefaults(platformIdentifier, targetFrameworkVersion);
-        }
-
         /// <summary>
-        /// This is the full set of .NET Framework <see cref="AppContext"/> in <see cref="BaseAppContextSwitches"/>. These are being initialized
-        /// to <code>false</code> to ensure that the corresponding functionality will be treated as if it is enabled by default on .NET Core.
+        /// This is a partial method. This method is responsible for populating the default values based on a TFM.
+        /// It is partial because each library should define this method in their code to contain their defaults.
         /// </summary>
-        private static void InitializeNetFxSwitchDefaultsForNetCoreRuntime()
+        /// <remarks>
+        /// This is the full set of .NET Framework <see cref="AppContext"/> in <see cref="BaseAppContextSwitches"/>. These are being initialized
+        /// to <see langword="false"/> to ensure that the corresponding functionality will be treated as if it is enabled by default on .NET Core.
+        /// </remarks>
+        static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int targetFrameworkVersion)
         {
             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchDoNotUseCulturePreservingDispatcherOperations, false);
             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchUseSha1AsDefaultHashAlgorithmForDigitalSignatures, false);
@@ -62,8 +29,9 @@ namespace System
             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchDoNotInvokeInWeakEventTableShutdownListener, false);
             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchEnableCleanupSchedulingImprovements, false);
             LocalAppContext.DefineSwitchDefault(BaseAppContextSwitches.SwitchEnableWeakEventMemoryImprovements, false);
+
+            // Ensure we set all the accessibility switch defaults
+            AccessibilitySwitches.SetSwitchDefaults(platformIdentifier, targetFrameworkVersion);
         }
     }
-
-    #pragma warning restore 436
 }

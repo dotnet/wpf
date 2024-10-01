@@ -146,7 +146,7 @@ namespace System.Windows.Media.Imaging
             {
                 _fixedSize = fixedSize;
                 _containerFormat = containerFormat;
-                _metadataBlocks = new ArrayList();
+                _metadataBlocks = new List<SafeMILHandle>();
             }
 
             internal BitmapMetadataBlockWriter(BitmapMetadataBlockWriter blockWriter, object syncObject)
@@ -155,9 +155,9 @@ namespace System.Windows.Media.Imaging
 
                 _fixedSize = blockWriter._fixedSize;
                 _containerFormat = blockWriter._containerFormat;
-                _metadataBlocks = new ArrayList();
+                _metadataBlocks = new List<SafeMILHandle>();
 
-                ArrayList metadataBlocks = blockWriter.MetadataBlocks;
+                List<SafeMILHandle> metadataBlocks = blockWriter.MetadataBlocks;
 
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
@@ -207,7 +207,7 @@ namespace System.Windows.Media.Imaging
                 out UInt32 count
             )
             {
-                count = (UInt32) _metadataBlocks.Count;
+                count = (UInt32)_metadataBlocks.Count;
 
                 return MS.Win32.NativeMethods.S_OK;
             }
@@ -227,7 +227,7 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
-                SafeMILHandle metadataReader = (SafeMILHandle) _metadataBlocks[(int)index];
+                SafeMILHandle metadataReader = _metadataBlocks[(int)index];
 
                 Guid wicMetadataReader = MILGuidData.IID_IWICMetadataReader;
                 return UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -271,7 +271,7 @@ namespace System.Windows.Media.Imaging
 
                 Guid guidVendor = new Guid(MILGuidData.GUID_VendorMicrosoft);
 
-                ArrayList metadataBlocks = new ArrayList();
+                List<SafeMILHandle> metadataBlocks = new();
 
                 hr = UnsafeNativeMethods.WICMetadataBlockReader.GetCount(
                     pIBlockReader,
@@ -354,7 +354,7 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
-                SafeMILHandle metadataWriter = (SafeMILHandle) _metadataBlocks[(int)index];
+                SafeMILHandle metadataWriter = _metadataBlocks[(int)index];
 
                 Guid wicMetadataWriter = MILGuidData.IID_IWICMetadataWriter;
                 return UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -437,12 +437,12 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
-                _metadataBlocks.Remove(index);
+                _metadataBlocks.RemoveAt((int)index);
 
                 return MS.Win32.NativeMethods.S_OK;
             }
 
-            internal ArrayList MetadataBlocks
+            internal List<SafeMILHandle> MetadataBlocks
             {
                 get
                 {
@@ -452,7 +452,7 @@ namespace System.Windows.Media.Imaging
 
             private bool _fixedSize;
             private Guid _containerFormat;
-            private ArrayList _metadataBlocks;
+            private List<SafeMILHandle> _metadataBlocks;
         }
 
         //*************************************************************
@@ -534,7 +534,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    SafeMILHandle metadataHandle = (SafeMILHandle) _metadataBlocks[(int)_index];
+                    SafeMILHandle metadataHandle = _metadataBlocks[(int)_index];
 
                     Guid wicMetadataReader = MILGuidData.IID_IWICMetadataReader;
                     int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -560,7 +560,7 @@ namespace System.Windows.Media.Imaging
 
                 if (newIndex > _metadataBlocks.Count)
                 {
-                    _index = (uint) _metadataBlocks.Count;
+                    _index = (uint)_metadataBlocks.Count;
                     return MS.Win32.NativeMethods.S_FALSE;
                 }
                 else
@@ -588,7 +588,7 @@ namespace System.Windows.Media.Imaging
                 return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
             }
 
-            private ArrayList _metadataBlocks;
+            private List<SafeMILHandle> _metadataBlocks;
             private UInt32 _index;
         }
 

@@ -1074,8 +1074,7 @@ namespace MS.Internal.PtsHost
         /// </param>
         private static void AddGlyphRunRecursive(Drawing drawing, List<GlyphRun> glyphRunsCollection, ref int cchGlyphRuns)
         {
-            DrawingGroup group = drawing as DrawingGroup;
-            if (group != null)
+            if (drawing is DrawingGroup group)
             {
                 foreach (Drawing child in group.Children)
                 {
@@ -1084,8 +1083,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-                GlyphRunDrawing glyphRunDrawing = drawing as GlyphRunDrawing;
-                if (glyphRunDrawing != null)
+                if (drawing is GlyphRunDrawing glyphRunDrawing)
                 {
                     // Add a glyph run
                     GlyphRun glyphRun = glyphRunDrawing.GlyphRun;

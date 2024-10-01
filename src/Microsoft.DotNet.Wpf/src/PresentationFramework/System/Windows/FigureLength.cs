@@ -48,53 +48,43 @@ namespace System.Windows
     }
 
     /// <summary>
-    /// FigureLength is the type used for height and width on figure element
+    /// FigureLength is the type used for height and width on figure element.
     /// </summary>
     [TypeConverter(typeof(FigureLengthConverter))]
     public readonly struct FigureLength : IEquatable<FigureLength>
     {
-
+        /// <summary>
+        /// Represents the <see cref="Value"/> of this instance; 1.0 if <see cref="FigureUnitType"/> is <see cref="FigureUnitType.Auto"/>.
+        /// </summary>
         private readonly double _unitValue;
+        /// <summary>
+        /// Represents the <see cref="FigureUnitType"/> of this instance.
+        /// </summary>
         private readonly FigureUnitType _unitType;
 
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
-
         /// <summary>
-        /// Constructor, initializes the FigureLength as absolute value in pixels.
+        /// Constructor, initializes the <see cref="FigureLength"/> as absolute value in pixels.
         /// </summary>
         /// <param name="pixels">Specifies the number of 'device-independent pixels' 
         /// (96 pixels-per-inch).</param>
         /// <exception cref="ArgumentException">
-        /// If <c>pixels</c> parameter is <c>double.NaN</c>
-        /// or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
-        /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c>.
-        /// or <c>value</c> parameter is <c>negative</c>.
+        /// If <c>pixels</c> parameter is <c>double.NaN</c> or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
+        /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c> or <c>value</c> parameter is <c>negative</c>.
         /// </exception>
         public FigureLength(double pixels) : this(pixels, FigureUnitType.Pixel) { }
 
         /// <summary>
-        /// Constructor, initializes the FigureLength and specifies what kind of value 
-        /// it will hold.
+        /// Constructor, initializes the <see cref="FigureLength"/> and specifies what kind of value it will hold.
         /// </summary>
-        /// <param name="value">Value to be stored by this FigureLength 
-        /// instance.</param>
-        /// <param name="type">Type of the value to be stored by this FigureLength 
-        /// instance.</param>
+        /// <param name="value">Value to be stored by this <see cref="FigureLength"/> instance.</param>
+        /// <param name="type">Type of the value to be stored by this <see cref="FigureLength"/> instance.</param>
         /// <remarks> 
-        /// If the <c>type</c> parameter is <c>FigureUnitType.Auto</c>, 
-        /// then passed in value is ignored and replaced with <c>1</c>.
+        /// If the <paramref name="type"/> parameter is <see cref="FigureUnitType.Auto"/>, 
+        /// then the value passed in <paramref name="value"/> is ignored and replaced with 1.0.
         /// </remarks>
         /// <exception cref="ArgumentException">
-        /// If <c>value</c> parameter is <c>double.NaN</c>
-        /// or <c>value</c> parameter is <c>double.NegativeInfinity</c>
-        /// or <c>value</c> parameter is <c>double.PositiveInfinity</c>.
-        /// or <c>value</c> parameter is <c>negative</c>.
+        /// If <c>pixels</c> parameter is <c>double.NaN</c> or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
+        /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c> or <c>value</c> parameter is <c>negative</c>.
         /// </exception>
         public FigureLength(double value, FigureUnitType type)
         {
@@ -122,116 +112,103 @@ namespace System.Windows
             _unitType = type;
         }
 
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods 
-
         /// <summary>
-        /// Overloaded operator, compares 2 FigureLengths.
+        /// Compares two <see cref="FigureLength"/> structures for equality.
         /// </summary>
-        /// <param name="fl1">first FigureLength to compare.</param>
-        /// <param name="fl2">second FigureLength to compare.</param>
-        /// <returns>true if specified FigureLengths have same value 
-        /// and unit type.</returns>
+        /// <param name="fl1">The first <see cref="FigureLength"/> to compare.</param>
+        /// <param name="fl2">The second <see cref="FigureLength"/> to compare.</param>
+        /// <returns><see langword="true"/> if specified <see cref="FigureLength"/>s have same
+        /// <see cref="Value"/> and <see cref="FigureUnitType"/>.</returns>
         public static bool operator ==(FigureLength fl1, FigureLength fl2)
         {
             return fl1.FigureUnitType == fl2.FigureUnitType && fl1.Value == fl2.Value;
         }
 
         /// <summary>
-        /// Overloaded operator, compares 2 FigureLengths.
+        /// Compares two <see cref="FigureLength"/> structures for inequality.
         /// </summary>
-        /// <param name="fl1">first FigureLength to compare.</param>
-        /// <param name="fl2">second FigureLength to compare.</param>
-        /// <returns>true if specified FigureLengths have either different value or 
-        /// unit type.</returns>
+        /// <param name="fl1">The first <see cref="FigureLength"/> to compare.</param>
+        /// <param name="fl2">The second <see cref="FigureLength"/> to compare.</param>
+        /// <returns><see langword="true"/> if specified <see cref="FigureLength"/>s differ
+        /// in <see cref="Value"/> or <see cref="FigureUnitType"/>.</returns>
         public static bool operator !=(FigureLength fl1, FigureLength fl2)
         {
             return !(fl1 == fl2);
         }
 
         /// <summary>
-        /// Compares this instance of FigureLength with another object.
+        /// Compares this instance of <see cref="FigureLength"/> with another object.
         /// </summary>
         /// <param name="oCompare">Reference to an object for comparison.</param>
-        /// <returns><c>true</c>if this FigureLength instance has the same value 
-        /// and unit type as oCompare.</returns>
+        /// <returns><see langword="true"/> if this <see cref="FigureLength"/> instance has the same value
+        /// and unit type as <paramref name="oCompare"/>.</returns>
         public override bool Equals(object oCompare)
         {
             return oCompare is FigureLength figureLength && Equals(figureLength);
         }
 
         /// <summary>
-        /// Compares this instance of FigureLength with another object.
+        /// Compares this instance of <see cref="FigureLength"/> with another <see cref="FigureLength"/>.
         /// </summary>
         /// <param name="figureLength">FigureLength to compare.</param>
-        /// <returns><c>true</c>if this FigureLength instance has the same value 
-        /// and unit type as figureLength.</returns>
+        /// <returns><see langword="true"/> if this <see cref="FigureLength"/> instance has the same value 
+        /// and unit type as <paramref name="figureLength"/>.</returns>
         public bool Equals(FigureLength figureLength)
         {
             return this == figureLength;
         }
 
         /// <summary>
-        /// <see cref="Object.GetHashCode"/>
+        /// Returns the hash code for this <see cref="FigureLength"/>.
         /// </summary>
-        /// <returns><see cref="Object.GetHashCode"/></returns>
+        /// <returns>The hash code for this <see cref="FigureLength"/> structure.</returns>
         public override int GetHashCode()
         {
             return (int)_unitValue + (int)_unitType;
         }
 
         /// <summary>
-        /// Returns <c>true</c> if this FigureLength instance holds 
-        /// an absolute (pixel) value.
+        /// Returns <see langword="true"/> if this <see cref="FigureLength"/> instance holds an absolute (pixel) value.
         /// </summary>
         public bool IsAbsolute { get { return _unitType == FigureUnitType.Pixel; } }
 
         /// <summary>
-        /// Returns <c>true</c> if this FigureLength instance is 
-        /// automatic (not specified).
+        /// Returns <see langword="true"/> if this <see cref="FigureLength"/> instance is automatic (not specified).
         /// </summary>
         public bool IsAuto { get { return _unitType == FigureUnitType.Auto; } }
 
         /// <summary>
-        /// Returns <c>true</c> if this FigureLength instance is column relative.
+        /// Returns <see langword="true"/> if this <see cref="FigureLength"/> instance is column relative.
         /// </summary>
         public bool IsColumn { get { return _unitType == FigureUnitType.Column; } }
 
         /// <summary>
-        /// Returns <c>true</c> if this FigureLength instance is content relative.
+        /// Returns <see langword="true"/> if this <see cref="FigureLength"/> instance is content relative.
         /// </summary>
         public bool IsContent { get { return _unitType == FigureUnitType.Content; } }
 
         /// <summary>
-        /// Returns <c>true</c> if this FigureLength instance is page relative.
+        /// Returns <see langword="true"/> if this <see cref="FigureLength"/> instance is page relative.
         /// </summary>
         public bool IsPage { get { return _unitType == FigureUnitType.Page; } }
 
         /// <summary>
-        /// Returns value part of this FigureLength instance.
+        /// Returns value part of this <see cref="FigureLength"/> instance.
         /// </summary>
         public double Value { get { return _unitValue; } }
 
         /// <summary>
-        /// Returns unit type of this FigureLength instance.
+        /// Returns unit type of this <see cref="FigureLength"/> instance.
         /// </summary>
         public FigureUnitType FigureUnitType { get { return _unitType; } }
 
         /// <summary>
-        /// Returns the string representation of this object.
+        /// Returns the <see langword="string"/> representation of this <see cref="FigureLength"/>.
         /// </summary>
+        /// <returns>A <see langword="string"/> representation of this <see cref="FigureLength"/>.</returns>
         public override string ToString()
         {
             return FigureLengthConverter.ToString(this, CultureInfo.InvariantCulture);
         }
-        
-        #endregion Public Methods 
     }
 }

@@ -95,24 +95,22 @@ namespace System.Windows
         /// <param name="source"> The object to convert to a Thickness. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source is not null)
-            {
-                if (source is string sourceString)
-                    return FromString(sourceString, cultureInfo);
-                else if (source is double sourceValue)
-                    return new Thickness(sourceValue);
-                else
-                    return new Thickness(Convert.ToDouble(source, cultureInfo));
-            }
+            if (source is null)
+                throw GetConvertFromException(source);
 
-            throw GetConvertFromException(source);
+            if (source is string sourceString)
+                return FromString(sourceString, cultureInfo);
+            else if (source is double sourceValue)
+                return new Thickness(sourceValue);
+            else
+                return new Thickness(Convert.ToDouble(source, cultureInfo));         
         }
 
         /// <summary>
         /// ConvertTo - Attempt to convert a Thickness to the given type
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
@@ -155,7 +153,13 @@ namespace System.Windows
 
         #region Internal Methods
 
-        static internal string ToString(Thickness th, CultureInfo cultureInfo)
+        /// <summary>
+        /// Converts <paramref name="th"/> to its string representation using the specified <paramref name="cultureInfo"/>.
+        /// </summary>
+        /// <param name="th">The <see cref="Thickness"/> to convert to string.</param>
+        /// <param name="cultureInfo">Culture to use when formatting doubles and choosing separator.</param>
+        /// <returns>The formatted <paramref name="th"/> as string using the specified <paramref name="cultureInfo"/>.</returns>
+        internal static string ToString(Thickness th, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
@@ -166,40 +170,31 @@ namespace System.Windows
             //  1 = 1x scratch space for alignment
 
             DefaultInterpolatedStringHandler handler = new(0, 7, cultureInfo, stackalloc char[64]);
-            FormatDoubleAsString(th.Left, ref handler);
+            LengthConverter.FormatLengthAsString(th.Left, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            FormatDoubleAsString(th.Top, ref handler);
+            LengthConverter.FormatLengthAsString(th.Top, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            FormatDoubleAsString(th.Right, ref handler);
+            LengthConverter.FormatLengthAsString(th.Right, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            FormatDoubleAsString(th.Bottom, ref handler);
+            LengthConverter.FormatLengthAsString(th.Bottom, ref handler);
 
             return handler.ToStringAndClear();
         }
 
-        /// <summary> Holds the "Auto" string representation for <see cref="double.NaN"/> conversion. </summary>
-        private static ReadOnlySpan<char> NaNValue => ['A', 'u', 't', 'o'];
-
-        /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
-        /// in <paramref name="handler"/>. <br /> <br />
-        /// Special representation applies for <see cref="double.NaN"/> values, emitted as "Auto" string instead. </summary>
-        /// <param name="value">The value to format as string.</param>
-        /// <param name="handler">The handler specifying culture used for conversion.</param>
-        static internal void FormatDoubleAsString(double value, ref DefaultInterpolatedStringHandler handler)
-        {
-            if (double.IsNaN(value))
-                handler.AppendFormatted(NaNValue);
-            else
-                handler.AppendFormatted(value);
-        }
-
-        static internal unsafe Thickness FromString(string s, CultureInfo cultureInfo)
+        /// <summary>
+        /// Constructs a <see cref="Thickness"/> struct out of string representation supplied by <paramref name="s"/> and the specified <paramref name="cultureInfo"/>.
+        /// </summary>
+        /// <param name="s">The string representation of a <see cref="Thickness"/> struct.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which was used to format this string.</param>
+        /// <returns>A new instance of <see cref="Thickness"/> struct representing the data contained in <paramref name="s"/>.</returns>
+        /// <exception cref="FormatException">Thrown when <paramref name="s"/> contains invalid string representation.</exception>
+        internal static Thickness FromString(string s, CultureInfo cultureInfo)
         {
             TokenizerHelper th = new(s, cultureInfo);
-            double* lengths = stackalloc double[4];
+            Span<double> lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.

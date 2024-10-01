@@ -88,7 +88,7 @@ namespace System.Windows
         /// instance.</param>
         /// <remarks> 
         /// If the <c>type</c> parameter is <c>FigureUnitType.Auto</c>, 
-        /// then passed in value is ignored and replaced with <c>0</c>.
+        /// then passed in value is ignored and replaced with <c>1</c>.
         /// </remarks>
         /// <exception cref="ArgumentException">
         /// If <c>value</c> parameter is <c>double.NaN</c>
@@ -98,38 +98,27 @@ namespace System.Windows
         /// </exception>
         public FigureLength(double value, FigureUnitType type)
         {
-            double maxColumns = PTS.Restrictions.tscColumnRestriction;
-            double maxPixel = Math.Min(1000000, PTS.MaxPageSize);
-
+            // Check value
             if (double.IsNaN(value))
-            {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
-            }
-            if (double.IsInfinity(value))
-            {
+            else if (double.IsInfinity(value))
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
-            }
-            if (value < 0.0)
-            {
+            else if (value < 0.0)
                 throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, "value"));
-            }
-            if (    type != FigureUnitType.Auto
-                &&  type != FigureUnitType.Pixel
-                &&  type != FigureUnitType.Column
-                &&  type != FigureUnitType.Content
-                &&  type != FigureUnitType.Page   )
-            {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
-            }
 
+            // Check unitType
             if (type is FigureUnitType.Content or FigureUnitType.Page)
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 1.0);
-            else if (type == FigureUnitType.Column)
-                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxColumns);
-            else if (type == FigureUnitType.Pixel)
-                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxPixel);
+            else if (type is FigureUnitType.Column)
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, PTS.Restrictions.tscColumnRestriction);
+            else if (type is FigureUnitType.Pixel)
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, Math.Min(1000000, PTS.MaxPageSize));
+            else if (type is FigureUnitType.Auto)
+                value = 1.0; // Value is ignored in case of "Auto" and defaulted to "1.0"
+            else
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
 
-            _unitValue = (type == FigureUnitType.Auto) ? 0.0 : value;
+            _unitValue = value;
             _unitType = type;
         }
 
@@ -228,7 +217,7 @@ namespace System.Windows
         /// <summary>
         /// Returns value part of this FigureLength instance.
         /// </summary>
-        public double Value { get { return (_unitType == FigureUnitType.Auto) ? 1.0 : _unitValue; } }
+        public double Value { get { return _unitValue; } }
 
         /// <summary>
         /// Returns unit type of this FigureLength instance.

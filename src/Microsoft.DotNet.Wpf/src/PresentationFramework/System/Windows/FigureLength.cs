@@ -51,8 +51,12 @@ namespace System.Windows
     /// FigureLength is the type used for height and width on figure element
     /// </summary>
     [TypeConverter(typeof(FigureLengthConverter))]
-    public struct FigureLength : IEquatable<FigureLength>
+    public readonly struct FigureLength : IEquatable<FigureLength>
     {
+
+        private readonly double _unitValue;
+        private readonly FigureUnitType _unitType;
+
         //------------------------------------------------------
         //
         //  Constructors
@@ -258,16 +262,5 @@ namespace System.Windows
         }
         
         #endregion Public Methods 
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields 
-        private double _unitValue;      //  unit value storage
-        private FigureUnitType _unitType; //  unit type storage
-        #endregion Private Fields 
     }
 }

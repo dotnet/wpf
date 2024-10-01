@@ -177,17 +177,8 @@ namespace System.Windows.Documents
         // for an error range.
         // This method actually runs the speller on the specified text,
         // re-evaluating the error from scratch.
-        internal IList GetSuggestionsForError(SpellingError error)
+        internal List<string> GetSuggestionsForError(SpellingError error)
         {
-            ITextPointer contextStart;
-            ITextPointer contextEnd;
-            ITextPointer contentStart;
-            ITextPointer contentEnd;
-            TextMap textMap;
-            ArrayList suggestions;
-
-            suggestions = new ArrayList(1);
-
             //
             // IMPORTANT!!
             //
@@ -195,18 +186,15 @@ namespace System.Windows.Documents
             // calculate the exact same error.  Keep the two methods in sync!
             //
 
-            XmlLanguage language;
-            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out language);
-            if (culture == null || !_spellerInterop.CanSpellCheck(culture))
-            {
-                // Return an empty list.
-            }
-            else
-            {
-                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out contentStart, out contextStart);
-                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out contentEnd, out contextEnd);
+            List<string> suggestions = new(4);
+            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
-                textMap = new TextMap(contextStart, contextEnd, contentStart, contentEnd);
+            if (culture is not null && _spellerInterop.CanSpellCheck(culture))
+            {
+                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out ITextPointer contentStart, out ITextPointer contextStart);
+                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out ITextPointer contentEnd, out ITextPointer contextEnd);
+
+                TextMap textMap = new(contextStart, contextEnd, contentStart, contentEnd);
 
                 SetCulture(culture);
 
@@ -915,7 +903,7 @@ namespace System.Windows.Documents
             {
                 if (textSegment.SubSegments.Count == 0)
                 {
-                    ArrayList suggestions = (ArrayList)data.Data;
+                    List<string> suggestions = (List<string>)data.Data;
                     if(textSegment.Suggestions.Count > 0)
                     {
                         foreach(string suggestion in textSegment.Suggestions)

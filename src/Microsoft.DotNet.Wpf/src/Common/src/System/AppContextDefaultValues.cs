@@ -19,15 +19,19 @@ namespace System
     {
         public static void PopulateDefaultValues()
         {
-            string platformIdentifier, profile;
-            int version;
-
-            ParseTargetFrameworkName(out platformIdentifier, out profile, out version);
+#if NETFX
+            // Get Target Framework information
+            ParseTargetFrameworkName(out string platformIdentifier, out string profile, out int version);
 
             // Call into each library to populate their default switches
             PopulateDefaultValuesPartial(platformIdentifier, profile, version);
+#else
+            // Call into each library to populate their default switches
+            // ".NETCoreApp,Version=v3.0"
+            PopulateDefaultValuesPartial(".NETCoreApp", string.Empty, 30000);
+#endif
         }
-
+#if NETFX
         /// <summary>
         /// We have this separate method for getting the parsed elements out of the TargetFrameworkName so we can
         /// more easily support this on other platforms.
@@ -67,29 +71,10 @@ namespace System
         /// <summary>
         ///  This is equivalent to calling <code>AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName</code>
         /// </summary>
-        /// <remarks>
-        /// <code>AppDomain.CurrentDomain.SetupInformation</code> is not available until .NET Core 3.0, but we 
-        /// have a need to run this code in .NET Core 2.2, we attempt to obtain this information via Reflection.
-        /// </remarks>
         /// <returns>TargetFrameworkMoniker on .NET Framework and .NET Core 3.0+; null on .NET Core 2.2 or older runtimes</returns>
         private static string GetTargetFrameworkMoniker()
         {
-            try
-            {
-                var pSetupInformation = typeof(AppDomain).GetProperty("SetupInformation");
-                object appDomainSetup = pSetupInformation?.GetValue(AppDomain.CurrentDomain);
-                Type tAppDomainSetup = Type.GetType("System.AppDomainSetup");
-                var pTargetFrameworkName = tAppDomainSetup?.GetProperty("TargetFrameworkName");
-
-                return
-                    appDomainSetup != null ?
-                    pTargetFrameworkName?.GetValue(appDomainSetup) as string :
-                    null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return AppContext.TargetFrameworkName;
         }
 
         // This code was a constructor copied from the FrameworkName class, which is located in System.dll.
@@ -196,7 +181,7 @@ namespace System
 
             return true;
         }
-
+#endif
         // This is a partial method. Platforms (such as Desktop) can provide an implementation of it that will read override value
         // from whatever mechanism is available on that platform. If no implementation is provided, the compiler is going to remove the calls
         // to it from the code

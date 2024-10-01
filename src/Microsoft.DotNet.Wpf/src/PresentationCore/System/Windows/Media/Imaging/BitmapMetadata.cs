@@ -450,8 +450,8 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            private bool _fixedSize;
-            private Guid _containerFormat;
+            private readonly bool _fixedSize;
+            private readonly Guid _containerFormat;
             private List<SafeMILHandle> _metadataBlocks;
         }
 
@@ -588,7 +588,7 @@ namespace System.Windows.Media.Imaging
                 return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
             }
 
-            private List<SafeMILHandle> _metadataBlocks;
+            private readonly List<SafeMILHandle> _metadataBlocks;
             private UInt32 _index;
         }
 

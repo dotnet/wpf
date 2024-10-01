@@ -76,10 +76,7 @@ namespace System.Windows
         /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c>.
         /// or <c>value</c> parameter is <c>negative</c>.
         /// </exception>
-        public FigureLength(double pixels)
-            : this(pixels, FigureUnitType.Pixel)
-        {
-        }
+        public FigureLength(double pixels) : this(pixels, FigureUnitType.Pixel) { }
 
         /// <summary>
         /// Constructor, initializes the FigureLength and specifies what kind of value 
@@ -124,20 +121,13 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
             }
+
             if (type is FigureUnitType.Content or FigureUnitType.Page)
-            {
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 1.0);
-            }
-
-            if (type == FigureUnitType.Column)
-            {
+            else if (type == FigureUnitType.Column)
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxColumns);
-            }
-
-            if (type == FigureUnitType.Pixel)
-            {
+            else if (type == FigureUnitType.Pixel)
                 ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxPixel);
-            }
 
             _unitValue = (type == FigureUnitType.Auto) ? 0.0 : value;
             _unitType = type;
@@ -160,10 +150,9 @@ namespace System.Windows
         /// <param name="fl2">second FigureLength to compare.</param>
         /// <returns>true if specified FigureLengths have same value 
         /// and unit type.</returns>
-        public static bool operator == (FigureLength fl1, FigureLength fl2)
+        public static bool operator ==(FigureLength fl1, FigureLength fl2)
         {
-            return (    fl1.FigureUnitType == fl2.FigureUnitType 
-                    &&  fl1.Value == fl2.Value  );
+            return fl1.FigureUnitType == fl2.FigureUnitType && fl1.Value == fl2.Value;
         }
 
         /// <summary>
@@ -173,10 +162,9 @@ namespace System.Windows
         /// <param name="fl2">second FigureLength to compare.</param>
         /// <returns>true if specified FigureLengths have either different value or 
         /// unit type.</returns>
-        public static bool operator != (FigureLength fl1, FigureLength fl2)
+        public static bool operator !=(FigureLength fl1, FigureLength fl2)
         {
-            return (    fl1.FigureUnitType != fl2.FigureUnitType 
-                    ||  fl1.Value != fl2.Value  );
+            return !(fl1 == fl2);
         }
 
         /// <summary>
@@ -198,7 +186,7 @@ namespace System.Windows
         /// and unit type as figureLength.</returns>
         public bool Equals(FigureLength figureLength)
         {
-            return (this == figureLength);
+            return this == figureLength;
         }
 
         /// <summary>
@@ -207,45 +195,45 @@ namespace System.Windows
         /// <returns><see cref="Object.GetHashCode"/></returns>
         public override int GetHashCode()
         {
-            return ((int)_unitValue + (int)_unitType);
+            return (int)_unitValue + (int)_unitType;
         }
 
         /// <summary>
         /// Returns <c>true</c> if this FigureLength instance holds 
         /// an absolute (pixel) value.
         /// </summary>
-        public bool IsAbsolute { get { return (_unitType == FigureUnitType.Pixel); } }
+        public bool IsAbsolute { get { return _unitType == FigureUnitType.Pixel; } }
 
         /// <summary>
         /// Returns <c>true</c> if this FigureLength instance is 
         /// automatic (not specified).
         /// </summary>
-        public bool IsAuto { get { return (_unitType == FigureUnitType.Auto); } }
+        public bool IsAuto { get { return _unitType == FigureUnitType.Auto; } }
 
         /// <summary>
         /// Returns <c>true</c> if this FigureLength instance is column relative.
         /// </summary>
-        public bool IsColumn { get { return (_unitType == FigureUnitType.Column); } }
+        public bool IsColumn { get { return _unitType == FigureUnitType.Column; } }
 
         /// <summary>
         /// Returns <c>true</c> if this FigureLength instance is content relative.
         /// </summary>
-        public bool IsContent { get { return (_unitType == FigureUnitType.Content); } }
+        public bool IsContent { get { return _unitType == FigureUnitType.Content; } }
 
         /// <summary>
         /// Returns <c>true</c> if this FigureLength instance is page relative.
         /// </summary>
-        public bool IsPage { get { return (_unitType == FigureUnitType.Page); } }
+        public bool IsPage { get { return _unitType == FigureUnitType.Page; } }
 
         /// <summary>
         /// Returns value part of this FigureLength instance.
         /// </summary>
-        public double Value { get { return ((_unitType == FigureUnitType.Auto) ? 1.0 : _unitValue); } }
+        public double Value { get { return (_unitType == FigureUnitType.Auto) ? 1.0 : _unitValue; } }
 
         /// <summary>
         /// Returns unit type of this FigureLength instance.
         /// </summary>
-        public FigureUnitType FigureUnitType { get { return (_unitType); } }
+        public FigureUnitType FigureUnitType { get { return _unitType; } }
 
         /// <summary>
         /// Returns the string representation of this object.

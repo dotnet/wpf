@@ -9,140 +9,115 @@
 //              to the *Type* that the string represents 
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Input;
-using MS.Utility;
 
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// MouseAction - Converter class for converting between a string and the Type of a MouseAction
+    /// Converter class for converting between a <see langword="string"/> and <see cref="MouseAction"/>.
     /// </summary>
     public class MouseActionConverter : TypeConverter
     {
         ///<summary>
-        /// CanConvertFrom - Used to check whether we can convert a string into a MouseAction
+        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="MouseAction"/>.
         ///</summary>
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
-        ///<returns>true if the given type can be converted, false otherwise</returns>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-        ///<summary>
-        ///TypeConverter method override. 
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion	is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    return (MouseActionConverter.IsDefinedMouseAction((MouseAction)context.Instance));
-                 }
-            }
-            return false;
+            // We can only handle string
+            return sourceType == typeof(string);
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Used to check whether we can convert specified value to <see langword="string"/>.
+        /// </summary>
+        /// <param name="context">ITypeDescriptorContext</param>
+        /// <param name="destinationType">Type to convert to</param>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        {
+            // We can convert to an InstanceDescriptor or to a string
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context is null || context.Instance is null)
+                return false;
+
+            // Make sure the value falls within defined set
+            return IsDefinedMouseAction((MouseAction)context.Instance);
+        }
+
+        /// <summary>
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="MouseAction"/> represensation.
         /// </summary>
         /// <param name="context">Parser Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="source">MouseAction String</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="MouseAction"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source != null && source is string)
+            if (source is not string mouseAction)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> mouseActionToken = mouseAction.AsSpan().Trim();
+            return mouseActionToken switch
             {
-                string mouseActionToken = ((string)source).Trim();
-                mouseActionToken = mouseActionToken.ToUpper(CultureInfo.InvariantCulture);
-                if (mouseActionToken == String.Empty)
-                    return MouseAction.None;
-                
-                MouseAction mouseAction = MouseAction.None;
-                switch (mouseActionToken)
-                {
-                    case "NONE"             : mouseAction = MouseAction.None; break;
-                    case "LEFTCLICK"        : mouseAction = MouseAction.LeftClick; break;
-                    case "RIGHTCLICK"       : mouseAction = MouseAction.RightClick; break;
-                    case "MIDDLECLICK"      : mouseAction = MouseAction.MiddleClick; break;
-                    case "WHEELCLICK"       : mouseAction = MouseAction.WheelClick; break;
-                    case "LEFTDOUBLECLICK"  : mouseAction = MouseAction.LeftDoubleClick; break;
-                    case "RIGHTDOUBLECLICK" : mouseAction = MouseAction.RightDoubleClick; break;
-                    case "MIDDLEDOUBLECLICK": mouseAction = MouseAction.MiddleDoubleClick; break;
-                    default :
-                        throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken));
-                }
-                return mouseAction;
-            }
-            throw GetConvertFromException(source);
+                _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
+                _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
+                _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
+                _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
+                _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
+                _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
+                _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
+                _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
+                _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
+                _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
+            };
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Converts a <paramref name="value"/> of <see cref="MouseAction"/> to its <see langword="string"/> represensation.
         /// </summary>
         /// <param name="context">Serialization Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="value">MouseAction value </param>
         /// <param name="destinationType">Type to Convert</param>
-        /// <returns>string if parameter is a MouseAction</returns>
+        /// <returns>A <see langword="string"/> representing the <see cref="MouseAction"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value != null)
+            if (value is null || destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
+
+            return (MouseAction)value switch
             {
-                MouseAction mouseActionValue  = (MouseAction)value ;
-                if (MouseActionConverter.IsDefinedMouseAction(mouseActionValue))
-                {
-                    string mouseAction = null;
-                    switch (mouseActionValue)
-                    {
-                        case MouseAction.None             : mouseAction=String.Empty; break;
-                        case MouseAction.LeftClick        : mouseAction="LeftClick"; break;
-                        case MouseAction.RightClick       : mouseAction="RightClick"; break;
-                        case MouseAction.MiddleClick      : mouseAction="MiddleClick"; break;
-                        case MouseAction.WheelClick       : mouseAction="WheelClick"; break;
-                        case MouseAction.LeftDoubleClick  : mouseAction="LeftDoubleClick"; break;
-                        case MouseAction.RightDoubleClick : mouseAction="RightDoubleClick"; break;
-                        case MouseAction.MiddleDoubleClick: mouseAction="MiddleDoubleClick"; break;
-                    }
-                    if (mouseAction != null)
-                        return mouseAction;
-                }
-                throw new InvalidEnumArgumentException("value", (int)mouseActionValue, typeof(MouseAction));
-            }
-            throw GetConvertToException(value,destinationType);
+                MouseAction.None => string.Empty,
+                MouseAction.LeftClick => "LeftClick",
+                MouseAction.RightClick => "RightClick",
+                MouseAction.MiddleClick => "MiddleClick",
+                MouseAction.WheelClick => "WheelClick",
+                MouseAction.LeftDoubleClick => "LeftDoubleClick",
+                MouseAction.RightDoubleClick => "RightDoubleClick",
+                MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
+                _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
+            };
         }
 
-        // Helper like Enum.IsDefined,  for MouseAction.
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{MouseAction}(MouseAction)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="mouseAction">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="mouseAction"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
         internal static bool IsDefinedMouseAction(MouseAction mouseAction)
         {
-            return (mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick);
+            return mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick;
         }
     }
 }

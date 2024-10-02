@@ -149,6 +149,8 @@
     <Compile Include="MS\Internal\Verify.cs" />
     <Compile Include="MS\Internal\WeakEventTable.cs" />
     <Compile Include="MS\Internal\WeakReferenceKey.cs" />
+    <Compile Include="MS\Internal\WpfComWrappers.cs" />
+    <Compile Include="MS\Internal\WpfComWrappers.TfThreadMgrWrapper.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="System\Collections\ObjectModel\WeakReadOnlyCollection.cs" />
     <Compile Include="System\ComponentModel\CurrentChangedEventManager.cs" />

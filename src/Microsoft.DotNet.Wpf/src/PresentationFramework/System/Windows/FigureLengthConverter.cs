@@ -2,32 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: Figure length converter implementation
-//
-//
-
-using MS.Internal;
-using MS.Utility;
-using System.ComponentModel;
-using System.Windows;
-using System;
-using System.Security;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
+using System.ComponentModel;
+using System.Windows.Markup;
 using System.Globalization;
 using System.Reflection;
-using System.Windows.Markup;
 
 namespace System.Windows
 {
     /// <summary>
-    /// FigureLengthConverter - Converter class for converting 
-    /// instances of other types to and from FigureLength instances.
+    /// Converter class for converting instances of other types to and from <see cref="FigureLength"/> instances.
     /// </summary> 
-    public class FigureLengthConverter: TypeConverter
+    public class FigureLengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -40,16 +26,10 @@ namespace System.Windows
         /// <summary>
         /// Checks whether or not this class can convert from a given type.
         /// </summary>
-        /// <param name="typeDescriptorContext">The ITypeDescriptorContext 
-        /// for this call.</param>
-        /// <param name="sourceType">The Type being queried for support.</param>
-        /// <returns>
-        /// <c>true</c> if thie converter can convert from the provided type, 
-        /// <c>false</c> otherwise.
-        /// </returns>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            Type sourceType)
+        /// <param name="typeDescriptorContext">Context information used for conversion.</param>
+        /// <param name="sourceType">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> if the given <paramref name="t"/> can be converted from, <see langword="false"/> otherwise.</returns>
+        public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types
             TypeCode tc = Type.GetTypeCode(sourceType);
@@ -66,7 +46,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -84,20 +64,20 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Attempts to convert to a FigureLength from the given object.
+        /// Attempts to initialize an instance of <see cref="FigureLength"/> from the given <paramref name="source"/>.
         /// </summary>
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
-        /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
-        /// <param name="source">The object to convert to a FigureLength.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <param name="source">The object to convert to a <see cref="FigureLength"/>.</param>
         /// <returns>
-        /// The FigureLength instance which was constructed.
+        /// The <see cref="FigureLength"/> instance which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// An ArgumentNullException is thrown if the example object is null.
+        /// An ArgumentNullException is thrown if the example object is <see langword="null"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// An ArgumentException is thrown if the example object is not null 
-        /// and is not a valid type which can be converted to a FigureLength.
+        /// An ArgumentException is thrown if the example object is not <see langword="null"/> 
+        /// and is not a valid type which can be converted to a <see cref="FigureLength"/>.
         /// </exception>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
@@ -112,21 +92,21 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Attempts to convert a FigureLength instance to the given type.
+        /// Attempts to convert a <see cref="FigureLength"/> instance to the given type.
         /// </summary>
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
-        /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
-        /// <param name="value">The FigureLength to convert.</param>
-        /// <param name="destinationType">The type to which to convert the FigureLength instance.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <param name="value">The <see cref="FigureLength"/> to convert.</param>
+        /// <param name="destinationType">The type to which to convert the <see cref="FigureLength"/> instance.</param>
         /// <returns>
         /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// An ArgumentNullException is thrown if the example object is null.
+        /// An ArgumentNullException is thrown if the <paramref name="destinationType"/> is <see langword="null"/>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// An ArgumentException is thrown if the object is not null and is not a FigureLength,
-        /// or if the destinationType isn't one of the valid destination types.
+        /// An ArgumentException is thrown if the <paramref name="value"/> is <see langword="null"/> or not a <see cref="FigureLength"/>,
+        /// or if the <paramref name="destinationType"/> isn't one of the valid destination types.
         /// </exception>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {

@@ -109,20 +109,18 @@ namespace System.Windows
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
-
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (!(value is CornerRadius))
-            {
+            if (value is not CornerRadius cornerRadius)
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), nameof(value));
-            }
 
-            CornerRadius cr = (CornerRadius)value;
-            if (destinationType == typeof(string)) { return ToString(cr, cultureInfo); }
+            if (destinationType == typeof(string))
+                return ToString(cornerRadius, cultureInfo);
+
             if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(CornerRadius).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
-                return new InstanceDescriptor(ci, new object[] { cr.TopLeft, cr.TopRight, cr.BottomRight, cr.BottomLeft });
+                return new InstanceDescriptor(ci, new object[] { cornerRadius.TopLeft, cornerRadius.TopRight, cornerRadius.BottomRight, cornerRadius.BottomLeft });
             }
 
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));

@@ -175,7 +175,7 @@ namespace System.Windows
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
         internal static double FromString(ReadOnlySpan<char> value, CultureInfo cultureInfo)
         {
-            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
+            ReadOnlySpan<char> valueSpan = value.Trim();
             double unitFactor = 1.0;
 
             // Auto is represented as Double.NaN
@@ -213,7 +213,6 @@ namespace System.Windows
                 throw new FormatException(SR.Format(SR.LengthFormatError, span.ToString()));
             }
         }
-
 
         #endregion
 

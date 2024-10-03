@@ -115,23 +115,20 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (value != null
-                && value is VirtualizationCacheLength)
+            if (value is not VirtualizationCacheLength cacheLength)
+                throw GetConvertToException(value, destinationType);
+
+            if (destinationType == typeof(string))
+                return ToString(cacheLength, cultureInfo);
+
+            if (destinationType == typeof(InstanceDescriptor))
             {
-                VirtualizationCacheLength gl = (VirtualizationCacheLength)value;
-
-                if (destinationType == typeof(string))
-                {
-                    return (ToString(gl, cultureInfo));
-                }
-
-                if (destinationType == typeof(InstanceDescriptor))
-                {
-                    ConstructorInfo ci = typeof(VirtualizationCacheLength).GetConstructor(new Type[] { typeof(double), typeof(VirtualizationCacheLengthUnit) });
-                    return (new InstanceDescriptor(ci, new object[] { gl.CacheBeforeViewport, gl.CacheAfterViewport }));
-                }
+                ConstructorInfo ci = typeof(VirtualizationCacheLength).GetConstructor(new Type[] { typeof(double), typeof(VirtualizationCacheLengthUnit) });
+                return new InstanceDescriptor(ci, new object[] { cacheLength.CacheBeforeViewport, cacheLength.CacheAfterViewport });
             }
-            throw GetConvertToException(value, destinationType);
+
+            // This will just throw an exception but it is a pattern
+            return base.ConvertTo(typeDescriptorContext, cultureInfo, value, destinationType);
         }
 
 

@@ -213,11 +213,10 @@ namespace MS.Internal
                 RawClassificationTables ct = new RawClassificationTables();
                 MILGetClassificationTables(out ct);
 
-                _unicodeClassTable   = new SecurityCriticalData<IntPtr>(ct.UnicodeClasses);
-                _charAttributeTable  = new SecurityCriticalData<IntPtr>(ct.CharacterAttributes);
-                _mirroredCharTable   = new SecurityCriticalData<IntPtr>(ct.Mirroring);
-                
-                _combiningMarksClassification = new SecurityCriticalData<CombiningMarksClassificationData>(ct.CombiningMarksClassification);
+                _unicodeClassTable = ct.UnicodeClasses;
+                _charAttributeTable = ct.CharacterAttributes;
+                _mirroredCharTable = ct.Mirroring;
+                _combiningMarksClassification = ct.CombiningMarksClassification;
             }
         }
 
@@ -404,27 +403,22 @@ namespace MS.Internal
             return i;
         }
 
-        private static unsafe short*** UnicodeClassTable
-        {
-            get { return (short***)_unicodeClassTable.Value; }
-        }
-        private static unsafe CharacterAttribute* CharAttributeTable
-        {
-            get { return (CharacterAttribute*)_charAttributeTable.Value; }
-        }
+        private static unsafe short*** UnicodeClassTable => (short***)_unicodeClassTable;
+
+        private static unsafe CharacterAttribute* CharAttributeTable => (CharacterAttribute*)_charAttributeTable;
 
         internal static CharacterAttribute CharAttributeOf(int charClass)
-        {   
-            unsafe 
-            { 
+        {
+            unsafe
+            {
                 Invariant.Assert(charClass >= 0 && charClass < (int) UnicodeClass.Max);
                 return CharAttributeTable[charClass]; 
             }
         }
 
-        static private readonly SecurityCriticalData<IntPtr>  _unicodeClassTable;
-        static private readonly SecurityCriticalData<IntPtr> _charAttributeTable;
-        static private readonly SecurityCriticalData<IntPtr> _mirroredCharTable;
-        static private readonly SecurityCriticalData<CombiningMarksClassificationData> _combiningMarksClassification;
+        static private readonly IntPtr _unicodeClassTable;
+        static private readonly IntPtr _charAttributeTable;
+        static private readonly IntPtr _mirroredCharTable;
+        static private readonly CombiningMarksClassificationData _combiningMarksClassification;
     }
 }

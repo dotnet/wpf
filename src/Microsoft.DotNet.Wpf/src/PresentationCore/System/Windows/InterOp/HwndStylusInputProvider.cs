@@ -36,17 +36,17 @@ namespace System.Windows.Interop
         internal HwndStylusInputProvider(HwndSource source)
         {
             InputManager inputManager = InputManager.Current;
-            _stylusLogic = new SecurityCriticalDataClass<WispLogic>(StylusLogic.GetCurrentStylusLogicAs<WispLogic>());
+            _stylusLogic = StylusLogic.GetCurrentStylusLogicAs<WispLogic>();
 
             IntPtr sourceHandle;
 
             // Register ourselves as an input provider with the input manager.
-            _site = new SecurityCriticalDataClass<InputProviderSite>(inputManager.RegisterInputProvider(this));
+            _site = inputManager.RegisterInputProvider(this);
 
             sourceHandle = source.Handle;
 
-            _stylusLogic.Value.RegisterHwndForInput(inputManager, source);
-            _source = new SecurityCriticalDataClass<HwndSource>(source);
+            _stylusLogic.RegisterHwndForInput(inputManager, source);
+            _source = source;
 
             // Enables multi-touch input
             UnsafeNativeMethods.SetProp(new HandleRef(this, sourceHandle), "MicrosoftTabletPenServiceProperty", new HandleRef(null, new IntPtr(MultiTouchEnabledFlag)));
@@ -57,23 +57,19 @@ namespace System.Windows.Interop
 
         public void Dispose()
         {
-            if(_site != null)
+            if(_site is not null)
             {
-                _site.Value.Dispose();
+                _site.Dispose();
                 _site = null;
 
-                _stylusLogic.Value.UnRegisterHwndForInput(_source.Value);
+                _stylusLogic.UnRegisterHwndForInput(_source);
                 _stylusLogic = null;
                 _source = null;
             }
         }
 
         /////////////////////////////////////////////////////////////////////
-        bool IInputProvider.ProvidesInputForRootVisual(Visual v)
-        {
-            Debug.Assert( null != _source );
-            return _source.Value.RootVisual == v;
-        }
+        bool IInputProvider.ProvidesInputForRootVisual(Visual v) => _source.RootVisual == v;
 
         void IInputProvider.NotifyDeactivate() {}
 
@@ -82,7 +78,7 @@ namespace System.Windows.Interop
             IntPtr result = IntPtr.Zero ;
 
             // It is possible to be re-entered during disposal.  Just return.
-            if(null == _source || null == _source.Value)
+            if (_source is null)
             {
                 return result;
             }
@@ -90,7 +86,7 @@ namespace System.Windows.Interop
             switch(msg)
             {
                 case WindowMessage.WM_ENABLE:
-                    _stylusLogic.Value.OnWindowEnableChanged(hwnd, (int)NativeMethods.IntPtrToInt32(wParam) == 0);
+                    _stylusLogic.OnWindowEnableChanged(hwnd, (int)NativeMethods.IntPtrToInt32(wParam) == 0);
                     break;
 
                 case WindowMessage.WM_TABLET_QUERYSYSTEMGESTURESTATUS:
@@ -102,7 +98,7 @@ namespace System.Windows.Interop
                     SafeNativeMethods.ScreenToClient(new HandleRef(this, hwnd), ref pt1);
                     Point ptClient1 = new Point(pt1.x, pt1.y);
 
-                    IInputElement inputElement = StylusDevice.LocalHitTest(_source.Value, ptClient1);
+                    IInputElement inputElement = StylusDevice.LocalHitTest(_source, ptClient1);
                     if (inputElement != null)
                     {
                         // walk up the parent chain
@@ -149,7 +145,7 @@ namespace System.Windows.Interop
 
                     // We always handle any scroll actions if we are enabled.  We do this when we see the SystemGesture Flick come through.
                     // Note: Scrolling happens on window flicked on even if it is not the active window.
-                    if(_stylusLogic != null && _stylusLogic.Value.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
+                    if(_stylusLogic != null && _stylusLogic.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
                     {
                         result = new IntPtr(0x0001); // tell UIHub the flick has already been handled.
                     }
@@ -159,7 +155,7 @@ namespace System.Windows.Interop
             if (handled && EventTrace.IsEnabled(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
             {
                 EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientInputMessage, EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info,
-                                                    (_source.Value.CompositionTarget != null ? _source.Value.CompositionTarget.Dispatcher.GetHashCode() : 0),
+                                                    (_source.CompositionTarget != null ? _source.CompositionTarget.Dispatcher.GetHashCode() : 0),
                                                      hwnd.ToInt64(),
                                                      msg,
                                                      (int)wParam,
@@ -171,8 +167,8 @@ namespace System.Windows.Interop
 
         /////////////////////////////////////////////////////////////////////
 
-        private SecurityCriticalDataClass<WispLogic>         _stylusLogic;
-        private SecurityCriticalDataClass<HwndSource>        _source;
-        private SecurityCriticalDataClass<InputProviderSite> _site;
+        private WispLogic         _stylusLogic;
+        private HwndSource        _source;
+        private InputProviderSite _site;
     }
 }

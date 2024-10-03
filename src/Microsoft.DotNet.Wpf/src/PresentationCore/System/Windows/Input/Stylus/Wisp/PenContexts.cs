@@ -41,8 +41,8 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.Stylus_PenContextFailure);
             }
 
-            _stylusLogic  = stylusLogic;
-            _inputSource   = new SecurityCriticalData<HwndSource>(hwndSource);
+            _stylusLogic = stylusLogic;
+            _inputSource = hwndSource;
         }
 
         /////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ namespace System.Windows.Input
             if (_contexts == null)
             {
                 // create contexts
-                _contexts = _stylusLogic.WispTabletDevices.CreateContexts(_inputSource.Value.CriticalHandle, this);
+                _contexts = _stylusLogic.WispTabletDevices.CreateContexts(_inputSource.CriticalHandle, this);
 
                 foreach(PenContext context in _contexts)
                 {
@@ -148,7 +148,7 @@ namespace System.Windows.Input
                                              gestureX, 
                                              gestureY,
                                              buttonState, 
-                                             _inputSource.Value);
+                                             _inputSource);
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ namespace System.Windows.Input
                                         stylusPointerId,
                                         data, 
                                         timestamp,
-                                        _inputSource.Value);
+                                        _inputSource);
         }
 
         /////////////////////////////////////////////////////////////////////////
@@ -224,14 +224,14 @@ namespace System.Windows.Input
         {
             // We only tear down the old context when PenContexts are enabled without being
             // dispose and we have a valid index. Otherwise, no-op here.
-            if (_contexts != null && index <= _contexts.Length && _inputSource.Value.CriticalHandle != IntPtr.Zero)
+            if (_contexts is not null && index <= _contexts.Length && _inputSource.CriticalHandle != 0)
             {
                 PenContext[] ctxs = new PenContext[_contexts.Length + 1];
                 uint preCopyCount = index;
                 uint postCopyCount = (uint)_contexts.Length - index;
 
                 Array.Copy(_contexts, 0, ctxs, 0, preCopyCount);
-                PenContext newContext = _stylusLogic.TabletDevices[(int)index].As<WispTabletDevice>().CreateContext(_inputSource.Value.CriticalHandle, this);
+                PenContext newContext = _stylusLogic.TabletDevices[(int)index].As<WispTabletDevice>().CreateContext(_inputSource.CriticalHandle, this);
                 ctxs[index] = newContext;
                 Array.Copy(_contexts, index, ctxs, index+1, postCopyCount);
                 _contexts = ctxs;
@@ -555,11 +555,11 @@ namespace System.Windows.Input
             return null;
         }
 
-        internal HwndSource InputSource { get { return _inputSource.Value; } }
+        internal HwndSource InputSource => _inputSource;
 
         /////////////////////////////////////////////////////////////////////
 
-        internal SecurityCriticalData<HwndSource> _inputSource;
+        internal HwndSource _inputSource;
 
         WispLogic                      _stylusLogic;
 

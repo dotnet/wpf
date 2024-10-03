@@ -552,7 +552,7 @@ namespace System.Windows.Documents
                 }
 
                 ReleaseCandidateList(null);
-                _candidateList = new  SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList>(textStore.GetReconversionCandidateList());
+                _candidateList = textStore.GetReconversionCandidateList();
                 if (CandidateList == null)
                 {
                     GC.SuppressFinalize(this);
@@ -648,23 +648,12 @@ namespace System.Windows.Documents
 
             // ReconversionMenuItem uses this to finalzie the candidate string.
 
-            internal UnsafeNativeMethods.ITfCandidateList CandidateList
-            {
-                 get
-                 {
-                     if ( _candidateList == null)
-                     {
-                         return null;
-                     }
-
-                     return _candidateList.Value;
-                 }
-            }
+            internal UnsafeNativeMethods.ITfCandidateList CandidateList => _candidateList;
 
             // The candidate list for Cicero Reconversion.
             // We need to use same ITfCandidateList object for both listing up and finalizing because
             // the index of the candidate string needs to match.
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
+            private UnsafeNativeMethods.ITfCandidateList _candidateList;
         }
 
         // Default EditorContextMenu item base class.

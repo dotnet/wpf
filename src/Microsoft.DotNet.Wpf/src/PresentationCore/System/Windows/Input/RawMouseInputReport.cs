@@ -66,7 +66,7 @@ namespace System.Windows.Input
             _x = x;
             _y = y;
             _wheel = wheel;
-            _extraInformation = new SecurityCriticalData<IntPtr>(extraInformation);
+            _extraInformation = extraInformation;
         }
 
         /// <summary>
@@ -93,13 +93,7 @@ namespace System.Windows.Input
         ///     Read-only access to the extra information was provided along
         ///     with the input.
         /// </summary>
-        public IntPtr ExtraInformation 
-        {
-            get 
-            {
-                return _extraInformation.Value;
-            }
-        }
+        public IntPtr ExtraInformation => _extraInformation;
 
         // IsValid Method for RawMouseActions. Relies on the enum being flags.
         internal static bool IsValidRawMouseActions(RawMouseActions actions)
@@ -138,6 +132,6 @@ namespace System.Windows.Input
         
         internal bool _isSynchronize; // Set from MouseDevice.Synchronize.
         
-        private SecurityCriticalData<IntPtr> _extraInformation;
+        private readonly IntPtr _extraInformation;
     }    
 }

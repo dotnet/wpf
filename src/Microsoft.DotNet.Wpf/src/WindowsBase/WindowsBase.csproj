@@ -268,8 +268,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Win32\HwndWrapperHook.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\ManagedWndProcTracker.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\MessageOnlyHwndWrapper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalData.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityCriticalDataClass.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\TextServicesLoader.cs" />
     <Compile Include="MS\Internal\PriorityChain.cs" />
     <Compile Include="MS\Internal\PriorityItem.cs" />

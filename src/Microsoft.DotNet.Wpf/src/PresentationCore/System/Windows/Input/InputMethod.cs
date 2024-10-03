@@ -1347,7 +1347,7 @@ namespace System.Windows.Input
                     //
                     if (DefaultImc != IntPtr.Zero)
                     {
-                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc.Value));
+                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc));
                     }
                 }
                 else 
@@ -1748,7 +1748,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_defaultImc==null)
+                if (_defaultImc == 0)
                 {
                     // 
                     //  Get the default HIMC from default IME window.
@@ -1757,11 +1757,12 @@ namespace System.Windows.Input
                     IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
                     // Store the default imc to _defaultImc.
-                    _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
+                    _defaultImc = himc;
 
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
-                return _defaultImc.Value;
+
+                return _defaultImc;
             }
         }
 
@@ -1795,7 +1796,7 @@ namespace System.Windows.Input
 
         // the default imc. The default imc is per thread and we cache it in ThreadStatic.
         [ThreadStatic]
-        private static SecurityCriticalDataClass<IntPtr> _defaultImc;
+        private static IntPtr _defaultImc;
 
         #endregion Private Fields
     }

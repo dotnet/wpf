@@ -1045,7 +1045,7 @@ namespace System.Windows
                 _hwndNotify.Count == 0 ||
                 _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
             {
-                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>>();
+                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper>();
                 _hwndNotifyHook = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook>();
                 _dpiAwarenessContextAndDpis = new List<DpiUtil.HwndDpiInfo>();
 
@@ -1139,10 +1139,10 @@ namespace System.Windows
                 Debug.Assert(!_hwndNotify.ContainsKey(hwndDpiInfo));
                 Debug.Assert(hwndDpiInfo.DpiAwarenessContextValue == dpiContextValue);
 
-                _hwndNotify[hwndDpiInfo] = new SecurityCriticalDataClass<HwndWrapper>(hwndNotify);
-                _hwndNotify[hwndDpiInfo].Value.Dispatcher.ShutdownFinished += OnShutdownFinished;
+                _hwndNotify[hwndDpiInfo] = hwndNotify;
+                _hwndNotify[hwndDpiInfo].Dispatcher.ShutdownFinished += OnShutdownFinished;
                 _hwndNotifyHook[hwndDpiInfo] = new HwndWrapperHook(SystemThemeFilterMessage);
-                _hwndNotify[hwndDpiInfo].Value.AddHook(_hwndNotifyHook[hwndDpiInfo]);
+                _hwndNotify[hwndDpiInfo].AddHook(_hwndNotifyHook[hwndDpiInfo]);
 
                 return hwndDpiInfo;
             }
@@ -1154,7 +1154,7 @@ namespace System.Windows
             {
                 foreach (var hwndDpiInfo in _dpiAwarenessContextAndDpis)
                 {
-                    _hwndNotify[hwndDpiInfo].Value.Dispose();
+                    _hwndNotify[hwndDpiInfo].Dispose();
                     _hwndNotifyHook[hwndDpiInfo] = null;
                 }
             }
@@ -1570,7 +1570,7 @@ namespace System.Windows
                 Debug.Assert(hwndDpiInfo != null);
 
                 // will throw when a match is not found, which should never happen because we just called Ensure...()
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
         }
 
@@ -1653,7 +1653,7 @@ namespace System.Windows
 
             if (EnsureResourceChangeListener(hwndDpiInfo))
             {
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
 
             return null;
@@ -1684,7 +1684,7 @@ namespace System.Windows
         /// </summary>
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
-        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper> _hwndNotify;
         [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();

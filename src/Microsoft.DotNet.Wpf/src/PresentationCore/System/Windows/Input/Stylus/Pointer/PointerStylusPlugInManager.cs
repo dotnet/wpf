@@ -35,7 +35,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal PointerStylusPlugInManager(PresentationSource source)
         {
-            _inputSource = new SecurityCriticalData<PresentationSource>(source);
+            _inputSource = source;
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>A matrix from the tablet to the screen</returns>
         private Matrix GetTabletToViewTransform(TabletDevice tablet)
         {
-            Matrix matrix = (_inputSource.Value as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+            Matrix matrix = (_inputSource as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
 
             matrix.Invert();
             matrix *= tablet.TabletDeviceImpl.TabletToScreen;
@@ -656,7 +656,7 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        internal SecurityCriticalData<PresentationSource> _inputSource;
+        internal PresentationSource _inputSource;
 
         List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 

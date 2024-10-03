@@ -21,8 +21,8 @@ namespace System.Windows.Input
     {
         internal InputProviderSite(InputManager inputManager, IInputProvider inputProvider)
         {
-            _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
-            _inputProvider = new SecurityCriticalDataClass<IInputProvider>(inputProvider);
+            _inputManager = inputManager;
+            _inputProvider = inputProvider;
         }
 
         /// <summary>
@@ -39,13 +39,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the input manager that this site is attached to.
         /// </summary>
-        internal InputManager CriticalInputManager
-        {
-            get
-            {
-                return _inputManager.Value;
-            }
-        }
+        internal InputManager CriticalInputManager => _inputManager;
 
         /// <summary>
         ///     Unregisters this input provider.
@@ -57,10 +51,11 @@ namespace System.Windows.Input
             {
                 _isDisposed = true;
 
-                if (_inputManager != null && _inputProvider != null)
+                if (_inputManager is not null && _inputProvider is not null)
                 {
-                    _inputManager.Value.UnregisterInputProvider(_inputProvider.Value);
+                    _inputManager.UnregisterInputProvider(_inputProvider);
                 }
+
                 _inputManager = null;
                 _inputProvider = null;
             }
@@ -100,17 +95,17 @@ namespace System.Windows.Input
             InputReportEventArgs input = new InputReportEventArgs(null, inputReport);
             input.RoutedEvent=InputManager.PreviewInputReportEvent;
 
-            if(_inputManager != null)
+            if(_inputManager is not null)
             {
-                handled = _inputManager.Value.ProcessInput(input);
+                handled = _inputManager.ProcessInput(input);
             }
 
             return handled;
         }
 
         private bool _isDisposed;
-        private SecurityCriticalDataClass<InputManager> _inputManager;
-        private SecurityCriticalDataClass<IInputProvider> _inputProvider;
+        private InputManager _inputManager;
+        private IInputProvider _inputProvider;
     }
 }
 

@@ -84,20 +84,14 @@ namespace System.Windows.Controls
         /// <param name="source"> The object to convert to a VirtualizationCacheLength. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
-            {
-                if (source is string)
-                {
-                    return (FromString((string)source, cultureInfo));
-                }
-                else
-                {
-                    //  conversion from numeric type
-                    double value = Convert.ToDouble(source, cultureInfo);
-                    return new VirtualizationCacheLength(value);
-                }
-            }
-            throw GetConvertFromException(source);
+            if (source is null)
+                throw GetConvertFromException(source);
+            
+            if (source is string stringValue)
+                return FromString(stringValue, cultureInfo);
+
+            // Conversion from a numeric type
+            return new VirtualizationCacheLength(Convert.ToDouble(source, cultureInfo));
         }
 
         /// <summary>

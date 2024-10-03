@@ -92,15 +92,14 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="source"> The object to convert to a double. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
-                                           CultureInfo cultureInfo, 
-                                           object source)
         {
             if (source is null)
                 throw GetConvertFromException(source);
 
             if (source is string sourceString)
                 return FromString(sourceString, cultureInfo);
-                
+
+            // Conversion from a numeric type
             return Convert.ToDouble(source, cultureInfo);   
         }
 

@@ -2820,14 +2820,14 @@ namespace MS.Internal.MilCodeGen.Generators
                  {
                      parseBody =
                          [[inline]]
-                             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+                             ValueTokenizerHelper tokenizer = new(source, formatProvider);
                              [[resource.ManagedName]] resource = new [[resource.ManagedName]]();
 
                              [[resource.CollectionType.ManagedName]] value;
 
-                             while (th.NextToken())
+                             while (tokenizer.NextToken())
                              {
-                                 [[WriteParseBody(resource.CollectionType, "th.GetCurrentTokenAsSpan()")]]
+                                 [[WriteParseBody(resource.CollectionType, "tokenizer.GetCurrentToken()")]]
 
                                  resource.Add(value);
                              }

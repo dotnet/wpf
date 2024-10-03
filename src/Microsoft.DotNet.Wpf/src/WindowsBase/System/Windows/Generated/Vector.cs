@@ -142,17 +142,17 @@ namespace System.Windows
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
 
             Vector value;
 
-            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
+            ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
             value = new Vector(double.Parse(firstToken, formatProvider),
-                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
+                double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
-            th.LastTokenRequired();
+            tokenizer.LastTokenRequired();
 
             return value;
         }

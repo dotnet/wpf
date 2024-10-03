@@ -477,11 +477,11 @@ namespace MS.Internal.MilCodeGen.Generators
         /// This method returns a string which will parse an instance of the type referred to
         /// by McgType.  It assumes that there is a variable called "value" to which it can
         /// assign the value it produces, as well as assuming that there's a TokenizerHelper
-        /// called "th" available and in the correct state for parsing.  If there's ever a need
+        /// called "tokenizer" available and in the correct state for parsing. If there's ever a need
         /// to alter these assumptions, we can add parameters to WriteParseBody to control these.
         /// It assumes that the first token is present in the string referred to by firstToken,
-        /// (typically a local string var or "th.GetCurrentToken()", and that all subsequent
-        /// tokens are required.  It is left to the caller to call .LastTokenRequired() if it
+        /// (typically a local string var or "tokenizer.GetCurrentToken()", and that all subsequent
+        /// tokens are required. It is left to the caller to call .LastTokenRequired() if it
         /// wished to ensure that there are no trailing tokens.
         /// </summary>
         private static string WriteParseBody(McgType type,
@@ -510,8 +510,8 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[Helpers.CodeGenHelpers.WriteFieldStatementsFirstLastWithSeparator(
                                 resource.LocalFields,
                                 "{parseMethod}(" + firstToken + ", formatProvider)",
-                                "{parseMethod}(th.NextTokenRequiredAsSpan(), formatProvider)",
-                                "{parseMethod}(th.NextTokenRequiredAsSpan(), formatProvider)",
+                                "{parseMethod}(tokenizer.NextTokenRequired(), formatProvider)",
+                                "{parseMethod}(tokenizer.NextTokenRequired(), formatProvider)",
                                 ",\n")]]);
                     [[/inline]];
 
@@ -556,16 +556,16 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-                        TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+                        ValueTokenizerHelper tokenizer = new(source, formatProvider);
 
                         [[resource.Name]] value;
 
-                        ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
+                        ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
                         [[WriteParseBody(resource, "firstToken")]]
 
                         // There should be no more tokens in this string.
-                        th.LastTokenRequired();
+                        tokenizer.LastTokenRequired();
 
                         return value;
                     }

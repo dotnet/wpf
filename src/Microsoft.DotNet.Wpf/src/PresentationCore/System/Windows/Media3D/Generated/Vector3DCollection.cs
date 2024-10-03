@@ -711,17 +711,17 @@ namespace System.Windows.Media.Media3D
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
             Vector3DCollection resource = new Vector3DCollection();
 
             Vector3D value;
 
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 value = new Vector3D(
-                    double.Parse(th.GetCurrentTokenAsSpan(), formatProvider),
-                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
-                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
+                    double.Parse(tokenizer.GetCurrentToken(), formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

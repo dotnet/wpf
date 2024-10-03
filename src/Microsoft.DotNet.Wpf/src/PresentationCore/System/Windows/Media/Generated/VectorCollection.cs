@@ -713,16 +713,16 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
             VectorCollection resource = new VectorCollection();
 
             Vector value;
 
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 value = new Vector(
-                    double.Parse(th.GetCurrentTokenAsSpan(), formatProvider),
-                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
+                    double.Parse(tokenizer.GetCurrentToken(), formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

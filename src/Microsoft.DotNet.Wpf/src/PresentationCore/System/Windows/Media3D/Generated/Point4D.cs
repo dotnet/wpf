@@ -154,19 +154,19 @@ namespace System.Windows.Media.Media3D
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
 
             Point4D value;
 
-            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
+            ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
             value = new Point4D(double.Parse(firstToken, formatProvider),
-                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
-                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
-                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
+                double.Parse(tokenizer.NextTokenRequired(), formatProvider),
+                double.Parse(tokenizer.NextTokenRequired(), formatProvider),
+                double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
-            th.LastTokenRequired();
+            tokenizer.LastTokenRequired();
 
             return value;
         }

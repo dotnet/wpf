@@ -796,16 +796,16 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
             GradientStopCollection resource = new GradientStopCollection();
 
             GradientStop value;
 
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 value = new GradientStop(
-                    Parsers.ParseColor(th.GetCurrentToken(), formatProvider),
-                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
+                    Parsers.ParseColor(tokenizer.GetCurrentToken().ToString(), formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

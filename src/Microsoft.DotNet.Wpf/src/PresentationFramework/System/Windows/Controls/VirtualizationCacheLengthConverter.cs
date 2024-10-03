@@ -180,36 +180,26 @@ namespace System.Windows.Controls
         /// <returns>Newly created VirtualizationCacheLength instance.</returns>
         internal static VirtualizationCacheLength FromString(string s, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
-            double[] lengths = new double[2];
+            TokenizerHelper th = new (s, cultureInfo);
+            Span<double> lengths = stackalloc double[2];
             int i = 0;
 
             // Peel off each double in the delimited list.
             while (th.NextToken())
             {
                 if (i >= 2)
-                {
-                    i = 3;    // Set i to a bad value.
-                    break;
-                }
+                    throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
 
-                lengths[i] = Double.Parse(th.GetCurrentToken(), cultureInfo);
+                lengths[i] = double.Parse(th.GetCurrentTokenAsSpan(), cultureInfo);
                 i++;
             }
 
-            // We have a reasonable interpreation for one value (all four edges), two values (horizontal, vertical),
-            // and four values (left, top, right, bottom).
-            switch (i)
+            return i switch
             {
-                case 1:
-                    return new VirtualizationCacheLength(lengths[0]);
-
-                case 2:
-                    // Should allowInfinity be false ??? (Rob)
-                    return new VirtualizationCacheLength(lengths[0], lengths[1]);
-            }
-
-            throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
+                1 => new VirtualizationCacheLength(lengths[0]),
+                2 => new VirtualizationCacheLength(lengths[0], lengths[1]),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s)),
+            };
         }
 
     #endregion

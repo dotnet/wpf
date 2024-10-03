@@ -174,22 +174,21 @@ namespace System.Windows
         //   [value] is a double
         //   [unit] is a string specifying the unit, like 'in' or 'px', or nothing (means pixels)
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
-        internal static double FromString(string s, CultureInfo cultureInfo)
+        internal static double FromString(ReadOnlySpan<char> value, CultureInfo cultureInfo)
         {
             ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
             double unitFactor = 1.0;
 
-            //Auto is represented and Double.NaN
-            //properties that do not want Auto and NaN to be in their ligit values,
-            //should disallow NaN in validation callbacks (same goes for negative values)
-            if (valueSpan.Equals("auto", StringComparison.OrdinalIgnoreCase))
-                return Double.NaN;
+            // Auto is represented as Double.NaN
+            // Properties that do not want Auto and NaN to be in their ligit values,
+            // should disallow NaN in validation callbacks (same goes for negative values)
+            if (valueSpan.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+                return double.NaN;
 
-            PixelUnit pixelUnit;
-            if (PixelUnit.TryParsePixel(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
+            if (PixelUnit.TryParsePixel(valueSpan, out PixelUnit pixelUnit) ||
+                PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit) ||
+                PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit) ||
+                PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
             {
                 valueSpan = valueSpan.Slice(0, valueSpan.Length - pixelUnit.Name.Length);
                 unitFactor = pixelUnit.Factor;
@@ -205,7 +204,7 @@ namespace System.Windows
         {
             // FormatException errors thrown by double.Parse are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
-            // to create a Length instance from a string.  This addresses windows bug 968884
+            // to create a Length instance from a string. This addresses windows bug 968884
             try
             {
                 return double.Parse(span, cultureInfo);

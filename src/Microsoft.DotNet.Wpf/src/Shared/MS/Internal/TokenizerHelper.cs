@@ -18,7 +18,7 @@ namespace MS.Internal.Markup
 namespace MS.Internal
 #endif
 {
-    internal class TokenizerHelper
+    internal sealed class TokenizerHelper
     {
         /// <summary>
         /// Constructor for TokenizerHelper which accepts an IFormatProvider.
@@ -91,7 +91,23 @@ namespace MS.Internal
 
             return _str.Substring(_currentTokenIndex,_currentTokenLength);
         }
-        
+
+        /// <summary>
+        /// Sibling to <see cref="GetCurrentToken"/> with a minor difference; if there's no token, it will return <see cref="ReadOnlySpan{char}.Empty"/>
+        /// instead of <see langword="null"/>. However, if used with <see cref="NextToken()"/>, this edge-case is never hit.
+        /// </summary>
+        /// <returns></returns>
+        internal ReadOnlySpan<char> GetCurrentTokenAsSpan()
+        {
+            // If there's no current token, return empty span
+            if (_currentTokenIndex < 0)
+            {
+                return ReadOnlySpan<char>.Empty;
+            }
+
+            return _str.AsSpan().Slice(_currentTokenIndex, _currentTokenLength);
+        }
+
         /// <summary>
         /// Throws an exception if there is any non-whitespace left un-parsed.
         /// </summary>

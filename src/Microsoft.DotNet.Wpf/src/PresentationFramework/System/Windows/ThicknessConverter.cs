@@ -195,7 +195,7 @@ namespace System.Windows
                 if (i >= 4) // In case we've got more than 4 doubles, we throw
                     throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
 
-                lengths[i] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
+                lengths[i] = LengthConverter.FromString(th.GetCurrentTokenAsSpan(), cultureInfo);
                 i++;
             }
 

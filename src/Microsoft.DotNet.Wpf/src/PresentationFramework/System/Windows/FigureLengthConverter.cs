@@ -105,23 +105,16 @@ namespace System.Windows
         /// An ArgumentException is thrown if the example object is not null 
         /// and is not a valid type which can be converted to a FigureLength.
         /// </exception>
-        public override object ConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
-            object source)
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
-            {
-                if (source is string)
-                {
-                    return (FromString((string)source, cultureInfo));
-                }
-                else
-                {
-                    return new FigureLength(Convert.ToDouble(source, cultureInfo)); //conversion from numeric type
-                }
-            }
-            throw GetConvertFromException(source);
+            if (source is null)
+                throw GetConvertFromException(source);
+
+            if (source is string stringValue)
+                return FromString(stringValue, cultureInfo);
+
+            // Attempt conversion from a numeric type (FigureLength.Pixel)
+            return new FigureLength(Convert.ToDouble(source, cultureInfo));
         }
 
         /// <summary>

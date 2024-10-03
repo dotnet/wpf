@@ -20,7 +20,11 @@ namespace System.Windows
         /// <summary>
         /// CanConvertFrom - Returns whether or not this class can convert from a given type
         /// </summary>
-        /// <ExternalAPI/>
+        /// <returns>
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
+        /// </returns>
+        /// <param name="typeDescriptor">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="destinationType">The <see cref="Type"/> being queried for support.</param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptor, Type destinationType)
         {
             return destinationType == typeof(string);
@@ -31,16 +35,22 @@ namespace System.Windows
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
-        /// <ExternalAPI/>
+        /// <returns>
+        /// <see langword="true"/> if this class can convert to <paramref name="destinationType"/>, <see langword="false"/> otherwise.
+        /// </returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
-        /// ConvertFrom
+        /// Converts <paramref name="value"/> of <see langword="string"/> type to its <see cref="KeySpline"/> represensation.
         /// </summary>
+        /// <param name="context">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <param name="value"> The object to convert to a <see cref="KeySpline"/>.</param>
+        /// <returns>A new instance of <see cref="KeySpline"/> class representing the data contained in <paramref name="value"/>.</returns>
+        /// <exception cref="NotSupportedException">Thrown in case the <paramref name="value"/> was not a <see cref="string"/>.</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo cultureInfo, object value)
         {
             if (value is not string stringValue)
@@ -55,14 +65,15 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// TypeConverter method implementation.
+        /// Attempt to convert a <see cref="KeySpline"/> class to the <paramref name="destinationType"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="cultureInfo">current culture (see CLR specs), null is a valid value</param>
         /// <param name="value">value to convert from</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns>converted value</returns>
-        /// <ExternalAPI/>
+        /// <returns>
+        /// The formatted <paramref name="value"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/> or an <see cref="InstanceDescriptor"/>.
+        /// </returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo cultureInfo, object value, Type destinationType)
         {
             if (value is KeySpline keySpline && destinationType is not null)
@@ -82,17 +93,17 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Converts <paramref name="keySpline"/> to its string representation using the specified <paramref name="cultureInfo"/>.
+        /// Converts <paramref name="keySpline"/> to its <see cref="string"/> representation using the specified <paramref name="cultureInfo"/>.
         /// </summary>
         /// <param name="keySpline">The <see cref="KeySpline"/> to convert to string.</param>
         /// <param name="cultureInfo">Culture to use when formatting doubles and choosing separator.</param>
-        /// <returns>The formatted <paramref name="keySpline"/> as string using the specified <paramref name="cultureInfo"/>.</returns>
+        /// <returns>The formatted <paramref name="keySpline"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/>.</returns>
         private static string ToString(KeySpline keySpline, CultureInfo cultureInfo)
         {
             string listSeparator = cultureInfo != null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator;
 
             // Initial capacity [64] is an estimate based on a sum of:
-            // 48 = 4x double (fourteen digits is generous for the range of values likely)
+            // 60 = 4x double (fifteen digits is generous for the range of values)
             //  3 = 3x separator characters
             //  1 = 1x scratch space for alignment
             DefaultInterpolatedStringHandler handler = new(3, 4, cultureInfo, stackalloc char[64]);

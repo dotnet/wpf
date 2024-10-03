@@ -11,20 +11,20 @@ using MS.Internal;
 namespace System.Windows
 {
     /// <summary>
-    /// ThicknessConverter - Converter class for converting instances of other types to and from Thickness instances.
+    /// Converter class for converting instances of other types to and from <see cref="Thickness"/> instances.
     /// </summary> 
     public class ThicknessConverter : TypeConverter
     {
         #region Public Methods
 
         /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type.
+        /// Returns whether this class can convert specific <paramref name="sourceType"/> into <see cref="Thickness"/>.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
         /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="sourceType"> The Type being queried for support. </param>
+        /// <param name="typeDescriptorContext">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -94,11 +94,15 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// ConvertTo - Attempt to convert a Thickness to the given type
+        /// Attempt to convert a <see cref="Thickness"/> struct to the <paramref name="destinationType"/>.
         /// </summary>
         /// <returns>
-        /// The object which was constructed.
+        /// The formatted <paramref name="value"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/> or an <see cref="InstanceDescriptor"/>.
         /// </returns>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
+        /// <param name="value"> The Thickness to convert. </param>
+        /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
@@ -106,10 +110,6 @@ namespace System.Windows
         /// An ArgumentException is thrown if the object is not null and is not a Thickness,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
-        /// <param name="value"> The Thickness to convert. </param>
-        /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -143,9 +143,9 @@ namespace System.Windows
         /// <summary>
         /// Converts <paramref name="thickness"/> to its string representation using the specified <paramref name="cultureInfo"/>.
         /// </summary>
-        /// <param name="thickness">The <see cref="Thickness"/> to convert to string.</param>
+        /// <param name="thickness">The <see cref="Thickness"/> to convert to <see cref="string"/>.</param>
         /// <param name="cultureInfo">Culture to use when formatting doubles and choosing separator.</param>
-        /// <returns>The formatted <paramref name="thickness"/> as string using the specified <paramref name="cultureInfo"/>.</returns>
+        /// <returns>The formatted <paramref name="thickness"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/>.</returns>
         internal static string ToString(Thickness thickness, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);

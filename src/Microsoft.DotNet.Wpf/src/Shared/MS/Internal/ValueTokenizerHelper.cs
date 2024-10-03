@@ -16,10 +16,9 @@ namespace MS.Internal
     {
         /// <summary>
         /// Constructor for <see cref="ValueTokenizerHelper"/> which accepts an <see cref="IFormatProvider"/>.
-        /// If the <see cref="IFormatProvider"/> is null, we use the thread's <see cref="IFormatProvider"/> info.
-        /// We will use ',' as the list separator, unless it's the same as the
-        /// decimal separator.  If it *is*, then we can't determine if, say, "23,5" is one
-        /// number or two.  In this case, we will use ";" as the separator.
+        /// If the <see cref="IFormatProvider"/> is <see langword="null"/>, we use the thread's <see cref="IFormatProvider"/> info.
+        /// We will use ',' as the list separator, unless it's the same as the decimal separator.
+        /// If it *is*, then we can't determine if, say, "23,5" is one number or two. In this case, we will use ";" as the separator.
         /// </summary>
         /// <param name="input"> The string which will be tokenized. </param>
         /// <param name="formatProvider"> The <see cref="IFormatProvider"/> which controls this tokenization. </param>
@@ -45,9 +44,7 @@ namespace MS.Internal
             while (_charIndex < _input.Length)
             {
                 if (!char.IsWhiteSpace(_input[_charIndex]))
-                {
                     break;
-                }
 
                 ++_charIndex;
             }
@@ -150,8 +147,7 @@ namespace MS.Internal
 
             // If we are allowing a quoted token and this token begins with a quote,
             // set up the quote count and skip the initial quote
-            if (allowQuotedToken &&
-                currentChar == _quoteChar)
+            if (allowQuotedToken && _quoteChar == currentChar)
             {
                 quoteCount++; // increment quote count
                 ++_charIndex; // move to next character
@@ -171,7 +167,7 @@ namespace MS.Internal
                 if (quoteCount > 0)
                 {
                     // if anything but a quoteChar we move on
-                    if (currentChar == _quoteChar)
+                    if (_quoteChar == currentChar)
                     {
                         --quoteCount;
 
@@ -218,8 +214,12 @@ namespace MS.Internal
             return true;
         }
 
-        // helper to move the _charIndex to the next token or to the end of the string
-        void ScanToNextToken(char separator)
+        /// <summary>
+        /// Helper function to move the _charIndex to the next token or to the end of the string.
+        /// </summary>
+        /// <param name="separator"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        private void ScanToNextToken(char separator)
         {
             // if already at end of the string don't bother
             if (_charIndex < _input.Length)
@@ -275,7 +275,7 @@ namespace MS.Internal
 
         // Helper to get the numeric list separator for a given IFormatProvider.
         // Separator is a comma [,] if the decimal separator is not a comma, or a semicolon [;] otherwise.
-        static internal char GetNumericListSeparator(IFormatProvider provider)
+        internal static char GetNumericListSeparator(IFormatProvider provider)
         {
             char numericSeparator = ',';
 
@@ -309,8 +309,9 @@ namespace MS.Internal
         private readonly ReadOnlySpan<char> _input;
 
         private int _charIndex;
+        private bool _foundSeparator;
+
         internal int _currentTokenIndex;
         internal int _currentTokenLength;
-        private bool _foundSeparator;
     }
 }

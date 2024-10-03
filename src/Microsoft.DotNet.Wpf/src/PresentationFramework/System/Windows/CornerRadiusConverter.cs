@@ -10,7 +10,7 @@ using MS.Internal;
 namespace System.Windows
 {
     /// <summary>
-    /// CornerRadiusConverter - Converter class for converting instances of other types to and from CornerRadius instances.
+    /// Converter class for converting instances of other types to and from <see cref="CornerRadius"/> instances.
     /// </summary> 
     public class CornerRadiusConverter : TypeConverter
     {
@@ -20,10 +20,10 @@ namespace System.Windows
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
         /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="sourceType"> The Type being queried for support. </param>
+        /// <param name="typeDescriptorContext">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types

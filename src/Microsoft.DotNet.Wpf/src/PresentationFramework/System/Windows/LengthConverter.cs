@@ -91,17 +91,17 @@ namespace System.Windows
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="source"> The object to convert to a double. </param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
                                            CultureInfo cultureInfo, 
                                            object source)
         {
-            if (source != null)
-            {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
-            }
+            if (source is null)
+                throw GetConvertFromException(source);
 
-            throw GetConvertFromException(source);
+            if (source is string sourceString)
+                return FromString(sourceString, cultureInfo);
+                
+            return Convert.ToDouble(source, cultureInfo);   
         }
 
         /// <summary>

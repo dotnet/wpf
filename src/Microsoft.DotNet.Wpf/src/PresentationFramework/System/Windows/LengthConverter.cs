@@ -121,31 +121,29 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the double. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
-                                         CultureInfo cultureInfo,
-                                         object value,
-                                         Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is double )
+            if (value is not double doubleValue)
+                throw GetConvertToException(value, destinationType);
+
+            if (destinationType == typeof(string))
             {
-                double l = (double)value;
-                if (destinationType == typeof(string)) 
-                { 
-                    if(double.IsNaN(l)) 
-                        return "Auto";
-                    else 
-                        return Convert.ToString(l, cultureInfo); 
-                }
-                else if (destinationType == typeof(InstanceDescriptor))
-                {
-                    ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
-                    return new InstanceDescriptor(ci, new object[] { l });
-                }
+                if (double.IsNaN(doubleValue))
+                    return "Auto";
+
+                return Convert.ToString(doubleValue, cultureInfo);
             }
-            throw GetConvertToException(value, destinationType);
+
+            if (destinationType == typeof(InstanceDescriptor))
+            {
+                ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
+                return new InstanceDescriptor(ci, new object[] { doubleValue });
+            }
+
+            // This will just throw an exception but it is a pattern
+            return base.ConvertTo(typeDescriptorContext, cultureInfo, value, destinationType);
         }
         #endregion
 

@@ -63,15 +63,7 @@ namespace System.Windows.Controls
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor)
-                ||  destinationType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>

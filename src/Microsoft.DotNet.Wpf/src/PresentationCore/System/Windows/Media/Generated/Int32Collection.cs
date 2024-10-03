@@ -720,7 +720,7 @@ namespace System.Windows.Media
 
             while (th.NextToken())
             {
-                value = Convert.ToInt32(th.GetCurrentToken(), formatProvider);
+                value = Int32.Parse(th.GetCurrentTokenAsSpan(), formatProvider);
 
                 resource.Add(value);
             }

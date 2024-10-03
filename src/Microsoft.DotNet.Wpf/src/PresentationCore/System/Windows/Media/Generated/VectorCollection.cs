@@ -721,8 +721,8 @@ namespace System.Windows.Media
             while (th.NextToken())
             {
                 value = new Vector(
-                    Convert.ToDouble(th.GetCurrentToken(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                    double.Parse(th.GetCurrentTokenAsSpan(), formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
 
                 resource.Add(value);
             }

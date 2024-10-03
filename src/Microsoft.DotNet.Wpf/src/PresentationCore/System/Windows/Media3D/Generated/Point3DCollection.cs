@@ -719,9 +719,9 @@ namespace System.Windows.Media.Media3D
             while (th.NextToken())
             {
                 value = new Point3D(
-                    Convert.ToDouble(th.GetCurrentToken(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                    double.Parse(th.GetCurrentTokenAsSpan(), formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
 
                 resource.Add(value);
             }

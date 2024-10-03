@@ -141,30 +141,22 @@ namespace System.Windows
         /// An ArgumentException is thrown if the object is not null and is not a FigureLength,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        public override object ConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo,
-            object value,
-            Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is FigureLength )
+            if (value is not FigureLength figureLength)
+                throw GetConvertToException(value, destinationType);
+
+            if (destinationType == typeof(string))
+                return ToString(in figureLength, cultureInfo);
+
+            if (destinationType == typeof(InstanceDescriptor))
             {
-                FigureLength fl = (FigureLength)value;
-
-                if (destinationType == typeof(string)) 
-                { 
-                    return (ToString(fl, cultureInfo)); 
-                }
-
-                if (destinationType == typeof(InstanceDescriptor))
-                {
-                    ConstructorInfo ci = typeof(FigureLength).GetConstructor(new Type[] { typeof(double), typeof(FigureUnitType) });
-                    return (new InstanceDescriptor(ci, new object[] { fl.Value, fl.FigureUnitType }));
-                }
+                ConstructorInfo ci = typeof(FigureLength).GetConstructor(new Type[] { typeof(double), typeof(FigureUnitType) });
+                return new InstanceDescriptor(ci, new object[] { figureLength.Value, figureLength.FigureUnitType });
             }
+
             throw GetConvertToException(value, destinationType);
         }
 
@@ -179,21 +171,29 @@ namespace System.Windows
         #region Internal Methods
 
         /// <summary>
-        /// Converts a FigureLength instance to a String given the CultureInfo.
+        /// Converts a <see cref="FigureLength"/> instance to a <see langword="string"/> given the <see cref="CultureInfo"/>.
         /// </summary>
-        /// <param name="fl">FigureLength instance to convert.</param>
-        /// <param name="cultureInfo">Culture Info.</param>
-        /// <returns>String representation of the object.</returns>
-        static internal string ToString(FigureLength fl, CultureInfo cultureInfo)
+        /// <param name="length">Reference to a <see cref="FigureLength"/> instance to convert from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <returns><see langword="string"/> representation of the <see cref="FigureLength"/>.</returns>
+        internal static string ToString(ref readonly FigureLength length, CultureInfo cultureInfo) => length.FigureUnitType switch
         {
-            switch (fl.FigureUnitType)
-            {
-                //  for Auto print out "Auto". value is always "1.0"
-                case FigureUnitType.Auto:
-                    return ("Auto");
+            FigureUnitType.Auto => "Auto", // Print out "Auto", value is always "1.0"
+            FigureUnitType.Pixel => Convert.ToString(length.Value, cultureInfo),
+            _ => ToStringWithUnitType(in length, cultureInfo)
+        };
 
-                case FigureUnitType.Pixel:
-                    return Convert.ToString(fl.Value, cultureInfo);
+        /// <summary>
+        /// Converts a <see cref="FigureLength"/> instance to a <see langword="string"/> given the <see cref="CultureInfo"/>.
+        /// </summary>
+        /// <param name="length">Reference to a <see cref="FigureLength"/> instance to convert from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <returns><see langword="string"/> representation of the <see cref="FigureLength"/>.</returns>
+        private static string ToStringWithUnitType(ref readonly FigureLength length, CultureInfo cultureInfo)
+        {
+            // 17 for digits; 3 for separator; 4 for negative sign; 5 for exponent; 3 scratch space
+            Span<char> doubleSpan = stackalloc char[32];
+            length.Value.TryFormat(doubleSpan, out int charsWritten, provider: cultureInfo);
 
             return string.Create(cultureInfo, stackalloc char[48], $"{doubleSpan.Slice(0, charsWritten)} {length.FigureUnitType}");
         }

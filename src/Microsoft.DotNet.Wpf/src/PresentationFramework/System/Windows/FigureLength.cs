@@ -254,7 +254,7 @@ namespace System.Windows
         /// </summary>
         public override string ToString()
         {
-            return FigureLengthConverter.ToString(this, CultureInfo.InvariantCulture);
+            return FigureLengthConverter.ToString(in this, CultureInfo.InvariantCulture);
         }
         
         #endregion Public Methods 

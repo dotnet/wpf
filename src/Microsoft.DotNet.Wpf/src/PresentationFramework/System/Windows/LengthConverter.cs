@@ -1,27 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Contains the LengthConverter: TypeConverter for the Length class.
-//
-//
-
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using MS.Internal;
 
 namespace System.Windows
 {
-
     /// <summary>
     /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
     /// </summary> 
-    public class LengthConverter: TypeConverter
+    public class LengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -56,7 +48,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -69,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
@@ -100,7 +92,7 @@ namespace System.Windows
                 return FromString(sourceString, cultureInfo);
 
             // Conversion from a numeric type
-            return Convert.ToDouble(source, cultureInfo);   
+            return Convert.ToDouble(source, cultureInfo);
         }
 
         /// <summary>
@@ -128,12 +120,7 @@ namespace System.Windows
                 throw GetConvertToException(value, destinationType);
 
             if (destinationType == typeof(string))
-            {
-                if (double.IsNaN(doubleValue))
-                    return "Auto";
-
-                return Convert.ToString(doubleValue, cultureInfo);
-            }
+                return ToString(doubleValue, cultureInfo);
 
             if (destinationType == typeof(InstanceDescriptor))
             {
@@ -153,6 +140,21 @@ namespace System.Windows
         //-------------------------------------------------------------------
 
         #region Internal Methods
+
+        /// <summary>
+        /// Formats a single <paramref name="value"/> to length representation.
+        /// For <see cref="double.NaN"/> values, "Auto" is returned instead.
+        /// </summary>
+        /// <param name="value">The value to format as string.</param>
+        /// <param name="handler">The handler specifying culture used for conversion.</param>
+        /// <returns>Formatted length representation of the <paramref name="value"/>.</returns>
+        internal static string ToString(double value, CultureInfo cultureInfo)
+        {
+            if (double.IsNaN(value))
+                return "Auto";
+
+            return Convert.ToString(value, cultureInfo);
+        }
 
         /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
         /// in <paramref name="handler"/>. <br /> <br />

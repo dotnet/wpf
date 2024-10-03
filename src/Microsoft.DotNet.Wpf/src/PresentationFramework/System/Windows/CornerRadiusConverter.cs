@@ -1,8 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using MS.Internal;
@@ -145,7 +145,7 @@ namespace System.Windows
 
         internal static CornerRadius FromString(string s, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new (s, cultureInfo);
+            TokenizerHelper th = new(s, cultureInfo);
             Span<double> radii = stackalloc double[4];
             int i = 0;
 

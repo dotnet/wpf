@@ -503,11 +503,12 @@ namespace MS.Internal.FontCache
             // An exact match was not found and so we will start looking for the best match.
             Text.TextInterface.Font matchingFont = null;
             int indexOfSpace = faceName.LastIndexOf(' ');
+            Dictionary<string, Text.TextInterface.Font>.AlternateLookup<ReadOnlySpan<char>> alternateLookup = faces.GetAlternateLookup<ReadOnlySpan<char>>();
 
             while (indexOfSpace > 0)
             {
                 faceName = faceName.Slice(0, indexOfSpace);
-                if (faces.TryGetValue(faceName.ToString(), out matchingFont))
+                if (alternateLookup.TryGetValue(faceName, out matchingFont))
                 {
                     return matchingFont;
                 }

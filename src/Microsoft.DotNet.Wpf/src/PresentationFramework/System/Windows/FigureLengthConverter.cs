@@ -195,17 +195,15 @@ namespace System.Windows
                 case FigureUnitType.Pixel:
                     return Convert.ToString(fl.Value, cultureInfo);
 
-                default:
-                    return $"{Convert.ToString(fl.Value, cultureInfo)} {fl.FigureUnitType}";
-            }
+            return string.Create(cultureInfo, stackalloc char[48], $"{doubleSpan.Slice(0, charsWritten)} {length.FigureUnitType}");
         }
 
         /// <summary>
-        /// Parses a FigureLength from a string given the CultureInfo.
+        /// Parses a <see cref="FigureLength"/> from a <see langword="string"/> given the <see cref="CultureInfo"/>.
         /// </summary>
-        /// <param name="s">String to parse from.</param>
-        /// <param name="cultureInfo">Culture Info.</param>
-        /// <returns>Newly created FigureLength instance.</returns>
+        /// <param name="input"><see langword="string"/> to parse from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> which is respected during conversion.</param>
+        /// <returns>Newly created <see cref="FigureLength"/> instance.</returns>
         /// <remarks>
         /// Formats: 
         /// "[value][unit]"
@@ -217,14 +215,11 @@ namespace System.Windows
         ///     As above, but the value is assumed to be 1.0
         ///     This is only acceptable for a subset of FigureUnitType: Auto
         /// </remarks>
-        static internal FigureLength FromString(string s, CultureInfo cultureInfo)
+        internal static FigureLength FromString(string input, CultureInfo cultureInfo)
         {
-            double value;
-            FigureUnitType unit;
-            XamlFigureLengthSerializer.FromString(s, cultureInfo,
-                out value, out unit);
+            XamlFigureLengthSerializer.FromString(input, cultureInfo, out double value, out FigureUnitType unit);
 
-            return (new FigureLength(value, unit));
+            return new FigureLength(value, unit);
         }
 
         #endregion Internal Methods

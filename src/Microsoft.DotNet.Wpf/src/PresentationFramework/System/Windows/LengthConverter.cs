@@ -11,8 +11,8 @@
 
 using System;
 using System.ComponentModel;
-
 using System.ComponentModel.Design.Serialization;
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
@@ -162,7 +162,7 @@ namespace System.Windows
             }
             throw GetConvertToException(value, destinationType);
         }
-        #endregion 
+        #endregion
 
         //-------------------------------------------------------------------
         //
@@ -172,6 +172,18 @@ namespace System.Windows
 
         #region Internal Methods
 
+        /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
+        /// in <paramref name="handler"/>. <br /> <br />
+        /// Special representation applies for <see cref="double.NaN"/> values, emitted as "Auto" string instead. </summary>
+        /// <param name="value">The value to format as string.</param>
+        /// <param name="handler">The handler specifying culture used for conversion.</param>
+        static internal void FormatLengthAsString(double value, ref DefaultInterpolatedStringHandler handler)
+        {
+            if (double.IsNaN(value))
+                handler.AppendLiteral("Auto");
+            else
+                handler.AppendFormatted(value);
+        }
 
         // Parse a Length from a string given the CultureInfo.
         // Formats: 
@@ -221,11 +233,6 @@ namespace System.Windows
             }
         }
 
-        static internal string ToString(double l, CultureInfo cultureInfo)
-        {
-            if(double.IsNaN(l)) return "Auto";
-            return Convert.ToString(l, cultureInfo);
-        }
 
         #endregion
 

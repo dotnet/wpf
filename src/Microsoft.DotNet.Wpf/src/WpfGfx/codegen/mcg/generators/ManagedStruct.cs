@@ -510,8 +510,8 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[Helpers.CodeGenHelpers.WriteFieldStatementsFirstLastWithSeparator(
                                 resource.LocalFields,
                                 "{parseMethod}(" + firstToken + ", formatProvider)",
-                                "{parseMethod}(th.NextTokenRequired(), formatProvider)",
-                                "{parseMethod}(th.NextTokenRequired(), formatProvider)",
+                                "{parseMethod}(th.NextTokenRequiredAsSpan(), formatProvider)",
+                                "{parseMethod}(th.NextTokenRequiredAsSpan(), formatProvider)",
                                 ",\n")]]);
                     [[/inline]];
 
@@ -560,7 +560,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         [[resource.Name]] value;
 
-                        String firstToken = th.NextTokenRequired();
+                        ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
                         [[WriteParseBody(resource, "firstToken")]]
 

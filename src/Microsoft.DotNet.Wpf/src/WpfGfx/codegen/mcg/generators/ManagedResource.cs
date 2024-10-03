@@ -2827,7 +2827,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                              while (th.NextToken())
                              {
-                                 [[WriteParseBody(resource.CollectionType, "th.GetCurrentToken()")]]
+                                 [[WriteParseBody(resource.CollectionType, "th.GetCurrentTokenAsSpan()")]]
 
                                  resource.Add(value);
                              }

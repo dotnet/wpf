@@ -6,24 +6,16 @@
 //
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System;
-using System.Linq;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using MS.Win32;
 using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 using System.Runtime.CompilerServices;
+
+using SR = MS.Internal.PresentationCore.SR;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -81,7 +73,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask?.ToArray();
+                return _mask != null ? new ReadOnlyCollection<byte>(_mask) : null;
             }
         }
 

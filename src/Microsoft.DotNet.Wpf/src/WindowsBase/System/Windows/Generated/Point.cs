@@ -146,11 +146,10 @@ namespace System.Windows
 
             Point value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
-            value = new Point(
-                Convert.ToDouble(firstToken, formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+            value = new Point(double.Parse(firstToken, formatProvider),
+                              double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
 
             // There should be no more tokens in this string.
             th.LastTokenRequired();

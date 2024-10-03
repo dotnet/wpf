@@ -143,6 +143,20 @@ namespace MS.Internal
         }
 
         /// <summary>
+        /// Sibling to <see cref="NextTokenRequired"/>; advances to the next token, throws an <see cref="InvalidOperationException"/> if not present.
+        /// </summary>
+        /// <returns>The next token found</returns>
+        internal ReadOnlySpan<char> NextTokenRequiredAsSpan()
+        {
+            if (!NextToken(false))
+            {
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
+            }
+
+            return GetCurrentTokenAsSpan();
+        }
+
+        /// <summary>
         /// Advances to the NextToken, throwing an exception if not present
         /// </summary>
         /// <returns>The next token found</returns>

@@ -166,7 +166,7 @@ namespace System.Windows
 
             Int32Rect value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -176,11 +176,10 @@ namespace System.Windows
             }
             else
             {
-                value = new Int32Rect(
-                    Convert.ToInt32(firstToken, formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
-                    Convert.ToInt32(th.NextTokenRequired(), formatProvider));
+                value = new Int32Rect(Int32.Parse(firstToken, formatProvider),
+                    Int32.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                    Int32.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                    Int32.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
             }
 
             // There should be no more tokens in this string.

@@ -155,12 +155,11 @@ namespace System.Windows.Media.Media3D
 
             Point3D value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
-            value = new Point3D(
-                Convert.ToDouble(firstToken, formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+            value = new Point3D(double.Parse(firstToken, formatProvider),
+                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
 
             // There should be no more tokens in this string.
             th.LastTokenRequired();

@@ -179,7 +179,7 @@ namespace System.Windows.Media.Media3D
 
             Quaternion value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -189,11 +189,10 @@ namespace System.Windows.Media.Media3D
             }
             else
             {
-                value = new Quaternion(
-                    Convert.ToDouble(firstToken, formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                value = new Quaternion(double.Parse(firstToken, formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
             }
 
             // There should be no more tokens in this string.

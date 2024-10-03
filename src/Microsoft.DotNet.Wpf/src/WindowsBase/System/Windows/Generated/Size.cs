@@ -160,7 +160,7 @@ namespace System.Windows
 
             Size value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = th.NextTokenRequiredAsSpan();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -170,9 +170,8 @@ namespace System.Windows
             }
             else
             {
-                value = new Size(
-                    Convert.ToDouble(firstToken, formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                value = new Size(double.Parse(firstToken, formatProvider),
+                    double.Parse(th.NextTokenRequiredAsSpan(), formatProvider));
             }
 
             // There should be no more tokens in this string.

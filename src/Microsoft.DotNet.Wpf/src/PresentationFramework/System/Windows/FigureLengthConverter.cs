@@ -72,21 +72,15 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Checks whether or not this class can convert to a given type.
+        /// Returns whether this class can convert specified value to <see langword="string"/> or <see cref="InstanceDescriptor"/>.
         /// </summary>
-        /// <param name="typeDescriptorContext">The ITypeDescriptorContext 
-        /// for this call.</param>
-        /// <param name="destinationType">The Type being queried for support.</param>
-        /// <returns>
-        /// <c>true</c> if this converter can convert to the provided type, 
-        /// <c>false</c> otherwise.
-        /// </returns>
-        public override bool CanConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            Type destinationType) 
+        /// <param name="typeDescriptorContext">Context information used for conversion.</param>
+        /// <param name="destinationType">Type being evaluated for conversion.</param>
+        /// <returns><see langword="true"/> when <paramref name="destinationType"/> specified is
+        /// <see langword="string"/> or <see cref="InstanceDescriptor"/>, <see langword="false"/> otherwise.</returns>
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
-            return (    destinationType == typeof(InstanceDescriptor) 
-                    ||  destinationType == typeof(string)   );
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>

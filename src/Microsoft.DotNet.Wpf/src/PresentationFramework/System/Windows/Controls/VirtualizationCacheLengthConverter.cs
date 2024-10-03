@@ -150,25 +150,26 @@ namespace System.Windows.Controls
 
             return string.Create(cultureInfo, stackalloc char[128], $"{cacheLength.CacheBeforeViewport}{listSeparator}{cacheLength.CacheAfterViewport}");
         }
+
         /// <summary>
-        /// Parses a VirtualizationCacheLength from a string given the CultureInfo.
+        /// Parses a <see cref="VirtualizationCacheLength"/> from a <see cref="string"/> given the <see cref="CultureInfo"/>.
         /// </summary>
-        /// <param name="s">String to parse from.</param>
-        /// <param name="cultureInfo">Culture Info.</param>
-        /// <returns>Newly created VirtualizationCacheLength instance.</returns>
-        internal static VirtualizationCacheLength FromString(string s, CultureInfo cultureInfo)
+        /// <param name="input"><see cref="string"/> to parse from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> that is respected during parsing.</param>
+        /// <returns>A new instance of <see cref="VirtualizationCacheLength"/>.</returns>
+        internal static VirtualizationCacheLength FromString(string input, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new(s, cultureInfo);
+            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
             Span<double> lengths = stackalloc double[2];
             int i = 0;
 
             // Peel off each double in the delimited list.
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 if (i >= 2)
-                    throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
+                    throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, input));
 
-                lengths[i] = double.Parse(th.GetCurrentTokenAsSpan(), cultureInfo);
+                lengths[i] = double.Parse(tokenizer.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
@@ -176,7 +177,7 @@ namespace System.Windows.Controls
             {
                 1 => new VirtualizationCacheLength(lengths[0]),
                 2 => new VirtualizationCacheLength(lengths[0], lengths[1]),
-                _ => throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s)),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, input)),
             };
         }
 

@@ -180,17 +180,17 @@ namespace System.Windows
         /// <exception cref="FormatException">Thrown when <paramref name="input"/> contains invalid string representation.</exception>
         internal static Thickness FromString(string input, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new(input, cultureInfo);
+            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
             Span<double> lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 if (i >= 4) // In case we've got more than 4 doubles, we throw
                     throw new FormatException(SR.Format(SR.InvalidStringThickness, input));
 
-                lengths[i] = LengthConverter.FromString(th.GetCurrentTokenAsSpan(), cultureInfo);
+                lengths[i] = LengthConverter.FromString(tokenizer.GetCurrentToken(), cultureInfo);
                 i++;
             }
 

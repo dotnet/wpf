@@ -143,19 +143,25 @@ namespace System.Windows
             return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
-        internal static CornerRadius FromString(string s, CultureInfo cultureInfo)
+        /// <summary>
+        /// Parses a <see cref="CornerRadius"/> from a <see cref="string"/> given the <see cref="CultureInfo"/>.
+        /// </summary>
+        /// <param name="input"><see cref="string"/> to parse from.</param>
+        /// <param name="cultureInfo">The <see cref="CultureInfo"/> that is respected during parsing.</param>
+        /// <returns>A new instance of <see cref="CornerRadius"/>.</returns>
+        internal static CornerRadius FromString(string input, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new(s, cultureInfo);
+            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
             Span<double> radii = stackalloc double[4];
             int i = 0;
 
             // Peel off each Length in the delimited list.
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 if (i >= 4)
-                    throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, s));
+                    throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, input));
 
-                radii[i] = double.Parse(th.GetCurrentTokenAsSpan(), cultureInfo);
+                radii[i] = double.Parse(tokenizer.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
@@ -165,7 +171,7 @@ namespace System.Windows
             {
                 1 => new CornerRadius(radii[0]),
                 4 => new CornerRadius(radii[0], radii[1], radii[2], radii[3]),
-                _ => throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, s)),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringCornerRadius, input)),
             };
         }
         #endregion

@@ -4,6 +4,7 @@
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MS.Internal;
 
@@ -64,7 +65,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask != null ? new ReadOnlyCollection<byte>((byte[])_mask.Clone()) : null;
             }
         }
 
@@ -546,7 +547,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                return new PartialList<PixelFormatChannelMask>(masks);
+                return new ReadOnlyCollection<PixelFormatChannelMask>(masks);
             }
         }
 

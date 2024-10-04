@@ -2,19 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Globalization;
-using System.ComponentModel;
-using System.Windows.Markup;// For ValueSerializerAttribute
-using System.Windows.Threading; // For DispatcherObject
 using MS.Utility;
-using MS.Internal.WindowsBase;
-using System.Reflection;   // for IsInstanceOfType
 using MS.Internal;
+using System.Threading;
+using System.Collections;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Windows.Markup;    // For ValueSerializerAttribute
+using MS.Internal.WindowsBase;
+using System.Windows.Threading; // For DispatcherObject
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -980,7 +978,7 @@ namespace System.Windows
             while (ownerType != null)
             {
                 // Ensure static constructor of type has run
-                SecurityHelper.RunClassConstructor(ownerType);
+                RuntimeHelpers.RunClassConstructor(ownerType.TypeHandle);
 
                 // Locate property
                 FromNameKey key = new(name, ownerType);

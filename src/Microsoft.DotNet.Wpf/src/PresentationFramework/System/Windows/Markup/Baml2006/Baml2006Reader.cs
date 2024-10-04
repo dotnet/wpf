@@ -16,6 +16,7 @@ using System.Windows.Media;
 using MS.Internal;
 using System.Globalization;
 using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Baml2006
 {
@@ -1377,7 +1378,7 @@ namespace System.Windows.Baml2006
                 // Force load the Statics by walking up the hierarchy and running class constructors
                 while (null != currentType)
                 {
-                    MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                    RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                     currentType = currentType.BaseType;
                 }
 

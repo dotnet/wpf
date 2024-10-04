@@ -2,13 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
+using System.Xaml;
 using System.ComponentModel;
 using System.Globalization;
-
-using System.Windows;
 using System.Collections.Generic;
-using System.Xaml;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
@@ -114,7 +112,7 @@ namespace System.Windows.Markup
                         // Force load the Statics by walking up the hierarchy and running class constructors
                         while (null != currentType)
                         {
-                            MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                            RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                             currentType = currentType.BaseType;
                         }
 

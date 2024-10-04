@@ -132,12 +132,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _defaultDirectory.Value == null ? String.Empty : _defaultDirectory.Value;
+                return _defaultDirectory == null ? String.Empty : _defaultDirectory;
             }
             set
             {
 
-                _defaultDirectory.Value = value;
+                _defaultDirectory = value;
             }
         }
 
@@ -171,12 +171,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _initialDirectory.Value == null ? String.Empty : _initialDirectory.Value;
+                return _initialDirectory == null ? String.Empty : _initialDirectory;
             }
             set
             {
 
-                _initialDirectory.Value = value;
+                _initialDirectory = value;
             }
         }
 
@@ -190,12 +190,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _rootDirectory.Value == null ? String.Empty : _rootDirectory.Value;
+                return _rootDirectory == null ? String.Empty : _rootDirectory;
             }
             set
             {
 
-                _rootDirectory.Value = value;
+                _rootDirectory = value;
             }
         }
 
@@ -229,12 +229,12 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _title.Value == null ? String.Empty : _title.Value;
+                return _title == null ? String.Empty : _title;
             }
             set
             {
 
-                _title.Value = value;
+                _title = value;
             }
         }
 
@@ -309,7 +309,7 @@ namespace Microsoft.Win32
         /// </summary>
         internal bool GetOption(FOS option)
         {
-            return (_dialogOptions.Value & option) != 0;
+            return (_dialogOptions & option) != 0;
         }
 
         /// <summary>
@@ -320,13 +320,13 @@ namespace Microsoft.Win32
             if (value)
             {
                 // if value is true, bitwise OR the option with _dialogOptions
-                _dialogOptions.Value |= option;
+                _dialogOptions |= option;
             }
             else
             {
                 // if value is false, AND the bitwise complement of the 
                 // option with _dialogOptions
-                _dialogOptions.Value &= ~option;
+                _dialogOptions &= ~option;
             }
         }
 
@@ -420,7 +420,7 @@ namespace Microsoft.Win32
             dialog.SetTitle(Title);
             dialog.SetFileName(CriticalItemName);
 
-            FOS options = _dialogOptions.Value;
+            FOS options = _dialogOptions;
             dialog.SetOptions(options);
 
             IList<FileDialogCustomPlace> places = CustomPlaces;
@@ -535,7 +535,7 @@ namespace Microsoft.Win32
             // 
             // Initialize Options Flags
             // 
-            _dialogOptions.Value = 0;   // _dialogOptions is an int containing a set of
+            _dialogOptions = 0;   // _dialogOptions is an int containing a set of
                                         // bit flags used to initialize the dialog box.
                                         // Within our code, we only use GetOption and SetOption
                                         // (change from Windows Forms, which sometimes directly
@@ -561,10 +561,10 @@ namespace Microsoft.Win32
             // Initialize additional properties
             // 
             _itemNames = null;
-            _title.Value = null;
-            _initialDirectory.Value = null;
-            _defaultDirectory.Value = null;
-            _rootDirectory.Value = null;
+            _title = null;
+            _initialDirectory = null;
+            _defaultDirectory = null;
+            _rootDirectory = null;
 
             // Set this to an empty list so callers can simply add to it.  They can also replace it wholesale.
             CustomPlaces = new List<FileDialogCustomPlace>();
@@ -772,14 +772,14 @@ namespace Microsoft.Win32
 
         // _dialogOptions is a set of bit flags used to control the behavior
         // of the Win32 dialog box.
-        private SecurityCriticalDataForSet<FOS> _dialogOptions;
+        private FOS _dialogOptions;
 
         // These private variables store data for the various public properties
         // that control the appearance of the file dialog box.
-        private SecurityCriticalDataForSet<string> _title;                  // Title bar of the message box
-        private SecurityCriticalDataForSet<string> _initialDirectory;       // Starting directory
-        private SecurityCriticalDataForSet<string> _defaultDirectory;       // Starting directory if no recent
-        private SecurityCriticalDataForSet<string> _rootDirectory;          // Topmost directory
+        private string _title;                  // Title bar of the message box
+        private string _initialDirectory;       // Starting directory
+        private string _defaultDirectory;       // Starting directory if no recent
+        private string _rootDirectory;          // Topmost directory
 
         // We store the handle of the file dialog inside our class 
         // for a variety of purposes (like getting the title of the dialog

@@ -48,7 +48,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details
             PTS.FSSUBTRACKDETAILS subtrackDetails;
-            PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle.Value, out subtrackDetails));
+            PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle, out subtrackDetails));
 
             // Draw border and background info.
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
@@ -70,7 +70,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 PTS.FSPARADESCRIPTION [] arrayParaDesc;
-                PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle.Value, ref subtrackDetails, out arrayParaDesc);
+                PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 using(DrawingContext ctx = _visual.RenderOpen())
                 {

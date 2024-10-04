@@ -1919,8 +1919,8 @@ namespace System.Windows
         //This will be cleaned up with the RootBrowserWindow cleanup.
         internal MimeType MimeType
         {
-            get { return _appMimeType.Value; }
-            set { _appMimeType = new SecurityCriticalDataForSet<MimeType>(value); }
+            get { return _appMimeType; }
+            set { _appMimeType = value; }
         }
 
         // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
@@ -2526,7 +2526,7 @@ namespace System.Windows
         private bool                        _resourcesInitialized = false;
         private bool                        _reloadFluentDictionary = false;
 
-        private SecurityCriticalDataForSet<MimeType> _appMimeType;
+        private MimeType                    _appMimeType;
         private IServiceProvider            _serviceProvider;
 
         private bool                        _appIsShutdown;

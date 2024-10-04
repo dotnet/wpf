@@ -33,10 +33,10 @@ namespace MS.Internal.PtsHost
         /// <param name="ptsContext">Current PTS Context.</param>
         /// <param name="br">PTS page break record.</param>
         /// <param name="pageNumber">Page number.</param>
-        internal PageBreakRecord(PtsContext ptsContext, SecurityCriticalDataForSet<IntPtr> br, int pageNumber)
+        internal PageBreakRecord(PtsContext ptsContext, IntPtr br, int pageNumber)
         {
             Invariant.Assert(ptsContext != null, "Invalid PtsContext object.");
-            Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
+            Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
 
             _br = br;
             _pageNumber = pageNumber;
@@ -94,7 +94,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal IntPtr BreakRecord
         {
-            get { return _br.Value; }
+            get { return _br; }
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace MS.Internal.PtsHost
                 }
 
                 // Cleanup the state.
-                _br.Value = IntPtr.Zero;
+                _br = IntPtr.Zero;
                 _ptsContext = null;
             }
         }
@@ -169,7 +169,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// PTS page break record.
         /// </summary>
-        private SecurityCriticalDataForSet<IntPtr> _br;
+        private IntPtr _br;
 
         /// <summary>
         /// Page number of the page starting at the break position.

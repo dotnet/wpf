@@ -556,7 +556,7 @@ namespace System.Windows.Interop
             {
                 if (_isDisposed)
                     return null;
-                return (_rootVisual.Value);
+                return (_rootVisual);
             }
             set
             {
@@ -570,29 +570,29 @@ namespace System.Windows.Interop
         {
             set
             {
-                if (_rootVisual.Value != value)
+                if (_rootVisual != value)
                 {
-                    Visual oldRoot = _rootVisual.Value;
+                    Visual oldRoot = _rootVisual;
 
                     if(value != null)
                     {
-                        _rootVisual.Value = value;
+                        _rootVisual = value;
 
-                        if(_rootVisual.Value is UIElement)
+                        if(_rootVisual is UIElement)
                         {
-                            ((UIElement)(_rootVisual.Value)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
+                            ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
 
                         if (_hwndTarget != null && _hwndTarget.IsDisposed == false)
                         {
-                            _hwndTarget.RootVisual = _rootVisual.Value;
+                            _hwndTarget.RootVisual = _rootVisual;
                         }
 
                         UIElement.PropagateResumeLayout(null, value);
                     }
                     else
                     {
-                        _rootVisual.Value = null;
+                        _rootVisual = null;
                         if (_hwndTarget != null && !_hwndTarget.IsDisposed)
                         {
                             _hwndTarget.RootVisual = null;
@@ -609,7 +609,7 @@ namespace System.Windows.Interop
                         UIElement.PropagateSuspendLayout(oldRoot);
                     }
 
-                    RootChanged(oldRoot, _rootVisual.Value);
+                    RootChanged(oldRoot, _rootVisual);
 
                     if (IsLayoutActive() == true)
                     {
@@ -633,7 +633,7 @@ namespace System.Windows.Interop
                     // have been torn down.  We just need to protect against that.
                     if(_keyboard != null)
                     {
-                        _keyboard.Value.OnRootChanged(oldRoot, _rootVisual.Value);
+                        _keyboard.Value.OnRootChanged(oldRoot, _rootVisual);
                     }
                 }
 
@@ -794,7 +794,7 @@ namespace System.Windows.Interop
         /// </summary>
         private void OnLayoutUpdated(object obj, EventArgs args)
         {
-            UIElement root = _rootVisual.Value as UIElement;
+            UIElement root = _rootVisual as UIElement;
 
             if(root != null)
             {
@@ -910,7 +910,7 @@ namespace System.Windows.Interop
         // nearest int.  Otherwise round the size up to the next int.
         private void RoundDeviceSize(ref Point size)
         {
-            UIElement root = _rootVisual.Value as UIElement;
+            UIElement root = _rootVisual as UIElement;
             if (root != null && root.SnapsToDevicePixels)
             {
                 size = new Point(DoubleUtil.DoubleToInt(size.X), DoubleUtil.DoubleToInt(size.Y));
@@ -1022,7 +1022,7 @@ namespace System.Windows.Interop
 
         private bool IsLayoutActive()
         {
-            if ((_rootVisual.Value is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
+            if ((_rootVisual is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
             {
                 return true;
             }
@@ -1040,7 +1040,7 @@ namespace System.Windows.Interop
             Debug.Assert(_hwndTarget.IsDisposed == false, "HwndTarget is disposed");
 
             UIElement rootUIElement = null;
-            rootUIElement = _rootVisual.Value as UIElement;
+            rootUIElement = _rootVisual as UIElement;
             if (rootUIElement == null) return;
 
             // InvalidateMeasure() call is necessary in the following scenario
@@ -1203,7 +1203,7 @@ namespace System.Windows.Interop
             // during which almost anything could have happened that might
             // invalidate our checks.
             UIElement rootUIElement=null;
-            rootUIElement = _rootVisual.Value as UIElement;
+            rootUIElement = _rootVisual as UIElement;
             if (IsUsable && rootUIElement != null)
             {
                 switch (message)
@@ -1981,7 +1981,7 @@ namespace System.Windows.Interop
 
             ArgumentNullException.ThrowIfNull(request);
 
-            UIElement root =_rootVisual.Value as UIElement;
+            UIElement root =_rootVisual as UIElement;
             if(root != null)
             {
                 // atanask:
@@ -2822,7 +2822,7 @@ namespace System.Windows.Interop
 
         private HwndTarget                  _hwndTarget;
 
-        private SecurityCriticalDataForSet<Visual>                      _rootVisual;
+        private Visual                      _rootVisual;
 
         private Tuple<HwndSourceHook, Delegate[]> _hooks;
 

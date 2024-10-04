@@ -49,7 +49,7 @@ namespace MS.Win32
             IntPtr parent,
             HwndWrapperHook[] hooks)
         {
-            _ownerThreadID = new SecurityCriticalDataForSet<int>(Environment.CurrentManagedThreadId);
+            _ownerThreadID = Environment.CurrentManagedThreadId;
 
 
             // First, add the set of hooks.  This allows the hooks to receive the
@@ -213,7 +213,7 @@ namespace MS.Win32
                 // (we know this since we're listening for WM_NCDESTROY).  Since we're being disposed
                 // we destroy it now.
 
-                if(Environment.CurrentManagedThreadId == _ownerThreadID.Value)
+                if(Environment.CurrentManagedThreadId == _ownerThreadID)
                 {
                     // We are the owner thread, we can safely destroy the window and unregister
                     // the class
@@ -420,7 +420,7 @@ namespace MS.Win32
         private SecurityCriticalDataClass<IntPtr> _handle;
         private UInt16 _classAtom;
         private SecurityCriticalDataClass<WeakReferenceList> _hooks;
-        private SecurityCriticalDataForSet<int> _ownerThreadID;
+        private int _ownerThreadID;
         
         private SecurityCriticalData<HwndWrapperHook> _wndProc;
         private bool _isDisposed;

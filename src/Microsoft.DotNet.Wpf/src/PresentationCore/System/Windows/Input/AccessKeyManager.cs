@@ -848,12 +848,12 @@ namespace System.Windows.Input
         {
             _key = key;
             _isMultiple = isMultiple;
-            _userInitiated = new SecurityCriticalDataForSet<bool>(userInitiated);
+            _userInitiated = userInitiated;
         }
 
         internal void ClearUserInitiated()
         {
-            _userInitiated.Value = false;
+            _userInitiated = false;
         }
         /// <summary>
         /// The key that was pressed which invoked this access key
@@ -875,12 +875,12 @@ namespace System.Windows.Input
 
         internal bool UserInitiated
         {
-            get { return _userInitiated.Value; }
+            get { return _userInitiated; }
         }
         
 
         private string _key;
         private bool _isMultiple;
-        private SecurityCriticalDataForSet<bool >_userInitiated;
+        private bool _userInitiated;
 }
 }

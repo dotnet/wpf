@@ -99,7 +99,7 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// Holds the reference to the interaction context
         /// </summary>
-        private SecurityCriticalDataForSet<IntPtr> _interactionContext = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+        private IntPtr _interactionContext = IntPtr.Zero;
 
         /// <summary>
         /// The stylus device that owns this interaction engine.
@@ -177,33 +177,33 @@ namespace System.Windows.Input.StylusPointer
             // Create our interaction context for gesture recognition
             IntPtr interactionContext = IntPtr.Zero;
             UnsafeNativeMethods.CreateInteractionContext(out interactionContext);
-            _interactionContext = new SecurityCriticalDataForSet<IntPtr>(interactionContext);
+            _interactionContext = interactionContext;
 
             if (configuration == null)
             {
                 configuration = DefaultConfiguration;
             }
 
-            if (_interactionContext.Value != IntPtr.Zero)
+            if (_interactionContext != IntPtr.Zero)
             {
                 // We do not want to filter specific pointers
-                UnsafeNativeMethods.SetPropertyInteractionContext(_interactionContext.Value,
+                UnsafeNativeMethods.SetPropertyInteractionContext(_interactionContext,
                     UnsafeNativeMethods.INTERACTION_CONTEXT_PROPERTY.INTERACTION_CONTEXT_PROPERTY_FILTER_POINTERS,
                     Convert.ToUInt32(false));
 
                 // Use screen measurements here as this makes certain math easier for us
-                UnsafeNativeMethods.SetPropertyInteractionContext(_interactionContext.Value,
+                UnsafeNativeMethods.SetPropertyInteractionContext(_interactionContext,
                    UnsafeNativeMethods.INTERACTION_CONTEXT_PROPERTY.INTERACTION_CONTEXT_PROPERTY_MEASUREMENT_UNITS,
                    (UInt32)UnsafeNativeMethods.InteractionMeasurementUnits.Screen);
 
                 // Configure the context
-                UnsafeNativeMethods.SetInteractionConfigurationInteractionContext(_interactionContext.Value, (uint)configuration.Count, configuration.ToArray());
+                UnsafeNativeMethods.SetInteractionConfigurationInteractionContext(_interactionContext, (uint)configuration.Count, configuration.ToArray());
 
                 // Store the delegate so it can be accessed over time
                 _callbackDelegate = Callback;
 
                 // Register for interaction notifications
-                UnsafeNativeMethods.RegisterOutputCallbackInteractionContext(_interactionContext.Value, _callbackDelegate);
+                UnsafeNativeMethods.RegisterOutputCallbackInteractionContext(_interactionContext, _callbackDelegate);
             }
         }
 
@@ -222,10 +222,10 @@ namespace System.Windows.Input.StylusPointer
             if (!_disposed)
             {
                 // We must destroy the interaction context when done
-                if (_interactionContext.Value != IntPtr.Zero)
+                if (_interactionContext != IntPtr.Zero)
                 {
-                    UnsafeNativeMethods.DestroyInteractionContext(_interactionContext.Value);
-                    _interactionContext.Value = IntPtr.Zero;
+                    UnsafeNativeMethods.DestroyInteractionContext(_interactionContext);
+                    _interactionContext = IntPtr.Zero;
                 }
 
                 _disposed = true;
@@ -257,7 +257,7 @@ namespace System.Windows.Input.StylusPointer
             try
             {
                 // Queue up the latest message for processing
-                UnsafeNativeMethods.BufferPointerPacketsInteractionContext(_interactionContext.Value, 1, new UnsafeNativeMethods.POINTER_INFO[] { _stylusDevice.CurrentPointerInfo });
+                UnsafeNativeMethods.BufferPointerPacketsInteractionContext(_interactionContext, 1, new UnsafeNativeMethods.POINTER_INFO[] { _stylusDevice.CurrentPointerInfo });
 
                 // Hover processing should occur directly from message receipt.
                 // Do this prior to the IC engine processing so HoverEnter/Leave has priority.
@@ -267,7 +267,7 @@ namespace System.Windows.Input.StylusPointer
                 DetectFlick(rsir);
 
                 // Fire processing of the queued messages
-                UnsafeNativeMethods.ProcessBufferedPacketsInteractionContext(_interactionContext.Value);
+                UnsafeNativeMethods.ProcessBufferedPacketsInteractionContext(_interactionContext);
             }
             catch
             {

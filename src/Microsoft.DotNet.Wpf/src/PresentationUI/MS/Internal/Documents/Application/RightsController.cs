@@ -57,7 +57,7 @@ class RightsController : IDocumentController, IDisposable
             try
             {
                 encryptedPackage =
-                    _provider.Value.EncryptPackage(ciphered);
+                    _provider.EncryptPackage(ciphered);
 
                 if (encryptedPackage != null)
                 {
@@ -125,7 +125,7 @@ class RightsController : IDocumentController, IDisposable
 
         RightsManagementProvider provider =
             new RightsManagementProvider(doc.SourcePackage);
-        _provider.Value = provider;
+        _provider = provider;
 
         try
         {
@@ -171,7 +171,7 @@ class RightsController : IDocumentController, IDisposable
             // If anything failed here, we cannot use the provider any longer,
             // so we can dispose it
             provider.Dispose();
-            _provider.Value = null;
+            _provider = null;
             throw;
         }
 
@@ -184,7 +184,7 @@ class RightsController : IDocumentController, IDisposable
             // If decryption failed, we can no longer do anything with the
             // provider instance or the current RM manager
             provider.Dispose();
-            _provider.Value = null;
+            _provider = null;
         }
 
         return true;
@@ -334,7 +334,7 @@ class RightsController : IDocumentController, IDisposable
             doc.DestinationProxy = new StreamProxy(clear);
 
             // save the use license in case the user acquired one
-            _provider.Value.SaveUseLicense(doc.DestinationPackage);
+            _provider.SaveUseLicense(doc.DestinationPackage);
 
             handled = true;
 
@@ -356,7 +356,7 @@ class RightsController : IDocumentController, IDisposable
                 "Cannot save with changes if Edit permission was not granted.");
 
             EncryptedPackageEnvelope encryptedPackage =
-                _provider.Value.EncryptPackage(ciphered);
+                _provider.EncryptPackage(ciphered);
 
             // the destination is intended to be encrypted when a non-null
             // value is returned
@@ -423,14 +423,14 @@ class RightsController : IDocumentController, IDisposable
     /// </summary>
     void IDisposable.Dispose()
     {
-        IDisposable provider = _provider.Value as IDisposable;
+        IDisposable provider = _provider as IDisposable;
 
         if (provider != null)
         {
             provider.Dispose();
         }
 
-        _provider.Value = null;
+        _provider = null;
         
         GC.SuppressFinalize(this);
     }
@@ -506,7 +506,7 @@ class RightsController : IDocumentController, IDisposable
     // Private Fields
     //--------------------------------------------------------------------------
 
-    private static SecurityCriticalDataForSet<IRightsManagementProvider> _provider;
+    private static IRightsManagementProvider _provider;
     #endregion Private Fields
 }
 }

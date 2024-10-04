@@ -45,7 +45,7 @@ namespace System.Windows.Media.TextFormatting
     internal class TextFormatterContext
 #endif
     {
-        private SecurityCriticalDataForSet<IntPtr>  _ploc;              // Line Services context
+        private IntPtr  _ploc;              // Line Services context
         private LineServicesCallbacks               _callbacks;         // object to hold all delegates for callback
         private State                               _state;             // internal state flags
         private BreakStrategies                     _breaking;          // context's breaking strategy
@@ -54,14 +54,14 @@ namespace System.Windows.Media.TextFormatting
 
         public TextFormatterContext()
         {
-            _ploc =  new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+            _ploc =  IntPtr.Zero;
             Init();
         }
 
 
         private void Init()
         {
-            if(_ploc.Value == System.IntPtr.Zero)
+            if(_ploc == System.IntPtr.Zero)
             {
                 // Initializing context
                 LsErr lserr = LsErr.None;
@@ -151,7 +151,7 @@ namespace System.Windows.Media.TextFormatting
                     SetSpecialCharacters(ref contextInfo);
                 }
 
-                _ploc.Value = ploc;
+                _ploc = ploc;
                 GC.KeepAlive(contextInfo);
 
                 //  There is a trick here to pass in this resolution as in twips
@@ -187,7 +187,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal TextPenaltyModule GetTextPenaltyModule()
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
             return new TextPenaltyModule(_ploc);
         }
 
@@ -263,10 +263,10 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         internal void Destroy()
         {
-            if(_ploc.Value != System.IntPtr.Zero)
+            if(_ploc != System.IntPtr.Zero)
             {
-                UnsafeNativeMethods.LoDestroyContext(_ploc.Value);
-                _ploc.Value = IntPtr.Zero;
+                UnsafeNativeMethods.LoDestroyContext(_ploc);
+                _ploc = IntPtr.Zero;
             }
         }
 
@@ -278,8 +278,8 @@ namespace System.Windows.Media.TextFormatting
         {
             if (_state == State.Uninitialized ||  breaking != _breaking)
             {
-                Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
-                LsErr lserr = UnsafeNativeMethods.LoSetBreaking(_ploc.Value, (int) breaking);
+                Invariant.Assert(_ploc != System.IntPtr.Zero);
+                LsErr lserr = UnsafeNativeMethods.LoSetBreaking(_ploc, (int) breaking);
 
                 if (lserr != LsErr.None)
                 {
@@ -308,10 +308,10 @@ namespace System.Windows.Media.TextFormatting
             out LsLineWidths    lineWidths
             )
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
 
             return UnsafeNativeMethods.LoCreateLine(
-                _ploc.Value,
+                _ploc,
                 cpFirst,
                 lineLength,
                 maxWidth,
@@ -334,10 +334,10 @@ namespace System.Windows.Media.TextFormatting
             out int         bestFitIndex
             )
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
 
             return UnsafeNativeMethods.LoCreateBreaks(
-                _ploc.Value,
+                _ploc,
                 cpFirst,
                 previousLineBreakRecord,
                 ploparabreak,
@@ -356,10 +356,10 @@ namespace System.Windows.Media.TextFormatting
             ref bool        penalizedAsJustified
             )
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
 
             return UnsafeNativeMethods.LoCreateParaBreakingSession(
-                _ploc.Value,
+                _ploc,
                 cpFirst,
                 maxWidth,
                 previousLineBreakRecord,
@@ -375,9 +375,9 @@ namespace System.Windows.Media.TextFormatting
             ref LsDevRes    deviceInfo
             )
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
             LsErr lserr = UnsafeNativeMethods.LoSetDoc(
-                _ploc.Value,
+                _ploc,
                 isDisplay ? 1 : 0,
                 isReferencePresentationEqual ? 1 : 0,
                 ref deviceInfo
@@ -395,9 +395,9 @@ namespace System.Windows.Media.TextFormatting
             int         tabStopCount
             )
         {
-            Invariant.Assert(_ploc.Value != System.IntPtr.Zero);
+            Invariant.Assert(_ploc != System.IntPtr.Zero);
             LsErr lserr = UnsafeNativeMethods.LoSetTabs(
-                _ploc.Value,
+                _ploc,
                 incrementalTab,
                 tabStopCount,
                 tabStops
@@ -503,7 +503,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Actual LS unmanaged context
         /// </summary>
-        internal SecurityCriticalDataForSet<IntPtr> Ploc
+        internal IntPtr Ploc
         {
             get { return _ploc; }
         }

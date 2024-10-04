@@ -44,7 +44,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         protected BaseParaClient(BaseParagraph paragraph) : base(paragraph.PtsContext)
         {
-            _paraHandle = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+            _paraHandle = IntPtr.Zero;
             _paragraph = paragraph;
         }
 
@@ -70,8 +70,8 @@ namespace MS.Internal.PtsHost
         internal void Arrange(IntPtr pfspara, PTS.FSRECT rcPara, int dvrTopSpace, uint fswdirParent)
         {
             // Make sure that paragraph handle (PFSPARA) is set. It is required to query paragraph content.
-            Debug.Assert(_paraHandle.Value == IntPtr.Zero || _paraHandle.Value == pfspara);
-            _paraHandle.Value = pfspara;
+            Debug.Assert(_paraHandle == IntPtr.Zero || _paraHandle == pfspara);
+            _paraHandle = pfspara;
 
             // Set paragraph rectangle (relative to the page)
             _rect = rcPara;
@@ -258,7 +258,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // PTS paragraph handle.
         // ------------------------------------------------------------------
-        protected SecurityCriticalDataForSet<IntPtr> _paraHandle;
+        protected IntPtr _paraHandle;
 
         // ------------------------------------------------------------------
         // Rectangle occupied by this portion of the paragraph (relative

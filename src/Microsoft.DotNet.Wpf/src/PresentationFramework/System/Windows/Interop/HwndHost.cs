@@ -135,7 +135,7 @@ namespace System.Windows.Interop
         protected override void OnKeyUp(KeyEventArgs e)
         {
             MSG msg;
-            if (_fTrusted.Value)
+            if (_fTrusted)
             {
                 msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
             }
@@ -169,7 +169,7 @@ namespace System.Windows.Interop
         protected override void OnKeyDown(KeyEventArgs e)
         {
             MSG msg;
-            if (_fTrusted.Value)
+            if (_fTrusted)
             {
                 msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
             }
@@ -490,7 +490,7 @@ namespace System.Windows.Interop
                 if (_hwndSubclass != null)
                 {
                     // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
-                    if (_fTrusted.Value == true)
+                    if (_fTrusted == true)
                     {
                         _hwndSubclass.CriticalDetach(false);
                     }
@@ -829,7 +829,7 @@ namespace System.Windows.Interop
 
         private void Initialize( bool fTrusted )
         {
-            _fTrusted = new SecurityCriticalDataForSet<bool> ( fTrusted ) ;
+            _fTrusted = fTrusted;
 
             _hwndSubclassHook = new HwndWrapperHook(SubclassWndProc);
             _handlerLayoutUpdated = new EventHandler(OnLayoutUpdated);
@@ -845,7 +845,7 @@ namespace System.Windows.Interop
         ///</summary>
         private void DemandIfUntrusted()
         {
-            if ( ! _fTrusted.Value )
+            if ( ! _fTrusted )
             {
             }
         }
@@ -1171,7 +1171,7 @@ namespace System.Windows.Interop
         /// </summary>
         private bool _hasDpiAwarenessContextTransition = false;
 
-        private SecurityCriticalDataForSet<bool> _fTrusted ;
+        private bool _fTrusted;
 
         private bool _isBuildingWindow = false;
 

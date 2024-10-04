@@ -262,7 +262,7 @@ namespace System.Windows.Media
                 // If the user didn't give us the uri value, then the uri has
                 // to be a file path because we got it from GetStandardColorSpaceProfile
                 //
-                if (_isProfileUriNotFromUser.Value)
+                if (_isProfileUriNotFromUser)
                 {
                     Invariant.Assert(uri.IsFile);
                 }
@@ -511,7 +511,7 @@ namespace System.Windows.Media
             }
 
             _profileUri = new SecurityCriticalData<Uri>(profileUri);
-            _isProfileUriNotFromUser = new SecurityCriticalDataForSet<bool>(isStandardProfileUriNotFromUser);
+            _isProfileUriNotFromUser = isStandardProfileUriNotFromUser;
 
             Stream profileStream = null;
 
@@ -807,7 +807,7 @@ namespace System.Windows.Media
 
         private SecurityCriticalData<Uri> _profileUri;
         
-        private SecurityCriticalDataForSet<bool> _isProfileUriNotFromUser;
+        private bool _isProfileUriNotFromUser;
 
         private AbbreviatedPROFILEHEADER _profileHeader;
 

@@ -52,7 +52,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private PtsPage()
         {
-            _ptsPage = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+            _ptsPage = IntPtr.Zero;
         }
 
         // ------------------------------------------------------------------
@@ -303,13 +303,13 @@ namespace MS.Internal.PtsHost
             if (fserr != PTS.fserrNone)
             {
                 // Formatting failed and ptsPage may be set to a partially formatted page. Set value to IntPtr.Zero
-                _ptsPage.Value = IntPtr.Zero;
+                _ptsPage = IntPtr.Zero;
                 PTS.ValidateAndTrace(fserr, PtsContext);
             }
             else
             {
                 // Formatting succeeded. Set page value
-                _ptsPage.Value = ptsPage;
+                _ptsPage = ptsPage;
             }
 
             if (TracePageFormatting.IsEnabled)
@@ -351,7 +351,7 @@ namespace MS.Internal.PtsHost
             }
 
             PTS.FSFMTRBL formattingResult;
-            int fserr = PTS.FsUpdateBottomlessPage(PtsContext.Context, _ptsPage.Value, _section.Handle, out formattingResult);
+            int fserr = PTS.FsUpdateBottomlessPage(PtsContext.Context, _ptsPage, _section.Handle, out formattingResult);
             if (fserr != PTS.fserrNone)
             {
                 // Do inplace cleanup.
@@ -405,20 +405,20 @@ namespace MS.Internal.PtsHost
             if (fserr != PTS.fserrNone)
             {
                 // Formatting failed and ptsPage may be set to a partially formatted page. Set value to IntPtr.Zero
-                _ptsPage.Value = IntPtr.Zero;
+                _ptsPage = IntPtr.Zero;
                 brOut = IntPtr.Zero;
                 PTS.ValidateAndTrace(fserr, PtsContext);
             }
             else
             {
-                _ptsPage.Value = ptsPage;
+                _ptsPage = ptsPage;
             }
             if (brOut != IntPtr.Zero)
             {
                 StructuralCache structuralCache = _section.StructuralCache;
                 if (structuralCache != null)
                 {
-                    _breakRecord = new PageBreakRecord(PtsContext, new SecurityCriticalDataForSet<IntPtr>(brOut), (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
+                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
                 }
             }
 
@@ -461,7 +461,7 @@ namespace MS.Internal.PtsHost
             // Create finite page and update layout size information
             PTS.FSFMTR formattingResult;
             IntPtr brOut;
-            int fserr = PTS.FsUpdateFinitePage(PtsContext.Context, _ptsPage.Value, brIn,
+            int fserr = PTS.FsUpdateFinitePage(PtsContext.Context, _ptsPage, brIn,
                                                _section.Handle, out formattingResult, out brOut);
 
             if (fserr != PTS.fserrNone)
@@ -477,7 +477,7 @@ namespace MS.Internal.PtsHost
                 StructuralCache structuralCache = _section.StructuralCache;
                 if (structuralCache != null)
                 {
-                    _breakRecord = new PageBreakRecord(PtsContext, new SecurityCriticalDataForSet<IntPtr>(brOut), (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
+                    _breakRecord = new PageBreakRecord(PtsContext, brOut, (breakRecord != null) ? breakRecord.PageNumber + 1 : 1);
                 }
             }
 
@@ -507,7 +507,7 @@ namespace MS.Internal.PtsHost
 
             // Get page details
             PTS.FSPAGEDETAILS pageDetails;
-            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
 
             // Arrange page content. Page content may be simple or complex -
@@ -537,7 +537,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each section.
                     PTS.FSSECTIONDESCRIPTION[] arraySectionDesc;
-                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage.Value, ref pageDetails, out arraySectionDesc);
+                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                     // Arrange each section
                     for (int index = 0; index < arraySectionDesc.Length; index++)
@@ -557,7 +557,7 @@ namespace MS.Internal.PtsHost
             {
                 // Get page details
                 PTS.FSPAGEDETAILS pageDetails;
-                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
                 // Arrange page content. Page content may be simple or complex -
                 // depending of set of features used in the content of the page.
@@ -582,7 +582,7 @@ namespace MS.Internal.PtsHost
                     {
                         // Retrieve description for each section.
                         PTS.FSSECTIONDESCRIPTION[] arraySectionDesc;
-                        PtsHelper.SectionListFromPage(PtsContext, _ptsPage.Value, ref pageDetails, out arraySectionDesc);
+                        PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                         // Arrange each section
                         for (int index = 0; index < arraySectionDesc.Length; index++)
@@ -602,7 +602,7 @@ namespace MS.Internal.PtsHost
             if (!IsEmpty)
             {
                 // Clear any incremental update state acummulated during update process.
-                PTS.Validate(PTS.FsClearUpdateInfoInPage(PtsContext.Context, _ptsPage.Value), PtsContext);
+                PTS.Validate(PTS.FsClearUpdateInfoInPage(PtsContext.Context, _ptsPage), PtsContext);
             }
         }
 
@@ -675,7 +675,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Handle to PTS page.
         //-------------------------------------------------------------------
-        internal IntPtr PageHandle { get { return _ptsPage.Value; } }
+        internal IntPtr PageHandle { get { return _ptsPage; } }
 
         //-------------------------------------------------------------------
         // Is being used in a plain text box?
@@ -725,7 +725,7 @@ namespace MS.Internal.PtsHost
                 }
 
                 // Cleanup the state.
-                _ptsPage.Value = IntPtr.Zero;
+                _ptsPage = IntPtr.Zero;
                 _breakRecord = null;
                 _visual = null;
                 _backgroundFormatOperation = null;
@@ -836,7 +836,7 @@ namespace MS.Internal.PtsHost
             {
                 // (2) PTS page - use page PTS APIs to get page rectangle.
                 PTS.FSPAGEDETAILS pageDetails;
-                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
                 // There are 2 different types of PTS page and calculated rectangle depends on it:
                 // (a) simple page (contains only one track) - get rectanglefrom the track.
@@ -880,7 +880,7 @@ namespace MS.Internal.PtsHost
             {
                 // (2) PTS page - use page PTS APIs to get bounding box.
                 PTS.FSPAGEDETAILS pageDetails;
-                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
                 // There are 2 different types of PTS page and bounding box calculation depends on it:
                 // (a) simple page (contains only one track) - get bounding box from the track.
@@ -1006,7 +1006,7 @@ namespace MS.Internal.PtsHost
 
             // Get page details
             PTS.FSPAGEDETAILS pageDetails;
-            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
             // If there is no change, visual information is valid
             if (pageDetails.fskupd == PTS.FSKUPDATE.fskupdNoChange) { return; }
@@ -1069,7 +1069,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each section.
                     PTS.FSSECTIONDESCRIPTION [] arraySectionDesc;
-                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage.Value, ref pageDetails, out arraySectionDesc);
+                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                     emptyPage = (arraySectionDesc.Length == 0);
                     if (!emptyPage)
@@ -1205,7 +1205,7 @@ namespace MS.Internal.PtsHost
             {
                 // Get page details
                 PTS.FSPAGEDETAILS pageDetails;
-                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+                PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
                 // Hittest page content. Page content may be simple or complex -
                 // depending of set of features used in the content of the page.
@@ -1233,7 +1233,7 @@ namespace MS.Internal.PtsHost
                     {
                         // Retrieve description for each section.
                         PTS.FSSECTIONDESCRIPTION [] arraySectionDesc;
-                        PtsHelper.SectionListFromPage(PtsContext, _ptsPage.Value, ref pageDetails, out arraySectionDesc);
+                        PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                         // Hittest each section
                         for (int index = 0; index < arraySectionDesc.Length && ie == null; index++)
@@ -1264,7 +1264,7 @@ namespace MS.Internal.PtsHost
 
             // Get page details
             PTS.FSPAGEDETAILS pageDetails;
-            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage.Value, out pageDetails));
+            PTS.Validate(PTS.FsQueryPageDetails(PtsContext.Context, _ptsPage, out pageDetails));
 
             // Check for page content - if simple, contains only one track and we call the helper to
             // find the element within that track. If complex, we must traverse sections within the content.
@@ -1287,7 +1287,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Retrieve description for each section.
                     PTS.FSSECTIONDESCRIPTION[] arraySectionDesc;
-                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage.Value, ref pageDetails, out arraySectionDesc);
+                    PtsHelper.SectionListFromPage(PtsContext, _ptsPage, ref pageDetails, out arraySectionDesc);
 
                     // Check each section for element
                     for (int index = 0; index < arraySectionDesc.Length; index++)
@@ -1440,10 +1440,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private void DestroyPage()
         {
-            if (_ptsPage.Value != IntPtr.Zero)
+            if (_ptsPage != IntPtr.Zero)
             {
                 PtsContext.OnPageDisposed(_ptsPage, true, false);
-                _ptsPage.Value = IntPtr.Zero;
+                _ptsPage = IntPtr.Zero;
             }
         }
 
@@ -1461,7 +1461,7 @@ namespace MS.Internal.PtsHost
         {
             get
             {
-                return (_ptsPage.Value == IntPtr.Zero); 
+                return (_ptsPage == IntPtr.Zero); 
             }
         }
 
@@ -1514,7 +1514,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // PTS page object.
         // ------------------------------------------------------------------
-        private SecurityCriticalDataForSet<IntPtr> _ptsPage;
+        private IntPtr _ptsPage;
 
         // ------------------------------------------------------------------
         // Is it finite page?

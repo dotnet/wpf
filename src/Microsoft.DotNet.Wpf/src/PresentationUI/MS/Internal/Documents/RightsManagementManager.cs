@@ -44,7 +44,7 @@ namespace MS.Internal.Documents
         {
             ArgumentNullException.ThrowIfNull(rmProvider);
 
-            _rmProviderCache.Value = rmProvider;
+            _rmProviderCache = rmProvider;
 
             //Create dictionary for Credential Management
             //used to map between CredManResources and RM Users
@@ -70,12 +70,12 @@ namespace MS.Internal.Documents
              Trace.SafeWrite(Trace.Rights, "Initializing RightsManagementManager");
 
              System.Diagnostics.Debug.Assert(
-                 _currentManager.Value == null,
+                 _currentManager == null,
                  "RightsManagementManager initialized twice.");
 
-             if (_currentManager.Value == null)
+             if (_currentManager == null)
              {
-                 _currentManager.Value = new DocumentRightsManagementManager(rmProvider);
+                 _currentManager = new DocumentRightsManagementManager(rmProvider);
              }
         }
 
@@ -715,7 +715,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _currentManager.Value;
+                return _currentManager;
             }
         }
 
@@ -1470,7 +1470,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _rmProviderCache.Value;
+                return _rmProviderCache;
             }
         }
 
@@ -1481,8 +1481,8 @@ namespace MS.Internal.Documents
         // Private Fields
         //------------------------------------------------------
 
-        private static SecurityCriticalDataForSet<DocumentRightsManagementManager> _currentManager;
-        private SecurityCriticalDataForSet<IRightsManagementProvider> _rmProviderCache;
+        private static DocumentRightsManagementManager _currentManager;
+        private IRightsManagementProvider _rmProviderCache;
 
         /// <summary>
         /// A handle to a currently open instance of the credential manager dialog

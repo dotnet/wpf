@@ -42,7 +42,7 @@ namespace System.Windows.Navigation
         private const string APPBASE = "application://";
         private static readonly Uri _packAppBaseUri = PackUriHelper.Create(new Uri(APPBASE));
 
-        private static SecurityCriticalDataForSet<Uri> _baseUri;
+        private static Uri _baseUri;
 
         // Cached result of calling
         // PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri).GetComponents(
@@ -53,7 +53,7 @@ namespace System.Windows.Navigation
 
         static BaseUriHelper()
         {
-            _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
+            _baseUri = _packAppBaseUri;
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(SiteOfOriginBaseUri), new SiteOfOriginContainer(), true);
@@ -406,13 +406,13 @@ namespace System.Windows.Navigation
         {
             get
             {
-                return _baseUri.Value;
+                return _baseUri;
             }
             set
             {
                 // This setter should only be called from Framework through
                 // BindUriHelper.set_BaseUri.
-                _baseUri.Value = value;
+                _baseUri = value;
             }
         }
 

@@ -59,8 +59,6 @@
 
     <!--  END REMOVE COLORS  -->
 
-    <!--<Style x:Key="DefaultDataGridCheckBoxColumnCellStyle" TargetType="{x:Type DataGridColumn}" />-->
-
     <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
@@ -502,9 +500,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--<Style TargetType="{x:Type DataGridTextColumn}">
-        <Setter Property="EditingElementStyle" Value="{StaticResource TextBoxStyle}" />
-    </Style>-->
 
     <!--  Style and template for the DataGrid.  -->
     <Style x:Key="DefaultDataGridStyle" TargetType="{x:Type DataGrid}">
@@ -788,11 +783,6 @@
         TargetType="{x:Type CheckBox}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
-
-    <!--<Style TargetType="{x:Type DataGridCheckBoxColumn}">
-        <Setter Property="ElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
-        <Setter Property="EditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
-    </Style>-->
 
     <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />
     <Style BasedOn="{StaticResource DefaultDataGridStyle}" TargetType="{x:Type DataGrid}" />

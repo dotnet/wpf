@@ -88,7 +88,6 @@ namespace System.Windows
         ///     Makes this object Read-Only state of this object; when in a Read-Only state, SetValue is not permitted,
         ///     though the effective value for a property may change.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal virtual void Seal()
         {
             Debug.Assert(!(this is Freezable), "A Freezable should not call DO's implementation of Seal()");
@@ -186,7 +185,6 @@ namespace System.Windows
         ///     have an entry in the _effectiveValues. This way we will avoid inheriting
         ///     the default value from the parent.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core.
         internal EffectiveValueEntry GetValueEntry(
             EntryIndex          entryIndex,
             DependencyProperty  dp,
@@ -460,7 +458,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetValue(DependencyProperty dp, bool value)
         {
             SetValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
@@ -472,7 +469,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetCurrentValue(DependencyProperty dp, bool value)
         {
             SetCurrentValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
@@ -484,7 +480,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetValueInternal(DependencyProperty dp, object value)
         {
             // Do not allow foreign threads access.
@@ -505,7 +500,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetCurrentValueInternal(DependencyProperty dp, object value)
         {
             // Do not allow foreign threads access.
@@ -523,7 +517,6 @@ namespace System.Windows
         /// <summary>
         /// Sets the local value of a property.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void SetDeferredValue(DependencyProperty dp, DeferredReference deferredReference)
         {
             // Cache the metadata object this method needed to get anyway.
@@ -536,7 +529,6 @@ namespace System.Windows
         /// <summary>
         /// Sets the value of a property to a deferred reference, without changing the ValueSource.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void SetCurrentDeferredValue(DependencyProperty dp, DeferredReference deferredReference)
         {
             // Cache the metadata object this method needed to get anyway.
@@ -549,7 +541,6 @@ namespace System.Windows
         /// <summary>
         /// Sets the local value of a property with a mutable default value.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void SetMutableDefaultValue(DependencyProperty dp, object value)
         {
             // Cache the metadata object this method needed to get anyway.
@@ -565,7 +556,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dp">Dependency property key</param>
         /// <param name="value">New local value</param>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetValue(DependencyPropertyKey dp, bool value)
         {
             SetValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
@@ -841,7 +831,6 @@ namespace System.Windows
         //  This is a helper routine to set this DO as the inheritance context of another,
         //  which has been set as a DP value here.
         //
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool ProvideSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
             DependencyObject doValue = value as DependencyObject;
@@ -855,7 +844,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool ProvideSelfAsInheritanceContext( DependencyObject doValue, DependencyProperty dp )
         {
             // We have to call Freezable.AddInheritanceContext even if the request
@@ -888,7 +876,6 @@ namespace System.Windows
         //
         //  This is a helper routine to remove this DO as the inheritance context of another.
         //
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool RemoveSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
             DependencyObject doValue = value as DependencyObject;
@@ -902,7 +889,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal bool RemoveSelfAsInheritanceContext( DependencyObject doValue, DependencyProperty dp )
         {
             // We have to call Freezable.RemoveInheritanceContext even if the request
@@ -1137,7 +1123,6 @@ namespace System.Windows
         ///  means no more changes, which means no more invalidations.
         ///
         /// </remarks>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void InvalidateSubProperty(DependencyProperty dp)
         {
             // when a sub property changes, send a Changed notification with old and new value being the same, and with
@@ -1156,7 +1141,6 @@ namespace System.Windows
         /// intermediate object is responsible for propagating the Freezable.Changed
         /// event (i.e. when the Freezable system doesn't propagate the event itself).
         /// </remarks>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void NotifySubPropertyChange(DependencyProperty dp)
         {
             InvalidateSubProperty(dp);
@@ -1224,7 +1208,6 @@ namespace System.Windows
         //  2. When this method is invoked with the coersion flag set to false it means that we will simply
         //     coerce and will not try to re-evaluate the base value for the property
         //
-        [FriendAccessAllowed] // Declared in Base also used in Framework
         internal UpdateResult UpdateEffectiveValue(
                 EntryIndex          entryIndex,
                 DependencyProperty  dp,
@@ -1731,7 +1714,6 @@ namespace System.Windows
         /// This is a helper method that is used to fire the property change notification through
         /// the callbacks and to all the dependents of this property such as bindings etc.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
         {
             // fire change notification
@@ -2071,14 +2053,12 @@ namespace System.Windows
             return ContainsValue( dp );
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal BaseValueSourceInternal GetValueSource(DependencyProperty dp, PropertyMetadata metadata, out bool hasModifiers)
         {
             bool isExpression, isAnimated, isCoerced, isCurrent;
             return GetValueSource(dp, metadata, out hasModifiers, out isExpression, out isAnimated, out isCoerced, out isCurrent);
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
         internal BaseValueSourceInternal GetValueSource(DependencyProperty dp, PropertyMetadata metadata,
                 out bool hasModifiers, out bool isExpression, out bool isAnimated, out bool isCoerced, out bool isCurrent)
         {
@@ -2260,7 +2240,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed]   // defined in Base, used in Core and Framework
         internal bool IsInheritanceContextSealed
         {
             get { return (_packedData & 0x01000000) != 0; }
@@ -2339,9 +2318,7 @@ namespace System.Windows
         //
         internal bool Animatable_IsResourceInvalidationNecessary
         {
-            [FriendAccessAllowed] // Built into Base, but used by Core.
             get { return (_packedData & 0x40000000) != 0; }
-            [FriendAccessAllowed] // Built into Base, but used by Core.
             set { if (value) { _packedData |= 0x40000000; } else { _packedData &= 0xBFFFFFFF; } }
         }
 
@@ -2350,9 +2327,7 @@ namespace System.Windows
         // but doesn't check the sub-properties for animations.
         internal bool IAnimatable_HasAnimatedProperties
         {
-            [FriendAccessAllowed] // Built into Base, but used by Core.
             get { return (_packedData & 0x80000000) != 0; }
-            [FriendAccessAllowed] // Built into Base, but used by Core.
             set { if (value) { _packedData |= 0x80000000; } else { _packedData &= 0x7FFFFFFF; } }
         }
 
@@ -2369,7 +2344,6 @@ namespace System.Windows
         // (using the following DP as the key).  The property engine will forward
         // notifications to direct dependents, the binding will hear about the change,
         // and will forward a sub-property change to the Border.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         static internal readonly DependencyProperty DirectDependencyProperty =
             DependencyProperty.Register("__Direct", typeof(object), typeof(DependencyProperty));
 
@@ -2481,7 +2455,6 @@ namespace System.Windows
         /// This method should only be called (once) from the Framework.  It should
         /// not be called directly by users.
         /// </remarks>
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void RegisterForAlternativeExpressionStorage(
                             AlternativeExpressionStorageCallback getExpressionCore,
                             out AlternativeExpressionStorageCallback getExpression)
@@ -2530,7 +2503,6 @@ namespace System.Windows
         /// <summary>
         /// Return true iff the property has an expression applied to it.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal bool HasExpression(EntryIndex entryIndex, DependencyProperty dp)
         {
             if (!entryIndex.Found)
@@ -2586,7 +2558,6 @@ namespace System.Windows
         /// </summary>
         internal virtual DependencyObject InheritanceContext
         {
-            [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
             get { return null; }
         }
 
@@ -2638,7 +2609,6 @@ namespace System.Windows
         ///     This is the equivalent of OnAncestorChanged
         ///     for an element
         /// </remarks>
-        [FriendAccessAllowed] // Built into Base, also used by Core.
         internal void OnInheritanceContextChanged(EventArgs args)
         {
             // Fire the event that BindingExpression and
@@ -2689,7 +2659,6 @@ namespace System.Windows
         ///     of InheritanceContext changes and then they can do
         ///     their own thing.
         /// </summary>
-        [FriendAccessAllowed] // Built into Base, also used by Core.
         internal virtual void OnInheritanceContextChangedCore(EventArgs args)
         {
         }
@@ -2705,7 +2674,6 @@ namespace System.Windows
         /// </remarks>
         internal event EventHandler InheritanceContextChanged
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             add
             {
                 // Get existing event hanlders
@@ -2723,7 +2691,6 @@ namespace System.Windows
                 InheritanceContextChangedHandlersField.SetValue(this, handlers);
             }
 
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             remove
             {
                 // Get existing event hanlders
@@ -2760,10 +2727,8 @@ namespace System.Windows
         /// </summary>
         internal bool CanBeInheritanceContext
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get { return (_packedData & 0x00200000) != 0; }
 
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             set
             {
                 if (value)
@@ -2777,7 +2742,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static bool IsTreeWalkOperation(OperationType operation)
         {
             return   operation == OperationType.AddChild ||
@@ -2819,14 +2783,12 @@ namespace System.Windows
         // has been modified
         internal EffectiveValueEntry[] EffectiveValues
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get { return _effectiveValues; }
         }
 
         // The total number of entries in the above EffectiveValues cache
         internal uint EffectiveValuesCount
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get { return _packedData & 0x000003FF; }
             private set { _packedData = (_packedData & 0xFFFFFC00) | (value & 0x000003FF); }
         }
@@ -2837,7 +2799,6 @@ namespace System.Windows
         // of a "working change list" we have to construct.
         internal uint InheritableEffectiveValuesCount
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get { return (_packedData >> 10) & 0x1FF; }
             set
             {
@@ -2875,7 +2836,6 @@ namespace System.Windows
         // property system responds by elevating the growth rate of the
         // EffectiveValues cache, to speed up initialization by requiring
         // fewer reallocations
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void BeginPropertyInitialization()
         {
             IsInPropertyInitialization = true;
@@ -2888,7 +2848,6 @@ namespace System.Windows
         // EffectiveValues cache to its normal rate, and then trimming
         // the cache to get rid of any excess bloat incurred by the
         // aggressive growth rate during initialization mode.
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void EndPropertyInitialization()
         {
             IsInPropertyInitialization = false;
@@ -2915,7 +2874,6 @@ namespace System.Windows
 
         internal DependencyObject InheritanceParent
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get
             {
                 if ((_packedData & 0x3E100000) == 0)
@@ -2974,12 +2932,10 @@ namespace System.Windows
 
         internal bool IsSelfInheritanceParent
         {
-            [FriendAccessAllowed] // Built into Base, also used by Framework.
             get { return (_packedData & 0x00100000) != 0; }
         }
 
         // Currently we only have support for turning this flag on. Once set this flag never goes false after that.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void SetIsSelfInheritanceParent()
         {
             // Merge all the inheritable properties on the inheritanceParent into the EffectiveValues
@@ -3005,7 +2961,6 @@ namespace System.Windows
         //  1. Recalculates the InheritanceParent with respect to the given FrameworkParent
         //  2. Is called from [FE/FCE].OnAncestorChangedInternal
         //
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal void SynchronizeInheritanceParent(DependencyObject parent)
         {
             // If this flag is true it indicates that all the inheritable properties for this node
@@ -3095,7 +3050,6 @@ namespace System.Windows
         // return value has Found set to true if an entry is found
         // return value has Index set to the index of the found entry (if Found is true)
         //            or  the location to insert an entry for this dp (if Found is false)
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal EntryIndex LookupEntry(int targetIndex)
         {
             int checkIndex;
@@ -3226,7 +3180,6 @@ namespace System.Windows
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
         //  2. This is a performance optimization
         //
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal virtual int EffectiveValuesInitialSize
         {
             get { return 2; }
@@ -3314,7 +3267,6 @@ namespace System.Windows
         //  This method
         //  1. Create a new EffectiveValueEntry for the given DP and inserts it into the EffectiveValues list
         //
-        [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, int targetIndex, PropertyMetadata metadata, object value, BaseValueSourceInternal valueSource)
         {
             Debug.Assert(value != DependencyProperty.UnsetValue, "Value to be set cannot be UnsetValue");
@@ -3493,7 +3445,6 @@ namespace System.Windows
         // special value in local store meaning that some alternative store (e.g.
         // the Framework's per-instance StyleData) is holding an Expression to
         // which we want to delegate SetValue.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static readonly object ExpressionInAlternativeStore = new NamedObject("ExpressionInAlternativeStore");
 
         // callbacks used for alternative expression storage
@@ -3522,10 +3473,8 @@ namespace System.Windows
     /// <remarks>
     /// This should only be used by the Framework.  It should not be used directly by users.
     /// </remarks>
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     internal delegate Expression AlternativeExpressionStorageCallback(DependencyObject d, DependencyProperty dp, PropertyMetadata metadata);
 
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     internal enum UpdateResult
     {
         ValueChanged = 0x01,
@@ -3533,7 +3482,6 @@ namespace System.Windows
         InheritedValueOverridden = 0x04,
     }
 
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     [Flags]
     internal enum RequestFlags
     {

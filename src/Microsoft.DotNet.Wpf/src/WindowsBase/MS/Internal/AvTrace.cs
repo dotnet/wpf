@@ -213,7 +213,6 @@ namespace MS.Internal
         ///  Read the registry to see if WPF tracing is allowed
         ///
 
-        [FriendAccessAllowed]
         static internal bool IsWpfTracingEnabledInRegistry()
         {
             // First time this is called, initialize from the registry

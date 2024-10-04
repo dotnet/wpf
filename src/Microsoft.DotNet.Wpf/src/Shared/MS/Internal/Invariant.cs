@@ -26,7 +26,6 @@ namespace MS.Internal
     /// <summary>
     /// Provides methods that assert an application is in a valid state. 
     /// </summary>
-    [FriendAccessAllowed] // Built into Base, used by Framework.
     internal // DO NOT MAKE PUBLIC - See security notes on Assert
         static class Invariant
     {

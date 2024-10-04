@@ -9,14 +9,11 @@ using System.IO;
 using System.IO.Packaging;
 using System.Security;
 
-using MS.Internal.PresentationUI;
-
 namespace MS.Internal.Documents.Application
 {
 /// <summary>
 /// Extends Document with a single member TrancationalPackage.
 /// </summary>
-[FriendAccessAllowed]
 internal class PackageDocument : Document
 {
     #region Constructors

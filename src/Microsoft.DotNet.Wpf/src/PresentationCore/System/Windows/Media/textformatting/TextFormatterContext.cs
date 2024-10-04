@@ -23,7 +23,6 @@ using System.Windows;
 using System.Windows.Media;
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Internal.TextFormatting;
 
 using IndexedGlyphRun = System.Windows.Media.TextFormatting.IndexedGlyphRun;
@@ -43,7 +42,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
     public class TextFormatterContext
 #else
-    [FriendAccessAllowed]   // used by Framework
     internal class TextFormatterContext
 #endif
     {

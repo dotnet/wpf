@@ -19,7 +19,6 @@ using System.Runtime.ConstrainedExecution;
 using System.Security;
 using System.Threading;
 using System.Windows.Threading;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -34,7 +33,6 @@ namespace MS.Internal
     // no raising events, no calling out to user code, etc.
     // !!! It is the caller's responsibility to obey this rule. !!!
     // ------------------------
-    [FriendAccessAllowed] // Built into Base, used by Core and Framework.
     internal class ReaderWriterLockWrapper
     {
         //------------------------------------------------------

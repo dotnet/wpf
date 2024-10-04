@@ -11,14 +11,13 @@ using System.IO;
 using System.Security;
 using System.Text; 
 #if PRESENTATION_CORE
-using MS.Internal.PresentationCore;  // for FriendAccessAllowed and BindUriHelper.UriToString
+using MS.Internal.PresentationCore;  // for BindUriHelper.UriToString
 #else
 #error Class is being used from an unknown assembly.
 #endif
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal static class MimeTypeMapper
     {
 

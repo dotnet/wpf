@@ -15,8 +15,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using MS.Internal.WindowsBase;
-
 namespace MS.Internal.Security
 {
 /// <summary>
@@ -25,7 +23,6 @@ namespace MS.Internal.Security
 /// <remarks>
 /// Only implemented the single method we are using SaveWithUI.
 /// </remarks>
-[FriendAccessAllowed]
 internal sealed class AttachmentService : IDisposable
 {
     #region Constructors

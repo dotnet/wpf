@@ -16,7 +16,6 @@ using System.Windows.Input;
 using MS.Win32;
 using MS.Utility;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 using SR=MS.Internal.PresentationCore.SR;
 
@@ -265,7 +264,6 @@ namespace System.Windows
         /// <param name="ce">
         ///     The element whose ancestory may have changed.
         /// </param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void OnAncestorChanged(ContentElement ce)
         {
             ArgumentNullException.ThrowIfNull(ce);
@@ -553,7 +551,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
@@ -564,7 +561,6 @@ namespace System.Windows
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
         {
             ArgumentNullException.ThrowIfNull(v);
@@ -598,7 +594,6 @@ namespace System.Windows
         ///     Helper method which returns true when all the given visuals 
         ///     are in the same presentation source.
         /// </summary>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
         {
             if (visuals == null || visuals.Length == 0)

@@ -36,7 +36,6 @@ namespace MS.Internal.IO.Packaging
     /// For now, we will only process one batch of requests at a time. We will most likely
     ///  want to spin multiple threads and do multiple batches at a time in the future
     /// </remarks>
-    [FriendAccessAllowed]
     internal class ByteRangeDownloader : IDisposable
     {
          //------------------------------------------------------

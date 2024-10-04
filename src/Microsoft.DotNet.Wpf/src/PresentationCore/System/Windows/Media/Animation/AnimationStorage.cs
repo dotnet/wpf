@@ -11,7 +11,7 @@ using System.Windows.Threading;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
 
-using MS.Internal.PresentationCore;     // SR, FriendAccessAllowed
+using MS.Internal.PresentationCore;     // SR
 
 namespace System.Windows.Media.Animation
 {
@@ -587,7 +587,6 @@ namespace System.Windows.Media.Animation
             }
         }
 
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void ApplyAnimationClocks(
             DependencyObject d,
             DependencyProperty dp,
@@ -694,7 +693,6 @@ namespace System.Windows.Media.Animation
         /// <param name="animationClocks"></param>
         /// <param name="handoffBehavior"></param>
         /// <param name="propertyTriggerLayerIndex"></param>
-        [FriendAccessAllowed]
         internal static void ApplyAnimationClocksToLayer(
             DependencyObject d,
             DependencyProperty dp,
@@ -1026,7 +1024,6 @@ namespace System.Windows.Media.Animation
             }
         }
 
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static bool IsPropertyAnimatable(
             DependencyObject d,
             DependencyProperty dp)
@@ -1055,7 +1052,6 @@ namespace System.Windows.Media.Animation
                 || (animation.TargetPropertyType == typeof(Object));
         }
 
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static bool IsAnimationClockValid(
             DependencyProperty dp,
             AnimationClock animation)

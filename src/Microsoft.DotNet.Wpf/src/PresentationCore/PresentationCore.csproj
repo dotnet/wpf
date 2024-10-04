@@ -36,7 +36,6 @@
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_av_types.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_core_types.cs" />
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\AppDomainShutdownMonitor.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
@@ -55,7 +54,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SizeLimitedCache.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\ValidateEnums.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Commands\CommandLibraryHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentXValidation.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentYValidation.cs" />

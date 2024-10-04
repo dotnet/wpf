@@ -20,7 +20,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Diagnostics;
-using MS.Internal.PresentationCore;
 
 using SR = MS.Internal.PresentationCore.SR;
 
@@ -130,7 +129,6 @@ namespace System.Windows.Media
         /// </summary>        
         internal override Transform AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 if ((Children == null) || (Children.Count == 0))

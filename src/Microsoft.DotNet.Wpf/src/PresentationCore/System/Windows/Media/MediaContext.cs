@@ -26,7 +26,6 @@ using System.Security;
 using System.Windows.Media.Effects;
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using MS.Win32;
 
@@ -1612,7 +1611,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Add a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal LoadedOrUnloadedOperation AddLoadedOrUnloadedCallback(
             DispatcherOperationCallback callback,
             DependencyObject target)
@@ -1632,7 +1630,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Remove a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void RemoveLoadedOrUnloadedCallback(LoadedOrUnloadedOperation op)
         {
             Debug.Assert(op != null);

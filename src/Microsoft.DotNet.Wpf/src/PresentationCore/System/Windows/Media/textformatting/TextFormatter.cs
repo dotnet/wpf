@@ -71,7 +71,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         static public TextFormatter CreateFromContext(TextFormatterContext soleContext)
 #else
-        [FriendAccessAllowed]   // used by Framework
         static internal TextFormatter CreateFromContext(TextFormatterContext soleContext)
 #endif
         {
@@ -88,7 +87,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         static public TextFormatter CreateFromContext(TextFormatterContext soleContext, TextFormattingMode textFormattingMode)
 #else
-        [FriendAccessAllowed]   // used by Framework
         static internal TextFormatter CreateFromContext(TextFormatterContext soleContext, TextFormattingMode textFormattingMode)
 #endif
         {
@@ -106,7 +104,6 @@ namespace System.Windows.Media.TextFormatting
         /// through friend assembly mechanics to quickly reuse the default TextFormatter retained in the current
         /// dispatcher of the running thread. 
         /// </remarks>
-        [FriendAccessAllowed]   // used by Framework
         static internal TextFormatter FromCurrentDispatcher()
         {
             return FromCurrentDispatcher(TextFormattingMode.Ideal);
@@ -120,7 +117,6 @@ namespace System.Windows.Media.TextFormatting
         /// through friend assembly mechanics to quickly reuse the default TextFormatter retained in the current
         /// dispatcher of the running thread. 
         /// </remarks>
-        [FriendAccessAllowed]   // used by Framework
         static internal TextFormatter FromCurrentDispatcher(TextFormattingMode textFormattingMode)
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -229,7 +225,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         public abstract TextLine RecreateLine(
 #else
-        [FriendAccessAllowed]   // used by Framework
         internal abstract TextLine RecreateLine(
 #endif
             TextSource                  textSource,
@@ -258,7 +253,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         public abstract TextParagraphCache CreateParagraphCache(
 #else
-        [FriendAccessAllowed]   // used by Framework
         internal abstract TextParagraphCache CreateParagraphCache(
 #endif
             TextSource                  textSource,

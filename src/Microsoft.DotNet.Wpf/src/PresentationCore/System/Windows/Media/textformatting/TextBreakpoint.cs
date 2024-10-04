@@ -17,7 +17,6 @@ using System;
 using System.Security;
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Internal.TextFormatting;
 
 
@@ -32,7 +31,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
     public abstract class TextBreakpoint : ITextMetrics, IDisposable
 #else
-    [FriendAccessAllowed]   // used by Framework
     internal abstract class TextBreakpoint : ITextMetrics, IDisposable
 #endif
     {

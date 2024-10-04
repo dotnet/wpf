@@ -11,14 +11,12 @@
 using System;
 using System.Diagnostics;
 using System.Windows;       // WeakEventManager
-using MS.Internal.WindowsBase;  // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
     /// <summary>
     /// Manager for the DependencyObject.InheritanceContextChanged event.
     /// </summary>
-    [FriendAccessAllowed]
     internal class InheritanceContextChangedEventManager : WeakEventManager
     {
         #region Constructors

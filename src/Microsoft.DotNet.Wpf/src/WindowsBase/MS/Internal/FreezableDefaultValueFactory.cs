@@ -7,7 +7,6 @@
 // Description: DefaultvalueFactory for Freezables
 //
 
-using MS.Internal.WindowsBase;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -22,7 +21,6 @@ namespace MS.Internal
     // the default value is modified it is automatically promoted from default to 
     // local.
     // </summary>
-    [FriendAccessAllowed] // built into Base, used by Core + Framework
     internal class FreezableDefaultValueFactory : DefaultValueFactory
     {
         /// <summary>

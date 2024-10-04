@@ -14,8 +14,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.TrustUI;
 
-using MS.Internal.PresentationUI;
-
 namespace MS.Internal.Documents
 {
 

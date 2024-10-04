@@ -45,9 +45,6 @@
     <Compile Include="$(WpfSharedDir)System\Windows\Markup\XmlWrappingReader.cs">
       <Link>Common\WPF\System\Windows\Markup\XmlWrappingReader.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)MS\Internal\FriendAccessAllowedAttribute.cs">
-      <Link>Common\WPF\MS\Internal\FriendAccessAllowedAttribute.cs</Link>
-    </Compile>
     <Compile Include="$(WpfSharedDir)MS\Utility\FrugalList.cs">
       <Link>Common\WPF\MS\Utility\FrugalList.cs</Link>
     </Compile>

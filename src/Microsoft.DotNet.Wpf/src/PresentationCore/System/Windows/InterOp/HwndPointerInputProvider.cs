@@ -5,7 +5,6 @@
 
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;
 using MS.Win32.Pointer;
 using System.Collections.Generic;
 using System.Diagnostics;

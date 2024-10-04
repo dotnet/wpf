@@ -17,7 +17,6 @@ using System.Reflection;
 using System.Text;
 
 using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -31,7 +30,6 @@ namespace System.Windows.Markup.Primitives
         /// <summary>
         /// Prevent external specialization
         /// </summary>
-        [FriendAccessAllowed] // Used by MarkupPropertyWrapper
         internal MarkupProperty() { }
 
         /// <summary>

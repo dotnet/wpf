@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Windows.Input;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 
-namespace PresentationCore.Tests.System.Windows.Input
+namespace System.Windows.Input
 {
     public class MouseActionConverterTests
     {

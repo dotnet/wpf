@@ -2409,14 +2409,7 @@ namespace System.Windows.Threading
             return succeeded;
         }
 
-        private bool IsWindowNull()
-        {
-           if(_window == null)
-            {
-                return true;
-            }
-            return false;
-        }
+        private bool IsWindowNull() => _window is null;
 
         private bool RequestForegroundProcessing()
         {

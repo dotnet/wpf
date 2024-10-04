@@ -328,7 +328,7 @@ namespace System.Windows.Documents
 
             // Create a TSF document.
             _threadManager.CreateDocumentMgr(out doc);
-            doc.CreateContext(_clientId, 0 /* flags */, textstore, out context, out editCookie);
+            doc.CreateContext(_clientId, flags: 0, textstore, out context, out editCookie);
             doc.Push(context);
 
             // Attach a thread focus sink.

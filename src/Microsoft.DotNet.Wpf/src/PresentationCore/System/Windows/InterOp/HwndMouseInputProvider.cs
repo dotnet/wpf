@@ -780,7 +780,7 @@ namespace System.Windows.Interop
                     // to this we release capture if we currently have it.
                     try
                     {
-                        if(_source.HasCapture )
+                        if(_source.HasCapture)
                         {
                             SafeNativeMethods.ReleaseCapture();
                         }

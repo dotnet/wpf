@@ -208,7 +208,7 @@ namespace System.Windows.Input
                     // so that nothing gets lost during marshalling. The cast from Int64 to Int32 below
                     // should be lossless cast because both COM server and client are expected
                     // to be of same bitness (they are in the same process).
-                    result.CommHandle = IntPtr.Size == 4 ? new IntPtr((int)commHandle) : new IntPtr(commHandle);
+                    result.CommHandle = Environment.Is64BitProcess ? (nint)commHandle : (int)commHandle;
 
                     result.WispContextKey = MS.Win32.Penimc.UnsafeNativeMethods.QueryWispContextKey(pimcContext);
 

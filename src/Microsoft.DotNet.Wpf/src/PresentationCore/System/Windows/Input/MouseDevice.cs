@@ -1195,7 +1195,7 @@ namespace System.Windows.Input
                         }
                     }
                     // Only process mouse input that is from our active PresentationSource.
-                    else if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource))
+                    else if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // We need to remember the StylusDevice that generated this input.  Use the _tagStylusDevice
                         // to store this in before we take over the inputReport Device and loose it.  Any
@@ -1440,7 +1440,7 @@ namespace System.Windows.Input
                     }
 
                     // Only process mouse input that is from our active presentation source.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // If the input is reporting mouse deactivation, we need
                         // to break any capture we may have.  Note that we only do
@@ -1888,7 +1888,7 @@ namespace System.Windows.Input
                     RawMouseInputReport rawMouseInputReport = (RawMouseInputReport) inputReportEventArgs.Report;
 
                     // Only process mouse input that is from our active visual manager.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // In general, this is where we promote the non-redundant
                         // reported actions to our premier events.

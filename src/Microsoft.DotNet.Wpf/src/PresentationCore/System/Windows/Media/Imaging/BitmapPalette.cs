@@ -366,7 +366,7 @@ namespace System.Windows.Media.Imaging
         // the behavior that we want.
         private SafeMILHandle _palette = null; // IWICPalette*
 
-        private IList<Color> _colors = new ReadOnlyCollection<Color>(new List<Color>());
+        private IList<Color> _colors = ReadOnlyCollection<Color>.Empty;
     }
 }
 

@@ -229,8 +229,10 @@
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeDescriptor.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\StrokeSerializer.cs" />
     <Compile Include="MS\Internal\Ink\InkSerializedFormat\TransformDescriptor.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FACTORY_TYPE.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWRITE_MEASURING_MODE.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
@@ -274,8 +276,10 @@
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteTypeConverterEx.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\FactoryType.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />

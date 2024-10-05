@@ -105,7 +105,7 @@ namespace MS.Internal.Text.TextInterface
 
             delegate* unmanaged<int, void*, void*, int> pfnDWriteCreateFactory = DWriteLoader.GetDWriteCreateFactoryFunctionPointer();
 
-            int hr = pfnDWriteCreateFactory((int)DWriteTypeConverter.Convert(factoryType), &iid, &factory);
+            int hr = pfnDWriteCreateFactory((int)DWriteTypeConverterEx.Convert(factoryType), &iid, &factory);
 
             DWriteUtil.ConvertHresultToException(hr);
 

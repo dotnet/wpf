@@ -344,8 +344,6 @@ namespace System.Windows.Data
 
         private void EndDefer()
         {
-            Debug.Assert(_deferLevel > 0);
-
             --_deferLevel;
 
             if (_deferLevel == 0)

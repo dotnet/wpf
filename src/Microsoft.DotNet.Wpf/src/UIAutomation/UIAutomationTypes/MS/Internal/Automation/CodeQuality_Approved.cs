@@ -546,9 +546,6 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.Windows.Automation.ControlType.Register(System.Guid,System.String):System.Windows.Automation.ControlType" )]
 [module: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.Windows.Automation.ControlType.Register(System.Guid,System.String,System.Windows.STID,System.Windows.Automation.AutomationProperty[]):System.Windows.Automation.ControlType" )]
 
-// approved by kimb and kcorby - we're excluding any of these we find
-[module: SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands", Scope="member", Target="MS.Internal.Automation.UiaCoreProviderApi.CheckError(System.Int32):System.Void")]
-
 //don't need assembly-level critical on this assembly
 
 //Related to ST and SR class:

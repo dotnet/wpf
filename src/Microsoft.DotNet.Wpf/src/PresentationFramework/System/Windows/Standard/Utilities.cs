@@ -243,7 +243,6 @@ namespace Standard
 
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

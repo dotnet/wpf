@@ -1889,7 +1889,6 @@ namespace Standard
         // Vista only
         public int iPaddedBorderWidth;
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static NONCLIENTMETRICS VistaMetricsStruct
         {
             get
@@ -1900,7 +1899,6 @@ namespace Standard
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static NONCLIENTMETRICS XPMetricsStruct
         {
             get

@@ -101,7 +101,6 @@ namespace Standard
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
         /// <returns>A Win32Error instance with the result of the native GetLastError</returns>
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static Win32Error GetLastError()
         {
             return new Win32Error(Marshal.GetLastWin32Error());
@@ -388,15 +387,7 @@ namespace Standard
             ThrowIfFailed(null);
         }
 
-        [
-            SuppressMessage(
-                "Microsoft.Usage",
-                "CA2201:DoNotRaiseReservedExceptionTypes",
-                Justification="Only recreating Exceptions that were already raised."),
-            SuppressMessage(
-                "Microsoft.Security",
-                "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")
-        ]
+        [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes", Justification="Only recreating Exceptions that were already raised.")]
         public void ThrowIfFailed(string message)
         {
             if (Failed)

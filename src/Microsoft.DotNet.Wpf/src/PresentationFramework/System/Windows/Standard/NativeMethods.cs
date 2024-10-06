@@ -3032,12 +3032,10 @@ namespace Standard
             return new IntPtr(SetClassLongPtr32(hwnd, nIndex, dwNewLong.ToInt32()));
         }
 
-        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetClassLong", SetLastError = true)]
         private static extern int SetClassLongPtr32(IntPtr hWnd, GCLP nIndex, int dwNewLong);
 
-        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr", SetLastError = true)]
         private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, GCLP nIndex, IntPtr dwNewLong);

@@ -66,10 +66,7 @@ namespace System.Windows
         /// or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
         /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(double pixels)
-            : this(pixels, GridUnitType.Pixel)
-        {
-        }
+        public GridLength(double pixels) : this(pixels, GridUnitType.Pixel) { }
 
         /// <summary>
         /// Constructor, initializes the GridLength and specifies what kind of value 
@@ -90,22 +87,20 @@ namespace System.Windows
         /// </exception>
         public GridLength(double value, GridUnitType type)
         {
+            // Check value
             if (double.IsNaN(value))
-            {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
-            }
-            if (double.IsInfinity(value))
-            {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
-            }
-            if (    type != GridUnitType.Auto
-                &&  type != GridUnitType.Pixel
-                &&  type != GridUnitType.Star   )
-            {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownGridUnitType, "type"));
-            }
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, nameof(value)));
+            else if (double.IsInfinity(value))
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, nameof(value)));
 
-            _unitValue = (type == GridUnitType.Auto) ? 0.0 : value;
+            // Check unitType
+            if (type is GridUnitType.Pixel or GridUnitType.Star)
+                _unitValue = value;
+            else if (type is GridUnitType.Auto)
+                _unitValue = 1.0; // Value is ignored in case of "Auto" and defaulted to "1.0"
+            else
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownGridUnitType, nameof(type)));
+
             _unitType = type;
         }
 
@@ -195,7 +190,7 @@ namespace System.Windows
         /// <summary>
         /// Returns value part of this GridLength instance.
         /// </summary>
-        public double Value { get { return ((_unitType == GridUnitType.Auto) ? 1.0 : _unitValue); } }
+        public double Value { get { return (_unitValue); } }
 
         /// <summary>
         /// Returns unit type of this GridLength instance.

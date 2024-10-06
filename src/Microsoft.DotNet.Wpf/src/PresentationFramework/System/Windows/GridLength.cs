@@ -45,15 +45,16 @@ namespace System.Windows
     /// properties of ColumnDefinition and RowDefinition used by Grid.
     /// </summary>
     [TypeConverter(typeof(GridLengthConverter))]
-    public struct GridLength : IEquatable<GridLength>
+    public readonly struct GridLength : IEquatable<GridLength>
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
+        /// <summary>
+        /// Represents the <see cref="Value"/> of this instance; 1.0 if <see cref="Windows.GridUnitType"/> is <see cref="GridUnitType.Auto"/>.
+        /// </summary>
+        private readonly double _unitValue;
+        /// <summary>
+        /// Represents the <see cref="GridUnitType"/> of this instance.
+        /// </summary>
+        private readonly GridUnitType _unitType;
 
         /// <summary>
         /// Constructor, initializes the GridLength as absolute value in pixels.
@@ -107,8 +108,6 @@ namespace System.Windows
             _unitValue = (type == GridUnitType.Auto) ? 0.0 : value;
             _unitType = type;
         }
-
-        #endregion Constructors
 
         //------------------------------------------------------
         //
@@ -238,8 +237,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Private Fields 
-        private double _unitValue;      //  unit value storage
-        private GridUnitType _unitType; //  unit type storage
         
         //  static instance of Auto GridLength
         private static readonly GridLength s_auto = new GridLength(1.0, GridUnitType.Auto);

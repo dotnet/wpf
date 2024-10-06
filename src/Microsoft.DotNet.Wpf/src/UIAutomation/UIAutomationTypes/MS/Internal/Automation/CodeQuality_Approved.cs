@@ -493,9 +493,6 @@ using System.Diagnostics.CodeAnalysis;
 [module: SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", Scope = "member", Target = "System.Windows.Automation.AutomationIdentifier.Register(MS.Internal.Automation.UiaCoreTypesApi+AutomationIdType,System.Guid,System.String):System.Windows.Automation.AutomationIdentifier")]
 // Not exposed for V1; Consider this rule for V2
 [module: SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Scope = "type", Target = "System.Windows.Automation.ClientSideProviderDescription")]
-// False positives
-[module: SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", Scope = "member", Target = "MS.Internal.Automation.FocusTracker.OnEventObjectDestroy(System.Int32,System.IntPtr,System.Int32,System.Int32):System.Void")]
-[module: SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", Scope = "member", Target = "MS.Internal.Automation.QueueProcessor.WaitForWork():System.Void")]
 // Not required for non-public code
 [module: SuppressMessage("Microsoft.MSInternal", "CA905:SystemAndMicrosoftNamespacesRequireApproval", Scope = "namespace", Target = "System.Windows.Automation")]
 [module: SuppressMessage("Microsoft.MSInternal", "CA905:SystemAndMicrosoftNamespacesRequireApproval", Scope = "namespace", Target = "System.Windows.Automation.Provider")]

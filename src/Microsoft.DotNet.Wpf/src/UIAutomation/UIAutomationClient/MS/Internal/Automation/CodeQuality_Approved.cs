@@ -358,8 +358,6 @@ using System.Diagnostics.CodeAnalysis;
 // Not exposed for V1; Consider this rule for V2
 [module: SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Scope = "type", Target = "System.Windows.Automation.ClientSideProviderDescription")]
 // False positives
-[module: SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", Scope = "member", Target = "MS.Internal.Automation.FocusTracker.OnEventObjectDestroy(System.Int32,System.IntPtr,System.Int32,System.Int32):System.Void")]
-[module: SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", Scope = "member", Target = "MS.Internal.Automation.QueueProcessor.WaitForWork():System.Void")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2004:RemoveCallsToGCKeepAlive", Scope="member", Target="System.Windows.Automation.AutomationElement.Find(System.Windows.Automation.TreeScope,System.Windows.Automation.Condition,MS.Internal.Automation.UiaCoreApi+UiaCacheRequest,System.Boolean,System.ComponentModel.BackgroundWorker):MS.Internal.Automation.UiaCoreApi+UiaCacheResponse[]")]
 // Not required for non-public code
 [module: SuppressMessage("Microsoft.MSInternal", "CA905:SystemAndMicrosoftNamespacesRequireApproval", Scope = "namespace", Target = "System.Windows.Automation")]

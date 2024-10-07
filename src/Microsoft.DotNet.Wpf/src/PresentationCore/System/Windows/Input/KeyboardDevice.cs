@@ -27,10 +27,10 @@ namespace System.Windows.Input
     {
         protected KeyboardDevice(InputManager inputManager)
         {
-            _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
             _isEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnIsEnabledChanged);
             _isVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnIsVisibleChanged);
@@ -42,8 +42,8 @@ namespace System.Windows.Input
             // Consider moving this elsewhere
             // The TextServicesManager must be created before the TextCompositionManager
             // so that TIP/IME listeners get precedence.
-            _TsfManager = new SecurityCriticalDataClass<TextServicesManager>(new TextServicesManager(inputManager));
-            _textcompositionManager = new SecurityCriticalData<TextCompositionManager>(new TextCompositionManager(inputManager));
+            _TsfManager = new TextServicesManager(inputManager);
+            _textcompositionManager = new TextCompositionManager(inputManager);
         }
 
         /// <summary>
@@ -87,20 +87,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        public override PresentationSource ActiveSource
-        {
-            get
-            {
-
-                //VerifyAccess();
-                if (_activeSource != null)
-                {
-                    return _activeSource.Value;
-                }
-
-                return null;
-            }
-        }
+        public override PresentationSource ActiveSource => _activeSource;
 
         /// <summary>
         ///     The default mode for restoring focus.
@@ -114,7 +101,6 @@ namespace System.Windows.Input
         {
             get
             {
-//                 VerifyAccess();
                 return (IInputElement) _focus;
             }
         }
@@ -153,7 +139,7 @@ namespace System.Windows.Input
             // If no element is given for focus, use the root of the active source.
             if(oFocus == null && _activeSource != null)
             {
-                oFocus = _activeSource.Value.RootVisual as DependencyObject;
+                oFocus = _activeSource.RootVisual;
                 forceToNullIfFailed = true;
             }
 
@@ -276,27 +262,14 @@ namespace System.Windows.Input
         /// </summary>
         public KeyStates GetKeyStates(Key key)
         {
-//             VerifyAccess();
             Validate_Key(key);
             return GetKeyStatesFromSystem(key);
         }
 
-        internal TextServicesManager TextServicesManager
-        {
-           get
-           {
-               return _TsfManager.Value;
-           }
-        }
+        internal TextServicesManager TextServicesManager => _TsfManager;
 
 
-       internal TextCompositionManager TextCompositionManager
-        {
-           get
-           {
-               return _textcompositionManager.Value;
-           }
-        }
+        internal TextCompositionManager TextCompositionManager => _textcompositionManager;
 
         private void TryChangeFocus(DependencyObject newFocus, IKeyboardInputProvider keyboardInputProvider, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
@@ -314,8 +287,7 @@ namespace System.Windows.Input
                     KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
                     previewLostFocus.RoutedEvent=Keyboard.PreviewLostKeyboardFocusEvent;
                     previewLostFocus.Source= _focus;
-                    if(_inputManager != null)
-                        _inputManager.Value.ProcessInput(previewLostFocus);
+                    _inputManager?.ProcessInput(previewLostFocus);
 
                     // is handled the right indication of canceled?
                     if (previewLostFocus.Handled)
@@ -332,8 +304,7 @@ namespace System.Windows.Input
                     KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
                     previewGotFocus.RoutedEvent=Keyboard.PreviewGotKeyboardFocusEvent;
                     previewGotFocus.Source= newFocus;
-                    if(_inputManager != null)
-                        _inputManager.Value.ProcessInput(previewGotFocus);
+                    _inputManager?.ProcessInput(previewGotFocus);
 
                     // is handled the right indication of canceled?
                     if (previewGotFocus.Handled)
@@ -356,8 +327,7 @@ namespace System.Windows.Input
                         KeyboardInputProviderAcquireFocusEventArgs acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
                         acquireFocus.RoutedEvent = Keyboard.PreviewKeyboardInputProviderAcquireFocusEvent;
                         acquireFocus.Source= newFocus;
-                        if(_inputManager != null)
-                            _inputManager.Value.ProcessInput(acquireFocus);
+                        _inputManager?.ProcessInput(acquireFocus);
 
                         // Acquire focus through the input provider.
                         changeFocus = keyboardInputProvider.AcquireFocus(false);
@@ -367,8 +337,7 @@ namespace System.Windows.Input
                         acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
                         acquireFocus.RoutedEvent = Keyboard.KeyboardInputProviderAcquireFocusEvent;
                         acquireFocus.Source= newFocus;
-                        if(_inputManager != null)
-                            _inputManager.Value.ProcessInput(acquireFocus);
+                        _inputManager?.ProcessInput(acquireFocus);
                     }
                     else
                     {
@@ -490,8 +459,7 @@ namespace System.Windows.Input
 
                 // Call TestServicesManager change the focus of the InputMethod is enable/disabled accordingly
                 // so it's ready befere the GotKeyboardFocusEvent handler is invoked.
-                if (_TsfManager != null)
-                    _TsfManager.Value.Focus(_focus);
+                _TsfManager?.Focus(_focus);
 
                 // InputLanguageManager checks the preferred input languages.
                 // This should before GotEvent because the preferred input language
@@ -504,16 +472,15 @@ namespace System.Windows.Input
                     KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) focus);
                     lostFocus.RoutedEvent=Keyboard.LostKeyboardFocusEvent;
                     lostFocus.Source= oldFocus;
-                    if(_inputManager != null)
-                        _inputManager.Value.ProcessInput(lostFocus);
+                    _inputManager?.ProcessInput(lostFocus);
                 }
+
                 if(_focus != null)
                 {
                     KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) _focus);
                     gotFocus.RoutedEvent=Keyboard.GotKeyboardFocusEvent;
                     gotFocus.Source= _focus;
-                    if(_inputManager!=null)
-                        _inputManager.Value.ProcessInput(gotFocus);
+                    _inputManager?.ProcessInput(gotFocus);
                 }
 
                 // InputMethod checks the preferred ime state.
@@ -669,12 +636,11 @@ namespace System.Windows.Input
 
             if(moveFocus)
             {
-                if(moveFocusTo == null && _activeSource != null)
+                if(moveFocusTo is null && _activeSource is not null)
                 {
-                    moveFocusTo = _activeSource.Value.RootVisual as DependencyObject;
+                    moveFocusTo = _activeSource.RootVisual;
                 }
 
-                
                 Focus(moveFocusTo, /*askOld=*/ false, /*askNew=*/ true, /*forceToNullIfFailed=*/ true);
             }
             else
@@ -729,14 +695,14 @@ namespace System.Windows.Input
                     if(_activeSource == null)
                     {
                         // we are now active.
-                        _activeSource = new SecurityCriticalDataClass<PresentationSource>(keyboardInput.InputSource);
+                        _activeSource = keyboardInput.InputSource;
                     }
-                    else if(_activeSource.Value != keyboardInput.InputSource)
+                    else if(_activeSource != keyboardInput.InputSource)
                     {
-                        IKeyboardInputProvider toDeactivate = _activeSource.Value.GetInputProvider(typeof(KeyboardDevice)) as IKeyboardInputProvider;
+                        IKeyboardInputProvider toDeactivate = _activeSource.GetInputProvider(typeof(KeyboardDevice)) as IKeyboardInputProvider;
 
                         // we are now active.
-                        _activeSource = new SecurityCriticalDataClass<PresentationSource>(keyboardInput.InputSource);
+                        _activeSource = keyboardInput.InputSource;
 
                         if(toDeactivate != null)
                         {
@@ -765,8 +731,8 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager!=null)
-                        _inputManager.Value.MostRecentInputDevice = this;
+                    if(_inputManager is not null)
+                        _inputManager.MostRecentInputDevice = this;
                 }
 
                 // We are missing detection for redundant ups
@@ -782,8 +748,8 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager!=null)
-                        _inputManager.Value.MostRecentInputDevice = this;
+                    if(_inputManager is not null)
+                        _inputManager.MostRecentInputDevice = this;
                 }
             }
 
@@ -1053,13 +1019,7 @@ namespace System.Windows.Input
             return wasDisconnected;
         }
 
-        internal bool IsActive
-        {
-            get
-            {
-                return _activeSource != null && _activeSource.Value != null;
-            }
-        }
+        internal bool IsActive => _activeSource is not null;
 
         private DeferredElementTreeState FocusTreeState
         {
@@ -1074,8 +1034,8 @@ namespace System.Windows.Input
             }
         }
 
-        private SecurityCriticalDataClass<InputManager> _inputManager;
-        private SecurityCriticalDataClass<PresentationSource> _activeSource;
+        private readonly InputManager _inputManager;
+        private PresentationSource _activeSource;
 
         private DependencyObject _focus;
         private DeferredElementTreeState _focusTreeState;
@@ -1110,9 +1070,9 @@ namespace System.Windows.Input
         }
 
         // TextCompositionManager handles KeyDown -> Unicode conversion.
-        private SecurityCriticalData<TextCompositionManager> _textcompositionManager;
+        private readonly TextCompositionManager _textcompositionManager;
         // TextServicesManager handles KeyDown -> IME composition conversion.
-        private SecurityCriticalDataClass<TextServicesManager> _TsfManager;
+        private readonly TextServicesManager _TsfManager;
 }
 }
 

@@ -1755,11 +1755,10 @@ namespace System.Windows.Threading
 
             // Create the message-only window we use to receive messages
             // that tell us to process the queue.
-            MessageOnlyHwndWrapper window = new MessageOnlyHwndWrapper();
-            _window = new SecurityCriticalData<MessageOnlyHwndWrapper>( window );
+            _window = new MessageOnlyHwndWrapper();
 
             _hook = new HwndWrapperHook(WndProcHook);
-            _window.Value.AddHook(_hook);
+            _window.AddHook(_hook);
 
             // Verify that the accessibility switches are set prior to any major UI code running.
             AccessibilitySwitches.VerifySwitches(this);
@@ -1805,8 +1804,7 @@ namespace System.Windows.Threading
                 // Because we may have to defer the actual shutting-down until
                 // later, we need to remember the execution context we started
                 // the shutdown from.
-                CulturePreservingExecutionContext shutdownExecutionContext = CulturePreservingExecutionContext.Capture();
-                _shutdownExecutionContext = new SecurityCriticalDataClass<CulturePreservingExecutionContext>(shutdownExecutionContext);
+                _shutdownExecutionContext = CulturePreservingExecutionContext.Capture();
 
                 // Tell Win32 to exit the message loop for this thread.
                 //
@@ -1832,11 +1830,11 @@ namespace System.Windows.Threading
         {
             if(!_hasShutdownFinished) // Dispatcher thread - no lock needed for read
             {
-                if(_shutdownExecutionContext != null && _shutdownExecutionContext.Value != null)
+                if(_shutdownExecutionContext is not null)
                 {
                     // Continue using the execution context that was active when the shutdown
                     // was initiated.
-                    CulturePreservingExecutionContext.Run(_shutdownExecutionContext.Value, new ContextCallback(ShutdownImplInSecurityContext), null);
+                    CulturePreservingExecutionContext.Run(_shutdownExecutionContext, new ContextCallback(ShutdownImplInSecurityContext), null);
                 }
                 else
                 {
@@ -1867,8 +1865,8 @@ namespace System.Windows.Threading
             MessageOnlyHwndWrapper window = null;
             lock(_instanceLock)
             {
-                window = _window.Value;
-                _window = new SecurityCriticalData<MessageOnlyHwndWrapper>(null);
+                window = _window;
+                _window = null;
             }
             window.Dispose();
 
@@ -2382,7 +2380,7 @@ namespace System.Windows.Threading
                 {
                     if (_postedProcessingType == PROCESS_BACKGROUND)
                     {
-                        SafeNativeMethods.KillTimer(new HandleRef(this, _window.Value.Handle), TIMERID_BACKGROUND);
+                        SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
                     }
                     else if (_postedProcessingType == PROCESS_FOREGROUND)
                     {
@@ -2391,7 +2389,7 @@ namespace System.Windows.Threading
                         IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
 
                         MSG msg = new MSG();
-                        UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Value.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
+                        UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
 
                         UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
                     }
@@ -2411,14 +2409,7 @@ namespace System.Windows.Threading
             return succeeded;
         }
 
-        private bool IsWindowNull()
-        {
-           if(_window.Value == null)
-            {
-                return true;
-            }
-            return false;
-        }
+        private bool IsWindowNull() => _window is null;
 
         private bool RequestForegroundProcessing()
         {
@@ -2429,14 +2420,14 @@ namespace System.Windows.Threading
                 // processing.
                 if(_postedProcessingType == PROCESS_BACKGROUND)
                 {
-                    SafeNativeMethods.KillTimer(new HandleRef(this, _window.Value.Handle), TIMERID_BACKGROUND);
+                    SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
                 }
 
                 _postedProcessingType = PROCESS_FOREGROUND;
 
                 // We have foreground items to process.
                 // By posting a message, Win32 will service us fairly promptly.
-                bool succeeded = UnsafeNativeMethods.TryPostMessage(new HandleRef(this, _window.Value.Handle), _msgProcessQueue, IntPtr.Zero, IntPtr.Zero);
+                bool succeeded = UnsafeNativeMethods.TryPostMessage(new HandleRef(this, _window.Handle), _msgProcessQueue, IntPtr.Zero, IntPtr.Zero);
                 if (!succeeded)
                 {
                     OnRequestProcessingFailure("TryPostMessage");
@@ -2460,7 +2451,7 @@ namespace System.Windows.Threading
                 {
                     _postedProcessingType = PROCESS_BACKGROUND;
 
-                    succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Value.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
+                    succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
                     if (!succeeded)
                     {
                         OnRequestProcessingFailure("TrySetTimer");
@@ -2702,7 +2693,7 @@ namespace System.Windows.Threading
                 // _window.Value being non-null without taking the instance lock.
 
                 SafeNativeMethods.SetTimer(
-                    new HandleRef(this, _window.Value.Handle),
+                    new HandleRef(this, _window.Handle),
                     TIMERID_TIMERS,
                     delta);
 
@@ -2718,7 +2709,7 @@ namespace System.Windows.Threading
                 // _window.Value being non-null without taking the instance lock.
 
                 SafeNativeMethods.KillTimer(
-                    new HandleRef(this, _window.Value.Handle),
+                    new HandleRef(this, _window.Handle),
                     TIMERID_TIMERS);
 
                 _isWin32TimerSet = false;
@@ -2864,26 +2855,15 @@ namespace System.Windows.Threading
         internal bool _exitAllFrames;       // used from DispatcherFrame
         private bool _startingShutdown;
         internal bool _hasShutdownStarted;  // used from DispatcherFrame
-        private SecurityCriticalDataClass<CulturePreservingExecutionContext> _shutdownExecutionContext;
+        private CulturePreservingExecutionContext _shutdownExecutionContext;
 
         internal int _disableProcessingCount; // read by DispatcherSynchronizationContext, decremented by DispatcherProcessingDisabled
-
-        //private static Priority _foregroundBackgroundBorderPriority = new Priority(Priority.Min, Priority.Max, "Dispatcher.ForegroundBackgroundBorder");
-        //private static Priority _backgroundIdleBorderPriority = new Priority(Priority.Min, _foregroundBackgroundBorderPriority, "Dispatcher.BackgroundIdleBorder");
-
-        //private static Priority _foregroundPriority = new Priority(_foregroundBackgroundBorderPriority, Priority.Max, "Dispatcher.Foreground");
-        //private static Priority _backgroundPriority = new Priority(_backgroundIdleBorderPriority, _foregroundBackgroundBorderPriority, "Dispatcher.Background");
-        //private static Priority _idlePriority = new Priority(Priority.Min, _backgroundIdleBorderPriority, "Dispatcher.Idle");
-
-        //private static PriorityRange _foregroundPriorityRange = new PriorityRange(_foregroundBackgroundBorderPriority, false, Priority.Max, true);
-        //private static PriorityRange _backgroundPriorityRange = new PriorityRange(_backgroundIdleBorderPriority, false, _foregroundBackgroundBorderPriority, false);
-        //private static PriorityRange _idlePriorityRange = new PriorityRange(Priority.Min, false, _backgroundIdleBorderPriority, false);
 
         private static PriorityRange _foregroundPriorityRange = new PriorityRange(DispatcherPriority.Loaded, true, DispatcherPriority.Send, true);
         private static PriorityRange _backgroundPriorityRange = new PriorityRange(DispatcherPriority.Background, true, DispatcherPriority.Input, true);
         private static PriorityRange _idlePriorityRange = new PriorityRange(DispatcherPriority.SystemIdle, true, DispatcherPriority.ContextIdle, true);
 
-        private SecurityCriticalData<MessageOnlyHwndWrapper> _window;
+        private MessageOnlyHwndWrapper _window;
 
         private HwndWrapperHook _hook;
 

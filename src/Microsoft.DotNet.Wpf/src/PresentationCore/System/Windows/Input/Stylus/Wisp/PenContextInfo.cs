@@ -15,9 +15,9 @@ namespace System.Windows.Input
     /// </summary>
     internal struct PenContextInfo
     {
-        public SecurityCriticalDataClass<IPimcContext3> PimcContext;
+        public IPimcContext3 PimcContext;
         
-        public SecurityCriticalDataClass<IntPtr> CommHandle;
+        public IntPtr CommHandle;
         
         public int ContextId;
 

@@ -19,9 +19,9 @@ namespace MS.Internal.Documents.Application
     /// </summary>
     internal static class NavigationHelper
     {
-        ///// <summary>
-        ///// Invokes a navigation to a new document
-        ///// </summary>
+        /// <summary>
+        /// Invokes a navigation to a new document
+        /// </summary>
         internal static void NavigateToDocument(Document document)
         {
             Trace.SafeWrite(
@@ -30,23 +30,19 @@ namespace MS.Internal.Documents.Application
                document.Uri);
 
             Invariant.Assert(
-               _navigate != null,
-               "Navigation object has not been instantiated.");
-
-            Invariant.Assert(
-                _navigate.Value != null,
+               _navigate is not null,
                 "Navigation delegate has not been assigned.");
 
             Invariant.Assert(
                 document != null,
                 "Target document has not been assigned.");
 
-            _navigate.Value(new SecurityCriticalData<Uri>(document.Uri));
+            _navigate(document.Uri);
         }
 
-        ///// <summary>
-        ///// Invokes a top-level browserNavigation action to the specified Uri.
-        ///// </summary>
+        /// <summary>
+        /// Invokes a top-level browserNavigation action to the specified Uri.
+        /// </summary>
         internal static void NavigateToExternalUri(Uri uri)
         {
             Trace.SafeWrite(
@@ -55,18 +51,14 @@ namespace MS.Internal.Documents.Application
                 uri);
 
             Invariant.Assert(
-                _navigate != null,
-                "Navigation object has not been instantiated.");
-
-            Invariant.Assert(
-                _navigate.Value != null,
+                _navigate is not null,
                 "Navigation delegate has not been assigned.");
 
             Invariant.Assert(
                 uri != null,
                 "Target uri has not been assigned.");
 
-            _navigate.Value(new SecurityCriticalData<Uri>(uri));
+            _navigate(uri);
         }
 
 
@@ -79,23 +71,12 @@ namespace MS.Internal.Documents.Application
         /// </remarks>
         internal static NavigateDelegate Navigate
         {
-            get
-            {
-                if (_navigate != null)
-                {
-                    return _navigate.Value;
-                }
-                return null;
-            }
-
-            set
-            {
-                _navigate = new SecurityCriticalDataClass<NavigateDelegate>(value);
-            }
+            get => _navigate;
+            set => _navigate = value;
         }
 
-        internal delegate void NavigateDelegate(SecurityCriticalData<Uri> uri);
+        internal delegate void NavigateDelegate(Uri uri);
 
-        private static SecurityCriticalDataClass<NavigateDelegate> _navigate;
+        private static NavigateDelegate _navigate;
     }
 }

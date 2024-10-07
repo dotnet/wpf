@@ -92,7 +92,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                schema.ValidateRelationships(new SecurityCriticalData<Package>(package), packageUri, partUri, mimeType);
+                schema.ValidateRelationships(package, packageUri, partUri, mimeType);
 
                 if (schema.AllowsMultipleReferencesToSameUri(mimeType))
                 {

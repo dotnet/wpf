@@ -172,7 +172,7 @@ namespace MS.Internal.Documents
         private void requestFromLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Navigate to the cached referral URI
-            NavigationHelper.Navigate(new SecurityCriticalData<Uri>(_referralUri));
+            NavigationHelper.Navigate(_referralUri);
         }
 
         /// <summary>

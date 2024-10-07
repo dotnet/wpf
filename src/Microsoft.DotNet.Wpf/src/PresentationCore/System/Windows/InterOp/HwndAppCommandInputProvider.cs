@@ -19,25 +19,21 @@ namespace System.Windows.Interop
     {
         internal HwndAppCommandInputProvider( HwndSource source )
         {
-            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
-
-            _source = new SecurityCriticalDataClass<HwndSource>(source);
+            _site = InputManager.Current.RegisterInputProvider(this);
+            _source = source;
         }
 
         public void Dispose( )
         {
-            if (_site != null)
-            {
-                _site.Value.Dispose();
-                _site = null;
-            }
+            _site?.Dispose();
+            _site = null;
             _source = null;
         }
 
         bool IInputProvider.ProvidesInputForRootVisual( Visual v )
         {
             Debug.Assert(null != _source);
-            return _source.Value.RootVisual == v;
+            return _source.RootVisual == v;
         }
 
         void IInputProvider.NotifyDeactivate() {}
@@ -45,7 +41,7 @@ namespace System.Windows.Interop
         internal IntPtr FilterMessage( IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled )
         {
             // It is possible to be re-entered during disposal.  Just return.
-            if(null == _source || null == _source.Value)
+            if(_source is null)
             {
                 return IntPtr.Zero;
             }
@@ -56,14 +52,14 @@ namespace System.Windows.Interop
                 // for example, by clicking an application command button using the mouse or typing an application command
                 // key on the keyboard.
                 RawAppCommandInputReport report = new RawAppCommandInputReport(
-                                                        _source.Value,
+                                                        _source,
                                                         InputMode.Foreground,
                                                         SafeNativeMethods.GetMessageTime(),
                                                         GetAppCommand(lParam),
                                                         GetDevice(lParam),
                                                         InputType.Command);
 
-                handled = _site.Value.ReportInput(report);
+                handled = _site.ReportInput(report);
             }
             
             return handled ? new IntPtr(1) : IntPtr.Zero ;
@@ -116,9 +112,9 @@ namespace System.Windows.Interop
             return inputType;
         }
 
-        private SecurityCriticalDataClass<HwndSource> _source;
+        private HwndSource _source;
 
-        private SecurityCriticalDataClass<InputProviderSite> _site;
+        private InputProviderSite _site;
     }
 }
 

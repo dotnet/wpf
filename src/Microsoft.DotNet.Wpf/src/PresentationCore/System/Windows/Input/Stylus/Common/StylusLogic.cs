@@ -187,17 +187,10 @@ namespace System.Windows.Input
         #region Construction/Initilization
 
         /// <summary>
-        ///
         /// True if the StylusLogic for the thread of the caller has been instantiated.
         /// False if otherwise.
         /// </summary>
-        internal static bool IsInstantiated
-        {
-            get
-            {
-                return _currentStylusLogic?.Value != null;
-            }
-        }
+        internal static bool IsInstantiated => _currentStylusLogic is not null;
 
         /// <summary>
         /// Wrapper around accesses to CoreAppContextSwitches so it's easier to
@@ -235,7 +228,7 @@ namespace System.Windows.Input
         /// thread as there is one per specific touch stack InputProvider.
         /// </summary>
         [ThreadStatic]
-        private static SecurityCriticalDataClass<StylusLogic> _currentStylusLogic = null;
+        private static StylusLogic _currentStylusLogic = null;
 
         /// <summary>
         /// This property is backed by a ThreadStatic instance.  This will be instantiated
@@ -246,12 +239,12 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_currentStylusLogic?.Value == null)
+                if (_currentStylusLogic is null)
                 {
                     Initialize();
                 }
 
-                return _currentStylusLogic?.Value;
+                return _currentStylusLogic;
             }
         }
 
@@ -279,11 +272,11 @@ namespace System.Windows.Input
                 // Choose between WISP and Pointer stacks
                 if (IsPointerStackEnabled)
                 {
-                    _currentStylusLogic = new SecurityCriticalDataClass<StylusLogic>(new PointerLogic(InputManager.UnsecureCurrent));
+                    _currentStylusLogic = new PointerLogic(InputManager.UnsecureCurrent);
                 }
                 else
                 {
-                    _currentStylusLogic = new SecurityCriticalDataClass<StylusLogic>(new WispLogic(InputManager.UnsecureCurrent));
+                    _currentStylusLogic = new WispLogic(InputManager.UnsecureCurrent);
                 }
             }
         }

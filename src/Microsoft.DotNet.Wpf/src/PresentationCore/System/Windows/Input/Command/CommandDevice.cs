@@ -24,9 +24,9 @@ namespace System.Windows.Input
     {
         internal CommandDevice( InputManager inputManager )
         {
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace System.Windows.Input
             }
         }
 
-        private SecurityCriticalData<InputManager> _inputManager;
+        private readonly InputManager _inputManager;
     }
 
     /// <summary>

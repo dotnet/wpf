@@ -30,17 +30,17 @@ namespace System.Windows.Interop
         /// <summary>
         /// The HwndSource for WM_POINTER messages
         /// </summary>
-        private SecurityCriticalDataClass<HwndSource> _source;
+        private readonly HwndSource _source;
 
         /// <summary>
         /// The Input site to inject messages
         /// </summary>
-        private SecurityCriticalDataClass<InputProviderSite> _site;
+        private InputProviderSite _site;
 
         /// <summary>
         /// The current pointer logic for this thread
         /// </summary>
-        private SecurityCriticalDataClass<PointerLogic> _pointerLogic;
+        private readonly PointerLogic _pointerLogic;
 
         /// <summary>
         /// The current stylus device we are using
@@ -71,13 +71,13 @@ namespace System.Windows.Interop
         /// <param name="source">The source to handle messages for</param>
         internal HwndPointerInputProvider(HwndSource source)
         {
-            _site = new SecurityCriticalDataClass<InputProviderSite>(InputManager.Current.RegisterInputProvider(this));
+            _site = InputManager.Current.RegisterInputProvider(this);
 
-            _source = new SecurityCriticalDataClass<HwndSource>(source);
-            _pointerLogic = new SecurityCriticalDataClass<PointerLogic>(StylusLogic.GetCurrentStylusLogicAs<PointerLogic>());
+            _source = source;
+            _pointerLogic = StylusLogic.GetCurrentStylusLogicAs<PointerLogic>();
 
             // Register the stylus plugin manager
-            _pointerLogic.Value.PlugInManagers[_source.Value] = new PointerStylusPlugInManager(_source.Value);
+            _pointerLogic.PlugInManagers[_source] = new PointerStylusPlugInManager(_source);
 
             // Store if this window is enabled or disabled
             int style = MS.Win32.UnsafeNativeMethods.GetWindowLong(new HandleRef(this, source.CriticalHandle), MS.Win32.NativeMethods.GWL_STYLE);
@@ -98,13 +98,10 @@ namespace System.Windows.Interop
             {
                 if (disposing)
                 {
-                    if (_site != null)
-                    {
-                        _site.Value.Dispose();
-                        _site = null;
-                    }
+                    _site?.Dispose();
+                    _site = null;
 
-                    _pointerLogic.Value.PlugInManagers.Remove(_source.Value);
+                    _pointerLogic.PlugInManagers.Remove(_source);
                 }
             }
 
@@ -249,7 +246,7 @@ namespace System.Windows.Interop
                         new RawStylusInputReport(
                             InputMode.Foreground,
                             timestamp,
-                            _source.Value,
+                            _source,
                             action,
                             () => { return _currentTabletDevice.StylusPointDescription; },
                             _currentTabletDevice.Id,
@@ -261,18 +258,18 @@ namespace System.Windows.Interop
 
                     // Send the input report to the stylus plugins if we're not doing a drag and the window
                     // is currently enabled.
-                    if (!_pointerLogic.Value.InDragDrop && IsWindowEnabled)
+                    if (!_pointerLogic.InDragDrop && IsWindowEnabled)
                     {
                         PointerStylusPlugInManager manager;
 
-                        if (_pointerLogic.Value.PlugInManagers.TryGetValue(_source.Value, out manager))
+                        if (_pointerLogic.PlugInManagers.TryGetValue(_source, out manager))
                         {
                             manager.InvokeStylusPluginCollection(rsir);
                         }
                     }
 
                     // Update the data in the stylus device with the latest pointer data
-                    _currentStylusDevice.Update(this, _source.Value, data, rsir);
+                    _currentStylusDevice.Update(this, _source, data, rsir);
 
                     // Call the StylusDevice to process and fire any interactions that
                     // might have resulted from the input.  If the originating inputs
@@ -324,7 +321,7 @@ namespace System.Windows.Interop
         /// <param name="originOffsetY">The Y offset in logical coordiantes</param>
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
-            Point originScreenCoord = _source.Value.RootVisual.PointToScreen(new Point(0, 0));
+            Point originScreenCoord = _source.RootVisual.PointToScreen(new Point(0, 0));
 
             // Use the inverse of our logical tablet to screen matrix to generate tablet coords
             MatrixTransform screenToTablet = new MatrixTransform(_currentTabletDevice.TabletToScreen);

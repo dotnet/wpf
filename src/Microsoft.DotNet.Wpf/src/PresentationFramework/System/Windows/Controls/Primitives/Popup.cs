@@ -2981,16 +2981,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            internal bool IsWindowAlive()
-            {
-                if (_window != null)
-                {
-                    HwndSource hwnd = _window.Value;
-                    return (hwnd != null) && !hwnd.IsDisposed;
-                }
-
-                return false;
-            }
+            internal bool IsWindowAlive() => _window is not null && !_window.IsDisposed;
 
             internal Point ClientToScreen(Visual rootVisual, Point clientPoint)
             {
@@ -3120,7 +3111,7 @@ namespace System.Windows.Controls.Primitives
 
             internal Matrix GetTransformToDevice()
             {
-                CompositionTarget ct = _window.Value.CompositionTarget;
+                CompositionTarget ct = _window.CompositionTarget;
                 if (ct != null && !ct.IsDisposed)
                 {
                     return ct.TransformToDevice;
@@ -3151,7 +3142,7 @@ namespace System.Windows.Controls.Primitives
 
             internal Matrix GetTransformFromDevice()
             {
-                CompositionTarget ct = _window.Value.CompositionTarget;
+                CompositionTarget ct = _window.CompositionTarget;
                 if (ct != null && !ct.IsDisposed)
                 {
                     return ct.TransformFromDevice;
@@ -3162,7 +3153,7 @@ namespace System.Windows.Controls.Primitives
 
             internal void SetWindowRootVisual(Visual v)
             {
-                _window.Value.RootVisual = v;
+                _window.RootVisual = v;
             }
 
             internal static bool IsVisualPresentationSourceNull(Visual visual)
@@ -3371,7 +3362,7 @@ namespace System.Windows.Controls.Primitives
                 newWindow.AddHook(hook);
 
                 // initialize the private critical window object
-                _window = new SecurityCriticalDataClass<HwndSource>(newWindow);
+                _window = newWindow;
 
                 // Set background color
                 HwndTarget hwndTarget = (HwndTarget)newWindow.CompositionTarget;
@@ -3426,21 +3417,9 @@ namespace System.Windows.Controls.Primitives
                 return IntPtr.Zero;
             }
 
-            private IntPtr Handle
-            {
-                get
-                {
-                    return (GetHandle(_window.Value));
-                }
-            }
+            private IntPtr Handle => GetHandle(_window);
 
-            private IntPtr ParentHandle
-            {
-                get
-                {
-                    return (GetParentHandle(_window.Value));
-                }
-            }
+            private IntPtr ParentHandle => GetParentHandle(_window);
 
             private static PresentationSource GetPresentationSource(Visual visual)
             {
@@ -3482,8 +3461,7 @@ namespace System.Windows.Controls.Primitives
             internal void DestroyWindow(HwndSourceHook hook, AutoResizedEventHandler onAutoResizedEventHandler, HwndDpiChangedEventHandler onDpiChagnedEventHandler)
             {
                 // Do this first to prevent infinite loops in dispose
-                HwndSource hwnd = _window.Value;
-
+                HwndSource hwnd = _window;
                 _window = null;
 
                 if (!hwnd.IsDisposed)
@@ -3503,7 +3481,7 @@ namespace System.Windows.Controls.Primitives
             /// </summary>
             private bool _isChildPopupInitialized;
 
-            private SecurityCriticalDataClass<HwndSource> _window;
+            private HwndSource _window;
 
             private const string WebOCWindowClassName = "Shell Embedding";
         }
@@ -3609,4 +3587,3 @@ namespace System.Windows.Controls.Primitives
         }
     }
 }
-

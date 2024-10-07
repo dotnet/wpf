@@ -70,7 +70,7 @@ namespace System.Windows.Input
             _isExtendedKey = isExtendedKey;
             _isSystemKey = isSystemKey;
             _virtualKey = virtualKey;
-            _extraInformation = new SecurityCriticalData<IntPtr>(extraInformation);
+            _extraInformation = extraInformation;
         }
 
         /// <summary>
@@ -102,13 +102,7 @@ namespace System.Windows.Input
         ///     Read-only access to the extra information was provided along
         ///     with the input.
         /// </summary>
-        public IntPtr ExtraInformation
-        {
-            get
-            {
-                return _extraInformation.Value;
-            }
-        }
+        public IntPtr ExtraInformation => _extraInformation;
 
         // IsValid Method for RawKeyboardActions. Relies on the enum being flags.
         internal static bool IsValidRawKeyboardActions(RawKeyboardActions actions)
@@ -130,7 +124,7 @@ namespace System.Windows.Input
         private bool _isExtendedKey;
         private bool _isSystemKey;
         private int _virtualKey;
-        private SecurityCriticalData<IntPtr> _extraInformation;
+        private readonly IntPtr _extraInformation;
     }    
 }
 

@@ -107,7 +107,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         private PointerStylusDevice _currentStylusDevice;
 
-        private SecurityCriticalData<InputManager> _inputManager;
+        private readonly InputManager _inputManager;
 
         /// <summary>
         /// Determines if we are currently processing a Drag/Drop operation.
@@ -151,10 +151,10 @@ namespace System.Windows.Input.StylusPointer
         {
             Statistics.FeaturesUsed |= Tracing.StylusTraceLogger.FeatureFlags.PointerStackEnabled;
 
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
             _overIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsEnabledChanged);
             _overIsVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsVisibleChanged);
@@ -201,7 +201,7 @@ namespace System.Windows.Input.StylusPointer
                         SelectStylusDevice(stylusDevice, null, false);
                     }
 
-                    _inputManager.Value.MostRecentInputDevice = stylusDevice.StylusDevice;
+                    _inputManager.MostRecentInputDevice = stylusDevice.StylusDevice;
 
                     // Call appropriate stylus plugins
                     GetManagerForSource(stylusDevice.ActiveSource)?.VerifyStylusPlugInCollectionTarget(rawStylusInputReport);
@@ -282,7 +282,7 @@ namespace System.Windows.Input.StylusPointer
 
                                 InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport);
                                 args.RoutedEvent = InputManager.PreviewInputReportEvent;
-                                _inputManager.Value.ProcessInput(args);
+                                _inputManager.ProcessInput(args);
 
                                 // Cancel this so that it doesn't propagate further in the InputManager.  We're ok to allow
                                 // the MouseDevice to continue processing this at this point, so don't set input.Handled.
@@ -307,9 +307,9 @@ namespace System.Windows.Input.StylusPointer
                 {
                     // See if we are in a DragDrop operation.  If so set our internal flag
                     // which stops us from promoting Stylus or Mouse events!
-                    if (_inDragDrop != _inputManager.Value.InDragDrop)
+                    if (_inDragDrop != _inputManager.InDragDrop)
                     {
-                        _inDragDrop = _inputManager.Value.InDragDrop;
+                        _inDragDrop = _inputManager.InDragDrop;
                     }
 
                     if (input.Report.Type == InputType.Mouse)
@@ -1359,7 +1359,7 @@ namespace System.Windows.Input.StylusPointer
 
             // Process this directly instead of doing a push. We want this event to get
             // to the user before the StylusUp and MouseUp event.
-            _inputManager.Value.ProcessInput(input);
+            _inputManager.ProcessInput(input);
         }
 
         #endregion

@@ -94,7 +94,7 @@ namespace System.Windows.Media
                 }
 
                 // store the original Uri that contains the face index
-                _originalUri = new SecurityCriticalDataClass<Uri>(Util.CombineUriWithFaceIndex(uriPath, checked((int)fontFaceDWrite.Index)));
+                _originalUri = Util.CombineUriWithFaceIndex(uriPath, checked((int)fontFaceDWrite.Index));
             }
             finally
             {
@@ -125,7 +125,7 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
 
             // remember the original Uri that contains face index
-            _originalUri = new SecurityCriticalDataClass<Uri>(typefaceSource);
+            _originalUri = typefaceSource;
 
             // split the Uri into the font source Uri and face index
             Uri fontSourceUri;
@@ -182,7 +182,7 @@ namespace System.Windows.Media
         public override int GetHashCode()
         {
             CheckInitialized();
-            return _originalUri.Value.GetHashCode() ^ (int)StyleSimulations;
+            return _originalUri.GetHashCode() ^ (int)StyleSimulations;
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace System.Windows.Media
                 return false;
 
             return StyleSimulations == t.StyleSimulations
-                && _originalUri.Value == t._originalUri.Value;
+                && _originalUri == t._originalUri;
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace System.Windows.Media
 
             try
             {
-                TrueTypeFontDriver trueTypeDriver = new TrueTypeFontDriver(pinnedFontSource, _originalUri.Value);
+                TrueTypeFontDriver trueTypeDriver = new TrueTypeFontDriver(pinnedFontSource, _originalUri);
                 trueTypeDriver.SetFace(FaceIndex);
 
                 return trueTypeDriver.ComputeFontSubset(glyphs);
@@ -291,7 +291,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return _originalUri.Value;
+                return _originalUri;
             }
             set
             {
@@ -300,9 +300,9 @@ namespace System.Windows.Media
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (!value.IsAbsoluteUri)
-                    throw new ArgumentException(SR.UriNotAbsolute, "value");
+                    throw new ArgumentException(SR.UriNotAbsolute, nameof(value));
 
-                _originalUri = new SecurityCriticalDataClass<Uri>(value);
+                _originalUri = value;
             }
         }
 
@@ -1677,10 +1677,7 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.NotInInitialization);
             }
 
-            Initialize(
-                (_originalUri == null) ? null : _originalUri.Value,
-                 _styleSimulations
-                 );
+            Initialize(_originalUri, _styleSimulations);
         }
 
         private void CheckInitialized()
@@ -1987,7 +1984,7 @@ namespace System.Windows.Media
         /// <summary>
         /// The Uri that was passed in to constructor.
         /// </summary>
-        private SecurityCriticalDataClass<Uri> _originalUri;
+        private Uri _originalUri;
 
         private const double CFFConversionFactor = 1.0 / 65536.0;
 

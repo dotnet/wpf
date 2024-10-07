@@ -1638,6 +1638,14 @@ namespace System.Windows.Documents
 
             _textservicesproperty = new TextServicesProperty(this);
 
+            // If Scope of this textstore already has a focus, we need to call SetFocus()
+            // in order to put this DIM on Cicero's focus. TextStore.OnGotFocus() calls
+            // ITfThreadMgr::SetFocus();
+            if (UiScope.IsKeyboardFocused)
+            {
+                OnGotFocus();
+            }
+
             if (IMECompositionTracer.IsEnabled)
             {
                 IMECompositionTracer.ConfigureTracing(this);

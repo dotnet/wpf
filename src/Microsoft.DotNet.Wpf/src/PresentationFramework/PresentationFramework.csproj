@@ -62,7 +62,6 @@
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TelemetryEventSource.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggingProvider.cs" />
     <Compile Include="$(WpfSharedDir)\Telemetry\Managed\TraceLoggers\ControlsTraceLogger.cs" />
-    <Compile Include="MarshalLocal.cs" />
     <Compile Include="Microsoft\Win32\CommonDialog.cs" />
     <Compile Include="Microsoft\Win32\CommonItemDialog.cs" />
     <Compile Include="Microsoft\Win32\FileDialog.cs" />

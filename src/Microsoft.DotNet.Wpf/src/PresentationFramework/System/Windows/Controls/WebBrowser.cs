@@ -436,7 +436,7 @@ namespace System.Windows.Controls
                 {
                     Type t = value.GetType();
 
-                    if (!System.Runtime.InteropServices.MarshalLocal.IsTypeVisibleFromCom(t))
+                    if (!Marshal.IsTypeVisibleFromCom(t))
                     {
                         throw new ArgumentException(SR.NeedToBeComVisible);
                     }

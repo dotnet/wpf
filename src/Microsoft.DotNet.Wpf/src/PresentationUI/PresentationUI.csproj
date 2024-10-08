@@ -13,6 +13,7 @@
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
     <NoInternalTypeHelper>true</NoInternalTypeHelper>
     <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DoNotLimitMicrosoftNetCoreReferences>true</DoNotLimitMicrosoftNetCoreReferences>
   </PropertyGroup>
 
   <!-- Theme files -->

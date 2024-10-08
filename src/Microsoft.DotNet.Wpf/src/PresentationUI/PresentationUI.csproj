@@ -1,8 +1,6 @@
 ﻿<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
-
-    
     <Platforms>AnyCPU;x64;arm64</Platforms>
 
     <EnableDefaultItems>false</EnableDefaultItems>
@@ -15,6 +13,7 @@
     <InternalMarkupCompilation>true</InternalMarkupCompilation>
     <NoInternalTypeHelper>true</NoInternalTypeHelper>
     <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DoNotLimitMicrosoftNetCoreReferences>true</DoNotLimitMicrosoftNetCoreReferences>
   </PropertyGroup>
 
   <!-- Theme files -->
@@ -221,40 +220,7 @@
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsVersion)" />
   </ItemGroup>
 
-  <!--
-    Minimal set of references needed to build PresentationUI
-  -->
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="Microsoft.Win32.Registry" />
-    <NetCoreReference Include="System.Collections" />
-    <NetCoreReference Include="System.Collections.Generic" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Process" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Diagnostics.TraceSource" />
-    <NetCoreReference Include="System.Drawing.Common" />
-    <NetCoreReference Include="System.Drawing.Primitives" />
-    <NetCoreReference Include="System.IO" />
-    <NetCoreReference Include="System.IO.FileSystem" />
-    <NetCoreReference Include="System.IO.FileSystem.AccessControl" />
-    <NetCoreReference Include="System.Memory" />
-    <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Loader" />
-    <NetCoreReference Include="System.Security.AccessControl" />
-    <NetCoreReference Include="System.Security.Cryptography" />
-    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Threading.ThreadPool" />
-
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />
   </ItemGroup>

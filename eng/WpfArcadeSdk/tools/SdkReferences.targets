@@ -4,23 +4,14 @@
                       Version="$(MicrosoftPrivateWinformsVersion)"
                       ExcludeAssets="All"
                       GeneratePathProperty="True"
-                      Condition="'$(MSBuildProjectExtension)'!='.vcxproj'
+                      Condition="'$(MSBuildProjectExtension)' != '.vcxproj'
                               And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
                               And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))
-                              And '$(NoAutoMicrosoftPrivateWinformsReference)'!='true'"/>
-
-    <!--
-      When @(NetCoreReference) is non-empty, exclude all assets (ExcludeAssets = All) and re-add them in
-      ResolveMicrosoftNetCoreAppReferences target
-    -->
-    <PackageReference Update="Microsoft.NETCore.App"
-                      GeneratePathProperty="true"
-                      ExcludeAssets="All"
-                      Condition="'@(NetCoreReference)'!='' And '$(DoNotLimitMicrosoftNetCoreReferences)'!='true' And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+                              And '$(NoAutoMicrosoftPrivateWinformsReference)' != 'true'"/>
 
     <PackageReference Update="Microsoft.NETCore.App"
                     GeneratePathProperty="true"
-                    Condition="('@(NetCoreReference)'=='' Or '$(DoNotLimitMicrosoftNetCoreReferences)' == 'true') And '$(MSBuildProjectExtension)'!='.vcxproj' And '$(DisableImplicitFrameworkReferences)' != 'true' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
+                    Condition="'$(MSBuildProjectExtension)'!='.vcxproj' And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'" />
   </ItemGroup>
 
   <Target Name="GeneratePathPropertyforMicrosoftWindowsDesktopApp"
@@ -39,82 +30,6 @@
       $(ResolveAssemblyReferencesDependsOn)
     </ResolveAssemblyReferencesDependsOn>
   </PropertyGroup>
-
-
-  <Target
-    Name="LimitNetCoreAppReferences"
-    AfterTargets="ResolveTargetingPackAssets;ResolveTargetingPacks"
-    Returns="@(Reference)"
-    Condition="'@(NetCoreReference)' != '' And '@(Reference)' != ''">
-    <!--
-      Example
-      <NetCoreReference Include="Microsoft.CSharp" />
-    -->
-
-    <!--
-       Save Microsoft.NETCore.App.Ref assemblies, and remove those from @(Reference)
-     -->
-    <ItemGroup>
-      <_netCoreAppSdkReference Remove="@(_netCoreAppSdkReference)" />
-      <_netCoreAppSdkReference Include="@(Reference)"
-                               Condition="'%(Reference.NuGetPackageId)'=='Microsoft.NETCore.App.Ref'">
-        <OriginalPath>%(Reference.Identity)</OriginalPath>
-      </_netCoreAppSdkReference>
-
-      <Reference Remove="@(_netCoreAppSdkReference)" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_netCoreAppReferences Remove="@(_netCoreAppReferences)" />
-    </ItemGroup>
-    <FilterItem1ByItem2 Item1="@(_netCoreAppSdkReference->'%(FileName)')"
-                        Item2="@(NetCoreReference)"
-                        Metadata2="Identity"
-                        PreserveItem1Metadata="true">
-      <Output ItemName="_netCoreAppReferences" TaskParameter="Result" />
-    </FilterItem1ByItem2>
-
-    <ItemGroup>
-      <Reference Include="@(_netCoreAppReferences->'%(OriginalPath)')" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="LimitWindowsDesktopAppReferences"
-        AfterTargets="ResolveTargetingPacks;ResolveTargetingPackAsssets"
-        Returns="@(Reference)"
-        Condition="'@(WindowsDesktopReference)'!='' and '@(Reference)' != ''">
-    <!--
-      Example
-      <WindowsDesktopReference Include="PresentationCore" />
-    -->
-
-    <!--
-       Save Microsoft.WindowsDesktop.App.Ref assemblies, and remove those from @(Reference)
-     -->
-    <ItemGroup>
-      <_windowsDesktopAppSdkReference Remove="@(_windowsDesktopAppSdkReference)" />
-      <_windowsDesktopAppSdkReference Include="@(Reference)"
-                                      Condition="'%(Reference.NuGetPackageId)'=='Microsoft.WindowsDesktop.App.Ref'">
-        <OriginalPath>%(Reference.Identity)</OriginalPath>
-      </_windowsDesktopAppSdkReference>
-
-      <Reference Remove="@(_windowsDesktopAppSdkReference)" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_windowsDesktopAppReferences Remove="@(_windowsDesktopAppReferences)" />
-    </ItemGroup>
-    <FilterItem1ByItem2 Item1="@(_windowsDesktopAppSdkReference->'%(FileName)')"
-                        Item2="@(WindowsDesktopReference)"
-                        Metadata2="Identity"
-                        PreserveItem1Metadata="true">
-      <Output ItemName="_windowsDesktopAppReferences" TaskParameter="Result" />
-    </FilterItem1ByItem2>
-
-    <ItemGroup>
-      <Reference Include="@(_windowsDesktopAppReferences->'%(OriginalPath)')" />
-    </ItemGroup>
-  </Target>
 
   <Target
     Name="ResolveMicrosoftDotNetWpfGitHubReferences"
@@ -208,6 +123,35 @@
                  And Exists('$(PkgMicrosoft_Private_Winforms)\ref\net8.0\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <!-- We always want to use the local WindowsBase, not the one coming from the .NET runtime. -->
+    <DefaultReferenceExclusion Include="WindowsBase"/>
+  </ItemGroup>
+
+  <!--
+    Allows excluding specific .NET runtime libraries from being implicitly referenced.
+    For example, to exclude WindowsBase from being implicitly referenced, add the following to your project file:
+
+      <DefaultReferenceExclusion>
+        <MicrosoftPrivateWinFormsReference Include="WindowsBase" />
+      </DefaultReferenceExclusion>
+  -->
+  <Target Name="FilterImplicitAssemblyReferences"
+          Condition="'@(DefaultReferenceExclusion)' != ''"
+          DependsOnTargets="ResolveProjectReferences"
+          AfterTargets="ResolveTargetingPackAssets">
+    <ItemGroup>
+      <_referenceExclusion Include="@(DefaultReferenceExclusion)">
+        <AssemblyName>%(DefaultReferenceExclusion.Identity)</AssemblyName>
+        <FrameworkReferenceName>Microsoft.NETCore.App</FrameworkReferenceName>
+        <ExternallyResolved>true</ExternallyResolved>
+      </_referenceExclusion>
+
+      <Reference Remove="@(_referenceExclusion)"
+                 MatchOnMetadata="AssemblyName;FrameworkReferenceName;ExternallyResolved"/>
     </ItemGroup>
   </Target>
 </Project>

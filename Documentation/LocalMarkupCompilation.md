@@ -37,8 +37,4 @@ It can be enabled for a project by setting this:
 In addition to these, care must be taken for the following: 
 
 - Use `<EmbeddedResource>` instead of `<Resource>`
-  - `PresentationBuildTask` will strip out `<Resource>` items during `_CompileTemporaryAssembly` phase. Using `EmbeddedResource` is equivalent (esp. in for `Xlf` based string resource generation with `Arcade.Sdk`) and will not be adversely affected by `PresentationBuildTasks` transformations. 
-- Always use `<NetCoreReference>` instead of implicitly acquiring the full set of `Microsoft.NetCore.App` references. 
-  - `Microsoft.NetCore.App` contains a version `WindowsBase` that clashes with WPF's `WindowsBase` during markup compilation.
-  - To avoid this clash, we must always specify the references we need explicitly. 
-  - Also, our code-base requires that all references be specified explicitly anyway to avoid inadvertent reference-creep to bug-fixes. 
+  - `PresentationBuildTask` will strip out `<Resource>` items during `_CompileTemporaryAssembly` phase. Using `EmbeddedResource` is equivalent (esp. in for `Xlf` based string resource generation with `Arcade.Sdk`) and will not be adversely affected by `PresentationBuildTasks` transformations.

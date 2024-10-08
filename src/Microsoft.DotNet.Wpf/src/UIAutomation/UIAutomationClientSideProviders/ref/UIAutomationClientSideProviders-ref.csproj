@@ -7,7 +7,7 @@
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    
+
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
@@ -22,23 +22,6 @@
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\ref\UIAutomationClient-ref.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Process" />
-    <NetCoreReference Include="System.Diagnostics.StackTrace" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Net.Primitives" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
 </Project>

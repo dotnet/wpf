@@ -10,17 +10,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="System.Printing.PrintQueue.cs" />
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
   </ItemGroup>
 </Project>

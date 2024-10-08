@@ -220,16 +220,6 @@ internal static class SecurityHelper
         }
 #endif
 
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
-        internal static bool AreStringTypesEqual(string m1, string m2)
-        {
-            return (string.Equals(m1, m2, StringComparison.OrdinalIgnoreCase));
-        }
-
-#endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
-
 #if WINDOWS_BASE
         ///
         /// Read and return a registry value.

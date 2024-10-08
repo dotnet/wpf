@@ -16,22 +16,21 @@ using System.Windows.Navigation; // BaseUriHelper
 using MS.Win32;
 #endif
 
-using System.Security;
 // The functionality in this class is shared across framework and core. The functionality in core
 // is a subset of the functionality in framework, so rather than create a dependency from core to
 // framework we have choses to duplicate this chunk of  code.
 #if PRESENTATION_CORE
 namespace MS.Internal.PresentationCore
 #elif PRESENTATIONFRAMEWORK
-using MS.Internal.PresentationFramework; // SecurityHelper
+using MS.Internal.PresentationFramework;
 
 namespace MS.Internal.Utility
 #elif PBTCOMPILER
-using MS.Internal.PresentationBuildTasks // SecurityHelper
+using MS.Internal.PresentationBuildTasks
 
 namespace MS.Internal.Utility
 #elif REACHFRAMEWORK
-using MS.Internal.ReachFramework; // SecurityHelper
+using MS.Internal.ReachFramework;
 
 namespace MS.Internal.Utility
 #else
@@ -88,7 +87,7 @@ namespace MS.Internal.Utility
         static internal bool DoSchemeAndHostMatch(Uri first, Uri second)
         {
             // Check that both the scheme and the host match. 
-           return (SecurityHelper.AreStringTypesEqual(first.Scheme, second.Scheme) && first.Host.Equals(second.Host) == true);
+            return string.Equals(first.Scheme, second.Scheme, StringComparison.OrdinalIgnoreCase) && string.Equals(first.Host, second.Host);
         }
 
         static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
@@ -103,7 +102,7 @@ namespace MS.Internal.Utility
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
                 
-                Uri baseuri = (baseUri == null) ? BindUriHelper.BaseUri : baseUri;
+                Uri baseuri = baseUri ?? BindUriHelper.BaseUri;
 
 #if CF_Envelope_Activation_Enabled
                 bool isContainer = false ;
@@ -166,7 +165,7 @@ namespace MS.Internal.Utility
                 if (sourceZone == targetZone)
                 {
                     // We don't send any referer when going cross-scheme
-                    if (SecurityHelper.AreStringTypesEqual(sourceUri.Scheme, destinationUri.Scheme))
+                    if (string.Equals(sourceUri.Scheme, destinationUri.Scheme, StringComparison.OrdinalIgnoreCase))
                     {
                         // HTTPHeader requires the referer uri to be escaped. 
                         referer = sourceUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);

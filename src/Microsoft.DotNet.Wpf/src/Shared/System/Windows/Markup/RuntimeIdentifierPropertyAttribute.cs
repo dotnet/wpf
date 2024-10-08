@@ -24,7 +24,7 @@ namespace System.Windows.Markup
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !TARGETTING35SP1 && !WINDOWS_BASE
+#if !PBTCOMPILER && !WINDOWS_BASE
     /// <summary>
     /// This attribute is placed on a class to identify the property that will
     /// function as an Name for the given class

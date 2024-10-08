@@ -30,9 +30,8 @@ namespace System.Xaml
         private EventHandler<XamlObjectEventArgs> _beforePropertiesHandler;
         private EventHandler<XamlObjectEventArgs> _afterPropertiesHandler;
         private EventHandler<XamlObjectEventArgs> _afterEndInitHandler;
-#if !TARGETTING35SP1
         private EventHandler<XAML3.XamlSetValueEventArgs> _xamlSetValueHandler;
-#endif
+
         private object _rootObjectInstance;
         private bool _skipDuplicatePropertyCheck;
         NameFixupGraph _nameFixupGraph;
@@ -86,9 +85,9 @@ namespace System.Xaml
                 _beforePropertiesHandler = settings.BeforePropertiesHandler;
                 _afterPropertiesHandler = settings.AfterPropertiesHandler;
                 _afterEndInitHandler = settings.AfterEndInitHandler;
-#if !TARGETTING35SP1
+
                 _xamlSetValueHandler = settings.XamlSetValueHandler;
-#endif
+
                 _rootObjectInstance = settings.RootObjectInstance;
                 _skipDuplicatePropertyCheck = settings.SkipDuplicatePropertyCheck;
                 _skipProvideValueOnRoot = settings.SkipProvideValueOnRoot;
@@ -125,7 +124,6 @@ namespace System.Xaml
             if (settings != null)
             {
                 runtimeSettings = new XamlRuntimeSettings { IgnoreCanConvert = settings.IgnoreCanConvert };
-#if !TARGETTING35SP1
                 if (settings.AccessLevel != null)
                 {
                     result = new PartialTrustTolerantRuntime(runtimeSettings, settings.AccessLevel, schemaContext);
@@ -133,7 +131,6 @@ namespace System.Xaml
             }
             if (result == null)
             {
-#endif
                 result = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
             }
             result.LineInfo = this;
@@ -178,7 +175,6 @@ namespace System.Xaml
             }
         }
 
-#if !TARGETTING35SP1
         protected virtual bool OnSetValue(object eventSender, XamlMember member, object value)
         {
             if (_xamlSetValueHandler != null)
@@ -189,7 +185,6 @@ namespace System.Xaml
             }
             return false;
         }
-#endif
 
         private NameFixupGraph NameFixupGraph
         {
@@ -1324,7 +1319,6 @@ namespace System.Xaml
             XamlValueConverter<TypeConverter> converter = property.TypeConverter;
             object inst = null;
 
-#if !TARGETTING35SP1
             XamlType declaringType = null;
             if (property.IsAttachable)
             {
@@ -1367,7 +1361,6 @@ namespace System.Xaml
                     }
                 }
             }
-#endif
 
             if (converter != null)
             {
@@ -1659,7 +1652,6 @@ namespace System.Xaml
             object parentInstance = ctx.ParentInstance;
             XamlMember parentProperty = ctx.ParentProperty;
 
-#if !TARGETTING35SP1
             if (parentProperty != null && parentProperty.IsUnknown == false)
             {
                 XamlType declaringType = null;
@@ -1687,7 +1679,6 @@ namespace System.Xaml
                     }
                 }
             }
-#endif
             // The Service Provider Interface IProvideValueTarget requires that we can supply ProvideValue with the
             // instance of the left-hand side of the property assignment. Markup extensions that are assigned to
             // directives are allowed to have a null left-hand instance.
@@ -2161,7 +2152,6 @@ namespace System.Xaml
 
         private void SetValue(object inst, XamlMember property, object value)
         {
-#if !TARGETTING35SP1
             if (!property.IsDirective)
             {
                 if (OnSetValue(inst, property, value))
@@ -2169,7 +2159,6 @@ namespace System.Xaml
                     return;
                 }
             }
-#endif
 
             Runtime.SetValue(inst, property, value);
         }

@@ -145,7 +145,7 @@ namespace MS.Internal.Xaml.Parser
         /// <summary>
         /// Stores characters that cannot be specified in <see cref="MarkupExtensionBracketCharactersAttribute"/>.
         /// </summary>
-        private static readonly ISet<char> s_restrictedCharSet = new SortedSet<char>(new char[] { '=', ',', '\'', '"', '{', '}', '\\' });
+        private static readonly SortedSet<char> s_restrictedCharSet = new(new char[] { '=', ',', '\'', '"', '{', '}', '\\' });
 
         private bool _initializing;
 

@@ -18,7 +18,7 @@ namespace MS.Internal.Xaml.Parser
     /// Class that provides helper functions for the parser/Xaml Reader
     /// to process Bracket Characters specified on a Markup Extension Property
     /// </summary>
-    internal class SpecialBracketCharacters : ISupportInitialize
+    internal sealed class SpecialBracketCharacters : ISupportInitialize
     {
         private string _startChars;
         private string _endChars;

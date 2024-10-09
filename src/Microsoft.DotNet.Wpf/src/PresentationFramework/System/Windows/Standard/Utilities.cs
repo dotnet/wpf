@@ -126,16 +126,6 @@ namespace Standard
         /// </summary>
         public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
 
-
-        /// <summary>
-        /// Is this using WPF4?
-        /// </summary>
-        /// <remarks>
-        /// There are a few specific bugs in Window in 3.5SP1 and below that require workarounds
-        /// when handling WM_NCCALCSIZE on the HWND.
-        /// </remarks>
-        public static bool IsPresentationFrameworkVersionLessThan4 => false;
-
         public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
         {
             return _GetBestMatch(frames, _GetBitDepth(), width, height);

@@ -135,9 +135,9 @@
     Allows excluding specific .NET runtime libraries from being implicitly referenced.
     For example, to exclude WindowsBase from being implicitly referenced, add the following to your project file:
 
-      <DefaultReferenceExclusion>
-        <MicrosoftPrivateWinFormsReference Include="WindowsBase" />
-      </DefaultReferenceExclusion>
+      <ItemGroup>
+        <DefaultReferenceExclusion Include="WindowsBase" />
+      </ItemGroup>
   -->
   <Target Name="FilterImplicitAssemblyReferences"
           Condition="'@(DefaultReferenceExclusion)' != ''"

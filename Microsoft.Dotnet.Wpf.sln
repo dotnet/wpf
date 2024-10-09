@@ -246,6 +246,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Fluent-ref", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj", "{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{92968783-2008-4A16-A823-6737224FEB9E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		eng\WpfArcadeSdk\Sdk\Sdk.props = eng\WpfArcadeSdk\Sdk\Sdk.props
+		eng\WpfArcadeSdk\Sdk\Sdk.targets = eng\WpfArcadeSdk\Sdk\Sdk.targets
+		eng\WpfArcadeSdk\tools\SdkReferences.targets = eng\WpfArcadeSdk\tools\SdkReferences.targets
+		eng\Versions.props = eng\Versions.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{B90B3D18-1B80-4FAF-A8DF-146C4F930AF9}"
 	ProjectSection(SolutionItems) = preProject
@@ -270,6 +277,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Documentation\testing-in-helix.md = Documentation\testing-in-helix.md
 		Documentation\wpf.vsconfig = Documentation\wpf.vsconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationCore.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests\PresentationCore.Tests.csproj", "{398CD1C6-A92E-4B63-97CD-4CABD96FA868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Xaml.Tests", "src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests\System.Xaml.Tests.csproj", "{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1974,6 +1985,38 @@ Global
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x64.Build.0 = Release|x64
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD}.Release|x86.Build.0 = Release|Any CPU
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|ARM64.Build.0 = Debug|ARM64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|x64.ActiveCfg = Debug|x64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|x64.Build.0 = Debug|x64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|x86.ActiveCfg = Debug|x86
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Debug|x86.Build.0 = Debug|x86
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|ARM64.ActiveCfg = Release|ARM64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|ARM64.Build.0 = Release|ARM64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|x64.ActiveCfg = Release|x64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|x64.Build.0 = Release|x64
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|x86.ActiveCfg = Release|x86
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868}.Release|x86.Build.0 = Release|x86
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|ARM64.Build.0 = Debug|ARM64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|x64.ActiveCfg = Debug|x64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|x64.Build.0 = Debug|x64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|x86.ActiveCfg = Debug|x86
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Debug|x86.Build.0 = Debug|x86
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|ARM64.ActiveCfg = Release|ARM64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|ARM64.Build.0 = Release|ARM64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|x64.ActiveCfg = Release|x64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|x64.Build.0 = Release|x64
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|x86.ActiveCfg = Release|x86
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2093,6 +2136,8 @@ Global
 		{A48B585E-6AB0-4F8D-8484-77F37CB44437} = {B0EFDB12-C931-4E7F-A6C2-D4AC111D7EDF}
 		{3F2C0E0E-BB13-46D9-8D9A-08256A49ECA9} = {5ACFB055-649D-4A01-98C2-B0BFE7E543D6}
 		{3C43C553-2C1F-4EB9-8BF8-371D4A42E0FD} = {60F4058B-D35B-42D2-B276-D44B3AC579BD}
+		{398CD1C6-A92E-4B63-97CD-4CABD96FA868} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
+		{93C6A5C8-4545-49DD-8D48-DDD6665ADFC0} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4340004-DAC0-497D-B69D-CFA7CD93F567}

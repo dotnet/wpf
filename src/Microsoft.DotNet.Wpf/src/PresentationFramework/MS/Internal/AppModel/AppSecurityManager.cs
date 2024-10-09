@@ -88,7 +88,7 @@ namespace MS.Internal.AppModel
                                    (Object.ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttps)) ||
                                    destinationUri.IsFile;
 
-            bool fIsMailTo = String.Compare(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase) == 0;
+            bool fIsMailTo = string.Equals(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase);
 
             // We elevate to navigate the browser iff: 
             //  We are user initiated AND

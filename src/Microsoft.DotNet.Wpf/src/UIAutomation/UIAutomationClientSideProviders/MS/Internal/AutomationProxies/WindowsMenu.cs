@@ -912,11 +912,10 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if hwnd corresponds to the submenu
-        private static bool IsWindowSubMenu (IntPtr hwnd)
+        private static bool IsWindowSubMenu(IntPtr hwnd)
         {
-            return (String.Compare(Misc.ProxyGetClassName(hwnd), WindowsMenu.MenuClassName, StringComparison.OrdinalIgnoreCase) == 0);
+            return string.Equals(Misc.ProxyGetClassName(hwnd), WindowsMenu.MenuClassName, StringComparison.OrdinalIgnoreCase);
         }
-
 
         private static int GetHighlightedMenuItem(IntPtr hmenu)
         {

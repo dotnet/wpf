@@ -227,9 +227,7 @@ namespace System.Windows.Navigation
 
             if (isSame && withFragment)
             {
-                isSame = isSame &&
-                         (string.Compare(aResolved.Fragment, bResolved.Fragment,
-                                        StringComparison.OrdinalIgnoreCase) == 0);
+                isSame = isSame && string.Equals(aResolved.Fragment, bResolved.Fragment, StringComparison.OrdinalIgnoreCase);
             }
 
             return isSame;
@@ -701,7 +699,7 @@ namespace System.Windows.Navigation
             FrameworkElement fe = INavigatorHost as FrameworkElement;
 
             Debug.Assert(fe != null, "INavigatorHost needs to be FrameworkElement");
-            if (String.Compare(name, fe.Name, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(name, fe.Name, StringComparison.OrdinalIgnoreCase))
             {
                 return INavigatorHost;
             }

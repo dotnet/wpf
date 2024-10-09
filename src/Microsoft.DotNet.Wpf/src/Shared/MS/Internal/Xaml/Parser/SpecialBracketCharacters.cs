@@ -27,9 +27,10 @@ namespace MS.Internal.Xaml.Parser
         /// </summary>
         private static readonly SearchValues<char> s_restrictedCharSet = SearchValues.Create('=', ',', '\'', '"', '{', '}', '\\');
 
+        private bool _initializing;
+
         private string _startChars;
         private string _endChars;
-        private bool _initializing;
         private StringBuilder _startCharactersStringBuilder;
         private StringBuilder _endCharactersStringBuilder;
 
@@ -41,7 +42,8 @@ namespace MS.Internal.Xaml.Parser
         internal SpecialBracketCharacters(IReadOnlyDictionary<char, char> attributeList)
         {
             BeginInit();
-            if (attributeList != null && attributeList.Count > 0)
+
+            if (attributeList?.Count > 0)
             {
                 Tokenize(attributeList);
             }
@@ -49,30 +51,26 @@ namespace MS.Internal.Xaml.Parser
 
         internal void AddBracketCharacters(char openingBracket, char closingBracket)
         {
-            if (_initializing)
-            {
-                _startCharactersStringBuilder.Append(openingBracket);
-                _endCharactersStringBuilder.Append(closingBracket);
-            }
-            else
-            {
+            if (!_initializing)
                 throw new InvalidOperationException();
-            }
+
+            _startCharactersStringBuilder.Append(openingBracket);
+            _endCharactersStringBuilder.Append(closingBracket);
         }
 
         private void Tokenize(IReadOnlyDictionary<char, char> attributeList)
         {
-            if (_initializing)
-            {
-                foreach (char openingBracket in attributeList.Keys)
-                {
-                    char closingBracket = attributeList[openingBracket];
+            if (!_initializing)
+                throw new InvalidOperationException();
 
-                    if (IsValidBracketCharacter(openingBracket, closingBracket))
-                    {
-                        _startCharactersStringBuilder.Append(openingBracket);
-                        _endCharactersStringBuilder.Append(closingBracket);
-                    }
+            foreach (char openingBracket in attributeList.Keys)
+            {
+                char closingBracket = attributeList[openingBracket];
+
+                if (IsValidBracketCharacter(openingBracket, closingBracket))
+                {
+                    _startCharactersStringBuilder.Append(openingBracket);
+                    _endCharactersStringBuilder.Append(closingBracket);
                 }
             }
         }
@@ -121,6 +119,9 @@ namespace MS.Internal.Xaml.Parser
 
         public void BeginInit()
         {
+            if (_initializing)
+                throw new InvalidOperationException();
+
             _initializing = true;
             _startCharactersStringBuilder = new StringBuilder();
             _endCharactersStringBuilder = new StringBuilder();
@@ -128,15 +129,28 @@ namespace MS.Internal.Xaml.Parser
 
         public void EndInit()
         {
+            if (!_initializing)
+                throw new InvalidOperationException();
+
             _startChars = _startCharactersStringBuilder.ToString();
             _endChars = _endCharactersStringBuilder.ToString();
+
+            // Clear the references, otherwise we could consider this a memory leak
+            _startCharactersStringBuilder = null;
+            _endCharactersStringBuilder = null;
+
             _initializing = false;
         }
 #else
+        /// <summary>
+        /// Stores characters that cannot be specified in <see cref="MarkupExtensionBracketCharactersAttribute"/>.
+        /// </summary>
+        private static readonly ISet<char> s_restrictedCharSet = new SortedSet<char>(new char[] { '=', ',', '\'', '"', '{', '}', '\\' });
+
+        private bool _initializing;
+
         private string _startChars;
         private string _endChars;
-        private readonly static ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
-        private bool _initializing;
         private StringBuilder _startCharactersStringBuilder;
         private StringBuilder _endCharactersStringBuilder;
 
@@ -145,10 +159,11 @@ namespace MS.Internal.Xaml.Parser
             BeginInit();
         }
 
-        internal SpecialBracketCharacters(IReadOnlyDictionary<char,char> attributeList)
+        internal SpecialBracketCharacters(IReadOnlyDictionary<char, char> attributeList)
         {
             BeginInit();
-            if (attributeList != null && attributeList.Count > 0)
+
+            if (attributeList?.Count > 0)
             {
                 Tokenize(attributeList);
             }
@@ -156,30 +171,26 @@ namespace MS.Internal.Xaml.Parser
 
         internal void AddBracketCharacters(char openingBracket, char closingBracket)
         {
-            if (_initializing)
-            {
-                _startCharactersStringBuilder.Append(openingBracket);
-                _endCharactersStringBuilder.Append(closingBracket);
-            }
-            else
-            {
+            if (!_initializing)
                 throw new InvalidOperationException();
-            }
+
+            _startCharactersStringBuilder.Append(openingBracket);
+            _endCharactersStringBuilder.Append(closingBracket);
         }
 
-        private void Tokenize(IReadOnlyDictionary<char,char> attributeList)
+        private void Tokenize(IReadOnlyDictionary<char, char> attributeList)
         {
-            if (_initializing)
+            if (!_initializing)
+                throw new InvalidOperationException();
+
+            foreach (char openingBracket in attributeList.Keys)
             {
-                foreach (char openingBracket in attributeList.Keys)
+                char closingBracket = attributeList[openingBracket];
+
+                if (IsValidBracketCharacter(openingBracket, closingBracket))
                 {
-                    char closingBracket = attributeList[openingBracket];
-                    string errorMessage = string.Empty;
-                    if (IsValidBracketCharacter(openingBracket, closingBracket))
-                    {
-                        _startCharactersStringBuilder.Append(openingBracket);
-                        _endCharactersStringBuilder.Append(closingBracket);
-                    }
+                    _startCharactersStringBuilder.Append(openingBracket);
+                    _endCharactersStringBuilder.Append(closingBracket);
                 }
             }
         }
@@ -187,21 +198,13 @@ namespace MS.Internal.Xaml.Parser
         private bool IsValidBracketCharacter(char openingBracket, char closingBracket)
         {
             if (openingBracket == closingBracket)
-            {
                 throw new InvalidOperationException("Opening bracket character cannot be the same as closing bracket character.");
-            }
             else if (char.IsLetterOrDigit(openingBracket) || char.IsLetterOrDigit(closingBracket) || char.IsWhiteSpace(openingBracket) || char.IsWhiteSpace(closingBracket))
-            {
                 throw new InvalidOperationException("Bracket characters cannot be alpha-numeric or whitespace.");
-            }
-            else if (_restrictedCharSet.Contains(openingBracket) || _restrictedCharSet.Contains(closingBracket))
-            {
+            else if (s_restrictedCharSet.Contains(openingBracket) || s_restrictedCharSet.Contains(closingBracket))
                 throw new InvalidOperationException("Bracket characters cannot be one of the following: '=' , ',', '\'', '\"', '{ ', ' }', '\\'");
-            }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         internal bool IsSpecialCharacter(char ch)
@@ -236,6 +239,9 @@ namespace MS.Internal.Xaml.Parser
 
         public void BeginInit()
         {
+            if (_initializing)
+                throw new InvalidOperationException();
+
             _initializing = true;
             _startCharactersStringBuilder = new StringBuilder();
             _endCharactersStringBuilder = new StringBuilder();
@@ -243,8 +249,16 @@ namespace MS.Internal.Xaml.Parser
 
         public void EndInit()
         {
+            if (!_initializing)
+                throw new InvalidOperationException();
+
             _startChars = _startCharactersStringBuilder.ToString();
             _endChars = _endCharactersStringBuilder.ToString();
+
+            // Clear the references, otherwise we could consider this a memory leak
+            _startCharactersStringBuilder = null;
+            _endCharactersStringBuilder = null;
+
             _initializing = false;
         }
 #endif

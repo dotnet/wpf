@@ -304,7 +304,7 @@ namespace Microsoft.Windows.Shell
 
             Thickness templateFixupMargin = default(Thickness);
 
-            var rootElement = (FrameworkElement)VisualTreeHelper.GetChild(_window, 0);
+            FrameworkElement rootElement = (FrameworkElement)VisualTreeHelper.GetChild(_window, 0);
 
             if (_chromeInfo.NonClientFrameEdges != NonClientFrameEdges.None)
             {

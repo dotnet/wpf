@@ -8631,6 +8631,17 @@ namespace System.Windows.Controls
             get { return _newItemPlaceholder; }
         }
 
+        //Clearing the properties which will hold references even after the datagrid is cleared. Fixes memory leaks.
+        internal void ClearFocusAndSelection()
+        {
+            FocusedCell = null;
+            _selectionAnchor = null;
+            CurrentCell = default;
+            CurrentItem = null;
+            CurrentColumn = null;
+            //Clear the focused info as well in ItemsControl
+            ClearFocusedInfo();
+        }
         #endregion
 
         #region Data

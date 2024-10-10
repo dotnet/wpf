@@ -31,7 +31,6 @@ namespace Standard
         /// <param name="value1">The first double to compare.</param>
         /// <param name="value2">The second double to compare.</param>
         /// <returns>The result of the AreClose comparision.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool AreClose(double value1, double value2)
         {
             if (value1 == value2)
@@ -54,7 +53,6 @@ namespace Standard
         /// <param name="value1">The first double to compare.</param>
         /// <param name="value2">The second double to compare.</param>
         /// <returns>The result of the LessThan comparision.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool LessThan(double value1, double value2)
         {
             return (value1 < value2) && !AreClose(value1, value2);
@@ -71,7 +69,6 @@ namespace Standard
         /// <param name="value1">The first double to compare.</param>
         /// <param name="value2">The second double to compare.</param>
         /// <returns>The result of the GreaterThan comparision.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool GreaterThan(double value1, double value2)
         {
             return (value1 > value2) && !AreClose(value1, value2);
@@ -88,7 +85,6 @@ namespace Standard
         /// <param name="value1">The first double to compare.</param>
         /// <param name="value2">The second double to compare.</param>
         /// <returns>The result of the LessThanOrClose comparision.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool LessThanOrClose(double value1, double value2)
         {
             return (value1 < value2) || AreClose(value1, value2);
@@ -105,7 +101,6 @@ namespace Standard
         /// <param name="value1">The first double to compare.</param>
         /// <param name="value2">The second double to compare.</param>
         /// <returns>The result of the GreaterThanOrClose comparision.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool GreaterThanOrClose(double value1, double value2)
         {
             return (value1 > value2) || AreClose(value1, value2);
@@ -116,7 +111,6 @@ namespace Standard
         /// </summary>
         /// <param name='value'>The value to test.</param>
         /// <returns>Whether or not the value is a finite number.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool IsFinite(double value)
         {
             return !double.IsNaN(value) && !double.IsInfinity(value);
@@ -127,7 +121,6 @@ namespace Standard
         /// </summary>
         /// <param name='value'>The value to test.</param>
         /// <returns>Whether or not the value is a valid size value.</returns>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool IsValidSize(double value)
         {
             return IsFinite(value) && GreaterThanOrClose(value, 0);

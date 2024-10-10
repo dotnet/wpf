@@ -229,7 +229,6 @@ namespace System.Xaml.Schema
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
         private bool IsInSystemXaml
         {
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
             get
             {
                 if (_isInSystemXaml == ThreeValuedBool.NotSet)

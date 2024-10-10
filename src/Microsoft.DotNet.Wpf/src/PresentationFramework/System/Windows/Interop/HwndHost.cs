@@ -215,7 +215,6 @@ namespace System.Windows.Interop
             throw new InvalidOperationException(SR.HwndHostDoesNotSupportChildKeyboardSinks);
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         IKeyboardInputSite IKeyboardInputSink.RegisterKeyboardInputSink(IKeyboardInputSink sink)
         {
             return RegisterKeyboardInputSinkCore(sink);
@@ -235,7 +234,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateAccelerator(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateAcceleratorCore(ref msg, modifiers);
@@ -277,7 +275,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.OnMnemonic(ref MSG msg, ModifierKeys modifiers)
         {
             return OnMnemonicCore(ref msg, modifiers);
@@ -296,7 +293,6 @@ namespace System.Windows.Interop
             return false;
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         bool IKeyboardInputSink.TranslateChar(ref MSG msg, ModifierKeys modifiers)
         {
             return TranslateCharCore(ref msg, modifiers);

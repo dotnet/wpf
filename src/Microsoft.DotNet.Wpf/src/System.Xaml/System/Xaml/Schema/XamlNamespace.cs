@@ -269,20 +269,22 @@ namespace System.Xaml.Schema
         internal void AddAssemblyNamespacePair(AssemblyNamespacePair pair)
         {
             // To allow the list to be read by multiple threads, we create a new list, add the pair,
-            // then assign it back to the original variable.  Assignments are assured to be atomic.
+            // then assign it back to the original variable. Assignments are assured to be atomic.
 
             List<AssemblyNamespacePair> assemblyNamespacesCopy;
             if (_assemblyNamespaces is null)
             {
-                assemblyNamespacesCopy = new List<AssemblyNamespacePair>();
+                assemblyNamespacesCopy = new List<AssemblyNamespacePair>(1);
                 Initialize();
             }
             else
             {
-                assemblyNamespacesCopy = new List<AssemblyNamespacePair>(_assemblyNamespaces);
+                assemblyNamespacesCopy = new List<AssemblyNamespacePair>(_assemblyNamespaces.Count + 1);
             }
 
+            assemblyNamespacesCopy.AddRange(_assemblyNamespaces);
             assemblyNamespacesCopy.Add(pair);
+
             _assemblyNamespaces = assemblyNamespacesCopy;
         }
 

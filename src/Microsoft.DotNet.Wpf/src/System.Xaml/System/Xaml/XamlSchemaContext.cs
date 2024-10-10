@@ -1181,6 +1181,7 @@ namespace System.Xaml
             return foundNew;
         }
 
+        // This method should be called inside _syncExaminingAssemblies lock
         private bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
         {
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;

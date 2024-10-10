@@ -12,23 +12,23 @@ namespace System.Xaml.MS.Impl
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
     internal readonly struct AssemblyNamespacePair
     {
-        private readonly WeakReference _assembly;
+        private readonly WeakReference<Assembly> _assembly;
         private readonly string _clrNamespace;
 
         public AssemblyNamespacePair(Assembly asm, string clrNamespace)
         {
-            _assembly = new WeakReference(asm);
+            _assembly = new WeakReference<Assembly>(asm);
             _clrNamespace = clrNamespace;
         }
 
         public Assembly? Assembly
         {
-            get { return (Assembly?)_assembly.Target; }
+            get => _assembly.TryGetTarget(out Assembly? assembly) ? assembly : null;
         }
 
         public string ClrNamespace
         {
-            get { return _clrNamespace; }
+            get => _clrNamespace;
         }
     }
 }

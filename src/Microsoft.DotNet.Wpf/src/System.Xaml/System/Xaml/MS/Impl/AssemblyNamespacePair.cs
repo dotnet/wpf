@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace System.Xaml.MS.Impl
 {
+    /// <summary>
+    /// Holds a <see cref="WeakReference"/> to an <see cref="Reflection.Assembly"/> associated with the current <see cref="ClrNamespace"/>.
+    /// </summary>
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
     internal readonly struct AssemblyNamespacePair
     {

@@ -18,6 +18,7 @@
 #pragma warning disable 1634, 1691
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1263,10 +1264,10 @@ namespace System.Windows.Media
 
             int glyphIndicesCount = _glyphIndices.Count;
 
-            ushort[] glyphIndices = BufferCache.GetUShorts(glyphIndicesCount);
+            ushort[] glyphIndices = ArrayPool<ushort>.Shared.Rent(glyphIndicesCount);
             _glyphIndices.CopyTo(glyphIndices, 0);
 
-            MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics = BufferCache.GetGlyphMetrics(glyphIndicesCount);
+            GlyphMetrics[] glyphMetrics = ArrayPool<GlyphMetrics>.Shared.Rent(glyphIndicesCount);
 
             _glyphTypeface.GetGlyphMetrics(glyphIndices,
                                            glyphIndicesCount,
@@ -1276,7 +1277,7 @@ namespace System.Windows.Media
                                            IsSideways,
                                            glyphMetrics);
 
-            BufferCache.ReleaseUShorts(glyphIndices);
+            ArrayPool<ushort>.Shared.Return(glyphIndices);
             glyphIndices = null;
 
             Rect bounds;
@@ -1393,7 +1394,7 @@ namespace System.Windows.Media
                 }
             }
 
-            BufferCache.ReleaseGlyphMetrics(glyphMetrics);
+            ArrayPool<GlyphMetrics>.Shared.Return(glyphMetrics);
 
             //
             // GlyphRun.ComputeInkBoundingBox() does not produce a large enough rectangle

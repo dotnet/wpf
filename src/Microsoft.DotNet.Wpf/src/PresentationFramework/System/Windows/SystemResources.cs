@@ -36,6 +36,7 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
+using System.Runtime.CompilerServices;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -819,7 +820,7 @@ namespace System.Windows
                     Type knownTypeHelper = assembly.GetType("Microsoft.Windows.Themes.KnownTypeHelper");
                     if (knownTypeHelper != null)
                     {
-                        MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(knownTypeHelper);
+                        RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
 #pragma warning restore 6502

@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Reflection;
 
 using MS.Utility;
-using System.Security;
 using System.Text;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
@@ -34,6 +33,7 @@ using System.Xaml;
 using System.Xaml.Permissions;
 using System.Windows.Navigation;
 using MS.Internal.Xaml.Context;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
@@ -943,7 +943,7 @@ namespace System.Windows.Markup
 
             // In some cases, the application constructor is not run prior to loading,
             // causing the loader not to recognize URIs beginning with "pack:" or "application:".
-            MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(typeof(System.Windows.Application));
+            RuntimeHelpers.RunClassConstructor(typeof(Application).TypeHandle);
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseXamlBegin, parserContext.BaseUri);
 

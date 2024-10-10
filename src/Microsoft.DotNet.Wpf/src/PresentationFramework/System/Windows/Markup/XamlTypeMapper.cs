@@ -10,28 +10,20 @@
 using System;
 using System.Xml;
 using System.IO;
+using MS.Utility;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection;
-using MS.Utility;
 
 #if !PBTCOMPILER
 
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Resources;
-using System.Windows.Threading;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 using MS.Internal;  // CriticalExceptions
-
-#else
-
-using System.Runtime.CompilerServices;
 
 #endif
 
@@ -2010,7 +2002,7 @@ namespace System.Windows.Markup
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (null != currentType)
             {
-                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                 currentType = GetCachedBaseType(currentType);
             }
 

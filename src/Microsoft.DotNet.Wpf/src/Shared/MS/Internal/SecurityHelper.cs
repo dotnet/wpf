@@ -118,15 +118,6 @@ internal static class SecurityHelper
         }
 #endif
 
-
-#if WINDOWS_BASE
-        internal static void RunClassConstructor(Type t)
-        {
-            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(t.TypeHandle);
-        }
-
-#endif //  WINDOWS_BASE
-
 #if DRT
         /// <remarks> The LinkDemand on Marshal.SizeOf() was removed in v4. </remarks>
         internal static int SizeOf(Type t)

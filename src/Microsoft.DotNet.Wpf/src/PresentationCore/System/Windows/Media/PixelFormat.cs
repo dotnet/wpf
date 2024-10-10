@@ -10,6 +10,7 @@ using System;
 using System.Security;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
@@ -78,7 +79,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask != null ? new ReadOnlyCollection<byte>((byte[])_mask.Clone()) : null;
             }
         }
 
@@ -560,7 +561,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                return new PartialList<PixelFormatChannelMask>(masks);
+                return new ReadOnlyCollection<PixelFormatChannelMask>(masks);
             }
         }
 

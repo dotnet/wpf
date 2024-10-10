@@ -1145,19 +1145,21 @@ namespace System.Xaml
             return foundNew;
         }
 
-        bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
+        // This method should be called inside _syncExaminingAssemblies lock
+        private bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
         {
-            bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
-            int xmlnsDefsCount = xmlnsDefs.Count;
-            for (int i = 0; i < xmlnsDefsCount; i++)
+            bool foundNew = false;
+
+            for (int i = 0; i < xmlnsDefs.Count; i++)
             {
                 XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
-                AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
-                ns.AddAssemblyNamespacePair(pair);
+
+                ns.AddAssemblyNamespacePair(new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace));
                 foundNew = true;
             }
+
             return foundNew;
         }
 

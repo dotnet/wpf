@@ -834,9 +834,8 @@ namespace System.Windows
         protected virtual void ValidateTemplatedParent(System.Windows.FrameworkElement templatedParent) { }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.GridLengthConverter))]
-    public partial struct GridLength : System.IEquatable<System.Windows.GridLength>
+    public readonly partial struct GridLength : System.IEquatable<System.Windows.GridLength>
     {
-        private int _dummyPrimitive;
         public GridLength(double pixels) { throw null; }
         public GridLength(double value, System.Windows.GridUnitType type) { throw null; }
         public static System.Windows.GridLength Auto { get { throw null; } }

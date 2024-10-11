@@ -59,30 +59,12 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Returns "current" message.   More exactly the last MSG Raised.
+        /// Returns "current" message. More exactly the last MSG Raised.
         ///</summary>
         public static MSG CurrentKeyboardMessage
         {
-            get
-            {
-                return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
-            }
-        }
-
-        /// <summary>
-        /// Returns "current" message.   More exactly the last MSG Raised.
-        ///</summary>
-        internal static MSG UnsecureCurrentKeyboardMessage
-        {
-            get
-            {
-                return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
-            }
-
-            set
-            {
-                ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage = value;
-            }
+            get => CurrentThreadData.CurrentKeyboardMessage;
+            internal set => CurrentThreadData.CurrentKeyboardMessage = value;
         }
 
         // Methods

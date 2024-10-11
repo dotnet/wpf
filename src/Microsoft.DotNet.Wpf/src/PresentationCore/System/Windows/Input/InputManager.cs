@@ -224,11 +224,10 @@ namespace System.Windows.Input
         /// </param>
         internal InputProviderSite RegisterInputProvider(IInputProvider inputProvider)
         {
-//             VerifyAccess();
-
+            // VerifyAccess();
 
             // Create a site for this provider, and keep track of it.
-            InputProviderSite site = new InputProviderSite(this, inputProvider);
+            InputProviderSite site = new(this, inputProvider);
             _inputProviders[inputProvider] = site;
 
             return site;
@@ -934,7 +933,7 @@ namespace System.Windows.Input
 
         private event KeyEventHandler _translateAccelerator;
 
-        private Hashtable _inputProviders = new Hashtable();
+        private readonly Dictionary<IInputProvider, InputProviderSite> _inputProviders = new();
 
         private KeyboardDevice _primaryKeyboardDevice;
         private MouseDevice    _primaryMouseDevice;

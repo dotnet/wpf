@@ -632,10 +632,10 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
+            ReadOnlySpan<char> typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
 
             // save the subscript
-            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out string subscript);
+            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out ReadOnlySpan<char> subscript);
 
             builder.Append(typeNamePrefixed);
             if (type.TypeArguments is not null)
@@ -657,7 +657,7 @@ namespace System.Xaml
             }
 
             // re-attach the subscript
-            if (subscript is not null)
+            if (!subscript.IsEmpty)
             {
                 builder.Append(subscript);
             }

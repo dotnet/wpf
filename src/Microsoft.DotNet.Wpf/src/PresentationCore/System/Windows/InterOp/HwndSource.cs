@@ -2725,9 +2725,9 @@ namespace System.Windows.Interop
                 _addToFront = addToFront;
                 _handler = new ThreadMessageEventHandler(this.OnPreprocessMessage);
 
-                if(addToFront)
+                if (addToFront)
                 {
-                    ComponentDispatcher.CriticalAddThreadPreprocessMessageHandlerFirst(_handler);
+                    ComponentDispatcher.AddThreadPreprocessMessageHandlerFirst(_handler);
                 }
                 else
                 {
@@ -2751,9 +2751,9 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(_addToFront)
+                if (_addToFront)
                 {
-                    ComponentDispatcher.CriticalRemoveThreadPreprocessMessageHandlerFirst(_handler);
+                    ComponentDispatcher.RemoveThreadPreprocessMessageHandlerFirst(_handler);
                 }
                 else
                 {

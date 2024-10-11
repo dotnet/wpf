@@ -28,7 +28,7 @@ namespace System.Windows.Input
             : base()
         {
             _deviceId = deviceId;
-            _inputManager = InputManager.UnsecureCurrent;
+            _inputManager = InputManager.Current;
 
             
             // If this is instantiated and the derived type is not a StylusTouchDevice then it is a 3rd party

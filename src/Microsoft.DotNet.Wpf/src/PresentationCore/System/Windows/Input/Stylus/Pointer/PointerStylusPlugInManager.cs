@@ -520,7 +520,7 @@ namespace System.Windows.Input.StylusPointer
                     if ((mouseInputReport.Actions & RawMouseActions.Deactivate) != RawMouseActions.Deactivate)
                         return;
 
-                    mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+                    mouseDevice = InputManager.Current.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
                     if (mouseDevice == null || mouseDevice.DirectlyOver != null)

@@ -2043,7 +2043,7 @@ namespace System.Windows.Documents
             // FrameworkTextComposition should be used for non-RichContent and TextRange is not exposed.
             if (editor.AcceptsRichContent)
             {
-                composition = new FrameworkRichTextComposition(InputManager.UnsecureCurrent, editor.UiScope, owner);
+                composition = new FrameworkRichTextComposition(InputManager.Current, editor.UiScope, owner);
             }
             else
             {

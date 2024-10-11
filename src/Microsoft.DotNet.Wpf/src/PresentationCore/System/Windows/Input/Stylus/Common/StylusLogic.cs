@@ -261,11 +261,11 @@ namespace System.Windows.Input
                 // Choose between WISP and Pointer stacks
                 if (IsPointerStackEnabled)
                 {
-                    _currentStylusLogic = new PointerLogic(InputManager.UnsecureCurrent);
+                    _currentStylusLogic = new PointerLogic(InputManager.Current);
                 }
                 else
                 {
-                    _currentStylusLogic = new WispLogic(InputManager.UnsecureCurrent);
+                    _currentStylusLogic = new WispLogic(InputManager.Current);
                 }
             }
         }

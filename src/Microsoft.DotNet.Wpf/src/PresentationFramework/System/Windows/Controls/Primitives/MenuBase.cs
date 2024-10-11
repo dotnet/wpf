@@ -889,7 +889,7 @@ namespace System.Windows.Controls.Primitives
             _pushedMenuMode = PresentationSource.CriticalFromVisual(this);
             Debug.Assert(_pushedMenuMode != null);
             IsAcquireFocusMenuMode = isAcquireFocusMenuMode;
-            InputManager.UnsecureCurrent.PushMenuMode(_pushedMenuMode);
+            InputManager.Current.PushMenuMode(_pushedMenuMode);
         }
 
         // **** Note:  This method is called via private reflection from RibbonMenuButton.
@@ -901,7 +901,7 @@ namespace System.Windows.Controls.Primitives
             PresentationSource pushedMenuMode = _pushedMenuMode;
             _pushedMenuMode = null;
             IsAcquireFocusMenuMode = false;
-            InputManager.UnsecureCurrent.PopMenuMode(pushedMenuMode);
+            InputManager.Current.PopMenuMode(pushedMenuMode);
         }
 
         // **** Note:  This property is read via private reflection from RibbonMenuButton.

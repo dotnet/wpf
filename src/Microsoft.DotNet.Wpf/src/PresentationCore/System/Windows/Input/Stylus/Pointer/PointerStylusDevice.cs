@@ -872,7 +872,7 @@ namespace System.Windows.Input.StylusPointer
             };
 
             // Now send the input report
-            InputManager.UnsecureCurrent.ProcessInput(irea);
+            InputManager.Current.ProcessInput(irea);
         }
 
         #endregion
@@ -1050,7 +1050,7 @@ namespace System.Windows.Input.StylusPointer
                         RoutedEvent = Stylus.LostStylusCaptureEvent,
                         Source = oldStylusCapture
                     };
-                    InputManager.UnsecureCurrent.ProcessInput(lostCapture);
+                    InputManager.Current.ProcessInput(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
@@ -1059,7 +1059,7 @@ namespace System.Windows.Input.StylusPointer
                         RoutedEvent = Stylus.GotStylusCaptureEvent,
                         Source = _stylusCapture
                     };
-                    InputManager.UnsecureCurrent.ProcessInput(gotCapture);
+                    InputManager.Current.ProcessInput(gotCapture);
                 }
 
                 // Now update the stylus over state (only if this is the current stylus and 

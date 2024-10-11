@@ -37,19 +37,6 @@ namespace System.Windows.Input
         }
 
         ///<summary>
-        ///     Internal implementation of InputManager.Current.
-        ///     Critical but not TAS - for internal's to use.
-        ///     Only exists for perf. The link demand check was causing perf in some XAF scenarios.
-        ///</summary>
-        internal static InputManager UnsecureCurrent
-        {
-            get
-            {
-                return GetCurrentInputManagerImpl();
-            }
-        }
-
-        ///<summary>
         /// When true indicates input processing is synchronized.   
         ///</summary> 
         internal static bool IsSynchronizedInput
@@ -240,10 +227,7 @@ namespace System.Windows.Input
         /// </summary>
         public ICollection InputProviders
         {
-            get
-            {
-                return _inputProviders.Keys;
-            }
+            get => _inputProviders.Keys;
         }
 
         /// <summary>
@@ -416,7 +400,7 @@ namespace System.Windows.Input
 
         internal static void SafeCurrentNotifyHitTestInvalidated()
         {
-            UnsecureCurrent.NotifyHitTestInvalidated();
+            Current.NotifyHitTestInvalidated();
         }
 
         private object HitTestInvalidatedAsyncCallback(object arg)

@@ -357,11 +357,7 @@ namespace System.Windows.Input
         /// </summary>
         public static KeyboardDevice PrimaryDevice
         {
-            get
-            {
-                KeyboardDevice keyboardDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
-                return keyboardDevice;
-            }
+            get => InputManager.Current.PrimaryKeyboardDevice;
         }
 
         // Check for Valid enum, as any int can be casted to the enum.

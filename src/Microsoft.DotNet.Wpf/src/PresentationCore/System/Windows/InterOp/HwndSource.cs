@@ -2412,7 +2412,7 @@ namespace System.Windows.Interop
                             // Raise the TranslateAccelerator event on the
                             // InputManager to allow keyboard navigation to
                             // happen on a descendent HwndSource
-                            InputManager.UnsecureCurrent.RaiseTranslateAccelerator(bubbleArgs);
+                            InputManager.Current.RaiseTranslateAccelerator(bubbleArgs);
                             handled = bubbleArgs.Handled;
                         }
                     }

@@ -25,7 +25,7 @@ namespace System.Windows.Input
             _target = element;
             _activeSource = PresentationSource.CriticalFromVisual(element);
 
-            _inputManager = InputManager.UnsecureCurrent;
+            _inputManager = InputManager.Current;
             _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
             _manipulationLogic = new ManipulationLogic(this);

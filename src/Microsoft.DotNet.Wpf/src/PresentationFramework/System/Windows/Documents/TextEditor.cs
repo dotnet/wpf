@@ -1364,17 +1364,9 @@ namespace System.Windows.Documents
         {
             get
             {
-                TextEditorThreadLocalStore store;
+                s_textEditorTLSInstance ??= new TextEditorThreadLocalStore();
 
-                store = (TextEditorThreadLocalStore)Thread.GetData(_threadLocalStoreSlot);
-
-                if (store == null)
-                {
-                    store = new TextEditorThreadLocalStore();
-                    Thread.SetData(_threadLocalStoreSlot, store);
-                }
-
-                return store;
+                return s_textEditorTLSInstance;
             }
         }
 
@@ -2057,7 +2049,8 @@ namespace System.Windows.Documents
         private WeakReference<ImmComposition> _immCompositionForDetach;
 
         // Thread local storage for TextEditor and dependent classes.
-        private static LocalDataStoreSlot _threadLocalStoreSlot = Thread.AllocateDataSlot();
+        [ThreadStatic]
+        private static TextEditorThreadLocalStore s_textEditorTLSInstance;
 
         // Flag indicating that MouseDown handler is in progress,
         // to ignore all MouseMoves caused by CaptureMouse call.

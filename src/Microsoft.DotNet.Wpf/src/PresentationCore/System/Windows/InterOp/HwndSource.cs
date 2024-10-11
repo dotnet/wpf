@@ -19,11 +19,6 @@ namespace System.Windows.Interop
     /// </summary>
     public class HwndSource : PresentationSource, IDisposable, IWin32Window, IKeyboardInputSink
     {
-        static HwndSource()
-        {
-            _threadSlot = Thread.AllocateDataSlot();
-        }
-
         /// <summary>
         ///    Constructs an instance of the HwndSource class that will always resize to its content size.
         /// </summary>
@@ -2670,18 +2665,9 @@ namespace System.Windows.Interop
         {
             get
             {
-                ThreadDataBlob data;
-                object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
-                {
-                    data = new ThreadDataBlob();
-                    Thread.SetData(_threadSlot, data);
-                }
-                else
-                {
-                    data = (ThreadDataBlob) obj;
-                }
-                return data;
+                s_threadDataBlobInstance ??= new ThreadDataBlob();
+
+                return s_threadDataBlobInstance;
             }
         }
 
@@ -2807,9 +2793,10 @@ namespace System.Windows.Interop
         private WeakEventPreprocessMessage _weakPreprocessMessageHandler;
         private WeakEventPreprocessMessage _weakMenuModeMessageHandler;
 
-        private static System.LocalDataStoreSlot _threadSlot;
-
         private RestoreFocusMode _restoreFocusMode;
+
+        [ThreadStatic]
+        private static ThreadDataBlob s_threadDataBlobInstance;
 
         [ThreadStatic]
         private static bool? _defaultAcquireHwndFocusInMenuMode;

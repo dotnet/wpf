@@ -24,27 +24,22 @@ namespace System.Windows.Interop
     ///</summary>
     public static class ComponentDispatcher
     {
-        static ComponentDispatcher()
-        {
-            _threadSlot = Thread.AllocateDataSlot();
-        }
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="ComponentDispatcherThread"/>.
+        /// </summary>
+        [ThreadStatic]
+        private static ComponentDispatcherThread s_componentDispatcherThread;
 
+        /// <summary>
+        /// Retrieves or creates an instance of <see cref="ComponentDispatcherThread"/> for the current thread.
+        /// </summary>
         private static ComponentDispatcherThread CurrentThreadData
         {
             get
             {
-                ComponentDispatcherThread data;
-                object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
-                {
-                    data = new ComponentDispatcherThread();
-                    Thread.SetData(_threadSlot, data);
-                }
-                else
-                {
-                    data = (ComponentDispatcherThread) obj;
-                }
-                return data;
+                s_componentDispatcherThread ??= new ComponentDispatcherThread();
+
+                return s_componentDispatcherThread;
             }
         }
 
@@ -238,8 +233,5 @@ namespace System.Windows.Interop
                 ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;
             }
         }
-
-        // member data
-        private static System.LocalDataStoreSlot _threadSlot;
     }
 };

@@ -400,7 +400,7 @@ namespace System.Windows.Input
 
         //
         // Find an IMouseInputProvider on which the cursor can be set
-        private IMouseInputProvider FindMouseInputProviderForCursor( )
+        private IMouseInputProvider FindMouseInputProviderForCursor()
         {
             // The shape of this API goes on the assumption that, like Win32, the cursor
             // is set for the whole desktop, not just a particular element or a particular
@@ -410,12 +410,12 @@ namespace System.Windows.Input
 
             IMouseInputProvider mouseInputProvider = null;
 
-            IEnumerator inputProviders = _inputManager.UnsecureInputProviders.GetEnumerator();
-
+            // NOTE: This is just wrong, if a new InputProvider was added when MouseDevice.SetCursor is called,
+            // it will end up with up InvalidOperationException right away. The odds are very low you're this good though.
+            IEnumerator inputProviders = _inputManager.InputProviders.GetEnumerator();
             while (inputProviders.MoveNext())
             {
-                IMouseInputProvider provider = inputProviders.Current as IMouseInputProvider;
-                if (provider != null )
+                if (inputProviders.Current is IMouseInputProvider provider)
                 {
                     mouseInputProvider = provider;
                     break;

@@ -210,10 +210,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void RaiseTranslateAccelerator(KeyEventArgs e)
         {
-            if (_translateAccelerator != null)
-            {
-                _translateAccelerator(this, e);
-            }
+            _translateAccelerator?.Invoke(this, e);
         }
 
         /// <summary>
@@ -245,28 +242,16 @@ namespace System.Windows.Input
         {
             get
             {
-                return UnsecureInputProviders;
-            }
-        }
-
-
-        /// <summary>
-        ///     Returns a collection of input providers registered with the input manager.
-        /// </summary>
-        internal ICollection UnsecureInputProviders
-        {
-            get
-            {
                 return _inputProviders.Keys;
             }
         }
+
         /// <summary>
         ///     Read-only access to the primary keyboard device.
         /// </summary>
         public KeyboardDevice PrimaryKeyboardDevice
         {
-            // 
-            get {return _primaryKeyboardDevice;}
+            get => _primaryKeyboardDevice;
         }
 
         /// <summary>
@@ -274,8 +259,7 @@ namespace System.Windows.Input
         /// </summary>
         public MouseDevice PrimaryMouseDevice
         {
-            // 
-            get {return _primaryMouseDevice;}
+            get => _primaryMouseDevice;
         }
 
         /// <summary>

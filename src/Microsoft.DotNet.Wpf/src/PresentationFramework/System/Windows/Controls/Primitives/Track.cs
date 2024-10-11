@@ -360,11 +360,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (_visualChildren == null || _visualChildren[index] == null)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
-            }
-            return _visualChildren[index];
+            return _visualChildren?[index] ?? throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
         
         /// <summary>

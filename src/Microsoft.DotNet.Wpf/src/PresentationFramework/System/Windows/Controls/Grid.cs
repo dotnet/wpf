@@ -3276,6 +3276,9 @@ namespace System.Windows.Controls
         private const double c_starClip = 1e298;                //  used as maximum for clipping star values during normalization
         private const int c_layoutLoopMaxCount = 5;             // 5 is an arbitrary constant chosen to end the measure loop
 
+        /// <summary>
+        /// This is variable stores <see cref="WeakReference{DefinitionBase[]}"/> class instance per thread.
+        /// </summary>
         [ThreadStatic]
         private static WeakReference<DefinitionBase[]> s_tempDefinitionsWeakRef;
 

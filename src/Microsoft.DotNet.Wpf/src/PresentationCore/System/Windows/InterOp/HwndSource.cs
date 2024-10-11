@@ -2795,6 +2795,9 @@ namespace System.Windows.Interop
 
         private RestoreFocusMode _restoreFocusMode;
 
+        /// <summary>
+        /// This is variable stores <see cref="ThreadDataBlob"/> class instance per thread.
+        /// </summary>
         [ThreadStatic]
         private static ThreadDataBlob s_threadDataBlobInstance;
 

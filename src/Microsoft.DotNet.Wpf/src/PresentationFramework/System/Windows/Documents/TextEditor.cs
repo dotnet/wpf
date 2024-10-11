@@ -2017,7 +2017,9 @@ namespace System.Windows.Documents
         // Weak-ref to the most recent ImmComposition - used when detaching
         private WeakReference<ImmComposition> _immCompositionForDetach;
 
-        // Thread local storage for TextEditor and dependent classes.
+        /// <summary>
+        /// This is variable stores <see cref="TextEditorThreadLocalStore"/> class instance per thread.
+        /// </summary>
         [ThreadStatic]
         private static TextEditorThreadLocalStore s_textEditorTLSInstance;
 

@@ -2669,7 +2669,7 @@ namespace System.Windows.Interop
                    value == SizeToContent.WidthAndHeight;
         }
 
-        class ThreadDataBlob
+        private class ThreadDataBlob
         {
             public int TranslateAcceleratorCallDepth;
         }
@@ -2808,6 +2808,9 @@ namespace System.Windows.Interop
 
         private RestoreFocusMode _restoreFocusMode;
 
+        /// <summary>
+        /// This is variable stores <see cref="ThreadDataBlob"/> class instance per thread.
+        /// </summary>
         [ThreadStatic]
         private static ThreadDataBlob s_threadDataBlobInstance;
 

@@ -75,20 +75,11 @@ namespace System.Windows.Interop
         // Methods
 
         /// <summary>
-        /// A component calls this to go modal.  Current thread wide only.
+        /// A component calls this to go modal. Current thread wide only.
         ///</summary>
         public static void PushModal()
         {
-            CriticalPushModal();
-        }
-
-        /// <summary>
-        /// A component calls this to go modal.  Current thread wide only.
-        ///</summary>
-        internal static void CriticalPushModal()
-        {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            data.PushModal();
+            CurrentThreadData.PushModal();
         }
 
         /// <summary>
@@ -96,16 +87,7 @@ namespace System.Windows.Interop
         ///</summary>
         public static void PopModal()
         {
-            CriticalPopModal();
-        }
-
-        /// <summary>
-        /// A component calls this to end being modal.
-        ///</summary>
-        internal static void CriticalPopModal()
-        {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            data.PopModal();
+            CurrentThreadData.PopModal();
         }
 
         /// <summary>

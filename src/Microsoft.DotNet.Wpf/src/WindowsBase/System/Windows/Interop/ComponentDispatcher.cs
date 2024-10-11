@@ -155,18 +155,18 @@ namespace System.Windows.Interop
         ///     Adds the specified handler to the front of the invocation list
         ///     of the PreprocessMessage event.
         /// <summary>
-        internal static void CriticalAddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
+        internal static void AddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
-            ComponentDispatcher.CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
+            CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
         }
 
         /// <summary>
         ///     Removes the first occurance of the specified handler from the
         ///     invocation list of the PreprocessMessage event.
         /// <summary>
-        internal static void CriticalRemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
+        internal static void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
-            ComponentDispatcher.CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
+            CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
         }
 
         /// <summary>

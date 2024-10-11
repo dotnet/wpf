@@ -21,28 +21,28 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>10.0.0-alpha.1.24509.1</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>10.0.0-alpha.1.24510.7</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-alpha.1.24508.15</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>10.0.0-alpha.1.24508.15</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>10.0.0-alpha.1.24508.15</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>10.0.0-alpha.1.24508.15</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>10.0.0-alpha.1.24508.15</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-alpha.1.24508.15</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>10.0.0-alpha.1.24508.15</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>10.0.0-alpha.1.24509.1</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>10.0.0-alpha.1.24508.15</SystemDirectoryServicesVersion>
-    <SystemFormatsNrbfVersion>10.0.0-alpha.1.24508.15</SystemFormatsNrbfVersion>
-    <SystemIOPackagingVersion>10.0.0-alpha.1.24508.15</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>10.0.0-alpha.1.24508.15</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-alpha.1.24509.15</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>10.0.0-alpha.1.24509.15</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>10.0.0-alpha.1.24509.15</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>10.0.0-alpha.1.24509.15</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>10.0.0-alpha.1.24509.15</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-alpha.1.24509.15</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>10.0.0-alpha.1.24509.15</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>10.0.0-alpha.1.24510.7</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>10.0.0-alpha.1.24509.15</SystemDirectoryServicesVersion>
+    <SystemFormatsNrbfVersion>10.0.0-alpha.1.24509.15</SystemFormatsNrbfVersion>
+    <SystemIOPackagingVersion>10.0.0-alpha.1.24509.15</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>10.0.0-alpha.1.24509.15</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>10.0.0-alpha.1.24508.15</SystemResourcesExtensionsVersion>
-    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-alpha.1.24508.15</SystemRuntimeSerializationFormattersPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-alpha.1.24508.15</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>10.0.0-alpha.1.24508.15</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>10.0.0-alpha.1.24508.15</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>10.0.0-alpha.1.24509.15</SystemResourcesExtensionsVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-alpha.1.24509.15</SystemRuntimeSerializationFormattersPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-alpha.1.24509.15</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>10.0.0-alpha.1.24509.15</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>10.0.0-alpha.1.24509.15</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

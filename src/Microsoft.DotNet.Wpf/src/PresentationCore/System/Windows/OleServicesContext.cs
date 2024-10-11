@@ -27,8 +27,11 @@ namespace System.Windows;
 //    affinity -- it could happen on any thread, which breaks us.
 internal class OleServicesContext
 {
-    // This is a slot to store OleServicesContext class per thread.
-    private static readonly LocalDataStoreSlot s_threadDataSlot = Thread.AllocateDataSlot();
+    /// <summary>
+    /// This is variable stores <see cref="OleServicesContext"/> class instance per thread.
+    /// </summary>
+    [ThreadStatic]
+    private static OleServicesContext s_oleServicesContextInstance;
 
 #if DEBUG
     // Ref count of calls to OleInitialize/OleUnitialize.
@@ -45,28 +48,18 @@ internal class OleServicesContext
         SetDispatcherThread();
     }
 
-    /// <summary>
-    ///  Get the ole services context associated with the current Thread.
-    /// </summary>
-    internal static OleServicesContext CurrentOleServicesContext
-    {
-        get
+        /// <summary>
+        /// Get the ole services context associated with the current Thread.
+        /// </summary>
+        internal static OleServicesContext CurrentOleServicesContext
         {
-            // Get the ole services context from the Thread data slot.
-            OleServicesContext oleServicesContext = (OleServicesContext)Thread.GetData(s_threadDataSlot);
-
-            if (oleServicesContext is null)
+            get
             {
-                // Create OleSErvicesContext instance.
-                oleServicesContext = new OleServicesContext();
+                s_oleServicesContextInstance ??= new OleServicesContext();
 
-                // Save the ole services context into the UIContext data slot.
-                Thread.SetData(s_threadDataSlot, oleServicesContext);
+                return s_oleServicesContextInstance;
             }
-
-            return oleServicesContext;
         }
-    }
 
     /// <summary>
     ///  Ensure the current thread is STA and OLE is initialized.

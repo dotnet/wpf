@@ -612,7 +612,6 @@
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
     <Compile Include="System\Windows\Input\Command\InputGesture.cs" />
     <Compile Include="System\Windows\Input\Command\InputGestureCollection.cs" />
-    <Compile Include="System\Windows\Input\Command\ISecureCommand.cs" />
     <Compile Include="System\Windows\Input\Command\KeyBinding.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGesture.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGestureConverter.cs" />
@@ -628,7 +627,6 @@
     <Compile Include="System\Windows\Input\Command\NavigationCommands.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedCommand.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedUICommand.cs" />
-    <Compile Include="System\Windows\Input\Command\SecureUICommand.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRenderer.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRendererThreadManager.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\MultiTouchSystemGestureLogic.cs" />

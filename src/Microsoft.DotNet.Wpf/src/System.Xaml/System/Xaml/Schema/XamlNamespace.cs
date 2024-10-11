@@ -99,8 +99,7 @@ namespace System.Xaml.Schema
 
             // It is not possible to get an array of open generic and then call
             // MakeGenericType on it so we need to process array subscripts.
-            string subscript;
-            typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
+            typeName = GenericTypeNameScanner.StripSubscript(typeName, out string subscript);
             typeName = MangleGenericTypeName(typeName, typeArgs.Length);
 
             // Get the open generic type.

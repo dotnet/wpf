@@ -239,8 +239,7 @@ namespace System.Xaml.Schema
             if (HasTypeArgs)
             {
                 // The subscript goes after the type args
-                string subscript;
-                string name = GenericTypeNameScanner.StripSubscript(Name, out subscript);
+                string name = GenericTypeNameScanner.StripSubscript(Name, out string subscript);
                 result.Append(name);
 
                 result.Append('(');

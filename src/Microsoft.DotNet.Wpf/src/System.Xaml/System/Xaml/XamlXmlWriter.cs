@@ -635,8 +635,7 @@ namespace System.Xaml
             string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
 
             // save the subscript
-            string subscript;
-            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out subscript);
+            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out string subscript);
 
             builder.Append(typeNamePrefixed);
             if (type.TypeArguments is not null)

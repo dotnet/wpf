@@ -134,34 +134,27 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Get the list of the input languages that are available in the
-        /// current thread.
+        /// Get the list of the input languages that are available in the current thread.
         /// </summary>
-        internal ArrayList InputLanguageList
+        internal unsafe CultureInfo[] InputLanguageList
         {
-             get
-             {
-                 int nCount;
-                 IntPtr langids;
+            get
+            {
+                // ITfInputProcessorProfiles::GetLanguageList returns the pointer that was allocated by CoTaskMemAlloc().
+                _ipp.GetLanguageList(out nint ptrLanguageIDs, out int nCount);
 
-                 // ITfInputProcessorProfiles::GetLanguageList returns the pointer that was allocated by
-                 // CoTaskMemAlloc().
-                 _ipp.GetLanguageList(out langids, out nCount);
+                ReadOnlySpan<short> languageIDs = new((void*)ptrLanguageIDs, nCount);
+                CultureInfo[] langArray = new CultureInfo[nCount];
 
-                 ArrayList arrayLang = new ArrayList();
+                // Create CultureInfo from each ID and store it
+                for (int i = 0; i < langArray.Length; i++)
+                    langArray[i] = new CultureInfo(languageIDs[i]);
 
-                 for (int i = 0; i < nCount; i++)
-                 {
-                     // Unmarshal each langid from short array.
-                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeof(short) * i));
-                     arrayLang.Add(new CultureInfo(langid));
-                 }
+                // Call CoTaskMemFree().
+                Marshal.FreeCoTaskMem(ptrLanguageIDs);
 
-                 // Call CoTaskMemFree().
-                 Marshal.FreeCoTaskMem(langids);
-
-                 return arrayLang;
-             }
+                return langArray;
+            }
         }
 
 

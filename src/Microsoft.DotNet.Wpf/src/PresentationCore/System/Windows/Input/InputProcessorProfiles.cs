@@ -16,7 +16,7 @@ namespace System.Windows.Input
     /// <summary>
     /// The <see cref="InputProcessorProfiles"/> class is always associated with hwndInputLanguage class.
     /// </summary>
-    internal class InputProcessorProfiles
+    internal sealed class InputProcessorProfiles
     {
         /// <summary>
         /// InputProcessorProfiles Constructor;

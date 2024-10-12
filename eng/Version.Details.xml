@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="10.0.0-alpha.1.24511.7">
+    <Dependency Name="Microsoft.Private.Winforms" Version="10.0.0-alpha.1.24511.10">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>3760721121afeb50e180eb1184542504e2a87652</Sha>
+      <Sha>04695775da3fb7dbdfd6592a13b377e84f1beadb</Sha>
       <SourceBuildTarball RepoName="winforms" ManagedOnly="true" />
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="10.0.0-alpha.1.24511.7">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="10.0.0-alpha.1.24511.10">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>3760721121afeb50e180eb1184542504e2a87652</Sha>
+      <Sha>04695775da3fb7dbdfd6592a13b377e84f1beadb</Sha>
     </Dependency>
     <Dependency Name="System.Reflection.MetadataLoadContext" Version="10.0.0-alpha.1.24510.11" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://github.com/dotnet/runtime</Uri>
@@ -159,9 +159,9 @@
       <Uri>https://github.com/dotnet/runtime</Uri>
       <Sha>985c17771202d32b6c6cff6d3bd9082ca5a4b0ff</Sha>
     </Dependency>
-    <Dependency Name="System.Drawing.Common" Version="10.0.0-alpha.1.24511.7">
+    <Dependency Name="System.Drawing.Common" Version="10.0.0-alpha.1.24511.10">
       <Uri>https://github.com/dotnet/winforms</Uri>
-      <Sha>3760721121afeb50e180eb1184542504e2a87652</Sha>
+      <Sha>04695775da3fb7dbdfd6592a13b377e84f1beadb</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

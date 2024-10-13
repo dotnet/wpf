@@ -386,31 +386,33 @@ namespace System.Windows.Input
 
         private static string GetCurrentOEMCPEncoding(int code)
         {
-            int cp =  UnsafeNativeMethods.GetOEMCP();
-            return CharacterEncoding(cp, code);
+            int codePage = UnsafeNativeMethods.GetOEMCP();
+
+            return CharacterEncoding(codePage, code);
         }
 
-        // Convert code to the string based on the code page.
-        private static string CharacterEncoding(int cp, int code)
+        /// <summary>
+        /// Convert <paramref name="code"/> to a string based on the <paramref name="codePage"/>.
+        /// </summary>
+        private static unsafe string CharacterEncoding(int codePage, int code)
         {
-            Byte[] bytes = ConvertCodeToByteArray(code);
-            StringBuilder sbuilder = new StringBuilder(EncodingBufferLen);
-
-            // Win32K uses MB_PRECOMPOSED | MB_USEGLYPHCHARS.
-            int nret = UnsafeNativeMethods.MultiByteToWideChar(cp, 
-                                                   UnsafeNativeMethods.MB_PRECOMPOSED | UnsafeNativeMethods.MB_USEGLYPHCHARS,
-                                                   bytes, bytes.Length,
-                                                   sbuilder, EncodingBufferLen);
-
-            if (nret == 0)
-            {
-                int win32Err = Marshal.GetLastWin32Error(); 
-                throw new System.ComponentModel.Win32Exception(win32Err);
+            ReadOnlySpan<byte> multiByte = ConvertCodeToByteArray(code, stackalloc byte[2]);
+            Span<char> outputChars = stackalloc char[EncodingBufferLen]; // 4
+         
+            int charsWritten;
+            // Since we do not use [LibraryImport], Span<T> marshallers are not available by default
+            fixed (byte* ptrMultiByte = multiByte)
+            fixed (char* ptrOutputChars = outputChars)
+            {                                                                    // Win32K uses MB_PRECOMPOSED | MB_USEGLYPHCHARS.
+                charsWritten = UnsafeNativeMethods.MultiByteToWideChar(codePage, UnsafeNativeMethods.MB_PRECOMPOSED | UnsafeNativeMethods.MB_USEGLYPHCHARS,
+                                                                       ptrMultiByte, multiByte.Length, ptrOutputChars, outputChars.Length);
             }
 
-            // set the length as MultiByteToWideChar returns.
-            sbuilder.Length = nret;
-            return sbuilder.ToString();
+            if (charsWritten == 0)
+                throw new Win32Exception(); // Initializes with Marshal.GetLastPInvokeError()
+
+            // Set the length as MultiByteToWideChar returns
+            return new string(outputChars.Slice(0, charsWritten));
         }
 
         // PreProcessInput event handler
@@ -849,22 +851,25 @@ namespace System.Windows.Input
             return NumpadScanCode.DigitFromScanCode(scanCode);
         }
 
-        // Convert the code to byte array for DBCS/SBCS.
-        private static Byte[] ConvertCodeToByteArray(int codeEntry)
+        /// <summary>
+        /// Convert the code to byte array for DBCS/SBCS.
+        /// </summary>
+        private static ReadOnlySpan<byte> ConvertCodeToByteArray(int codeEntry, Span<byte> destination)
         {
-            Byte[] bytes;
-            if (codeEntry > 0xff)
+            Debug.Assert(destination.Length == 2, "Invalid buffer length");
+
+            if (codeEntry > 0xFF)
             {
-                bytes = new Byte[2];
-                bytes[0] = (Byte)(codeEntry >> 8);
-                bytes[1] = (Byte)codeEntry;
+                destination[0] = (byte)(codeEntry >> 8);
+                destination[1] = (byte)codeEntry;
             }
             else
             {
-                bytes = new Byte[1];
-                bytes[0] = (Byte)codeEntry;
+                destination = destination.Slice(0, 1);
+                destination[0] = (byte)codeEntry;
             }
-            return bytes;
+
+            return destination;
         }
 
         // clear the altnumpad composition object and reset entry.

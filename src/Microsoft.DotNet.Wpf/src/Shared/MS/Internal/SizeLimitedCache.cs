@@ -239,7 +239,7 @@ namespace MS.Internal
         /// <summary>
         ///     Doubly linked list node class. Has 3 values: key, resource, permanence flag
         /// </summary>
-        private class Node
+        private sealed class Node
         {
             public Node(K key, V resource, bool isPermanent)
             {
@@ -248,41 +248,16 @@ namespace MS.Internal
                 IsPermanent = isPermanent;
             }
 
-            public K Key
-            {
-                get { return _key; }
-                set { _key = value; }
-            }
+            public K Key { get; }
 
-            public V Resource
-            {
-                get { return _resource; }
-                set { _resource = value; }
-            }
+            public V Resource { get; set; }
 
-            public bool IsPermanent
-            {
-                get { return _isPermanent; }
-                set { _isPermanent = value; }
-            }
+            public bool IsPermanent { get; set; }
 
-            public Node Next
-            {
-                get { return _next; }
-                set { _next = value; }
-            }
+            public Node Next { get; set; }
 
-            public Node Previous
-            {
-                get { return _previous; }
-                set { _previous = value; }
-            }
+            public Node Previous { get; set; }
 
-            private V _resource;
-            private K _key;
-            private bool _isPermanent;
-            private Node _next;
-            private Node _previous;
         }
 
         //*****************************************************

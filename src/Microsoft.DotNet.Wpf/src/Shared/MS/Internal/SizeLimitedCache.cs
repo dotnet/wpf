@@ -187,17 +187,10 @@ namespace MS.Internal
         /// </returns>
         public V Get(K key)
         {
-            if ( (object)key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            ArgumentNullException.ThrowIfNull(key, nameof(key));
 
-            // note: [] throws, thus we should check if its in the dictionary first.
-            if (!_nodeLookup.ContainsKey(key))
-            {
-                return default(V);
-            }
-            Node node = _nodeLookup[key];
+            if (!_nodeLookup.TryGetValue(key, out Node node))
+                return default;
 
             if (!node.IsPermanent)
             {

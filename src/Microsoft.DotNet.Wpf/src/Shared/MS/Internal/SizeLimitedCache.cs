@@ -235,7 +235,7 @@ namespace MS.Internal
         /// <param name="node">
         ///     The node to remove
         /// </param>
-        private void RemoveFromList(Node node)
+        private static void RemoveFromList(Node node)
         {
             node.Previous.Next = node.Next;
             node.Next.Previous = node.Previous;
@@ -250,7 +250,7 @@ namespace MS.Internal
         /// </returns>
         private bool IsFull()
         {
-            return (_nodeLookup.Count - _permanentCount >= _maximumItems);
+            return (_nodeLookup.Count - _permanentCount) >= _maximumItems;
         }
 
         /// <summary>
@@ -307,17 +307,17 @@ namespace MS.Internal
         // ****************************************************
 
         // the maximum nonpermanent items allowed
-        private int _maximumItems;
+        private readonly int _maximumItems;
 
         // need to keep a separate counter for permanent items
         private int _permanentCount;
 
         // the _begin and _end nodes are empty nodes marking the begin and
         // end of the list.
-        private Node _begin;
-        private Node _end;
+        private readonly Node _begin;
+        private readonly Node _end;
 
         // the hashtable mapping keys to nodes
-        private Dictionary<K, Node> _nodeLookup;
+        private readonly Dictionary<K, Node> _nodeLookup;
     }
 }

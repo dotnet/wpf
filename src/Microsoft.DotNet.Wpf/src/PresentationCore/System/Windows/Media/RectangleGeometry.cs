@@ -502,7 +502,7 @@ namespace System.Windows.Media
             }
         }
 
-        private uint GetPointCount(Rect rect, double radiusX, double radiusY)
+        private static uint GetPointCount(Rect rect, double radiusX, double radiusY)
         {
             if (rect.IsEmpty)
             {
@@ -518,7 +518,7 @@ namespace System.Windows.Media
             }
         }
 
-        private uint GetSegmentCount(Rect rect, double radiusX, double radiusY)
+        private static uint GetSegmentCount(Rect rect, double radiusX, double radiusY)
         {
             if (rect.IsEmpty)
             {

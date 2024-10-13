@@ -20,7 +20,7 @@ namespace MS.Internal
     ///     changed, it gets moved to the end of the list. Also, permanent items,
     ///     though in the hash table, are NOT in the linked list.
     /// </remarks>
-    internal class SizeLimitedCache<K, V>
+    internal sealed class SizeLimitedCache<K, V>
     {
         //*****************************************************
         // Constructors
@@ -88,7 +88,7 @@ namespace MS.Internal
             ArgumentNullException.ThrowIfNull(key, nameof(key));
             ArgumentNullException.ThrowIfNull(resource, nameof(resource));
 
-            // note: [] throws, thus we should check if its in the dictionary first.
+            // Lookup first
             if (!_nodeLookup.TryGetValue(key, out Node node))
             {
                 node = new Node(key, resource, isPermanent);

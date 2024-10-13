@@ -482,24 +482,24 @@ namespace System.Windows.Input
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // KeyUp
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
             {
-                KeyEventArgs keyArgs = (KeyEventArgs) e.StagingItem.Input;
-                if(!keyArgs.Handled)
+                KeyEventArgs keyArgs = (KeyEventArgs)e.StagingItem.Input;
+                if (!keyArgs.Handled)
                 {
-                    if(keyArgs.RealKey == Key.LeftAlt || keyArgs.RealKey == Key.RightAlt)
+                    if (keyArgs.RealKey == Key.LeftAlt || keyArgs.RealKey == Key.RightAlt)
                     {
                         // Make sure both Alt keys are up.
                         ModifierKeys modifiers = keyArgs.KeyboardDevice.Modifiers;
-                        if((modifiers & ModifierKeys.Alt) == 0)
+                        if ((modifiers & ModifierKeys.Alt) == 0)
                         {
-                            if(_altNumpadEntryMode)
+                            if (_altNumpadEntryMode)
                             {
                                 _altNumpadEntryMode = false;
 
                                 // Generate the Unicode equivalent if we
                                 // actually entered a number via the numpad.
-                                if(_altNumpadEntry != 0)
+                                if (_altNumpadEntry != 0)
                                 {
                                     _altNumpadcomposition.ClearTexts();
                                     if (_altNumpadConversionMode == AltNumpadConversionMode.OEMCodePage)
@@ -513,9 +513,7 @@ namespace System.Windows.Input
                                     }
                                     else if (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode)
                                     {
-                                        Char[] chars = new Char[1];
-                                        chars[0] = (Char) _altNumpadEntry;
-                                        _altNumpadcomposition.SetText(new string(chars));
+                                        _altNumpadcomposition.SetText(((char)_altNumpadEntry).ToString());
                                     }
                                 }
                             }

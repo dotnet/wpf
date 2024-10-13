@@ -146,10 +146,8 @@ namespace MS.Internal
         {
             ArgumentNullException.ThrowIfNull(key, nameof(key));
 
-            if (!_nodeLookup.TryGetValue(key, out Node node))
+            if (!_nodeLookup.Remove(key, out Node node))
                 return;
-
-            _nodeLookup.Remove(key);
 
             if (!node.IsPermanent)
                 RemoveFromList(node);

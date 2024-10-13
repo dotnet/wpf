@@ -289,11 +289,11 @@ namespace MS.Internal
         // Private Fields
         // ****************************************************
 
-        // the maximum nonpermanent items allowed
-        private readonly int _maximumItems;
-
         // need to keep a separate counter for permanent items
         private int _permanentCount;
+
+        // the maximum nonpermanent items allowed
+        private readonly int _maximumItems;
 
         // the _begin and _end nodes are empty nodes marking the begin and
         // end of the list.

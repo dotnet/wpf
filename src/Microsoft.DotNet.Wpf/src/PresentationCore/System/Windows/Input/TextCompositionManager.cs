@@ -9,15 +9,27 @@ using Microsoft.Win32;
 
 namespace System.Windows.Input
 {
-    //
-    // Modes of AltNumpad.
-    //
+    /// <summary>
+    /// Modes when entering characters via Alt+Numpad keys.
+    /// </summary>
     internal enum AltNumpadConversionMode
     {
-        DefaultCodePage,         // ACP code page encoding. Alt+Numpad0+NumpadX
-        OEMCodePage,             // OEM code page encoding. Alt+NumpadX
-        HexDefaultCodePage,      // HEX value in ACP.       Alt+NumpadDOT+NumpadX
-        HexUnicode,              // HEX value in Unicode.   Alt+NumpadPlus+NumpadX
+        /// <summary>
+        /// ACP code page encoding: Alt+Numpad0+NumpadX
+        /// </summary>
+        DefaultCodePage,
+        /// <summary>
+        /// OEM code page encoding: Alt+NumpadX
+        /// </summary>
+        OEMCodePage,
+        /// <summary>
+        /// HEX value in ACP: Alt+NumpadDOT+NumpadX
+        /// </summary>
+        HexDefaultCodePage,
+        /// <summary>
+        /// HEX value in Unicode: Alt+NumpadPlus+NumpadX
+        /// </summary>
+        HexUnicode,
     }
 
     /// <summary>

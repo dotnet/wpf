@@ -230,16 +230,7 @@ namespace System.Windows.Media
                 endPoint *= matrix;
             }
 
-            PathFigureCollection collection = new PathFigureCollection();
-            collection.Add(
-                new PathFigure(
-                startPoint,
-                new PathSegment[]{new LineSegment(endPoint, true)},
-                false // ==> not closed
-                )
-            );
-
-            return collection;
+            return new PathFigureCollection(1) { new PathFigure(startPoint, [new LineSegment(endPoint, true)], false) }; // ==> not closed;
         }
 
         /// <summary>

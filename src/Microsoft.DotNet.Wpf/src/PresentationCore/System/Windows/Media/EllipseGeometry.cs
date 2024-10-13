@@ -267,32 +267,23 @@ namespace System.Windows.Media
 
         internal override PathFigureCollection GetTransformedFigureCollection(Transform transform)
         {
-            Point [] points = GetPointList();
+            Point[] points = GetPointList();
 
             // Get the combined transform argument with the internal transform
             Matrix matrix = GetCombinedMatrix(transform);
             if (!matrix.IsIdentity)
             {
-                for (int i=0; i<points.Length; i++)
+                for (int i = 0; i < points.Length; i++)
                 {
                     points[i] *= matrix;
                 }
             }
 
-            PathFigureCollection figureCollection = new PathFigureCollection();
-            figureCollection.Add(
-                new PathFigure(
-                    points[0],
-                    new PathSegment[]{
-                    new BezierSegment(points[1], points[2], points[3], true, true),
-                    new BezierSegment(points[4], points[5], points[6], true, true),
-                    new BezierSegment(points[7], points[8], points[9], true, true),
-                    new BezierSegment(points[10], points[11], points[12], true, true)},
-                    true
-                    )
-                );
-
-            return figureCollection;
+            return new PathFigureCollection(1) { new PathFigure(points[0], [new BezierSegment(points[1], points[2], points[3], true, true),
+                                                                            new BezierSegment(points[4], points[5], points[6], true, true),
+                                                                            new BezierSegment(points[7], points[8], points[9], true, true),
+                                                                            new BezierSegment(points[10], points[11], points[12], true, true)],
+                                                                            closed: true) };
         }
 
         /// <summary>

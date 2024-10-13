@@ -332,50 +332,26 @@ namespace System.Windows.Media
                 // Transform if applicable.
                 if (!matrix.IsIdentity)
                 {
-                    for (int i=0; i<points.Length; i++)
+                    for (int i = 0; i < points.Length; i++)
                     {
                         points[i] *= matrix;
                     }
                 }
 
-                PathFigureCollection collection = new PathFigureCollection();
-                collection.Add(
-                    new PathFigure(
-                    points[0],
-                    new PathSegment[]{
-                        new BezierSegment(points[1], points[2], points[3], true, true),
-                        new LineSegment(points[4], true, true),
-                        new BezierSegment(points[5], points[6], points[7], true, true),
-                        new LineSegment(points[8], true, true),
-                        new BezierSegment(points[9], points[10], points[11], true, true),
-                        new LineSegment(points[12], true, true),
-                        new BezierSegment(points[13], points[14], points[15], true, true)},
-                        true    // closed
-                    )
-                );
-
-                return collection;
+                return new PathFigureCollection(1) { new PathFigure(points[0], [new BezierSegment(points[1], points[2], points[3], true, true),
+                                                                                new LineSegment(points[4], true, true),
+                                                                                new BezierSegment(points[5], points[6], points[7], true, true),
+                                                                                new LineSegment(points[8], true, true),
+                                                                                new BezierSegment(points[9], points[10], points[11], true, true),
+                                                                                new LineSegment(points[12], true, true),
+                                                                                new BezierSegment(points[13], points[14], points[15], true, true)],
+                                                                                closed: true) };    // closed
             }
             else
-            {                
-                PathFigureCollection collection = new PathFigureCollection();
-                collection.Add(
-                    new PathFigure(
-                    rect.TopLeft * matrix,
-                    new PathSegment[]{
-                        new PolyLineSegment(
-                        new Point[]
-                        {
-                            rect.TopRight * matrix,
-                            rect.BottomRight * matrix,
-                            rect.BottomLeft * matrix
-                        },
-                        true)},
-                        true    // closed
-                    )
-                );
-
-                return collection;
+            {
+                Point[] points = [rect.TopRight * matrix, rect.BottomRight * matrix, rect.BottomLeft * matrix];
+                
+                return new PathFigureCollection(1) { new PathFigure(rect.TopLeft * matrix, [new PolyLineSegment(points, isStroked: true)], closed: true) };
             }            
         }
         

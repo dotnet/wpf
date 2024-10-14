@@ -20,8 +20,8 @@
         <Setter Property="TextElement.FontSize" Value="12" />
         <Setter Property="TextBlock.TextAlignment" Value="Justify" />
         <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
-        <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
-        <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ToolTipBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}"/>
         <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />

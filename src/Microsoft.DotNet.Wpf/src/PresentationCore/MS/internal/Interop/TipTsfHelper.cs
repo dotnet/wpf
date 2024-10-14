@@ -164,20 +164,17 @@ namespace MS.Internal.Interop
         /// <returns>True if the touch KB should show, false otherwise.</returns>
         private static bool ShouldShow(DependencyObject focusedObject)
         {
-            UIElement uiElement;
-            UIElement3D uiElement3D;
-            ContentElement contentElement;
             AutomationPeer peer = null;
 
-            if ((uiElement = focusedObject as UIElement) != null)
+            if (focusedObject is UIElement uiElement)
             {
                 peer = uiElement.GetAutomationPeer();
             }
-            else if ((uiElement3D = focusedObject as UIElement3D) != null)
+            else if (focusedObject is UIElement3D uiElement3D)
             {
                 peer = uiElement3D.GetAutomationPeer();
             }
-            else if ((contentElement = focusedObject as ContentElement) != null)
+            else if (focusedObject is ContentElement contentElement)
             {
                 peer = contentElement.GetAutomationPeer();
             }

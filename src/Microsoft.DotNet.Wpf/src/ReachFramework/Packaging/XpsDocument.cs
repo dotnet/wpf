@@ -313,7 +313,7 @@ namespace System.Windows.Xps.Packaging
                 //
                 List<PackagePart> xmlPartList = new List<PackagePart>();
                 
-                (FixedDocumentSequenceReader as XpsFixedDocumentSequenceReaderWriter).CollectXmlPartsAndDepenedents(xmlPartList);
+                ((XpsFixedDocumentSequenceReaderWriter)FixedDocumentSequenceReader).CollectXmlPartsAndDepenedents(xmlPartList);
 
                 foreach( PackagePart part in xmlPartList )
                 {
@@ -619,11 +619,11 @@ namespace System.Windows.Xps.Packaging
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
             object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
-            if (!(fixedObject is FixedDocumentSequence) )
+            if (fixedObject is not FixedDocumentSequence fdseq)
             {
                  throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocumentSequence);
             }
-            return fixedObject as FixedDocumentSequence;
+            return fdseq;
         }
 
         /// <summary>
@@ -898,10 +898,7 @@ namespace System.Windows.Xps.Packaging
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
-            {
-                _opcPackage.Close();
-            }
+                _opcPackage?.Close();
         }
 
         internal

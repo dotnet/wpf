@@ -324,8 +324,7 @@ namespace System.Windows.Input
             DependencyObject parent = null;
             DependencyObject dependencyObject = element;
             
-            ContentElement ce = element as ContentElement;
-            if (ce != null)
+            if (element is ContentElement ce)
                 dependencyObject = ce.GetUIParent();
             
             while (dependencyObject != null)
@@ -347,8 +346,7 @@ namespace System.Windows.Input
                 return d;
 
             // Step 1: Walk up the logical tree
-            UIElement uiElement = d as UIElement;
-            if (uiElement != null)
+            if (d is UIElement uiElement)
             {
                 DependencyObject logicalParent = uiElement.GetUIParentCore();
                 if (logicalParent != null)
@@ -358,8 +356,7 @@ namespace System.Windows.Input
             }
             else
             {
-                ContentElement ce = d as ContentElement;
-                if (ce != null)
+                if (d is ContentElement ce)
                 {
                     DependencyObject logicalParent = ce.GetUIParent(true);
                     if (logicalParent != null)
@@ -369,8 +366,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    UIElement3D uiElement3D = d as UIElement3D;
-                    if (uiElement3D != null)
+                    if (d is UIElement3D uiElement3D)
                     {
                         DependencyObject logicalParent = uiElement3D.GetUIParentCore();
                         if (logicalParent != null)

@@ -1,11 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Text;
-using System.Windows.Threading;
 using System.Runtime.InteropServices;
-using MS.Win32;
+using System.Windows.Threading;
+using System.Diagnostics;
 using Microsoft.Win32;
+using System.Text;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
@@ -890,13 +891,7 @@ namespace System.Windows.Input
         // Return true if we're in hex conversion mode.
         private bool HexConversionMode
         {
-            get 
-            {
-                if ((_altNumpadConversionMode == AltNumpadConversionMode.HexDefaultCodePage) ||
-                    (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode))
-                    return true;
-                return false;
-            }
+            get => _altNumpadConversionMode is AltNumpadConversionMode.HexDefaultCodePage or AltNumpadConversionMode.HexUnicode;
         }
 
         /// <summary>
@@ -908,15 +903,11 @@ namespace System.Windows.Input
             {
                 if (!_isHexNumpadRegistryChecked)
                 {
-                    object obj;
-                    RegistryKey key;
-
-                    key = Registry.CurrentUser.OpenSubKey("Control Panel\\Input Method");
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey("Control Panel\\Input Method");
                     if (key != null)
                     {
-                        obj = key.GetValue("EnableHexNumpad");
-
-                        if ((obj is string) && ((string)obj != "0"))
+                        object obj = key.GetValue("EnableHexNumpad");
+                        if (obj is string value && value != "0")
                         {
                             _isHexNumpadEnabled = true;
                         }
@@ -924,6 +915,7 @@ namespace System.Windows.Input
 
                     _isHexNumpadRegistryChecked = true;
                 }
+
                 return _isHexNumpadEnabled;
             }
         }
@@ -966,23 +958,21 @@ namespace System.Windows.Input
         // ScanCode of Numpad keys.
         internal static class NumpadScanCode
         {
-            internal static int DigitFromScanCode(int scanCode)
+            internal static int DigitFromScanCode(int scanCode) => scanCode switch
             {
-                switch (scanCode)
-                {
-                    case Numpad0: return 0;
-                    case Numpad1: return 1;
-                    case Numpad2: return 2;
-                    case Numpad3: return 3;
-                    case Numpad4: return 4;
-                    case Numpad5: return 5;
-                    case Numpad6: return 6;
-                    case Numpad7: return 7;
-                    case Numpad8: return 8;
-                    case Numpad9: return 9;
-                }
-                return -1;
-            }
+                Numpad0 => 0,
+                Numpad1 => 1,
+                Numpad2 => 2,
+                Numpad3 => 3,
+                Numpad4 => 4,
+                Numpad5 => 5,
+                Numpad6 => 6,
+                Numpad7 => 7,
+                Numpad8 => 8,
+                Numpad9 => 9,
+                _ => -1,
+            };
+
             internal const int NumpadDot      =  0x53;
             internal const int NumpadPlus     =  0x4e;
             internal const int Numpad0        =  0x52;

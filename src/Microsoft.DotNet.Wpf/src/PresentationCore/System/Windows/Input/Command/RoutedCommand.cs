@@ -269,6 +269,10 @@ namespace System.Windows.Input
             {
                 return ComponentCommands.LoadDefaultGestureFromResource(_commandId);
             }
+            else if(OwnerType == typeof(ItemsCommands))
+            {
+                return ItemsCommands.LoadDefaultGestureFromResource(_commandId);
+            }
             return new InputGestureCollection();
         }
 

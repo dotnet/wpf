@@ -178,22 +178,30 @@ namespace System.Formats.Nrbf
                     || !classInfo.HasMember("_items")
                     || !classInfo.HasMember("_size")
                     || classInfo.GetRawValue("_size") is not int size
-                    || classInfo.GetRawValue("_items") is not SZArrayRecord<object> arrayRecord
+                    || classInfo.GetRawValue("_items") is not SZArrayRecord<SerializationRecord> arrayRecord
                     || size > arrayRecord.Length)
                 {
                     return false;
                 }
 
                 ArrayList arrayList = new(size);
-                object?[] array = arrayRecord.GetArray();
+                SerializationRecord?[] array = arrayRecord.GetArray();
                 for (int i = 0; i < size; i++)
                 {
-                    if (array[i] is SerializationRecord)
+                    SerializationRecord? elementRecord = array[i];
+                    if (elementRecord is null)
                     {
+                        arrayList.Add(null);
+                    }
+                    else if (elementRecord is PrimitiveTypeRecord primitiveTypeRecord)
+                    {
+                        arrayList.Add(primitiveTypeRecord.Value);
+                    }
+                    else
+                    {
+                        // It was a complex type (represented as a ClassRecord or an ArrayRecord)
                         return false;
                     }
-
-                    arrayList.Add(array[i]);
                 }
 
                 value = arrayList;
@@ -259,27 +267,39 @@ namespace System.Formats.Nrbf
                     || !classInfo.HasMember("Values")
                     // Note that hashtables with custom comparers and/or hash code providers will have non null Comparer
                     || classInfo.GetSerializationRecord("Comparer") is not null
-                    || classInfo.GetSerializationRecord("Keys") is not SZArrayRecord<object?> keysRecord
-                    || classInfo.GetSerializationRecord("Values") is not SZArrayRecord<object?> valuesRecord
+                    || classInfo.GetSerializationRecord("Keys") is not SZArrayRecord<SerializationRecord?> keysRecord
+                    || classInfo.GetSerializationRecord("Values") is not SZArrayRecord<SerializationRecord?> valuesRecord
                     || keysRecord.Length != valuesRecord.Length)
                 {
                     return false;
                 }
 
                 Hashtable temp = new(keysRecord.Length);
-                object?[] keys = keysRecord.GetArray();
-                object?[] values = valuesRecord.GetArray();
+                SerializationRecord?[] keys = keysRecord.GetArray();
+                SerializationRecord?[] values = valuesRecord.GetArray();
                 for (int i = 0; i < keys.Length; i++)
                 {
-                    object? key = keys[i];
-                    object? value = values[i];
+                    SerializationRecord? key = keys[i];
+                    SerializationRecord? value = values[i];
 
-                    if (key is null or SerializationRecord || value is SerializationRecord)
+                    if (key is null || key is not PrimitiveTypeRecord primitiveKey)
                     {
                         return false;
                     }
 
-                    temp[key] = value;
+                    if (value is null)
+                    {
+                        temp[primitiveKey.Value] = null; // null values are allowed
+                    }
+                    else if (value is PrimitiveTypeRecord primitiveValue)
+                    {
+                        temp[primitiveKey.Value] = primitiveValue.Value;
+                    }
+                    else
+                    {
+                        // It was a complex type (represented as a ClassRecord or an ArrayRecord)
+                        return false;
+                    }
                 }
 
                 hashtable = temp;

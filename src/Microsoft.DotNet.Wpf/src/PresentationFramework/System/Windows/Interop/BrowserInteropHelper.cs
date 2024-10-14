@@ -30,11 +30,6 @@ namespace System.Windows.Interop
     /// </summary>
     public static class BrowserInteropHelper
     {
-        static BrowserInteropHelper()
-        {
-            IsInitialViewerNavigation = true;
-        }
-
         /// <summary>
         /// Returns the IOleClientSite interface
         /// </summary>
@@ -77,31 +72,11 @@ namespace System.Windows.Interop
             get { return _hostingFlags; }
             set { _hostingFlags = value; }
         }
-        
+
         /// <summary>
         /// Returns the Uri used to launch the application.
         /// </summary>
-        public static Uri Source
-        {
-            get
-            {
-                return SiteOfOriginContainer.BrowserSource;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we are running the XAML viewer pseudo-application (what used to be XamlViewer.xbap).
-        /// This explicitly does not cover the case of XPS documents (MimeType.Document).
-        /// </summary>
-        internal static bool IsViewer
-        {
-            get
-            {
-                Application app = Application.Current;
-                return app != null && app.MimeType == MimeType.Markup;
-            }
-        }
-
+        public static Uri Source => null;
 
         /// <summary>
         /// Returns true if the host browser is IE or the WebOC hosted in a standalone application.
@@ -112,23 +87,6 @@ namespace System.Windows.Interop
             get
             {
                 return (HostingFlags & HostingFlags.hfHostedInIEorWebOC) != 0;
-            }
-        }
-
-        /// <summary>
-        /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
-        /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
-        /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
-        /// </summary>
-        internal static bool IsInitialViewerNavigation
-        {
-            get
-            {
-                return IsViewer && _isInitialViewerNavigation;
-            }
-            set
-            {
-                _isInitialViewerNavigation = value;
             }
         }
 
@@ -233,7 +191,6 @@ namespace System.Windows.Interop
         }
 
         private static HostingFlags _hostingFlags;
-        private static bool _isInitialViewerNavigation;
         private static bool? _isScriptInteropDisabled;
         
         private static UnsafeNativeMethods.IServiceProvider _hostHtmlDocumentServiceProvider;

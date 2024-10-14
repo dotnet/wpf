@@ -98,11 +98,6 @@ static class WpfWebRequestHelper
 
             CookieHandler.HandleWebRequest(httpRequest);
 
-            if (String.IsNullOrEmpty(httpRequest.Referer))
-            {
-                httpRequest.Referer = BindUriHelper.GetReferer(uri);
-            }
-
             CustomCredentialPolicy.EnsureCustomCredentialPolicy();
 
             // Enable NTLM authentication.

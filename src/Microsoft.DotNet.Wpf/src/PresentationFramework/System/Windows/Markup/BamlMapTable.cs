@@ -624,7 +624,7 @@ namespace System.Windows.Markup
             else
             {
                 Debug.Assert(id < StringIdMap.Count);
-                BamlStringInfoRecord infoRecord = (BamlStringInfoRecord)StringIdMap[id];
+                BamlStringInfoRecord infoRecord = StringIdMap[id];
                 return infoRecord.Value;
             }
         }
@@ -1471,8 +1471,9 @@ namespace System.Windows.Markup
             Debug.Assert(GetHashTableData(stringValue) == null,
                 "Already have this String in the BamlMapTable string table");
 
-            BamlStringInfoRecord stringInfo = new BamlStringInfoRecord();
-            stringInfo.StringId = (short)StringIdMap.Add(stringInfo);
+            BamlStringInfoRecord stringInfo = new();
+            StringIdMap.Add(stringInfo);
+            stringInfo.StringId = (short)(StringIdMap.Count - 1);
             stringInfo.Value = stringValue;
 
             // add to the hash
@@ -1658,9 +1659,7 @@ namespace System.Windows.Markup
         // an existing record something different.
         internal void LoadStringInfoRecord(BamlStringInfoRecord record)
         {
-            Debug.Assert(StringIdMap.Count == record.StringId ||
-                         record.Value ==
-                         ((BamlStringInfoRecord)StringIdMap[record.StringId]).Value);
+            Debug.Assert(StringIdMap.Count == record.StringId || record.Value == StringIdMap[record.StringId].Value);
 
             if (StringIdMap.Count == record.StringId)
             {
@@ -1698,7 +1697,7 @@ namespace System.Windows.Markup
             table._assemblyIdToInfo = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo);
             table._typeIdToInfo = new List<BamlTypeInfoRecord>(_typeIdToInfo);
             table._attributeIdToInfo = new List<BamlAttributeInfoRecord>(_attributeIdToInfo);
-            table._stringIdToInfo = (ArrayList)_stringIdToInfo.Clone();
+            table._stringIdToInfo = new List<BamlStringInfoRecord>(_stringIdToInfo);
             return table;
         }
 
@@ -1759,7 +1758,7 @@ namespace System.Windows.Markup
             get { return _attributeIdToInfo; }
         }
 
-        private ArrayList StringIdMap
+        private List<BamlStringInfoRecord> StringIdMap
         {
             get { return _stringIdToInfo; }
         }
@@ -1827,7 +1826,10 @@ namespace System.Windows.Markup
         /// List of Attribute Ids
         /// </summary>
         private List<BamlAttributeInfoRecord> _attributeIdToInfo = new(10);
-        ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
+        /// <summary>
+        /// List of String Info
+        /// </summary>
+        private List<BamlStringInfoRecord> _stringIdToInfo = new();     
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
         XamlTypeMapper _xamlTypeMapper;

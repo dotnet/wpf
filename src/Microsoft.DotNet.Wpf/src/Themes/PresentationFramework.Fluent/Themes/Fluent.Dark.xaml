@@ -277,9 +277,6 @@
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
   <!--  Elevation border brushes  -->
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
-    <!--<LinearGradientBrush.RelativeTransform>
-            <ScaleTransform CenterY="0.5" ScaleY="-1" />
-        </LinearGradientBrush.RelativeTransform>-->
     <LinearGradientBrush.GradientStops>
       <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
       <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
@@ -320,15 +317,25 @@
   <SolidColorBrush x:Key="AccentButtonBackground" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
-  <!--<SolidColorBrush x:Key="AccentButtonBackgroundDisabled" ResourceKey="AccentFillColorDisabledBrush" />-->
+  <SolidColorBrush x:Key="AccentButtonBackgroundDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="{StaticResource TextOnAccentFillColorSecondary}" />
-  <!--<SolidColorBrush x:Key="AccentButtonForegroundDisabled" ResourceKey="TextOnAccentFillColorDisabled" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="{DynamicResource AccentControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="{DynamicResource AccentControlElevationBorder}" />-->
+  <SolidColorBrush x:Key="AccentButtonForegroundDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
+  <LinearGradientBrush x:Key="AccentButtonBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="AccentButtonBorderBrushPointerOver" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="{DynamicResource ControlFillColorTransparent}" />
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparentBrush}" />-->
+  <SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparent}" />
   <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ControlFillColorTertiary}" />
@@ -337,8 +344,18 @@
   <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-  <!--<SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource ControlElevationBorder}" />-->
+  <LinearGradientBrush x:Key="ButtonBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="ButtonBorderBrushPointerOver" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
   <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <!--  Calendar  -->
@@ -703,7 +720,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -723,7 +740,7 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
@@ -745,7 +762,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -765,17 +782,17 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPressed}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundPressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundDisabled}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushDisabled}" />
-              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

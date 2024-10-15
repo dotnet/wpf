@@ -5,7 +5,9 @@
     All Rights Reserved.
 -->
 
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- Styles when TabItems are on the Top -->
     <ControlTemplate x:Key="DefaultTopTabControlStyle" TargetType="{x:Type TabControl}">
@@ -207,6 +209,11 @@
             </Style.Triggers>
     </Style>
 
+    <sys:Double x:Key="TabItemHeaderMinHeight">32</sys:Double>
+    <sys:Double x:Key="TabItemHeaderMinWidth">100</sys:Double>
+    <sys:Double x:Key="TabItemHeaderFontSize">14</sys:Double>
+    <Thickness x:Key="TabItemHeaderPadding">8,6,8,6</Thickness>
+
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="{DynamicResource TabViewItemHeaderBackground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -225,10 +232,10 @@
                     <Grid x:Name="Root">
                         <Border
                             x:Name="Border"
-                            MinWidth="180"
-                            MinHeight="36"
+                            MinWidth="{DynamicResource TabItemHeaderMinWidth}"
+                            MinHeight="{DynamicResource TabItemHeaderMinHeight}"
                             Margin="0"
-                            Padding="6"
+                            Padding="{DynamicResource TabItemHeaderPadding}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1,1,1,0"
@@ -238,6 +245,7 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                 ContentSource="Header"
+                                TextElement.FontSize="{DynamicResource TabItemHeaderFontSize}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                 Margin="{TemplateBinding Padding}"
                                 RecognizesAccessKey="True" />

@@ -4048,6 +4048,10 @@
       </Trigger>
     </Style.Triggers>
   </Style>
+  <sys:Double x:Key="TabItemHeaderMinHeight">32</sys:Double>
+  <sys:Double x:Key="TabItemHeaderMinWidth">100</sys:Double>
+  <sys:Double x:Key="TabItemHeaderFontSize">14</sys:Double>
+  <Thickness x:Key="TabItemHeaderPadding">8,6,8,6</Thickness>
   <Style TargetType="{x:Type TabItem}">
     <Setter Property="Background" Value="{DynamicResource TabViewItemHeaderBackground}" />
     <Setter Property="BorderBrush" Value="Transparent" />
@@ -4064,8 +4068,8 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid x:Name="Root">
-            <Border x:Name="Border" MinWidth="180" MinHeight="36" Margin="0" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
-              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
+            <Border x:Name="Border" MinWidth="{DynamicResource TabItemHeaderMinWidth}" MinHeight="{DynamicResource TabItemHeaderMinHeight}" Margin="0" Padding="{DynamicResource TabItemHeaderPadding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
+              <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" TextElement.FontSize="{DynamicResource TabItemHeaderFontSize}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
             </Border>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="SelectionStates">

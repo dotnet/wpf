@@ -719,8 +719,8 @@ namespace System.Windows.Markup
             ParserContext context = ScopedCopy();
 
             // Deep copy only selected instance variables
-            context._mapTable = (_mapTable != null) ? _mapTable.Clone() : null;
-            context._xamlTypeMapper = (_xamlTypeMapper != null) ? _xamlTypeMapper.Clone() : null;
+            context._mapTable = _mapTable?.Clone();
+            context._xamlTypeMapper = _xamlTypeMapper?.Clone();
 
             // Connect the XamlTypeMapper and bamlmaptable
             context._xamlTypeMapper.MapTable = context._mapTable;

@@ -681,9 +681,9 @@
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
   <!--  ToolTip  -->
-  <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+  <SolidColorBrush x:Key="ToolTipBackgroundBrush" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="ToolTipBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-  <SolidColorBrush x:Key="ToolTipForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="ToolTipForegroundBrush" Color="{StaticResource TextFillColorPrimary}" />
   <!--  ToolBar  -->
   <!--  TODO  -->
   <!--  TreeGrid  -->
@@ -4556,9 +4556,9 @@
     <Setter Property="Width" Value="Auto" />
     <Setter Property="TextElement.FontSize" Value="12" />
     <Setter Property="TextBlock.TextAlignment" Value="Justify" />
-    <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
-    <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
-    <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
+    <Setter Property="Background" Value="{DynamicResource ToolTipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />

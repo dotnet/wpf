@@ -8,32 +8,7 @@
 *
 \***************************************************************************/
 
-using System;
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
-using System.Text;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Globalization;
-using MS.Utility;
-using System.Collections.Specialized;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using MS.Internal;
-
-
-#if !PBTCOMPILER
-
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-#endif
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -49,88 +24,71 @@ namespace System.Windows.Markup
     /// Main goal is to track current/parent context with a minimum of overhead.
     /// This class is internal so it can be shared with the BamlRecordReader
     /// </summary>
-    internal class ParserStack : ArrayList
+    internal sealed class ParserStack<T> : List<T> where T : class
     {
         /// <summary>
         ///     Creates a default ParserStack
         /// </summary>
-        internal ParserStack() : base()
+        internal ParserStack() : base() { }
+
+        public void Push(T item)
         {
+            Add(item);
         }
 
-        /// <summary>
-        ///     Creates a clone.
-        /// </summary>
-        private ParserStack(ICollection collection) : base(collection)
+        public T Pop()
         {
-        }
-
-        #region StackOverrides
-
-        public void Push(object o)
-        {
-            Add(o);
-        }
-
-        public object Pop()
-        {
-            object o = this[Count - 1];
+            T item = this[Count - 1];
             RemoveAt(Count - 1);
-            return o;
+
+            return item;
         }
 
 #if !PBTCOMPILER
-        public object Peek()
+        public T Peek()
         {
             // Die if peeking on empty stack
             return this[Count - 1];
         }
 #endif
 
-        public override object Clone()
+        public List<T> Clone()
         {
-            return new ParserStack(this);
+            return new List<T>(this);
         }
-
-        #endregion // StackOverrides
-
-        #region Properties
 
         /// <summary>
         /// Returns the Current Context on the stack
         /// </summary>
-        internal object CurrentContext
+        internal T CurrentContext
         {
-            get { return Count > 0 ? this[Count - 1] : null; }
+            get => Count > 0 ? this[Count - 1] : null;
         }
 
         /// <summary>
         /// Returns the Parent of the Current Context
         /// </summary>
-        internal object ParentContext
+        internal T ParentContext
         {
-            get { return Count > 1 ? this[Count - 2] : null; }
+            get => Count > 1 ? this[Count - 2] : null;
         }
 
         /// <summary>
         /// Returns the GrandParent of the Current Context
         /// </summary>
-        internal object GrandParentContext
+        internal T GrandParentContext
         {
-            get { return Count > 2 ? this[Count - 3] : null; }
+            get => Count > 2 ? this[Count - 3] : null;
         }
 
 #if !PBTCOMPILER
         /// <summary>
         /// Returns the GreatGrandParent of the Current Context
         /// </summary>
-        internal object GreatGrandParentContext
+        internal T GreatGrandParentContext
         {
-            get { return Count > 3 ? this[Count - 4] : null; }
+            get => Count > 3 ? this[Count - 4] : null;
         }
 #endif
-
-        #endregion // Properties
-
     }
 }

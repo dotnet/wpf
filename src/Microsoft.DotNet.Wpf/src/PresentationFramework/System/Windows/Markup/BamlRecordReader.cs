@@ -525,7 +525,7 @@ namespace System.Windows.Markup
             CurrentContext.ObjectData = null;
 
             #if DEBUG  // ifdef's around Debug.Assert are necessary because stackDepth is only DEBUG defined
-            Debug.Assert( stackDepth == ReaderContextStack.Count );
+            Debug.Assert(stackDepth == ReaderContextStack.Count);
             #endif
 
             PopContext();
@@ -4081,12 +4081,12 @@ namespace System.Windows.Markup
             // Check each one for the resource we are searching for until we reach a DependencyObject
             // which is actually in the element tree.  Stop at this one.
 
-            ParserStack contextStack = ReaderContextStack;
+            ParserStack<ReaderContextStackData> contextStack = ReaderContextStack;
             BamlRecordReader reader = this;
 
-            while( contextStack != null )
+            while (contextStack != null)
             {
-                for (int i = contextStack.Count-1; i >= 0; i--)
+                for (int i = contextStack.Count - 1; i >= 0; i--)
                 {
                     ReaderContextStackData stackData = (ReaderContextStackData) contextStack[i];
                     IDictionary dictionary = GetDictionaryFromContext(stackData, false /*toInsert*/);
@@ -4340,7 +4340,7 @@ namespace System.Windows.Markup
         // Pos the reader context stack.
         internal void PopContext()
         {
-            ReaderContextStackData stackData = (ReaderContextStackData) ReaderContextStack.Pop();
+            ReaderContextStackData stackData = ReaderContextStack.Pop();
 
             // If we're through with an Name scoping point, take it off the stack.
             INameScope nameScope = NameScope.NameScopeFromObject(stackData.ObjectData);
@@ -5493,12 +5493,12 @@ namespace System.Windows.Markup
 
         internal ReaderContextStackData CurrentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.CurrentContext; }
+            get { return ReaderContextStack.CurrentContext; }
         }
 
         internal ReaderContextStackData ParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.ParentContext; }
+            get { return ReaderContextStack.ParentContext; }
         }
 
         internal object ParentObjectData
@@ -5506,13 +5506,13 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
         internal ReaderContextStackData GrandParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.GrandParentContext; }
+            get { return ReaderContextStack.GrandParentContext; }
         }
 
         internal object GrandParentObjectData
@@ -5520,16 +5520,16 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
         internal ReaderContextStackData GreatGrandParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.GreatGrandParentContext; }
+            get { return ReaderContextStack.GreatGrandParentContext; }
         }
 
-        internal ParserStack ReaderContextStack
+        internal ParserStack<ReaderContextStackData> ReaderContextStack
         {
             get { return _contextStack; }
         }
@@ -5575,7 +5575,7 @@ namespace System.Windows.Markup
         }
 
         // The stack of context information accumulated during reading.
-        internal ParserStack ContextStack
+        internal ParserStack<ReaderContextStackData> ContextStack
         {
             get { return _contextStack; }
             set { _contextStack = value; }
@@ -5628,27 +5628,27 @@ namespace System.Windows.Markup
 #region Data
 
         // state vars
-        IComponentConnector          _componentConnector;
-        object                       _rootElement;
-        bool                         _bamlAsForest;
-        bool                         _isRootAlreadyLoaded;
-        ArrayList                    _rootList;
-        ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
-        TypeConvertContext           _typeConvertContext;
-        int                          _persistId;
-        ParserStack                  _contextStack = new ParserStack();
-        XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        int                          _maxAsyncRecords;
+        IComponentConnector                 _componentConnector;
+        object                              _rootElement;
+        bool                                _bamlAsForest;
+        bool                                _isRootAlreadyLoaded;
+        ArrayList                           _rootList;
+        ParserContext                       _parserContext;   // XamlTypeMapper, namespace state, lang/space values
+        TypeConvertContext                  _typeConvertContext;
+        int                                 _persistId;
+        ParserStack<ReaderContextStackData> _contextStack = new();
+        XamlParseMode                       _parseMode = XamlParseMode.Synchronous;
+        int                                 _maxAsyncRecords;
         // end of state vars
 
-        Stream                       _bamlStream;
-        ReaderStream                 _xamlReaderStream;
-        BamlBinaryReader             _binaryReader;
-        BamlRecordManager            _bamlRecordManager;
-        BamlRecord                   _preParsedBamlRecordsStart = null;
-        BamlRecord                   _preParsedIndexRecord = null;
-        bool                         _endOfDocument = false;
-        bool                         _buildTopDown = true;
+        Stream                              _bamlStream;
+        ReaderStream                        _xamlReaderStream;
+        BamlBinaryReader                    _binaryReader;
+        BamlRecordManager                   _bamlRecordManager;
+        BamlRecord                          _preParsedBamlRecordsStart = null;
+        BamlRecord                          _preParsedIndexRecord = null;
+        bool                                _endOfDocument = false;
+        bool                                _buildTopDown = true;
 
         // The outer BRR, when this one is nested.
         BamlRecordReader             _previousBamlRecordReader;

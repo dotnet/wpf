@@ -387,9 +387,9 @@ namespace System.Windows.Markup
                     }
 
                     // Loop through types and cache them.
-                    for (int j=0; j<TypeIdMap.Count; j++)
+                    for (int j = 0; j < TypeIdMap.Count; j++)
                     {
-                        BamlTypeInfoRecord info = TypeIdMap[j] as BamlTypeInfoRecord;
+                        BamlTypeInfoRecord info = TypeIdMap[j];
                         if (info.Type != null)
                         {
                             BamlAssemblyInfoRecord assyInfo = GetAssemblyInfoFromId(info.AssemblyId);
@@ -417,13 +417,13 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlTypeInfoRecord typeInfo  = (BamlTypeInfoRecord)TypeIdMap[id];
+                BamlTypeInfoRecord typeInfo = TypeIdMap[id];
 
-                if (null != typeInfo)
+                if (typeInfo is not null)
                 {
                     type = GetTypeFromTypeInfo(typeInfo);
 
-                    if (null == type)
+                    if (type is null)
                     {
                         ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
                     }
@@ -509,7 +509,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                return (BamlTypeInfoRecord) TypeIdMap[id];
+                return TypeIdMap[id];
             }
         }
 
@@ -801,15 +801,14 @@ namespace System.Windows.Markup
             {
                 if (bamlAttributeInfoRecord.OwnerTypeId < 0)
                 {
-                    bamlAttributeInfoRecord.OwnerType =
-                                         GetKnownTypeFromId(bamlAttributeInfoRecord.OwnerTypeId);
+                    bamlAttributeInfoRecord.OwnerType = GetKnownTypeFromId(bamlAttributeInfoRecord.OwnerTypeId);
                 }
                 else
                 {
-                    BamlTypeInfoRecord typeInfo = (BamlTypeInfoRecord)TypeIdMap[bamlAttributeInfoRecord.OwnerTypeId];
-                    if (null != typeInfo)
+                    BamlTypeInfoRecord typeInfo = TypeIdMap[bamlAttributeInfoRecord.OwnerTypeId];
+                    if (typeInfo is not null)
                     {
-                        bamlAttributeInfoRecord.OwnerType =  GetTypeFromTypeInfo(typeInfo);
+                        bamlAttributeInfoRecord.OwnerType = GetTypeFromTypeInfo(typeInfo);
                     }
                 }
             }
@@ -1251,7 +1250,8 @@ namespace System.Windows.Markup
             bamlTypeInfoRecord.IsInternalType = (elementType != null && ReflectionHelper.IsInternalType(elementType));
 
             // review, could be a race condition here.
-            bamlTypeInfoRecord.TypeId = (short)TypeIdMap.Add(bamlTypeInfoRecord);
+            TypeIdMap.Add(bamlTypeInfoRecord);
+            bamlTypeInfoRecord.TypeId = (short)(TypeIdMap.Count - 1);
 
             // add to the hash
             ObjectHashTable.Add(key, bamlTypeInfoRecord);
@@ -1268,9 +1268,7 @@ namespace System.Windows.Markup
         // as an existing record, ensure we're not trying to overwrite something.
         internal void LoadTypeInfoRecord(BamlTypeInfoRecord record)
         {
-            Debug.Assert(TypeIdMap.Count == record.TypeId ||
-                         record.TypeFullName ==
-                         ((BamlTypeInfoRecord)TypeIdMap[record.TypeId]).TypeFullName);
+            Debug.Assert(TypeIdMap.Count == record.TypeId || record.TypeFullName == TypeIdMap[record.TypeId].TypeFullName);
 
             if (TypeIdMap.Count == record.TypeId)
             {
@@ -1699,7 +1697,7 @@ namespace System.Windows.Markup
 
             table._objectHashTable = (Hashtable)_objectHashTable.Clone();
             table._assemblyIdToInfo = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo);
-            table._typeIdToInfo = (ArrayList)_typeIdToInfo.Clone();
+            table._typeIdToInfo = new List<BamlTypeInfoRecord>(_typeIdToInfo);
             table._attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone();
             table._stringIdToInfo = (ArrayList)_stringIdToInfo.Clone();
             return table;
@@ -1752,7 +1750,7 @@ namespace System.Windows.Markup
             get { return _assemblyIdToInfo; }
         }
 
-        private ArrayList TypeIdMap
+        private List<BamlTypeInfoRecord> TypeIdMap
         {
             get { return _typeIdToInfo; }
         }
@@ -1818,8 +1816,14 @@ namespace System.Windows.Markup
         // so leave null so Load doesn't take the hit.
         Hashtable _objectHashTable = new Hashtable();
 
-        private List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();    // List of Assemblies
-        ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
+        /// <summary>
+        /// List of Assemblies
+        /// </summary>
+        private List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();
+        /// <summary>
+        /// List of class types
+        /// </summary>
+        private List<BamlTypeInfoRecord> _typeIdToInfo = new();    
         ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
         ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
 

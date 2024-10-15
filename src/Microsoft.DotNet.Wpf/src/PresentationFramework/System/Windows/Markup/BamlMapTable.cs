@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
@@ -519,9 +520,9 @@ namespace System.Windows.Markup
         private short GetAssemblyIdForType(Type t)
         {
             string assemblyName = t.Assembly.FullName;
-            for (int i=0; i<AssemblyIdMap.Count; i++)
+            for (int i = 0; i < AssemblyIdMap.Count; i++)
             {
-                string mapName = ((BamlAssemblyInfoRecord)AssemblyIdMap[i]).AssemblyFullName;
+                string mapName = AssemblyIdMap[i].AssemblyFullName;
                 if (mapName == assemblyName)
                 {
                     return (short)i;
@@ -994,7 +995,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                return (BamlAssemblyInfoRecord)AssemblyIdMap[id];
+                return AssemblyIdMap[id];
             }
         }
 
@@ -1079,7 +1080,8 @@ namespace System.Windows.Markup
 #endif
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)(AssemblyIdMap.Count - 1);
 
                 ObjectHashTable.Add(key, bamlAssemblyInfoRecord);
 
@@ -1096,7 +1098,8 @@ namespace System.Windows.Markup
                     bamlAssemblyInfoRecord.Assembly.FullName == bamlAssemblyInfoRecord.AssemblyFullName);
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)(AssemblyIdMap.Count - 1);
 
                 // Write to BAML
                 bamlAssemblyInfoRecord.Write(binaryWriter);
@@ -1115,8 +1118,7 @@ namespace System.Windows.Markup
         internal void LoadAssemblyInfoRecord(BamlAssemblyInfoRecord record)
         {
             Debug.Assert(AssemblyIdMap.Count == record.AssemblyId ||
-                         record.AssemblyFullName ==
-                ((BamlAssemblyInfoRecord)AssemblyIdMap[record.AssemblyId]).AssemblyFullName);
+                         record.AssemblyFullName == AssemblyIdMap[record.AssemblyId].AssemblyFullName);
 
             if (AssemblyIdMap.Count == record.AssemblyId)
             {
@@ -1696,7 +1698,7 @@ namespace System.Windows.Markup
             BamlMapTable table = new BamlMapTable(_xamlTypeMapper);
 
             table._objectHashTable = (Hashtable)_objectHashTable.Clone();
-            table._assemblyIdToInfo = (ArrayList)_assemblyIdToInfo.Clone();
+            table._assemblyIdToInfo = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo);
             table._typeIdToInfo = (ArrayList)_typeIdToInfo.Clone();
             table._attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone();
             table._stringIdToInfo = (ArrayList)_stringIdToInfo.Clone();
@@ -1745,7 +1747,7 @@ namespace System.Windows.Markup
             get { return _objectHashTable; }
         }
 
-        private ArrayList AssemblyIdMap
+        private List<BamlAssemblyInfoRecord> AssemblyIdMap
         {
             get { return _assemblyIdToInfo; }
         }
@@ -1816,7 +1818,7 @@ namespace System.Windows.Markup
         // so leave null so Load doesn't take the hit.
         Hashtable _objectHashTable = new Hashtable();
 
-        ArrayList _assemblyIdToInfo = new ArrayList(1);    // arrayList of Assemblies
+        private List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();    // List of Assemblies
         ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
         ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
         ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info

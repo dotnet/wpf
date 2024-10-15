@@ -2264,7 +2264,7 @@ namespace System.Windows.Controls
                 out container);
         }
         
-        //Clear the _focusedInfo property when the row is cleared in datagrid.
+        // Clear the _focusedInfo property when the row is cleared in datagrid.
         internal void ClearFocusedInfo()
         {
             _focusedInfo = null;

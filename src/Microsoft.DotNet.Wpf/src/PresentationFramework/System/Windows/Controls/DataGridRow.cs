@@ -497,7 +497,7 @@ namespace System.Windows.Controls
             {
                 detailsPresenter.Content = BindingExpressionBase.DisconnectedItem;
             }
-            //Clear the properties to fix memory leaks case of selection and then clearing the items.
+            // Clear the properties to fix memory leaks case of selection and then clearing the items.
             _owner?.ClearFocusAndSelection();
             _owner = null;
         }

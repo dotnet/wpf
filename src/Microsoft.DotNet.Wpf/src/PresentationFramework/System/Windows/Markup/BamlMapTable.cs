@@ -365,9 +365,9 @@ namespace System.Windows.Markup
                 {
                     // Loop through attributes. We only care about having CLR properties in
                     // the hash table.  DependencyProperties are already cached by the framework.
-                    for (int i=0; i<AttributeIdMap.Count; i++)
+                    for (int i = 0; i < AttributeIdMap.Count; i++)
                     {
-                        BamlAttributeInfoRecord info = AttributeIdMap[i] as BamlAttributeInfoRecord;
+                        BamlAttributeInfoRecord info = AttributeIdMap[i];
                         if (info.PropInfo != null)
                         {
                             object key = GetAttributeInfoKey(info.OwnerType.FullName, info.Name);
@@ -647,7 +647,7 @@ namespace System.Windows.Markup
                 return record;
             }
 
-            return (BamlAttributeInfoRecord)AttributeIdMap[id];
+            return AttributeIdMap[id];
         }
 
         internal BamlAttributeInfoRecord GetAttributeInfoFromIdWithOwnerType(short attributeId)
@@ -678,8 +678,8 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
-                if (record != null)
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
+                if (record is not null)
                 {
                     return record.Name;
                 }
@@ -698,7 +698,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 return (record.OwnerTypeId == ownerTypeId) && (string.Equals(record.Name, name, StringComparison.Ordinal));
             }
         }
@@ -719,7 +719,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 return attributeUsage == record.AttributeUsage;
             }
         }
@@ -735,7 +735,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 name = record.Name;
                 ownerTypeId = record.OwnerTypeId;
                 attributeUsage = record.AttributeUsage;
@@ -907,7 +907,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord attribInfo = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord attribInfo = AttributeIdMap[id];
                 return GetDependencyProperty(attribInfo);
             }
         }
@@ -1348,7 +1348,7 @@ namespace System.Windows.Markup
             object key = GetAttributeInfoKey(typeFullName, fieldName);
 
             bamlAttributeInfoRecord = (BamlAttributeInfoRecord)GetHashTableData(key);
-            if (null == bamlAttributeInfoRecord)
+            if (bamlAttributeInfoRecord is null)
             {
                 // The property is new and needs a record created.
                 bamlAttributeInfoRecord = new BamlAttributeInfoRecord
@@ -1357,7 +1357,8 @@ namespace System.Windows.Markup
                     OwnerTypeId = typeId
                 };
 
-                bamlAttributeInfoRecord.AttributeId = (short)AttributeIdMap.Add(bamlAttributeInfoRecord);
+                AttributeIdMap.Add(bamlAttributeInfoRecord);
+                bamlAttributeInfoRecord.AttributeId = (short)(AttributeIdMap.Count - 1);
                 bamlAttributeInfoRecord.AttributeUsage = attributeUsage;
 
                 // add to the hash
@@ -1644,9 +1645,7 @@ namespace System.Windows.Markup
         // an existing record something different.
         internal void LoadAttributeInfoRecord(BamlAttributeInfoRecord record)
         {
-            Debug.Assert(AttributeIdMap.Count == record.AttributeId ||
-                         record.Name ==
-                         ((BamlAttributeInfoRecord)AttributeIdMap[record.AttributeId]).Name);
+            Debug.Assert(AttributeIdMap.Count == record.AttributeId || record.Name == AttributeIdMap[record.AttributeId].Name);
 
             if (AttributeIdMap.Count == record.AttributeId)
             {
@@ -1699,7 +1698,7 @@ namespace System.Windows.Markup
                 _objectHashTable = (Hashtable)_objectHashTable.Clone(),
                 _assemblyIdToInfo = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo),
                 _typeIdToInfo = new List<BamlTypeInfoRecord>(_typeIdToInfo),
-                _attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone(),
+                _attributeIdToInfo = new List<BamlAttributeInfoRecord>(_attributeIdToInfo),
                 _stringIdToInfo = (ArrayList)_stringIdToInfo.Clone()
             };
 
@@ -1758,7 +1757,7 @@ namespace System.Windows.Markup
             get { return _typeIdToInfo; }
         }
 
-        private ArrayList AttributeIdMap
+        private List<BamlAttributeInfoRecord> AttributeIdMap
         {
             get { return _attributeIdToInfo; }
         }
@@ -1826,8 +1825,11 @@ namespace System.Windows.Markup
         /// <summary>
         /// List of class types
         /// </summary>
-        private List<BamlTypeInfoRecord> _typeIdToInfo = new();    
-        private ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
+        private List<BamlTypeInfoRecord> _typeIdToInfo = new();
+        /// <summary>
+        /// List of Attribute Ids
+        /// </summary>
+        private List<BamlAttributeInfoRecord> _attributeIdToInfo = new(10);
         private ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.

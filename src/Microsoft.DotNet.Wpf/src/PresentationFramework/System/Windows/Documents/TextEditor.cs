@@ -2018,7 +2018,7 @@ namespace System.Windows.Documents
         private WeakReference<ImmComposition> _immCompositionForDetach;
 
         /// <summary>
-        /// This is variable stores <see cref="TextEditorThreadLocalStore"/> class instance per thread.
+        /// Holds a thread-specific instance of <see cref="TextEditorThreadLocalStore"/>.
         /// </summary>
         [ThreadStatic]
         private static TextEditorThreadLocalStore s_textEditorTLSInstance;

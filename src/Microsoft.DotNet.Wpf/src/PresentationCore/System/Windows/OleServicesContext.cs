@@ -28,7 +28,7 @@ namespace System.Windows;
 internal class OleServicesContext
 {
     /// <summary>
-    /// This is variable stores <see cref="OleServicesContext"/> class instance per thread.
+    /// Holds a thread-specific instance of <see cref="OleServicesContext"/>.
     /// </summary>
     [ThreadStatic]
     private static OleServicesContext s_oleServicesContextInstance;

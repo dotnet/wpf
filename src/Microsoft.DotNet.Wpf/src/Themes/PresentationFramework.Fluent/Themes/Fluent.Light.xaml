@@ -4551,7 +4551,7 @@
   <sys:Double x:Key="ToolTipMaxWidth">320</sys:Double>
   <Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
   <Style x:Key="DefaultToolTipStyle" TargetType="{x:Type ToolTip}">
-    <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />
+    <Setter Property="MaxWidth" Value="{DynamicResource ToolTipMaxWidth}" />
     <Setter Property="Height" Value="Auto" />
     <Setter Property="Width" Value="Auto" />
     <Setter Property="TextElement.FontSize" Value="12" />
@@ -4561,7 +4561,7 @@
     <Setter Property="Background" Value="{DynamicResource ToolTipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
-    <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />
+    <Setter Property="Padding" Value="{DynamicResource ToolTipBorderPadding}" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="SnapsToDevicePixels" Value="True" />

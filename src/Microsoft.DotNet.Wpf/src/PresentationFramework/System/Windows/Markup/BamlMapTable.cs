@@ -1680,17 +1680,14 @@ namespace System.Windows.Markup
 #endif
 
 #if !PBTCOMPILER
-        internal BamlMapTable Clone()
+        internal BamlMapTable Clone() => new BamlMapTable(_xamlTypeMapper)
         {
-            BamlMapTable table = new BamlMapTable(_xamlTypeMapper);
-
-            table._objectHashTable = (Hashtable)_objectHashTable.Clone();
-            table._assemblyIdToInfo = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo);
-            table._typeIdToInfo = new List<BamlTypeInfoRecord>(_typeIdToInfo);
-            table._attributeIdToInfo = new List<BamlAttributeInfoRecord>(_attributeIdToInfo);
-            table._stringIdToInfo = new List<BamlStringInfoRecord>(_stringIdToInfo);
-            return table;
-        }
+            ObjectHashTable = (Hashtable)_objectHashTable.Clone(),
+            AssemblyIdMap = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo),
+            TypeIdMap = new List<BamlTypeInfoRecord>(_typeIdToInfo),
+            AttributeIdMap = new List<BamlAttributeInfoRecord>(_attributeIdToInfo),
+            StringIdMap = new List<BamlStringInfoRecord>(_stringIdToInfo)
+        };       
 
         private TypeConverter GetConverterFromCache(short typeId)
         {
@@ -1731,27 +1728,42 @@ namespace System.Windows.Markup
 
         private Hashtable ObjectHashTable
         {
-            get { return _objectHashTable; }
+            get => _objectHashTable;
+#if !PBTCOMPILER
+            init => _objectHashTable = value;
+#endif
         }
 
         private List<BamlAssemblyInfoRecord> AssemblyIdMap
         {
-            get { return _assemblyIdToInfo; }
+            get => _assemblyIdToInfo;
+#if !PBTCOMPILER
+            init => _assemblyIdToInfo = value;
+#endif
         }
 
         private List<BamlTypeInfoRecord> TypeIdMap
         {
-            get { return _typeIdToInfo; }
+            get => _typeIdToInfo;
+#if !PBTCOMPILER
+            init => _typeIdToInfo = value;
+#endif
         }
 
         private List<BamlAttributeInfoRecord> AttributeIdMap
         {
-            get { return _attributeIdToInfo; }
+            get => _attributeIdToInfo;
+#if !PBTCOMPILER
+            init => _attributeIdToInfo = value;
+#endif
         }
 
         private List<BamlStringInfoRecord> StringIdMap
         {
-            get { return _stringIdToInfo; }
+            get => _stringIdToInfo;
+#if !PBTCOMPILER
+            init => _stringIdToInfo = value;
+#endif
         }
 
         internal XamlTypeMapper XamlTypeMapper
@@ -1803,24 +1815,24 @@ namespace System.Windows.Markup
         // see if any advantage in breaking up or searching
         // by PropId, etc. instead of Hash. Hash is only used on compile
         // so leave null so Load doesn't take the hit.
-        Hashtable _objectHashTable = new Hashtable();
+        private readonly Hashtable _objectHashTable = new();
 
         /// <summary>
-        /// List of Assemblies
+        /// List of <see cref="BamlAssemblyInfoRecord"/> (user assemblies).
         /// </summary>
-        private List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();
+        private readonly List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();
         /// <summary>
-        /// List of class types
+        /// List of <see cref="BamlTypeInfoRecord"/> (class types).
         /// </summary>
-        private List<BamlTypeInfoRecord> _typeIdToInfo = new();
+        private readonly List<BamlTypeInfoRecord> _typeIdToInfo = new();
         /// <summary>
-        /// List of Attribute Ids
+        /// List of <see cref="BamlAttributeInfoRecord"/> (attribute IDs).
         /// </summary>
-        private List<BamlAttributeInfoRecord> _attributeIdToInfo = new(10);
+        private readonly List<BamlAttributeInfoRecord> _attributeIdToInfo = new(10);
         /// <summary>
-        /// List of String Info
+        /// List of <see cref="BamlStringInfoRecord"/> (strings).
         /// </summary>
-        private List<BamlStringInfoRecord> _stringIdToInfo = new();     
+        private readonly List<BamlStringInfoRecord> _stringIdToInfo = new();     
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
         XamlTypeMapper _xamlTypeMapper;

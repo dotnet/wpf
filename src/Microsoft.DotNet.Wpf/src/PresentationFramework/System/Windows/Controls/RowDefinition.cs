@@ -562,7 +562,7 @@ namespace System.Windows.Controls
                 throw new ArgumentException(SR.Format(SR.GridCollection_MustBeCertainType, "RowDefinitionCollection", "RowDefinition"));
             }
 
-            if (item.Parent != null)
+            if (item.Parent != _owner && item.Parent != null)
             {
                 throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
             }

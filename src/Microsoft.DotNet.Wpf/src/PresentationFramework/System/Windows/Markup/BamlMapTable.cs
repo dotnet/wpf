@@ -679,12 +679,8 @@ namespace System.Windows.Markup
             else
             {
                 BamlAttributeInfoRecord record = AttributeIdMap[id];
-                if (record is not null)
-                {
-                    return record.Name;
-                }
+                return record.Name;
             }
-            return null;
         }
 
         internal bool DoesAttributeMatch(short id, short ownerTypeId, string name)
@@ -799,10 +795,7 @@ namespace System.Windows.Markup
                 else
                 {
                     BamlTypeInfoRecord typeInfo = TypeIdMap[bamlAttributeInfoRecord.OwnerTypeId];
-                    if (typeInfo is not null)
-                    {
-                        bamlAttributeInfoRecord.OwnerType = GetTypeFromTypeInfo(typeInfo);
-                    }
+                    bamlAttributeInfoRecord.OwnerType = GetTypeFromTypeInfo(typeInfo);
                 }
             }
 
@@ -1021,10 +1014,9 @@ namespace System.Windows.Markup
                 AssemblyFullName = assemblyFullName
             };
 
-            BamlAssemblyInfoRecord bamlAssemblyInfoRecord =
-                (BamlAssemblyInfoRecord)GetHashTableData(key);
+            BamlAssemblyInfoRecord bamlAssemblyInfoRecord = (BamlAssemblyInfoRecord)GetHashTableData(key);
 
-            if (null == bamlAssemblyInfoRecord)
+            if (bamlAssemblyInfoRecord is null)
             {
                 bamlAssemblyInfoRecord = new BamlAssemblyInfoRecord
                 {
@@ -1113,8 +1105,7 @@ namespace System.Windows.Markup
         // sure we are not overwriting existing data.
         internal void LoadAssemblyInfoRecord(BamlAssemblyInfoRecord record)
         {
-            Debug.Assert(AssemblyIdMap.Count == record.AssemblyId ||
-                         record.AssemblyFullName == AssemblyIdMap[record.AssemblyId].AssemblyFullName);
+            Debug.Assert(AssemblyIdMap.Count == record.AssemblyId || record.AssemblyFullName == AssemblyIdMap[record.AssemblyId].AssemblyFullName);
 
             if (AssemblyIdMap.Count == record.AssemblyId)
             {

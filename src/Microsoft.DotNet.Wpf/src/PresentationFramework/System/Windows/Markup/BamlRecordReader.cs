@@ -4304,17 +4304,17 @@ namespace System.Windows.Markup
         {
             ReaderContextStackData d;
 
-            lock(_stackDataFactoryCache)
+            lock (s_stackDataFactoryCache)
             {
-                if (_stackDataFactoryCache.Count == 0)
+                if (s_stackDataFactoryCache.Count == 0)
                 {
                     d = new ReaderContextStackData();
                 }
                 else
                 {
                     // Get StackData from the factory cache
-                    d = _stackDataFactoryCache[_stackDataFactoryCache.Count-1];
-                    _stackDataFactoryCache.RemoveAt(_stackDataFactoryCache.Count-1);
+                    d = s_stackDataFactoryCache[s_stackDataFactoryCache.Count - 1];
+                    s_stackDataFactoryCache.RemoveAt(s_stackDataFactoryCache.Count - 1);
                 }
             }
 
@@ -4355,9 +4355,9 @@ namespace System.Windows.Markup
             // Clear the stack data and then add it to the factory cache for reuse
             stackData.ClearData();
 
-            lock(_stackDataFactoryCache)
+            lock (s_stackDataFactoryCache)
             {
-                _stackDataFactoryCache.Add(stackData);
+                s_stackDataFactoryCache.Add(stackData);
             }
         }
 
@@ -5574,13 +5574,6 @@ namespace System.Windows.Markup
             get { return _xamlReaderStream; }
         }
 
-        // The stack of context information accumulated during reading.
-        internal ParserStack<ReaderContextStackData> ContextStack
-        {
-            get { return _contextStack; }
-            set { _contextStack = value; }
-        }
-
         internal int LineNumber
         {
             get { return ParserContext.LineNumber; }
@@ -5623,11 +5616,13 @@ namespace System.Windows.Markup
             get { return _previousBamlRecordReader; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // state vars
+        private readonly ParserStack<ReaderContextStackData> _contextStack = new();
+
         IComponentConnector                 _componentConnector;
         object                              _rootElement;
         bool                                _bamlAsForest;
@@ -5636,7 +5631,6 @@ namespace System.Windows.Markup
         ParserContext                       _parserContext;   // XamlTypeMapper, namespace state, lang/space values
         TypeConvertContext                  _typeConvertContext;
         int                                 _persistId;
-        ParserStack<ReaderContextStackData> _contextStack = new();
         XamlParseMode                       _parseMode = XamlParseMode.Synchronous;
         int                                 _maxAsyncRecords;
         // end of state vars
@@ -5653,7 +5647,7 @@ namespace System.Windows.Markup
         // The outer BRR, when this one is nested.
         BamlRecordReader             _previousBamlRecordReader;
 
-        static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
+        private static readonly List<ReaderContextStackData> s_stackDataFactoryCache = new();
 
 #endregion Data
     }

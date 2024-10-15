@@ -211,8 +211,7 @@ namespace System.Windows.Controls
             //     Fallback search is if they type "bob" and then press "b"
             //     we'll look for "bobb" and when we don't find it we should
             //     find the next item starting with "bob".
-            if (_charsEntered.Count > 0
-                && (String.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo))==0))
+            if (_charsEntered.Count > 0 && string.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo)) == 0)
             {
                 repeatedChar = true;
             }

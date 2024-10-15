@@ -270,7 +270,7 @@ namespace MS.Win32
                 themeName = themeNameSB.ToString();
                 themeName = Path.GetFileNameWithoutExtension(themeName);
 
-                if(String.Compare(themeName, "aero", StringComparison.OrdinalIgnoreCase) == 0 && Utilities.IsOSWindows8OrNewer)
+                if(string.Equals(themeName, "aero", StringComparison.OrdinalIgnoreCase) && Utilities.IsOSWindows8OrNewer)
                 {
                     themeName = "Aero2";
                 }

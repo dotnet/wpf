@@ -329,25 +329,19 @@ namespace Microsoft.Build.Tasks.Windows
         // <returns></returns>
         private bool IsItemLocalizable(ITaskItem fileItem)
         {
-            bool isLocalizable = false;
-
             // if the default culture is not set, by default all
             // the items are not localizable.
+            bool isLocalizable = false;
 
-            if (Culture != null && Culture.Equals("") == false)
+            if (!string.IsNullOrEmpty(Culture))
             {
-                string localizableString;
+                string localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
 
                 // Default culture is set, by default the item is localizable
-                // unless it is set as false in the Localizable attribute.
-
-                isLocalizable = true;
-
-                localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
-
-                if (localizableString != null && String.Compare(localizableString, "false", StringComparison.OrdinalIgnoreCase) ==0 )
+                // unless it is set as false in the Localizable attribute.         
+                if (!string.Equals(localizableString, "false", StringComparison.OrdinalIgnoreCase))
                 {
-                    isLocalizable = false;
+                    isLocalizable = true;
                 }
             }
 

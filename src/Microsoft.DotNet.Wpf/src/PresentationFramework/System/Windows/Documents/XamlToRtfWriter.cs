@@ -2237,29 +2237,29 @@ namespace System.Windows.Documents
             {
                 string imageFormatName = imageName.Substring(extensionIndex);
 
-                if (string.Compare(".png", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".png", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Png;
                 }
-                if (string.Compare(".jpeg", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0 ||
-                    string.Compare(".jpg", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".jpeg", imageFormatName, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(".jpg", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Jpeg;
                 }
-                if (string.Compare(".gif", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".gif", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Gif;
                 }
-                if (string.Compare(".tif", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0 ||
-                    string.Compare(".tiff", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".tif", imageFormatName, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(".tiff", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Tif;
                 }
-                if (string.Compare(".bmp", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".bmp", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Bmp;
                 }
-                if (string.Compare(".dib", imageFormatName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(".dib", imageFormatName, StringComparison.OrdinalIgnoreCase))
                 {
                     imageFormat = RtfImageFormat.Dib;
                 }
@@ -2271,11 +2271,11 @@ namespace System.Windows.Documents
         // Get the image stretch type
         private System.Windows.Media.Stretch GetImageStretch(string imageStretch)
         {
-            if (string.Compare("Fill", imageStretch, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals("Fill", imageStretch, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Media.Stretch.Fill;
             }
-            else if (string.Compare("UniformToFill", imageStretch, StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals("UniformToFill", imageStretch, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Media.Stretch.UniformToFill;
             }
@@ -2288,11 +2288,11 @@ namespace System.Windows.Documents
         // Get the image stretch direction type
         private System.Windows.Controls.StretchDirection GetImageStretchDirection(string imageStretchDirection)
         {
-            if (string.Compare("UpOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals("UpOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Controls.StretchDirection.UpOnly;
             }
-            else if (string.Compare("DownOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals("DownOnly", imageStretchDirection, StringComparison.OrdinalIgnoreCase))
             {
                 return System.Windows.Controls.StretchDirection.DownOnly;
             }
@@ -2720,19 +2720,19 @@ namespace System.Windows.Documents
             {
                 XamlToRtfError xamlToRtfError = XamlToRtfError.None;
 
-                if (string.Compare(name, "&gt;", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(name, "&gt;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters(">");
                 }
-                else if (string.Compare(name, "&lt;", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals(name, "&lt;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters("<");
                 }
-                else if (string.Compare(name, "&amp;", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals(name, "&amp;", StringComparison.OrdinalIgnoreCase))
                 {
                     return ((IXamlContentHandler)this).Characters("&");
                 }
-                else if (name.IndexOf("&#x", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (name.StartsWith("&#x", StringComparison.OrdinalIgnoreCase))
                 {
                     xamlToRtfError = XamlToRtfError.InvalidFormat;
                     if (name.Length >= 5)
@@ -2746,7 +2746,7 @@ namespace System.Windows.Documents
                         }
                     }
                 }
-                else if (name.IndexOf("&#", StringComparison.OrdinalIgnoreCase) == 0)
+                else if (name.StartsWith("&#", StringComparison.OrdinalIgnoreCase))
                 {
                     if (name.Length >= 4)
                     {
@@ -2875,11 +2875,11 @@ namespace System.Windows.Documents
                                         break;
 
                                     case XamlAttribute.XAFontWeight:
-                                        if (string.Compare(valueString, "Normal", StringComparison.OrdinalIgnoreCase) == 0)
+                                        if (string.Equals(valueString, "Normal", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Bold = false;
                                         }
-                                        else if (string.Compare(valueString, "Bold", StringComparison.OrdinalIgnoreCase) == 0)
+                                        else if (string.Equals(valueString, "Bold", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Bold = true;
                                         }
@@ -2895,7 +2895,7 @@ namespace System.Windows.Documents
                                         break;
 
                                     case XamlAttribute.XAFontStyle:
-                                        if (string.Compare(valueString, "Italic", StringComparison.OrdinalIgnoreCase) == 0)
+                                        if (string.Equals(valueString, "Italic", StringComparison.OrdinalIgnoreCase))
                                         {
                                             formatState.Italic = true;
                                         }
@@ -3466,7 +3466,7 @@ namespace System.Windows.Documents
             {
                 for (int i = 0; i < entries.Length; i++)
                 {
-                    if (string.Compare(entries[i].Name, name, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(entries[i].Name, name, StringComparison.OrdinalIgnoreCase))
                     {
                         return entries[i].Value;
                     }
@@ -3689,12 +3689,12 @@ namespace System.Windows.Documents
                 if (dirName.Length == 0)
                     return false;
 
-                if (string.Compare("RightToLeft", dirName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals("RightToLeft", dirName, StringComparison.OrdinalIgnoreCase))
                 {
                     dirState = DirState.DirRTL;
                     return true;
                 }
-                else if (string.Compare("LeftToRight", dirName, StringComparison.OrdinalIgnoreCase) == 0)
+                else if (string.Equals("LeftToRight", dirName, StringComparison.OrdinalIgnoreCase))
                 {
                     dirState = DirState.DirLTR;
                     return true;

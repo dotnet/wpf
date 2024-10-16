@@ -1768,10 +1768,9 @@ namespace System.Windows.Markup
 
         internal XamlTypeMapper XamlTypeMapper
         {
-            get { return _xamlTypeMapper; }
-
+            get => _xamlTypeMapper;
 #if !PBTCOMPILER
-            set { _xamlTypeMapper = value;  }
+            set => _xamlTypeMapper = value;
 #endif
         }
 
@@ -1832,10 +1831,12 @@ namespace System.Windows.Markup
         /// <summary>
         /// List of <see cref="BamlStringInfoRecord"/> (strings).
         /// </summary>
-        private readonly List<BamlStringInfoRecord> _stringIdToInfo = new();     
+        private readonly List<BamlStringInfoRecord> _stringIdToInfo = new();
 
-        // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
-        XamlTypeMapper _xamlTypeMapper;
+        /// <summary>
+        /// XamlTypeMapper associated with this map table. There is always a one-to-one correspondence.
+        /// </summary>
+        private XamlTypeMapper _xamlTypeMapper;
 
         // The assembly record for the known types of controls
         BamlAssemblyInfoRecord _knownAssemblyInfoRecord;

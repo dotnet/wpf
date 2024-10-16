@@ -35,7 +35,7 @@ namespace MS.Internal
             throw new FormatException(SR.Parsers_IllegalToken);
         }
 
-        private static Color ParseHexColor(string trimmedColor)
+        static private Color ParseHexColor(ReadOnlySpan<char> trimmedColor)
         {
             int a,r,g,b;
             a = 255;
@@ -190,7 +190,7 @@ namespace MS.Internal
         /// </summary>
         internal static Color ParseColor(string color, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            string trimmedColor = color.Trim();
+            ReadOnlySpan<char> trimmedColor = color.AsSpan().Trim();
             ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
             // Check that our assumption stays true
@@ -199,13 +199,14 @@ namespace MS.Internal
             if (colorKind is ColorKind.NumericColor)
                 return ParseHexColor(trimmedColor);
 
-            if (colorKind is ColorKind.ContextColor)
-                return ParseContextColor(trimmedColor, formatProvider, context);
+            if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+                return ParseContextColor(trimmedColor.ToString(), formatProvider, context);
 
-            if (colorKind is ColorKind.ScRgbColor)
-                return ParseScRgbColor(trimmedColor, formatProvider);
+            if (colorKind is ColorKind.ScRgbColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+                return ParseScRgbColor(trimmedColor.ToString(), formatProvider);
 
-            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor);
+            // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor.ToString());
             if (knownColor == KnownColor.UnknownColor)
                 throw new FormatException(SR.Parsers_IllegalToken);
 
@@ -220,8 +221,8 @@ namespace MS.Internal
         /// </summary>
         internal static Brush ParseBrush(string brush, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            string trimmedColor = brush.Trim();
-            if (trimmedColor.Length == 0)
+            ReadOnlySpan<char> trimmedColor = brush.AsSpan().Trim();
+            if (trimmedColor.IsEmpty)
                 throw new FormatException(SR.Parser_Empty);
 
             ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
@@ -235,11 +236,11 @@ namespace MS.Internal
             if (colorKind is ColorKind.NumericColor)
                 return new SolidColorBrush(ParseHexColor(trimmedColor));
 
-            if (colorKind is ColorKind.ContextColor)
-                return new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context));
+            if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+                return new SolidColorBrush(ParseContextColor(trimmedColor.ToString(), formatProvider, context));
 
-            if (colorKind is ColorKind.ScRgbColor)
-                return new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider));
+            if (colorKind is ColorKind.ScRgbColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+                return new SolidColorBrush(ParseScRgbColor(trimmedColor.ToString(), formatProvider));
 
             // NULL is returned when the color was not valid
             SolidColorBrush solidColorBrush = KnownColors.ColorStringToKnownBrush(trimmedColor);
@@ -261,13 +262,11 @@ namespace MS.Internal
         /// <summary>
         /// Parse a PathFigureCollection string.
         /// </summary>
-        internal static PathFigureCollection ParsePathFigureCollection(
-            string pathString,
-            IFormatProvider formatProvider)
+        internal static PathFigureCollection ParsePathFigureCollection(string pathString, IFormatProvider formatProvider)
         {
-            PathStreamGeometryContext context = new PathStreamGeometryContext();
+            PathStreamGeometryContext context = new();
 
-            AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
+            AbbreviatedGeometryParser parser = new();
 
             parser.ParseToGeometryContext(context, pathString, startIndex: 0);
             

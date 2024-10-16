@@ -179,11 +179,11 @@ namespace System.Windows.Media
         }
 
         /// Return the solid color brush from a color string.  If there's no match, null
-        public static SolidColorBrush ColorStringToKnownBrush(string s)
+        public static SolidColorBrush ColorStringToKnownBrush(ReadOnlySpan<char> colorString)
         {
-            if (null != s)
-            {
-                KnownColor result = ColorStringToKnownColor(s);
+            if (!colorString.IsEmpty)
+            {   // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
+                KnownColor result = ColorStringToKnownColor(colorString.ToString());
 
                 // If the result is UnknownColor, that means this string wasn't found
                 if (result != KnownColor.UnknownColor)
@@ -192,6 +192,7 @@ namespace System.Windows.Media
                     return SolidColorBrushFromUint((uint)result);
                 }
             }
+
             return null;
         }
 

@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -23,10 +22,5 @@
     <Compile Include="System.Windows.Xps.Serialization.RCW.IXpsOMPackageWriter.cs" />
     <Compile Include="System.Windows.Xps.Packaging.XpsDocument.cs" />
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
   </ItemGroup>
 </Project>

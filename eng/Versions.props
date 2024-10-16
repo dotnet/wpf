@@ -22,18 +22,18 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>8.0.10-servicing.24468.3</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>8.0.11-servicing.24515.8</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>8.0.10-servicing.24466.10</VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>8.0.10</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>8.0.10</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>8.0.10-servicing.24466.10</MicrosoftNETCorePlatformsVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>8.0.11-servicing.24514.23</VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>8.0.11</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>8.0.11</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>8.0.11-servicing.24514.23</MicrosoftNETCorePlatformsVersion>
     <SystemCodeDomPackageVersion>8.0.0</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>8.0.1</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>8.0.1</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>8.0.10</SystemDrawingCommonVersion>
+    <SystemDrawingCommonVersion>8.0.11</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>8.0.0</SystemDirectoryServicesVersion>
     <SystemIOPackagingVersion>8.0.1</SystemIOPackagingVersion>
     <SystemReflectionMetadataLoadContextVersion>8.0.1</SystemReflectionMetadataLoadContextVersion>

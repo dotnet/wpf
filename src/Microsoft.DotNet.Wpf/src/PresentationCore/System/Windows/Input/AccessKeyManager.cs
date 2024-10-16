@@ -43,9 +43,9 @@ namespace System.Windows.Input
 
             lock (akm._keyToElements)
             {
-                if (!akm._keyToElements.TryGetValue(key, out List<WeakReference> elements))
+                if (!akm._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
                 {
-                    elements = new List<WeakReference>(1);
+                    elements = new List<WeakReference<IInputElement>>(1);
                     akm._keyToElements[key] = elements;
                 }
                 else
@@ -54,7 +54,7 @@ namespace System.Windows.Input
                     PurgeDead(elements, null);
                 }
 
-                elements.Add(new WeakReference(element));
+                elements.Add(new WeakReference<IInputElement>(element));
             }
         }
 
@@ -73,7 +73,7 @@ namespace System.Windows.Input
             lock (akm._keyToElements)
             {
                 // Get all elements bound to this key and remove this element
-                if (akm._keyToElements.TryGetValue(key, out List<WeakReference> elements))
+                if (akm._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
                 {
                     PurgeDead(elements, element);
                     if (elements.Count == 0)
@@ -378,10 +378,11 @@ namespace System.Windows.Input
             List<IInputElement> possibleElements;
             lock (_keyToElements)
             {
-                possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference> elements) ? CopyAndPurgeDead(elements) : null;
+                possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements) ? CopyAndPurgeDead(elements) : null;
             }
 
-            if (possibleElements == null) return null;
+            if (possibleElements is null)
+                return null;
 
             List<IInputElement> finalTargets = new List<IInputElement>(1);
 
@@ -566,14 +567,12 @@ namespace System.Windows.Input
             private object _scope;
         }
 
-        private static void PurgeDead(List<WeakReference> elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference<IInputElement>> elements, object elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = elements[i];
-                object element = weakReference.Target;
-
-                if (element == null || element == elementToRemove)
+                WeakReference<IInputElement> weakReference = elements[i];
+                if (!weakReference.TryGetTarget(out IInputElement element) || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
                 }
@@ -585,26 +584,24 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        ///     Takes an ArrayList of WeakReferences, removes the dead references and returns
+        ///     Takes a List of WeakReferences, removes the dead references and returns
         ///     a generic List of IInputElements (strong references)
         /// </summary>
-        private static List<IInputElement> CopyAndPurgeDead(List<WeakReference> elements)
+        private static List<IInputElement> CopyAndPurgeDead(List<WeakReference<IInputElement>> elements)
         {
             List<IInputElement> copy = new List<IInputElement>(elements.Count);
 
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = elements[i];
-                object element = weakReference.Target;
+                WeakReference<IInputElement> weakReference = elements[i];
 
-                if (element == null)
+                if (!weakReference.TryGetTarget(out IInputElement element))
                 {
                     elements.RemoveAt(i);
                 }
                 else
                 {
-                    Debug.Assert(element is IInputElement, "Element in AccessKeyManager store was not of type IInputElement");
-                    copy.Add((IInputElement)element);
+                    copy.Add(element);
                     i++;
                 }
             }
@@ -643,7 +640,7 @@ namespace System.Windows.Input
         ///     The primary access key element for an element.  This is stored as a WeakReference.
         /// </summary>
         private static readonly DependencyProperty AccessKeyElementProperty =
-            DependencyProperty.RegisterAttached("AccessKeyElement", typeof(WeakReference), typeof(AccessKeyManager));
+            DependencyProperty.RegisterAttached("AccessKeyElement", typeof(WeakReference<IInputElement>), typeof(AccessKeyManager));
 
         #endregion
 
@@ -657,10 +654,8 @@ namespace System.Windows.Input
         private string GetAccessKeyCharacter(DependencyObject d)
         {
             // See what the local value for AccessKeyElement is first and start with that.
-            WeakReference cachedElementWeakRef = (WeakReference)d.GetValue(AccessKeyElementProperty);
-            IInputElement accessKeyElement = (cachedElementWeakRef != null) ? (IInputElement)cachedElementWeakRef.Target : null;
-
-            if (accessKeyElement != null)
+            WeakReference<IInputElement> cachedElementWeakRef = (WeakReference<IInputElement>)d.GetValue(AccessKeyElementProperty);
+            if (cachedElementWeakRef.TryGetTarget(out IInputElement accessKeyElement))
             {
                 // First figure out if the target of accessKeyElement is still "d", then go find
                 // the "primary" character for the accessKeyElement.  
@@ -674,15 +669,15 @@ namespace System.Windows.Input
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
                 
-                    foreach (KeyValuePair<string, List<WeakReference>> entry in Current._keyToElements)
+                    foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in Current._keyToElements)
                     {
-                        List<WeakReference> elements = entry.Value;
+                        List<WeakReference<IInputElement>> elements = entry.Value;
                         for (int i = 0; i < elements.Count; i++)
                         {
                             // If this element matches accessKeyElement, then return the current character
-                            WeakReference currentElementWeakRef = elements[i];
+                            WeakReference<IInputElement> currentElementWeakRef = elements[i];
 
-                            if (currentElementWeakRef.Target == accessKeyElement)
+                            if (currentElementWeakRef.TryGetTarget(out IInputElement element) && element == accessKeyElement)
                             {
                                 return entry.Key;
                             }
@@ -695,16 +690,14 @@ namespace System.Windows.Input
             // There was no access key stored or it no longer matched.  Clear out the cache and figure it out again.
             d.ClearValue(AccessKeyElementProperty);
 
-            foreach (KeyValuePair<string, List<WeakReference>> entry in Current._keyToElements)
+            foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in Current._keyToElements)
             {
-                List<WeakReference> elements = entry.Value;
+                List<WeakReference<IInputElement>> elements = entry.Value;
                 for (int i = 0; i < elements.Count; i++)
                 {
                     // Determine the target for this element.  Cache the weak reference for the element on the target.
-                    WeakReference currentElementWeakRef = elements[i];
-                    IInputElement currentElement = (IInputElement)currentElementWeakRef.Target;
-
-                    if (currentElement != null)
+                    WeakReference<IInputElement> currentElementWeakRef = elements[i];
+                    if (currentElementWeakRef.TryGetTarget(out IInputElement currentElement))
                     {
                         AccessKeyPressedEventArgs accessKeyPressedEventArgs = new AccessKeyPressedEventArgs();
                         currentElement.RaiseEvent(accessKeyPressedEventArgs);
@@ -732,7 +725,7 @@ namespace System.Windows.Input
 
         #region Data
         // Map: string -> List<WeakReference> to IInputElements
-        private readonly Dictionary<string, List<WeakReference>> _keyToElements = new(10);
+        private readonly Dictionary<string, List<WeakReference<IInputElement>>> _keyToElements = new(10);
 
         [ThreadStatic]
         private static AccessKeyManager _accessKeyManager;

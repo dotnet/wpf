@@ -648,10 +648,10 @@ namespace System.Windows.Input
 
         internal static string InternalGetAccessKeyCharacter(DependencyObject d)
         {
-            return Current.GetAccessKeyCharacter(d);
+            return GetAccessKeyCharacter(d);
         }
 
-        private string GetAccessKeyCharacter(DependencyObject d)
+        private static string GetAccessKeyCharacter(DependencyObject d)
         {
             // See what the local value for AccessKeyElement is first and start with that.
             WeakReference<IInputElement> cachedElementWeakRef = (WeakReference<IInputElement>)d.GetValue(AccessKeyElementProperty);
@@ -717,8 +717,7 @@ namespace System.Windows.Input
                 }
             }
 
-
-            return String.Empty;
+            return string.Empty;
         }
 
         #endregion

@@ -14,6 +14,8 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -398,26 +400,19 @@ namespace System.Windows.Markup
         // and types that are a part of BamlTypeInfoRecords in the baml file.
         internal Type GetTypeFromId(short id)
         {
-            Type type = null;
-
             if (id < 0)
             {
                 return KnownTypes.Types[-id];
             }
-            else
+
+            BamlTypeInfoRecord typeInfo = TypeIdMap[id];
+            Type type = GetTypeFromTypeInfo(typeInfo);
+
+            if (type is null)
             {
-                BamlTypeInfoRecord typeInfo = TypeIdMap[id];
-
-                if (typeInfo is not null)
-                {
-                    type = GetTypeFromTypeInfo(typeInfo);
-
-                    if (type is null)
-                    {
-                        ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
-                    }
-                }
+                ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
             }
+
             return type;
         }
 
@@ -1624,10 +1619,11 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // Helper method to throw an Exception.
-        private void ThrowException(string id, string parameter)
+        [DoesNotReturn]
+        private static void ThrowException(string id, string parameter)
         {
-            ApplicationException bamlException = new ApplicationException(
-                                                     SR.Format(SR.GetResourceString(id), parameter));
+            ApplicationException bamlException = new(SR.Format(SR.GetResourceString(id), parameter));
+
             throw bamlException;
         }
 

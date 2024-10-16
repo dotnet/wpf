@@ -7,23 +7,11 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System;
-using System.Xml;
+
 using System.IO;
-using System.Windows;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Utility;
-using MS.Internal;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
-
-using MS.Utility;
+using System.Collections;
+using System.Diagnostics;
 
 namespace System.Windows.Markup
 {
@@ -37,8 +25,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Create a BamlWriter on the passed stream.  The stream must be writable.
         /// </summary>
-        public BamlWriter(
-            Stream stream)
+        public BamlWriter(Stream stream)
         {
             ArgumentNullException.ThrowIfNull(stream);
             if (!stream.CanWrite)
@@ -59,8 +46,8 @@ namespace System.Windows.Markup
             _closed = false;
             _nodeTypeStack = new ParserStack<WriteStackNode>();
             _assemblies = new Hashtable(7);
-           _extensionParser = new MarkupExtensionParser((IParserHelper)this, _parserContext);
-           _markupExtensionNodes = new ArrayList();
+            _extensionParser = new MarkupExtensionParser(this, _parserContext);
+            _markupExtensionNodes = new ArrayList();
         }
 
   

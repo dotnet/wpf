@@ -14,22 +14,12 @@ using MS.Win32;
 
 namespace System.Windows
 {
-    #region DataFormats class
-
     /// <summary>
     /// Translates between Windows Design text-based formats and
     /// 32-bit signed integer-based clipboard formats.
     /// </summary>
     public static class DataFormats
     {
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
-
         /// <summary>
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified ID.
         /// </summary>
@@ -39,16 +29,6 @@ namespace System.Windows
         /// Gets the data format with the Windows Clipboard numeric ID and name for the specified data format.
         /// </summary>
         public static DataFormat GetDataFormat(string format) => DataFormatsImpl.GetDataFormat(format);
-
-        #endregion Public Methods
-
-        //------------------------------------------------------
-        //
-        //  Public Fields
-        //
-        //------------------------------------------------------
-
-        #region Public Fields
 
         /// <summary>
         /// Specifies the standard ANSI text format. This field is read-only.
@@ -185,15 +165,7 @@ namespace System.Windows
         /// Specifies a data format as Xaml Package. This field is read-only.
         /// </summary>
         public static readonly string XamlPackage = "XamlPackage";
-        #endregion Public Fields
 
-        //------------------------------------------------------
-        //
-        //  Internal Fields
-        //
-        //------------------------------------------------------
-
-        #region Internal Fields
         /// <summary>
         /// Specifies a data format as ApplicationTrust which is used to block
         /// paste from partial trust to full trust applications. The intent of this 
@@ -204,16 +176,6 @@ namespace System.Windows
 
         internal const string FileName = "FileName";
         internal const string FileNameW = "FileNameW";
-
-        #endregion  Internal Fields
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
 
         /// <summary>
         /// Convert TextDataFormat to Dataformats.
@@ -244,29 +206,11 @@ namespace System.Windows
             _ => false
         };
 
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Data Formats Implementation
-        //
-        //------------------------------------------------------
-
-        #region Data Formats Implementation Class
-
         /// <summary>
         /// Static class containing the internal format list and associated lookup methods.
         /// </summary>
         private static class DataFormatsImpl
         {
-            //------------------------------------------------------
-            //
-            //  Static constructor
-            //
-            //------------------------------------------------------
-
-            #region Static constructor
-
             /// <summary>
             /// Ensures that the Win32 predefined formats are setup in our format list.
             /// This is called anytime we need to search the list.
@@ -310,16 +254,6 @@ namespace System.Windows
                 if (inkServicesFrameworkFormatId != 0)
                     formatList.Add(new(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
             }
-
-            #endregion Static Constructor
-
-            //------------------------------------------------------
-            //
-            //  Private Methods
-            //
-            //------------------------------------------------------
-
-            #region Private Methods
 
             /// <summary>
             /// Allows a new format name to be specified if the requested format is not in the list.
@@ -395,28 +329,16 @@ namespace System.Windows
                 }
             }
 
-            #endregion Private Methods
-
-            //------------------------------------------------------
-            //
-            //  Private Fields
-            //
-            //------------------------------------------------------
-
-            #region Private Fields
-
-            // The registered data format list.
+            /// <summary>
+            /// List of all registered <see cref="DataFormat"/> that we're aware of.
+            /// </summary>
             private static readonly List<DataFormat> formatList;
-            // This object is for locking the _formatList to access safe in the multi-thread.
+
+            /// <summary>
+            /// Lock specially used for access to <see cref="formatList"/> field.
+            /// </summary>
             private static readonly object _formatListlock = new();
 
-            #endregion Private Fields
-
         }
-
-        #endregion Data Formats Implementation Class
-
     }
-
-    #endregion DataFormats class
 }

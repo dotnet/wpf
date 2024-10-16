@@ -183,9 +183,9 @@ namespace System.Windows.Input
         {
             get 
             {
-                if (_accessKeyManager == null)
-                    _accessKeyManager = new AccessKeyManager();
-                return _accessKeyManager;
+                s_accessKeyManager ??= new AccessKeyManager();
+
+                return s_accessKeyManager;
             }
         }
 
@@ -234,7 +234,7 @@ namespace System.Windows.Input
             return ProcessKey(targets, key, existsElsewhere, userInitiated);
         }
 
-        private ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
+        private static ProcessKeyResult ProcessKey(List<IInputElement> targets, string key, bool existsElsewhere, bool userInitiated)
         {
             if (targets != null)
             {
@@ -424,7 +424,7 @@ namespace System.Windows.Input
         /// <param name="element"></param>
         /// <param name="key"></param>
         /// <returns>Scope for the given element, null means the context global scope</returns>
-        private AccessKeyInformation GetInfoForElement(IInputElement element, string key)
+        private static AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
             AccessKeyInformation info = new AccessKeyInformation();
             if (element != null)
@@ -446,7 +446,7 @@ namespace System.Windows.Input
             return info;
         }
 
-        private PresentationSource GetSourceForElement(IInputElement element)
+        private static PresentationSource GetSourceForElement(IInputElement element)
         {
             PresentationSource source = null;
             DependencyObject elementDO = element as DependencyObject;
@@ -469,7 +469,7 @@ namespace System.Windows.Input
             return source;
         }
 
-        private PresentationSource GetActiveSource()
+        private static PresentationSource GetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
@@ -478,7 +478,7 @@ namespace System.Windows.Input
             return null;
         }
 
-        private PresentationSource CriticalGetActiveSource()
+        private static PresentationSource CriticalGetActiveSource()
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
@@ -488,7 +488,7 @@ namespace System.Windows.Input
         }
 
         
-        private bool IsTargetable(IInputElement element)
+        private static bool IsTargetable(IInputElement element)
         {
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
@@ -728,7 +728,7 @@ namespace System.Windows.Input
         private readonly Dictionary<string, List<WeakReference<IInputElement>>> _keyToElements = new(10);
 
         [ThreadStatic]
-        private static AccessKeyManager _accessKeyManager;
+        private static AccessKeyManager s_accessKeyManager;
 
         #endregion
     }

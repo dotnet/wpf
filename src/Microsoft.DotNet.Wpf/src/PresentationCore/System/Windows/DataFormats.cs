@@ -3,22 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 //
-//
-// Description: Manage the data formats.
-//
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
 //
-//
 
-using MS.Win32;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
 using MS.Internal.PresentationCore;
+using System.Collections.Generic;
 using System.Windows.Ink;
-using SecurityHelper = MS.Internal.SecurityHelper;
+using System.Text;
+using MS.Win32;
 
 namespace System.Windows
 {

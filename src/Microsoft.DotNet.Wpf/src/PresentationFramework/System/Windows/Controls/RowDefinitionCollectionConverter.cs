@@ -6,13 +6,12 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Globalization;
+using System.Text;
 using MS.Internal;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
-    internal class RowDefinitionCollectionConverter : TypeConverter
+    internal sealed class RowDefinitionCollectionConverter : TypeConverter
     {
         #region Public Methods
 
@@ -20,13 +19,13 @@ namespace System.Windows.Controls
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// bool - True if this converter can convert from the provided type, false if not.
         /// </returns>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="sourceType"> The Type being queried for support. </param>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+            return sourceType == typeof(string);
         }
 
         /// <summary>
@@ -35,18 +34,18 @@ namespace System.Windows.Controls
         /// <returns>
         /// bool - True if this converter can convert to the provided type, false if not.
         /// </returns>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
-            return destinationType == typeof(string) || base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(string);
         }
 
         /// <summary>
         /// ConvertFrom - Attempt to convert to a RowDefinitionCollection from the given object.
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
@@ -55,28 +54,28 @@ namespace System.Windows.Controls
         /// An ArgumentException is thrown if the object is not null and is not a valid type,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        /// <param name="context"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="culture"> The CultureInfo which is respected when converting. </param>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The Thickness to convert. </param>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value)
         {
-            if(value != null && value is string input){
-                IProvideValueTarget ipvt = context?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+            if (value != null && value is string input)
+            {
+                IProvideValueTarget ipvt = typeDescriptorContext?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
                 Grid grid = ipvt?.TargetObject as Grid;
-                if(grid != null)
+                if (grid != null)
                 {
-                    var collection = new RowDefinitionCollection(grid); // Pass Grid instance
-                    var converter = new GridLengthConverter();
+                    RowDefinitionCollection collection = new RowDefinitionCollection(grid); // Pass Grid instance
 
-                    TokenizerHelper th = new TokenizerHelper(input, culture);
-                    while(th.NextToken())
+                    TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
+                    while (th.NextToken())
                     {
-                        collection.Add(new RowDefinition { Height = (GridLength)converter.ConvertFromString(th.GetCurrentToken()) });
+                        collection.Add(new RowDefinition { Height = GridLengthConverter.FromString(th.GetCurrentToken(), cultureInfo) });
                     }
 
                     return collection;
                 }
-            }            
+            }
             throw GetConvertFromException(value);
         }
 
@@ -84,32 +83,37 @@ namespace System.Windows.Controls
         /// ConvertTo - Attempt to convert a RowDefinitionCollection to the given type
         /// </summary>
         /// <returns>
-        /// The object which was constructoed.
+        /// The object which was constructed.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
         /// <param name="context"> The ITypeDescriptorContext for this call. </param>
         /// <param name="culture"> The CultureInfo which is respected when converting. </param>
-        /// <param name="value"> The RowDefintionCollection to convert. </param>
-        /// <param name="destinationType">The type to which to convert the RowDefintionCollection instance. </param>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        /// <param name="value"> The RowDefinitionCollection to convert. </param>
+        /// <param name="destinationType">The type to which to convert the RowDefinitionCollection instance. </param>
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
             ArgumentNullException.ThrowIfNull(destinationType);
-            if (destinationType == typeof(string) && value is RowDefinitionCollection RowDefinitions)
+            if (destinationType == typeof(string) && value is RowDefinitionCollection rowDefinitions)
             {
-                var parts = new string[RowDefinitions.Count];
+                char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
+                StringBuilder sb = new StringBuilder();
 
-                for (int i = 0; i < RowDefinitions.Count; i++)
+                for (int i = 0; i < rowDefinitions.Count; i++)
                 {
-                    parts[i] = RowDefinitions[i].Height.ToString();
+                    if (i > 0)
+                    {
+                        sb.Append(listSeparator);
+                    }
+                    sb.Append(GridLengthConverter.ToString(rowDefinitions[i].Height, cultureInfo));
                 }
 
-                return string.Join(",", parts);
+                return sb.ToString();
             }
 
-            return base.ConvertTo(context, culture, value, destinationType);
+            throw GetConvertToException(value, destinationType);
         }
 
         #endregion Public Methods

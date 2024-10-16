@@ -5036,7 +5036,7 @@ namespace System.Windows.Controls
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }
-    internal partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    internal sealed partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
     {
         internal ColumnDefinitionCollectionConverter() { }
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
@@ -5044,7 +5044,7 @@ namespace System.Windows.Controls
         public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
     }
-    internal partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    internal sealed partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
     {
         internal RowDefinitionCollectionConverter() { }
         public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        

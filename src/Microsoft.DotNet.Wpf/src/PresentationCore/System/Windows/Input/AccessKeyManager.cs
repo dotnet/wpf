@@ -43,9 +43,9 @@ namespace System.Windows.Input
 
             lock (akm._keyToElements)
             {
-                if (!akm._keyToElements.TryGetValue(key, out ArrayList elements))
+                if (!akm._keyToElements.TryGetValue(key, out List<WeakReference> elements))
                 {
-                    elements = new ArrayList(1);
+                    elements = new List<WeakReference>(1);
                     akm._keyToElements[key] = elements;
                 }
                 else
@@ -73,7 +73,7 @@ namespace System.Windows.Input
             lock (akm._keyToElements)
             {
                 // Get all elements bound to this key and remove this element
-                if (akm._keyToElements.TryGetValue(key, out ArrayList elements))
+                if (akm._keyToElements.TryGetValue(key, out List<WeakReference> elements))
                 {
                     PurgeDead(elements, element);
                     if (elements.Count == 0)
@@ -378,7 +378,7 @@ namespace System.Windows.Input
             List<IInputElement> possibleElements;
             lock (_keyToElements)
             {
-                possibleElements = _keyToElements.TryGetValue(key, out ArrayList elements) ? CopyAndPurgeDead(elements) : null;
+                possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference> elements) ? CopyAndPurgeDead(elements) : null;
             }
 
             if (possibleElements == null) return null;
@@ -566,11 +566,11 @@ namespace System.Windows.Input
             private object _scope;
         }
 
-        private static void PurgeDead(ArrayList elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference> elements, object elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = (WeakReference)elements[i];
+                WeakReference weakReference = elements[i];
                 object element = weakReference.Target;
 
                 if (element == null || element == elementToRemove)
@@ -588,13 +588,13 @@ namespace System.Windows.Input
         ///     Takes an ArrayList of WeakReferences, removes the dead references and returns
         ///     a generic List of IInputElements (strong references)
         /// </summary>
-        private static List<IInputElement> CopyAndPurgeDead(ArrayList elements)
+        private static List<IInputElement> CopyAndPurgeDead(List<WeakReference> elements)
         {
             List<IInputElement> copy = new List<IInputElement>(elements.Count);
 
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = (WeakReference)elements[i];
+                WeakReference weakReference = elements[i];
                 object element = weakReference.Target;
 
                 if (element == null)
@@ -674,13 +674,13 @@ namespace System.Windows.Input
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
                 
-                    foreach (KeyValuePair<string, ArrayList> entry in Current._keyToElements)
+                    foreach (KeyValuePair<string, List<WeakReference>> entry in Current._keyToElements)
                     {
-                        ArrayList elements = entry.Value;
+                        List<WeakReference> elements = entry.Value;
                         for (int i = 0; i < elements.Count; i++)
                         {
                             // If this element matches accessKeyElement, then return the current character
-                            WeakReference currentElementWeakRef = (WeakReference)elements[i];
+                            WeakReference currentElementWeakRef = elements[i];
 
                             if (currentElementWeakRef.Target == accessKeyElement)
                             {
@@ -695,13 +695,13 @@ namespace System.Windows.Input
             // There was no access key stored or it no longer matched.  Clear out the cache and figure it out again.
             d.ClearValue(AccessKeyElementProperty);
 
-            foreach (KeyValuePair<string, ArrayList> entry in Current._keyToElements)
+            foreach (KeyValuePair<string, List<WeakReference>> entry in Current._keyToElements)
             {
-                ArrayList elements = entry.Value;
+                List<WeakReference> elements = entry.Value;
                 for (int i = 0; i < elements.Count; i++)
                 {
                     // Determine the target for this element.  Cache the weak reference for the element on the target.
-                    WeakReference currentElementWeakRef = (WeakReference)elements[i];
+                    WeakReference currentElementWeakRef = elements[i];
                     IInputElement currentElement = (IInputElement)currentElementWeakRef.Target;
 
                     if (currentElement != null)
@@ -731,8 +731,8 @@ namespace System.Windows.Input
         #endregion
 
         #region Data
-        // Map: string -> ArrayList of WeakReferences to IInputElements
-        private readonly Dictionary<string, ArrayList> _keyToElements = new(10);
+        // Map: string -> List<WeakReference> to IInputElements
+        private readonly Dictionary<string, List<WeakReference>> _keyToElements = new(10);
 
         [ThreadStatic]
         private static AccessKeyManager _accessKeyManager;

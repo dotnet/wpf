@@ -172,7 +172,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (first chance processing).
         ///</summary>
-        [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
             add {
@@ -187,7 +186,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (second chance processing).
         ///</summary>
-        [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
             add

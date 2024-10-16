@@ -5,7 +5,7 @@
 namespace System.Windows.Media
 {
     /// <summary>
-    /// Encapsulates color kinds as categorized via <see cref="KnownColors.MatchColor(string)"/>
+    /// Encapsulates color kinds as categorized via <see cref="KnownColors.MatchColor(ReadOnlySpan{char})"/>
     /// </summary>
     internal enum ColorKind
     {

@@ -240,8 +240,7 @@ namespace System.Windows.Media
                 return ColorKind.NumericColor;
 
             if (colorString.StartsWith("sc#", StringComparison.Ordinal))
-                return ColorKind.ScRgbColor; // TODO: This originally didn't return, so isKnownColor was true as well but it doesn't matter,
-                                             // isScRgbColor always went first in the calling methods
+                return ColorKind.ScRgbColor;
 
             if (colorString.StartsWith(Parsers.s_ContextColor, StringComparison.OrdinalIgnoreCase))
                 return ColorKind.ContextColor;

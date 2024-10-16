@@ -8,6 +8,7 @@
 
 using MS.Internal.PresentationCore;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Ink;
 using System.Threading;
 using System.Text;
@@ -244,19 +245,19 @@ namespace System.Windows
 
                 int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.Xaml);
                 if (xamlFormatId != 0)
-                    s_formatList.Add(new(DataFormats.Xaml, xamlFormatId));
+                    s_formatList.Add(new DataFormat(DataFormats.Xaml, xamlFormatId));
 
                 // This is the format to store trust boundary information. Essentially this is accompalished by storing 
                 // the permission set of the source application where the content comes from. During paste we compare this to
                 // the permission set of the target application.
                 int applicationTrustFormatId = UnsafeNativeMethods.RegisterClipboardFormat(DataFormats.ApplicationTrust);
                 if (applicationTrustFormatId != 0)
-                    s_formatList.Add(new(DataFormats.ApplicationTrust, applicationTrustFormatId));
+                    s_formatList.Add(new DataFormat(DataFormats.ApplicationTrust, applicationTrustFormatId));
 
                 // RegisterClipboardFormat returns 0 on failure
                 int inkServicesFrameworkFormatId = UnsafeNativeMethods.RegisterClipboardFormat(StrokeCollection.InkSerializedFormat);
                 if (inkServicesFrameworkFormatId != 0)
-                    s_formatList.Add(new(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
+                    s_formatList.Add(new DataFormat(StrokeCollection.InkSerializedFormat, inkServicesFrameworkFormatId));
             }
 
             /// <summary>
@@ -268,8 +269,6 @@ namespace System.Windows
                 lock (s_formatListlock)
                 {
                     DataFormat formatItem;
-                    StringBuilder sb;
-
                     for (int i = 0; i < s_formatList.Count; i++)
                     {
                         formatItem = s_formatList[i];
@@ -280,18 +279,16 @@ namespace System.Windows
                             return formatItem;
                     }
 
-                    sb = new StringBuilder(NativeMethods.MAX_PATH);
-
-                    // This can happen if windows adds a standard format that we don't know about,
-                    // so we should play it safe.
-                    if (UnsafeNativeMethods.GetClipboardFormatName(id, sb, sb.Capacity) == 0)
+                    // This can happen if windows adds a standard format that we don't know about, so we should play it safe.
+                    StringBuilder stringBuilder = new(NativeMethods.MAX_PATH);
+                    if (UnsafeNativeMethods.GetClipboardFormatName(id, stringBuilder, stringBuilder.Capacity) == 0)
                     {
-                        sb.Length = 0; // Same as Clear()
-                        sb.Append("Format").Append(id);
+                        stringBuilder.Length = 0; // Same as Clear()
+                        stringBuilder.Append("Format").Append(id);
                     }
 
                     // Create a new format and store it
-                    formatItem = new(sb.ToString(), id);
+                    formatItem = new DataFormat(stringBuilder.ToString(), id);
                     s_formatList.Add(formatItem);
 
                     return formatItem;
@@ -323,7 +320,7 @@ namespace System.Windows
                     int formatId = UnsafeNativeMethods.RegisterClipboardFormat(format);
 
                     if (formatId == 0)
-                        throw new System.ComponentModel.Win32Exception();
+                        throw new Win32Exception();
 
                     // Create a new format and store it
                     DataFormat newFormat = new(format, formatId);

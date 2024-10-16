@@ -263,7 +263,7 @@ namespace System.Windows
             /// <summary>
             /// Allows a new format name to be specified if the requested format is not in the list.
             /// </summary>
-            public static DataFormat GetDataFormat(int id)
+            internal static unsafe DataFormat GetDataFormat(int id)
             {
                 // Lock the data format list to obtain the mutual-exclusion.
                 lock (s_formatListlock)
@@ -279,16 +279,26 @@ namespace System.Windows
                             return formatItem;
                     }
 
+                    const string Format = "Format";
+
                     // This can happen if windows adds a standard format that we don't know about, so we should play it safe.
-                    StringBuilder stringBuilder = new(NativeMethods.MAX_PATH);
-                    if (UnsafeNativeMethods.GetClipboardFormatName(id, stringBuilder, stringBuilder.Capacity) == 0)
+                    // Maximum length can be up to 255: https://learn.microsoft.com/en-us/windows/win32/dataxchg/about-atom-tables
+                    Span<char> formatName = stackalloc char[256];
+                    int atomLength = 0;
+                    fixed (char* ptrFormatName = formatName)
                     {
-                        stringBuilder.Length = 0; // Same as Clear()
-                        stringBuilder.Append("Format").Append(id);
+                        // If the return value is zero, the ID was not found, hence we will just create a placeholder name "Format{id}"
+                        if ((atomLength = UnsafeNativeMethods.GetClipboardFormatName(id, ptrFormatName, formatName.Length)) == 0)
+                        {
+                            Format.CopyTo(formatName);
+                            id.TryFormat(formatName.Slice(Format.Length), out int charsWritten);
+
+                            atomLength = Format.Length + charsWritten;
+                        }
                     }
 
                     // Create a new format and store it
-                    formatItem = new DataFormat(stringBuilder.ToString(), id);
+                    formatItem = new DataFormat(new string(formatName.Slice(0, atomLength)), id);
                     s_formatList.Add(formatItem);
 
                     return formatItem;
@@ -298,7 +308,7 @@ namespace System.Windows
             /// <summary>
             /// Retrieves a data format using its name or attempts to register a new one if it doesn't exist.
             /// </summary>
-            public static DataFormat GetDataFormat(string format)
+            internal static DataFormat GetDataFormat(string format)
             {
                 ArgumentNullException.ThrowIfNull(format);
 

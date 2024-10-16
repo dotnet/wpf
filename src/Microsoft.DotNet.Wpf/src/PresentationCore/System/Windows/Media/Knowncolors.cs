@@ -229,9 +229,9 @@ namespace System.Windows.Media
             return scp;
         }
 
-        static internal string MatchColor(string colorString, out bool isKnownColor, out bool isNumericColor, out bool isContextColor, out bool isScRgbColor)
+        internal static void MatchColor(string colorString, out bool isKnownColor, out bool isNumericColor, out bool isContextColor, out bool isScRgbColor)
         {
-            string trimmedString = colorString.Trim();
+            string trimmedString = colorString;
 
             if (((trimmedString.Length == 4) ||
                 (trimmedString.Length == 5) ||
@@ -243,7 +243,7 @@ namespace System.Windows.Media
                 isScRgbColor = false;
                 isKnownColor = false;
                 isContextColor = false;
-                return trimmedString;
+                return;
             }
             else
                 isNumericColor = false;
@@ -265,15 +265,13 @@ namespace System.Windows.Media
                 isContextColor = true;
                 isScRgbColor = false;
                 isKnownColor = false;
-                return trimmedString;
+                return;
             }
             else
             {
                 isContextColor = false;
                 isKnownColor = true;
             }
-
-            return trimmedString;
         }
 #endif
 

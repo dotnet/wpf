@@ -193,34 +193,23 @@ namespace MS.Internal
             string trimmedColor = color.Trim();
             ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
-            //NOTE: This can never be true as MatchColor will return KnownColor unconditionally, so we may as well remove it in next commit
-            if (colorKind is not ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor)
+            // Check that our assumption stays true
+            Debug.Assert(colorKind is ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor);
+
+            if (colorKind is ColorKind.NumericColor)
+                return ParseHexColor(trimmedColor);
+
+            if (colorKind is ColorKind.ContextColor)
+                return ParseContextColor(trimmedColor, formatProvider, context);
+
+            if (colorKind is ColorKind.ScRgbColor)
+                return ParseScRgbColor(trimmedColor, formatProvider);
+
+            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor);
+            if (knownColor == KnownColor.UnknownColor)
                 throw new FormatException(SR.Parsers_IllegalToken);
 
-            //Is it a number?
-            if (colorKind is ColorKind.NumericColor)
-            {
-                return ParseHexColor(trimmedColor);
-            }
-            else if (colorKind is ColorKind.ContextColor)
-            {
-                return ParseContextColor(trimmedColor, formatProvider, context);
-            }
-            else if (colorKind is ColorKind.ScRgbColor)
-            {
-                return ParseScRgbColor(trimmedColor, formatProvider);
-            }
-            else
-            {
-                KnownColor kc = KnownColors.ColorStringToKnownColor(trimmedColor);
-
-                if (kc == KnownColor.UnknownColor)
-                {
-                    throw new FormatException(SR.Parsers_IllegalToken);
-                }
-
-                return Color.FromUInt32((uint)kc);
-            }
+            return Color.FromUInt32((uint)knownColor);
         }
 
         /// <summary>
@@ -232,53 +221,37 @@ namespace MS.Internal
         internal static Brush ParseBrush(string brush, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
             string trimmedColor = brush.Trim();
+            if (trimmedColor.Length == 0)
+                throw new FormatException(SR.Parser_Empty);
+
             ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
-            if (trimmedColor.Length == 0)
-            {
-                throw new FormatException(SR.Parser_Empty);
-            }
+            // Check that our assumption stays true
+            Debug.Assert(colorKind is ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor);
 
             // Note that because trimmedColor is exactly brush.Trim() we don't have to worry about
-            // extra tokens as we do with TokenizerHelper.  If we return one of the solid color
-            // brushes then the ParseColor routine (or ColorStringToKnownColor) matched the entire
-            // input.
+            // extra tokens as we do with TokenizerHelper. If we return one of the solid color brushes
+            // then the ParseColor routine (or ColorStringToKnownColor) matched the entire input.
             if (colorKind is ColorKind.NumericColor)
-            {
-                return (new SolidColorBrush(ParseHexColor(trimmedColor)));
-            }
+                return new SolidColorBrush(ParseHexColor(trimmedColor));
 
             if (colorKind is ColorKind.ContextColor)
-            {
-                return (new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context)));
-            }
+                return new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context));
 
             if (colorKind is ColorKind.ScRgbColor)
-            {
-                return (new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider)));
-            }
+                return new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider));
 
-            if (colorKind is ColorKind.KnownColor)
-            {
-                SolidColorBrush scp = KnownColors.ColorStringToKnownBrush(trimmedColor);
+            // NULL is returned when the color was not valid
+            SolidColorBrush solidColorBrush = KnownColors.ColorStringToKnownBrush(trimmedColor);
 
-                if (scp != null)
-                {
-                    return scp;
-                }
-            }
-
-            // If it's not a color, so the content is illegal.
-            throw new FormatException(SR.Parsers_IllegalToken);
+            return solidColorBrush is not null ? solidColorBrush : throw new FormatException(SR.Parsers_IllegalToken);
         }
 
 
         /// <summary>
         /// ParseTransform - parse a Transform from a string
         /// </summary>
-        internal static Transform ParseTransform(
-            string transformString,
-            IFormatProvider formatProvider)
+        internal static Transform ParseTransform(string transformString, IFormatProvider formatProvider)
         {
             Matrix matrix = Matrix.Parse(transformString);
 

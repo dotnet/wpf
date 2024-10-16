@@ -43,9 +43,7 @@ namespace System.Windows.Input
 
             lock (akm._keyToElements)
             {
-                ArrayList elements = (ArrayList)akm._keyToElements[key];
-
-                if (elements == null)
+                if (!akm._keyToElements.TryGetValue(key, out ArrayList elements))
                 {
                     elements = new ArrayList(1);
                     akm._keyToElements[key] = elements;
@@ -75,9 +73,7 @@ namespace System.Windows.Input
             lock (akm._keyToElements)
             {
                 // Get all elements bound to this key and remove this element
-                ArrayList elements = (ArrayList)akm._keyToElements[key];
-
-                if (elements != null)
+                if (akm._keyToElements.TryGetValue(key, out ArrayList elements))
                 {
                     PurgeDead(elements, element);
                     if (elements.Count == 0)
@@ -382,7 +378,7 @@ namespace System.Windows.Input
             List<IInputElement> possibleElements;
             lock (_keyToElements)
             {
-                possibleElements = CopyAndPurgeDead(_keyToElements[key] as ArrayList);
+                possibleElements = _keyToElements.TryGetValue(key, out ArrayList elements) ? CopyAndPurgeDead(elements) : null;
             }
 
             if (possibleElements == null) return null;
@@ -594,11 +590,6 @@ namespace System.Windows.Input
         /// </summary>
         private static List<IInputElement> CopyAndPurgeDead(ArrayList elements)
         {
-            if (elements == null)
-            {
-                return null;
-            }
-
             List<IInputElement> copy = new List<IInputElement>(elements.Count);
 
             for (int i = 0; i < elements.Count; )
@@ -683,9 +674,9 @@ namespace System.Windows.Input
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
                 
-                    foreach (DictionaryEntry entry in Current._keyToElements)
+                    foreach (KeyValuePair<string, ArrayList> entry in Current._keyToElements)
                     {
-                        ArrayList elements = (ArrayList)entry.Value;
+                        ArrayList elements = entry.Value;
                         for (int i = 0; i < elements.Count; i++)
                         {
                             // If this element matches accessKeyElement, then return the current character
@@ -693,7 +684,7 @@ namespace System.Windows.Input
 
                             if (currentElementWeakRef.Target == accessKeyElement)
                             {
-                                return (string)entry.Key;
+                                return entry.Key;
                             }
                         }
                     }
@@ -704,9 +695,9 @@ namespace System.Windows.Input
             // There was no access key stored or it no longer matched.  Clear out the cache and figure it out again.
             d.ClearValue(AccessKeyElementProperty);
 
-            foreach (DictionaryEntry entry in Current._keyToElements)
+            foreach (KeyValuePair<string, ArrayList> entry in Current._keyToElements)
             {
-                ArrayList elements = (ArrayList)entry.Value;
+                ArrayList elements = entry.Value;
                 for (int i = 0; i < elements.Count; i++)
                 {
                     // Determine the target for this element.  Cache the weak reference for the element on the target.
@@ -726,7 +717,7 @@ namespace System.Windows.Input
 
                             if (accessKeyPressedEventArgs.Target == d)
                             {
-                                return (string)entry.Key;
+                                return entry.Key;
                             }
                         }
                     }
@@ -741,9 +732,10 @@ namespace System.Windows.Input
 
         #region Data
         // Map: string -> ArrayList of WeakReferences to IInputElements
-        private Hashtable _keyToElements = new Hashtable(10);
+        private readonly Dictionary<string, ArrayList> _keyToElements = new(10);
 
-        [ThreadStatic] private static AccessKeyManager _accessKeyManager;
+        [ThreadStatic]
+        private static AccessKeyManager _accessKeyManager;
 
         #endregion
     }

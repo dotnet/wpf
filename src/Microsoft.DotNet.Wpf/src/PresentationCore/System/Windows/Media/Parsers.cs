@@ -194,7 +194,8 @@ namespace MS.Internal
             bool isNumericColor;
             bool isScRgbColor;
             bool isContextColor;
-            string trimmedColor = KnownColors.MatchColor(color, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
+            string trimmedColor = color.Trim();
+            KnownColors.MatchColor(trimmedColor, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
 
             if ((isPossibleKnowColor == false) &&
                 (isNumericColor == false) &&
@@ -242,7 +243,8 @@ namespace MS.Internal
             bool isNumericColor;
             bool isScRgbColor;
             bool isContextColor;
-            string trimmedColor = KnownColors.MatchColor(brush, out isPossibleKnownColor, out isNumericColor, out isContextColor, out isScRgbColor);
+            string trimmedColor = brush.Trim();
+            KnownColors.MatchColor(trimmedColor, out isPossibleKnownColor, out isNumericColor, out isContextColor, out isScRgbColor);
 
             if (trimmedColor.Length == 0)
             {

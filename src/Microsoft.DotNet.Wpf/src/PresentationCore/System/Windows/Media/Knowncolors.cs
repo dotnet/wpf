@@ -227,49 +227,25 @@ namespace System.Windows.Media
             return scp;
         }
 
-        internal static void MatchColor(string colorString, out bool isKnownColor, out bool isNumericColor, out bool isContextColor, out bool isScRgbColor)
+        /// <summary>
+        /// Matches the input string against known color formats.
+        /// </summary>
+        /// <param name="colorString">The color string to categorize.</param>
+        /// <returns>A <see cref="ColorKind"/> specifying the input string format.</returns>
+        /// <remarks><see cref="ColorKind.KnownColor"/> is used as a fallback value.</remarks>
+        internal static ColorKind MatchColor(string colorString)
         {
-            string trimmedString = colorString;
+            if ((colorString.Length is 4 or 5 or 7 or 9) && (colorString[0] == '#'))
+                return ColorKind.NumericColor;
 
-            if (((trimmedString.Length == 4) ||
-                (trimmedString.Length == 5) ||
-                (trimmedString.Length == 7) ||
-                (trimmedString.Length == 9)) &&
-                (trimmedString[0] == '#'))
-            {
-                isNumericColor = true;
-                isScRgbColor = false;
-                isKnownColor = false;
-                isContextColor = false;
-                return;
-            }
-            else
-                isNumericColor = false;
+            if (colorString.StartsWith("sc#", StringComparison.Ordinal))
+                return ColorKind.ScRgbColor; // TODO: This originally didn't return, so isKnownColor was true as well but it doesn't matter,
+                                             // isScRgbColor always went first in the calling methods
 
-            if ((trimmedString.StartsWith("sc#", StringComparison.Ordinal) == true))
-            {
-                isNumericColor = false;
-                isScRgbColor = true;
-                isKnownColor = false;
-                isContextColor = false;
-            }
-            else
-            {
-                isScRgbColor = false;
-            }
+            if (colorString.StartsWith(Parsers.s_ContextColor, StringComparison.OrdinalIgnoreCase))
+                return ColorKind.ContextColor;
 
-            if ((trimmedString.StartsWith(Parsers.s_ContextColor, StringComparison.OrdinalIgnoreCase) == true))
-            {
-                isContextColor = true;
-                isScRgbColor = false;
-                isKnownColor = false;
-                return;
-            }
-            else
-            {
-                isContextColor = false;
-                isKnownColor = true;
-            }
+            return ColorKind.KnownColor;
         }
 #endif
 

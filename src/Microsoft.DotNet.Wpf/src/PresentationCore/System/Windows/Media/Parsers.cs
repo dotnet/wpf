@@ -190,31 +190,23 @@ namespace MS.Internal
         /// </summary>
         internal static Color ParseColor(string color, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            bool isPossibleKnowColor;
-            bool isNumericColor;
-            bool isScRgbColor;
-            bool isContextColor;
             string trimmedColor = color.Trim();
-            KnownColors.MatchColor(trimmedColor, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
+            ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
-            if ((isPossibleKnowColor == false) &&
-                (isNumericColor == false) &&
-                (isScRgbColor == false) &&
-                (isContextColor== false))
-            {
+            //NOTE: This can never be true as MatchColor will return KnownColor unconditionally, so we may as well remove it in next commit
+            if (colorKind is not ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor)
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
             //Is it a number?
-            if (isNumericColor)
+            if (colorKind is ColorKind.NumericColor)
             {
                 return ParseHexColor(trimmedColor);
             }
-            else if (isContextColor)
+            else if (colorKind is ColorKind.ContextColor)
             {
                 return ParseContextColor(trimmedColor, formatProvider, context);
             }
-            else if (isScRgbColor)
+            else if (colorKind is ColorKind.ScRgbColor)
             {
                 return ParseScRgbColor(trimmedColor, formatProvider);
             }
@@ -239,12 +231,8 @@ namespace MS.Internal
         /// </summary>
         internal static Brush ParseBrush(string brush, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            bool isPossibleKnownColor;
-            bool isNumericColor;
-            bool isScRgbColor;
-            bool isContextColor;
             string trimmedColor = brush.Trim();
-            KnownColors.MatchColor(trimmedColor, out isPossibleKnownColor, out isNumericColor, out isContextColor, out isScRgbColor);
+            ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
             if (trimmedColor.Length == 0)
             {
@@ -255,22 +243,22 @@ namespace MS.Internal
             // extra tokens as we do with TokenizerHelper.  If we return one of the solid color
             // brushes then the ParseColor routine (or ColorStringToKnownColor) matched the entire
             // input.
-            if (isNumericColor)
+            if (colorKind is ColorKind.NumericColor)
             {
                 return (new SolidColorBrush(ParseHexColor(trimmedColor)));
             }
 
-            if (isContextColor)
+            if (colorKind is ColorKind.ContextColor)
             {
                 return (new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context)));
             }
 
-            if (isScRgbColor)
+            if (colorKind is ColorKind.ScRgbColor)
             {
                 return (new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider)));
             }
 
-            if (isPossibleKnownColor)
+            if (colorKind is ColorKind.KnownColor)
             {
                 SolidColorBrush scp = KnownColors.ColorStringToKnownBrush(trimmedColor);
 

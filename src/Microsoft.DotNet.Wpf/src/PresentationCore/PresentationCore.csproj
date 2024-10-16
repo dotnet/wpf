@@ -706,6 +706,7 @@
     <Compile Include="System\Windows\Media\ColorContext.cs" />
     <Compile Include="System\Windows\Media\ColorContextHelper.cs" />
     <Compile Include="System\Windows\Media\ColorConverter.cs" />
+    <Compile Include="System\Windows\Media\ColorKind.cs" />
     <Compile Include="System\Windows\Media\ColorTransform.cs" />
     <Compile Include="System\Windows\Media\ColorTransformHelper.cs" />
     <Compile Include="System\Windows\Media\CombinedGeometry.cs" />

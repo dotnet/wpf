@@ -233,7 +233,7 @@ namespace System.Windows.Media
         /// <param name="colorString">The color string to categorize.</param>
         /// <returns>A <see cref="ColorKind"/> specifying the input string format.</returns>
         /// <remarks><see cref="ColorKind.KnownColor"/> is used as a fallback value.</remarks>
-        internal static ColorKind MatchColor(string colorString)
+        internal static ColorKind MatchColor(ReadOnlySpan<char> colorString)
         {
             if ((colorString.Length is 4 or 5 or 7 or 9) && (colorString[0] == '#'))
                 return ColorKind.NumericColor;

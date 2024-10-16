@@ -64,7 +64,7 @@ namespace MS.Internal.Printing
             {
                 System.Windows.Interop.WindowInteropHelper helper =
                     new System.Windows.Interop.WindowInteropHelper(System.Windows.Application.Current.MainWindow);
-                owner = helper.CriticalHandle;
+                owner = helper.Handle;
             }
 
             try

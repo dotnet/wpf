@@ -53,21 +53,15 @@ namespace System.Windows.Media
         /// A NotSupportedException is thrown if the example object is null or is not a valid type
         /// which can be converted to a Color.
         /// </exception>
-        public override object ConvertFrom(ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value)
+        public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo ci, object value)
         {
-            if (null == value)
-            {
+            if (value is null)
                 throw GetConvertFromException(value);
-            }
 
-            String s = value as string;
-
-            if (null == s)
-            {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
-            }
+            if (value is not string valueString)
+                throw new ArgumentException(SR.Format(SR.General_BadType, nameof(ConvertFrom), nameof(value)));
             
-            return Parsers.ParseColor(value as string, ci, td);        
+            return Parsers.ParseColor(valueString, ci, td);        
         }
 
         /// <summary>

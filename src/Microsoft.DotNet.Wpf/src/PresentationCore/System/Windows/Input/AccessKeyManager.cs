@@ -39,23 +39,20 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
-            AccessKeyManager akm = AccessKeyManager.Current;
+            AccessKeyManager instance = AccessKeyManager.Current;
 
-            lock (akm._keyToElements)
+            if (!instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
             {
-                if (!akm._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
-                {
-                    elements = new List<WeakReference<IInputElement>>(1);
-                    akm._keyToElements[key] = elements;
-                }
-                else
-                {
-                    // There were some elements there, remove dead ones
-                    PurgeDead(elements, null);
-                }
-
-                elements.Add(new WeakReference<IInputElement>(element));
+                elements = new List<WeakReference<IInputElement>>(1);
+                instance._keyToElements[key] = elements;
             }
+            else
+            {
+                // There were some elements there, remove dead ones
+                PurgeDead(elements, null);
+            }
+
+            elements.Add(new WeakReference<IInputElement>(element));
         }
 
         /// <summary>
@@ -68,18 +65,15 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
             key = NormalizeKey(key);
 
-            AccessKeyManager akm = AccessKeyManager.Current;
+            AccessKeyManager instance = AccessKeyManager.Current;
 
-            lock (akm._keyToElements)
+            // Get all elements bound to this key and remove this element
+            if (instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
             {
-                // Get all elements bound to this key and remove this element
-                if (akm._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
+                PurgeDead(elements, element);
+                if (elements.Count == 0)
                 {
-                    PurgeDead(elements, element);
-                    if (elements.Count == 0)
-                    {
-                        akm._keyToElements.Remove(key);
-                    }
+                    instance._keyToElements.Remove(key);
                 }
             }
         }
@@ -94,9 +88,9 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            AccessKeyManager akm = AccessKeyManager.Current;
-            List<IInputElement> targets = akm.GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
-            return (targets != null && targets.Count > 0);
+            AccessKeyManager instance = AccessKeyManager.Current;
+            List<IInputElement> targets = instance.GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
+            return targets != null && targets.Count > 0;
         }
 
         /// <summary>
@@ -113,8 +107,8 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            AccessKeyManager akm = AccessKeyManager.Current;
-            return (akm.ProcessKeyForScope(scope, key, isMultiple,false) == ProcessKeyResult.MoreMatches);
+            AccessKeyManager instance = AccessKeyManager.Current;
+            return instance.ProcessKeyForScope(scope, key, isMultiple, false) == ProcessKeyResult.MoreMatches;
         }
 
         /// <summary>
@@ -131,7 +125,7 @@ namespace System.Windows.Input
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, nameof(key)));
             }
 
             return firstCharacter.ToUpperInvariant();
@@ -375,12 +369,7 @@ namespace System.Windows.Input
             //    5) Final selection uses S.  yay!
             // 
             // 
-            List<IInputElement> possibleElements;
-            lock (_keyToElements)
-            {
-                possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements) ? CopyAndPurgeDead(elements) : null;
-            }
-
+            List<IInputElement> possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements) ? CopyAndPurgeDead(elements) : null;
             if (possibleElements is null)
                 return null;
 

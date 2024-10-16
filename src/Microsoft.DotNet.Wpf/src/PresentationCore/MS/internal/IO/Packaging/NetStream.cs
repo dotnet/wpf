@@ -38,15 +38,11 @@
 #endif
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;               // for Debug.Assert
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Collections;               // for IComparer
-using System.Diagnostics;               // for Debug.Assert
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
-using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -79,7 +75,7 @@ namespace MS.Internal.IO.Packaging
         {
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.NetStream()");
+                Trace.TraceInformation("NetStream.NetStream()");
 #endif
 
             // check parms
@@ -131,7 +127,7 @@ namespace MS.Internal.IO.Packaging
             CheckDisposed();
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.Read() offset:{0} length:{1}", _position, count );
+                Trace.TraceInformation("NetStream.Read() offset:{0} length:{1}", _position, count );
 #endif
 
             PackagingUtilities.VerifyStreamReadArgs(this, buffer, offset, count);
@@ -145,7 +141,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -254,7 +250,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }
@@ -265,7 +261,7 @@ namespace MS.Internal.IO.Packaging
 
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.Seek() pos:{0}", temp);
+                Trace.TraceInformation("NetStream.Seek() pos:{0}", temp);
 #endif
             _position = temp;
             return _position;
@@ -291,7 +287,7 @@ namespace MS.Internal.IO.Packaging
 
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.set_Position() pos:{0}", value);
+                    Trace.TraceInformation("NetStream.set_Position() pos:{0}", value);
 #endif
 
                 _position = value;
@@ -382,7 +378,7 @@ namespace MS.Internal.IO.Packaging
                 {
 #if DEBUG
                     if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation("NetStream.Close()");
+                        Trace.TraceInformation("NetStream.Close()");
 #endif
                     lock (_syncObject)
                     {
@@ -394,7 +390,7 @@ namespace MS.Internal.IO.Packaging
                         {
 #if DEBUG
                         if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - mark as closed");
+                            Trace.TraceInformation("NetStream.Dispose(bool) - mark as closed");
 #endif
 
                             // No matter what, mark ourselves as disposed.
@@ -402,10 +398,8 @@ namespace MS.Internal.IO.Packaging
                             _disposed = true;
 
                             // release any blocked threads - Set() does not throw any exceptions
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Set();
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Set();
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Set();
 
                             // Free ByteRangeDownloader
                             FreeByteRangeDownloader();
@@ -423,15 +417,12 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             // Free Full Download
-                            if (_responseStream != null)
-                            {
-                                _responseStream.Close();
-                            }
+                            _responseStream?.Close();
 
                             FreeTempFile();
 #if DEBUG
                         if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - exiting");
+                            Trace.TraceInformation("NetStream.Dispose(bool) - exiting");
 #endif
                         }
                         finally
@@ -520,7 +511,7 @@ namespace MS.Internal.IO.Packaging
                     {
 #if DEBUG
                         if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.ReadCallBack() - exiting early because we are closed");
+                            Trace.TraceInformation("NetStream.ReadCallBack() - exiting early because we are closed");
 #endif
                         return;
                     }
@@ -537,7 +528,7 @@ namespace MS.Internal.IO.Packaging
 
 #if DEBUG
                             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                                System.Diagnostics.Trace.TraceInformation("NetStream.ReadCallBack (offset,length):({0},{1})", _highWaterMark, read);
+                                Trace.TraceInformation("NetStream.ReadCallBack (offset,length):({0},{1})", _highWaterMark, read);
 #endif
                             lock(PackagingUtilities.IsolatedStorageFileLock)
                             {
@@ -560,7 +551,7 @@ namespace MS.Internal.IO.Packaging
                     {
 #if DEBUG
                         if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.ReadCallBack() - read complete - EndRead() returned zero");
+                            Trace.TraceInformation("NetStream.ReadCallBack() - read complete - EndRead() returned zero");
 #endif
                         // set Length if not already done so
                         if (_fullStreamLength < 0)
@@ -604,7 +595,7 @@ namespace MS.Internal.IO.Packaging
                 _byteRangeDownloader.Credentials = _originalRequest.Credentials;
                 _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
 
-                _byteRangesAvailable = new ArrayList(); // byte ranges that are downloaded
+                _byteRangesAvailable = new List<Block>(); // byte ranges that are downloaded
             }
         }
 
@@ -620,7 +611,7 @@ namespace MS.Internal.IO.Packaging
             // block.Offset > Int32.MaxValue
             // block.Offset + block.Length - 1 > Int32.MaxValue
             // No need to do "checked" since block.Length > 0 && block.Length <= Int32.MaxValue
-            if (block.Offset > (Int32.MaxValue - block.Length + 1))
+            if (block.Offset > (int.MaxValue - block.Length + 1))
                 return;
 
             // spawn a request
@@ -631,7 +622,7 @@ namespace MS.Internal.IO.Packaging
             {
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.MakeByteRangeRequest() offset:{0} length:{1} (padded to {2})",
+                    Trace.TraceInformation("NetStream.MakeByteRangeRequest() offset:{0} length:{1} (padded to {2})",
                         block.Offset, block.Length, _additionalRequestMinSize);
 #endif
                 block.Length = _additionalRequestMinSize;
@@ -640,7 +631,7 @@ namespace MS.Internal.IO.Packaging
             else
             {
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.MakeByteRangeRequest() offset:{0} length:{1}", block.Offset, block.Length);
+                    Trace.TraceInformation("NetStream.MakeByteRangeRequest() offset:{0} length:{1}", block.Offset, block.Length);
             }
 #endif
 
@@ -706,7 +697,7 @@ namespace MS.Internal.IO.Packaging
 #if DEBUG
                 // Note that this includes the "fullDownload" range
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.GetData() total byteranges:{0} after merging:{1}", _unmergedBlocks, _byteRangesAvailable.Count);
+                    Trace.TraceInformation("NetStream.GetData() total byteranges:{0} after merging:{1}", _unmergedBlocks, _byteRangesAvailable.Count);
 #endif
                 _inAdditionalRequest = false;        // allow more byte-range requests
             }
@@ -913,19 +904,19 @@ namespace MS.Internal.IO.Packaging
         // Merge all overlapping and adjacent ranges
         // This function assumes the list of ranges are already sorted
         // Function is destructive (in-place)
-        private void MergeByteRanges(ArrayList ranges)
+        private static void MergeByteRanges(List<Block> ranges)
         {
             checked
             {
                 // For each byte range
                 for (int i = 0; i + 1 < ranges.Count; i++)
                 {
-                    Block b = (Block)ranges[i];
+                    Block b = ranges[i];
 
                     // handle possible multiple-overlap (or adjacency)
-                    while (b.Mergeable((Block)ranges[i + 1]))
+                    while (b.Mergeable(ranges[i + 1]))
                     {
-                        b.Merge((Block)ranges[i + 1]);
+                        b.Merge(ranges[i + 1]);
                         ranges.RemoveAt(i + 1);
 
                         // don't index off the end of the list
@@ -947,7 +938,7 @@ namespace MS.Internal.IO.Packaging
         {
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - byteRange data Event signaled");
+                Trace.TraceInformation("NetStream.GetData() - byteRange data Event signaled");
 #endif
             Debug.Assert(block.Length > 0);
 
@@ -968,7 +959,7 @@ namespace MS.Internal.IO.Packaging
                     _additionalRequestThreshold *= 2;
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - byteRange request satisfied by full download - increasing threshold");
+                    Trace.TraceInformation("NetStream.GetData() - byteRange request satisfied by full download - increasing threshold");
 #endif
                 }
                 else
@@ -1014,7 +1005,7 @@ namespace MS.Internal.IO.Packaging
                 {
 #if DEBUG
                 if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - Request Data (BeginRead)");
+                    Trace.TraceInformation("NetStream.GetData() - Request Data (BeginRead)");
 #endif
 
                     // Continue reading data until
@@ -1072,8 +1063,8 @@ namespace MS.Internal.IO.Packaging
                         // 5. The block we were asked to retrieve was not satisfied by existing data
                         if (_allowByteRangeRequests
                             && !_inAdditionalRequest
-                            && (_highWaterMark <= Int64.MaxValue - (long) _additionalRequestThreshold) // Ensure that we don't get overflow from the next line
-                            && (block.Offset > _highWaterMark + (long) _additionalRequestThreshold)
+                            && (_highWaterMark <= long.MaxValue - _additionalRequestThreshold) // Ensure that we don't get overflow from the next line
+                            && (block.Offset > _highWaterMark + _additionalRequestThreshold)
                             && ((_byteRangeDownloader == null) || !_byteRangeDownloader.ErroredOut) && (block.Length > 0))
                         {
                             MakeByteRangeRequest(block);            // request data
@@ -1087,7 +1078,7 @@ namespace MS.Internal.IO.Packaging
                 {
 #if DEBUG
                     if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - wait start");   // for debugging deadlock
+                        Trace.TraceInformation("NetStream.GetData() - wait start");   // for debugging deadlock
 #endif
                     // WaitAny if both events are in use - or just
                     ReadEvent eventFired;
@@ -1108,7 +1099,7 @@ namespace MS.Internal.IO.Packaging
                     }
 #if DEBUG
                     if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                        System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - wait end [{0}]", eventFired);
+                        Trace.TraceInformation("NetStream.GetData() - wait end [{0}]", eventFired);
 #endif
                     lock (_syncObject)
                     {
@@ -1134,7 +1125,7 @@ namespace MS.Internal.IO.Packaging
 
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.GetData() satisfied with {0} bytes", dataAvailable);
+                Trace.TraceInformation("NetStream.GetData() satisfied with {0} bytes", dataAvailable);
 #endif
             // could exit with dataAvailable == 0 if we didn't know the full stream length coming in and the request
             // was beyond the actual stream length
@@ -1187,10 +1178,7 @@ namespace MS.Internal.IO.Packaging
                     finally
                     {
                         // FreeFullDownload
-                        if (_responseStream != null)
-                        {
-                            _responseStream.Close();
-                        }
+                        _responseStream?.Close();
                     }
                 }
                 finally
@@ -1274,9 +1262,9 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private enum ReadEvent { FullDownloadReadEvent = 0, ByteRangeReadEvent = 1, MaxReadEventEnum };
 
-        Uri                     _uri;               // uri we are resolving
+        readonly Uri            _uri;               // uri we are resolving
 
-        WebRequest              _originalRequest;   // Proxy member is Critical
+        readonly WebRequest     _originalRequest;   // Proxy member is Critical
         Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
         long                    _position;          // our "logical stream position"
 
@@ -1290,7 +1278,7 @@ namespace MS.Internal.IO.Packaging
         // 3. _readEventHandles - cannot be as these are synchronization objects which must be freely accessible
         // 4. _byteRangeDownloader - yes except this object can be disposed while it is still "active" - it is expected to behave correctly in this
         //                scenario.
-        private Object          _syncObject = new Object();
+        private readonly object _syncObject = new object();
         private volatile bool   _disposed;
 
         // full-file download
@@ -1319,7 +1307,7 @@ namespace MS.Internal.IO.Packaging
         private bool                _allowByteRangeRequests;        // toggle
         private ByteRangeDownloader _byteRangeDownloader;           // handles byte-range downloads for us
         private bool                _inAdditionalRequest;           // only spawn one byte-range request at a time
-        private ArrayList           _byteRangesAvailable;           // byte ranges that are downloaded
+        private List<Block>         _byteRangesAvailable;           // byte ranges that are downloaded
 #if DEBUG
         private int                 _unmergedBlocks;                // for trace only
 #endif

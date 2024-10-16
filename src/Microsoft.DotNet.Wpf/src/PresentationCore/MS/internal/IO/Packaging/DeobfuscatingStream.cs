@@ -20,7 +20,6 @@
 
 using System;
 using System.IO;
-using System.IO.Packaging;
 
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
@@ -200,17 +199,13 @@ namespace MS.Internal.IO.Packaging
 
             // Make sure streamUri is in the correct form; getting partUri from it will do all necessary checks for error
             //    conditions; We also have to make sure that it has a part name
-            Uri partUri = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri);
-            if (partUri == null)
-            {
-                throw new InvalidOperationException(SR.InvalidPartName);
-            }
+            Uri _ = System.IO.Packaging.PackUriHelper.GetPartUri(streamUri) ?? throw new InvalidOperationException(SR.InvalidPartName);
 
             // Normally we should use PackUriHelper.GetStringForPartUri to get the string representation of part Uri
             //    however, since we already made sure that streamUris is in the correct form (such as to check if it is an absolute Uri
             //    and there is a correct authority (package)), it doesn't have to be fully validated again.
             // Get the escaped string for the part name as part names should have only ascii characters
-            String guid = Path.GetFileNameWithoutExtension(
+            string guid = Path.GetFileNameWithoutExtension(
                                     streamUri.GetComponents(UriComponents.Path | UriComponents.KeepDelimiter, UriFormat.UriEscaped));
 
             _guid = GetGuidByteArray(guid);
@@ -353,8 +348,8 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
 
         private Stream  _obfuscatedStream;        // stream we ultimately decompress from and to in the container
-        private byte[] _guid;
-        private bool _ownObfuscatedStream;      // Does this class own the underlying stream?
+        private readonly byte[] _guid;
+        private readonly bool _ownObfuscatedStream;      // Does this class own the underlying stream?
                                                                     //  if it does, it should dispose the underlying stream when this class is disposed
         private const long ObfuscatedLength = 32;
         #endregion

@@ -154,18 +154,17 @@ namespace System.Windows
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
 
             Point value;
 
-            String firstToken = th.NextTokenRequired();
+            ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
-            value = new Point(
-                Convert.ToDouble(firstToken, formatProvider),
-                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+            value = new Point(double.Parse(firstToken, formatProvider),
+                              double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
-            th.LastTokenRequired();
+            tokenizer.LastTokenRequired();
 
             return value;
         }

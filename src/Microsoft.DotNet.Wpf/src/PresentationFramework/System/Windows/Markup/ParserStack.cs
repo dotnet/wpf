@@ -27,9 +27,15 @@ namespace System.Windows.Markup
     internal sealed class ParserStack<T> : List<T> where T : class
     {
         /// <summary>
-        ///     Creates a default ParserStack
+        /// Creates an empty <see cref="ParserStack{T}"/> with default capacity.
         /// </summary>
         internal ParserStack() : base() { }
+
+        /// <summary>
+        /// Private constructor, supports <see cref="Clone"/> method execution.
+        /// </summary>
+        /// <param name="collection"></param>
+        private ParserStack(IEnumerable<T> collection) : base(collection) { }
 
         public void Push(T item)
         {
@@ -52,9 +58,13 @@ namespace System.Windows.Markup
         }
 #endif
 
-        public List<T> Clone()
+        /// <summary>
+        /// Creates a shallow copy of <see cref="ParserStack{T}"/>.
+        /// </summary>
+        /// <returns>A newly initialized instance.</returns>
+        public ParserStack<T> Clone()
         {
-            return new List<T>(this);
+            return new ParserStack<T>(this);
         }
 
         /// <summary>

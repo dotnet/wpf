@@ -34,11 +34,6 @@ namespace System.Windows.Interop
     /// </summary>
     public class HwndSource : PresentationSource, IDisposable, IWin32Window, IKeyboardInputSink
     {
-        static HwndSource()
-        {
-            _threadSlot = Thread.AllocateDataSlot();
-        }
-
         /// <summary>
         ///    Constructs an instance of the HwndSource class that will always resize to its content size.
         /// </summary>
@@ -2674,7 +2669,7 @@ namespace System.Windows.Interop
                    value == SizeToContent.WidthAndHeight;
         }
 
-        class ThreadDataBlob
+        private class ThreadDataBlob
         {
             public int TranslateAcceleratorCallDepth;
         }
@@ -2683,18 +2678,9 @@ namespace System.Windows.Interop
         {
             get
             {
-                ThreadDataBlob data;
-                object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
-                {
-                    data = new ThreadDataBlob();
-                    Thread.SetData(_threadSlot, data);
-                }
-                else
-                {
-                    data = (ThreadDataBlob) obj;
-                }
-                return data;
+                s_threadDataBlobInstance ??= new ThreadDataBlob();
+
+                return s_threadDataBlobInstance;
             }
         }
 
@@ -2739,9 +2725,9 @@ namespace System.Windows.Interop
                 _addToFront = addToFront;
                 _handler = new ThreadMessageEventHandler(this.OnPreprocessMessage);
 
-                if(addToFront)
+                if (addToFront)
                 {
-                    ComponentDispatcher.CriticalAddThreadPreprocessMessageHandlerFirst(_handler);
+                    ComponentDispatcher.AddThreadPreprocessMessageHandlerFirst(_handler);
                 }
                 else
                 {
@@ -2765,9 +2751,9 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(_addToFront)
+                if (_addToFront)
                 {
-                    ComponentDispatcher.CriticalRemoveThreadPreprocessMessageHandlerFirst(_handler);
+                    ComponentDispatcher.RemoveThreadPreprocessMessageHandlerFirst(_handler);
                 }
                 else
                 {
@@ -2820,9 +2806,13 @@ namespace System.Windows.Interop
         WeakEventPreprocessMessage _weakPreprocessMessageHandler;
         WeakEventPreprocessMessage _weakMenuModeMessageHandler;
 
-        private static System.LocalDataStoreSlot _threadSlot;
-
         private RestoreFocusMode _restoreFocusMode;
+
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="ThreadDataBlob"/>.
+        /// </summary>
+        [ThreadStatic]
+        private static ThreadDataBlob s_threadDataBlobInstance;
 
         [ThreadStatic]
         private static bool? _defaultAcquireHwndFocusInMenuMode;

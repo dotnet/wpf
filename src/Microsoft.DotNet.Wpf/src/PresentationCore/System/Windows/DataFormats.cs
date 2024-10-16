@@ -30,6 +30,8 @@ namespace System.Windows
         /// </summary>
         public static DataFormat GetDataFormat(string format) => DataFormatsImpl.GetDataFormat(format);
 
+#pragma warning disable IDE1006 // Naming rule violation (Static fields without s_* prefix)
+
         /// <summary>
         /// Specifies the standard ANSI text format. This field is read-only.
         /// </summary>
@@ -155,7 +157,6 @@ namespace System.Windows
         /// </summary>
         public static readonly string Serializable = "PersistentObject";
 
-
         /// <summary>
         /// Specifies a data format as Xaml. This field is read-only.
         /// </summary>
@@ -165,6 +166,8 @@ namespace System.Windows
         /// Specifies a data format as Xaml Package. This field is read-only.
         /// </summary>
         public static readonly string XamlPackage = "XamlPackage";
+
+#pragma warning restore IDE1006 // Naming rule violation (Static fields without s_* prefix)
 
         /// <summary>
         /// Specifies a data format as ApplicationTrust which is used to block

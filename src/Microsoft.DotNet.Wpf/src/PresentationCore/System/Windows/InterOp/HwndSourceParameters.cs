@@ -5,7 +5,8 @@
 //
 
 using MS.Win32;
-using System.Windows.Media;
+using MS.Internal;
+using System.Reflection;
 using System.Windows.Input;
 
 using SR = MS.Internal.PresentationCore.SR;
@@ -423,7 +424,7 @@ namespace System.Windows.Interop
         /// <remarks>Not intended to be tested outside test code</remarks>
         internal static void SetPlatformSupportsTransparentChildWindowsForTestingOnly(bool value)
         {
-            if (string.Equals(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
+            if (ReflectionUtils.GetAssemblyPartialName(Assembly.GetEntryAssembly()).Equals("drthwndsource", StringComparison.CurrentCultureIgnoreCase))
             {
                 _platformSupportsTransparentChildWindows = value;
             }

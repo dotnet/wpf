@@ -103,7 +103,6 @@
     <Compile Include="ModuleInitializer.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="MS\Internal\AnimatedTypeHelpers.cs" />
-    <Compile Include="MS\Internal\CheckedPointers.cs" />
     <Compile Include="MS\Internal\Classification.cs" />
     <Compile Include="MS\Internal\CoreAppContextSwitches.cs" />
     <Compile Include="MS\Internal\CustomCategoryAttribute.cs" />

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
+using MS.Internal;
 using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;

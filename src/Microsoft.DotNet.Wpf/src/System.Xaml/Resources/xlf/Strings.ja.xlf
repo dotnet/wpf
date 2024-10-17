@@ -427,11 +427,6 @@
         <target state="translated">現在の状態では位置指定パラメーターを出力できません。ライターは要素の出力を開始しているため、属性形式の位置指定パラメーターを書き出すことはできません。また、位置指定パラメーターを含むマークアップ拡張に既定のコンストラクターがないため、位置指定パラメーターを展開することもできません。位置指定パラメーター メンバーをノード ストリームの前の方へ移動して、XamlXmlWriter が属性を出力できる位置に配置してください。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">XamlLoadPermission 型のアクセス許可が必要です。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">ObjectMarkupInfo 型の値が必要です。</target>
@@ -560,16 +555,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">無効な式: '{0}'</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 値 '{0}' は、このアクセス許可に対して無効です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -1135,26 +1120,6 @@
       <trans-unit id="SchemaContextNull">
         <source>SchemaContext cannot be null.</source>
         <target state="translated">SchemaContext を null にすることはできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">無効なセキュリティ XML です。必要な属性 '{0}' がありません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">無効なセキュリティ XML です。タグ '{0}' は予期されていません。'{1}' が必要です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">無効なセキュリティ XML です。属性 '{1}' に予期しない値 '{0}' があります。'{2}' が必要です。</target>
         <note />
       </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">

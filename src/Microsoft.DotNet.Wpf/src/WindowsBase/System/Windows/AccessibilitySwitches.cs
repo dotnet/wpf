@@ -42,12 +42,12 @@ namespace System.Windows
         /// <summary>
         /// Guards against multiple definitions of default switch values.
         /// </summary>
-        static int s_DefaultsSet = 0;
+        private static bool s_defaultsSet = false;
 
         /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        static int s_SwitchesVerified = 0;
+        private static bool s_switchesVerified = false;
 
         #endregion
 
@@ -176,7 +176,7 @@ namespace System.Windows
             {
 
                 case ".NETFramework":
-                    if (Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
+                    if (Interlocked.CompareExchange(ref s_defaultsSet, true, false) == false)
                     {
                         if (targetFrameworkVersion <= 40700)
                         {
@@ -222,7 +222,7 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref s_switchesVerified, true, false) == false)
             {
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.

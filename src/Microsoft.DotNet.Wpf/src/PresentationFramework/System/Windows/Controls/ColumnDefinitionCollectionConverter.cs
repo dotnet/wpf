@@ -55,7 +55,7 @@ namespace System.Windows.Controls
         /// <param name="value"> The Thickness to convert. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value)
         {
-            if (value != null && value is string input)
+            if (value is string input)
             {
                 IProvideValueTarget ipvt = typeDescriptorContext?.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
                 Grid grid = ipvt?.TargetObject as Grid;
@@ -95,7 +95,7 @@ namespace System.Windows.Controls
             if (destinationType == typeof(string) && value is ColumnDefinitionCollection columnDefinitions)
             {
                 char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder(5 * columnDefinitions.Count);
 
                 for (int i = 0; i < columnDefinitions.Count; i++)
                 {

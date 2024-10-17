@@ -285,11 +285,12 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value == null){
+                _data ??= new ExtendedData();
+                if (value == null)
+                {
                     _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
                     return;
                 }
-                _data ??= new ExtendedData();
                 _data.ColumnDefinitions = value;
             }
         }
@@ -310,11 +311,12 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value == null){
+                _data ??= new ExtendedData();
+                if (value == null)
+                {
                     _data.RowDefinitions = new RowDefinitionCollection(this);
                     return;
                 }
-                _data ??= new ExtendedData();
                 _data.RowDefinitions = value;
             }
         }

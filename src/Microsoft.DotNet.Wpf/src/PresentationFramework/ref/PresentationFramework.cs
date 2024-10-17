@@ -5106,22 +5106,6 @@ namespace System.Windows.Controls
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }
-    internal sealed partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
-    {
-        internal ColumnDefinitionCollectionConverter() { }
-        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
-        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
-        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
-        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
-    }
-    internal sealed partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
-    {
-        internal RowDefinitionCollectionConverter() { }
-        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }        
-        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) { throw null; }
-        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }        
-        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) { throw null; }
-    }
     public partial class Grid : System.Windows.Controls.Panel, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty ColumnProperty;
@@ -5131,11 +5115,9 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty RowSpanProperty;
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
         public Grid() { }
-        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
-        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.RowDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } set { } }
         public bool ShowGridLines { get { throw null; } set { } }

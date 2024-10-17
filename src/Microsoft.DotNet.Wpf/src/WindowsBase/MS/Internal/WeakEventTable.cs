@@ -137,15 +137,21 @@ namespace MS.Internal
         {
             get
             {
-                EventKey key = new EventKey(manager, source);
-                object result = _dataTable[key];
-                return result;
+                using (ReadLock)
+                {
+                    EventKey key = new EventKey(manager, source);
+                    object result = _dataTable[key];
+                    return result;
+                }
             }
 
             set
             {
-                EventKey key = new EventKey(manager, source, true);
-                _dataTable[key] = value;
+                using (WriteLock)
+                {
+                    EventKey key = new EventKey(manager, source, true);
+                    _dataTable[key] = value;
+                }
             }
         }
 
@@ -177,13 +183,16 @@ namespace MS.Internal
         internal void Remove(WeakEventManager manager, object source)
         {
             EventKey key = new EventKey(manager, source);
-            if (!_inPurge)
+            using (WriteLock)
             {
-                _dataTable.Remove(key);
-            }
-            else
-            {
-                _toRemove.Add(key);
+                if (!_inPurge)
+                {
+                    _dataTable.Remove(key);
+                }
+                else
+                {
+                    _toRemove.Add(key);
+                }
             }
         }
 

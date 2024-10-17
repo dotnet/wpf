@@ -16,7 +16,6 @@ namespace Microsoft.Win32
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Security;
     using System.Windows;
 
     using MS.Internal.AppModel;
@@ -66,9 +65,6 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the OpenFileDialog.
         /// </exception>
-        /// <Remarks>
-        ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
-        /// </Remarks>
         public Stream OpenFile()
         {
             string filename = CriticalItemName;
@@ -90,9 +86,6 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the OpenFileDialog
         /// </exception>
-        /// <Remarks>
-        ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
-        /// </Remarks>
         public Stream[] OpenFiles()
         {
             // Cache ItemNames to avoid perf issues as per
@@ -129,9 +122,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Resets all properties to their default values.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public override void Reset()
         {
 

@@ -6,10 +6,6 @@ variables:
 # clean the local repo on the build agents
 - name: Build.Repository.Clean
   value: true
-- name: _DotNetArtifactsCategory
-  value: WINDOWSDESKTOP
-- name: _DotNetValidationArtifactsCategory
-  value: WINDOWSDESKTOP
 - ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
   - name: PostBuildSign
     value: false

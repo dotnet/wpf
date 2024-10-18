@@ -15,13 +15,10 @@ using MS.Win32;
 using MS.Internal;
 using System.Collections.Specialized;
 using System.IO;
-using System.Security;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 using SR = MS.Internal.PresentationCore.SR;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
@@ -530,62 +527,6 @@ namespace System.Windows
 
         #region Private Methods
 
-        /// <summary>
-        /// Calls IsDynamicCodePolicyEnabled to determine if DeviceGuard is enabled, then caches it so subsequent calls only return the cached value.
-        /// </summary>
-        private static bool IsDeviceGuardEnabled
-        {
-            get
-            {
-                if (_isDeviceGuardEnabled < 0) return false;
-                if (_isDeviceGuardEnabled > 0) return true;
-
-                bool isDynamicCodePolicyEnabled = IsDynamicCodePolicyEnabled();
-                _isDeviceGuardEnabled = isDynamicCodePolicyEnabled ? 1 : -1;
-
-                return isDynamicCodePolicyEnabled;
-            }
-        }
-
-        /// <summary>
-        /// Loads Wldp.dll and looks for WldpIsDynamicCodePolicyEnabled to determine whether DeviceGuard is enabled.
-        /// </summary>
-        private static bool IsDynamicCodePolicyEnabled()
-        {
-            bool isEnabled = false;
-
-            IntPtr hModule = IntPtr.Zero;
-            try
-            {
-                hModule = LoadLibraryHelper.SecureLoadLibraryEx(ExternDll.Wldp, IntPtr.Zero, UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_SYSTEM32);
-                if (hModule != IntPtr.Zero)
-                {
-                    IntPtr entryPoint = UnsafeNativeMethods.GetProcAddressNoThrow(new HandleRef(null, hModule), "WldpIsDynamicCodePolicyEnabled");
-                    if (entryPoint != IntPtr.Zero)
-                    {
-                        int hResult = UnsafeNativeMethods.WldpIsDynamicCodePolicyEnabled(out isEnabled);
-
-                        if (hResult != NativeMethods.S_OK)
-                        {
-                            isEnabled = false;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                if (hModule != IntPtr.Zero)
-                {
-                    UnsafeNativeMethods.FreeLibrary(hModule);
-                }
-            }
-
-            return isEnabled;
-        }
-
         private static IDataObject GetDataObjectInternal()
         {
             IDataObject dataObject;
@@ -769,7 +710,6 @@ namespace System.Windows
 
         #endregion Private Constants
 
-        private static int _isDeviceGuardEnabled = 0;
     }
 
     #endregion Clipboard class

@@ -3150,18 +3150,6 @@ namespace MS.Win32
         /// </remarks>
         [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool EnumDisplayMonitors(
-            IntPtr hdc, 
-            IntPtr lprcClip, 
-            NativeMethods.MonitorEnumProc lpfnEnum, 
-            IntPtr lParam);
-
-        /// <summary>
-        /// Retrieves a value that describes the Device Guard policy enforcement status for .NET dynamic code.
-        /// </summary>
-        /// <param name="enabled">On success, returns true if the Device Guard policy enforces .NET Dynamic Code policy; otherwise, returns false.</param>
-        /// <returns>This method returns S_OK if successful or a failure code otherwise.</returns>
-        [DllImport(ExternDll.Wldp, CallingConvention = CallingConvention.Winapi, ExactSpelling = true)]
-        internal static extern int WldpIsDynamicCodePolicyEnabled([Out] out bool enabled);
+        internal static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, NativeMethods.MonitorEnumProc lpfnEnum, IntPtr lParam);
     }
 }

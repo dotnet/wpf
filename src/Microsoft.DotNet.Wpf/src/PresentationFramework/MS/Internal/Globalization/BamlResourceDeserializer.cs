@@ -336,8 +336,7 @@ namespace MS.Internal.Globalization
                 // pop properties from property inheritance stack as well
                 foreach (BamlTreeNode child in node.Children)
                 {
-                    BamlStartComplexPropertyNode propertyNode = child as BamlStartComplexPropertyNode;
-                    if (propertyNode != null)
+                    if (child is BamlStartComplexPropertyNode propertyNode)
                     {
                         PopPropertyFromStack(propertyNode.PropertyName);
                     }
@@ -357,13 +356,7 @@ namespace MS.Internal.Globalization
 
         private void PushPropertyToStack(string propertyName, ILocalizabilityInheritable node)
         {
-            Stack<ILocalizabilityInheritable> stackForProperty;
-            if (_propertyInheritanceTreeStack.ContainsKey(propertyName))
-            {
-                // get the stack
-                stackForProperty = _propertyInheritanceTreeStack[propertyName];
-            }
-            else
+            if (!_propertyInheritanceTreeStack.TryGetValue(propertyName, out Stack<ILocalizabilityInheritable> stackForProperty))
             {
                 stackForProperty = new Stack<ILocalizabilityInheritable>();
                 _propertyInheritanceTreeStack.Add(propertyName, stackForProperty);
@@ -382,9 +375,8 @@ namespace MS.Internal.Globalization
         // Get the Top of the stack for a certain property
         private ILocalizabilityInheritable PeekPropertyStack(string propertyName)
         {
-            if (_propertyInheritanceTreeStack.ContainsKey(propertyName))
+            if (_propertyInheritanceTreeStack.TryGetValue(propertyName, out Stack<ILocalizabilityInheritable> stackForProperty))
             {
-                Stack<ILocalizabilityInheritable> stackForProperty = _propertyInheritanceTreeStack[propertyName];
                 if (stackForProperty.Count > 0)
                 {
                     return stackForProperty.Peek();
@@ -400,11 +392,10 @@ namespace MS.Internal.Globalization
         //-----------------------------
 
         // stack for building baml trees
-        private Stack<BamlTreeNode> _bamlTreeStack = new Stack<BamlTreeNode>();
+        private readonly Stack<BamlTreeNode> _bamlTreeStack = new();
 
         // stacks for building property's localizability inheritance tree.
-        private Dictionary<string, Stack<ILocalizabilityInheritable>> _propertyInheritanceTreeStack
-            = new Dictionary<string, Stack<ILocalizabilityInheritable>>(8);
+        private readonly Dictionary<string, Stack<ILocalizabilityInheritable>> _propertyInheritanceTreeStack = new(8);
 
         private BamlTreeNode _currentParent;
         private BamlStartDocumentNode _root;

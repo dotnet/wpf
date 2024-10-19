@@ -89,7 +89,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override IList<DependencyObject> GetSelectedNodes(Object selection)
+        public override ReadOnlySpan<DependencyObject> GetSelectedNodes(object selection)
         {
             return TextSelectionHelper.GetSelectedNodes(selection);
         }
@@ -101,7 +101,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <returns>the parent element of the selection; can be null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
-        public override UIElement GetParent(Object selection)
+        public override UIElement GetParent(object selection)
         {
             return TextSelectionHelper.GetParent(selection);
         }
@@ -158,7 +158,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (elementEnd.CompareTo(start) < 0)
                 throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
-            ContentLocatorPart part = new ContentLocatorPart(CharacterRangeElementName);
+            ContentLocatorPart part = new ContentLocatorPart(s_characterRangeElementName);
 
             int startOffset = 0;
             int endOffset = 0;
@@ -199,7 +199,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
             ArgumentNullException.ThrowIfNull(locatorPart);
 
-            if (CharacterRangeElementName != locatorPart.PartType)
+            if (s_characterRangeElementName != locatorPart.PartType)
                 throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // First we extract the offset and length of the
@@ -302,10 +302,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     Returns a list of XmlQualifiedNames representing the
         ///     the locator parts this processor can resolve/generate.
         /// </summary>
-        public override XmlQualifiedName[] GetLocatorPartTypes()
-        {
-            return (XmlQualifiedName[])LocatorPartTypeNames.Clone();
-        }
+        public override ReadOnlySpan<XmlQualifiedName> GetLocatorPartTypes() => new(in s_characterRangeElementName);
 
         #endregion Public Methods
 
@@ -420,7 +417,7 @@ namespace MS.Internal.Annotations.Anchoring
         internal const Char Separator = ',';
 
         // Name of locator part element
-        internal static readonly XmlQualifiedName CharacterRangeElementName = new XmlQualifiedName("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
+        internal static readonly XmlQualifiedName s_characterRangeElementName = new("CharacterRange", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);
 
         #endregion Internal Fields
 
@@ -557,13 +554,6 @@ namespace MS.Internal.Annotations.Anchoring
         //------------------------------------------------------
 
         #region Private Fields
-
-        // ContentLocatorPart types understood by this processor
-        private static readonly XmlQualifiedName[] LocatorPartTypeNames =
-                new XmlQualifiedName[]
-                {
-                    CharacterRangeElementName
-                };
 
         // Optional DPV - used in printing case when there is no viewer available
         private DocumentPageView _targetPage = null;

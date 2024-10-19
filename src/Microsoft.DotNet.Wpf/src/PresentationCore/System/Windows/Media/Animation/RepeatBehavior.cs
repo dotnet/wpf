@@ -4,16 +4,11 @@
 
 //
 
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
-
-using MS.Internal;
-
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Animation
 {
@@ -32,11 +27,11 @@ namespace System.Windows.Media.Animation
     /// <para>A Forever RepeatBehavior specifies that a Timeline will repeat forever.</para>
     /// </summary>
     [TypeConverter(typeof(RepeatBehaviorConverter))]
-    public struct RepeatBehavior : IFormattable
+    public readonly struct RepeatBehavior : IFormattable
     {
-        private double _iterationCount;
-        private TimeSpan _repeatDuration;
-        private RepeatBehaviorType _type;
+        private readonly double _iterationCount;
+        private readonly TimeSpan _repeatDuration;
+        private readonly RepeatBehaviorType _type;
 
         #region Constructors
 
@@ -46,14 +41,10 @@ namespace System.Windows.Media.Animation
         /// <param name="count">The number of iterations specified by this RepeatBehavior.</param>
         public RepeatBehavior(double count)
         {
-            if (   Double.IsInfinity(count)
-                || double.IsNaN(count)
-                || count < 0.0)
-            {
-                throw new ArgumentOutOfRangeException("count", SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
-            }
+            if (double.IsInfinity(count) || double.IsNaN(count) || count < 0.0)
+                throw new ArgumentOutOfRangeException(nameof(count), SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
 
-            _repeatDuration = new TimeSpan(0);
+            _repeatDuration = TimeSpan.Zero;
             _iterationCount = count;
             _type = RepeatBehaviorType.IterationCount;
         }
@@ -65,10 +56,8 @@ namespace System.Windows.Media.Animation
         /// <param name="duration">A TimeSpan representing the repeat duration specified by this RepeatBehavior.</param>
         public RepeatBehavior(TimeSpan duration)
         {
-            if (duration < new TimeSpan(0))
-            {
-                throw new ArgumentOutOfRangeException("duration", SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
-            }
+            if (duration < TimeSpan.Zero)
+                throw new ArgumentOutOfRangeException(nameof(duration), SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
 
             _iterationCount = 0.0;
             _repeatDuration = duration;
@@ -76,20 +65,14 @@ namespace System.Windows.Media.Animation
         }
 
         /// <summary>
-        /// Creates and returns a RepeatBehavior that indicates that a Timeline should repeat its
-        /// simple duration forever.
+        /// Private constructor, serves for creation of <see cref="RepeatBehavior.Forever"/> only.
         /// </summary>
-        /// <value>A RepeatBehavior that indicates that a Timeline should repeat its simple duration
-        /// forever.</value>
-        public static RepeatBehavior Forever
+        /// <param name="behaviorType">Only <see cref="RepeatBehaviorType.Forever"/> value is permitted.</param>
+        private RepeatBehavior(RepeatBehaviorType behaviorType)
         {
-            get
-            {
-                RepeatBehavior forever = new RepeatBehavior();
-                forever._type = RepeatBehaviorType.Forever;
+            Debug.Assert(behaviorType == RepeatBehaviorType.Forever);
 
-                return forever;
-            }
+            _type = behaviorType;
         }
 
         #endregion // Constructors
@@ -129,11 +112,8 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (_type != RepeatBehaviorType.IterationCount)
-                {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
+                if (!HasCount)
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotIterationCount, this));
-                }
 
                 return _iterationCount;
             }
@@ -148,13 +128,24 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                if (_type != RepeatBehaviorType.RepeatDuration)
-                {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
+                if (!HasDuration)
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotRepeatDuration, this));
-                }
 
                 return _repeatDuration;
+            }
+        }
+
+        /// <summary>
+        /// Creates and returns a <see cref="RepeatBehavior"/> that indicates that a <see cref="Timeline"/>
+        /// should repeat its simple duration forever.
+        /// </summary>
+        /// <value>A <see cref="RepeatBehavior"/> that indicates that a <see cref="Timeline"/>
+        /// should repeat its simple duration forever.</value>
+        public static RepeatBehavior Forever
+        {
+            get
+            {
+                return new RepeatBehavior(RepeatBehaviorType.Forever);
             }
         }
 
@@ -167,16 +158,9 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <param name="value"></param>
         /// <returns>true if value is a RepeatBehavior and is equal to this instance; otherwise false.</returns>
-        public override bool Equals(Object value)
+        public override bool Equals(object value)
         {
-            if (value is RepeatBehavior)
-            {
-                return this.Equals((RepeatBehavior)value);
-            }
-            else
-            {
-                return false;
-            }
+            return value is RepeatBehavior behavior && Equals(behavior);
         }
 
         /// <summary>

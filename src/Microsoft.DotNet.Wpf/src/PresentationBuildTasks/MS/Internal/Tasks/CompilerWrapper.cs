@@ -261,7 +261,7 @@ namespace MS.Internal
 
                     if (asmReference != null)
                     {
-                        if (String.Compare(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase))
                         {
                             // Set the local assembly file to markupCompiler
                             _mc.LocalAssemblyFile = asmReference;

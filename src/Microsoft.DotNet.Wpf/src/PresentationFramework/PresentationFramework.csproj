@@ -124,7 +124,6 @@
     <Compile Include="MS\Internal\AppModel\ResourceContainer.cs" />
     <Compile Include="MS\Internal\AppModel\ResourcePart.cs" />
     <Compile Include="MS\Internal\AppModel\ReturnEventSaver.cs" />
-    <Compile Include="MS\Internal\AppModel\SecurityMgrSite.cs" />
     <Compile Include="MS\Internal\AppModel\ShellProvider.cs" />
     <Compile Include="MS\Internal\Commands\CommandHelpers.cs" />
     <Compile Include="MS\Internal\Controls\ActiveXContainer.cs" />

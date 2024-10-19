@@ -51,21 +51,6 @@ namespace MS.Internal.AppModel
         hfInDebugMode = 0x20
     };
 
-
-    //********************************************************************************************//
-    //  IMPORTANT:  IMPORTANT:  IMPORTANT:  IMPORTANT:                                            //
-    //********************************************************************************************//
-    //  If you change or update this interface, make sure you update the definitions in 
-    //  wcp\host\inc\hostservices.idl
-    //  In addition, make sure the enum is updated in wcp\host\startup\shellhandler.cxx
-    internal enum MimeType
-    {
-        Unknown = 0,
-        Document = 1,
-        Application = 2,
-        Markup = 3
-    }
-
     //********************************************************************************************//
     //  IMPORTANT:  IMPORTANT:  IMPORTANT:  IMPORTANT:                                            //
     //********************************************************************************************//

@@ -7021,7 +7021,7 @@ namespace System.Windows.Media
         public static bool operator !=(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial struct PixelFormatChannelMask
+    public readonly partial struct PixelFormatChannelMask
     {
         public System.Collections.Generic.IList<byte> Mask { get { throw null; } }
         public override bool Equals(object obj) { throw null; }

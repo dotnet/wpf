@@ -104,8 +104,7 @@ namespace System.Windows.Media
             Uri typefaceSource = new Uri(uriPath);
            
             _fontFace = new FontFaceLayoutInfo(font);
-            // We skip permission demands for FontSource because the above line already demands them for the right callers.
-            _fontSource = new FontSource(typefaceSource, true);
+            _fontSource = new FontSource(typefaceSource);
 
             Invariant.Assert(  styleSimulations == StyleSimulations.None 
                             || styleSimulations == StyleSimulations.ItalicSimulation 
@@ -158,8 +157,7 @@ namespace System.Windows.Media
 
             _fontFace = new FontFaceLayoutInfo(_font);
 
-            // We skip permission demands for FontSource because the above line already demands them for the right callers.
-            _fontSource = new FontSource(fontSourceUri, true);
+            _fontSource = new FontSource(fontSourceUri);
 
 
             _initializationState = InitializationState.IsInitialized; // fully initialized

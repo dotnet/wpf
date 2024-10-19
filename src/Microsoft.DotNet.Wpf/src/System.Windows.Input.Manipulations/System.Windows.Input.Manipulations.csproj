@@ -6,13 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.resx"/>
+    <EmbeddedResource Include="Resources\Strings.resx" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="System\Windows\Input\Manipulations\DoubleUtil.cs" />
     <Compile Include="System\Windows\Input\Manipulations\Exceptions.cs" />
-    <Compile Include="System\Windows\Input\Manipulations\GlobalSuppressions.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaExpansionBehavior2D.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaParameters2D.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaProcessor2D.cs" />

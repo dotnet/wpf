@@ -59,7 +59,6 @@ namespace System.Windows.Interop
         ///     The handle of the window to which the message was sent. 
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr hwnd
         {
@@ -92,7 +91,6 @@ namespace System.Windows.Interop
         ///     The wParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr wParam
         {
@@ -110,7 +108,6 @@ namespace System.Windows.Interop
         ///     The lParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr lParam
         {

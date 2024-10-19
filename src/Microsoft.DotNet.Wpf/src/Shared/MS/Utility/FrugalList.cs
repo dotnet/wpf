@@ -46,7 +46,6 @@ using MS.Internal.WindowsBase;
     // We suppress two FxCop warnings in this module because not all usages
     // of FrugalList will instantiate all the storage classes and not all class instances
     // will use every method.
-    // CA1811:AvoidUncalledPrivateCode
     // CA1812:AvoidUninstantiatedInternalClasses
     //
 

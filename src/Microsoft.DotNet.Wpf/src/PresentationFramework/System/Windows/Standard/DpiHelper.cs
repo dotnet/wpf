@@ -42,7 +42,6 @@ namespace Standard
             return _transformToDip.Transform(devicePoint);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static Rect LogicalRectToDevice(Rect logicalRectangle, double dpiScaleX, double dpiScaleY)
         {
             Point topLeft = LogicalPixelsToDevice(new Point(logicalRectangle.Left, logicalRectangle.Top), dpiScaleX, dpiScaleY);
@@ -59,7 +58,6 @@ namespace Standard
             return new Rect(topLeft, bottomRight);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static Size LogicalSizeToDevice(Size logicalSize, double dpiScaleX, double dpiScaleY)
         {
             Point pt = LogicalPixelsToDevice(new Point(logicalSize.Width, logicalSize.Height), dpiScaleX, dpiScaleY);

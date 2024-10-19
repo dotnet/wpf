@@ -42,65 +42,50 @@ namespace Standard
                 (byte)((color & 0x0000FF00) >> 8),
                 (byte)((color & 0x000000FF) >> 0));
         }
-
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int GET_X_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
             return LOWORD((int) lParam.ToInt64());
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int GET_Y_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
             return HIWORD((int) lParam.ToInt64());
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int HIWORD(int i)
         {
             return (short)(i >> 16);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int LOWORD(int i)
         {
             return (short)(i & 0xFFFF);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static bool IsFlagSet(int value, int mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(uint value, uint mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(long value, long mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(ulong value, ulong mask)
         {
             return 0 != (value & mask);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool IsOSVistaOrNewer
         {
             get { return _osVersion >= new Version(6, 0); }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsOSWindows7OrNewer
         {
             get { return _osVersion >= new Version(6, 1); }
@@ -208,8 +193,7 @@ namespace Standard
             return s_bitDepth;
         }
 
-        /// <summary>GDI's DeleteObject</summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        /// <summary>GDI's DeleteObject</summary>   
         public static void SafeDeleteObject(ref IntPtr gdiObject)
         {
             IntPtr p = gdiObject;
@@ -219,8 +203,7 @@ namespace Standard
                 NativeMethods.DeleteObject(p);
             }
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+    
         public static void SafeDestroyWindow(ref IntPtr hwnd)
         {
             IntPtr p = hwnd;
@@ -230,10 +213,7 @@ namespace Standard
                 NativeMethods.DestroyWindow(p);
             }
         }
-
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+        
         public static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

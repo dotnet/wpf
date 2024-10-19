@@ -38,7 +38,6 @@ namespace Standard
             private set; 
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
             // A null callback means just use DefWindowProc.

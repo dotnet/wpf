@@ -155,7 +155,7 @@ namespace Microsoft.Win32
             }
 
             // Get the handle of the owner window using WindowInteropHelper.
-            IntPtr hwndOwner = (new WindowInteropHelper(owner)).CriticalHandle;
+            IntPtr hwndOwner = (new WindowInteropHelper(owner)).Handle;
 
             // Just in case, check if the window's handle is zero.
             if (hwndOwner == IntPtr.Zero)

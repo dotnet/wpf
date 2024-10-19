@@ -2,33 +2,34 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
 using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Xaml.MS.Impl
 {
+    /// <summary>
+    /// Holds a <see cref="WeakReference"/> to an <see cref="Reflection.Assembly"/> associated with the current <see cref="ClrNamespace"/>.
+    /// </summary>
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
-    internal class AssemblyNamespacePair
+    internal readonly struct AssemblyNamespacePair
     {
-        WeakReference _assembly;
-        String _clrNamespace;
+        private readonly WeakReference<Assembly> _assembly;
+        private readonly string _clrNamespace;
 
-        public AssemblyNamespacePair(Assembly asm, String clrNamespace)
+        public AssemblyNamespacePair(Assembly asm, string clrNamespace)
         {
-            _assembly = new WeakReference(asm);
+            _assembly = new WeakReference<Assembly>(asm);
             _clrNamespace = clrNamespace;
         }
 
-        public Assembly Assembly
+        public Assembly? Assembly
         {
-            get { return (Assembly)_assembly.Target; }
+            get => _assembly.TryGetTarget(out Assembly? assembly) ? assembly : null;
         }
 
         public string ClrNamespace
         {
-            get { return _clrNamespace; }
+            get => _clrNamespace;
         }
     }
 }

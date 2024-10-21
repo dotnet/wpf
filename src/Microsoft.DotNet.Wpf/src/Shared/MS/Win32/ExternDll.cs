@@ -48,7 +48,6 @@ namespace MS.Win32
         public const string Wininet = "wininet.dll";
         public const string Winmm = "winmm.dll";
         public const string Winspool = "winspool.drv";
-        public const string Wldp = "wldp.dll";
         public const string WpfGfx = "WpfGfx_cor3.dll";
         public const string WtsApi32 = "wtsapi32.dll";
     }

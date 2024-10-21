@@ -609,7 +609,7 @@ namespace MS.Internal.IO.Packaging
             }
             else
             {
-                SecurityHelper.ThrowExceptionForHR(hresult);
+                Marshal.ThrowExceptionForHR(hresult, errorInfo: -1);
             }
 
             return obj;
@@ -809,7 +809,7 @@ namespace MS.Internal.IO.Packaging
             else
             {
                 // Throw if we failed.
-                SecurityHelper.ThrowExceptionForHR(hr);
+                Marshal.ThrowExceptionForHR(hr, errorInfo: -1);
             }
         }
 

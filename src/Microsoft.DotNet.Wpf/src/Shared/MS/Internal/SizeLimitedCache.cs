@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal
 {
     /// <summary>
@@ -25,7 +23,7 @@ namespace MS.Internal
     ///     changed, it gets moved to the end of the list. Also, permanent items,
     ///     though in the hash table, are NOT in the linked list.
     /// </remarks>
-    internal class SizeLimitedCache<K, V>
+    internal sealed class SizeLimitedCache<K, V>
     {
         //*****************************************************
         // Constructors
@@ -90,20 +88,13 @@ namespace MS.Internal
         /// </param>
         public void Add(K key, V resource, bool isPermanent)
         {
+            ArgumentNullException.ThrowIfNull(key, nameof(key));
+            ArgumentNullException.ThrowIfNull(resource, nameof(resource));
 
-            if ( (object)key == null)
+            // Lookup first
+            if (!_nodeLookup.TryGetValue(key, out Node node))
             {
-                throw new ArgumentNullException("key");
-            }
-            if ( (object)resource == null)
-            {
-                throw new ArgumentNullException("resource");
-            }
-
-            // note: [] throws, thus we should check if its in the dictionary first.
-            if (!_nodeLookup.ContainsKey(key))
-            {
-                Node node = new Node(key, resource, isPermanent);
+                node = new Node(key, resource, isPermanent);
                 if (!isPermanent)
                 {
                     if (IsFull())
@@ -116,11 +107,11 @@ namespace MS.Internal
                 {
                     _permanentCount++;
                 }
+
                 _nodeLookup[key] = node;
             }
             else
             {
-                Node node = _nodeLookup[key];
                 if (!node.IsPermanent)
                 {
                     RemoveFromList(node);
@@ -156,27 +147,15 @@ namespace MS.Internal
         /// </param>
         public void Remove(K key)
         {
-            if ( (object)key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key, nameof(key));
 
-            // note: [] throws, thus we should check if its in the dictionary first.
-            if (!_nodeLookup.ContainsKey(key))
-            {
+            if (!_nodeLookup.Remove(key, out Node node))
                 return;
-            }
-            Node node = _nodeLookup[key];
 
-            _nodeLookup.Remove(key);
             if (!node.IsPermanent)
-            {
                 RemoveFromList(node);
-            }
             else
-            {
                 _permanentCount--;
-            }
         }
 
         /// <summary>
@@ -192,17 +171,10 @@ namespace MS.Internal
         /// </returns>
         public V Get(K key)
         {
-            if ( (object)key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+            ArgumentNullException.ThrowIfNull(key, nameof(key));
 
-            // note: [] throws, thus we should check if its in the dictionary first.
-            if (!_nodeLookup.ContainsKey(key))
-            {
-                return default(V);
-            }
-            Node node = _nodeLookup[key];
+            if (!_nodeLookup.TryGetValue(key, out Node node))
+                return default;
 
             if (!node.IsPermanent)
             {
@@ -247,7 +219,7 @@ namespace MS.Internal
         /// <param name="node">
         ///     The node to remove
         /// </param>
-        private void RemoveFromList(Node node)
+        private static void RemoveFromList(Node node)
         {
             node.Previous.Next = node.Next;
             node.Next.Previous = node.Previous;
@@ -262,13 +234,13 @@ namespace MS.Internal
         /// </returns>
         private bool IsFull()
         {
-            return (_nodeLookup.Count - _permanentCount >= _maximumItems);
+            return (_nodeLookup.Count - _permanentCount) >= _maximumItems;
         }
 
         /// <summary>
         ///     Doubly linked list node class. Has 3 values: key, resource, permanence flag
         /// </summary>
-        private class Node
+        private sealed class Node
         {
             public Node(K key, V resource, bool isPermanent)
             {
@@ -277,59 +249,34 @@ namespace MS.Internal
                 IsPermanent = isPermanent;
             }
 
-            public K Key
-            {
-                get { return _key; }
-                set { _key = value; }
-            }
+            public K Key { get; }
 
-            public V Resource
-            {
-                get { return _resource; }
-                set { _resource = value; }
-            }
+            public V Resource { get; set; }
 
-            public bool IsPermanent
-            {
-                get { return _isPermanent; }
-                set { _isPermanent = value; }
-            }
+            public bool IsPermanent { get; set; }
 
-            public Node Next
-            {
-                get { return _next; }
-                set { _next = value; }
-            }
+            public Node Next { get; set; }
 
-            public Node Previous
-            {
-                get { return _previous; }
-                set { _previous = value; }
-            }
+            public Node Previous { get; set; }
 
-            private V _resource;
-            private K _key;
-            private bool _isPermanent;
-            private Node _next;
-            private Node _previous;
         }
 
         //*****************************************************
         // Private Fields
         // ****************************************************
 
-        // the maximum nonpermanent items allowed
-        private int _maximumItems;
-
         // need to keep a separate counter for permanent items
         private int _permanentCount;
 
+        // the maximum nonpermanent items allowed
+        private readonly int _maximumItems;
+
         // the _begin and _end nodes are empty nodes marking the begin and
         // end of the list.
-        private Node _begin;
-        private Node _end;
+        private readonly Node _begin;
+        private readonly Node _end;
 
         // the hashtable mapping keys to nodes
-        private Dictionary<K, Node> _nodeLookup;
+        private readonly Dictionary<K, Node> _nodeLookup;
     }
 }

@@ -35,7 +35,7 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class GlyphingCache
     {
-        private SizeLimitedCache<Typeface, TypefaceMap>  _sizeLimitedCache;
+        private readonly SizeLimitedCache<Typeface, TypefaceMap> _sizeLimitedCache;
     
         internal GlyphingCache(int capacity)
         {

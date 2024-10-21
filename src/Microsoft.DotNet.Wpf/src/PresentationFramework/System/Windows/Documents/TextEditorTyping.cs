@@ -68,7 +68,6 @@ namespace System.Windows.Documents
             }
 
             var onEnterBreak = new ExecutedRoutedEventHandler(OnEnterBreak);
-            var onSpace = new ExecutedRoutedEventHandler(OnSpace);
             var onQueryStatusNYI = new CanExecuteRoutedEventHandler(OnQueryStatusNYI);
             var onQueryStatusEnterBreak = new CanExecuteRoutedEventHandler(OnQueryStatusEnterBreak);
             
@@ -84,8 +83,6 @@ namespace System.Windows.Documents
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.EnterLineBreak       , onEnterBreak                                           , onQueryStatusEnterBreak           , KeyGesture.CreateFromResourceStrings(KeyEnterLineBreak,   nameof(SR.KeyEnterLineBreakDisplayString)         ));
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabForward           , new ExecutedRoutedEventHandler(OnTabForward)           , new CanExecuteRoutedEventHandler(OnQueryStatusTabForward)           , KeyGesture.CreateFromResourceStrings(KeyTabForward,       nameof(SR.KeyTabForwardDisplayString)             ));
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.TabBackward          , new ExecutedRoutedEventHandler(OnTabBackward)          , new CanExecuteRoutedEventHandler(OnQueryStatusTabBackward)          , KeyGesture.CreateFromResourceStrings(KeyTabBackward,      nameof(SR.KeyTabBackwardDisplayString)            ));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Space                , onSpace                                                , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeySpace,            nameof(SR.KeySpaceDisplayString)                  ));
-            CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ShiftSpace           , onSpace                                                , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyShiftSpace,       nameof(SR.KeyShiftSpaceDisplayString)             ));
 
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.Backspace            , new ExecutedRoutedEventHandler(OnBackspace)            , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyBackspace,        SR.KeyBackspaceDisplayString),   KeyGesture.CreateFromResourceStrings(KeyShiftBackspace, SR.KeyShiftBackspaceDisplayString) );
         }
@@ -1258,46 +1255,6 @@ namespace System.Windows.Documents
                 }
                 ((TextSelection)This.Selection).UpdateCaretState(CaretScrollMethod.Simple);
             }
-        }
-
-        // ...........................................................................
-        //
-        // In some controls, Space and Shift+Space keys are mapped to
-        // scroll down and scroll up commands respectively.
-        // In TextEditor, we handle them as text input.
-        // Using the command system allows controls to override the existing default behavior.
-        // ...........................................................................
-
-        // Space, Shift+Space handler
-        private static void OnSpace(object sender, ExecutedRoutedEventArgs e)
-        {
-            TextEditor This = TextEditor._GetTextEditor(sender);
-
-            if (This == null || !This._IsEnabled || This.IsReadOnly || !This._IsSourceInScope(e.OriginalSource))
-            {
-                return;
-            }
-
-            // If this event is our Cicero TextStore composition, we always handles through ITextStore::SetText.
-            if (This.TextStore != null && This.TextStore.IsComposing)
-            {
-                return;
-            }
-
-            if (This.ImmComposition != null && This.ImmComposition.IsComposition)
-            {
-                return;
-            }
-
-            // Consider event handled
-            e.Handled = true;
-
-            if (This.TextView != null)
-            {
-                This.TextView.ThrottleBackgroundTasksForUserInput();
-            }
-
-            ScheduleInput(This, new TextInputItem(This, " ", /*isInsertKeyToggled:*/!This._OvertypeMode));
         }
 
         // ...........................................................................

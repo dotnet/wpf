@@ -57,14 +57,6 @@ using MS.Internal.AppModel;
 #if REACHFRAMEWORK
     using MS.Internal.Utility;
 #endif
-#if WINDOWS_BASE
-    // This existed originally to allow FontCache service to 
-    // see the WindowsBase variant of this class. We no longer have
-    // a FontCache service, but over time other parts of WPF might
-    // have started to depend on this, so we leave it as-is for 
-    // compat. 
-#endif
-
 
 internal static class SecurityHelper
     {
@@ -130,13 +122,6 @@ internal static class SecurityHelper
         internal static int SizeOf(Object o)
         {
             return Marshal.SizeOf(o);
-        }
-#endif
-
-#if WINDOWS_BASE || PRESENTATION_CORE || PRESENTATIONFRAMEWORK
-        internal static Exception GetExceptionForHR(int hr)
-        {
-            return Marshal.GetExceptionForHR(hr, new IntPtr(-1));
         }
 #endif
 

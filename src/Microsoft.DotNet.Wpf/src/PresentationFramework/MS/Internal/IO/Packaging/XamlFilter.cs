@@ -16,7 +16,7 @@ using System.Globalization;             // For CultureInfo
 using System.Collections;               // For Stack and Hashtable
 using System.Runtime.InteropServices;   // For COMException
 using System.Windows;                   // for ExceptionStringTable
-using MS.Internal.Interop;  // for CHUNK_BREAKTYPE (and other IFilter-related definitions)
+using MS.Internal.Interop;              // for CHUNK_BREAKTYPE (and other IFilter-related definitions)
 
 namespace MS.Internal.IO.Packaging
 {
@@ -266,19 +266,19 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Return a maximum of bufferCharacterCount characters (*not* bytes) from the current content unit.
         /// </summary>
-        public String GetText(int bufferCharacterCount)
+        public string GetText(int bufferCharacterCount)
         {
             //BufferCharacterCount should be non-negative
             Debug.Assert(bufferCharacterCount >= 0);
 
             if (_currentContent == null)
             {
-                SecurityHelper.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_TEXT);
+                Marshal.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_TEXT, errorInfo: -1);
             }
             int numCharactersToReturn = _currentContent.Length - _countOfCharactersReturned;
             if (numCharactersToReturn <= 0)
             {
-                SecurityHelper.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_MORE_TEXT);
+                Marshal.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_MORE_TEXT, errorInfo: -1);
             }
 
             // Return at most bufferCharacterCount characters. The marshaler makes sure it can add a terminating
@@ -296,10 +296,11 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// The XAML indexing filter never returns property values.
         /// </summary>
-        public Object GetValue()
+        public object GetValue()
         {
-            SecurityHelper.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_VALUES);
-            return null;
+            Marshal.ThrowExceptionForHR((int)FilterErrorCode.FILTER_E_NO_VALUES, errorInfo: -1);
+
+            return null; // Unreachable
         }
 
     #endregion Managed IFilter API

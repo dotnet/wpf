@@ -99,14 +99,6 @@ internal static class SecurityHelper
         }
 #endif
 
-#if WINDOWS_BASE || PRESENTATION_CORE
-        internal static void ThrowExceptionForHR(int hr)
-        {
-            Marshal.ThrowExceptionForHR(hr, new IntPtr(-1));
-        }
-
-#endif
-
 #if PRESENTATIONFRAMEWORK
 
         /// <summary>

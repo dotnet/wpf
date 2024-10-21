@@ -454,8 +454,8 @@ namespace System.Windows.Media
                 radiusX = Math.Min(rect.Width * (1.0 / 2.0), Math.Abs(radiusX));
                 radiusY = Math.Min(rect.Height * (1.0 / 2.0), Math.Abs(radiusY));
 
-                double bezierX = ((1.0 - EllipseGeometry.c_arcAsBezier) * radiusX);
-                double bezierY = ((1.0 - EllipseGeometry.c_arcAsBezier) * radiusY);
+                double bezierX = ((1.0 - EllipseGeometry.ArcAsBezier) * radiusX);
+                double bezierY = ((1.0 - EllipseGeometry.ArcAsBezier) * radiusY);
 
                 points[1].X = points[0].X = points[15].X = points[14].X = rect.X;
                 points[2].X = points[13].X = rect.X + bezierX;

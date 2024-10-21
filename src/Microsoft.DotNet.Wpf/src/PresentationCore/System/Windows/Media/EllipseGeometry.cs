@@ -19,9 +19,7 @@ namespace System.Windows.Media
         /// <summary>
         ///
         /// </summary>
-        public EllipseGeometry()
-        {
-        }
+        public EllipseGeometry() { }
 
         /// <summary>
         /// Constructor - sets the ellipse to the paramters with the given transformation
@@ -30,7 +28,7 @@ namespace System.Windows.Media
         {
             if (rect.IsEmpty) 
             {
-                throw new System.ArgumentException(SR.Format(SR.Rect_Empty, "rect"));
+                throw new ArgumentException(SR.Format(SR.Rect_Empty, nameof(rect)));
             }
 
             RadiusX = (rect.Right - rect.X) * (1.0 / 2.0);
@@ -41,10 +39,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Constructor - sets the ellipse to the parameters
         /// </summary>
-        public EllipseGeometry(
-            Point center, 
-            double radiusX, 
-            double radiusY)
+        public EllipseGeometry(Point center, double radiusX, double radiusY)
         {
             Center = center;
             RadiusX = radiusX;
@@ -54,11 +49,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Constructor - sets the ellipse to the parameters
         /// </summary>
-        public EllipseGeometry(
-            Point center,
-            double radiusX,
-            double radiusY,
-            Transform transform) : this(center, radiusX, radiusY)
+        public EllipseGeometry(Point center, double radiusX, double radiusY, Transform transform) : this(center, radiusX, radiusY)
         {
             Transform = transform;
         }
@@ -81,14 +72,13 @@ namespace System.Windows.Media
                 if (transform == null || transform.IsIdentity) 
                 {
                     Point currentCenter = Center;
-                    Double currentRadiusX = RadiusX;
-                    Double currentRadiusY = RadiusY;
+                    double currentRadiusX = RadiusX;
+                    double currentRadiusY = RadiusY;
 
-                    boundsRect = new Rect(
-                        currentCenter.X - Math.Abs(currentRadiusX),
-                        currentCenter.Y - Math.Abs(currentRadiusY),
-                        2.0 * Math.Abs(currentRadiusX),
-                        2.0 * Math.Abs(currentRadiusY));
+                    boundsRect = new Rect(currentCenter.X - Math.Abs(currentRadiusX),
+                                          currentCenter.Y - Math.Abs(currentRadiusY),
+                                          2.0 * Math.Abs(currentRadiusX),
+                                          2.0 * Math.Abs(currentRadiusY));
                 }
                 else
                 {
@@ -99,9 +89,7 @@ namespace System.Windows.Media
                     // it's easier to let unmanaged code do the work for us.
                     //
 
-                    Matrix geometryMatrix;
-
-                    Transform.GetTransformValue(transform, out geometryMatrix);
+                    Transform.GetTransformValue(transform, out Matrix geometryMatrix);
 
                     boundsRect = EllipseGeometry.GetBoundsHelper(
                         null /* no pen */,
@@ -124,86 +112,44 @@ namespace System.Windows.Media
         /// </summary>
         internal override Rect GetBoundsInternal(Pen pen, Matrix matrix, double tolerance, ToleranceType type)
         {
-            Matrix geometryMatrix;
-            
-            Transform.GetTransformValue(Transform, out geometryMatrix);
+            Transform.GetTransformValue(Transform, out Matrix geometryMatrix);
 
-            return EllipseGeometry.GetBoundsHelper(
-                pen,
-                matrix,
-                Center,
-                RadiusX,
-                RadiusY,
-                geometryMatrix,
-                tolerance,
-                type);
+            return EllipseGeometry.GetBoundsHelper(pen, matrix, Center, RadiusX, RadiusY, geometryMatrix, tolerance, type);
         }
         
-        internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point center, double radiusX, double radiusY,
-                                             Matrix geometryMatrix, double tolerance, ToleranceType type)
+        internal static unsafe Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point center, double radiusX, double radiusY,
+                                                    Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            Rect rect;
-
             if ((pen == null || pen.DoesNotContainGaps) && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
-                double strokeThickness = 0.0;
+                double strokeThickness = Pen.ContributesToBounds(pen) ? Math.Abs(pen.Thickness) : 0.0;
 
-                if (Pen.ContributesToBounds(pen))
-                {
-                    strokeThickness = Math.Abs(pen.Thickness);
-                }
-
-                rect = new Rect(
-                    center.X - Math.Abs(radiusX)-0.5*strokeThickness,
-                    center.Y - Math.Abs(radiusY)-0.5*strokeThickness,
-                    2.0 * Math.Abs(radiusX)+strokeThickness,
-                    2.0 * Math.Abs(radiusY)+strokeThickness);
+                return new Rect(center.X - Math.Abs(radiusX) - 0.5 * strokeThickness,
+                                center.Y - Math.Abs(radiusY) - 0.5 * strokeThickness,
+                                2.0 * Math.Abs(radiusX) + strokeThickness,
+                                2.0 * Math.Abs(radiusY) + strokeThickness);
             }
-            else
+
+            Point* ptrPoints = stackalloc Point[(int)PointCount];
+            EllipseGeometry.InitializePointList(ptrPoints, (int)PointCount, center, radiusX, radiusY);
+
+            fixed (byte* ptrTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
             {
-                unsafe
-                {
-                    Point* pPoints = stackalloc Point[(int)GetPointCount()];
-                    EllipseGeometry.InitializePointList(pPoints, (int)GetPointCount(), center, radiusX, radiusY);
-
-                    fixed (byte* pTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
-                    {
-                        rect = Geometry.GetBoundsHelper(
-                            pen, 
-                            &worldMatrix, 
-                            pPoints, 
-                            pTypes, 
-                            c_pointCount, 
-                            c_segmentCount,
-                            &geometryMatrix,
-                            tolerance,
-                            type,
-                            false); // skip hollows - meaningless here, this is never a hollow
-                    }
-                }
+                return Geometry.GetBoundsHelper(pen, &worldMatrix, ptrPoints, ptrTypes, PointCount, SegmentCount, &geometryMatrix,
+                                                tolerance, type, false); // skip hollows - meaningless here, this is never a hollow
             }
-
-            return rect;
         }
 
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
         {
             unsafe
             {
-                Point* pPoints = stackalloc Point[(int)GetPointCount()];
-                EllipseGeometry.InitializePointList(pPoints, (int)GetPointCount(), Center, RadiusX, RadiusY);
+                Point* ptrPoints = stackalloc Point[(int)PointCount];
+                EllipseGeometry.InitializePointList(ptrPoints, (int)PointCount, Center, RadiusX, RadiusY);
 
-                fixed (byte* pTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* ptrTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
-                    return ContainsInternal(
-                        pen,
-                        hitPoint,
-                        tolerance, 
-                        type,
-                        pPoints,
-                        GetPointCount(),
-                        pTypes,
-                        GetSegmentCount());
+                    return ContainsInternal(pen, hitPoint, tolerance, type, ptrPoints, PointCount, ptrTypes, SegmentCount);
                 }
             }
         }
@@ -252,7 +198,7 @@ namespace System.Windows.Media
         internal override PathFigureCollection GetTransformedFigureCollection(Transform transform)
         {
             // Initialize the point list
-            Span<Point> points = stackalloc Point[(int)GetPointCount()];
+            Span<Point> points = stackalloc Point[(int)PointCount];
             InitializePointList(points);
 
             // Get the combined transform argument with the internal transform
@@ -277,7 +223,7 @@ namespace System.Windows.Media
         /// </summary>
         internal override PathGeometry GetAsPathGeometry()
         {
-            PathStreamGeometryContext ctx = new PathStreamGeometryContext(FillRule.EvenOdd, Transform);
+            PathStreamGeometryContext ctx = new(FillRule.EvenOdd, Transform);
             PathGeometry.ParsePathGeometryData(GetPathGeometryData(), ctx);
 
             return ctx.GetPathGeometry();
@@ -297,11 +243,10 @@ namespace System.Windows.Media
             PathGeometryData data = new() { FillRule = FillRule.EvenOdd, Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform) };
 
             // Initialize the point list
-            Span<Point> points = stackalloc Point[(int)GetPointCount()];
+            Span<Point> points = stackalloc Point[(int)PointCount];
             InitializePointList(points);
 
-            ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
-
+            ByteStreamGeometryContext ctx = new();
             ctx.BeginFigure(points[0], true /* is filled */, true /* is closed */);
 
             // i == 0, 3, 6, 9
@@ -332,13 +277,13 @@ namespace System.Windows.Media
         /// </summary>
         private unsafe static void InitializePointList(Point* points, int pointsCount, Point center, double radiusX, double radiusY)
         {
-            Invariant.Assert(pointsCount >= c_pointCount);
+            Invariant.Assert((uint)pointsCount >= PointCount);
 
             radiusX = Math.Abs(radiusX);
             radiusY = Math.Abs(radiusY);
               
             // Set the X coordinates
-            double mid = radiusX * c_arcAsBezier;
+            double mid = radiusX * ArcAsBezier;
 
             points[0].X = points[1].X = points[11].X = points[12].X = center.X + radiusX;
             points[2].X = points[10].X = center.X + mid;
@@ -347,7 +292,7 @@ namespace System.Windows.Media
             points[5].X = points[6].X = points[7].X = center.X - radiusX;
 
             // Set the Y coordinates
-            mid = radiusY * c_arcAsBezier;
+            mid = radiusY * ArcAsBezier;
 
             points[2].Y = points[3].Y = points[4].Y = center.Y + radiusY;
             points[1].Y = points[5].Y = center.Y + mid;
@@ -355,29 +300,26 @@ namespace System.Windows.Media
             points[7].Y = points[11].Y = center.Y - mid;
             points[8].Y = points[9].Y = points[10].Y = center.Y - radiusY;
         }
-
-        private static uint GetPointCount() { return c_pointCount; }
-        private static uint GetSegmentCount() { return c_segmentCount; }
         
         #region Static Data
         
         // Approximating a 1/4 circle with a Bezier curve                _
-        internal const double c_arcAsBezier = 0.5522847498307933984; // =( \/2 - 1)*4/3
+        internal const double ArcAsBezier = 0.5522847498307933984; // =( \/2 - 1)*4/3
 
-        private const UInt32 c_segmentCount = 4;
-        private const UInt32 c_pointCount = 13;
+        private const uint SegmentCount = 4;
+        private const uint PointCount = 13;
 
-        private const byte c_smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier  |
-                                            (byte)MILCoreSegFlags.SegIsCurved    |
-                                            (byte)MILCoreSegFlags.SegSmoothJoin;
+        private const byte SmoothBezier = (byte)MILCoreSegFlags.SegTypeBezier  |
+                                          (byte)MILCoreSegFlags.SegIsCurved    |
+                                          (byte)MILCoreSegFlags.SegSmoothJoin;
 
         private static ReadOnlySpan<byte> RoundedPathTypes => [(byte)MILCoreSegFlags.SegTypeBezier | 
                                                                (byte)MILCoreSegFlags.SegIsCurved   |
                                                                (byte)MILCoreSegFlags.SegSmoothJoin | 
                                                                (byte)MILCoreSegFlags.SegClosed,
-                                                               c_smoothBezier, 
-                                                               c_smoothBezier, 
-                                                               c_smoothBezier];
+                                                               SmoothBezier,
+                                                               SmoothBezier,
+                                                               SmoothBezier];
 
         #endregion
     }

@@ -264,7 +264,7 @@ namespace MS.Internal.Automation
 
         private static void NotifySources()
         {
-            foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
+            foreach (PresentationSource source in PresentationSource.CurrentSourcesList)
             {
                 if (!source.IsDisposed)
                 {

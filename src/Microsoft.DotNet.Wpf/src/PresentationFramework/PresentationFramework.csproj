@@ -49,7 +49,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\HashHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Text\InternalEncoding.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\WindowsRuntime\ReflectionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Context\XamlContextStack.cs" />

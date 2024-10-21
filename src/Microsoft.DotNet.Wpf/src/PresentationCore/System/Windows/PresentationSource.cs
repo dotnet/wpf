@@ -86,7 +86,6 @@ namespace System.Windows
         /// <returns>The source in which the visual is being presented.</returns>
         public static PresentationSource FromVisual(Visual visual)
         {
-
             return CriticalFromVisual(visual);
         }
 
@@ -97,7 +96,6 @@ namespace System.Windows
         /// <returns>The source in which the dependency object is being presented.</returns>
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-
             return CriticalFromVisual(dependencyObject);
         }
 
@@ -359,12 +357,8 @@ namespace System.Windows
         /// </summary>
         public static IEnumerable CurrentSources
         {
-            get
-            {
-                return CriticalCurrentSources;
-            }
+            get => _sources;
         }
-
 
         #endregion
 
@@ -620,12 +614,9 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        internal static WeakReferenceList CriticalCurrentSources
+        internal static WeakReferenceList CurrentSourcesList
         {
-            get
-            {
-                return _sources;
-            }
+            get => _sources;
         }
 
         private static void AddElementToWatchList(DependencyObject element)

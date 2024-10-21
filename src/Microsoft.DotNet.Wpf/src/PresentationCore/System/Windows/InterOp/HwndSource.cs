@@ -679,19 +679,17 @@ namespace System.Windows.Interop
             {
                 throw new ArgumentException(SR.NullHwnd);
             }
-            HwndSource hwndSource = null;
-            foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
+
+            foreach (PresentationSource source in PresentationSource.CurrentSourcesList)
             {
-                HwndSource test = source as HwndSource;
-                if (test != null && test.CriticalHandle == hwnd)
+                if (source is HwndSource hwndSource && hwndSource.Handle == hwnd)
                 {
-                    // Don't hand out a disposed source.
-                    if (!test.IsDisposed)
-                        hwndSource = test;
-                    break;
+                    // Don't hand out a disposed source
+                    return !hwndSource.IsDisposed ? hwndSource : null;
                 }
             }
-            return hwndSource;
+
+            return null;
         }
 
 

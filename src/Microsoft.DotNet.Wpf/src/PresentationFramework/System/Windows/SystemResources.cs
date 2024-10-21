@@ -1326,7 +1326,7 @@ namespace System.Windows
             Dispatcher dispatcher = isSysColorsOrSettingsChange ? null : Dispatcher.FromThread(System.Threading.Thread.CurrentThread);
             if (dispatcher != null || isSysColorsOrSettingsChange)
             {
-                foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
+                foreach (PresentationSource source in PresentationSource.CurrentSourcesList)
                 {
                     if (!source.IsDisposed && (isSysColorsOrSettingsChange || (source.Dispatcher == dispatcher)))
                     {

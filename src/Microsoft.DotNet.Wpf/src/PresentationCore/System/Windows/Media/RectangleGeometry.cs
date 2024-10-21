@@ -214,16 +214,15 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    uint pointCount, segmentCount;
-                    GetCounts(rect, radiusX, radiusY, out pointCount, out segmentCount);
+                    GetCounts(rect, radiusX, radiusY, out uint pointCount, out uint segmentCount);
 
                     // We've checked that rect isn't empty above
                     Invariant.Assert(pointCount != 0);
 
                     Point* pPoints = stackalloc Point[(int)pointCount];
-                    RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
+                    RectangleGeometry.InitializePointList(pPoints, (int)pointCount, rect, radiusX, radiusY);
 
-                    fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         boundingRect = Geometry.GetBoundsHelper(
                             pen,
@@ -260,9 +259,9 @@ namespace System.Windows.Media
             unsafe
             {
                 Point* pPoints = stackalloc Point[(int)pointCount];
-                RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
+                RectangleGeometry.InitializePointList(pPoints, (int)pointCount, rect, radiusX, radiusY);
 
-                fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -327,7 +326,9 @@ namespace System.Windows.Media
 
             if (IsRounded(radiusX, radiusY))
             {
-                Point[] points = GetPointList(rect, radiusX, radiusY);
+                // Initialize the point list
+                Span<Point> points = stackalloc Point[(int)GetPointCount(rect, radiusX, radiusY)];
+                InitializePointList(points, rect, radiusX, radiusY);
 
                 // Transform if applicable.
                 if (!matrix.IsIdentity)
@@ -388,9 +389,7 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new() { FillRule = FillRule.EvenOdd, Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform) };
 
             double radiusX = RadiusX;
             double radiusY = RadiusY;
@@ -400,7 +399,9 @@ namespace System.Windows.Media
 
             if (IsRounded(radiusX, radiusY))
             {
-                Point[] points = GetPointList(rect, radiusX, radiusY);
+                // Initialize the point list
+                Span<Point> points = stackalloc Point[(int)GetPointCount(rect, radiusX, radiusY)];
+                InitializePointList(points, rect, radiusX, radiusY);
 
                 ctx.BeginFigure(points[0], true /* is filled */, true /* is closed */);
                 ctx.BezierTo(points[1], points[2], points[3], true /* is stroked */, false /* is smooth join */);
@@ -426,30 +427,25 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// Initializes the point list into <paramref name="destination"/>. Optionally pins the source if not stack-allocated.
         /// </summary>
-        /// <returns></returns>
-        private Point[] GetPointList(Rect rect, double radiusX, double radiusY)
+        private unsafe void InitializePointList(Span<Point> destination, ref readonly Rect rect, double radiusX, double radiusY)
         {
-            uint pointCount = GetPointCount(rect, radiusX, radiusY);
-            Point[] points = new Point[pointCount];
-
-            unsafe
+            fixed (Point* ptrPoints = destination) // In case this is stackallocated, it's a no-op
             {
-                fixed(Point *pPoints = points)
-                {
-                    RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
-                }
+                RectangleGeometry.InitializePointList(ptrPoints, destination.Length, rect, radiusX, radiusY);
             }
-
-            return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
+        /// <summary>
+        /// Initializes the point list specified by <paramref name="points"/>. The pointer must be pinned.
+        /// </summary>
+        private unsafe static void InitializePointList(Point* points, int pointsCount, Rect rect, double radiusX, double radiusY)
         {
             if (IsRounded(radiusX, radiusY))
             {
                 // It is a rounded rectangle
-                Invariant.Assert(pointsCount >= RoundedPointCount);
+                Invariant.Assert((uint)pointsCount >= RoundedPointCount);
 
                 radiusX = Math.Min(rect.Width * (1.0 / 2.0), Math.Abs(radiusX));
                 radiusY = Math.Min(rect.Height * (1.0 / 2.0), Math.Abs(radiusY));
@@ -476,7 +472,7 @@ namespace System.Windows.Media
             else
             {
                 // The rectangle is not rounded
-                Invariant.Assert(pointsCount >= SquaredPointCount);
+                Invariant.Assert((uint)pointsCount >= SquaredPointCount);
 
                 points[0].X = points[3].X = points[4].X = rect.X;
                 points[1].X = points[2].X = rect.Right;

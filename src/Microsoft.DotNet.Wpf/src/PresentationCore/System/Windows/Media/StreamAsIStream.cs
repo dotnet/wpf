@@ -1,9 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using MS.Internal;
-using MS.Win32;
 using System.Runtime.InteropServices;
+using MS.Internal;
+using System.IO;
+using MS.Win32;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
@@ -162,7 +163,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -181,7 +182,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -238,7 +239,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return hr;
@@ -254,7 +255,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -275,7 +276,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -291,7 +292,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -363,7 +364,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -381,7 +382,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -406,7 +407,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -422,7 +423,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -446,7 +447,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -466,7 +467,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -486,7 +487,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;

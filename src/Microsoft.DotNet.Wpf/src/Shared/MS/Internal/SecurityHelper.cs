@@ -104,22 +104,6 @@ internal static class SecurityHelper
         {
             Marshal.ThrowExceptionForHR(hr, new IntPtr(-1));
         }
-        
-        internal static int GetHRForException(Exception exception)
-        {
-            ArgumentNullException.ThrowIfNull(exception);
-
-            // GetHRForException fills a per thread IErrorInfo object with data from the exception
-            // The exception may contain security sensitive data like full file paths that we do not
-            // want to leak into an IErrorInfo
-            int hr = Marshal.GetHRForException(exception);
-
-            // Call GetHRForException a second time with a security safe exception object
-            // to make sure the per thread IErrorInfo is cleared of security sensitive data
-            Marshal.GetHRForException(new Exception());
-
-            return hr;
-        }
 
 #endif
 

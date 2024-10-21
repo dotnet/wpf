@@ -449,7 +449,7 @@ namespace System.Windows.Media
             if (IsRounded(radiusX, radiusY))
             {
                 // It is a rounded rectangle
-                Invariant.Assert(pointsCount >= c_roundedPointCount);
+                Invariant.Assert(pointsCount >= RoundedPointCount);
 
                 radiusX = Math.Min(rect.Width * (1.0 / 2.0), Math.Abs(radiusX));
                 radiusY = Math.Min(rect.Height * (1.0 / 2.0), Math.Abs(radiusY));
@@ -476,7 +476,7 @@ namespace System.Windows.Media
             else
             {
                 // The rectangle is not rounded
-                Invariant.Assert(pointsCount >= c_squaredPointCount);
+                Invariant.Assert(pointsCount >= SquaredPointCount);
 
                 points[0].X = points[3].X = points[4].X = rect.X;
                 points[1].X = points[2].X = rect.Right;
@@ -510,11 +510,11 @@ namespace System.Windows.Media
             }
             else if (IsRounded(radiusX, radiusY))
             {
-                return c_roundedPointCount;
+                return RoundedPointCount;
             }
             else
             {
-                return c_squaredPointCount;
+                return SquaredPointCount;
             }
         }
 
@@ -526,11 +526,11 @@ namespace System.Windows.Media
             }
             else if (IsRounded(radiusX, radiusY))
             {
-                return c_roundedSegmentCount;
+                return RoundedSegmentCount;
             }
             else
             {
-                return c_squaredSegmentCount;
+                return SquaredSegmentCount;
             }
         }
 
@@ -544,13 +544,13 @@ namespace System.Windows.Media
             else if (IsRounded(radiusX, radiusY))
             {
                 // The rectangle is rounded
-                pointCount = c_roundedPointCount;
-                segmentCount = c_roundedSegmentCount;
+                pointCount = RoundedPointCount;
+                segmentCount = RoundedSegmentCount;
             }
             else
             {
-                pointCount = c_squaredPointCount;
-                segmentCount = c_squaredSegmentCount;
+                pointCount = SquaredPointCount;
+                segmentCount = SquaredSegmentCount;
             }
         }
 
@@ -577,8 +577,8 @@ namespace System.Windows.Media
         #region InstanceData
 
         // Rouneded
-        static private UInt32 c_roundedSegmentCount = 8;
-        static private UInt32 c_roundedPointCount = 17;
+        private const uint RoundedSegmentCount = 8;
+        private const uint RoundedPointCount = 17;
 
         private const byte SmoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
                                           (byte)MILCoreSegFlags.SegIsCurved   |
@@ -599,8 +599,8 @@ namespace System.Windows.Media
                                                                SmoothLine];
 
         // Squared
-        private const UInt32 c_squaredSegmentCount = 4;
-        private const UInt32 c_squaredPointCount = 5;
+        private const uint SquaredSegmentCount = 4;
+        private const uint SquaredPointCount = 5;
 
         private static ReadOnlySpan<byte> SquaredPathTypes => [(byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegClosed,
                                                                (byte)MILCoreSegFlags.SegTypeLine,

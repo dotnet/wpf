@@ -76,21 +76,9 @@ namespace System.Windows
         {
             get
             {
-                OleServicesContext oleServicesContext;
+                s_oleServicesContextInstance ??= new OleServicesContext();
 
-                // Get the ole services context from the Thread data slot.
-                oleServicesContext = (OleServicesContext)Thread.GetData(OleServicesContext._threadDataSlot);
-
-                if (oleServicesContext == null)
-                {
-                    // Create OleSErvicesContext instance.
-                    oleServicesContext = new OleServicesContext();
-
-                    // Save the ole services context into the UIContext data slot.
-                    Thread.SetData(OleServicesContext._threadDataSlot, oleServicesContext);
-                }
-
-                return oleServicesContext;
+                return s_oleServicesContextInstance;
             }
         }
 
@@ -305,8 +293,11 @@ namespace System.Windows
 
         #region Private Fields
 
-        // This is a slot to store OleServicesContext class per thread.
-        private static readonly LocalDataStoreSlot _threadDataSlot = Thread.AllocateDataSlot();
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="OleServicesContext"/>.
+        /// </summary>
+        [ThreadStatic]
+        private static OleServicesContext s_oleServicesContextInstance;
 
 #if DEBUG
         // Ref count of calls to OleInitialize/OleUnitialize.

@@ -1890,6 +1890,8 @@ namespace System.Windows.Data
 
             object oldItem = (args.OldItems != null && args.OldItems.Count > 0) ? args.OldItems[0] : null;
             object newItem = (args.NewItems != null && args.NewItems.Count > 0) ? args.NewItems[0] : null;
+            IList oldItems = args.OldItems ?? Array.Empty<object>();
+            IList newItems = args.NewItems ?? Array.Empty<object>();
 
             LiveShapingList lsList = InternalList as LiveShapingList;
             LiveShapingItem lsi;
@@ -1925,7 +1927,7 @@ namespace System.Windows.Data
                     if (!IsGrouping)
                     {
                         AdjustCurrencyForAdd(adjustedNewIndex);
-                        args = new NotifyCollectionChangedEventArgs(effectiveAction, newItem, adjustedNewIndex);
+                        args = new NotifyCollectionChangedEventArgs(effectiveAction, newItems, adjustedNewIndex);
                     }
                     else
                     {
@@ -1963,7 +1965,7 @@ namespace System.Windows.Data
                     if (!IsGrouping)
                     {
                         AdjustCurrencyForRemove(adjustedOldIndex);
-                        args = new NotifyCollectionChangedEventArgs(effectiveAction, args.OldItems[0], adjustedOldIndex);
+                        args = new NotifyCollectionChangedEventArgs(effectiveAction, oldItems, adjustedOldIndex);
                     }
                     else
                     {
@@ -1993,7 +1995,7 @@ namespace System.Windows.Data
                     if (!IsGrouping)
                     {
                         AdjustCurrencyForReplace(adjustedOldIndex);
-                        args = new NotifyCollectionChangedEventArgs(effectiveAction, args.NewItems[0], args.OldItems[0], adjustedOldIndex);
+                        args = new NotifyCollectionChangedEventArgs(effectiveAction, newItems, oldItems, adjustedOldIndex);
                     }
                     else
                     {
@@ -2392,34 +2394,58 @@ namespace System.Windows.Data
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewStartingIndex > _unknownIndex)
                     {
-                        ShadowCollection.Insert(e.NewStartingIndex, e.NewItems[0]);
+                        ShadowCollection.InsertRange(e.NewStartingIndex, e.NewItems);
                     }
                     else
                     {
-                        ShadowCollection.Add(e.NewItems[0]);
+                        ShadowCollection.AddRange(e.NewItems);
                     }
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldStartingIndex > _unknownIndex)
                     {
-                        ShadowCollection.RemoveAt(e.OldStartingIndex);
+                        ShadowCollection.RemoveRange(e.OldStartingIndex, e.OldItems.Count);
                     }
                     else
                     {
-                        ShadowCollection.Remove(e.OldItems[0]);
+                        for (int i = e.OldStartingIndex; i < e.OldItems.Count; i++)
+                        {
+                            ShadowCollection.Remove(e.OldItems[i]);
+                        }
                     }
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     if (e.OldStartingIndex > _unknownIndex)
                     {
-                        ShadowCollection[e.OldStartingIndex] = e.NewItems[0];
+                        if (e.NewItems.Count == e.OldItems.Count)
+                        {
+                            for (int i = 0; i < e.NewItems.Count; i++)
+                            {
+                                ShadowCollection[e.OldStartingIndex + i] = e.NewItems[i];
+                            }
+                        }
+                        else
+                        {
+                            if (e.OldItems.Count > 0)
+                            {
+                                ShadowCollection.RemoveRange(e.OldStartingIndex, e.OldItems.Count);
+                            }
+
+                            if (e.NewItems.Count > 0)
+                            {
+                                ShadowCollection.InsertRange(e.OldStartingIndex, e.NewItems);
+                            }
+                        }
                     }
                     else
                     {
                         // allow the ShadowCollection to throw the IndexOutOfRangeException
                         // if the item is not found.
-                        tempIndex = ShadowCollection.IndexOf(e.OldItems[0]);
-                        ShadowCollection[tempIndex] = e.NewItems[0];
+                        for (int i = 0; i < e.OldItems.Count; i++)
+                        {
+                            tempIndex = ShadowCollection.IndexOf(e.OldItems[i]);
+                            ShadowCollection[tempIndex] = e.NewItems[i];
+                        }
                     }
                     break;
                 case NotifyCollectionChangedAction.Move:
@@ -2522,17 +2548,17 @@ namespace System.Windows.Data
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems.Count != 1)
+                    if (e.NewItems.Count < 1)
                         throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems.Count != 1)
+                    if (e.OldItems.Count < 1)
                         throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
+                    if (e.NewItems.Count < 1 || e.OldItems.Count < 1)
                         throw new NotSupportedException(SR.RangeActionsNotSupported);
                     break;
 

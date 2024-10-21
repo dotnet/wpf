@@ -19,6 +19,7 @@ using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using System.IO;
 
 
 namespace System.Windows.Media
@@ -130,8 +131,7 @@ namespace System.Windows.Media
         const int STREAM_SEEK_CUR = 0x1;
         const int STREAM_SEEK_END = 0x2;
 
-        protected System.IO.Stream dataStream;
-        private Exception _lastException;
+        protected Stream dataStream;
 
         // to support seeking ahead of the stream length...
         private long virtualPosition = -1;
@@ -168,28 +168,20 @@ namespace System.Windows.Media
         {
             stream = IntPtr.Zero;
 
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.E_NOTIMPL;
         }
 
         public int Commit(uint grfCommitFlags)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -199,12 +191,8 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -220,8 +208,6 @@ namespace System.Windows.Media
             cbWritten = 0;
             cbRead = 0;
 
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -235,9 +221,8 @@ namespace System.Windows.Media
                         toRead  = (uint) (cb - cbWritten);
                     }
 
-                    uint read = 0;
 
-                    hr = Read(buffer.AsSpan(0, (int) toRead), out read);
+                    hr = Read(buffer.AsSpan(0, (int)toRead), out uint read);
 
                     if (read == 0)
                     {
@@ -246,9 +231,8 @@ namespace System.Windows.Media
 
                     cbRead += read;
 
-                    uint written = 0;
 
-                    hr = MILIStreamWrite(pstm, buffer, read, out written);
+                    hr = MILIStreamWrite(pstm, buffer, read, out uint written);
 
                     if (written != read)
                     {
@@ -260,32 +244,22 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return hr;
         }
 
         public int LockRegion(long libOffset, long cb, uint dwLockType)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.E_NOTIMPL;
         }
@@ -293,8 +267,6 @@ namespace System.Windows.Media
         public int Read(Span<byte> buffer, out uint cbRead)
         {
             cbRead = 0;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -305,40 +277,28 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
 
         public int Revert()
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.E_NOTIMPL;
         }
 
         public unsafe int Seek(long offset, uint origin, long * plibNewPostion)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -401,20 +361,14 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
 
         public int SetSize(long value)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -423,12 +377,8 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -437,8 +387,6 @@ namespace System.Windows.Media
         {
             System.Runtime.InteropServices.ComTypes.STATSTG statstgOut = new System.Runtime.InteropServices.ComTypes.STATSTG();
             statstg = statstgOut;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -452,32 +400,22 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
 
         public int UnlockRegion(long libOffset, long cb, uint dwLockType)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.E_NOTIMPL;
         }
@@ -485,8 +423,6 @@ namespace System.Windows.Media
         public int Write(byte[] buffer, uint cb, out uint cbWritten)
         {
             cbWritten = 0;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -500,12 +436,8 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -513,8 +445,6 @@ namespace System.Windows.Media
         public int CanWrite(out bool canWrite)
         {
             canWrite = false;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -524,12 +454,8 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -537,8 +463,6 @@ namespace System.Windows.Media
         public int CanSeek(out bool canSeek)
         {
             canSeek = false;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -548,12 +472,8 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -573,8 +493,8 @@ namespace System.Windows.Media
         internal static StreamAsIStream FromSD(ref StreamDescriptor sd)
         {
             Debug.Assert(((IntPtr)sd.m_handle) != IntPtr.Zero, "Stream is disposed.");
-            System.Runtime.InteropServices.GCHandle handle = (System.Runtime.InteropServices.GCHandle)(sd.m_handle);
-            return (StreamAsIStream)(handle.Target);
+
+            return (StreamAsIStream)sd.m_handle.Target;
         }
 
         internal static int Clone(ref StreamDescriptor pSD, out IntPtr stream)
@@ -599,8 +519,7 @@ namespace System.Windows.Media
 
         internal static unsafe int Read(ref StreamDescriptor pSD, IntPtr buffer, uint cb, out uint cbRead)
         {
-            var span = new Span<byte>(buffer.ToPointer(), (int) cb);
-            return (StreamAsIStream.FromSD(ref pSD)).Read(span, out cbRead);
+            return (StreamAsIStream.FromSD(ref pSD)).Read(new Span<byte>((void*)buffer, (int)cb), out cbRead);
         }
 
         internal static int Revert(ref StreamDescriptor pSD)

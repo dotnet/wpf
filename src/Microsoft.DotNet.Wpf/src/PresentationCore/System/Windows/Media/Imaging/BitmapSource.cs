@@ -404,7 +404,7 @@ namespace System.Windows.Media.Imaging
             // Demand Site Of origin on the URI if it passes then this  information is ok to expose
             CheckIfSiteOfOrigin();
 
-            CriticalCopyPixels(sourceRect, buffer, bufferSize, stride);
+            CriticalCopyPixels(sourceRect, buffer, (uint)bufferSize, stride);
         }
 
         /// <summary>
@@ -676,8 +676,7 @@ namespace System.Windows.Media.Imaging
             if (elementSize == -1)
                 throw new ArgumentException(SR.Image_InvalidArrayForPixel);
 
-            int destBufferSize = checked(elementSize * (pixels.Length - offset));
-
+            uint destBufferSize = checked((uint)elementSize * (uint)(pixels.Length - offset));
 
             if (pixels is byte[])
             {
@@ -723,7 +722,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="buffer"></param>
         /// <param name="bufferSize"></param>
         /// <param name="stride"></param>
-        internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
+        internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, uint bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
                 throw new ArgumentNullException("buffer");
@@ -742,7 +741,7 @@ namespace System.Windows.Media.Imaging
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
             ArgumentOutOfRangeException.ThrowIfLessThan(stride, minStride);
 
-            int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
+            uint minRequiredDestSize = checked(((uint)stride * (uint)(sourceRect.Height - 1)) + (uint)minStride);
             ArgumentOutOfRangeException.ThrowIfLessThan(bufferSize, minRequiredDestSize);
 
             lock (_syncObject)
@@ -751,7 +750,7 @@ namespace System.Windows.Media.Imaging
                     WicSourceHandle,
                     ref sourceRect,
                     (uint)stride,
-                    (uint)bufferSize,
+                    bufferSize,
                     buffer
                     ));
             }

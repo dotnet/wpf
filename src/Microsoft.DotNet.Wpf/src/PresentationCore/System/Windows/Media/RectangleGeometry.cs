@@ -17,9 +17,7 @@ namespace System.Windows.Media
         /// <summary>
         /// 
         /// </summary>
-        public RectangleGeometry()
-        {
-        }
+        public RectangleGeometry() { }
 
         /// <summary>
         /// Constructor - sets the rounded rectangle to equal the passed in parameters
@@ -32,9 +30,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Constructor - sets the rounded rectangle to equal the passed in parameters
         /// </summary>
-        public RectangleGeometry(Rect rect,
-            double radiusX,
-            double radiusY) : this(rect)
+        public RectangleGeometry(Rect rect, double radiusX, double radiusY) : this(rect)
         {
             RadiusX = radiusX;
             RadiusY = radiusY;
@@ -47,11 +43,7 @@ namespace System.Windows.Media
         /// <param name="radiusX"></param>
         /// <param name="radiusY"></param>
         /// <param name="transform"></param>
-        public RectangleGeometry(
-            Rect rect,
-            double radiusX,
-            double radiusY,
-            Transform transform) : this(rect, radiusX, radiusY)
+        public RectangleGeometry(Rect rect, double radiusX, double radiusY, Transform transform) : this(rect, radiusX, radiusY)
         {
             Transform = transform;
         }
@@ -101,9 +93,7 @@ namespace System.Windows.Media
                         // it's easier to let unmanaged code do the work for us.
                         //
 
-                        Matrix geometryMatrix;
-
-                        Transform.GetTransformValue(transform, out geometryMatrix);
+                        Transform.GetTransformValue(transform, out Matrix geometryMatrix);
 
                         boundsRect = RectangleGeometry.GetBoundsHelper(
                             null /* no pen */,
@@ -123,24 +113,20 @@ namespace System.Windows.Media
 
         internal override bool AreClose(Geometry geometry)
         {
-            RectangleGeometry rectGeometry2 = geometry as RectangleGeometry;
-
-            if (rectGeometry2 != null)
+            if (geometry is RectangleGeometry rectGeometry2)
             {
                 RectangleGeometry rectGeometry1 = this;
                 Rect rect1 = rectGeometry1.Rect;
                 Rect rect2 = rectGeometry2.Rect;
-                
-                return (
-                    DoubleUtil.AreClose(rect1.X, rect2.X) &&
-                    DoubleUtil.AreClose(rect1.Y, rect2.Y) &&
-                    DoubleUtil.AreClose(rect1.Width, rect2.Width) &&
-                    DoubleUtil.AreClose(rect1.Height, rect2.Height) &&
-                    DoubleUtil.AreClose(rectGeometry1.RadiusX, rectGeometry2.RadiusX) &&
-                    DoubleUtil.AreClose(rectGeometry1.RadiusY, rectGeometry2.RadiusY) &&
-                    (rectGeometry1.Transform == rectGeometry2.Transform) &&
-                    (rectGeometry1.IsFrozen == rectGeometry2.IsFrozen)
-                    );
+
+                return DoubleUtil.AreClose(rect1.X, rect2.X) &&
+                       DoubleUtil.AreClose(rect1.Y, rect2.Y) &&
+                       DoubleUtil.AreClose(rect1.Width, rect2.Width) &&
+                       DoubleUtil.AreClose(rect1.Height, rect2.Height) &&
+                       DoubleUtil.AreClose(rectGeometry1.RadiusX, rectGeometry2.RadiusX) &&
+                       DoubleUtil.AreClose(rectGeometry1.RadiusY, rectGeometry2.RadiusY) &&
+                       (rectGeometry1.Transform == rectGeometry2.Transform) &&
+                       (rectGeometry1.IsFrozen == rectGeometry2.IsFrozen);
             }
 
             return base.AreClose(geometry);
@@ -152,77 +138,51 @@ namespace System.Windows.Media
         /// </summary>
         internal override Rect GetBoundsInternal(Pen pen, Matrix worldMatrix, double tolerance, ToleranceType type)
         {
-            Matrix geometryMatrix;
-            
-            Transform.GetTransformValue(Transform, out geometryMatrix);
+            Transform.GetTransformValue(Transform, out Matrix geometryMatrix);
 
-            return RectangleGeometry.GetBoundsHelper(
-                pen,
-                worldMatrix,
-                Rect,
-                RadiusX,
-                RadiusY,
-                geometryMatrix,
-                tolerance,
-                type);
+            return RectangleGeometry.GetBoundsHelper(pen, worldMatrix, Rect, RadiusX, RadiusY, geometryMatrix, tolerance, type);
         }
         
-        internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Rect rect, double radiusX, double radiusY,
+        internal static unsafe Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Rect rect, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            Rect boundingRect;
-
             if (rect.IsEmpty)
-            {
-                boundingRect = Rect.Empty;
-            }
-            else if ( (pen == null || pen.DoesNotContainGaps) &&
-                geometryMatrix.IsIdentity && worldMatrix.IsIdentity)
+                return Rect.Empty;
+
+            if ((pen is null || pen.DoesNotContainGaps) && geometryMatrix.IsIdentity && worldMatrix.IsIdentity)
             {
                 double strokeThickness = 0.0;
 
-                boundingRect = rect;
+                Rect boundingRect = rect;
 
                 if (Pen.ContributesToBounds(pen))
                 {
                     strokeThickness = Math.Abs(pen.Thickness);
 
-                    boundingRect.X -= 0.5*strokeThickness;
-                    boundingRect.Y -= 0.5*strokeThickness;
+                    boundingRect.X -= 0.5 * strokeThickness;
+                    boundingRect.Y -= 0.5 * strokeThickness;
                     boundingRect.Width += strokeThickness;
                     boundingRect.Height += strokeThickness;
                 }
+
+                return boundingRect;
             }
             else
             {
-                unsafe
+                GetCounts(rect, radiusX, radiusY, out uint pointCount, out uint segmentCount);
+
+                // We've checked that rect isn't empty above
+                Invariant.Assert(pointCount != 0);
+
+                Point* ptrPoints = stackalloc Point[(int)pointCount];
+                RectangleGeometry.InitializePointList(ptrPoints, (int)pointCount, rect, radiusX, radiusY);
+
+                fixed (byte* ptrTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
-                    GetCounts(rect, radiusX, radiusY, out uint pointCount, out uint segmentCount);
-
-                    // We've checked that rect isn't empty above
-                    Invariant.Assert(pointCount != 0);
-
-                    Point* pPoints = stackalloc Point[(int)pointCount];
-                    RectangleGeometry.InitializePointList(pPoints, (int)pointCount, rect, radiusX, radiusY);
-
-                    fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
-                    {
-                        boundingRect = Geometry.GetBoundsHelper(
-                            pen,
-                            &worldMatrix,
-                            pPoints,
-                            pTypes,
-                            pointCount,
-                            segmentCount,
-                            &geometryMatrix,
-                            tolerance,
-                            type,
-                            false);  // skip hollows - meaningless here, this is never a hollow
-                    }
+                    return Geometry.GetBoundsHelper(pen, &worldMatrix, ptrPoints, ptrTypes, pointCount, segmentCount,
+                                                    &geometryMatrix, tolerance, type, false);  // skip hollows - meaningless here, this is never a hollow
                 }
             }
-
-            return boundingRect;
         }
 
         internal override bool ContainsInternal(Pen pen, Point hitPoint, double tolerance, ToleranceType type)
@@ -241,20 +201,12 @@ namespace System.Windows.Media
             
             unsafe
             {
-                Point* pPoints = stackalloc Point[(int)pointCount];
-                RectangleGeometry.InitializePointList(pPoints, (int)pointCount, rect, radiusX, radiusY);
+                Point* ptrPoints = stackalloc Point[(int)pointCount];
+                RectangleGeometry.InitializePointList(ptrPoints, (int)pointCount, rect, radiusX, radiusY);
 
-                fixed (byte* pTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* ptrTypes = GetTypeList(rect, radiusX, radiusY)) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
-                    return ContainsInternal(
-                        pen,
-                        hitPoint,
-                        tolerance, 
-                        type,
-                        pPoints,
-                        pointCount,
-                        pTypes,
-                        segmentCount);
+                    return ContainsInternal(pen, hitPoint, tolerance, type, ptrPoints, pointCount, ptrTypes, segmentCount);
                 }
             }
         }
@@ -329,7 +281,7 @@ namespace System.Windows.Media
                                                                                 new BezierSegment(points[9], points[10], points[11], true, true),
                                                                                 new LineSegment(points[12], true, true),
                                                                                 new BezierSegment(points[13], points[14], points[15], true, true)],
-                                                                                closed: true) };    // closed
+                                                                                closed: true) };
             }
             else
             {
@@ -346,8 +298,7 @@ namespace System.Windows.Media
 
         internal bool IsRounded()
         {
-            return RadiusX != 0.0
-                && RadiusY != 0.0;
+            return RadiusX != 0.0 && RadiusY != 0.0;
         }
 
         /// <summary>
@@ -355,7 +306,7 @@ namespace System.Windows.Media
         /// </summary>
         internal override PathGeometry GetAsPathGeometry()
         {
-            PathStreamGeometryContext ctx = new PathStreamGeometryContext(FillRule.EvenOdd, Transform);
+            PathStreamGeometryContext ctx = new(FillRule.EvenOdd, Transform);
             PathGeometry.ParsePathGeometryData(GetPathGeometryData(), ctx);
 
             return ctx.GetPathGeometry();
@@ -378,7 +329,7 @@ namespace System.Windows.Media
             double radiusY = RadiusY;
             Rect rect = Rect;
 
-            ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
+            ByteStreamGeometryContext ctx = new();
 
             if (IsRounded(radiusX, radiusY))
             {
@@ -412,7 +363,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Initializes the point list into <paramref name="destination"/>. Optionally pins the source if not stack-allocated.
         /// </summary>
-        private unsafe void InitializePointList(Span<Point> destination, ref readonly Rect rect, double radiusX, double radiusY)
+        private unsafe void InitializePointList(Span<Point> destination, Rect rect, double radiusX, double radiusY)
         {
             fixed (Point* ptrPoints = destination) // In case this is stackallocated, it's a no-op
             {

@@ -120,7 +120,7 @@ namespace System.Windows.Media
         internal static unsafe Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Point center, double radiusX, double radiusY,
                                                     Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
-            if ((pen == null || pen.DoesNotContainGaps) && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
+            if ((pen is null || pen.DoesNotContainGaps) && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 double strokeThickness = Pen.ContributesToBounds(pen) ? Math.Abs(pen.Thickness) : 0.0;
 
@@ -129,14 +129,16 @@ namespace System.Windows.Media
                                 2.0 * Math.Abs(radiusX) + strokeThickness,
                                 2.0 * Math.Abs(radiusY) + strokeThickness);
             }
-
-            Point* ptrPoints = stackalloc Point[(int)PointCount];
-            EllipseGeometry.InitializePointList(ptrPoints, (int)PointCount, center, radiusX, radiusY);
-
-            fixed (byte* ptrTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
+            else
             {
-                return Geometry.GetBoundsHelper(pen, &worldMatrix, ptrPoints, ptrTypes, PointCount, SegmentCount, &geometryMatrix,
-                                                tolerance, type, false); // skip hollows - meaningless here, this is never a hollow
+                Point* ptrPoints = stackalloc Point[(int)PointCount];
+                EllipseGeometry.InitializePointList(ptrPoints, (int)PointCount, center, radiusX, radiusY);
+
+                fixed (byte* ptrTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
+                {
+                    return Geometry.GetBoundsHelper(pen, &worldMatrix, ptrPoints, ptrTypes, PointCount, SegmentCount, &geometryMatrix,
+                                                    tolerance, type, false); // skip hollows - meaningless here, this is never a hollow
+                }
             }
         }
 

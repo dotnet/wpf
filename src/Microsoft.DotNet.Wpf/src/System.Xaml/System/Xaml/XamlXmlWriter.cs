@@ -615,22 +615,21 @@ namespace System.Xaml
             return builder.ToString();
         }
 
-        string ConvertXamlTypeToString(XamlType typeArgument)
+        private string ConvertXamlTypeToString(XamlType typeArgument)
         {
             var builder = new StringBuilder();
             ConvertXamlTypeToStringHelper(typeArgument, builder);
             return builder.ToString();
         }
 
-        void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
+        private void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
+            ReadOnlySpan<char> typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
 
             // save the subscript
-            string subscript;
-            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out subscript);
+            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out ReadOnlySpan<char> subscript);
 
             builder.Append(typeNamePrefixed);
             if (type.TypeArguments != null)
@@ -650,7 +649,7 @@ namespace System.Xaml
             }
 
             // re-attach the subscript
-            if (subscript != null)
+            if (!subscript.IsEmpty)
             {
                 builder.Append(subscript);
             }

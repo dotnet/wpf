@@ -84,12 +84,8 @@ namespace System.Windows
         /// </summary>
         /// <param name="visual">The visual to find the source for.</param>
         /// <returns>The source in which the visual is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromVisual(Visual visual)
         {
-
             return CriticalFromVisual(visual);
         }
 
@@ -98,12 +94,8 @@ namespace System.Windows
         /// </summary>
         /// <param name="dependencyObject">The dependency object to find the source for.</param>
         /// <returns>The source in which the dependency object is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-
             return CriticalFromVisual(dependencyObject);
         }
 
@@ -118,7 +110,6 @@ namespace System.Windows
         ///     1) You cannot use the UIElement or ContentElement AddHandler() method.
         ///     2) Class handlers are not allowed.
         ///     3) The handlers will receive the SourceChanged event even if it was handled.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public static void AddSourceChangedHandler(IInputElement element, SourceChangedEventHandler handler)
         {
@@ -298,14 +289,7 @@ namespace System.Windows
         /// <summary>
         ///     The root visual being presented in the source.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
-        public abstract Visual RootVisual
-        {
-            get;
-            set;
-        }
+        public abstract Visual RootVisual { get; set; }
 
         /// <summary>
         ///     Causes this PresentationSource to enter "menu mode".
@@ -355,10 +339,7 @@ namespace System.Windows
         /// <summary>
         ///     Whether or not the object is disposed.
         /// </summary>
-        public abstract bool IsDisposed
-        {
-            get;
-        }
+        public abstract bool IsDisposed { get; }
 
         #endregion
 
@@ -374,17 +355,10 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public static IEnumerable CurrentSources
         {
-            get
-            {
-                return CriticalCurrentSources;
-            }
+            get => _sources;
         }
-
 
         #endregion
 
@@ -551,6 +525,17 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Returns whether this <see cref="Visual"/> is connected to a <see cref="PresentationSource"/>.
+        /// In case it is, we can deem this <see cref="Visual"/> renderable.
+        /// </summary>
+        /// <param name="visual">The <see cref="Visual"/> to check.</param>
+        /// <returns><see langword="true"/> if it is connected to a <see cref="PresentationSource"/>, <see langword="false"/> otherwise.</returns>
+        internal static bool IsVisualConnectedToSource(Visual visual)
+        {
+            return CriticalFromVisual(visual) is not null;
+        }
+
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
@@ -619,20 +604,6 @@ namespace System.Windows
 
         //------------------------------------------------------
         //
-        //  Internal Properties
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
-        //  Internal Events
-        //
-        //------------------------------------------------------
-        // None
-
-        //------------------------------------------------------
-        //
         //  Private Static Methods
         //
         //------------------------------------------------------  
@@ -643,12 +614,9 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        internal static WeakReferenceList CriticalCurrentSources
+        internal static WeakReferenceList CurrentSourcesList
         {
-            get
-            {
-                return _sources;
-            }
+            get => _sources;
         }
 
         private static void AddElementToWatchList(DependencyObject element)

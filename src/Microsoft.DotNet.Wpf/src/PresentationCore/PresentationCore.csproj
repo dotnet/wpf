@@ -39,7 +39,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\AppDomainShutdownMonitor.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CharacterBuffer.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\CommonDependencyPropertyAttribute.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\DecoderFallbackWithFailureFlag.cs" />

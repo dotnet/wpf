@@ -24,6 +24,8 @@ using MS.Win32;
 using System.IO.Packaging;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using SR = MS.Internal.PresentationCore.SR;
+using MS.Internal.PresentationCore;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Media.Imaging
 {
@@ -655,7 +657,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             if (offset < 0)
             {
@@ -678,43 +680,13 @@ namespace System.Windows.Media.Imaging
 
             int destBufferSize = checked(elementSize * (pixels.Length - offset));
 
+            // Check whether offset is out of bounds manually
+            if (offset >= pixels.Length)
+                throw new IndexOutOfRangeException();
 
-            if (pixels is byte[])
-            {
-                fixed (void* pixelArray = &((byte[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is short[])
-            {
-                fixed (void* pixelArray = &((short[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is ushort[])
-            {
-                fixed (void* pixelArray = &((ushort[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is int[])
-            {
-                fixed (void* pixelArray = &((int[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is uint[])
-            {
-                fixed (void* pixelArray = &((uint[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is float[])
-            {
-                fixed (void* pixelArray = &((float[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is double[])
-            {
-                fixed (void* pixelArray = &((double[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-}
+            fixed (byte* pixelArray = &Unsafe.AddByteOffset(ref MemoryMarshal.GetArrayDataReference(pixels), (nint)offset * elementSize))
+                CriticalCopyPixels(sourceRect, (nint)pixelArray, destBufferSize, stride);
+        }
 
         /// <summary>
         /// CriticalCopyPixels
@@ -726,7 +698,7 @@ namespace System.Windows.Media.Imaging
         internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 

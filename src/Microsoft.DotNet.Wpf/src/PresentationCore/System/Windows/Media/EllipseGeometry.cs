@@ -159,8 +159,7 @@ namespace System.Windows.Media
         {
             Rect rect;
 
-            if ( (pen == null || pen.DoesNotContainGaps) &&
-                worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
+            if ((pen == null || pen.DoesNotContainGaps) && worldMatrix.IsIdentity && geometryMatrix.IsIdentity)
             {
                 double strokeThickness = 0.0;
 
@@ -179,10 +178,10 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Point* pPoints = stackalloc Point[(int)c_pointCount];
-                    EllipseGeometry.GetPointList(pPoints, c_pointCount, center, radiusX, radiusY);
+                    Point* pPoints = stackalloc Point[(int)GetPointCount()];
+                    EllipseGeometry.InitializePointList(pPoints, (int)GetPointCount(), center, radiusX, radiusY);
 
-                    fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         rect = Geometry.GetBoundsHelper(
                             pen, 
@@ -207,9 +206,9 @@ namespace System.Windows.Media
             unsafe
             {
                 Point* pPoints = stackalloc Point[(int)GetPointCount()];
-                EllipseGeometry.GetPointList(pPoints, GetPointCount(), Center, RadiusX, RadiusY);
+                EllipseGeometry.InitializePointList(pPoints, (int)GetPointCount(), Center, RadiusX, RadiusY);
 
-                fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* pTypes = RoundedPathTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -267,7 +266,9 @@ namespace System.Windows.Media
 
         internal override PathFigureCollection GetTransformedFigureCollection(Transform transform)
         {
-            Point[] points = GetPointList();
+            // Initialize the point list
+            Span<Point> points = stackalloc Point[(int)GetPointCount()];
+            InitializePointList(points);
 
             // Get the combined transform argument with the internal transform
             Matrix matrix = GetCombinedMatrix(transform);
@@ -308,11 +309,11 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new() { FillRule = FillRule.EvenOdd, Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform) };
 
-            Point[] points = GetPointList();
+            // Initialize the point list
+            Span<Point> points = stackalloc Point[(int)GetPointCount()];
+            InitializePointList(points);
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
@@ -331,24 +332,20 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// Initializes the point list into <paramref name="destination"/>. Optionally pins the source if not stack-allocated.
         /// </summary>
-        /// <returns></returns>
-        private Point[] GetPointList()
+        private unsafe void InitializePointList(Span<Point> destination)
         {
-            Point[] points = new Point[GetPointCount()];
-
-            unsafe
+            fixed (Point* ptrPoints = destination) // In case this is stackallocated, it's a no-op
             {
-                fixed(Point *pPoints = points)
-                {
-                    EllipseGeometry.GetPointList(pPoints, GetPointCount(), Center, RadiusX, RadiusY);
-                }
+                EllipseGeometry.InitializePointList(ptrPoints, destination.Length, Center, RadiusX, RadiusY);
             }
-
-            return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
+        /// <summary>
+        /// Initializes the point list specified by <paramref name="points"/>. The pointer must be pinned.
+        /// </summary>
+        private unsafe static void InitializePointList(Point* points, int pointsCount, Point center, double radiusX, double radiusY)
         {
             Invariant.Assert(pointsCount >= c_pointCount);
 

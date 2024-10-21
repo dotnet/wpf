@@ -131,8 +131,7 @@ namespace System.Windows.Media
         const int STREAM_SEEK_CUR = 0x1;
         const int STREAM_SEEK_END = 0x2;
 
-        protected System.IO.Stream dataStream;
-        private Exception _lastException;
+        protected Stream dataStream;
 
         // to support seeking ahead of the stream length...
         private long virtualPosition = -1;
@@ -177,8 +176,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -200,8 +197,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -261,8 +256,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -281,8 +274,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -306,8 +297,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -326,8 +315,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -402,8 +389,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -424,8 +409,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -453,8 +436,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -473,8 +454,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -501,8 +480,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -525,8 +502,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 
@@ -549,8 +524,6 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
                 return Marshal.GetHRForException(e);
             }
 

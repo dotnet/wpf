@@ -580,25 +580,23 @@ namespace System.Windows.Media
         static private UInt32 c_roundedSegmentCount = 8;
         static private UInt32 c_roundedPointCount = 17;
 
-        static private byte smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
-                                            (byte)MILCoreSegFlags.SegIsCurved   |
-                                            (byte)MILCoreSegFlags.SegSmoothJoin;
+        private const byte SmoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
+                                          (byte)MILCoreSegFlags.SegIsCurved   |
+                                          (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        static private byte smoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;
+        private const byte SmoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        private static ReadOnlySpan<byte> RoundedPathTypes => new byte[] {
-            (byte)MILCoreSegFlags.SegTypeBezier |
-            (byte)MILCoreSegFlags.SegIsCurved   |
-            (byte)MILCoreSegFlags.SegSmoothJoin |
-            (byte)MILCoreSegFlags.SegClosed,
-            smoothLine,
-            smoothBezier,
-            smoothLine,
-            smoothBezier,
-            smoothLine,
-            smoothBezier,
-            smoothLine
-        };
+        private static ReadOnlySpan<byte> RoundedPathTypes => [(byte)MILCoreSegFlags.SegTypeBezier |
+                                                               (byte)MILCoreSegFlags.SegIsCurved   |
+                                                               (byte)MILCoreSegFlags.SegSmoothJoin |
+                                                               (byte)MILCoreSegFlags.SegClosed,
+                                                               SmoothLine,
+                                                               SmoothBezier,
+                                                               SmoothLine,
+                                                               SmoothBezier,
+                                                               SmoothLine,
+                                                               SmoothBezier,
+                                                               SmoothLine];
 
         // Squared
         private const UInt32 c_squaredSegmentCount = 4;

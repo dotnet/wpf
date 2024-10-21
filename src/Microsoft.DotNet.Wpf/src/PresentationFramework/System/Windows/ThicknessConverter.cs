@@ -2,44 +2,30 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: Contains the ThicknessConverter: TypeConverter for the Thickness struct.
-//
-//
-
-using System;
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
     /// <summary>
-    /// ThicknessConverter - Converter class for converting instances of other types to and from Thickness instances.
+    /// Converter class for converting instances of other types to and from <see cref="Thickness"/> instances.
     /// </summary> 
     public class ThicknessConverter : TypeConverter
     {
         #region Public Methods
 
         /// <summary>
-        /// CanConvertFrom - Returns whether or not this class can convert from a given type.
+        /// Returns whether this class can convert specific <paramref name="sourceType"/> into <see cref="Thickness"/>.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.
         /// </returns>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="sourceType"> The Type being queried for support. </param>
+        /// <param name="typeDescriptorContext">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
         public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -100,18 +86,24 @@ namespace System.Windows
 
             if (source is string sourceString)
                 return FromString(sourceString, cultureInfo);
-            else if (source is double sourceValue)
+
+            if (source is double sourceValue)
                 return new Thickness(sourceValue);
-            else
-                return new Thickness(Convert.ToDouble(source, cultureInfo));         
+
+            // Conversion from a numeric type
+            return new Thickness(Convert.ToDouble(source, cultureInfo));
         }
 
         /// <summary>
-        /// ConvertTo - Attempt to convert a Thickness to the given type
+        /// Attempt to convert a <see cref="Thickness"/> struct to the <paramref name="destinationType"/>.
         /// </summary>
         /// <returns>
-        /// The object which was constructed.
+        /// The formatted <paramref name="value"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/> or an <see cref="InstanceDescriptor"/>.
         /// </returns>
+        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
+        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
+        /// <param name="value"> The Thickness to convert. </param>
+        /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
@@ -119,10 +111,6 @@ namespace System.Windows
         /// An ArgumentException is thrown if the object is not null and is not a Thickness,
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
-        /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
-        /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
-        /// <param name="value"> The Thickness to convert. </param>
-        /// <param name="destinationType">The type to which to convert the Thickness instance. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -133,7 +121,8 @@ namespace System.Windows
 
             if (destinationType == typeof(string))
                 return ToString(thickness, cultureInfo);
-            else if (destinationType == typeof(InstanceDescriptor))
+
+            if (destinationType == typeof(InstanceDescriptor))
             {
                 ConstructorInfo ci = typeof(Thickness).GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double), typeof(double) });
                 return new InstanceDescriptor(ci, new object[] { thickness.Left, thickness.Top, thickness.Right, thickness.Bottom });
@@ -141,7 +130,6 @@ namespace System.Windows
 
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(Thickness), destinationType.FullName));
         }
-
 
         #endregion Public Methods
 
@@ -154,12 +142,12 @@ namespace System.Windows
         #region Internal Methods
 
         /// <summary>
-        /// Converts <paramref name="th"/> to its string representation using the specified <paramref name="cultureInfo"/>.
+        /// Converts <paramref name="thickness"/> to its string representation using the specified <paramref name="cultureInfo"/>.
         /// </summary>
-        /// <param name="th">The <see cref="Thickness"/> to convert to string.</param>
+        /// <param name="thickness">The <see cref="Thickness"/> to convert to <see cref="string"/>.</param>
         /// <param name="cultureInfo">Culture to use when formatting doubles and choosing separator.</param>
-        /// <returns>The formatted <paramref name="th"/> as string using the specified <paramref name="cultureInfo"/>.</returns>
-        internal static string ToString(Thickness th, CultureInfo cultureInfo)
+        /// <returns>The formatted <paramref name="thickness"/> as <see cref="string"/> using the specified <paramref name="cultureInfo"/>.</returns>
+        internal static string ToString(Thickness thickness, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
@@ -170,40 +158,40 @@ namespace System.Windows
             //  1 = 1x scratch space for alignment
 
             DefaultInterpolatedStringHandler handler = new(0, 7, cultureInfo, stackalloc char[64]);
-            LengthConverter.FormatLengthAsString(th.Left, ref handler);
+            LengthConverter.FormatLengthAsString(thickness.Left, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            LengthConverter.FormatLengthAsString(th.Top, ref handler);
+            LengthConverter.FormatLengthAsString(thickness.Top, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            LengthConverter.FormatLengthAsString(th.Right, ref handler);
+            LengthConverter.FormatLengthAsString(thickness.Right, ref handler);
             handler.AppendFormatted(listSeparator);
 
-            LengthConverter.FormatLengthAsString(th.Bottom, ref handler);
+            LengthConverter.FormatLengthAsString(thickness.Bottom, ref handler);
 
             return handler.ToStringAndClear();
         }
 
         /// <summary>
-        /// Constructs a <see cref="Thickness"/> struct out of string representation supplied by <paramref name="s"/> and the specified <paramref name="cultureInfo"/>.
+        /// Constructs a <see cref="Thickness"/> struct out of string representation supplied by <paramref name="input"/> and the specified <paramref name="cultureInfo"/>.
         /// </summary>
-        /// <param name="s">The string representation of a <see cref="Thickness"/> struct.</param>
+        /// <param name="input">The string representation of a <see cref="Thickness"/> struct.</param>
         /// <param name="cultureInfo">The <see cref="CultureInfo"/> which was used to format this string.</param>
-        /// <returns>A new instance of <see cref="Thickness"/> struct representing the data contained in <paramref name="s"/>.</returns>
-        /// <exception cref="FormatException">Thrown when <paramref name="s"/> contains invalid string representation.</exception>
-        internal static Thickness FromString(string s, CultureInfo cultureInfo)
+        /// <returns>A new instance of <see cref="Thickness"/> struct representing the data contained in <paramref name="input"/>.</returns>
+        /// <exception cref="FormatException">Thrown when <paramref name="input"/> contains invalid string representation.</exception>
+        internal static Thickness FromString(string input, CultureInfo cultureInfo)
         {
-            TokenizerHelper th = new(s, cultureInfo);
+            ValueTokenizerHelper tokenizer = new(input, cultureInfo);
             Span<double> lengths = stackalloc double[4];
             int i = 0;
 
             // Peel off each double in the delimited list.
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 if (i >= 4) // In case we've got more than 4 doubles, we throw
-                    throw new FormatException(SR.Format(SR.InvalidStringThickness, s));
+                    throw new FormatException(SR.Format(SR.InvalidStringThickness, input));
 
-                lengths[i] = LengthConverter.FromString(th.GetCurrentToken(), cultureInfo);
+                lengths[i] = LengthConverter.FromString(tokenizer.GetCurrentToken(), cultureInfo);
                 i++;
             }
 
@@ -215,11 +203,10 @@ namespace System.Windows
                 1 => new Thickness(lengths[0]),
                 2 => new Thickness(lengths[0], lengths[1], lengths[0], lengths[1]),
                 4 => new Thickness(lengths[0], lengths[1], lengths[2], lengths[3]),
-                _ => throw new FormatException(SR.Format(SR.InvalidStringThickness, s)),
+                _ => throw new FormatException(SR.Format(SR.InvalidStringThickness, input)),
             };
         }
 
-    #endregion
-
+        #endregion
     }
 }

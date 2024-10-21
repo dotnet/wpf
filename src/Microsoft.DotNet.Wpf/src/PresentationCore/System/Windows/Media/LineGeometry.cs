@@ -114,19 +114,19 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Point* pPoints = stackalloc Point[2];
+                    Point* pPoints = stackalloc Point[(int)PointCount];
                     pPoints[0] = pt1;
                     pPoints[1] = pt2;
 
-                    fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                    fixed (byte* pTypes = LineTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         return Geometry.GetBoundsHelper(
                             pen, 
                             &worldMatrix, 
                             pPoints, 
-                            pTypes, 
-                            c_pointCount,
-                            c_segmentCount,
+                            pTypes,
+                            PointCount,
+                            SegmentCount,
                             &geometryMatrix,
                             tolerance,
                             type,
@@ -140,11 +140,11 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point* pPoints = stackalloc Point[2];
+                Point* pPoints = stackalloc Point[(int)PointCount];
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
                 
-                fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
+                fixed (byte* pTypes = LineTypes) // Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -152,9 +152,9 @@ namespace System.Windows.Media
                         tolerance, 
                         type,
                         pPoints,
-                        GetPointCount(),
+                        PointCount,
                         pTypes,
-                        GetSegmentCount());
+                        SegmentCount);
                 }
             }
         }
@@ -184,12 +184,6 @@ namespace System.Windows.Media
         {
             return 0.0;
         }
-
-        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
-
-        private static uint GetPointCount() { return c_pointCount; }
-
-        private static uint GetSegmentCount() { return c_segmentCount; }
 
         /// <summary>
         /// GetAsPathGeometry - return a PathGeometry version of this Geometry
@@ -261,8 +255,10 @@ namespace System.Windows.Media
 
         #region Static Data
         
-        private const UInt32 c_segmentCount = 1;
-        private const UInt32 c_pointCount = 2;
+        private const uint SegmentCount = 1;
+        private const uint PointCount = 2;
+
+        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
 
         #endregion
     }

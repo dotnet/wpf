@@ -6,7 +6,6 @@
 #define __DWRITETYPECONVERTER_H
 
 #include "Common.h"
-#include "FactoryType.h"
 #include "FontWeight.h"
 #include "FontFaceType.h"
 #include "FontFileType.h"
@@ -19,7 +18,6 @@
 #include "DWriteGlyphOffset.h"
 #include "InformationalStringID.h"
 
-using namespace System::Windows::Media;
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     /// <summary>
@@ -29,7 +27,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
     {
         internal:
 
-            static DWRITE_FACTORY_TYPE            Convert(FactoryType factoryType);
             static FontWeight                     Convert(DWRITE_FONT_WEIGHT fontWeight);
             static DWRITE_FONT_WEIGHT             Convert(FontWeight fontWeight);
             static FontFileType                   Convert(DWRITE_FONT_FILE_TYPE dwriteFontFileType);
@@ -48,8 +45,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             static System::Windows::Point         Convert(DWRITE_GLYPH_OFFSET dwriteGlyphOffset);
             static DWRITE_INFORMATIONAL_STRING_ID Convert(InformationalStringID informationStringID);
             static InformationalStringID          Convert(DWRITE_INFORMATIONAL_STRING_ID dwriteInformationStringID);
-            static DWRITE_MEASURING_MODE          Convert(TextFormattingMode measuringMode);
-            static TextFormattingMode             Convert(DWRITE_MEASURING_MODE dwriteMeasuringMode);
     };
 
 }}}}//MS::Internal::Text::TextInterface

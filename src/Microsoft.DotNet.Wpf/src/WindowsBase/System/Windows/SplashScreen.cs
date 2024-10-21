@@ -44,14 +44,13 @@ namespace System.Windows
         public SplashScreen(Assembly resourceAssembly, string resourceName)
         {
             ArgumentNullException.ThrowIfNull(resourceAssembly);
-            if (String.IsNullOrEmpty(resourceName))
+            if (string.IsNullOrEmpty(resourceName))
             {
-                throw new ArgumentNullException("resourceName");
+                throw new ArgumentNullException(nameof(resourceName));
             }
             _resourceName = resourceName.ToLowerInvariant();
             _hInstance = Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
-            AssemblyName name = new AssemblyName(resourceAssembly.FullName);
-            _resourceManager = new ResourceManager(name.Name + ".g", resourceAssembly);
+            _resourceManager = new ResourceManager($"{ReflectionUtils.GetAssemblyPartialName(resourceAssembly)}.g", resourceAssembly);
         }
 
         public void Show(bool autoClose)

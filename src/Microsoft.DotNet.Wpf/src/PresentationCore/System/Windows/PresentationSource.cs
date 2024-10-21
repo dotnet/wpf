@@ -551,6 +551,17 @@ namespace System.Windows
             }
         }
 
+        /// <summary>
+        /// Returns whether this <see cref="Visual"/> is connected to a <see cref="PresentationSource"/>.
+        /// In case it is, we can deem this <see cref="Visual"/> renderable.
+        /// </summary>
+        /// <param name="visual">The <see cref="Visual"/> to check.</param>
+        /// <returns><see langword="true"/> if it is connected to a <see cref="PresentationSource"/>, <see langword="false"/> otherwise.</returns>
+        internal static bool IsVisualConnectedToSource(Visual visual)
+        {
+            return CriticalFromVisual(visual) is not null;
+        }
+
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);

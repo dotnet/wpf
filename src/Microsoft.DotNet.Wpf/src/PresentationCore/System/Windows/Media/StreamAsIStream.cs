@@ -19,6 +19,7 @@ using MS.Internal.PresentationCore;
 
 using SR=MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using System.IO;
 
 
 namespace System.Windows.Media
@@ -178,7 +179,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -201,7 +202,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -262,7 +263,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -282,7 +283,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -307,7 +308,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -327,7 +328,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -403,7 +404,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -425,7 +426,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -454,7 +455,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -474,7 +475,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -502,7 +503,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -526,7 +527,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500
@@ -550,7 +551,7 @@ namespace System.Windows.Media
             {
                 // store the last exception
                 _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             #pragma warning restore 6500

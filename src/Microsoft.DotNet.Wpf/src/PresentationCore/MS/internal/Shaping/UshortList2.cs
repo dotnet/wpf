@@ -35,12 +35,6 @@ namespace MS.Internal.Shaping
             _storage = new UshortArray(array);
         }
 
-        internal UshortList(CheckedUShortPointer unsafeArray, int arrayLength)
-        {
-            _storage = new UnsafeUshortArray(unsafeArray, arrayLength);
-            _length = arrayLength;
-        }
-
         public ushort this[int index]
         {
             get
@@ -268,43 +262,4 @@ namespace MS.Internal.Shaping
                 );
         }
     }
-
-
-    /// <summary>
-    /// Ushort buffer implemented as unmanaged ushort array
-    /// </summary>
-    internal unsafe class UnsafeUshortArray : UshortBuffer
-    {
-        private ushort*     _array;
-
-        private int         _arrayLength;
-
-
-        internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
-        {            
-            _array = array.Probe(0, arrayLength);
-            _arrayLength = arrayLength;
-        }
-
-
-        public override ushort this[int index]
-        {
-            get
-            {
-                Invariant.Assert(index >= 0 && index < _arrayLength);
-                return _array[index];
-            }
-            set
-            {
-                Invariant.Assert(index >= 0 && index < _arrayLength);
-                _array[index] = value;
-            }
-        }
-
-        public override int Length
-        {
-            get { return _arrayLength; }
-        }
-    }
 }
-

@@ -11,6 +11,7 @@
 //
 
 using System;
+using System.Threading;
 using System.Windows.Threading;
 
 using System.Collections;
@@ -157,12 +158,12 @@ namespace System.Windows.Media
         /// </summary>
         internal static void PropagateDirtyRectangleSettings()
         {
-            int oldValue = s_DisableDirtyRectangles;
-            int disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles ? 1 : 0;
+            bool oldValue = s_disableDirtyRectangles;
+            bool disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles;
 
             if (disableDirtyRectangles != oldValue)
             {
-                if (System.Threading.Interlocked.CompareExchange(ref s_DisableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
+                if (Interlocked.CompareExchange(ref s_disableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
                 {
                     NotifyRedirectionEnvironmentChanged();
                 }
@@ -171,7 +172,7 @@ namespace System.Windows.Media
 
         internal static bool DisableDirtyRectangles
         {
-            get { return (s_DisableDirtyRectangles != 0); }
+            get => s_disableDirtyRectangles;
         }
 
         /// <summary>
@@ -368,9 +369,10 @@ namespace System.Windows.Media
         /// </summary>
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
 
-        // 1 if app is requesting to disable D3D dirty rectangle work, 0 otherwise.
-        // We use Interlocked.CompareExchange to change this, which supports int but not bool.
-        private static int s_DisableDirtyRectangles = 0;
+        /// <summary>
+        /// <see langword="True"/> if the app is requesting to disable D3D dirty rectangle work, <see langword="false"/> otherwise.
+        /// </summary>
+        private static bool s_disableDirtyRectangles = false;
      }
 }
 

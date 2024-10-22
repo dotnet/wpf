@@ -279,31 +279,38 @@ CMILFactory::CreateBitmapRenderTarget(
     }
     if (SUCCEEDED(hr))
     {
-        if ((format != MilPixelFormat::PBGRA32bpp) && (format != MilPixelFormat::PRGBA128bppFloat))
+        if (format != MilPixelFormat::PBGRA32bpp)
         {
             MIL_THR(WGXERR_UNSUPPORTEDPIXELFORMAT);
         }
     }
 
+    CHybridSurfaceRenderTarget *pRenderTarget = NULL;
     if (SUCCEEDED(hr))
     {
-        if ( !(dwFlags & MilRTInitialization::HardwareOnly) )
-        {
-            MIL_THR(CSwRenderTargetBitmap::Create(
+        CDisplaySet const *pDisplaySet = NULL; 
+        GetCurrentDisplaySet(&pDisplaySet);  // pDisplaySet can be NULL so we dont need to get hr
+
+        MIL_THR(CHybridSurfaceRenderTarget::Create(
+            pDisplaySet,
+            dwFlags,
+            dpiX,
+            dpiY,
+            OUT &pRenderTarget));
+    }
+    if (SUCCEEDED(hr))
+    {
+        IntermediateRTUsage rtUsage;
+        rtUsage.flags = IntermediateRTUsage::ForBlending;
+        rtUsage.wrapMode = MilBitmapWrapMode::Extend;
+        MIL_THR(pRenderTarget->CreateRenderTargetBitmap(
                 width,
                 height,
-                format,
-                dpiX,
-                dpiY,
-                DisplayId::None,
-                ppIRenderTargetBitmap
-                DBG_STEP_RENDERING_COMMA_PARAM(NULL) // pDisplayRTParent
-                ));
-        }
-        else
-        {
-            MIL_THR(WGXERR_NOTIMPLEMENTED);
-        }
+                rtUsage,
+                dwFlags,
+                ppIRenderTargetBitmap));
+                
+        pRenderTarget->Release();
     }
 
     API_CHECK(hr);

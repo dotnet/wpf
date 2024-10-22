@@ -2208,27 +2208,16 @@ namespace System.Windows.Controls
                         // No, we did not find anything.  Alert the user.
 
                         // build our message string.
-                        string messageString = _findToolbar.SearchUp ?
-                            SR.DocumentViewerSearchUpCompleteLabel :
-                            SR.DocumentViewerSearchDownCompleteLabel;
+                        string messageString = _findToolbar.SearchUp ? SR.DocumentViewerSearchUpCompleteLabel : SR.DocumentViewerSearchDownCompleteLabel;
+                        messageString = string.Format(CultureInfo.CurrentCulture, messageString, _findToolbar.SearchText);
 
-                        messageString = String.Format(
-                            CultureInfo.CurrentCulture,
-                            messageString,
-                            _findToolbar.SearchText);
+                        // If we have a parent window, use it when alerting the user, otherwise fallback.
+                        Window parentWindow = Application.Current?.CheckAccess() ?? false ? Application.Current.MainWindow : null;
 
-                        Window wnd = null;
-                        if (Application.Current != null && Application.Current.CheckAccess())
-                        {
-                            wnd = Application.Current.MainWindow;
-                        }
-
-                        MS.Internal.PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
-                            wnd,
-                            messageString,
-                            SR.DocumentViewerSearchCompleteTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Asterisk);
+                        if (parentWindow is not null)
+                            MessageBox.Show(parentWindow, messageString, SR.DocumentViewerSearchCompleteTitle, MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        else
+                            MessageBox.Show(messageString, SR.DocumentViewerSearchCompleteTitle, MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     }
                 }
             }

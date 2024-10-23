@@ -89,7 +89,6 @@
     <Compile Include="MS\Internal\DefaultValueFactory.cs" />
     <Compile Include="MS\Internal\FreezableDefaultValueFactory.cs" />
     <Compile Include="MS\Internal\Generated\AvTraceMessages.cs" />
-    <Compile Include="MS\Internal\GenericsInstances.cs" />
     <Compile Include="MS\Internal\InheritanceContextChangedEventManager.cs" />
     <Compile Include="MS\Internal\InheritanceContextHelper.cs" />
     <Compile Include="MS\Internal\Interop\ErrorCodes.cs" />

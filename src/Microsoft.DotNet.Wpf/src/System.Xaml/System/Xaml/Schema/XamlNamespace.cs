@@ -17,7 +17,7 @@ namespace System.Xaml.Schema
     {
         public readonly XamlSchemaContext SchemaContext;
 
-        private List<AssemblyNamespacePair> _assemblyNamespaces;
+        private AssemblyNamespacePair[] _assemblyNamespaces;
         private ConcurrentDictionary<string, XamlType> _typeCache;
         private ICollection<XamlType> _allPublicTypes;
 
@@ -169,7 +169,7 @@ namespace System.Xaml.Schema
         {
             // The only external mutation we allow is adding new namespaces. So the count of
             // namespaces also serves as a revision number.
-            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0;
+            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Length : 0;
         }
 
         private Type TryGetType(string typeName)
@@ -177,7 +177,7 @@ namespace System.Xaml.Schema
             Type type = SearchAssembliesForShortName(typeName);
             if (type == null && IsClrNamespace)
             {
-                Debug.Assert(_assemblyNamespaces.Count == 1);
+                Debug.Assert(_assemblyNamespaces.Length == 1);
                 type = XamlLanguage.LookupClrNamespaceType(_assemblyNamespaces[0], typeName);
             }
             if (type == null)
@@ -228,22 +228,18 @@ namespace System.Xaml.Schema
             return xamlTypeList.AsReadOnly();
         }
 
-        private List<AssemblyNamespacePair> GetClrNamespacePair(string clrNs, string assemblyName)
+        private AssemblyNamespacePair[] GetClrNamespacePair(string clrNs, string assemblyName)
         {
             Assembly asm = SchemaContext.OnAssemblyResolve(assemblyName);
             if (asm == null)
-            {
                 return null;
-            }
 
-            List<AssemblyNamespacePair> onePair = new List<AssemblyNamespacePair>();
-            onePair.Add(new AssemblyNamespacePair(asm, clrNs));
-            return onePair;
+            return new AssemblyNamespacePair[1] { new AssemblyNamespacePair(asm, clrNs) };
         }
 
         private Type SearchAssembliesForShortName(string shortName)
         {
-            foreach(AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
+            foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
             {
                 Assembly asm = assemblyNamespacePair.Assembly;
                 if (asm == null)
@@ -259,27 +255,31 @@ namespace System.Xaml.Schema
                     return type;
                 }
             }
+
             return null;
         }
 
         // This method should only be called inside SchemaContext._syncExaminingAssemblies lock
         internal void AddAssemblyNamespacePair(AssemblyNamespacePair pair)
         {
-            // To allow the list to be read by multiple threads, we create a new list, add the pair,
-            // then assign it back to the original variable.  Assignments are assured to be atomic.
+            // To allow the array to be read concurrently by multiple threads, we create a new array, add the pair,
+            // then assign it back to the original variable. Assignments are guaranteed to be atomic for word size.
 
-            List<AssemblyNamespacePair> assemblyNamespacesCopy;
+            AssemblyNamespacePair[] assemblyNamespacesCopy;
             if (_assemblyNamespaces == null)
             {
-                assemblyNamespacesCopy = new List<AssemblyNamespacePair>();
+                assemblyNamespacesCopy = new AssemblyNamespacePair[1];
                 Initialize();
             }
             else
             {
-                assemblyNamespacesCopy = new List<AssemblyNamespacePair>(_assemblyNamespaces);
+                assemblyNamespacesCopy = new AssemblyNamespacePair[_assemblyNamespaces.Length + 1];
             }
 
-            assemblyNamespacesCopy.Add(pair);
+            // Copy over and add new item
+            _assemblyNamespaces.CopyTo(assemblyNamespacesCopy, 0);
+            assemblyNamespacesCopy[assemblyNamespacesCopy.Length - 1] = pair;
+
             _assemblyNamespaces = assemblyNamespacesCopy;
         }
 

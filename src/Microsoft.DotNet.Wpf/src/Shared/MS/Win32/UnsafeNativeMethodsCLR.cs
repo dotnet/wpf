@@ -153,10 +153,10 @@ namespace MS.Win32
         [DllImport(ExternDll.Gdi32, EntryPoint="SelectObject", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern IntPtr CriticalSelectObject(HandleRef hdc, IntPtr obj);
 
-        [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, BestFitMapping = false, SetLastError = true)]
-        public static extern int GetClipboardFormatName(int format, StringBuilder lpString, int cchMax);
+        [DllImport(ExternDll.User32, CharSet = CharSet.Auto, BestFitMapping = false, SetLastError = true)]
+        public static unsafe extern int GetClipboardFormatName(int format, char* lpString, int cchMax);
 
-        [DllImport(ExternDll.User32, SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, BestFitMapping = false)]
+        [DllImport(ExternDll.User32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
         public static extern int RegisterClipboardFormat(string format);
 
         [DllImport(ExternDll.Gdi32, SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]

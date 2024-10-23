@@ -26,21 +26,6 @@
     -->
     <EmbedUntrackedSources Condition="'$(InternalMarkupCompilation)'=='true'">false</EmbedUntrackedSources>
   </PropertyGroup>
-  <!--
-    Internal PBT compilation requires that we use <NetCoreReference>
-    This is so that the copy of ref\WindowsBase.dll inherited from Microsoft.NetCore.App
-    does not make its way through to markup-compilation.
-
-    In addition to this, our codebase requires that all references to Microsoft.NetCore.App
-    be explicitly enumerated through the use of <NetCoreReference> to avoid inadvertent additions
-    to assembly references during code-changes.
-  -->
-  <ItemGroup Condition="'$(InternalMarkupCompilation)'=='true'">
-    <NetCoreReference Include="mscorlib" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
-    <NetCoreReference Include="System.Runtime" />
-  </ItemGroup>
 
   <PropertyGroup Condition="'$(InternalMarkupCompilation)'=='true' And Exists('$(LocalMicrosoftWinFXTargets)')">
     <PrepareResourceNamesDependsOn>

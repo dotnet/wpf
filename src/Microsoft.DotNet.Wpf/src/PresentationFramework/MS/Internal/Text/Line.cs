@@ -161,9 +161,7 @@ namespace MS.Internal.Text
         /// of the text bounds.
         /// </remarks>
         internal List<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
-        {
-            List<Rect> rectangles = new List<Rect>();
-            
+        {       
             // Adjust x offset for trailing spaces
             double delta = CalculateXOffsetShift();
             double adjustedXOffset = xOffset + delta;
@@ -173,7 +171,7 @@ namespace MS.Internal.Text
             {
                 // We should not shift offset in this case
                 Invariant.Assert(DoubleUtil.AreClose(delta, 0));
-                System.Windows.Media.TextFormatting.TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
+                TextLine line = _line.Collapse(GetCollapsingProps(_wrappingWidth, _owner.ParagraphProperties));
                 Invariant.Assert(line.HasCollapsed, "Line has not been collapsed");
                 textBounds = line.GetTextBounds(cp, cch);
             }
@@ -181,8 +179,10 @@ namespace MS.Internal.Text
             {
                 textBounds = _line.GetTextBounds(cp, cch);
             }
-            Invariant.Assert(textBounds.Count > 0);
 
+            // Pre-allocate List as we need it
+            Invariant.Assert(textBounds.Count > 0);
+            List<Rect> rectangles = new(textBounds.Count);
 
             for (int boundIndex = 0; boundIndex < textBounds.Count; boundIndex++)
             {
@@ -191,6 +191,7 @@ namespace MS.Internal.Text
                 rect.Y += yOffset;
                 rectangles.Add(rect);
             }
+
             return rectangles;
         }
 

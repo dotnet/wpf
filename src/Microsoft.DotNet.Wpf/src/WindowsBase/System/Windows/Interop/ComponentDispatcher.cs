@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Threading;
 using System.Diagnostics.CodeAnalysis;
-using System.Security;
-using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -29,27 +24,22 @@ namespace System.Windows.Interop
     ///</summary>
     public static class ComponentDispatcher
     {
-        static ComponentDispatcher()
-        {
-            _threadSlot = Thread.AllocateDataSlot();
-        }
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="ComponentDispatcherThread"/>.
+        /// </summary>
+        [ThreadStatic]
+        private static ComponentDispatcherThread s_componentDispatcherThread;
 
+        /// <summary>
+        /// Retrieves or creates an instance of <see cref="ComponentDispatcherThread"/> for the current thread.
+        /// </summary>
         private static ComponentDispatcherThread CurrentThreadData
         {
             get
             {
-                ComponentDispatcherThread data;
-                object obj = Thread.GetData(_threadSlot);
-                if(null == obj)
-                {
-                    data = new ComponentDispatcherThread();
-                    Thread.SetData(_threadSlot, data);
-                }
-                else
-                {
-                    data = (ComponentDispatcherThread) obj;
-                }
-                return data;
+                s_componentDispatcherThread ??= new ComponentDispatcherThread();
+
+                return s_componentDispatcherThread;
             }
         }
 
@@ -61,57 +51,26 @@ namespace System.Windows.Interop
         ///</summary>
         public static bool IsThreadModal
         {
-            get
-            {
-                ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-                return data.IsThreadModal;
-            }
+            get => CurrentThreadData.IsThreadModal;
         }
 
         /// <summary>
-        /// Returns "current" message.   More exactly the last MSG Raised.
+        /// Returns "current" message. More exactly the last MSG Raised.
         ///</summary>
         public static MSG CurrentKeyboardMessage
         {
-            get
-            {
-                return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
-            }
-        }
-
-        /// <summary>
-        /// Returns "current" message.   More exactly the last MSG Raised.
-        ///</summary>
-        internal static MSG UnsecureCurrentKeyboardMessage
-        {
-            get
-            {
-                return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
-            }
-
-            set
-            {
-                ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage = value;
-            }
+            get => CurrentThreadData.CurrentKeyboardMessage;
+            internal set => CurrentThreadData.CurrentKeyboardMessage = value;
         }
 
         // Methods
 
         /// <summary>
-        /// A component calls this to go modal.  Current thread wide only.
+        /// A component calls this to go modal. Current thread wide only.
         ///</summary>
         public static void PushModal()
         {
-            CriticalPushModal();
-        }
-
-        /// <summary>
-        /// A component calls this to go modal.  Current thread wide only.
-        ///</summary>
-        internal static void CriticalPushModal()
-        {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            data.PushModal();
+            CurrentThreadData.PushModal();
         }
 
         /// <summary>
@@ -119,37 +78,23 @@ namespace System.Windows.Interop
         ///</summary>
         public static void PopModal()
         {
-            CriticalPopModal();
-        }
-
-        /// <summary>
-        /// A component calls this to end being modal.
-        ///</summary>
-        internal static void CriticalPopModal()
-        {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            data.PopModal();
+            CurrentThreadData.PopModal();
         }
 
         /// <summary>
         /// The message loop pumper calls this when it is time to do idle processing.
         ///</summary>
-        [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
         public static void RaiseIdle()
         {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            data.RaiseIdle();
+            CurrentThreadData.RaiseIdle();
         }
 
         /// <summary>
         /// The message loop pumper calls this for every keyboard message.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1030:UseEventsWhereAppropriate")]
-        [SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
         public static bool RaiseThreadMessage(ref MSG msg)
         {
-            ComponentDispatcherThread data = ComponentDispatcher.CurrentThreadData;
-            return data.RaiseThreadMessage(ref msg);
+            return CurrentThreadData.RaiseThreadMessage(ref msg);
         }
 
         // Events
@@ -160,12 +105,8 @@ namespace System.Windows.Interop
         ///</summary>
         public static event EventHandler ThreadIdle
         {
-            add {
-                ComponentDispatcher.CurrentThreadData.ThreadIdle += value;
-            }
-            remove {
-                ComponentDispatcher.CurrentThreadData.ThreadIdle -= value;
-            }
+            add => CurrentThreadData.ThreadIdle += value;
+            remove => CurrentThreadData.ThreadIdle -= value;
         }
 
         /// <summary>
@@ -174,12 +115,8 @@ namespace System.Windows.Interop
         ///</summary>
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
-            add {
-                ComponentDispatcher.CurrentThreadData.ThreadFilterMessage += value;
-            }
-            remove {
-                ComponentDispatcher.CurrentThreadData.ThreadFilterMessage -= value;
-            }
+            add => CurrentThreadData.ThreadFilterMessage += value;
+            remove => CurrentThreadData.ThreadFilterMessage -= value;
         }
 
         /// <summary>
@@ -188,31 +125,26 @@ namespace System.Windows.Interop
         ///</summary>
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
-            add
-            {
-                ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage += value;
-            }
-            remove {
-                ComponentDispatcher.CurrentThreadData.ThreadPreprocessMessage -= value;
-            }
+            add => CurrentThreadData.ThreadPreprocessMessage += value;
+            remove => CurrentThreadData.ThreadPreprocessMessage -= value;
         }
 
         /// <summary>
         ///     Adds the specified handler to the front of the invocation list
         ///     of the PreprocessMessage event.
         /// <summary>
-        internal static void CriticalAddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
+        internal static void AddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
-            ComponentDispatcher.CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
+            CurrentThreadData.AddThreadPreprocessMessageHandlerFirst(handler);
         }
 
         /// <summary>
         ///     Removes the first occurance of the specified handler from the
         ///     invocation list of the PreprocessMessage event.
         /// <summary>
-        internal static void CriticalRemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
+        internal static void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
-            ComponentDispatcher.CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
+            CurrentThreadData.RemoveThreadPreprocessMessageHandlerFirst(handler);
         }
 
         /// <summary>
@@ -221,12 +153,8 @@ namespace System.Windows.Interop
         ///</summary>
         public static event EventHandler EnterThreadModal
         {
-            add {
-                ComponentDispatcher.CurrentThreadData.EnterThreadModal += value;
-            }
-            remove {
-                ComponentDispatcher.CurrentThreadData.EnterThreadModal -= value;
-            }
+            add => CurrentThreadData.EnterThreadModal += value;
+            remove => CurrentThreadData.EnterThreadModal -= value;
         }
 
         /// <summary>
@@ -235,16 +163,8 @@ namespace System.Windows.Interop
         ///</summary>
         public static event EventHandler LeaveThreadModal
         {
-            add
-            {
-                ComponentDispatcher.CurrentThreadData.LeaveThreadModal += value;
-            }
-            remove {
-                ComponentDispatcher.CurrentThreadData.LeaveThreadModal -= value;
-            }
+            add => CurrentThreadData.LeaveThreadModal += value;
+            remove => CurrentThreadData.LeaveThreadModal -= value;
         }
-
-        // member data
-        private static System.LocalDataStoreSlot _threadSlot;
     }
-};
+}

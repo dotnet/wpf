@@ -2,65 +2,38 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: This file contains the implementation of TokenizerHelper.
-//              This class should be used by most - if not all - MIL parsers.
-//
-
 using System;
-using System.Collections;
 using System.Diagnostics;
-using System.ComponentModel;
 using System.Globalization;
+using MS.Internal.WindowsBase;
 
-#if !PBTCOMPILER
-using System.Windows;
-#endif
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif PBTCOMPILER 
-    using MS.Utility ;     
-    using MS.Internal.Markup;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-using MS.Internal.YourAssemblyName;
-#endif
-
-#if PBTCOMPILER
-namespace MS.Internal.Markup
-#else
 namespace MS.Internal
-#endif
 {
-    internal sealed class TokenizerHelper
+    /// <summary>
+    /// Represents a <see langword="ref struct"/> implementation of <see cref="TokenizerHelper"/> operating over <see cref="ReadOnlySpan{char}"/>.
+    /// </summary>
+    internal ref struct ValueTokenizerHelper
     {
         /// <summary>
-        /// Constructor for <see cref="TokenizerHelper"/> which accepts an <see cref="IFormatProvider"/>.
+        /// Constructor for <see cref="ValueTokenizerHelper"/> which accepts an <see cref="IFormatProvider"/>.
         /// If the <see cref="IFormatProvider"/> is <see langword="null"/>, we use the thread's <see cref="IFormatProvider"/> info.
         /// We will use ',' as the list separator, unless it's the same as the decimal separator.
         /// If it *is*, then we can't determine if, say, "23,5" is one number or two. In this case, we will use ";" as the separator.
         /// </summary>
-        /// <param name="str"> The string which will be tokenized. </param>
+        /// <param name="input"> The string which will be tokenized. </param>
         /// <param name="formatProvider"> The <see cref="IFormatProvider"/> which controls this tokenization. </param>
-        internal TokenizerHelper(string str, IFormatProvider formatProvider) : this(str, '\'', GetNumericListSeparator(formatProvider)) { }
+        internal ValueTokenizerHelper(ReadOnlySpan<char> input, IFormatProvider formatProvider) : this(input, '\'', GetNumericListSeparator(formatProvider)) { }
 
         /// <summary>
-        /// Initialize the <see cref="TokenizerHelper"/> with the string to tokenize,
+        /// Initialize the <see cref="ValueTokenizerHelper"/> with the string to tokenize,
         /// the char which represents quotes and the list separator.
         /// </summary>
-        /// <param name="str"> The string to tokenize. </param>
+        /// <param name="input"> The string to tokenize. </param>
         /// <param name="quoteChar"> The quote char. </param>
         /// <param name="separator"> The list separator. </param>
-        internal TokenizerHelper(string str, char quoteChar, char separator)
+        internal ValueTokenizerHelper(ReadOnlySpan<char> input, char quoteChar, char separator)
         {
-            _str = str;
-            _strLen = str == null ? 0 : str.Length;
+            _input = input;
             _currentTokenIndex = -1;
             _quoteChar = quoteChar;
             _argSeparator = separator;
@@ -68,108 +41,82 @@ namespace MS.Internal
             // immediately forward past any whitespace so
             // NextToken() logic always starts on the first
             // character of the next token.
-            while (_charIndex < _strLen)
+            while (_charIndex < _input.Length)
             {
-                if (!char.IsWhiteSpace(_str[_charIndex]))
+                if (!char.IsWhiteSpace(_input[_charIndex]))
                     break;
 
                 ++_charIndex;
             }
         }
 
-        internal string GetCurrentToken()
-        {
-            // if no current token, return null
-            if (_currentTokenIndex < 0)
-            {
-                return null;
-            }
-
-            return _str.Substring(_currentTokenIndex,_currentTokenLength);
-        }
-
         /// <summary>
-        /// Sibling to <see cref="GetCurrentToken"/> with a minor difference; if there's no token, it will return <see cref="ReadOnlySpan{char}.Empty"/>
-        /// instead of <see langword="null"/>. However, if used with <see cref="NextToken()"/>, this edge-case is never hit.
+        /// Returns the next available token or <see cref="ReadOnlySpan{char}.Empty"/> if there's none ready.
         /// </summary>
-        /// <returns></returns>
-        internal ReadOnlySpan<char> GetCurrentTokenAsSpan()
+        /// <returns>A slice of the next token or <see cref="ReadOnlySpan{char}.Empty"/>.</returns>
+        internal readonly ReadOnlySpan<char> GetCurrentToken()
         {
-            // If there's no current token, return empty span
+            // If there's no current token, return an empty span
             if (_currentTokenIndex < 0)
             {
                 return ReadOnlySpan<char>.Empty;
             }
 
-            return _str.AsSpan().Slice(_currentTokenIndex, _currentTokenLength);
+            return _input.Slice(_currentTokenIndex, _currentTokenLength);
         }
 
         /// <summary>
         /// Throws an exception if there is any non-whitespace left un-parsed.
         /// </summary>
-        internal void LastTokenRequired()
+        internal readonly void LastTokenRequired()
         {
-            if (_charIndex != _strLen)
+            if (_charIndex != _input.Length)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _input.ToString()));
             }
         }
 
         /// <summary>
-        /// Advances to the NextToken
+        /// Advances to the next token.
         /// </summary>
-        /// <returns>true if next token was found, false if at end of string</returns>
+        /// <returns><see langword="true"/> if next token was found, <see langword="false"/> if at end of string.</returns>
         internal bool NextToken()
         {
             return NextToken(false);
         }
 
         /// <summary>
-        /// Advances to the NextToken, throwing an exception if not present
+        /// Advances to the next token, throwing an exception if not present.
         /// </summary>
-        /// <returns>The next token found</returns>
-        internal string NextTokenRequired()
+        /// <returns>A slice of the next next token.</returns>
+        internal ReadOnlySpan<char> NextTokenRequired()
         {
             if (!NextToken(false))
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _input.ToString()));
             }
 
             return GetCurrentToken();
         }
 
         /// <summary>
-        /// Sibling to <see cref="NextTokenRequired"/>; advances to the next token, throws an <see cref="InvalidOperationException"/> if not present.
+        /// Advances to the next token, throwing an exception if not present.
         /// </summary>
-        /// <returns>The next token found</returns>
-        internal ReadOnlySpan<char> NextTokenRequiredAsSpan()
-        {
-            if (!NextToken(false))
-            {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
-            }
-
-            return GetCurrentTokenAsSpan();
-        }
-
-        /// <summary>
-        /// Advances to the NextToken, throwing an exception if not present
-        /// </summary>
-        /// <returns>The next token found</returns>
-        internal string NextTokenRequired(bool allowQuotedToken)
+        /// <returns>A slice of the next next token.</returns>
+        internal ReadOnlySpan<char> NextTokenRequired(bool allowQuotedToken)
         {
             if (!NextToken(allowQuotedToken))
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _input.ToString()));
             }
 
             return GetCurrentToken();
         }
 
         /// <summary>
-        /// Advances to the NextToken
+        /// Advances to the next token.
         /// </summary>
-        /// <returns>true if next token was found, false if at end of string</returns>
+        /// <returns><see langword="true"/> if next token was found, <see langword="false"/> if at end of string.</returns>
         internal bool NextToken(bool allowQuotedToken)
         {
             // use the currently-set separator character.
@@ -177,22 +124,21 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// Advances to the NextToken.  A separator character can be specified
-        /// which overrides the one previously set.
+        /// Advances to the next token. A separator character can be specified which overrides the one previously set.
         /// </summary>
-        /// <returns>true if next token was found, false if at end of string</returns>
+        /// <returns><see langword="true"/> if next token was found, <see langword="false"/> if at end of string.</returns>
         internal bool NextToken(bool allowQuotedToken, char separator)
         {
             _currentTokenIndex = -1; // reset the currentTokenIndex
             _foundSeparator = false; // reset
 
             // If we're at end of the string, just return false.
-            if (_charIndex >= _strLen)
+            if (_charIndex >= _input.Length)
             {
                 return false;
             }
 
-            char currentChar = _str[_charIndex];
+            char currentChar = _input[_charIndex];
 
             Debug.Assert(!char.IsWhiteSpace(currentChar), "Token started on Whitespace");
 
@@ -212,16 +158,16 @@ namespace MS.Internal
 
             // loop until hit end of string or hit a , or whitespace
             // if at end of string ust return false.
-            while (_charIndex < _strLen)
+            while (_charIndex < _input.Length)
             {
-                currentChar = _str[_charIndex];
+                currentChar = _input[_charIndex];
 
                 // if have a QuoteCount and this is a quote
                 // decrement the quoteCount
                 if (quoteCount > 0)
                 {
                     // if anything but a quoteChar we move on
-                    if (currentChar == _quoteChar)
+                    if (_quoteChar == currentChar)
                     {
                         --quoteCount;
 
@@ -251,7 +197,7 @@ namespace MS.Internal
             // before the ending quote
             if (quoteCount > 0)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _str));                
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _input.ToString()));
             }
 
             ScanToNextToken(separator); // move so at the start of the nextToken for next call
@@ -262,7 +208,7 @@ namespace MS.Internal
 
             if (_currentTokenLength < 1)
             {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _input.ToString()));
             }
 
             return true;
@@ -276,24 +222,24 @@ namespace MS.Internal
         private void ScanToNextToken(char separator)
         {
             // if already at end of the string don't bother
-            if (_charIndex < _strLen)
+            if (_charIndex < _input.Length)
             {
-                char currentChar = _str[_charIndex];
+                char currentChar = _input[_charIndex];
 
                 // check that the currentChar is a space or the separator.  If not
                 // we have an error. this can happen in the quote case
                 // that the char after the quotes string isn't a char.
                 if (!(char.IsWhiteSpace(currentChar) || (currentChar == separator)))
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));                    
+                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _input.ToString()));
                 }
 
                 // loop until hit a character that isn't
                 // an argument separator or whitespace.
                 int argSepCount = 0;
-                while (_charIndex < _strLen)
+                while (_charIndex < _input.Length)
                 {
-                    currentChar = _str[_charIndex];
+                    currentChar = _input[_charIndex];
 
                     if (currentChar == separator)
                     {
@@ -303,7 +249,7 @@ namespace MS.Internal
 
                         if (argSepCount > 1)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                            throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _input.ToString()));
                         }
                     }
                     else if (char.IsWhiteSpace(currentChar))
@@ -320,9 +266,9 @@ namespace MS.Internal
                 // at the end of string or means there was a separator
                 // but there isn't an arg
 
-                if (argSepCount > 0 && _charIndex >= _strLen)
+                if (argSepCount > 0 && _charIndex >= _input.Length)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _str));
+                    throw new InvalidOperationException(SR.Format(SR.TokenizerHelperEmptyToken, _charIndex, _input.ToString()));
                 }
             }
         }
@@ -350,7 +296,7 @@ namespace MS.Internal
             return numericSeparator;
         }
 
-        internal bool FoundSeparator
+        internal readonly bool FoundSeparator
         {
             get
             {
@@ -358,13 +304,10 @@ namespace MS.Internal
             }
         }
 
-        // Readonly fields
         private readonly char _quoteChar;
         private readonly char _argSeparator;
-        private readonly string _str;
-        private readonly int _strLen;
+        private readonly ReadOnlySpan<char> _input;
 
-        // State fields
         private int _charIndex;
         private bool _foundSeparator;
 

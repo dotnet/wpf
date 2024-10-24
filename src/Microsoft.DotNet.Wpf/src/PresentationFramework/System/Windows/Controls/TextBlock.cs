@@ -2920,19 +2920,6 @@ Debug.Assert(lineCount == LineCount);
         }
 
         // ------------------------------------------------------------------
-        // Make sure that complex content is cleared.
-        // ------------------------------------------------------------------
-        private void ClearComplexContent()
-        {
-            if (_complexContent != null)
-            {
-                _complexContent.Detach(this);
-                _complexContent = null;
-                Invariant.Assert(_contentCache == null, "Content cache should be null when complex content exists.");
-            }
-        }
-
-        // ------------------------------------------------------------------
         // Invalidates a portion of text affected by a highlight change.
         // ------------------------------------------------------------------
         private void OnHighlightChanged(object sender, HighlightChangedEventArgs args)
@@ -3566,55 +3553,20 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void VerifyReentrancy()
         {
-            if(CheckFlags(Flags.MeasureInProgress))
+            if (CheckFlags(Flags.MeasureInProgress))
             {
                 throw new InvalidOperationException(SR.MeasureReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ArrangeInProgress))
+            if (CheckFlags(Flags.ArrangeInProgress))
             {
                 throw new InvalidOperationException(SR.ArrangeReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ContentChangeInProgress))
+            if (CheckFlags(Flags.ContentChangeInProgress))
             {
                 throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
-        }
-
-        /// <summary>
-        /// Returns index of the line that starts at the given dcp. Returns -1 if
-        /// no line or the line metrics collection starts at the given dcp
-        /// </summary>
-        /// <param name="dcpLine">
-        /// Start dcp of required line
-        /// </param>
-        private int GetLineIndexFromDcp(int dcpLine)
-        {
-            Invariant.Assert(dcpLine >= 0);
-            int lineIndex = 0;
-            int lineStartOffset = 0;
-
-            int lineCount = LineCount;
-            while (lineIndex < lineCount)
-            {
-Debug.Assert(lineCount == LineCount);
-                if (lineStartOffset == dcpLine)
-                {
-                    // Found line that starts at given dcp
-                    return lineIndex;
-                }
-                else
-                {
-                    lineStartOffset += GetLine(lineIndex).Length;
-                    ++lineIndex;
-                }
-            }
-
-            // No line found starting at this position. Return -1.
-            // We should never hit this code
-            Invariant.Assert(false, "Dcp passed is not at start of any line in TextBlock");
-            return -1;
         }
 
         // ------------------------------------------------------------------

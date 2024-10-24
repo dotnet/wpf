@@ -50,15 +50,24 @@ namespace System.Windows.Media
         /// <param name="closed">Indicates whether the figure is closed</param>
         public PathFigure(Point start, IEnumerable<PathSegment> segments, bool closed)
         {
+            ArgumentNullException.ThrowIfNull(segments);
+
             StartPoint = start;
             PathSegmentCollection mySegments = Segments;
 
-            ArgumentNullException.ThrowIfNull(segments);
+            foreach (PathSegment item in segments)
+                mySegments.Add(item);
+
+            IsClosed = closed;
+        }
+
+        internal PathFigure(Point start, ReadOnlySpan<PathSegment> segments, bool closed)
+        {
+            StartPoint = start;
+            PathSegmentCollection mySegments = Segments;
 
             foreach (PathSegment item in segments)
-            {
                 mySegments.Add(item);
-            }
 
             IsClosed = closed;
         }

@@ -1176,7 +1176,7 @@ namespace System.Windows.Controls
             // a) content is dirty (properties or content)
             // b) there are inline objects (they may be dynamically sized)
             int lineCount = LineCount;
-            if ((lineCount > 0) && IsMeasureValid && InlineObjects == null)
+            if ((lineCount > 0) && IsMeasureValid && InlineObjects is null)
             {
                 // Assuming that all of above conditions are true, Measure can be
                 // skipped in following situations:
@@ -1369,9 +1369,9 @@ namespace System.Windows.Controls
             // Remove all existing visuals. If there are inline objects, they will be added below.
             _complexContent?.VisualChildren.Clear();
 
-            ArrayList inlineObjects = InlineObjects;
+            List<InlineObject> inlineObjects = InlineObjects;
             int lineCount = LineCount;
-            if (inlineObjects != null && lineCount > 0)
+            if (inlineObjects is not null && lineCount > 0)
             {
                 bool exceptionThrown = true;
 
@@ -1395,7 +1395,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < lineCount; i++)
                     {
-Debug.Assert(lineCount == LineCount);
+                        Debug.Assert(lineCount == LineCount);
                         LineMetrics lineMetrics = GetLine(i);
 
                         if (lineMetrics.HasInlineObjects)
@@ -1948,20 +1948,20 @@ Debug.Assert(lineCount == LineCount);
                 desiredSize = inlineObject.Element.DesiredSize;
 
                 // Store inline object in the cache.
-                ArrayList inlineObjects = InlineObjects;
+                List<InlineObject> inlineObjects = InlineObjects;
                 bool alreadyCached = false;
-                if (inlineObjects == null)
+                if (inlineObjects is null)
                 {
-                    InlineObjects = inlineObjects = new ArrayList(1);
+                    InlineObjects = inlineObjects = new List<InlineObject>(1);
                 }
                 else
                 {
                     // Find out if inline object is already cached.
                     for (int index = 0; index < inlineObjects.Count; index++)
                     {
-                        if (((InlineObject)inlineObjects[index]).Dcp == inlineObject.Dcp)
+                        if (inlineObjects[index].Dcp == inlineObject.Dcp)
                         {
-                            Debug.Assert(((InlineObject)inlineObjects[index]).Element == inlineObject.Element, "InlineObject cache is out of sync.");
+                            Debug.Assert(inlineObjects[index].Element == inlineObject.Element, "InlineObject cache is out of sync.");
                             alreadyCached = true;
                             break;
                         }
@@ -2744,10 +2744,14 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         // InlineObjects
         //-------------------------------------------------------------------
-        private ArrayList InlineObjects
+        private List<InlineObject> InlineObjects
         {
-            get { return _complexContent?.InlineObjects; }
-            set { _complexContent?.InlineObjects = value; }
+            get => _complexContent?.InlineObjects;
+            set
+            {
+                if (_complexContent is not null)
+                    _complexContent.InlineObjects = value;
+            }
         }
 
         //-------------------------------------------------------------------
@@ -3822,7 +3826,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         // Represents complex content.
         //-------------------------------------------------------------------
-        private class ComplexContent
+        private sealed class ComplexContent
         {
             //---------------------------------------------------------------
             // Ctor
@@ -3890,7 +3894,7 @@ Debug.Assert(lineCount == LineCount);
             //---------------------------------------------------------------
             // Collection of inline objects hosted by the TextBlock control.
             //---------------------------------------------------------------
-            internal ArrayList InlineObjects;
+            internal List<InlineObject> InlineObjects;
         }
 
         //-------------------------------------------------------------------

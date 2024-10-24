@@ -3468,10 +3468,7 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private static void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs args)
         {
-            TextBlock textBlock = sender as TextBlock;
-            ContentElement child = args.TargetObject as ContentElement;
-
-            if (textBlock != null && child != null)
+            if (sender is TextBlock textBlock && args.TargetObject is ContentElement child)
             {
                 if (TextBlock.ContainsContentElement(textBlock, child))
                 {

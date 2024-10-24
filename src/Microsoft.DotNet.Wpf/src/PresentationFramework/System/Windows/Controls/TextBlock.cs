@@ -1653,7 +1653,8 @@ Debug.Assert(lineCount == LineCount);
         protected virtual IInputElement InputHitTestCore(Point point)
         {
             // If layout data is not updated return 'this'.
-            if (!IsLayoutDataValid) { return this; }
+            if (!IsLayoutDataValid)
+                return this;
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
             LineProperties lineProperties = GetLineProperties();
@@ -1663,23 +1664,23 @@ Debug.Assert(lineCount == LineCount);
             // a) use cached line information to find which line has been hit,
             // b) re-create the line that has been hit,
             // c) hit-test the line.
-            IInputElement ie = null;
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
             Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
             point -= contentOffset; // // Take into account content offset.
 
-            if (point.X < 0 || point.Y < 0) return this;
+            if (point.X < 0 || point.Y < 0)
+                return this;
 
-            ie = null;
+            IInputElement ie = null;
             int dcp = 0;
             double lineOffset = 0;
 
-            TextRunCache textRunCache = new TextRunCache();
+            TextRunCache textRunCache = new();
 
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 if (lineOffset + lineMetrics.Height > point.Y)
@@ -1718,7 +1719,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return ie ?? this;
         }
 
         /// <summary>

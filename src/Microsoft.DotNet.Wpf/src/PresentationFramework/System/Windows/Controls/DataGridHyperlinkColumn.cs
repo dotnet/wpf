@@ -112,14 +112,13 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null && !cell.IsEditing)
+            if (element is DataGridCell cell && !cell.IsEditing)
             {
-                if (string.Compare(propertyName, "ContentBinding", StringComparison.Ordinal) == 0)
+                if (string.Equals(propertyName, "ContentBinding", StringComparison.Ordinal))
                 {
                     cell.BuildVisualTree();
                 }
-                else if (string.Compare(propertyName, "TargetName", StringComparison.Ordinal) == 0)
+                else if (string.Equals(propertyName, "TargetName", StringComparison.Ordinal))
                 {
                     TextBlock outerBlock = cell.Content as TextBlock;
                     if (outerBlock != null && outerBlock.Inlines.Count > 0)

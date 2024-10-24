@@ -201,8 +201,7 @@ namespace System.Windows.Controls
                 {
                     OnCellsPanelHorizontalOffsetChanged(e);
                 }
-                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty ||
-                         string.Compare(propertyName, "ViewportWidth", StringComparison.Ordinal) == 0)
+                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty || string.Equals(propertyName, "ViewportWidth", StringComparison.Ordinal))
                 {
                     InvalidateColumnRealization(false);
                 }

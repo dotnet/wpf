@@ -678,7 +678,7 @@ namespace MS.Internal.AutomationProxies
                 return false;
             }
 
-            return (0 == String.Compare(Misc.GetClassName(hwndEx), ComboboxEx32, StringComparison.OrdinalIgnoreCase));
+            return string.Equals(Misc.GetClassName(hwndEx), ComboboxEx32, StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsEditableCombo()

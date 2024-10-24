@@ -160,7 +160,7 @@ namespace MS.Internal.Text
         /// it uses those as the bounding rectangles. If not, it returns the rectangle for the first (and only) element
         /// of the text bounds.
         /// </remarks>
-        internal List<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
+        internal ReadOnlySpan<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
         {       
             // Adjust x offset for trailing spaces
             double delta = CalculateXOffsetShift();
@@ -182,14 +182,14 @@ namespace MS.Internal.Text
 
             // Pre-allocate List as we need it
             Invariant.Assert(textBounds.Count > 0);
-            List<Rect> rectangles = new(textBounds.Count);
+            Rect[] rectangles = new Rect[textBounds.Count];
 
-            for (int boundIndex = 0; boundIndex < textBounds.Count; boundIndex++)
+            for (int boundIndex = 0; boundIndex < rectangles.Length; boundIndex++)
             {
                 Rect rect = textBounds[boundIndex].Rectangle;
                 rect.X += adjustedXOffset;
                 rect.Y += yOffset;
-                rectangles.Add(rect);
+                rectangles[boundIndex] = rect;
             }
 
             return rectangles;

@@ -1826,8 +1826,8 @@ Debug.Assert(lineCount == LineCount);
 
                         double xOffset = contentOffset.X;
                         double yOffset = contentOffset.Y + lineHeightOffset;
-                        List<Rect> lineBounds = line.GetRangeBounds(boundStart, boundEnd - boundStart, xOffset, yOffset);
-                        Debug.Assert(lineBounds.Count > 0);
+                        ReadOnlySpan<Rect> lineBounds = line.GetRangeBounds(boundStart, boundEnd - boundStart, xOffset, yOffset);
+                        Debug.Assert(lineBounds.Length > 0);
                         rectangles.AddRange(lineBounds);
                     }
                 }
@@ -2312,7 +2312,7 @@ Debug.Assert(lineCount == LineCount);
                         if (Invariant.Strict)
                         {
                             // Check consistency of line formatting
-                            MS.Internal.Invariant.Assert(GetLine(i).Length == line.Length, "Line length is out of sync");
+                            Invariant.Assert(GetLine(i).Length == line.Length, "Line length is out of sync");
                         }
 
                         int dcpStart = Math.Max(dcpLineStart, dcpPositionStart);
@@ -2320,28 +2320,24 @@ Debug.Assert(lineCount == LineCount);
 
                         if (dcpStart != dcpEnd)
                         {
-                            IList<Rect> aryTextBounds = line.GetRangeBounds(dcpStart, dcpEnd - dcpStart, contentOffset.X, contentOffset.Y + lineOffset);
-
-                            if (aryTextBounds.Count > 0)
+                            ReadOnlySpan<Rect> aryTextBounds = line.GetRangeBounds(dcpStart, dcpEnd - dcpStart, contentOffset.X, contentOffset.Y + lineOffset);                            
+                            if (!aryTextBounds.IsEmpty)
                             {
-                                int j = 0;
-                                int c = aryTextBounds.Count;
-
-                                do
+                                // Process the bounds minus the last one
+                                for (int j = 0; j < aryTextBounds.Length - 1; j++)
                                 {
-                                    Rect rect = aryTextBounds[j];
+                                    CaretElement.AddGeometry(ref geometry, new RectangleGeometry(aryTextBounds[j]));
+                                }
 
-                                    if (j == (c - 1)
-                                       && dcpPositionEnd >= dcpLineEnd
-                                       && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
-                                    {
-                                        double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
-                                        rect.Width = rect.Width + endOfParaGlyphWidth;
-                                    }
+                                // Process the last bounds entry
+                                Rect lastRect = aryTextBounds[aryTextBounds.Length - 1];
+                                if (dcpPositionEnd >= dcpLineEnd && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
+                                {
+                                    double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
+                                    lastRect.Width += endOfParaGlyphWidth;
+                                }
 
-                                    RectangleGeometry rectGeometry = new RectangleGeometry(rect);
-                                    CaretElement.AddGeometry(ref geometry, rectGeometry);
-                                } while (++j < c);
+                                CaretElement.AddGeometry(ref geometry, new RectangleGeometry(lastRect));
                             }
                         }
                     }

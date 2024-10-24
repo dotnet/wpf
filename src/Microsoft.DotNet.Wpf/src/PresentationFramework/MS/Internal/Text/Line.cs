@@ -169,8 +169,8 @@ namespace MS.Internal.Text
                 textBounds = _line.GetTextBounds(cp, cch);
             }
 
-            // Pre-allocate List as we need it
             Invariant.Assert(textBounds.Count > 0);
+
             Rect[] rectangles = new Rect[textBounds.Count];
 
             for (int boundIndex = 0; boundIndex < rectangles.Length; boundIndex++)

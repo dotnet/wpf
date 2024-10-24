@@ -337,25 +337,16 @@ namespace System.Windows.Controls
         /// <summary>
         /// Initializes a new instance of TextBlock class.
         /// </summary>
-        public TextBlock() : base()
-        {
-            Initialize();
-        }
+        public TextBlock() : base() { }
 
         /// <summary>
         /// Initializes a new inslace of TextBlock class and adds a first Inline to its Inline collection.
         /// </summary>
-        public TextBlock(Inline inline)
-            : base()
+        public TextBlock(Inline inline) : base()
         {
-            Initialize();
             ArgumentNullException.ThrowIfNull(inline);
 
-            this.Inlines.Add(inline);
-        }
-
-        private void Initialize()
-        {
+            Inlines.Add(inline);
         }
 
         #endregion Constructors

@@ -272,6 +272,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a ColumnDefinitionCollection of column definitions.
         /// </summary>
+        [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
@@ -282,11 +283,22 @@ namespace System.Windows.Controls
 
                 return (_data.ColumnDefinitions);
             }
+            set
+            {
+                _data ??= new ExtendedData();
+                if (value == null)
+                {
+                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
+                    return;
+                }
+                _data.ColumnDefinitions = value;
+            }
         }
 
         /// <summary>
         /// Returns a RowDefinitionCollection of row definitions.
         /// </summary>
+        [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
         {
@@ -296,6 +308,16 @@ namespace System.Windows.Controls
                 if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
 
                 return (_data.RowDefinitions);
+            }
+            set
+            {
+                _data ??= new ExtendedData();
+                if (value == null)
+                {
+                    _data.RowDefinitions = new RowDefinitionCollection(this);
+                    return;
+                }
+                _data.RowDefinitions = value;
             }
         }
 

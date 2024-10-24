@@ -1277,7 +1277,7 @@ namespace System.Windows.Controls
                         // paragraph ellipsis at this time. Since TextBlock is auto-sized we do not know the RenderSize until we finish Measure
                         line.Format(dcp, contentSize.Width, GetLineProperties(dcp == 0, lineProperties), textLineBreakIn, _textBlockCache._textRunCache, /*Show paragraph ellipsis*/ false);
 
-                        double lineHeight = CalcLineAdvance(line.Height, lineProperties);
+                        double lineHeight = CalcLineAdvance(lineProperties, line.Height);
 
     #if DEBUG
                         LineMetrics metrics = new LineMetrics(contentSize.Width, line.Length, line.Width, lineHeight, line.BaselineOffset, line.HasInlineObjects(), textLineBreakIn);
@@ -3067,7 +3067,7 @@ Debug.Assert(lineCount == LineCount);
         //
         // Returns: Line advance distance..
         //-------------------------------------------------------------------
-        private double CalcLineAdvance(double lineHeight, LineProperties lineProperties)
+        private static double CalcLineAdvance(LineProperties lineProperties, double lineHeight)
         {
             return lineProperties.CalcLineAdvance(lineHeight);
         }
@@ -3408,7 +3408,7 @@ Debug.Assert(lineCount == LineCount);
                 {
                     bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
                     Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
-                    double lineHeight = CalcLineAdvance(line.Height, lineProperties);
+                    double lineHeight = CalcLineAdvance(lineProperties, line.Height);
 
                     // Check consistency of line formatting
                     Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");

@@ -8519,9 +8519,13 @@ namespace System.Windows.Controls
             IProvideDataGridColumn cell = GetAnyCellOrColumnHeader();
             if (cell != null)
             {
-                CellsPanelHorizontalOffset = DataGridHelper.GetParentCellsPanelHorizontalOffset(cell);
+                // Due to layout rounding, computation of the offset may return a negative value while computing the difference between controls,
+                // however since this offset is used also for Button's Width servicing the DataGrid.SelectAllCommand in all standard styles,
+                // we cannot accept this. Even if we could, the DataGrid[CellsPanel] layout logic depends on this offset being 0 or greater.
+                // See https://github.com/dotnet/wpf/pull/9983 for more information regarding this.
+                CellsPanelHorizontalOffset = Math.Max(0d, DataGridHelper.GetParentCellsPanelHorizontalOffset(cell));
             }
-            else if (!Double.IsNaN(RowHeaderWidth))
+            else if (!double.IsNaN(RowHeaderWidth))
             {
                 CellsPanelHorizontalOffset = RowHeaderWidth;
             }

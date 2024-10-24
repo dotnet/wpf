@@ -160,7 +160,6 @@ namespace MS.Internal.Text
             Debug.Assert(runs != null, "Cannot retrieve runs collection.");
 
             // Calculate offset shift due to trailing spaces
-            double adjustedXOffset = lineOffset.X + CalculateXOffsetShift();
             foreach (TextSpan<TextRun> textSpan in runs)
             {
                 TextRun run = textSpan.Value;
@@ -169,8 +168,7 @@ namespace MS.Internal.Text
                     InlineObject inlineObject = run as InlineObject;
 
                     // Disconnect visual from its old parent, if necessary.
-                    Visual currentParent = VisualTreeHelper.GetParent(inlineObject.Element) as Visual;
-                    if (currentParent != null)
+                    if (VisualTreeHelper.GetParent(inlineObject.Element) is Visual currentParent)
                     {
                         ContainerVisual parent = currentParent as ContainerVisual;
                         Invariant.Assert(parent != null, "parent should always derives from ContainerVisual");
@@ -178,17 +176,16 @@ namespace MS.Internal.Text
                     }
 
                     // Get position of inline object withing the text line.
-                    FlowDirection flowDirection;
-                    Rect rect = GetBoundsFromPosition(runDcp, inlineObject.Length, out flowDirection);
+                    Rect rect = GetBoundsFromPosition(runDcp, inlineObject.Length, out FlowDirection flowDirection);
                     Debug.Assert(DoubleUtil.GreaterThanOrClose(rect.Width, 0), "Negative inline object's width.");
 
                     ContainerVisual proxyVisual = new ContainerVisual();
-                    if (inlineObject.Element is FrameworkElement)
+                    if (inlineObject.Element is FrameworkElement frameworkElement)
                     {
                         FlowDirection parentFlowDirection = _owner.FlowDirection;
                         // Check parent's FlowDirection to determine if mirroring is needed
 
-                        DependencyObject parent = ((FrameworkElement)inlineObject.Element).Parent; 
+                        DependencyObject parent = frameworkElement.Parent; 
                         if(parent != null)
                         {
                             parentFlowDirection = (FlowDirection)parent.GetValue(FrameworkElement.FlowDirectionProperty);

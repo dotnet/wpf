@@ -1859,26 +1859,22 @@ Debug.Assert(lineCount == LineCount);
         {
             get
             {
-                if(CheckFlags(Flags.ContentChangeInProgress))
+                if (CheckFlags(Flags.ContentChangeInProgress))
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
                 if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
                 {
                     // Return empty collection
-                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                 }
 
                 // Create a TextSegment from TextContainer, use it to return enumerator
-                System.Collections.Generic.List<TextSegment> textSegmentsList = new System.Collections.Generic.List<TextSegment>(1);
-                TextSegment textSegment = new TextSegment(_complexContent.TextContainer.Start, _complexContent.TextContainer.End);
-                textSegmentsList.Insert(0, textSegment);
-                ReadOnlyCollection<TextSegment> textSegments = new ReadOnlyCollection<TextSegment>(textSegmentsList);
+                TextSegment[] textSegment = new TextSegment[1] { new TextSegment(_complexContent.TextContainer.Start, _complexContent.TextContainer.End) };
 
                 // Return enumerator created from textSegments
-                return new HostedElements(textSegments);
+                return new HostedElements(new ReadOnlyCollection<TextSegment>(textSegment));
             }
         }
 

@@ -2873,13 +2873,6 @@ namespace MS.Win32
             void Assign(string bstr);
         };
 
-        [ComImport, Guid("3050f6cf-98b5-11cf-bb82-00aa00bdce0b"), InterfaceType(ComInterfaceType.InterfaceIsDual)]
-        internal interface IHTMLWindow4
-        {
-            [return: MarshalAs(UnmanagedType.IDispatch)] object CreatePopup([In] ref object reserved);
-            [return: MarshalAs(UnmanagedType.Interface)] object frameElement();
-        }
-
         internal static class ArrayToVARIANTHelper
         {
             static ArrayToVARIANTHelper()

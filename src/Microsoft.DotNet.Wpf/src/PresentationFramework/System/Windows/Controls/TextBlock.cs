@@ -3416,19 +3416,18 @@ Debug.Assert(lineCount == LineCount);
             LineProperties lineProperties = GetLineProperties();
 
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
-            Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
 
             // Create / format all lines.
             // Since we are disposing line object, it can be reused to format following lines.
             Line line = CreateLine(lineProperties);
-            TextRunCache textRunCache = new TextRunCache();
+            TextRunCache textRunCache = new();
 
             int dcp = 0;
             double lineOffset = 0;
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 using (line)
@@ -3438,7 +3437,7 @@ Debug.Assert(lineCount == LineCount);
                     double lineHeight = CalcLineAdvance(line.Height, lineProperties);
 
                     // Check consistency of line formatting
-                    MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
+                    Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
                     Debug.Assert(DoubleUtil.AreClose(lineHeight, lineMetrics.Height), "Line height is out of sync.");
 
                     // Calculated line width might be different from measure width in following cases:

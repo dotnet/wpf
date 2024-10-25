@@ -183,7 +183,7 @@ namespace System.Windows.Input
             LastMatch
         }
 
-        private void PostProcessInput(object sender, ProcessInputEventArgs e)
+        private static void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.Handled)
                 return;

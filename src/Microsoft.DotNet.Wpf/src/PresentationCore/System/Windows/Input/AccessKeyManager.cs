@@ -419,12 +419,11 @@ namespace System.Windows.Input
         private static PresentationSource GetSourceForElement(IInputElement element)
         {
             PresentationSource source = null;
-            DependencyObject elementDO = element as DependencyObject;
 
             // Use internal helpers to try to find the source of the element.
             // Because IInputElements can move around without notification we need to
             // look up the source every time.
-            if (elementDO != null)
+            if (element is DependencyObject elementDO)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(elementDO);
 
@@ -433,7 +432,7 @@ namespace System.Windows.Input
                     source = PresentationSource.CriticalFromVisual(containingVisual);
                 }
             }
-            
+
             // NOTE: source can be null but IsTargetable(element) == true if the
             // element is in an orphaned tree but the tree has not yet been garbage collected.  
             return source;
@@ -770,9 +769,10 @@ namespace System.Windows.Input
 
         #region Data
 
-        private object _scope;
+        private readonly string _key;
+
         private UIElement _target;
-        private string _key;
+        private object _scope;
 
         #endregion
     }
@@ -818,10 +818,10 @@ namespace System.Windows.Input
         {
             get { return _userInitiated; }
         }
-        
 
-        private string _key;
-        private bool _isMultiple;
+        private readonly bool _isMultiple;
+        private readonly string _key;
+
         private bool _userInitiated;
-}
+    }
 }

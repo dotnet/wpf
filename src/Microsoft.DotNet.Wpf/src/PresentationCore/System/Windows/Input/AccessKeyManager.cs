@@ -285,12 +285,12 @@ namespace System.Windows.Input
         {
             // AccessKeyManager handles both text and system text.
             string text = e.Text;
-            if ((text == null) || (text.Length == 0))
+            if (string.IsNullOrEmpty(text))
             {
                 text = e.SystemText;
             }
 
-            if ((text != null) && (text.Length > 0))
+            if (!string.IsNullOrEmpty(text))
             {
                 if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
@@ -301,23 +301,16 @@ namespace System.Windows.Input
 
         private static void OnKeyDown(KeyEventArgs e)
         {
-            KeyboardDevice keyboard = (KeyboardDevice)e.Device;
-
-            string text = null;
-            switch (e.RealKey)
+            string text = e.RealKey switch
             {
-                case Key.Enter :
-                     text = "\x000D";
-                     break;
+                Key.Enter => "\x000D",
+                Key.Escape => "\x001B",
+                _ => null
+            };
 
-                case Key.Escape :
-                     text = "\x001B";
-                     break;
-            }
-
-            if (text != null)
+            if (text is not null)
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false, e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }

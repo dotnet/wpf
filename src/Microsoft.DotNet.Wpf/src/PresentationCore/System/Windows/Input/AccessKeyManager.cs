@@ -452,14 +452,7 @@ namespace System.Windows.Input
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
             // For an element to be a valid target it must be visible and enabled
-            if (uielement != null 
-                && IsVisible(uielement)
-                && IsEnabled(uielement))
-            {
-                return true;
-            }
-
-            return false;
+            return uielement is not null && IsVisible(uielement) && IsEnabled(uielement);
         }
 
         private static bool IsVisible(DependencyObject element)

@@ -382,11 +382,12 @@ namespace System.Windows.Input
                     {
                         AccessKeyInformation elementInfo = GetInfoForElement(element, key);
 
-                        if (elementInfo.target == null) continue;
+                        if (elementInfo.Target is null)
+                            continue;
 
                         if (scope == elementInfo.Scope)
                         {
-                            finalTargets.Add(elementInfo.target);
+                            finalTargets.Add(elementInfo.Target);
                         }
                     }
                 }
@@ -394,9 +395,9 @@ namespace System.Windows.Input
                 {
                     // This is the same element that sent the event so it must be in the same scope.  
                     // Just add it to the final targets
-                    if (senderInfo.target != null)
+                    if (senderInfo.Target is not null)
                     {
-                        finalTargets.Add(senderInfo.target);
+                        finalTargets.Add(senderInfo.Target);
                     }
                 }
             }
@@ -412,24 +413,16 @@ namespace System.Windows.Input
         /// <returns>Scope for the given element, null means the context global scope</returns>
         private static AccessKeyInformation GetInfoForElement(IInputElement element, string key)
         {
-            AccessKeyInformation info = new AccessKeyInformation();
-            if (element != null)
-            {
-                AccessKeyPressedEventArgs args = new AccessKeyPressedEventArgs(key);
+            if (element is null)
+                return new AccessKeyInformation(GetActiveSource(), null);
+            
+            AccessKeyPressedEventArgs args = new(key);
+            element.RaiseEvent(args);
 
-                element.RaiseEvent(args);
-                info.Scope = args.Scope;
-                info.target = args.Target;
-                if (info.Scope == null)
-                {
-                    info.Scope = GetSourceForElement(element);
-                }
-            }
-            else
-            {
-                info.Scope = GetActiveSource();
-            }
-            return info;
+            if (args.Scope is not null)
+                return new AccessKeyInformation(args.Scope, args.Target);
+
+            return new AccessKeyInformation(GetSourceForElement(element), args.Target);  
         }
 
         private static PresentationSource GetSourceForElement(IInputElement element)
@@ -512,33 +505,27 @@ namespace System.Windows.Input
             return (bool)element.GetValue(UIElement.IsEnabledProperty);                               
         }
 
-        private struct AccessKeyInformation
+        private readonly struct AccessKeyInformation
         {
-            public object Scope
+            public readonly object Scope { get; }
+            public readonly UIElement Target { get; }
+
+            /// <summary>
+            /// Represents an empty value where <see cref="Scope"/> and <see cref="Target"/> are <see langword="null"/>.
+            /// </summary>
+            public static AccessKeyInformation Empty => s_empty;
+
+            public AccessKeyInformation(object scope, UIElement target)
             {
-                get 
-                {
-                    return _scope;
-                }
-                set 
-                {
-                    _scope = value;
-                }
+                Scope = scope;
+                Target = target;
             }
 
-            
-            public UIElement target;
+            /// <summary>
+            /// Holds the singleton for <see cref="AccessKeyInformation.Empty"/>.
+            /// </summary>
+            private static readonly AccessKeyInformation s_empty = new();
 
-            private static AccessKeyInformation _empty = new AccessKeyInformation();
-            public static AccessKeyInformation Empty
-            {
-                get
-                {
-                    return _empty;
-                }
-            }
-
-            private object _scope;
         }
 
         private static void PurgeDead(List<WeakReference<IInputElement>> elements, object elementToRemove)

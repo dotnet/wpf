@@ -194,7 +194,8 @@ namespace System.Windows.Input
 
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
-            if (e.StagingItem.Input.Handled) return;
+            if (e.StagingItem.Input.Handled)
+                return;
 
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
@@ -292,7 +293,7 @@ namespace System.Windows.Input
 
             if (!string.IsNullOrEmpty(text))
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false, e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -337,7 +338,7 @@ namespace System.Windows.Input
             // null scope defaults to the active window
             if (scope == null)
             {
-                scope = CriticalGetActiveSource();
+                scope = GetActiveSource();
 
                 // if there is no active scope then give up
                 if (scope == null)
@@ -426,7 +427,7 @@ namespace System.Windows.Input
             }
             else
             {
-                info.Scope = CriticalGetActiveSource();
+                info.Scope = GetActiveSource();
             }
             return info;
         }
@@ -462,16 +463,6 @@ namespace System.Windows.Input
 
             return null;
         }
-
-        private static PresentationSource CriticalGetActiveSource()
-        {
-            IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
-            if (hwnd != IntPtr.Zero)
-                return HwndSource.CriticalFromHwnd(hwnd);
-
-            return null;
-        }
-
         
         private static bool IsTargetable(IInputElement element)
         {
@@ -493,11 +484,9 @@ namespace System.Windows.Input
             while (element != null)
             {
                 Visibility visibility;
-                UIElement uiElem = element as UIElement;
                 UIElement3D uiElem3D = element as UIElement3D;
-                
-                if (uiElem != null)
 
+                if (element is UIElement uiElem)
                 {
                     visibility = uiElem.Visibility;
                 }
@@ -520,7 +509,7 @@ namespace System.Windows.Input
         // returns whether the given DO is enabled or not
         private static bool IsEnabled(DependencyObject element)
         {
-            return ((bool)element.GetValue(UIElement.IsEnabledProperty));                               
+            return (bool)element.GetValue(UIElement.IsEnabledProperty);                               
         }
 
         private struct AccessKeyInformation

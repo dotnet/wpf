@@ -511,7 +511,7 @@ namespace System.Windows.Input
 
         }
 
-        private static void PurgeDead(List<WeakReference<IInputElement>> elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference<IInputElement>> elements, IInputElement elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {

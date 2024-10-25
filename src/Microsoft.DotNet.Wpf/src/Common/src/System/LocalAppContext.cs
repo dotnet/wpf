@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace System
 {
-    internal partial class LocalAppContext
+    internal static class LocalAppContext
     {
         /// <summary>
         /// Holds the switch names and their values. In case it is modified outside <see cref="DefineSwitchDefault"/>,

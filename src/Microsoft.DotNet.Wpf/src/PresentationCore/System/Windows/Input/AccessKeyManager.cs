@@ -2,29 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
-using System.Windows.Media;
 using System.Windows.Interop;
-using MS.Internal;
+using System.Globalization;
 using System.Diagnostics;
-using System.Windows;
-using System.Security;
+using MS.Internal;
 
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    ///   AccessKeyManager object is created on demand and it is one per thread.
-    /// It attached an event handler for PostProcessInput on InputManager and expose registration and 
-    /// unregistration of access keys. When the access key is pressed in calls OnAccessKey method on the target element
+    ///  <see cref="AccessKeyManager"/> object is created on demand and it is one per thread.
+    /// It attaches an event handler for PostProcessInput on <see cref="InputManager"/> and expose registration and 
+    /// unregistration of access keys. When the access key is pressed it calls OnAccessKey method on the target element
     /// </summary>
     public sealed class AccessKeyManager
     {

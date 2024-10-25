@@ -88,8 +88,7 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            AccessKeyManager instance = AccessKeyManager.Current;
-            List<IInputElement> targets = instance.GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
+            List<IInputElement> targets = GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
             return targets != null && targets.Count > 0;
         }
 
@@ -107,8 +106,7 @@ namespace System.Windows.Input
         {
             key = NormalizeKey(key);
 
-            AccessKeyManager instance = AccessKeyManager.Current;
-            return instance.ProcessKeyForScope(scope, key, isMultiple, false) == ProcessKeyResult.MoreMatches;
+            return ProcessKeyForScope(scope, key, isMultiple, false) == ProcessKeyResult.MoreMatches;
         }
 
         /// <summary>
@@ -209,7 +207,7 @@ namespace System.Windows.Input
 }
 
         // Assumes key is already a single unicode character
-        private ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
+        private static ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
         {
             // This comes from OnKeyDown or OnText and though it is a single character it might not be uppercased.
             key = key.ToUpperInvariant();
@@ -221,7 +219,7 @@ namespace System.Windows.Input
         }
 
         // Assumes key is already a single unicode character AND is uppercased
-        private ProcessKeyResult ProcessKeyForScope(object scope, string key, bool existsElsewhere, bool userInitiated)
+        private static ProcessKeyResult ProcessKeyForScope(object scope, string key, bool existsElsewhere, bool userInitiated)
         {
             List<IInputElement> targets = GetTargetsForScope(scope, key, null, AccessKeyInformation.Empty);
 
@@ -283,7 +281,7 @@ namespace System.Windows.Input
             return ProcessKeyResult.NoMatch;
         }
 
-        private void OnText(TextCompositionEventArgs e)
+        private static void OnText(TextCompositionEventArgs e)
         {
             // AccessKeyManager handles both text and system text.
             string text = e.Text;
@@ -301,7 +299,7 @@ namespace System.Windows.Input
             }
         }
 
-        private void OnKeyDown(KeyEventArgs e)
+        private static void OnKeyDown(KeyEventArgs e)
         {
             KeyboardDevice keyboard = (KeyboardDevice)e.Device;
 
@@ -333,7 +331,7 @@ namespace System.Windows.Input
         /// <param name="sender"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        private List<IInputElement> GetTargetsForSender(IInputElement sender, string key)
+        private static List<IInputElement> GetTargetsForSender(IInputElement sender, string key)
         {
             // Find the scope for the sender -- will be matched against the possible targets' scopes
             AccessKeyInformation senderInfo = GetInfoForElement(sender, key);
@@ -341,7 +339,7 @@ namespace System.Windows.Input
             return GetTargetsForScope(senderInfo.Scope, key, sender, senderInfo);
         }
         
-        private List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
+        private static List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
         {
             // null scope defaults to the active window
             if (scope == null)
@@ -361,15 +359,20 @@ namespace System.Windows.Input
                 // If AltKey is required and it isnt pressed then dont match against any targets
                 return null;
             }
-            
+
             //Scoping:
             //    1) When key is pressed, find matching AKs -> S
             //    3) find scope for keyevent.Source
             //    4) find scope for everything in S. throw away those that don't match.
             //    5) Final selection uses S.  yay!
-            // 
-            // 
-            List<IInputElement> possibleElements = _keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements) ? CopyAndPurgeDead(elements) : null;
+            //
+
+            AccessKeyManager instance = AccessKeyManager.Current;
+
+            if (!instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
+                return null;
+
+            List<IInputElement> possibleElements = CopyAndPurgeDead(elements);
             if (possibleElements is null)
                 return null;
 
@@ -642,6 +645,8 @@ namespace System.Windows.Input
 
         private static string GetAccessKeyCharacter(DependencyObject d)
         {
+            AccessKeyManager instance = AccessKeyManager.Current;
+
             // See what the local value for AccessKeyElement is first and start with that.
             WeakReference<IInputElement> cachedElementWeakRef = (WeakReference<IInputElement>)d.GetValue(AccessKeyElementProperty);
             if (cachedElementWeakRef.TryGetTarget(out IInputElement accessKeyElement))
@@ -658,7 +663,7 @@ namespace System.Windows.Input
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
                 
-                    foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in Current._keyToElements)
+                    foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in instance._keyToElements)
                     {
                         List<WeakReference<IInputElement>> elements = entry.Value;
                         for (int i = 0; i < elements.Count; i++)
@@ -679,7 +684,7 @@ namespace System.Windows.Input
             // There was no access key stored or it no longer matched.  Clear out the cache and figure it out again.
             d.ClearValue(AccessKeyElementProperty);
 
-            foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in Current._keyToElements)
+            foreach (KeyValuePair<string, List<WeakReference<IInputElement>>> entry in instance._keyToElements)
             {
                 List<WeakReference<IInputElement>> elements = entry.Value;
                 for (int i = 0; i < elements.Count; i++)
@@ -715,6 +720,9 @@ namespace System.Windows.Input
         // Map: string -> List<WeakReference> to IInputElements
         private readonly Dictionary<string, List<WeakReference<IInputElement>>> _keyToElements = new(10);
 
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="AccessKeyManager"/>.
+        /// </summary>
         [ThreadStatic]
         private static AccessKeyManager s_accessKeyManager;
 

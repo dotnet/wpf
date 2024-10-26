@@ -38,11 +38,11 @@ namespace System.Windows.Media
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
             ref HashSet<ushort> glyphSet = ref CollectionsMarshal.GetValueRefOrAddDefault(_collectedGlyphTypefaces, glyphTypeface, out bool exists);
-            if(!exists)
+            if (!exists)
                 glyphSet = new HashSet<ushort>(glyphRun.GlyphIndices.Count);
 
             foreach (ushort glyphIndex in glyphRun.GlyphIndices)
-            {             
+            {
                 glyphSet.Add(glyphIndex);
             }
         }

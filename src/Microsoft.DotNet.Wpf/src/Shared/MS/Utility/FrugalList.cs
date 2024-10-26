@@ -2110,34 +2110,27 @@ namespace MS.Utility
         {
             get
             {
-                // If no entry, default(T) is returned
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
-                {
-                    return _listStore.EntryAt(index);
-                }
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+                if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
+                return _listStore.EntryAt(index);
+            }
             set
             {
                 // Ensure write success
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
-                {
-                    _listStore.SetAt(index, value);
-                    return;
-                }
-                throw new ArgumentOutOfRangeException(nameof(index));
+                if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                    throw new ArgumentOutOfRangeException(nameof(index));
+
+                _listStore.SetAt(index, value);
             }
         }
 
         public ref T GetEntryAtRef(int index)
         {
-            // If no entry, default(T) is returned
-            if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
-            {
-                return ref _listStore.EntryAtRef(index);
-            }
-            throw new ArgumentOutOfRangeException(nameof(index));
+            if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            return ref _listStore.EntryAtRef(index);
         }
 
         public int Add(T value)

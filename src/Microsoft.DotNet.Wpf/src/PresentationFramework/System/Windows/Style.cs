@@ -936,13 +936,10 @@ namespace System.Windows
         /// </summary>
         internal int GlobalIndex { get; }
 
-        // Special equality check that takes into account 'null'
-        private static bool IsEqual(object a, object b)
+        internal bool IsBasedOnModified
         {
-            return (a != null) ? a.Equals(b) : (b == null);
+            get => IsModified(BasedOnID);
         }
-
-        internal bool IsBasedOnModified { get { return IsModified(BasedOnID); } }
 
         private EventHandlersStore _eventHandlersStore = null;
 

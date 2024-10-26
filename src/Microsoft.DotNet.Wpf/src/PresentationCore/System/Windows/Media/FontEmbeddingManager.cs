@@ -27,6 +27,7 @@ using MS.Internal.Shaping;
 using System.Security;
 
 using SR=MS.Internal.PresentationCore.SR;
+using System.Runtime.InteropServices;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
@@ -72,19 +73,13 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(glyphRun);
 
-            // Suppress PRESharp parameter validation warning about glyphRun.GlyphTypeface because
-            // GlyphRun.GlyphTypeface property cannot be null.
-#pragma warning suppress 56506
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
-            HashSet<ushort> glyphSet;
-            
-            if (_collectedGlyphTypefaces.ContainsKey(glyphTypeface))
-                glyphSet = _collectedGlyphTypefaces[glyphTypeface];
-            else
-                glyphSet = _collectedGlyphTypefaces[glyphTypeface] = new HashSet<ushort>();
+            ref HashSet<ushort> glyphSet = ref CollectionsMarshal.GetValueRefOrAddDefault(_collectedGlyphTypefaces, glyphTypeface, out bool exists);
+            if(!exists)
+                glyphSet = new HashSet<ushort>(glyphRun.GlyphIndices.Count);
 
-            foreach(ushort glyphIndex in glyphRun.GlyphIndices)
+            foreach (ushort glyphIndex in glyphRun.GlyphIndices)
             {             
                 glyphSet.Add(glyphIndex);
             }

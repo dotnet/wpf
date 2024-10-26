@@ -393,6 +393,8 @@ namespace System.Windows
         }
 
         // Synchronized (write locks, lock-free reads): Covered by the TriggerBase instance
+        // NOTE: There are actually no locks performed as any write operations
+        // are done on a Dispatcher thread before the TriggerBase is sealed
         internal FrugalStructList<PropertyValue> PropertyValues = new();
 
         // Global, cross-object synchronization

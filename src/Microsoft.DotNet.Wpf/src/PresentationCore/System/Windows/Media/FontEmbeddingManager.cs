@@ -51,7 +51,7 @@ namespace System.Windows.Media
         /// </summary>
         public FontEmbeddingManager()
         {
-            _collectedGlyphTypefaces = new Dictionary<Uri, Dictionary<ushort, bool>>(_uriComparer);
+            _collectedGlyphTypefaces = new Dictionary<Uri, HashSet<ushort>>(_uriComparer);
         }
 
         #endregion Constructors
@@ -77,16 +77,16 @@ namespace System.Windows.Media
 #pragma warning suppress 56506
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
-            Dictionary<ushort, bool> glyphSet;
+            HashSet<ushort> glyphSet;
             
             if (_collectedGlyphTypefaces.ContainsKey(glyphTypeface))
                 glyphSet = _collectedGlyphTypefaces[glyphTypeface];
             else
-                glyphSet = _collectedGlyphTypefaces[glyphTypeface] = new Dictionary<ushort, bool>();
+                glyphSet = _collectedGlyphTypefaces[glyphTypeface] = new HashSet<ushort>();
 
             foreach(ushort glyphIndex in glyphRun.GlyphIndices)
             {             
-                glyphSet[glyphIndex] = true;
+                glyphSet.Add(glyphIndex);
             }
         }
 
@@ -114,12 +114,12 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         public ICollection<ushort> GetUsedGlyphs(Uri glyphTypeface)
         {
-            Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
+            HashSet<ushort> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
             if (glyphsUsed == null)
             {
-                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, nameof(glyphTypeface));
             }
-            return glyphsUsed.Keys;
+            return glyphsUsed;
         }
 
         #endregion Public Methods
@@ -155,7 +155,7 @@ namespace System.Windows.Media
         /// bool values in the dictionary don't matter,
         /// we'll switch to Set class when it becomes available.
         /// </summary>
-        private Dictionary<Uri, Dictionary<ushort, bool>>   _collectedGlyphTypefaces;
+        private Dictionary<Uri, HashSet<ushort>>   _collectedGlyphTypefaces;
 
         private static UriComparer _uriComparer = new UriComparer();
 

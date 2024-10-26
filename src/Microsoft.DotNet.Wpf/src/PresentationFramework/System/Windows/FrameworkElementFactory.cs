@@ -429,7 +429,7 @@ namespace System.Windows
             if( existingIndex >= 0 )
             {
                 // Overwrite existing value for dp
-                lock (_synchronized)
+                lock (_propertyValuesLock)
                 {
                     ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(existingIndex);
                     propertyValue.ValueType = valueType;
@@ -445,7 +445,7 @@ namespace System.Windows
                 propertyValue.Property = dp;
                 propertyValue.ValueInternal = value;
 
-                lock (_synchronized)
+                lock (_propertyValuesLock)
                 {
                     PropertyValues.Add(propertyValue);
                 }
@@ -583,7 +583,7 @@ namespace System.Windows
             }
 
 
-            lock (_synchronized)
+            lock (_propertyValuesLock)
             {
                 // Set delayed ChildID for all property triggers
                 for (int i = 0; i < PropertyValues.Count; i++)
@@ -1263,6 +1263,9 @@ namespace System.Windows
         // Synchronized (write locks, lock-free reads): Covered by FrameworkElementFactory instance lock
         internal FrugalStructList<PropertyValue> PropertyValues = new();
 
+        // Instance-based synchronization for write locks to PropertyValues
+        private readonly Lock _propertyValuesLock = new();
+
         // Store all the event handlers for this FEF
         // NOTE: We cannot use UnCommonField<T> because that uses property engine
         // storage that can be set only on a DependencyObject
@@ -1287,9 +1290,6 @@ namespace System.Windows
         private FrameworkElementFactory _firstChild;
         private FrameworkElementFactory _lastChild;
         private FrameworkElementFactory _nextSibling;
-
-        // Instance-based synchronization
-        private readonly object _synchronized = new object();
     }
 }
 

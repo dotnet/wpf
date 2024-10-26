@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Globalization; // CultureInfo.InvariantCulture
 
 #if WINDOWS_BASE
     using MS.Internal.WindowsBase;
@@ -42,7 +41,6 @@ namespace MS.Win32
         {
             _ownerThreadID = Environment.CurrentManagedThreadId;
 
-
             // First, add the set of hooks. This allows the hooks to receive the
             // messages sent to the window very early in the process.
             foreach (HwndWrapperHook hook in hooks)
@@ -68,7 +66,7 @@ namespace MS.Win32
                 throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            IntPtr hInstance = UnsafeNativeMethods.GetModuleHandle( null );
+            IntPtr hInstance = UnsafeNativeMethods.GetModuleHandle(null);
 
             // We need to keep the Delegate object alive through the call to CreateWindowEx().
             // Subclass.WndProc will install a better delegate (to the same function) when it
@@ -79,25 +77,19 @@ namespace MS.Win32
             // The class name is a concat of AppName, ThreadName, and RandomNumber.
             // Register will fail if the string gets over 255 in length.
             // So limit each part to a reasonable amount.
-            string appName;
-            string currentDomainFriendlyName = AppDomain.CurrentDomain.FriendlyName;
-            if (null != currentDomainFriendlyName && 128 <= currentDomainFriendlyName.Length)
-                appName = currentDomainFriendlyName[..128];
-            else
-                appName = currentDomainFriendlyName;
+            ReadOnlySpan<char> appName = AppDomain.CurrentDomain.FriendlyName;
+            if (appName.Length > 128)
+                appName = appName.Slice(0, 128);
 
-            string threadName;
-            if(null != Thread.CurrentThread.Name && 64 <= Thread.CurrentThread.Name.Length)
-                threadName = Thread.CurrentThread.Name.Substring(0, 64);
-            else
-                threadName = Thread.CurrentThread.Name;
+            // Get current thread name, constrain at 64 chars max
+            ReadOnlySpan<char> threadName = Thread.CurrentThread.Name;         
+            if (threadName.Length > 64)
+                threadName = threadName.Slice(0, 64);
 
-            // Create a suitable unique class name.
-            _classAtom = 0;
-            string randomName = Guid.NewGuid().ToString();
-            string className = String.Format(CultureInfo.InvariantCulture, "HwndWrapper[{0};{1};{2}]", appName, threadName, randomName);
+            // Create a suitable unique class name
+            string className = $"HwndWrapper[{appName};{threadName};{Guid.NewGuid()}]";
 
-            wc_d.cbSize        = Marshal.SizeOf(typeof(NativeMethods.WNDCLASSEX_D));
+            wc_d.cbSize        = Marshal.SizeOf<NativeMethods.WNDCLASSEX_D>();
             wc_d.style         = classStyle;
             wc_d.lpfnWndProc   = initialWndProc;
             wc_d.cbClsExtra    = 0;
@@ -106,14 +98,13 @@ namespace MS.Win32
             wc_d.hIcon         = IntPtr.Zero;
             wc_d.hCursor       = IntPtr.Zero;
             wc_d.hbrBackground = hNullBrush;
-            wc_d.lpszMenuName  = "";
+            wc_d.lpszMenuName  = string.Empty;
             wc_d.lpszClassName = className;
             wc_d.hIconSm       = IntPtr.Zero;
 
-            // Register the unique class for this instance.
-            // Note we use a GUID in the name so we are confident that
-            // the class name should be unique.  And RegisterClassEx won't
-            // fail (for that reason).
+            // Register the unique class for this window instance.
+            // Note we use a GUID in the name so we are confident that the class name should be unique.
+            // And RegisterClassEx won't fail (for that reason).
             _classAtom = UnsafeNativeMethods.RegisterClassEx(wc_d);
 
             // call CreateWindow
@@ -144,7 +135,6 @@ namespace MS.Win32
             }
             GC.KeepAlive(initialWndProc);
         }
-
 
         ~HwndWrapper()
         {

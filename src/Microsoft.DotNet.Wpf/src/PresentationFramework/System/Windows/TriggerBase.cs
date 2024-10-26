@@ -387,7 +387,7 @@ namespace System.Windows
         }
 
         // Synchronized (write locks, lock-free reads): Covered by the TriggerBase instance
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        internal FrugalStructList<PropertyValue> PropertyValues = new();
 
         // Global, cross-object synchronization
         private static readonly object Synchronized = new object();

@@ -519,7 +519,7 @@ namespace System.Windows
             // Scan for record
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                var propertyValue = PropertyValues[i];
+                PropertyValue propertyValue = PropertyValues[i];
                 if (propertyValue.ValueType == PropertyValueType.Set &&
                     propertyValue.Property == dp)
                 {
@@ -810,7 +810,7 @@ namespace System.Windows
 
                     for (int i = 0; i < PropertyValues.Count; i++)
                     {
-                        var propertyValue = PropertyValues[i];
+                        PropertyValue propertyValue = PropertyValues[i];
                         if (propertyValue.ValueType == PropertyValueType.Set)
                         {
                             // Get the value out of the table.
@@ -1244,7 +1244,7 @@ namespace System.Windows
         {
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                var propertyValue = PropertyValues[i];
+                PropertyValue propertyValue = PropertyValues[i];
                 if (propertyValue.Property == dp &&
                     (propertyValue.ValueType == PropertyValueType.Set ||
                      propertyValue.ValueType == PropertyValueType.Resource ||
@@ -1261,7 +1261,7 @@ namespace System.Windows
         private bool _sealed;
 
         // Synchronized (write locks, lock-free reads): Covered by FrameworkElementFactory instance lock
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        internal FrugalStructList<PropertyValue> PropertyValues = new();
 
         // Store all the event handlers for this FEF
         // NOTE: We cannot use UnCommonField<T> because that uses property engine

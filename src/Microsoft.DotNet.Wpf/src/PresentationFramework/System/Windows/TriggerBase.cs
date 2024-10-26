@@ -209,6 +209,7 @@ namespace System.Windows
         /// data structures) by Style.Seal(). We keep them around even after
         /// that point should we need to serialize this data back out.
         /// </remarks>
+        // This is only called from ProcessSettersCollection, which is guranteed to be on single thread.
         internal void AddToPropertyValues(string childName, DependencyProperty dp, object value, PropertyValueType valueType)
         {
             // Store original data
@@ -234,7 +235,8 @@ namespace System.Windows
             // Track Dependent/Source relationship for prediction
             for (int i = 0; i < PropertyValues.Count; i++)
             {
-                PropertyValue propertyValue = PropertyValues[i];
+                // We can use ref here as we're guranteed via VerifyAccess() to be on single thread
+                ref PropertyValue propertyValue = ref PropertyValues.GetEntryAtRef(i);
 
                 DependencyProperty dependent = propertyValue.Property;
 
@@ -266,7 +268,11 @@ namespace System.Windows
             DetachFromDispatcher();
         }
 
-        // This will transfer information in the _setters collection to PropertyValues array.
+        /// <summary>
+        /// This will transfer information in the _setters collection to PropertyValues array.
+        /// </summary>
+        // NOTE: This is currently only called in Seal() overrides and it should stay that way
+        // as it gurantees that any changes made to PropertyValues are on single thread!
         internal void ProcessSettersCollection(SetterBaseCollection setters)
         {
             // Add information in Setters collection to PropertyValues array.

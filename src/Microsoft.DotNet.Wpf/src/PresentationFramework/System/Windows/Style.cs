@@ -50,6 +50,7 @@ namespace System.Windows
         /// </summary>
         public Style()
         {
+            // Get globally unique ID
             GlobalIndex = Interlocked.Increment(ref s_globalStyleIndex);
         }
 
@@ -61,6 +62,7 @@ namespace System.Windows
         {
             TargetType = targetType;
 
+            // Get globally unique ID
             GlobalIndex = Interlocked.Increment(ref s_globalStyleIndex);
         }
 
@@ -74,6 +76,7 @@ namespace System.Windows
             TargetType = targetType;
             BasedOn = basedOn;
 
+            // Get globally unique ID
             GlobalIndex = Interlocked.Increment(ref s_globalStyleIndex);
         }
 
@@ -1010,8 +1013,11 @@ namespace System.Windows
         internal HybridDictionary DataTriggersWithActions = null;
 
         /// <summary>
-        /// Writes must be done atomically, currently only written via <see cref="GetUniqueGlobalIndex"/>.
+        /// Global indexer for <see cref="Style"/> and its derivates.
         /// </summary>
+        /// <remarks>
+        /// Access must be done atomically, currently only written via constructors.
+        /// </remarks>
         private static int s_globalStyleIndex = 0;
 
         private const int TargetTypeID = 0x01;

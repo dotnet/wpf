@@ -407,6 +407,9 @@ namespace System.Windows
         /// <summary>
         /// Global indexer for <see cref="TriggerBase"/> and its derivates.
         /// </summary>
+        /// <remarks>
+        /// Access must be done atomically, currently only written via <see cref="EstablishLayer"/>.
+        /// </remarks>
         private static long s_nextGlobalLayerRank = StoryboardLayers.PropertyTriggerStartLayer; // 2
     }
 }

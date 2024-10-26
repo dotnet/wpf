@@ -357,9 +357,8 @@ namespace System.Windows.Input
             if (!instance._keyToElements.TryGetValue(key, out List<WeakReference<IInputElement>> elements))
                 return null;
 
+            // Returns a copy of strong references to IInputElements from the elements collection
             List<IInputElement> possibleElements = CopyAndPurgeDead(elements);
-            if (possibleElements is null)
-                return null;
 
             List<IInputElement> finalTargets = new List<IInputElement>(1);
 

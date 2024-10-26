@@ -3,50 +3,22 @@
 // See the LICENSE file in the project root for more information.
 
 //
-// 
-//
 // Description: The FontEmbeddingManager class handles physical and composite font embedding.
 //
 //              See spec at http://avalon/text/DesignDocsAndSpecs/Font%20embedding%20APIs.htm
 // 
-//
-//
 
-using System;
-using System.Text;
-using System.IO;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-
-using MS.Internal.FontCache;
-using MS.Internal.FontFace;
-using MS.Internal.Shaping;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
+using SR = MS.Internal.PresentationCore.SR;
 using System.Runtime.InteropServices;
-
-// Allow suppression of presharp warnings
-#pragma warning disable 1634, 1691
+using System.Collections.Generic;
 
 namespace System.Windows.Media
 {
     /// <summary>
-    /// The FontEmbeddingManager class handles physical and composite font embedding.
+    /// The <see cref="FontEmbeddingManager"/> class handles physical and composite font embedding.
     /// </summary>
     public class FontEmbeddingManager
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
-
         /// <summary>
         /// Creates a new instance of font usage manager.
         /// </summary>
@@ -54,16 +26,6 @@ namespace System.Windows.Media
         {
             _collectedGlyphTypefaces = new Dictionary<Uri, HashSet<ushort>>(s_uriComparer);
         }
-
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
 
         /// <summary>
         /// Collects information about glyph typeface and index used by a glyph run.
@@ -103,26 +65,22 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="glyphTypeface">Specifies the Uri of a glyph typeface to obtain usage data for.</param>
         /// <returns>A collection of glyph indices recorded previously.</returns>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         ///     Glyph typeface Uri does not point to a previously recorded glyph typeface.
         /// </exception>
         [CLSCompliant(false)]
         public ICollection<ushort> GetUsedGlyphs(Uri glyphTypeface)
         {
             HashSet<ushort> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
-            if (glyphsUsed == null)
+            if (glyphsUsed == null) // NOTE: This will currently throw KeyNotFoundException instead
             {
                 throw new ArgumentException(SR.GlyphTypefaceNotRecorded, nameof(glyphTypeface));
             }
             return glyphsUsed;
         }
 
-        #endregion Public Methods
-
-        private class UriComparer : IEqualityComparer<Uri>
+        private sealed class UriComparer : IEqualityComparer<Uri>
         {
-            #region IEqualityComparer<Uri> Members
-
             public bool Equals(Uri x, Uri y)
             {
                 // We don't use Uri.Equals because it doesn't compare Fragment parts,
@@ -134,17 +92,7 @@ namespace System.Windows.Media
             {
                 return obj.GetHashCode();
             }
-
-            #endregion
         }
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
 
         /// <summary>
         /// Contains the FontUri and its GlyphIndicies as values.   
@@ -156,6 +104,5 @@ namespace System.Windows.Media
         /// </summary>
         private static readonly UriComparer s_uriComparer = new();
 
-        #endregion Private Fields
     }
 }

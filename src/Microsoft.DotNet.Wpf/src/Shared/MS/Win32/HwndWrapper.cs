@@ -37,32 +37,19 @@ namespace MS.Win32
             s_msgGCMemory = UnsafeNativeMethods.RegisterWindowMessage("HwndWrapper.GetGCMemMessage");
         }
 
-        public HwndWrapper(
-            int classStyle,
-            int style,
-            int exStyle,
-            int x,
-            int y,
-            int width,
-            int height,
-            string name,
-            IntPtr parent,
-            HwndWrapperHook[] hooks)
+        public HwndWrapper(int classStyle, int style, int exStyle, int x, int y, int width, int height,
+                           string name, IntPtr parent, params ReadOnlySpan<HwndWrapperHook> hooks)
         {
             _ownerThreadID = Environment.CurrentManagedThreadId;
 
 
-            // First, add the set of hooks.  This allows the hooks to receive the
+            // First, add the set of hooks. This allows the hooks to receive the
             // messages sent to the window very early in the process.
-            if(hooks != null)
+            foreach (HwndWrapperHook hook in hooks)
             {
-                for(int i = 0, iEnd = hooks.Length; i < iEnd; i++)
-                {
-                    if(null != hooks[i])
-                        AddHook(hooks[i]);
-                }
+                if (hook is not null)
+                    AddHook(hook);
             }
-
 
             _wndProc = new HwndWrapperHook(WndProc);
 

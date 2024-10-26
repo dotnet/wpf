@@ -52,7 +52,7 @@ namespace System.Windows.Media
         /// </summary>
         public FontEmbeddingManager()
         {
-            _collectedGlyphTypefaces = new Dictionary<Uri, HashSet<ushort>>(_uriComparer);
+            _collectedGlyphTypefaces = new Dictionary<Uri, HashSet<ushort>>(s_uriComparer);
         }
 
         #endregion Constructors
@@ -127,7 +127,7 @@ namespace System.Windows.Media
             {
                 // We don't use Uri.Equals because it doesn't compare Fragment parts,
                 // and we use Fragment part to store font face index.
-                return String.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);
+                return string.Equals(x.ToString(), y.ToString(), StringComparison.OrdinalIgnoreCase);
             }
 
             public int GetHashCode(Uri obj)
@@ -147,12 +147,14 @@ namespace System.Windows.Media
         #region Private Fields
 
         /// <summary>
-        /// bool values in the dictionary don't matter,
-        /// we'll switch to Set class when it becomes available.
+        /// Contains the FontUri and its GlyphIndicies as values.   
         /// </summary>
-        private Dictionary<Uri, HashSet<ushort>>   _collectedGlyphTypefaces;
+        private readonly Dictionary<Uri, HashSet<ushort>> _collectedGlyphTypefaces;
 
-        private static UriComparer _uriComparer = new UriComparer();
+        /// <summary>
+        /// Custom comparer for FontUri used in <see cref="_collectedGlyphTypefaces"/>.
+        /// </summary>
+        private static readonly UriComparer s_uriComparer = new();
 
         #endregion Private Fields
     }

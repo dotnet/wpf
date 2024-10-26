@@ -987,7 +987,7 @@ namespace System.Windows
 
         // Original Style data (not including based-on data)
         // Synchronized (write locks, lock-free reads): Covered by Style instance lock
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        internal FrugalStructList<PropertyValue> PropertyValues = new();
 
         // Properties driven on the container (by the Style) that should be
         // invalidated when the style gets applied/unapplied. These properties

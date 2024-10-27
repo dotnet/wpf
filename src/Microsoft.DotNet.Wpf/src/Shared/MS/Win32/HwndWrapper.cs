@@ -217,7 +217,7 @@ namespace MS.Win32
 
         public void AddHook(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList();
             _hooks.Insert(0, hook);
         }
 

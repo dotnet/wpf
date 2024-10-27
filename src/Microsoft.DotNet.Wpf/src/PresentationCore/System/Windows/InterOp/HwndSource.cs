@@ -227,27 +227,6 @@ namespace System.Windows.Interop
 
             _publicHook = new HwndWrapperHook(PublicHooksFilterMessage);
 
-            // When processing WM_SIZE, LayoutFilterMessage must be invoked before
-            // HwndTargetFilterMessage. This way layout will be updated before resizing
-            // HwndTarget, resulting in single render per resize. This means that
-            // layout hook should appear before HwndTarget hook in the wrapper hooks
-            // list. If this is done the other way around, first HwndTarget resize will
-            // force re-render, then layout will be updated according to the new size,
-            // scheduling another render.
-            HwndWrapperHook[] wrapperHooks = { _hwndTargetHook, _layoutHook, _inputHook, null };
-
-            if (null != parameters.HwndSourceHook)
-            {
-                // In case there's more than one delegate, add these to the event storage backwards
-                // so they'll get invoked in the expected order.
-                Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
-                for (int i = handlers.Length -1; i >= 0; --i)
-                {
-                    EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
-                }
-                wrapperHooks[3] = _publicHook;
-            }
-
             _restoreFocusMode = parameters.RestoreFocusMode;
             _acquireHwndFocusInMenuMode = parameters.AcquireHwndFocusInMenuMode;
 
@@ -260,22 +239,41 @@ namespace System.Windows.Interop
                 parameters.ExtendedWindowStyle &= (~NativeMethods.WS_EX_LAYERED);
             }
 
-
             _constructionParameters = parameters;
-            _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle,
-                                       parameters.WindowStyle,
-                                       parameters.ExtendedWindowStyle,
-                                       parameters.PositionX,
-                                       parameters.PositionY,
-                                       parameters.Width,
-                                       parameters.Height,
-                                       parameters.WindowName,
-                                       parameters.ParentWindow,
-                                       wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            if (parameters.HwndSourceHook is not null)
+            {
+                // In case there's more than one delegate, add these to the event storage backwards
+                // so they'll get invoked in the expected order.
+                Delegate[] handlers = parameters.HwndSourceHook.GetInvocationList();
+                for (int i = handlers.Length - 1; i >= 0; --i)
+                {
+                    EventHelper.AddHandler(ref _hooks, (HwndSourceHook)handlers[i]);
+                }
+
+                // When processing WM_SIZE, LayoutFilterMessage must be invoked before
+                // HwndTargetFilterMessage. This way layout will be updated before resizing
+                // HwndTarget, resulting in single render per resize. This means that
+                // layout hook should appear before HwndTarget hook in the wrapper hooks
+                // list. If this is done the other way around, first HwndTarget resize will
+                // force re-render, then layout will be updated according to the new size,
+                // scheduling another render.
+
+                _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle, parameters.WindowStyle, parameters.ExtendedWindowStyle,
+                                               parameters.PositionX, parameters.PositionY, parameters.Width, parameters.Height,
+                                               parameters.WindowName, parameters.ParentWindow, _hwndTargetHook, _layoutHook,
+                                               _inputHook, _publicHook);
+            }
+            else
+            {
+                _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle, parameters.WindowStyle, parameters.ExtendedWindowStyle,
+                                               parameters.PositionX, parameters.PositionY, parameters.Width, parameters.Height,
+                                               parameters.WindowName, parameters.ParentWindow, _hwndTargetHook, _layoutHook,
+                                               _inputHook);
+            }
+
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle) { UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 

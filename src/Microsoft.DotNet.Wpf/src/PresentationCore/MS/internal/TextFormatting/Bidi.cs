@@ -1732,7 +1732,7 @@ namespace MS.Internal.TextFormatting
                 flags,
                 state,
                 levels,
-                new PartialArray<DirectionClass>(characterClass),
+                characterClass,
                 out cchResolved
                 );
         }

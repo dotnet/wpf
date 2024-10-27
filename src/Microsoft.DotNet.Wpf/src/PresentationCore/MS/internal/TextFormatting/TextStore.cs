@@ -975,8 +975,8 @@ namespace MS.Internal.TextFormatting
                         0, // no max hint
                         flags,
                         _bidiState,
-                        new PartialArray<byte>(bidiLevels, resolvedLength, ich - resolvedLength),
-                        new PartialArray<DirectionClass>(directionClasses, resolvedLength, ich - resolvedLength),
+                        bidiLevels.AsSpan(resolvedLength, ich - resolvedLength),
+                        directionClasses.AsSpan(resolvedLength, ich - resolvedLength),
                         out cchResolved
                         );
 

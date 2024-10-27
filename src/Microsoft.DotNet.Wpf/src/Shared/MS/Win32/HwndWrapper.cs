@@ -2,30 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Threading;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
-using MS.Internal;
+using System.Windows.Threading;
 using MS.Internal.Interop;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-using MS.Internal.YourAssemblyName;
-#endif
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
+using System.Threading;
+using MS.Internal;
+using System;
 
 namespace MS.Win32
 {
@@ -45,8 +27,7 @@ namespace MS.Win32
             // messages sent to the window very early in the process.
             foreach (HwndWrapperHook hook in hooks)
             {
-                if (hook is not null)
-                    AddHook(hook);
+                AddHook(hook);
             }
 
             _wndProc = new HwndWrapperHook(WndProc);
@@ -161,17 +142,14 @@ namespace MS.Win32
                 return;
             }
 
-            if(disposing)
+            if (disposing)
             {
                 // diposing == false means we're being called from the finalizer
                 // and can't follow any reference types that may themselves be
                 // finalizable - thus don't call the Disposed callback.
 
                 // Notify listeners that we are being disposed.
-                if(Disposed != null)
-                {
-                    Disposed(this, EventArgs.Empty);
-                }
+                Disposed?.Invoke(this, EventArgs.Empty);
             }
 
             // We are now considered disposed.
@@ -223,7 +201,7 @@ namespace MS.Win32
 
         internal void AddHookLast(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList();
             _hooks.Add(hook);
         }
 

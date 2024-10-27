@@ -33,7 +33,6 @@ namespace MS.Win32
     ///     is not thread safe and will be operated on by the thread that owns
     ///     the window.
     /// </summary>
-    /// <remarks> Not available to partial trust callers</remarks>
     internal class HwndSubclass : IDisposable
     {
         static HwndSubclass()

@@ -1409,18 +1409,18 @@ namespace System.Windows
                 return null;
             }
 
-            Type type;
-            object dataType = ContentPresenter.DataTypeForItem(item, target, out type);
-
-            ArrayList keys = new ArrayList();
+            object dataType = ContentPresenter.DataTypeForItem(item, target, out Type type);
 
             // construct the list of acceptable keys, in priority order
-            int exactMatch = -1;    // number of entries that count as an exact match
-
             // add compound keys for the dataType and all its base types
+            List<TemplateKey> keys = new();
+
+            // number of entries that count as an exact match
+            int exactMatch = -1;
+
             while (dataType != null)
             {
-                object key = null;
+                TemplateKey key = null;
                 if (templateType == typeof(ItemContainerTemplate))
                     key = new ItemContainerTemplateKey(dataType);
                 else if (templateType == typeof(DataTemplate))
@@ -1436,7 +1436,7 @@ namespace System.Windows
                 if (type != null)
                 {
                     type = type.BaseType;
-                    if (type == typeof(Object))     // don't search for Object - perf
+                    if (type == typeof(object))     // don't search for Object - perf
                         type = null;
                 }
 
@@ -1461,14 +1461,14 @@ namespace System.Windows
         }
 
         // Search the parent chain for a [Data|Table]Template in a ResourceDictionary.
-        private static object FindTemplateResourceInTree(DependencyObject target, ArrayList keys, int exactMatch, ref int bestMatch)
+        private static object FindTemplateResourceInTree(DependencyObject target, List<TemplateKey> keys, int exactMatch, ref int bestMatch)
         {
             Debug.Assert(target != null, "Don't call FindTemplateResource with a null target object");
 
             ResourceDictionary table;
             object resource = null;
 
-            FrameworkObject fo = new FrameworkObject(target);
+            FrameworkObject fo = new(target);
             Debug.Assert(fo.IsValid, "Don't call FindTemplateResource with a target object that is neither a FrameworkElement nor a FrameworkContentElement");
 
             while (fo.IsValid)
@@ -1482,9 +1482,9 @@ namespace System.Windows
                 // Fetch the ResourceDictionary
                 // for the given target element
                 table = GetInstanceResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1501,9 +1501,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1520,9 +1520,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetThemeStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1539,9 +1539,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetTemplateResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1580,16 +1580,14 @@ namespace System.Windows
 
         // Given a ResourceDictionary and a set of keys, try to find the best
         //  match in the resource dictionary.
-        private static object FindBestMatchInResourceDictionary(
-            ResourceDictionary table, ArrayList keys, int exactMatch, ref int bestMatch)
+        private static object FindBestMatchInResourceDictionary(ResourceDictionary table, List<TemplateKey> keys, int exactMatch, ref int bestMatch)
         {
             object resource = null;
-            int k;
 
             // Search target element's ResourceDictionary for the resource
             if (table != null)
             {
-                for (k = 0;  k < bestMatch;  ++k)
+                for (int k = 0; k < bestMatch; k++)
                 {
                     object candidate = table[keys[k]];
                     if (candidate != null)

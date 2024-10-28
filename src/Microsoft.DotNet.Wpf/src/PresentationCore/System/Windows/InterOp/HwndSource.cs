@@ -227,20 +227,6 @@ namespace System.Windows.Interop
 
             _publicHook = new HwndWrapperHook(PublicHooksFilterMessage);
 
-            _restoreFocusMode = parameters.RestoreFocusMode;
-            _acquireHwndFocusInMenuMode = parameters.AcquireHwndFocusInMenuMode;
-
-            if (parameters.EffectivePerPixelOpacity)
-            {
-                parameters.ExtendedWindowStyle |= NativeMethods.WS_EX_LAYERED;
-            }
-            else
-            {
-                parameters.ExtendedWindowStyle &= (~NativeMethods.WS_EX_LAYERED);
-            }
-
-            _constructionParameters = parameters;
-
             // When processing WM_SIZE, LayoutFilterMessage must be invoked before
             // HwndTargetFilterMessage. This way layout will be updated before resizing
             // HwndTarget, resulting in single render per resize. This means that
@@ -266,6 +252,20 @@ namespace System.Windows.Interop
                 // In this case, we do not need the _publicHook
                 hooks = hooks.Slice(0, 3);
             }
+
+            _restoreFocusMode = parameters.RestoreFocusMode;
+            _acquireHwndFocusInMenuMode = parameters.AcquireHwndFocusInMenuMode;
+
+            if (parameters.EffectivePerPixelOpacity)
+            {
+                parameters.ExtendedWindowStyle |= NativeMethods.WS_EX_LAYERED;
+            }
+            else
+            {
+                parameters.ExtendedWindowStyle &= (~NativeMethods.WS_EX_LAYERED);
+            }
+
+            _constructionParameters = parameters;
 
             _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle, parameters.WindowStyle, parameters.ExtendedWindowStyle,
                                            parameters.PositionX, parameters.PositionY, parameters.Width, parameters.Height,

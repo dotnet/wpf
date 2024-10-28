@@ -3133,17 +3133,11 @@ namespace System.Windows
             return continueInvalidation;
         }
 
-        internal static bool InvalidateAutomationIntermediateElements(
-            DependencyObject mergePoint,
-            DependencyObject modelTreeNode)
+        internal static bool InvalidateAutomationIntermediateElements(DependencyObject mergePoint, DependencyObject modelTreeNode)
         {
-            UIElement e = null;
-            ContentElement ce = null;
-            UIElement3D e3d = null;
-
             while (modelTreeNode != null && modelTreeNode != mergePoint)
             {
-                if (!UIElementHelper.InvalidateAutomationPeer(modelTreeNode, out e, out ce, out e3d))
+                if (!UIElementHelper.InvalidateAutomationPeer(modelTreeNode, out _, out _, out _))
                 {
                     return false;
                 }

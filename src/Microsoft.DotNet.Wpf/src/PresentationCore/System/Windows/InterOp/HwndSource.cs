@@ -235,7 +235,7 @@ namespace System.Windows.Interop
             // force re-render, then layout will be updated according to the new size,
             // scheduling another render.
 
-            ReadOnlySpan<HwndWrapperHook> hooks = [_hwndTargetHook, _layoutHook, _inputHook, _publicHook];
+            ReadOnlySpan<HwndWrapperHook> wrapperHooks = [_hwndTargetHook, _layoutHook, _inputHook, _publicHook];
 
             if (parameters.HwndSourceHook is not null)
             {
@@ -250,7 +250,7 @@ namespace System.Windows.Interop
             else
             {
                 // In this case, we do not need the _publicHook
-                hooks = hooks.Slice(0, 3);
+                wrapperHooks = wrapperHooks.Slice(0, 3);
             }
 
             _restoreFocusMode = parameters.RestoreFocusMode;
@@ -269,7 +269,7 @@ namespace System.Windows.Interop
 
             _hwndWrapper = new HwndWrapper(parameters.WindowClassStyle, parameters.WindowStyle, parameters.ExtendedWindowStyle,
                                            parameters.PositionX, parameters.PositionY, parameters.Width, parameters.Height,
-                                           parameters.WindowName, parameters.ParentWindow, hooks);
+                                           parameters.WindowName, parameters.ParentWindow, wrapperHooks);
 
             _hwndTarget = new HwndTarget(_hwndWrapper.Handle) { UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity };
             if (_hwndTarget.UsesPerPixelOpacity)
@@ -277,7 +277,7 @@ namespace System.Windows.Interop
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
                 // Prevent this window from being themed.
-                UnsafeNativeMethods.CriticalSetWindowTheme(new HandleRef(this, _hwndWrapper.Handle), "", "");
+                UnsafeNativeMethods.CriticalSetWindowTheme(new HandleRef(this, _hwndWrapper.Handle), string.Empty, string.Empty);
             }
             _constructionParameters = null;
 

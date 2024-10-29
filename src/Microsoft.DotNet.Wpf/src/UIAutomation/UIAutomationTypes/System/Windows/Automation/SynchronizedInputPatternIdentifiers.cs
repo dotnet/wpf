@@ -4,9 +4,6 @@
 
 // Description: Automation Identifiers for SynchronizedInput Pattern
 
-using System;
-using System.Collections;
-using System.ComponentModel;
 using MS.Internal.Automation;
 using System.Runtime.InteropServices;
 

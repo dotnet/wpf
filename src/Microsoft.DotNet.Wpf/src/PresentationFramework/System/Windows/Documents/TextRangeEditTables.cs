@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Windows.Documents.Internal; // ColumnResizeAdorner
+
 //
 // Description: Internal static class representing a group of methods
 //              for list editing
@@ -9,12 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using System.Collections.Generic;
-    using System.Windows.Documents.Internal; // ColumnResizeAdorner
-
     /// <summary>
     /// Internal static class representing a group of methods for table editing
     /// </summary>

@@ -12,12 +12,7 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 #if PRESENTATION_CORE
-using SR=MS.Internal.PresentationCore.SR;
 #else
 using SR=System.Windows.SR;
 #endif

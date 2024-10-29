@@ -12,17 +12,9 @@
 // the NotSupportedException.
 // 
 
-using System;
 using System.IO.Packaging;
 using System.IO;
-using System.Collections.Generic;
-using System.Windows.Resources;
-using System.Resources;
-using System.Reflection;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Navigation;
-using System.Security;
 
 namespace MS.Internal.AppModel
 {

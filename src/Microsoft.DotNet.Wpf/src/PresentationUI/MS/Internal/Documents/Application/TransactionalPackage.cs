@@ -18,32 +18,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
-using System.Text;
-using System.Security;
 using System.Windows.TrustUI;
-
-using MS.Internal;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// This class represents a Package which does not alter the original
-/// and writes the changes to a temporary package (when provided) as a
-/// type of change log; leaving the original untouched.
-/// </summary>
-/// <remarks>
-/// In the descriptions below the following terms are used:
-/// 
-///   Proxy: This is the reference being given to callers that
-///   contains underlying objects.
-///   Active: The underlying object that the proxy should pass calls to.
-///   Temp: This is the writeable object that contains changes.
-///   Original: This is the read only object that has the source data.
-/// </remarks>
-internal class TransactionalPackage : Package, IDisposable
+    /// <summary>
+    /// This class represents a Package which does not alter the original
+    /// and writes the changes to a temporary package (when provided) as a
+    /// type of change log; leaving the original untouched.
+    /// </summary>
+    /// <remarks>
+    /// In the descriptions below the following terms are used:
+    /// 
+    ///   Proxy: This is the reference being given to callers that
+    ///   contains underlying objects.
+    ///   Active: The underlying object that the proxy should pass calls to.
+    ///   Temp: This is the writeable object that contains changes.
+    ///   Original: This is the read only object that has the source data.
+    /// </remarks>
+    internal class TransactionalPackage : Package, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------

@@ -2,24 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is an internal class that is build around ArrayList of Memory streams to enable really large (63 bit size)
 //  virtual streams.
-//
-//
-//
-//
-//
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {

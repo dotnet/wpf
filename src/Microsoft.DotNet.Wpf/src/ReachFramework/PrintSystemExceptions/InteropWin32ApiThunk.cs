@@ -10,18 +10,17 @@
                                                             
 --*/
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace MS
 {
-namespace Internal
-{
-namespace PrintWin32Thunk
-{
-namespace Win32ApiThunk
-{
-    static internal class NativeMethodsForPrintExceptions
+    namespace Internal
+    {
+        namespace PrintWin32Thunk
+        {
+            namespace Win32ApiThunk
+            {
+                static internal class NativeMethodsForPrintExceptions
     {
         [DllImport("Kernel32.dll", EntryPoint="FormatMessageW",
                    CharSet=CharSet.Unicode,

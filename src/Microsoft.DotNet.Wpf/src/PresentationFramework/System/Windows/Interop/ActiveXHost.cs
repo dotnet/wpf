@@ -21,26 +21,16 @@
 //      The classid of the ActiveX control is specified in the constructor.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Utility;
 using MS.Win32;
-using System.Security;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.

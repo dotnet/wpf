@@ -2,6 +2,25 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;                  // DoubleUtil
+using MS.Internal.Documents;
+using System.Windows.Threading;     // Dispatcher
+using System.Windows.Automation.Peers;    // AutomationPeer
+using System.Windows.Documents.DocumentStructures;
+using System.Windows.Media;         // Visual
+using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.IO;
+using System.IO.Packaging;
+using System.Collections;
+using System.ComponentModel;        // DesignerSerializationVisibility
+using System.Globalization;
+using MS.Internal.Annotations.Component;
+using System.Windows.Navigation;
+using System.Windows.Controls;
+using MS.Internal.IO.Packaging;
+
+using PackUriHelper = System.IO.Packaging.PackUriHelper;
+
 //
 // Description:
 //      Implements the FixedDocument element
@@ -10,36 +29,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;                  // DoubleUtil
-    using MS.Internal.Documents;
-    using MS.Utility;                   // ExceptionStringTable
-    using MS.Internal.Utility;
-    using System.Windows.Threading;     // Dispatcher
-    using System.Windows;               // DependencyID etc.
-    using System.Windows.Automation.Peers;    // AutomationPeer
-    using System.Windows.Documents;     // DocumentPaginator
-    using System.Windows.Documents.DocumentStructures;
-    using System.Windows.Media;         // Visual
-    using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
-    using System.Windows.Shapes;        // Glyphs
-    using System;
-    using System.IO;
-    using System.IO.Packaging;
-    using System.Net;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;        // DesignerSerializationVisibility
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using MS.Internal.Annotations.Component;
-    using System.Windows.Navigation;
-    using System.Windows.Controls;
-    using System.Text;
-    using MS.Internal.IO.Packaging;
-    using System.Security;
-
-    using PackUriHelper = System.IO.Packaging.PackUriHelper;
     //=====================================================================
     /// <summary>
     /// FixedDocument is the spine of a portable, high fidelity fixed-format

@@ -3,15 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // NotifyCollectionChangedAction
-using System.ComponentModel;            // PropertyChangedEventArgs
-using System.Diagnostics;
 using System.Windows.Controls.Primitives;   // GridViewRowPresenterBase
 using System.Windows.Data;              // BindingBase
 
 using MS.Internal;                      // DoubleUtil
-using MS.Utility;
 
 
 namespace System.Windows.Controls

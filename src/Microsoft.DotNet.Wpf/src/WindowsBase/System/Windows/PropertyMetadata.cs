@@ -4,13 +4,8 @@
 
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;  // for DispatcherObject
-
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {

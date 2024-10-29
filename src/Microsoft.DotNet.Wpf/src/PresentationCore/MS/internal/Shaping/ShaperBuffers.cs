@@ -9,20 +9,6 @@
 //
 //
 
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using MS.Internal.FontCache;
-using MS.Internal.FontFace;
-using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
-using MS.Internal.PresentationCore;
-using MS.Utility;
-
-
 namespace MS.Internal.Shaping
 {
     /// <summary>

@@ -5,15 +5,7 @@
 //
 // 
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Markup;
-using MS.Internal; 
-using System.Security; 
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     /// CommandBinding - Command-EventHandlers map

@@ -2,25 +2,24 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using MS.Win32;
+using MS.Internal.Interop;
+
+// Some COM interfaces and Win32 structures are already declared in the framework.
+// Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 // Interfaces and enums are taken from ShObjIdl.idl
 
 namespace MS.Internal.AppModel
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using MS.Win32;
-    using MS.Internal.Interop;
-
-    // Some COM interfaces and Win32 structures are already declared in the framework.
-    // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-    using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
-    using IStream = System.Runtime.InteropServices.ComTypes.IStream;
+    // There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
+    // wgx_render.cs wins if we don't put this inside of the namespace.
+    using HRESULT = Standard.HRESULT;
+    using Win32Error = Standard.Win32Error;
 
     #region Structs
 

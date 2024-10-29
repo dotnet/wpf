@@ -8,16 +8,11 @@
 //      to read item[N], the following indices will be a sequence for index N+1, N+2 etc.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Reflection;
-
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
-using MS.Utility;
 
 namespace MS.Internal.Data
 {

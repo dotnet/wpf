@@ -11,7 +11,6 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
 

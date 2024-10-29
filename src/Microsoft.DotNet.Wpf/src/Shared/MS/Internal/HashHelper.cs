@@ -2,15 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: Static class to help work around hashing-related bugs.
-//
 
+
+/* Unmerged change from project 'PresentationFramework'
+Removed:
 using System;
-using MS.Internal;                  // BaseHashHelper
-
+*/
 #if WINDOWS_BASE
 namespace MS.Internal.Hashing.WindowsBase
 #elif PRESENTATION_CORE

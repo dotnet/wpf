@@ -2,26 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: The ApplicationCommands class defines a standard set of commands that are required in most applications.
 //              The goal of these commands is to unify input, programming model and UI for the most common actions in
 //              Windows applications thus providing a standard interface for such common commands.
 //
 //              See spec at : http://avalon/CoreUI/Specs%20%20Eventing%20and%20Commanding/CommandLibrarySpec.mht
-//
-//
-//
 
-using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Collections;
-using System.ComponentModel;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal; // CommandHelper
+using MS.Internal;
 
 namespace System.Windows.Input
 {

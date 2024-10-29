@@ -8,10 +8,8 @@
 // See spec at Grouping.mht
 //
 
-using System;
 using System.Collections;       // IEnumerator
 using System.ComponentModel;    // PropertyChangedEventArgs, GroupDescription
-using System.Diagnostics;       // Debug
 using System.Windows;           // DependencyProperty.UnsetValue
 using System.Windows.Data;      // CollectionViewGroup
 using System.Windows.Threading; // Dispatcher

@@ -11,24 +11,21 @@
 *
 \***************************************************************************/
 using System.Collections;               // DictionaryEntry
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // PropertyDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Reflection;                // PropertyInfo
 
 using System.Windows.Controls;          // MediaElement
-using System.Windows.Documents;         // TableTemplate
 using System.Windows.Markup;            // INameScope
 using MS.Internal;                      // Helper
 using MS.Utility;                       // FrugalMap
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// A Storyboard coordinates a set of actions in a time-dependent manner.
-/// </summary>
-public class Storyboard : ParallelTimeline
+    /// <summary>
+    /// A Storyboard coordinates a set of actions in a time-dependent manner.
+    /// </summary>
+    public class Storyboard : ParallelTimeline
 {
     static Storyboard()
     {

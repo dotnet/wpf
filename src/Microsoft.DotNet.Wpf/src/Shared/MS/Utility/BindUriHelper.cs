@@ -2,18 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.IO;
-using System.Net; // HttpWebRequest
-using System.Net.Cache; // HttpRequestCachePolicy
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text; 
+using System.Text;
 using System.Windows.Navigation; // BaseUriHelper
 
 #if !PBTCOMPILER
-using MS.Win32;
 #endif
 
 // The functionality in this class is shared across framework and core. The functionality in core
@@ -37,11 +29,11 @@ namespace MS.Internal.Utility
 #error Class is being used from an unknown assembly.
 #endif
 {
-   // 
-   // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.
-   // See also WpfWebRequestHelper.
-   //
-   internal static  partial class BindUriHelper
+    // 
+    // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.
+    // See also WpfWebRequestHelper.
+    //
+    internal static  partial class BindUriHelper
    {
         private const int MAX_PATH_LENGTH = 2048 ;
         private const int MAX_SCHEME_LENGTH = 32;

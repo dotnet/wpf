@@ -5,22 +5,8 @@
 //
 //
 
-using MS.Internal;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 
 namespace System.Windows.Media
 {

@@ -14,15 +14,12 @@
 //
 
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Data;
-using System.Windows.Threading;
 
 using System.Windows.Markup;
 using MS.Internal;

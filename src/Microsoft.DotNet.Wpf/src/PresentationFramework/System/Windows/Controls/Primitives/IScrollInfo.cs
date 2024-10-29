@@ -7,12 +7,7 @@
 //              Spec:  Virtualization in Layout.doc
 //
 
-using MS.Internal;
-using MS.Utility;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Media;
-using System;
 
 namespace System.Windows.Controls.Primitives
 {

@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-
 namespace MS.Internal.Xaml.Parser
 {
     internal class XamlPropertyName : XamlName

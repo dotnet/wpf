@@ -10,8 +10,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant
-
     /// <summary>
     /// Collection of Block elements - elements allowed as children
     /// of FlowDocument, Section, ListItem, TableCell, Floater and Figure.

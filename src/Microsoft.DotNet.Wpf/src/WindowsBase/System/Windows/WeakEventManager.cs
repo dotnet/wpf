@@ -59,18 +59,11 @@
 
 \***************************************************************************/
 
-using System;
-using System.Diagnostics;           // Debug
-using System.Collections;           // Hashtable
-using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
-using System.Security;              // 
-using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList
 using MS.Internal;                  // Invariant
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {

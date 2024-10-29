@@ -8,9 +8,7 @@
 //
 
 using System;
-using System.Collections;
 using System.Diagnostics;
-using System.ComponentModel;
 using System.Globalization;
 
 #if !PBTCOMPILER
@@ -18,14 +16,14 @@ using System.Windows;
 #endif
 
 #if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
+using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
     using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
     using MS.Internal.PresentationFramework;
-#elif PBTCOMPILER 
-    using MS.Utility ;     
-    using MS.Internal.Markup;
+#elif PBTCOMPILER
+using MS.Utility;
+using MS.Internal.Markup;
 #elif DRT
     using MS.Internal.Drt;
 #else

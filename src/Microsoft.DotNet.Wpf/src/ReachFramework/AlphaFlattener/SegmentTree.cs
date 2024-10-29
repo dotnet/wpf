@@ -3,10 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;              // for ArrayList
-using System.Diagnostics;
-using System.Collections.Generic;
 
 using System.Windows;                  // for Rect                        WindowsBase.dll
 

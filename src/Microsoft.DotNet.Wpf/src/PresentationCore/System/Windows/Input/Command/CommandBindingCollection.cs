@@ -2,25 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: The CommandBindingCollection class serves the purpose of Storing/Retrieving 
 //                   CommandBindings.
 //
 //              See spec at : http://avalon/coreUI/Specs/Commanding%20--%20design.htm 
-// 
-//
-//
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Input;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

@@ -9,18 +9,12 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Markup;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
 
 namespace System.Windows
 {

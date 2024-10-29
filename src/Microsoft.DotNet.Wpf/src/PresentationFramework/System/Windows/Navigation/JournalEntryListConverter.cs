@@ -12,14 +12,10 @@
 // Disable unknown #pragma warning for pragmas we use to exclude certain PreSharp violations
 #pragma warning disable 1634, 1691
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
-using System.ComponentModel;
 using System.Windows.Data;
-
-using MS.Internal;
 
 namespace System.Windows.Navigation
 {

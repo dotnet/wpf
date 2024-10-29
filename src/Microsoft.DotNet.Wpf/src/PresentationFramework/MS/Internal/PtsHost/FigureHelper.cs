@@ -8,9 +8,8 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;

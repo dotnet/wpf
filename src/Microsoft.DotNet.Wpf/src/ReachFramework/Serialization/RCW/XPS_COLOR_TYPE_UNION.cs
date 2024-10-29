@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Xps.Serialization.RCW
@@ -17,7 +16,7 @@ namespace System.Windows.Xps.Serialization.RCW
     /// iii.Decompile the DLL and copy out the RCW by hand.
     ///      ILDASM xpsobjectmodel.dll
     /// </summary>
-    
+
     [ComConversionLoss]
     [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 40)]
     internal struct XPS_COLOR_TYPE_UNION

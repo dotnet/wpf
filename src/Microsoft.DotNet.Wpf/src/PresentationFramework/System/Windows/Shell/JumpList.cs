@@ -2,30 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Markup;
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using MS.Win32;
 
+using HRESULT = Standard.HRESULT;
 
 namespace System.Windows.Shell
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Text;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Markup;
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.PresentationFramework;
-    using MS.Internal.Interop;
-    using MS.Win32;
-
-    using HRESULT = MS.Internal.Interop.HRESULT;
-
     /// <summary>
     /// The list of possible reasons why a JumpItem would be rejected from a JumpList when applied.
     /// </summary>

@@ -10,16 +10,8 @@
 //
 
 using MS.Internal;
-using MS.Utility;
 using MS.Win32;
-
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
-using System.Text;
-using System.Windows;
 
 namespace System.Windows.Documents
 {

@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
 namespace MS.Internal.Ink.InkSerializedFormat

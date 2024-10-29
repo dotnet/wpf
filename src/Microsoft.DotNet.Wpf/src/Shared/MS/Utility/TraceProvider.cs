@@ -7,14 +7,10 @@
 // Provides an internal Avalon API to replace Microsoft.Windows.EventTracing.dll
 
 #if !SILVERLIGHTXAML
-using System;
 using MS.Win32;
 using MS.Internal;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Globalization; //for CultureInfo
-using System.Diagnostics;
-using MS.Internal.WindowsBase;
 
 #pragma warning disable 1634, 1691  //disable warnings about unknown pragma
 

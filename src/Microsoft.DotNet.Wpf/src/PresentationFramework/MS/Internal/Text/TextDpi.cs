@@ -8,10 +8,7 @@
 //
 
 
-using System;                   // Double, ...
 using System.Windows;           // DependencyObject
-using System.Windows.Documents; // TextElement, ...
-using System.Windows.Media;     // FontFamily
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 
 namespace MS.Internal.Text

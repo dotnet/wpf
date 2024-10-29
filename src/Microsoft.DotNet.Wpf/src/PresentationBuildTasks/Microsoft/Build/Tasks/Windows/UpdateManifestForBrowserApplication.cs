@@ -9,16 +9,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.IO;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Microsoft.Build.Tasks;
 using System.Xml;
-using System.Xml.XPath;
-using Microsoft.Build.Tasks.Windows;
-using System.Collections;
 
 using MS.Utility;
 using MS.Internal.Tasks;

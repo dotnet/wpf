@@ -8,7 +8,6 @@
 //
 
 using Microsoft.Win32;
-using System.Collections.Generic;
 using System.Xaml;
 using System.Xml;
 

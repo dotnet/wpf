@@ -5,18 +5,13 @@
 // Description: 
 //    SignatureResourceHelper is a helper class used to get resources.
 using System;
-using System.Collections;
 using Drawing = System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.TrustUI;
-using System.Security;
 
 using MS.Internal.Documents.Application;
 

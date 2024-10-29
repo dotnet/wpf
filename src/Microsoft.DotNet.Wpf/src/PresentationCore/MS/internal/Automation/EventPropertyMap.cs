@@ -11,16 +11,14 @@
 //
 //
 
-using System;
 using System.Collections;
 using System.Windows;
-using System.Diagnostics;
 
 namespace MS.Internal.Automation
 {
     // Manages the property map that is used to determine if there are
     // Automation clients interested in properties.
-	internal class EventPropertyMap
+    internal class EventPropertyMap
 	{
         //------------------------------------------------------
         //

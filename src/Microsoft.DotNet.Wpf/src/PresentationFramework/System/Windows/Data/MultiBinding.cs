@@ -8,29 +8,24 @@
 // Specs:       UIBinding.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Controls;  // Validation
 using System.Windows.Markup;
 using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of bindings attached to a single property.
-///     The inner bindings contribute their values to the MultiBinding,
-///     which combines/converts them into a resultant final value.
-///     In the reverse direction, the target value is tranlated to
-///     a set of values that are fed back into the inner bindings.
-/// </summary>
-[ContentProperty("Bindings")]
+    /// <summary>
+    ///  Describes a collection of bindings attached to a single property.
+    ///     The inner bindings contribute their values to the MultiBinding,
+    ///     which combines/converts them into a resultant final value.
+    ///     In the reverse direction, the target value is tranlated to
+    ///     a set of values that are fed back into the inner bindings.
+    /// </summary>
+    [ContentProperty("Bindings")]
 public class MultiBinding : BindingBase, IAddChild
 {
     //------------------------------------------------------

@@ -17,24 +17,11 @@
 //          Why even AffectsRender causes it? 
 
 using MS.Internal;
-using MS.Internal.PtsHost;
-using MS.Internal.PtsTable;
-using MS.Internal.Text;
-using MS.Utility;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
-using System.Collections;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
-using System.Windows.Controls;
 using System.Windows.Markup;
 using System.ComponentModel; // TypeConverter
-using System.Collections.Generic;
 using MS.Internal.Documents;
-
-using System;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 

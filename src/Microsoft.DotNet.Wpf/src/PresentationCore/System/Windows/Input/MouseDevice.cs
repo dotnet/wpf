@@ -2,21 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
 using System.Collections;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using System.Security;
 using MS.Internal;
-using MS.Win32; // *NativeMethods
+using MS.Win32;
 using System.Runtime.InteropServices;
-using System;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -25,7 +17,6 @@ using SR = MS.Internal.PresentationCore.SR;
 // does).  The latter choice lets you move the mouse away from the area you're
 // scrolling and still use the wheel.  To get this effect, uncomment this line.
 //#define SEND_WHEEL_EVENTS_TO_FOCUS
-
 
 namespace System.Windows.Input
 {

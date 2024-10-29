@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     public enum XamlNodeType:byte

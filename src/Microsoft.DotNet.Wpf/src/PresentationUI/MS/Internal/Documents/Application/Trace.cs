@@ -4,17 +4,15 @@
 
 // Description: Utility class for Trace switches and methods for XpsViewer.
 
-using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Utility class for Trace switches and methods for XpsViewer.
-/// <summary>
-internal static class Trace
+    /// <summary>
+    /// Utility class for Trace switches and methods for XpsViewer.
+    /// <summary>
+    internal static class Trace
 {
     #region Internal Methods
     //--------------------------------------------------------------------------

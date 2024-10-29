@@ -2,20 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implements the base Avalon Window class
-//
-
-using System;
-
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
@@ -29,12 +19,12 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
-using Microsoft.Win32;
 using System.Diagnostics.CodeAnalysis;
 
-using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 using SNM = Standard.NativeMethods;
+using HRESULT = Standard.HRESULT;
+using Win32Error = Standard.Win32Error;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -43,9 +33,6 @@ using SNM = Standard.NativeMethods;
 
 namespace System.Windows
 {
-    /// <summary>
-    ///
-    /// </summary>
     [Localizability(LocalizationCategory.Ignore)]
     public class Window : ContentControl, IWindowService
     {

@@ -2,22 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: Ole Services for DragDrop and Clipboard.
-//
-//
 
 using MS.Win32;
 using MS.Internal;
-using System.Security;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Input;
 
-using SR=MS.Internal.PresentationCore.SR;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows

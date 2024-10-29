@@ -8,17 +8,11 @@
 // ResourcePart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
 //
 
-using System;
 using System.IO.Packaging;
 using System.Windows;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
-using System.Security;
 
 using MS.Internal.Resources;
-using MS.Internal;
 
 //In order to avoid generating warnings about unknown message numbers and 
 //unknown pragmas when compiling your C# source code with the actual C# compiler, 

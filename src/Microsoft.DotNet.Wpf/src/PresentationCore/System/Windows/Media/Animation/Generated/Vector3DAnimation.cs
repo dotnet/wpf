@@ -9,24 +9,14 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;                 
 
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
-{       
+{
     /// <summary>
     /// Animates the value of a Vector3D property using linear interpolation
     /// between two values.  The values are determined by the combination of

@@ -2,31 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-// Description:
-//              CommonItemDialog is an abstract class derived from CommonDialog
-//              that implements shared functionality common to all IFileDialog
-//              variants. It provides a common options storage and events handling.
-//
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using MS.Win32;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
+
+// There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
+// wgx_render.cs wins if we don't explicitly define it here.
+using HRESULT = Standard.HRESULT;
 
 namespace Microsoft.Win32
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-    using MS.Win32;
-
-    using System;
-    using System.ComponentModel;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Windows;
-
-    using HRESULT = MS.Internal.Interop.HRESULT;
-
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from

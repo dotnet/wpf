@@ -9,9 +9,6 @@
 //
 
 
-using System;
-using System.Diagnostics;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace MS.Internal.PtsHost

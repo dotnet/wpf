@@ -8,16 +8,9 @@
 //      It can use its own journal ("island frame") or its prent's, if available.
 //
 
-using System;
-using System.Net;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Threading;
-using System.Security;
-
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
@@ -28,12 +21,7 @@ using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Utility;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Collections.Generic;
-
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 
 
 namespace System.Windows.Navigation

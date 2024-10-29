@@ -9,22 +9,14 @@
 // See specs at Validation.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 
 using MS.Internal.Controls;
-using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
 
 namespace System.Windows.Controls
 {

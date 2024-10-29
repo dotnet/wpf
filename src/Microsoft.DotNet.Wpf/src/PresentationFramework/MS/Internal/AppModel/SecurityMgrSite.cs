@@ -8,12 +8,8 @@
 //              It is primarily used to supply an hwnd to be modal to- when a ProcessUrlAction call
 //              is required to show UI. 
 
-using System;
 using MS.Win32;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Security;
-using MS.Internal.AppModel;
 
 namespace MS.Internal
 {

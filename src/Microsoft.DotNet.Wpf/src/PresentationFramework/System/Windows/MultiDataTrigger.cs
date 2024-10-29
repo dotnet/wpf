@@ -8,13 +8,8 @@
 //              gets values from data.
 //
 
-using MS.Utility;
-
-using System;
-using System.Diagnostics;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace System.Windows

@@ -6,20 +6,14 @@
 // Description: Defines XmlBindingWorker object, workhorse for XML bindings
 //
 
-using System;
 using System.Xml;
 using System.Xml.XPath;
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Threading;
-using System.Threading;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Controls;      // IGeneratorHost
 using System.Windows.Markup;
-using MS.Internal.Data;
 
 namespace MS.Internal.Data
 {

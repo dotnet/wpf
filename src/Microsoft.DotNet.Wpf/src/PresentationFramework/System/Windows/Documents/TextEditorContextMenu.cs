@@ -2,24 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Runtime.InteropServices;
+using MS.Win32;
+using System.Windows.Interop;
+
 //
 // Description: A Component of TextEditor supporting the default ContextMenu.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using MS.Win32;
-    using System.Windows.Interop;
-
     // A Component of TextEditor supporting the default ContextMenu.
     internal static class TextEditorContextMenu
     {

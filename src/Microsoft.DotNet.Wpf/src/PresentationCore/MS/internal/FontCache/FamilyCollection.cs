@@ -9,23 +9,14 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
 
 using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
 

@@ -8,20 +8,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;   
-
-using SR=System.Windows.SR;
 
 using MS.Internal.PresentationFramework;
 

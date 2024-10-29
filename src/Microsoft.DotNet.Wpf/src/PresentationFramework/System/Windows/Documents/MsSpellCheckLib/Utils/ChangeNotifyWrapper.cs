@@ -6,7 +6,6 @@
 // Description: See <summary> below.
 //
 
-using System;
 using System.ComponentModel;
 
 /// <summary>

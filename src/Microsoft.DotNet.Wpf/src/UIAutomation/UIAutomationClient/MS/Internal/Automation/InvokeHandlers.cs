@@ -6,9 +6,6 @@
 
 using System;
 using System.Windows.Automation;
-using System.ComponentModel;
-using System.Threading;
-using System.Diagnostics;
 
 namespace MS.Internal.Automation
 {

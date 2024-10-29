@@ -8,26 +8,14 @@
 //
 //
 
-using System;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Globalization;
-using System.Security;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
-using System.Windows.Markup;
-using SR=MS.Internal.PresentationCore.SR;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     #region Geometry
     /// <summary>

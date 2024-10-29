@@ -6,7 +6,6 @@
 // Description: A TextContainer node representing a TextElement.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents

@@ -4,7 +4,6 @@
 
 // Description: Automation Identifiers for RangeValue Pattern
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

@@ -8,21 +8,15 @@
 //          IOleCommandTarget calls in browser hosting scenario
 //
 
-using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using System.Windows.Threading;
 using System.Windows;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Navigation;
 using System.Windows.Controls;
 
 using MS.Internal.Documents;                               // DocumentApplicationDocumentViewer
-using MS.Internal.PresentationFramework;                   // SecurityHelper
 using MS.Internal.KnownBoxes;
 using MS.Win32;
 

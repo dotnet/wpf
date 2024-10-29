@@ -130,7 +130,7 @@ namespace MS.Internal.PtsHost
             {
                 return host.GetRectangles(child);
             }
-            return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+            return ReadOnlyCollection<Rect>.Empty;
         }
 
         /// <summary>

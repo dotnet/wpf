@@ -335,7 +335,7 @@ namespace MS.Internal.PtsHost
 
             if (subtrackDetails.cParas == 0) 
             {
-                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                return ReadOnlyCollection<ParagraphResult>.Empty;
             }
 
             // Get list of paragraphs

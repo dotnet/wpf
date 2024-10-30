@@ -51,7 +51,6 @@ namespace MS.Internal.Text.TextInterface
                 // However, the build system complained about not having an explicit case 
                 // for DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_NATURAL_METRICS
                 case DWRITE_MEASURING_MODE.DWRITE_MEASURING_MODE_GDI_NATURAL:
-                    throw new InvalidOperationException();
                 default:
                     throw new InvalidOperationException();
             }

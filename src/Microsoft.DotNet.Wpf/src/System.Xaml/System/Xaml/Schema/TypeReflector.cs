@@ -14,7 +14,7 @@ using XAML3 = System.Windows.Markup;
 namespace System.Xaml.Schema
 {
     [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2002:Do not lock on objects with weak identity", Justification = "This type is internal.")]
-    class TypeReflector : Reflector
+    internal class TypeReflector : Reflector
     {
         private const XamlCollectionKind XamlCollectionKindInvalid = (XamlCollectionKind)byte.MaxValue;
 
@@ -1134,7 +1134,7 @@ namespace System.Xaml.Schema
 
         internal class ThreadSafeDictionary<K, V> : Dictionary<K, V> where V : class
         {
-            bool _isComplete;
+            private bool _isComplete;
 
             internal ThreadSafeDictionary()
             {

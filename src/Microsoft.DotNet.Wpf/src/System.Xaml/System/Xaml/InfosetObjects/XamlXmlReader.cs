@@ -16,14 +16,14 @@ namespace System.Xaml
 {
     public class XamlXmlReader : XamlReader, IXamlLineInfo
     {
-        XamlParserContext _context;
-        IEnumerator<XamlNode> _nodeStream;
+        private XamlParserContext _context;
+        private IEnumerator<XamlNode> _nodeStream;
 
-        XamlNode _current;
-        LineInfo _currentLineInfo;
-        XamlNode _endOfStreamNode;
+        private XamlNode _current;
+        private LineInfo _currentLineInfo;
+        private XamlNode _endOfStreamNode;
 
-        XamlXmlReaderSettings _mergedSettings;
+        private XamlXmlReaderSettings _mergedSettings;
 
         public XamlXmlReader(XmlReader xmlReader)
         {

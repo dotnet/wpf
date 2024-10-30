@@ -125,13 +125,13 @@ namespace System.Xaml
 
         internal INameScope UnderlyingNameScope { get { return _underlyingNameScope; } }
 
-        class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            int index;
-            IDictionaryEnumerator dictionaryEnumerator;
-            HybridDictionary _nameMap;
-            INameScope _underlyingNameScope;
-            FrugalObjectList<string> _names;
+            private int index;
+            private IDictionaryEnumerator dictionaryEnumerator;
+            private HybridDictionary _nameMap;
+            private INameScope _underlyingNameScope;
+            private FrugalObjectList<string> _names;
 
             public Enumerator(NameScopeDictionary nameScopeDictionary)
             {

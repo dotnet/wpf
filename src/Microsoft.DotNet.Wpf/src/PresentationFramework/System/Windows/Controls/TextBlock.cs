@@ -1747,7 +1747,7 @@ Debug.Assert(lineCount == LineCount);
             if (!IsLayoutDataValid)
             {
                 // return empty collection
-                return ReadOnlyCollection<Rect>.Empty;
+                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
@@ -1757,14 +1757,14 @@ Debug.Assert(lineCount == LineCount);
             if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
             {
                 // return empty collection
-                return ReadOnlyCollection<Rect>.Empty;
+                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
 
             // First find the element start and end position
             TextPointer start = FindElementPosition((IInputElement)child);
             if (start == null)
             {
-                return ReadOnlyCollection<Rect>.Empty;
+                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
 
             TextPointer end = null;
@@ -1780,7 +1780,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (end == null)
             {
-                return ReadOnlyCollection<Rect>.Empty;
+                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
             }
 
             int startOffset = _complexContent.TextContainer.Start.GetOffsetToPosition(start);
@@ -1868,7 +1868,7 @@ Debug.Assert(lineCount == LineCount);
                 if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
                 {
                     // Return empty collection
-                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
+                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
                 }
 
                 // Create a TextSegment from TextContainer, use it to return enumerator

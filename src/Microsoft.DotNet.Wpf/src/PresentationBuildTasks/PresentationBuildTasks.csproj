@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;net9.0</TargetFrameworks>
+    <TargetFrameworks>net472;net10.0</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 
@@ -26,7 +26,7 @@
     <BinPlaceRuntime>false</BinPlaceRuntime>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

@@ -84,7 +84,7 @@
     <!-- If DotNetTool is undefined, we default to assuming 'dotnet' is on the path -->
     <DotNetTool Condition="'$(DotNetTool)' == ''">dotnet</DotNetTool>
 
-    <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' == 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\netcoreapp2.1\Microsoft.DotNet.ApiCompat.dll</_ApiCompatPath>
+    <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' == 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\net10.0\Microsoft.DotNet.ApiCompat.dll</_ApiCompatPath>
     <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' != 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\net472\Microsoft.DotNet.ApiCompat.exe</_ApiCompatPath>
 
     <_ApiCompatCommand Condition="'$(MSBuildRuntimeType)' == 'core'">"$(DotNetTool)" "$(_ApiCompatPath)"</_ApiCompatCommand>

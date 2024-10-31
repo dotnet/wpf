@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
 
     <!-- THEME_AEROLITE #DEFINE is used in KnownTypeHelper.cs -->

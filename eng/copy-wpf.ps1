@@ -84,7 +84,7 @@ function CopyManagedBinariesToLocation($location, $localBinLocation)
 
     $PackageName = "Microsoft.DotNet.Wpf.GitHub"
     $PackageName += if ($release) { "" } else { ".Debug" }
-    $BinaryLocationInPackage = "net9.0"
+    $BinaryLocationInPackage = "net10.0"
     CopyPackagedBinaries $location $localBinLocation $PackageName $BinaryLocationInPackage
 }
 
@@ -176,7 +176,7 @@ elseif($testhost)
 else
 {
     $runtimeIdentifer = "win-$arch"
-    $location = [System.IO.Path]::Combine($destination, "bin\Debug\net9.0", $runtimeIdentifer, "publish")
+    $location = [System.IO.Path]::Combine($destination, "bin\Debug\net10.0", $runtimeIdentifer, "publish")
     if(![System.IO.Directory]::Exists($location))
     {
         Write-Host "App publishing directory unavailable: " $location -ForegroundColor Red

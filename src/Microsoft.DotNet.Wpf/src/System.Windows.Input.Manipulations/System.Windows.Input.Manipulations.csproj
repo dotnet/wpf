@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

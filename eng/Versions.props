@@ -43,6 +43,7 @@
     <SystemSecurityCryptographyXmlPackageVersion>10.0.0-alpha.1.24560.1</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>10.0.0-alpha.1.24560.1</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>10.0.0-alpha.1.24560.1</SystemWindowsExtensionsPackageVersion>
+    <SystemRuntimeCompilerServicesUnsafePackageVersion>6.0.0</SystemRuntimeCompilerServicesUnsafePackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>
@@ -121,5 +122,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <MicrosoftDotNetWpfDncEngVersion>10.0.0-alpha.1.24474.3</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftWindowsCsWin32PackageVersion>0.3.106</MicrosoftWindowsCsWin32PackageVersion>
   </PropertyGroup>
 </Project>

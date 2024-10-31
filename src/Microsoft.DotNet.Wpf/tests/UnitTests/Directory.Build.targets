@@ -1,5 +1,4 @@
 <Project>
-
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
@@ -24,15 +23,48 @@
   </Target>
 
   <!--
-    A WindowsBase facade is included in the Microsoft.NETCore.App targeting pack while we ship our own WindowsBase in the Microsoft.WindowsDesktop.App targeting pack.
-    To allow our projects to reference our version of WindowsBase without conflicting, we remove the version from the Microsoft.NETCore.App targeting pack from the list of reference.
+   Referencing packages that reference the desktop package causes grief with building internally. Currently this
+   is only happening with referencing StaFact (for [WpfFact] tests). Remove the reference if it exists.
   -->
-  <Target Name="RemoveWindowsBaseNetCoreAppReference"
-          AfterTargets="ResolveTargetingPackAssets"
-          Returns="@(Reference)">
+  <Target Name="RemoveDesktopFramework" AfterTargets="ProcessFrameworkReferences" BeforeTargets="FixupRuntimeFrameworkVersions">
     <ItemGroup>
-      <Reference Remove="@(Reference)" Condition="'%(Reference.AssemblyName)' == 'WindowsBase' And '%(Reference.FrameworkReferenceName)' == 'Microsoft.NETCore.App'" />
+      <RuntimeFramework Remove="@(RuntimeFramework)" Condition="'%(RuntimeFramework.Identity)' == 'Microsoft.WindowsDesktop.App'"/>
     </ItemGroup>
   </Target>
 
+  <!--
+   Update versions in @(RuntimeFramework) items to match the declared versions in the SDK.
+
+   @(RuntimeFramework) items are defined in the ProcessFrameworkReferences target based off of the single $(RuntimeFrameworkVersion)
+   property. This creates problems if the SDK has multiple versions for the various targets. The runtime.config file that will be
+   generated for tests can end up referencing versions that are not actually in the .dotnet folder.
+  -->
+  <Target Name="FixupRuntimeFrameworkVersions" AfterTargets="ProcessFrameworkReferences" BeforeTargets="GenerateBuildDependencyFile">
+    <PropertyGroup>
+      <!-- Split out the target framework. "net10.0-windows" is an example. -->
+      <_targetFrameworkIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</_targetFrameworkIdentifier>
+      <_targetFrameworkIdentifier Condition="'$(_targetFrameworkIdentifier)' == '.NETCoreApp'">net</_targetFrameworkIdentifier>
+      <_targetFrameworkVersion>$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</_targetFrameworkVersion>
+      <_targetFrameworkRoot>$(_targetFrameworkIdentifier)$(_targetFrameworkVersion)</_targetFrameworkRoot>
+    </PropertyGroup>
+    <ItemGroup>
+      <!--
+        Filter known references to the current target framework.
+
+        KnownFrameworkReference comes from the SDK Microsoft.NETCoreSdk.BundledVersions.props.
+      -->
+      <_filteredKnownFrameworkReference Include="@(KnownFrameworkReference)"
+                                        Condition="'%(KnownFrameworkReference.TargetFramework)' == '$(_targetFrameworkRoot)'" />
+
+      <!-- Update the versions in RuntimeFramework to match the KnownFrameworkReference version. -->
+      <_updatedRuntimeFramework Include="@(RuntimeFramework)"
+                                Condition="'%(Identity)' != '' And '@(RuntimeFramework)' != '' And '@(_filteredKnownFrameworkReference)' != ''">
+        <Version>@(_filteredKnownFrameworkReference->'%(DefaultRuntimeFrameworkVersion)')</Version>
+      </_updatedRuntimeFramework>
+
+      <!-- Remove and readd the updated items. -->
+      <RuntimeFramework Remove="@(RuntimeFramework)" />
+      <RuntimeFramework Include="@(_updatedRuntimeFramework)" />
+    </ItemGroup>
+  </Target>
 </Project>

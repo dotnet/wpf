@@ -5,7 +5,7 @@
     <PackageId>PresentationUI-PresentationFramework-impl-cycle</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <!--The field '{0}' is never used -->
     <NoWarn>$(NoWarn);0169</NoWarn>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{D242FDF9-F132-4154-BB9F-3F85C39F6F4C}</ProjectGuid>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <DefineConstants>$(DefineConstants);UIAUTOMATIONCLIENTSIDEPROVIDERS</DefineConstants>
     <NoWarn>$(NoWarn);0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

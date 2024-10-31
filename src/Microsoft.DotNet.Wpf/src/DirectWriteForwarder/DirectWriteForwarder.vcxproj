@@ -99,7 +99,7 @@
     <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
   </ItemGroup>
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
-    <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
+    <Error Text="Unexpected result from _WindowsBaseReference '@(_WindowsBaseReference->Count())'" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>
       <_windowsBasePath>%(_WindowsBaseReference.FullPath)</_windowsBasePath>
     </PropertyGroup>
@@ -116,6 +116,11 @@
     </ItemGroup>
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!--<ItemGroup>
+    <KnownAppHostPack Update="@(KnownAppHostPack)">
+      <AppHostPackVersion>10.0.100-alpha.1.24509.5</AppHostPackVersion>
+    </KnownAppHostPack>
+  </ItemGroup>-->
   <!-- Provide a stub Pack target for C++/CLI -->
   <Target Name="Pack" DependsOnTargets="$(PackDependsOn)">
     <IsPackableFalseWarningTask Condition="'$(IsPackable)' == 'false' AND '$(WarnOnPackingNonPackableProject)' == 'true'" />

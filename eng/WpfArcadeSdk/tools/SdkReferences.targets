@@ -112,23 +112,22 @@
           Condition="'@(MicrosoftPrivateWinFormsReference)'!=''
                  And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
                  And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0')) ">
+    <PropertyGroup>
+      <_WinFormsTargetFrameworkVersion Condition="'$(_WinFormsTargetFrameworkVersion)' == ''">$(TargetFramework)</_WinFormsTargetFrameworkVersion>
+    </PropertyGroup>
     <ItemGroup>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
-                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
-        <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
-      </Reference>
-      <Reference Include="$(PkgMicrosoft_Private_Winforms)\ref\net8.0\%(MicrosoftPrivateWinFormsReference.Identity).dll"
-                 Condition="!Exists('$(PkgMicrosoft_Private_Winforms)\ref\$(TargetFramework)\%(MicrosoftPrivateWinFormsReference.Identity).dll')
-                 And $(TargetFramework) == 'net9.0'
-                 And Exists('$(PkgMicrosoft_Private_Winforms)\ref\net8.0\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
+      <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(_WinFormsTargetFrameworkVersion)\%(MicrosoftPrivateWinFormsReference.Identity).dll"
+                 Condition="Exists('$(PkgMicrosoft_Private_Winforms)\lib\$(_WinFormsTargetFrameworkVersion)\%(MicrosoftPrivateWinFormsReference.Identity).dll')">
         <NuGetPackageId>Microsoft.Private.Winforms</NuGetPackageId>
       </Reference>
     </ItemGroup>
+    <Error Condition="!Exists('$(PkgMicrosoft_Private_Winforms)\lib\$(_WinFormsTargetFrameworkVersion)\%(MicrosoftPrivateWinFormsReference.Identity).dll')"
+           Text="$(PkgMicrosoft_Private_Winforms)\lib\$(_WinFormsTargetFrameworkVersion)\%(MicrosoftPrivateWinFormsReference.Identity).dll could not be found."/>
   </Target>
 
   <ItemGroup>
     <!-- We always want to use the local WindowsBase, not the one coming from the .NET runtime. -->
-    <DefaultReferenceExclusion Include="WindowsBase"/>
+    <DefaultReferenceExclusion Include="WindowsBase;System.Xaml"/>
   </ItemGroup>
 
   <!--
@@ -141,17 +140,17 @@
   -->
   <Target Name="FilterImplicitAssemblyReferences"
           Condition="'@(DefaultReferenceExclusion)' != ''"
-          DependsOnTargets="ResolveProjectReferences"
-          AfterTargets="ResolveTargetingPackAssets">
+          AfterTargets="ResolveTargetingPackAssets"
+          BeforeTargets="_HandlePackageFileConflicts;ResolveAssemblyReferences">
     <ItemGroup>
       <_referenceExclusion Include="@(DefaultReferenceExclusion)">
         <AssemblyName>%(DefaultReferenceExclusion.Identity)</AssemblyName>
-        <FrameworkReferenceName>Microsoft.NETCore.App</FrameworkReferenceName>
+        <!-- <FrameworkReferenceName>Microsoft.NETCore.App</FrameworkReferenceName> -->
         <ExternallyResolved>true</ExternallyResolved>
       </_referenceExclusion>
 
       <Reference Remove="@(_referenceExclusion)"
-                 MatchOnMetadata="AssemblyName;FrameworkReferenceName;ExternallyResolved"/>
+                 MatchOnMetadata="AssemblyName;ExternallyResolved"/>
     </ItemGroup>
   </Target>
 </Project>

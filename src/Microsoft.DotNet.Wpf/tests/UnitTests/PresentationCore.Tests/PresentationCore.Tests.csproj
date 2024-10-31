@@ -5,9 +5,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <Nullable>enable</Nullable>
-    <!--
-      AnyCPU isn't really valid for this project as tests implicitly load the DirectWriteForwarder.
-    -->
     <Platforms>x64;x86;ARM64</Platforms>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <!-- SYSLIB5005: System.Formats.Nrbf is experimental -->

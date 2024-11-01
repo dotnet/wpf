@@ -41,10 +41,18 @@
   -->
   <Target Name="FixupRuntimeFrameworkVersions" AfterTargets="ProcessFrameworkReferences" BeforeTargets="GenerateBuildDependencyFile">
     <PropertyGroup>
+      <!--
+        This would be more correct to just match the TargetFramework version between the RuntimeFramework and the KnownFramework.
+      -->
+
+      <!-- Find the Major.Minor out of the updated targeting pack semantic version. -->
+      <_targetPackVersion Condition="'$(UpdatedTargetingPackVersion)' != ''">$([System.Text.RegularExpressions.Regex]::Match($(UpdatedTargetingPackVersion), '^(\d+)\.(\d+)').Value)</_targetPackVersion>
+
       <!-- Split out the target framework. "net10.0-windows" is an example. -->
       <_targetFrameworkIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</_targetFrameworkIdentifier>
       <_targetFrameworkIdentifier Condition="'$(_targetFrameworkIdentifier)' == '.NETCoreApp'">net</_targetFrameworkIdentifier>
-      <_targetFrameworkVersion>$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</_targetFrameworkVersion>
+      <_targetFrameworkVersion Condition="'$(_targetPackVersion)' != ''">$(_targetPackVersion)</_targetFrameworkVersion>
+      <_targetFrameworkVersion Condition="'$(_targetFrameworkVersion)' == ''">$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</_targetFrameworkVersion>
       <_targetFrameworkRoot>$(_targetFrameworkIdentifier)$(_targetFrameworkVersion)</_targetFrameworkRoot>
     </PropertyGroup>
     <ItemGroup>

@@ -51,15 +51,13 @@
     Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop
   -->
   <ItemGroup Condition="'$(TargetFramework)'=='net472'">
-    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
     <PackagingAssemblyContent Include="System.Collections.Immutable.dll" />
     <PackagingAssemblyContent Include="System.Memory.dll" />
     <PackagingAssemblyContent Include="System.Numerics.Vectors.dll" />
     <PackagingAssemblyContent Include="System.Reflection.Metadata.dll" />
-    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
     <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net10.0'">
+  <ItemGroup>
     <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
     <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
   </ItemGroup>

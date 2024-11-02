@@ -2571,7 +2571,7 @@ namespace System.Windows.Data
 
             IList list = AllowsCrossThreadChanges ? ShadowCollection : (SourceCollection as IList);
 
-            if (!UsesLocalArray)
+            if (!UsesLocalArray || list is null)
             {
                 // if there's no sort/filter, just use the collection's array
                 _internalList = list;

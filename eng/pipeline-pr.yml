@@ -86,7 +86,7 @@ jobs:
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
         - name: _programfilesx86
-          value: ${Env:ProgramFiles(x86)}/dotnet          
+          value: ${Env:ProgramFiles(x86)}/dotnet
         - name: _programfiles
           value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
@@ -174,6 +174,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\BuildSrc-${{ parameters.targetArchitecture }}.binlog
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 

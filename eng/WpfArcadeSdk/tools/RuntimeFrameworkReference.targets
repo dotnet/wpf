@@ -21,6 +21,10 @@
       <TargetingPackVersion>$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
     </FrameworkReference>
 
+    <KnownAppHostPack Update="Microsoft.NETCore.App"
+                      AppHostPackVersion="$(RuntimeFrameworkVersion)"
+                      Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''" />
+
     <!--
       Workaround - this should be removed when our tests are converted from Microsoft.NET.Sdk.WindowsDesktop => Microsoft.NET.Sdk
       project

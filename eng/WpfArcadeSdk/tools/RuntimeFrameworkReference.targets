@@ -19,6 +19,7 @@
     <KnownFrameworkReference Remove="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <!-- The below logic intentionally doesn't consider multiple .NETCoreApp TFMs as that isn't necessary at this point. -->
   <PropertyGroup>
     <UseOOBNETCoreAppTargetingPack Condition="'$(UseOOBNETCoreAppTargetingPack)' == ''">true</UseOOBNETCoreAppTargetingPack>
     <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == ''">true</UseOOBNETCoreAppRuntimePack>
@@ -51,7 +52,8 @@
   </ItemGroup>
 
   <!-- Update paths for resolved packs which is necessary when the packs couldn't be resolved.
-       This happens when package download is disabled and the package isn't available in the SDK's packs folder. -->
+       This happens when package download is disabled and the package isn't available in the SDK's packs folder.
+       This entire target can be removed when vcxproj's NuGet support gets enabled. -->
   <Target Name="UpdateOOBPacks"
           Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'"
           AfterTargets="ResolveFrameworkReferences">

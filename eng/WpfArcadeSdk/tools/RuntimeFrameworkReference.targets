@@ -53,6 +53,7 @@
   <!-- Update paths for resolved packs which is necessary when the packs couldn't be resolved.
        This happens when package download is disabled and the package isn't available in the SDK's packs folder. -->
   <Target Name="UpdateOOBPacks"
+          Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'"
           AfterTargets="ResolveFrameworkReferences">
     <ItemGroup>
       <Error Text="'MicrosoftNETCoreAppRefVersion' is not set. Please set it to the version of the targeting pack you want to use." Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(MicrosoftNETCoreAppRefVersion)' == ''" />
@@ -66,11 +67,17 @@
       <ResolvedRuntimePack PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.runtime.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)"
                            NuGetPackageVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)"
                            Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false' and '%(ResolvedRuntimePack.FrameworkName)' == 'Microsoft.NETCore.App'" />
+    </ItemGroup>
 
+    <PropertyGroup>
+      <_ResolvedRuntimePackPath>@(ResolvedRuntimePack->WithMetdataValue('FrameworkName', 'Microsoft.NETCore.App')->Metadata('Path'))</_ResolvedRuntimePackPath>
+    </PropertyGroup>
+
+    <ItemGroup>
       <ResolvedFrameworkReference Condition="'%(Identity)' == 'Microsoft.NETCore.App'">
         <TargetingPackPath Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(EnableTargetingPackDownload)' == 'false'">$(NuGetPackageRoot)microsoft.netcore.app.ref\$(MicrosoftNETCoreAppRefVersion)</TargetingPackPath>
         <TargetingPackVersion Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(EnableTargetingPackDownload)' == 'false'">$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
-        <RuntimePackPath Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(NuGetPackageRoot)microsoft.netcore.app.runtime.win-x86\$(MicrosoftNETCoreAppRuntimewinx64Version)</RuntimePackPath>
+        <RuntimePackPath Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(_ResolvedRuntimePackPath)</RuntimePackPath>
         <RuntimePackVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(MicrosoftNETCoreAppRuntimewinx64Version)</RuntimePackVersion>
       </ResolvedFrameworkReference>
 

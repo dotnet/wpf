@@ -1,0 +1,15 @@
+<Project>
+
+  <PropertyGroup>
+    <RuntimeIdentifier Condition="'$(PlatformTarget)' == ''">win-x86</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(PlatformTarget)' != ''">win-$(PlatformTarget)</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- Pre-download vcxproj dependencies as vcxprojs in this repo don't support NuGet package download. -->
+  <ItemGroup>
+    <PackageDownload Include="Microsoft.NETCore.App.Ref" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
+    <PackageDownload Include="Microsoft.NETCore.App.Runtime.$(RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRuntimewinx64Version)]" Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''" />
+    <PackageDownload Include="Microsoft.NETCore.App.Host.$(RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRuntimewinx64Version)]" Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''" />
+  </ItemGroup>
+
+</Project>

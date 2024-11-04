@@ -167,14 +167,14 @@ jobs:
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\scripts\cibuild.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
-          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\BuildSrc-${{ parameters.targetArchitecture }}.binlog
+          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\BuildSrc-$(_Platform).binlog
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
@@ -191,7 +191,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
-          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test-$(_Platform).binlog
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 
@@ -199,11 +199,11 @@ jobs:
         displayName: Publish XUnit Test Results
         inputs:
           testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml' 
+          testResultsFiles: '*.xml'
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
 
       # - task: PowerShell@2
       #   displayName: Install .NET Core

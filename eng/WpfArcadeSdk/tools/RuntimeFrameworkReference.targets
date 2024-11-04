@@ -21,18 +21,9 @@
 
   <!-- The below logic intentionally doesn't consider multiple .NETCoreApp TFMs as that isn't necessary at this point. -->
   <PropertyGroup>
-    <UseOOBNETCoreAppTargetingPack Condition="'$(UseOOBNETCoreAppTargetingPack)' == ''">true</UseOOBNETCoreAppTargetingPack>
-    <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == ''">true</UseOOBNETCoreAppRuntimePack>
-    <UseOOBNETCoreAppAppHostPack Condition="'$(UseOOBNETCoreAppAppHostPack)' == ''">true</UseOOBNETCoreAppAppHostPack>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- vcxproj don't support restore -->
-    <EnableTargetingPackDownload Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableTargetingPackDownload>
-    <EnableRuntimePackDownload Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableRuntimePackDownload>
-    <GenerateErrorForMissingTargetingPacks Condition="'$(EnableTargetingPackDownload)' == 'false'">false</GenerateErrorForMissingTargetingPacks>
-
-    <EnableAppHostPackDownload Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableAppHostPackDownload>
+    <UseOOBNETCoreAppTargetingPack Condition="'$(UseOOBNETCoreAppTargetingPack)' == '' and '$(MicrosoftNETCoreAppRefVersion)' != ''">true</UseOOBNETCoreAppTargetingPack>
+    <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == '' and '$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''">true</UseOOBNETCoreAppRuntimePack>
+    <UseOOBNETCoreAppAppHostPack Condition="'$(UseOOBNETCoreAppAppHostPack)' == '' and '$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''">true</UseOOBNETCoreAppAppHostPack>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,6 +41,15 @@
                       AppHostPackVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)"
                       Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true'" />
   </ItemGroup>
+
+  <!-- These properties can be removed when vcxproj's NuGet support gets enabled. -->
+  <PropertyGroup>
+    <EnableTargetingPackDownload Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableTargetingPackDownload>
+    <EnableRuntimePackDownload Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableRuntimePackDownload>
+    <GenerateErrorForMissingTargetingPacks Condition="'$(EnableTargetingPackDownload)' == 'false'">false</GenerateErrorForMissingTargetingPacks>
+
+    <EnableAppHostPackDownload Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true' and '$(MSBuildProjectExtension)' == '.vcxproj'">false</EnableAppHostPackDownload>
+  </PropertyGroup>
 
   <!-- Update paths for resolved packs which is necessary when the packs couldn't be resolved.
        This happens when package download is disabled and the package isn't available in the SDK's packs folder.

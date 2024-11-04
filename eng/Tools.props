@@ -1,8 +1,8 @@
 <Project>
 
   <PropertyGroup>
-    <RuntimeIdentifier Condition="'$(PlatformTarget)' == ''">win-x86</RuntimeIdentifier>
-    <RuntimeIdentifier Condition="'$(PlatformTarget)' != ''">win-$(PlatformTarget)</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(Platform)' == ''">win-x86</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(Platform)' != ''">win-$(Platform)</RuntimeIdentifier>
   </PropertyGroup>
 
   <!-- Pre-download vcxproj dependencies as vcxprojs in this repo don't support NuGet package download. -->

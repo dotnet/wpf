@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <UseOOBNETCoreAppTargetingPack>true</UseOOBNETCoreAppTargetingPack>
-    <UseOOBNETCoreAppRuntimePack>true</UseOOBNETCoreAppRuntimePack>
-    <UseOOBNETCoreAppAppHostPack>true</UseOOBNETCoreAppAppHostPack>
+    <UseOOBNETCoreAppTargetingPack Condition="'$(UseOOBNETCoreAppTargetingPack)' == ''">true</UseOOBNETCoreAppTargetingPack>
+    <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == ''">true</UseOOBNETCoreAppRuntimePack>
+    <UseOOBNETCoreAppAppHostPack Condition="'$(UseOOBNETCoreAppAppHostPack)' == ''">true</UseOOBNETCoreAppAppHostPack>
   </PropertyGroup>
 
   <PropertyGroup>

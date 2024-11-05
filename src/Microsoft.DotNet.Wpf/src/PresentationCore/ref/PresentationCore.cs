@@ -3600,6 +3600,11 @@ namespace System.Windows.Input
         Text = 4,
         Command = 5,
     }
+    public static partial class ItemsCommands
+    {
+        public static System.Windows.Input.RoutedUICommand Sort { get { throw null; } }
+        public static System.Windows.Input.RoutedUICommand Group { get { throw null; } }
+    }
     public partial class KeyBinding : System.Windows.Input.InputBinding
     {
         public static readonly System.Windows.DependencyProperty KeyProperty;

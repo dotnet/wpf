@@ -203,7 +203,8 @@ namespace System.Windows.Input
             commandType == typeof(EditingCommands) ||
             commandType == typeof(NavigationCommands) ||
             commandType == typeof(ComponentCommands) ||
-            commandType == typeof(MediaCommands))
+            commandType == typeof(MediaCommands) ||
+            commandType == typeof(ItemsCommands))
             {
                 return true;
             }
@@ -736,6 +737,19 @@ namespace System.Windows.Input
                 }
             }
 
+            if (ownerType == typeof(ItemsCommands) || ((null == knownCommand) && searchAll))
+            {
+                switch (localName)
+                {
+                    case "Sort":
+                        knownCommand = ItemsCommands.Sort;
+                        break;
+                    case "Group":
+                        knownCommand = ItemsCommands.Group;
+                        break;
+                }
+            }
+
 
             #if DEBUG
             if( knownCommand == null )
@@ -749,6 +763,7 @@ namespace System.Windows.Input
                     VerifyCommandDoesntExist( typeof(MediaCommands), localName );
                     VerifyCommandDoesntExist( typeof(EditingCommands), localName );
                     VerifyCommandDoesntExist( typeof(ComponentCommands), localName );
+                    VerifyCommandDoesntExist( typeof(ItemsCommands), localName );
                 }
 
             }

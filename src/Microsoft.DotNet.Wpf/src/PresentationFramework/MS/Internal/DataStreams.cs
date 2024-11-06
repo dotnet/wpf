@@ -96,9 +96,8 @@ namespace MS.Internal.AppModel
                 while (dpEnumerator.MoveNext())
                 {
                     LocalValueEntry localValueEntry = (LocalValueEntry)dpEnumerator.Current;
-                    FrameworkPropertyMetadata metadata = localValueEntry.Property.GetMetadata(element.DependencyObjectType) as FrameworkPropertyMetadata;
-                                        
-                    if (metadata == null)
+                    
+                    if (localValueEntry.Property.GetMetadata(element.DependencyObjectType) is not FrameworkPropertyMetadata metadata)
                     {
                         continue;
                     }
@@ -163,8 +162,7 @@ namespace MS.Internal.AppModel
 
         private void SaveState(object node)
         {
-            UIElement element = node as UIElement;
-            if (element == null)
+            if (node is not UIElement element)
             {
                 return;
             }
@@ -207,10 +205,7 @@ namespace MS.Internal.AppModel
                     object customState = customJournalingObject.GetJournalState(JournalReason.NewContentNavigation);
                     if (customState != null)
                     {
-                        if (_customJournaledObjects == null)
-                        {
-                            _customJournaledObjects = new HybridDictionary(2);
-                        }
+                        _customJournaledObjects ??= new HybridDictionary(2);
 
                         //
                         // Again, We cannot guarantee the PeristId of all elements in the same page are unique.
@@ -285,8 +280,7 @@ namespace MS.Internal.AppModel
 
         private void LoadState(object node)
         {
-            UIElement element = node as UIElement;
-            if (element == null)
+            if (node is not UIElement element)
             {
                 return;
             }
@@ -310,7 +304,6 @@ namespace MS.Internal.AppModel
                     CustomJournalStateInternal state = 
                         (CustomJournalStateInternal)_customJournaledObjects[persistId];
                     Debug.Assert(state != null);
-                    IJournalState customJournalingObject = node as IJournalState;
 
                     //
                     // For below two scenarios, JournalData cannot be restored successfully. For now, we just
@@ -322,7 +315,7 @@ namespace MS.Internal.AppModel
                     //  B. If the loose xaml file has been changed since the journal data was created
                     //
                     //
-                    if (customJournalingObject != null)
+                    if (node is IJournalState customJournalingObject)
                     {
                         customJournalingObject.RestoreJournalState(state);
                     }
@@ -345,8 +338,7 @@ namespace MS.Internal.AppModel
                 operation(node);
             }
 
-            DependencyObject treeNode = node as DependencyObject;
-            if (treeNode == null)
+            if (node is not DependencyObject treeNode)
             {
                 return;
             }
@@ -395,12 +387,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                if (_formatter == null)
-                {
-                    _formatter = new BinaryFormatter();
-                }
-
-                return _formatter;
+               return _formatter ??= new BinaryFormatter();
             }
         }
 

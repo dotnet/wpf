@@ -35,7 +35,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
@@ -75,6 +74,7 @@ namespace System.Windows.Media
         {
             if (destinationType == typeof(string))
             {
+
                 // When invoked by the serialization engine we can convert to string only for some instances
                 if (context != null && context.Instance != null)
                 {
@@ -147,6 +147,7 @@ namespace System.Windows.Media
 
                 if (destinationType == typeof(string))
                 {
+
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
@@ -168,4 +169,5 @@ namespace System.Windows.Media
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

@@ -72,10 +72,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         AnimationClock clock,
                         HandoffBehavior handoffBehavior)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
@@ -144,10 +141,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </param>
                     public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
@@ -203,10 +197,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </returns>
                     public object GetAnimationBaseValue(DependencyProperty dp)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
                     
                         return this.GetValueEntry(
                                 LookupEntry(dp.GlobalIndex),
@@ -225,12 +216,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// <param name="dp"></param>
                     /// <param name="metadata"></param>
                     /// <param name="entry">EffectiveValueEntry computed by base</param>
-                    /// <SecurityNote>
-                    ///     Putting an InheritanceDemand as a defense-in-depth measure,
-                    ///     as this provides a hook to the property system that we don't
-                    ///     want exposed under PartialTrust.
-                    /// </SecurityNote>
-                    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
                     internal sealed override void EvaluateAnimatedValueCore(
                             DependencyProperty  dp,
                             PropertyMetadata    metadata,

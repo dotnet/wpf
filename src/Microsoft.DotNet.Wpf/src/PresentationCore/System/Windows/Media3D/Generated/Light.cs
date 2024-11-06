@@ -38,6 +38,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     abstract partial class Light : Model3D
     {
         //------------------------------------------------------
@@ -211,7 +214,7 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
 
 
             // Initializations
@@ -227,6 +230,9 @@ namespace System.Windows.Media.Media3D
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

@@ -347,10 +347,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public int Add([[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         
@@ -431,10 +428,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public void Insert(int index, [[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         

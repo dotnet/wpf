@@ -38,6 +38,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
+
+
+
     abstract partial class AffineTransform3D : Transform3D
     {
         //------------------------------------------------------
@@ -65,6 +68,9 @@ namespace System.Windows.Media.Media3D
         {
             return (AffineTransform3D)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 
@@ -171,5 +177,6 @@ namespace System.Windows.Media.Media3D
 
 
         #endregion Constructors
+
     }
 }

@@ -136,6 +136,8 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, double value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -213,6 +215,8 @@ namespace System.Windows.Media
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -549,7 +553,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -567,7 +572,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -585,7 +591,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -603,7 +610,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -689,6 +697,7 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
+
             if (_collection.Count == 0)
             {
                 return String.Empty;
@@ -794,6 +803,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -934,6 +944,7 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<double> icollectionOfT = collection as ICollection<double>;
 
             if (icollectionOfT != null)
@@ -941,7 +952,7 @@ namespace System.Windows.Media
                 _collection = new FrugalStructList<double>(icollectionOfT);
             }
             else
-            {
+            {       
                 ICollection icollection = collection as ICollection;
 
                 if (icollection != null) // an IC but not and IC<T>
@@ -954,8 +965,11 @@ namespace System.Windows.Media
 
                     foreach (double item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 
@@ -969,5 +983,6 @@ namespace System.Windows.Media
         }
 
         #endregion Constructors
+
     }
 }

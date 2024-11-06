@@ -7,9 +7,9 @@
 <CG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Elements.xsd">
     <!-- The list of Elements we need to generate partial classes for -->
     <Elements>
-        <Element Name="UIElement3D" Namespace="System.Windows" ManagedDestinationDir="src\Core\CSharp\System\Windows\Generated" ImplementsIAnimatable="false"/>
-        <Element Name="UIElement" Namespace="System.Windows" ManagedDestinationDir="src\Core\CSharp\System\Windows\Generated" ImplementsIAnimatable="true"/>
-        <Element Name="ContentElement" Namespace="System.Windows" ManagedDestinationDir="src\Core\CSharp\System\Windows\Generated" ImplementsIAnimatable="true"/>
+        <Element Name="UIElement3D" Namespace="System.Windows" ManagedDestinationDir="src\PresentationCore\System\Windows\Generated" ImplementsIAnimatable="false"/>
+        <Element Name="UIElement" Namespace="System.Windows" ManagedDestinationDir="src\PresentationCore\System\Windows\Generated" ImplementsIAnimatable="true"/>
+        <Element Name="ContentElement" Namespace="System.Windows" ManagedDestinationDir="src\PresentationCore\System\Windows\Generated" ImplementsIAnimatable="true"/>
     </Elements>
 
     <!-- The list of Events we need to generate code for per-element -->

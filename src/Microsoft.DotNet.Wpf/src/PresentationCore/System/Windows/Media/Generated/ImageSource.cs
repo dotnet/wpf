@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     abstract partial class ImageSource : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -245,6 +248,7 @@ namespace System.Windows.Media
             return base.ToString();
         }
 
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -289,5 +293,6 @@ namespace System.Windows.Media
 
 
         #endregion Constructors
+
     }
 }

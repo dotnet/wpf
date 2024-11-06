@@ -203,11 +203,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     [[instance.TypeName]] baseValue, 
                                     double keyFrameProgress)
                                 {
-                                    if (   keyFrameProgress < 0.0
-                                        || keyFrameProgress > 1.0)
-                                    {
-                                        throw new ArgumentOutOfRangeException("keyFrameProgress");
-                                    }
+                                    ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+                                    ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
                                     
                                     return InterpolateValueCore(baseValue, keyFrameProgress);
                                 }
@@ -255,10 +252,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             // requiring that they be split across two namespaces.
             switch (moduleName)
             {
-                case @"Core\CSharp":
+                case @"PresentationCore":
                     moduleReference = "using MS.Internal.PresentationCore;";
                     break;
-                case "Framework":
+                case "PresentationFramework":
                     moduleReference = "using MS.Internal.PresentationFramework;";
                     break;
             }

@@ -22,7 +22,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Windows.Markup;
 using System.Windows.Converters;
 using System.Windows;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
@@ -131,4 +130,5 @@ namespace System.Windows
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

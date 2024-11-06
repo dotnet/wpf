@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class PolyLineSegment : PathSegment
     {
         //------------------------------------------------------
@@ -216,9 +219,9 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
+            //
             Debug.Assert(s_Points == null || s_Points.IsFrozen,
-                "Detected context bound default value PolyLineSegment.s_Points (See OS Bug #947272).");
+                "Detected context bound default value PolyLineSegment.s_Points.");
 
 
             // Initializations
@@ -234,6 +237,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

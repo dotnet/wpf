@@ -90,10 +90,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 // requiring that they be split across two namespaces.
                 switch (instance.ModuleName)
                 {
-                    case @"Core\CSharp":
+                    case @"PresentationCore":
                         moduleReference = "using MS.Internal.PresentationCore;";
                         break;
-                    case "Framework":
+                    case "PresentationFramework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
                         break;
                 }
@@ -135,7 +135,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                             namespace System.Windows.Media.Animation
                             {       
-                               
                                 /// <summary>
                                 /// Animates the value of a [[instance.TypeName]] property using linear interpolation
                                 /// between two values.  The values are determined by the combination of

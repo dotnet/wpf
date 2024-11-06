@@ -31,7 +31,6 @@ using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Media.Imaging;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Media3D
@@ -140,4 +139,5 @@ namespace System.Windows.Media.Media3D
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
+
 }

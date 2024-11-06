@@ -96,7 +96,7 @@ namespace MS.Internal.Csp
 
             // Add some implicit referenced assemblies. 
 
-            referencedAssemblies.Add(Path.Combine(parameters.ClrDir, "System.dll"));
+            referencedAssemblies.Add(string.IsNullOrEmpty(parameters.ClrDir) ? "System.dll" : Path.Combine(parameters.ClrDir, "System.dll"));
             if (parameters.EnableCsPrime)
             {
                 // Needed so that the project can access MS.Internal.Csp.CsPrimeRuntime.

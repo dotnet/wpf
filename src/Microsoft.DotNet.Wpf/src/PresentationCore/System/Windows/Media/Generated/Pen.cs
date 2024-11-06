@@ -42,6 +42,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media
 {
+
+
+
     sealed partial class Pen : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
@@ -83,6 +86,10 @@ namespace System.Windows.Media
 
         private static void BrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -169,6 +176,10 @@ namespace System.Windows.Media
         }
         private static void DashStylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -446,7 +457,8 @@ namespace System.Windows.Media
                     if (vDashStyle != null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
+
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)
@@ -567,10 +579,10 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  
-
+            // of your app.
+            //
             Debug.Assert(s_DashStyle == null || s_DashStyle.IsFrozen,
-                "Detected context bound default value Pen.s_DashStyle (See OS Bug #947272).");
+                "Detected context bound default value Pen.s_DashStyle.");
 
 
             // Initializations
@@ -649,6 +661,9 @@ namespace System.Windows.Media
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

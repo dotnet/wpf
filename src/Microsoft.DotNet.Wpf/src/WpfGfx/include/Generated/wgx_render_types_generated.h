@@ -355,5 +355,3 @@ BEGIN_MILENUM( MilCompoundStyle )
     Custom = 3,
 END_MILENUM
 #endif // COMPOUND_PEN_IMPLEMENTED
-
-

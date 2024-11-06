@@ -32,6 +32,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Imaging
 {
+
+
+
     sealed partial class CroppedBitmap : BitmapSource
     {
         //------------------------------------------------------
@@ -73,6 +76,7 @@ namespace System.Windows.Media.Imaging
 
         private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             CroppedBitmap target = ((CroppedBitmap) d);
 
 
@@ -314,10 +318,10 @@ namespace System.Windows.Media.Imaging
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
+            //
             Debug.Assert(s_Source == null || s_Source.IsFrozen,
-                "Detected context bound default value CroppedBitmap.s_Source (See OS Bug #947272).");
+                "Detected context bound default value CroppedBitmap.s_Source.");
 
 
             // Initializations
@@ -342,6 +346,9 @@ namespace System.Windows.Media.Imaging
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceSourceRect));
         }
 
+
+
         #endregion Constructors
+
     }
 }

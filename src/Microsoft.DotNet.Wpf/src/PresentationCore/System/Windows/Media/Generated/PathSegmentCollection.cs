@@ -259,11 +259,14 @@ namespace System.Windows.Media
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     PathSegment oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -608,8 +611,10 @@ namespace System.Windows.Media
                 PathSegment newValue = (PathSegment) sourcePathSegmentCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -628,8 +633,10 @@ namespace System.Windows.Media
                 PathSegment newValue = (PathSegment) sourcePathSegmentCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -648,8 +655,10 @@ namespace System.Windows.Media
                 PathSegment newValue = (PathSegment) sourcePathSegmentCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -668,8 +677,10 @@ namespace System.Windows.Media
                 PathSegment newValue = (PathSegment) sourcePathSegmentCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -773,6 +784,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -921,7 +933,7 @@ namespace System.Windows.Media
                 _collection = new FrugalStructList<PathSegment>(icollectionOfT);
             }
             else
-            {
+            {       
                 ICollection icollection = collection as ICollection;
 
                 if (icollection != null) // an IC but not and IC<T>
@@ -941,6 +953,7 @@ namespace System.Windows.Media
                         PathSegment newValue = item;
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                     }
 
                     needsItemValidation = false;
@@ -956,6 +969,7 @@ namespace System.Windows.Media
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
                     OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
                 }
             }
 
@@ -964,5 +978,6 @@ namespace System.Windows.Media
         }
 
         #endregion Constructors
+
     }
 }

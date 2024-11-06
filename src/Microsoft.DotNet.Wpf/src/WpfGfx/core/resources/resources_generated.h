@@ -31,5 +31,3 @@ class CMilPenDuce;
 class CGlyphRunResource;
 class CMilSlaveVideo;
 class CMilGuidelineSetDuce;
-
-

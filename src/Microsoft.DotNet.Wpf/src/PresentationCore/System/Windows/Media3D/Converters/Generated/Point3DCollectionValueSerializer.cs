@@ -31,7 +31,6 @@ using System.Windows.Media.Composition;
 using System.Security;
 using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Media.Imaging;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Media3D.Converters
@@ -55,6 +54,7 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
+
             // Validate the input type
             if (!(value is Point3DCollection))
             {
@@ -62,7 +62,8 @@ namespace System.Windows.Media.Media3D.Converters
             }
 
             return true;
-}
+
+        }
 
         /// <summary>
         /// Converts a string into a Point3DCollection.
@@ -77,7 +78,8 @@ namespace System.Windows.Media.Media3D.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -96,4 +98,8 @@ namespace System.Windows.Media.Media3D.Converters
             return base.ConvertToString(value, context);
         }
     }
+
+
+
+
 }

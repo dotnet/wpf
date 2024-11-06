@@ -76,7 +76,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Collections;
                             using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Security.Permissions;
                             using System.Windows;
                             using System.Windows.Markup;
                             using System.Windows.Media.Animation;
@@ -110,10 +109,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;
@@ -124,10 +120,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     internal [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;

@@ -22,7 +22,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Windows.Markup;
 using System.Windows.Converters;
 using System.Windows;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Converters
@@ -46,6 +45,7 @@ namespace System.Windows.Converters
         /// </summary>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
+
             // Validate the input type
             if (!(value is Size))
             {
@@ -53,7 +53,8 @@ namespace System.Windows.Converters
             }
 
             return true;
-}
+
+        }
 
         /// <summary>
         /// Converts a string into a Size.
@@ -68,7 +69,8 @@ namespace System.Windows.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -87,4 +89,8 @@ namespace System.Windows.Converters
             return base.ConvertToString(value, context);
         }
     }
+
+
+
+
 }

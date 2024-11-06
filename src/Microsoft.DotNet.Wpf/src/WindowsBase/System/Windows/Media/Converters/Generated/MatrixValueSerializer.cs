@@ -23,7 +23,6 @@ using System.Windows.Markup;
 using System.Windows.Media.Converters;
 using System.Windows;
 using System.Windows.Media;
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Converters
@@ -47,6 +46,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
+
             // Validate the input type
             if (!(value is Matrix))
             {
@@ -54,7 +54,8 @@ namespace System.Windows.Media.Converters
             }
 
             return true;
-}
+
+        }
 
         /// <summary>
         /// Converts a string into a Matrix.
@@ -69,7 +70,8 @@ namespace System.Windows.Media.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -88,4 +90,8 @@ namespace System.Windows.Media.Converters
             return base.ConvertToString(value, context);
         }
     }
+
+
+
+
 }

@@ -40,6 +40,9 @@ using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
+
+
+
     sealed partial class BitmapEffectGroup : BitmapEffect
     {
         //------------------------------------------------------
@@ -213,9 +216,10 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
+            // of your app.
+            //
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value BitmapEffectGroup.s_Children");
+                "Detected context bound default value BitmapEffectGroup.s_Children.");
 
 
             // Initializations
@@ -231,6 +235,9 @@ namespace System.Windows.Media.Effects
                                    /* coerceValueCallback */ null);
         }
 
+
+
         #endregion Constructors
+
     }
 }

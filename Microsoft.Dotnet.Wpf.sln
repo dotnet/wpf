@@ -261,6 +261,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{92968783-200
 		Directory.Build.targets = Directory.Build.targets
 		global.json = global.json
 		eng\common\init-tools-native.ps1 = eng\common\init-tools-native.ps1
+		eng\pipeline-pr.yml = eng\pipeline-pr.yml
 		eng\restore-toolset.ps1 = eng\restore-toolset.ps1
 		Restore.cmd = Restore.cmd
 		start-vs.cmd = start-vs.cmd

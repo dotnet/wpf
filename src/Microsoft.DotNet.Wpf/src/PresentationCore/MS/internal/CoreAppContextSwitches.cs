@@ -2,20 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using System;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace MS.Internal
 {
-    // WPF's builds are seeing new warnings as as result of using LocalAppContext in PresentationFramework, PresentationCore and WindowsBase.
-    // These binaries have internalsVisibleTo attribute set between them - which results in the warning.
-    // We don't have a way of suppressing this warning effectively until the shared copies of LocalAppContext and
-    // AppContextDefaultValues have pragmas added to suppress warning 436
-#pragma warning disable 436
     internal static class CoreAppContextSwitches
     {
         #region DoNotScaleForDpiChanges
@@ -411,5 +403,4 @@ namespace MS.Internal
         #endregion
 
     }
-#pragma warning restore 436
 }

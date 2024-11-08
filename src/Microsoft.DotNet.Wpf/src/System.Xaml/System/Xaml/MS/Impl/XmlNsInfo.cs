@@ -14,6 +14,8 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Xaml.Schema;
 
+using MS.Internal;
+
 namespace System.Xaml.MS.Impl
 {
     class XmlNsInfo
@@ -214,8 +216,7 @@ namespace System.Xaml.MS.Impl
                 xmlNamespaceList.Add(nsDef.XmlNamespace);
             }
 
-            string assemblyName = _fullyQualifyAssemblyName ?
-                assembly.FullName : XamlSchemaContext.GetAssemblyShortName(assembly);
+            string assemblyName = _fullyQualifyAssemblyName ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
             foreach (KeyValuePair<string, IList<string>> clrToXmlNs in result)
             {
                 // Sort namespaces in preference order

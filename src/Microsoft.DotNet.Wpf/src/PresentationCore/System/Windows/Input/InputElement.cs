@@ -276,8 +276,8 @@ namespace System.Windows.Input
                             HwndSource sourceTo = PresentationSource.CriticalFromVisual(rootTo) as HwndSource;
 
 
-                            if(sourceFrom != null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
-                               sourceTo != null && sourceTo.CriticalHandle != IntPtr.Zero && sourceTo.CompositionTarget != null)
+                            if(sourceFrom != null && sourceFrom.Handle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
+                               sourceTo != null && sourceTo.Handle != IntPtr.Zero && sourceTo.CompositionTarget != null)
                             {
                                 // Translate the point into client coordinates.
                                 ptTranslated = PointUtil.RootToClient(ptTranslated, sourceFrom);

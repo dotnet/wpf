@@ -49,7 +49,7 @@ namespace System.Windows.Interop
             {
                 if (_hwndSource != null)
                 {
-                    IntPtr handle = _hwndSource.CriticalHandle;
+                    IntPtr handle = _hwndSource.Handle;
                     if (handle != IntPtr.Zero)
                     {
                         return new HandleRef(_hwndSource, handle);

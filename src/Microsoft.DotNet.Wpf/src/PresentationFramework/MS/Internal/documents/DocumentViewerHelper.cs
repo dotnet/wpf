@@ -283,7 +283,7 @@ namespace MS.Internal.Documents
             messageString = String.Format(System.Globalization.CultureInfo.CurrentCulture, messageString, findToolBar.SearchText);
 
             HwndSource hwndSource = PresentationSource.CriticalFromVisual(findToolBar) as HwndSource;
-            IntPtr hwnd = (hwndSource != null) ? hwndSource.CriticalHandle : IntPtr.Zero;
+            IntPtr hwnd = (hwndSource != null) ? hwndSource.Handle : IntPtr.Zero;
 
             PresentationFramework.SecurityHelper.ShowMessageBoxHelper(
                 hwnd,

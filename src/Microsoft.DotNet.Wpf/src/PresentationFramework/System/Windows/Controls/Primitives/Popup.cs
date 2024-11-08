@@ -3400,7 +3400,7 @@ namespace System.Windows.Controls.Primitives
             private static IntPtr GetHandle(HwndSource hwnd)
             {
                 // add hook to the popup's window
-                return (hwnd!=null ? hwnd.CriticalHandle : IntPtr.Zero);
+                return (hwnd!=null ? hwnd.Handle : IntPtr.Zero);
             }
 
             private static IntPtr GetParentHandle(HwndSource hwnd)

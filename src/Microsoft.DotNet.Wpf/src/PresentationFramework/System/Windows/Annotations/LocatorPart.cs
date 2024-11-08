@@ -365,7 +365,7 @@ namespace System.Windows.Annotations
             string corePrefix = namespaceManager.LookupPrefix(AnnotationXmlConstants.Namespaces.CoreSchemaNamespace);
             string prefix = namespaceManager.LookupPrefix(this.PartType.Namespace);
             string res = prefix == null ? "" : (prefix + ":");
-            res += $"{TextSelectionProcessor.CharacterRangeElementName.Name}/{corePrefix}:{AnnotationXmlConstants.Elements.Item}";
+            res += $"{TextSelectionProcessor.s_characterRangeElementName.Name}/{corePrefix}:{AnnotationXmlConstants.Elements.Item}";
 
             int startOffset;
             int endOffset;

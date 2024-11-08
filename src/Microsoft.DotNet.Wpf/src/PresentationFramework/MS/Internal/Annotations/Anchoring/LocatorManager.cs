@@ -105,23 +105,20 @@ namespace MS.Internal.Annotations.Anchoring
         /// <param name="processorId">string id used to specify this processor as 
         /// the SubTreeProcessorIdProperty value</param>
         /// <exception cref="ArgumentNullException">if the processor or processorId are null</exception>
-        public void RegisterSubTreeProcessor(SubTreeProcessor processor, String processorId)
+        public void RegisterSubTreeProcessor(SubTreeProcessor processor, string processorId)
         {
             VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(processor);
             ArgumentNullException.ThrowIfNull(processorId);
 
-            XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
+            ReadOnlySpan<XmlQualifiedName> locatorPartTypes = processor.GetLocatorPartTypes();
 
             _subtreeProcessors[processorId] = processor;
 
-            if (locatorPartTypes != null)
+            foreach (XmlQualifiedName typeName in locatorPartTypes)
             {
-                foreach (XmlQualifiedName typeName in locatorPartTypes)
-                {
-                    _locatorPartHandlers[typeName] = processor;
-                }
+                _locatorPartHandlers[typeName] = processor;
             }
         }
 
@@ -202,15 +199,12 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(processor);
             ArgumentNullException.ThrowIfNull(selectionType);
 
-            XmlQualifiedName[] locatorPartTypes = processor.GetLocatorPartTypes();
+            ReadOnlySpan<XmlQualifiedName> locatorPartTypes = processor.GetLocatorPartTypes();
             _selectionProcessors[selectionType] = processor;
 
-            if (locatorPartTypes != null)
+            foreach (XmlQualifiedName type in locatorPartTypes)
             {
-                foreach (XmlQualifiedName type in locatorPartTypes)
-                {
-                    _locatorPartHandlers[type] = processor;
-                }
+                _locatorPartHandlers[type] = processor;
             }
         }
 
@@ -359,16 +353,16 @@ namespace MS.Internal.Annotations.Anchoring
             VerifyAccess();
             ArgumentNullException.ThrowIfNull(selection);
 
-            ICollection nodes = null;
+            ReadOnlySpan<DependencyObject> nodes;
             SelectionProcessor selProcessor = GetSelectionProcessor(selection.GetType());
 
             if (selProcessor != null)
             {
-                nodes = (ICollection)selProcessor.GetSelectedNodes(selection);
+                nodes = selProcessor.GetSelectedNodes(selection);
             }
             else
             {
-                throw new ArgumentException("Unsupported Selection", "selection");
+                throw new ArgumentException("Unsupported Selection", nameof(selection));
             }
 
             IList<ContentLocatorBase> returnLocators = null;

@@ -24,7 +24,8 @@
 
   <!--
    Referencing packages that reference the desktop package causes grief with building internally. Currently this
-   is only happening with referencing StaFact (for [WpfFact] tests). Remove the reference if it exists.
+   is only happening with referencing StaFact (for [WpfFact] tests). Remove the reference if it comes in directly
+   or transitively.
   -->
   <Target Name="RemoveDesktopFramework" AfterTargets="ProcessFrameworkReferences" BeforeTargets="FixupRuntimeFrameworkVersions">
     <ItemGroup>
@@ -32,47 +33,9 @@
     </ItemGroup>
   </Target>
 
-  <!--
-   Update versions in @(RuntimeFramework) items to match the declared versions in the SDK.
-
-   @(RuntimeFramework) items are defined in the ProcessFrameworkReferences target based off of the single $(RuntimeFrameworkVersion)
-   property. This creates problems if the SDK has multiple versions for the various targets. The runtime.config file that will be
-   generated for tests can end up referencing versions that are not actually in the .dotnet folder.
-  -->
-  <Target Name="FixupRuntimeFrameworkVersions" AfterTargets="ProcessFrameworkReferences" BeforeTargets="GenerateBuildDependencyFile">
-    <PropertyGroup>
-      <!--
-        This would be more correct to just match the TargetFramework version between the RuntimeFramework and the KnownFramework.
-      -->
-
-      <!-- Find the Major.Minor out of the updated targeting pack semantic version. -->
-      <_targetPackVersion Condition="'$(UpdatedTargetingPackVersion)' != ''">$([System.Text.RegularExpressions.Regex]::Match($(UpdatedTargetingPackVersion), '^(\d+)\.(\d+)').Value)</_targetPackVersion>
-
-      <!-- Split out the target framework. "net10.0-windows" is an example. -->
-      <_targetFrameworkIdentifier>$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))</_targetFrameworkIdentifier>
-      <_targetFrameworkIdentifier Condition="'$(_targetFrameworkIdentifier)' == '.NETCoreApp'">net</_targetFrameworkIdentifier>
-      <_targetFrameworkVersion Condition="'$(_targetPackVersion)' != ''">$(_targetPackVersion)</_targetFrameworkVersion>
-      <_targetFrameworkVersion Condition="'$(_targetFrameworkVersion)' == ''">$([MSBuild]::GetTargetFrameworkVersion($(TargetFramework)))</_targetFrameworkVersion>
-      <_targetFrameworkRoot>$(_targetFrameworkIdentifier)$(_targetFrameworkVersion)</_targetFrameworkRoot>
-    </PropertyGroup>
+  <Target Name="RemoveTransitiveDesktopFramework" AfterTargets="ResolvePackageAssets" BeforeTargets="AddTransitiveFrameworkReferences">
     <ItemGroup>
-      <!--
-        Filter known references to the current target framework.
-
-        KnownFrameworkReference comes from the SDK Microsoft.NETCoreSdk.BundledVersions.props.
-      -->
-      <_filteredKnownFrameworkReference Include="@(KnownFrameworkReference)"
-                                        Condition="'%(KnownFrameworkReference.TargetFramework)' == '$(_targetFrameworkRoot)'" />
-
-      <!-- Update the versions in RuntimeFramework to match the KnownFrameworkReference version. -->
-      <_updatedRuntimeFramework Include="@(RuntimeFramework)"
-                                Condition="'%(Identity)' != '' And '@(RuntimeFramework)' != '' And '@(_filteredKnownFrameworkReference)' != ''">
-        <Version>@(_filteredKnownFrameworkReference->'%(DefaultRuntimeFrameworkVersion)')</Version>
-      </_updatedRuntimeFramework>
-
-      <!-- Remove and readd the updated items. -->
-      <RuntimeFramework Remove="@(RuntimeFramework)" />
-      <RuntimeFramework Include="@(_updatedRuntimeFramework)" />
+      <TransitiveFrameworkReference Remove="@(TransitiveFrameworkReference)" Condition="'%(TransitiveFrameworkReference.Identity)' == 'Microsoft.WindowsDesktop.App'"/>
     </ItemGroup>
   </Target>
 </Project>

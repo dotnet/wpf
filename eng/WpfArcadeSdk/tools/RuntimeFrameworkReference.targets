@@ -3,7 +3,6 @@
     Explicitly import Microsoft.NETCore.Platforms to prevent using the one from the SDK, which
     usually lags behind the version that WPF gets from CoreFx packages
   -->
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms"
                       Version="$(MicrosoftNETCorePlatformsVersion)"

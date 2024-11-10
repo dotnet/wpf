@@ -61,14 +61,7 @@
       <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'=='true'" />
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
       <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
-                                     Condition="'$(WpfRuntimeIdentifier)'=='win-x64' or '$(WpfRuntimeIdentifier)'=='win-arm64'"/>
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
-                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
-      <!-- If building a single project, Platform is used in win-x86.  Below handles this case. -->
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\x86\$(Configuration)\**\$(AssemblyName).dll"
-                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86' and @(ResolvedImplementationAssembly->Count()) == 0"/>
-
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll" />
       <Error Condition="@(ResolvedImplementationAssembly->Count()) &gt; 1" Text="More than one reference assembly was added to ResolvedImplementationAssembly!" />
     </ItemGroup>
   </Target>
@@ -84,7 +77,7 @@
     <!-- If DotNetTool is undefined, we default to assuming 'dotnet' is on the path -->
     <DotNetTool Condition="'$(DotNetTool)' == ''">dotnet</DotNetTool>
 
-    <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' == 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\net9.0\Microsoft.DotNet.ApiCompat.dll</_ApiCompatPath>
+    <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' == 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\netcoreapp2.1\Microsoft.DotNet.ApiCompat.dll</_ApiCompatPath>
     <_ApiCompatPath Condition="'$(MSBuildRuntimeType)' != 'core'">$(NuGetPackageRoot)\microsoft.dotnet.apicompat\$(MicrosoftDotNetApiCompatVersion)\tools\net472\Microsoft.DotNet.ApiCompat.exe</_ApiCompatPath>
 
     <_ApiCompatCommand Condition="'$(MSBuildRuntimeType)' == 'core'">"$(DotNetTool)" "$(_ApiCompatPath)"</_ApiCompatCommand>

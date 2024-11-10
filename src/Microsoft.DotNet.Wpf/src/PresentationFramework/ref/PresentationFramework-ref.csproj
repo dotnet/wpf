@@ -9,7 +9,7 @@
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <NoWarn>$(NoWarn);0618;1058,3003</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <Platforms>x86;x64;arm64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 

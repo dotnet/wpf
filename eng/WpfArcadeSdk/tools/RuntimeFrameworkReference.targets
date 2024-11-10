@@ -4,14 +4,6 @@
     usually lags behind the version that WPF gets from CoreFx packages
   -->
 
-  <PropertyGroup>
-    <UpdatedTargetingPackVersion Condition="'$(MicrosoftNETCoreAppRefVersion)'!=''
-                                            And '$(NoTargets)'!='true'
-                                            And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
-                                            And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0'))
-                                            And '$(MSBuildProjectExtension)'!='.vcxproj'">$(MicrosoftNETCoreAppRefVersion)</UpdatedTargetingPackVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms"
                       Version="$(MicrosoftNETCorePlatformsVersion)"
@@ -20,12 +12,6 @@
     <AdditionalPackageReference Include="Microsoft.NETCore.Platforms"
                                 Version="$(MicrosoftNETCorePlatformsVersion)"
                                 Condition="'$(ManagedCxx)'=='true'"/>
-
-    <!-- This should probably update all FrameworkReference entries. -->
-    <FrameworkReference Update="Microsoft.NETCore.App"
-                        Condition="'$(UpdatedTargetingPackVersion)'!=''">
-      <TargetingPackVersion>$(UpdatedTargetingPackVersion)</TargetingPackVersion>
-    </FrameworkReference>
 
     <!--
       Workaround - this should be removed when our tests are converted from Microsoft.NET.Sdk.WindowsDesktop => Microsoft.NET.Sdk

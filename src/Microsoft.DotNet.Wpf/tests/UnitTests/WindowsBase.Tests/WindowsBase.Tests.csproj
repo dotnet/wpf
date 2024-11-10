@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <Platforms>x64;x86;ARM64</Platforms>
+    <Platforms>x64;x86;arm64</Platforms>
     <RootNamespace />
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
   </PropertyGroup>

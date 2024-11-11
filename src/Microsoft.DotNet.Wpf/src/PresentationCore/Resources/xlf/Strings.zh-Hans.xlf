@@ -1782,16 +1782,6 @@
         <target state="translated">部分名称与其内容类型不一致。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 值“{0}”对于此 Permission 无效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">权限类型无效。应为“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">压力必须是介于 0 和 1 之间的值。</target>
@@ -2855,11 +2845,6 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">搜索</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">无法在部分信任中将 SandboxExternalContent 设置为 true。</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

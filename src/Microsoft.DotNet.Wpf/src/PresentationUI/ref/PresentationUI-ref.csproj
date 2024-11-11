@@ -3,7 +3,7 @@
     <AssemblyName>PresentationUI</AssemblyName>
     <PackageId>PresentationUI-ref</PackageId>
     <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
   <ItemGroup>

@@ -13,11 +13,13 @@ insert_final_newline = true
 indent_style = space
 indent_size = 4
 
-[project.json]
+[*.json]
 indent_size = 2
 
 # C# files
 [*.cs]
+file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
+
 # New line preferences
 csharp_new_line_before_open_brace = all
 csharp_new_line_before_else = true

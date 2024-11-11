@@ -1,5 +1,4 @@
-﻿<Project>
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);BASE_NATIVEMETHODS;WINDOWS_BASE</DefineConstants>
     <DefineConstants Condition="'$(WeakEventTelemetry)'=='true'">$(DefineConstants);WeakEventTelemetry</DefineConstants>
@@ -7,7 +6,14 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
     <ProjectGuid>{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}</ProjectGuid>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
+    <!--
+      Disable CLS compliance warning so interop can be generated to match native types.
+    -->
+    <NoWarn>$(NoWarn);CS3016</NoWarn>
+
+    <!-- Project reference workaround https://github.com/dotnet/sdk/issues/44042 -->
+    <PackageVersion>$(AssemblyVersion)</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,6 +25,7 @@
     <Compile Include="$(WpfCommonDir)src\System\LocalAppContext.cs">
       <Link>Common\System\LocalAppContext.cs</Link>
     </Compile>
+    <Compile Include="LibraryAssemblyInfo.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
@@ -380,6 +387,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafePackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -393,7 +401,6 @@
        it needs to be imported after Sdk.targets. This causes the BuildDependsOn variable,
        which is modified by the T4 targets, to be overwritten, so the TransformAll target
        doesn’t run before the Build target. -->
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="$(WpfCodeGenDir)AvTrace\GenTraceSources.targets" />
   <Import Project="$(WpfCodeGenDir)AvTrace\GenAvMessages.targets" />
   <!-- DevDiv Bug 888747: Re-enable AvTrace codegen -->

@@ -6,7 +6,7 @@
     <!-- don't sign nor binplace this non-shipping assembly -->
     <ShouldWriteSigningRequired>false</ShouldWriteSigningRequired>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
@@ -26,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\ref\UIAutomationProvider-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\ref\UIAutomationTypes-ref.csproj" />
   </ItemGroup>
 
   <ItemGroup>

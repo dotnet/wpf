@@ -512,7 +512,7 @@ namespace System.Windows
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public string Name { get { throw null; } set { } }
         public bool OverridesDefaultStyle { get { throw null; } set { } }
-        public new System.Windows.DependencyObject Parent { get { throw null; } }
+        public System.Windows.DependencyObject Parent { get { throw null; } }
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.Style Style { get { throw null; } set { } }

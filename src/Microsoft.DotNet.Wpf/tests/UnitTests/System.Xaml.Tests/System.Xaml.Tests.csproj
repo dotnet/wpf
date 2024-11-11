@@ -5,7 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
+    <Platforms>x64;x86;arm64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

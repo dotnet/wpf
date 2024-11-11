@@ -33,6 +33,7 @@
     </ItemGroup>
   </Target>
 
+  <!-- See RemoveDesktopFramework above -->
   <Target Name="RemoveTransitiveDesktopFramework" AfterTargets="ResolvePackageAssets" BeforeTargets="AddTransitiveFrameworkReferences">
     <ItemGroup>
       <TransitiveFrameworkReference Remove="@(TransitiveFrameworkReference)" Condition="'%(TransitiveFrameworkReference.Identity)' == 'Microsoft.WindowsDesktop.App'"/>

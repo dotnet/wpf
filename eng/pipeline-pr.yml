@@ -174,7 +174,6 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
-          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\BuildSrc-$(_Platform).binlog
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
@@ -191,7 +190,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
-          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test-$(_Platform).binlog
+          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 

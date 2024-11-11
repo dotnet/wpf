@@ -113,6 +113,7 @@
                  And '$(TargetFrameworkIdentifier)' == '.NETCoreApp'
                  And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0')) ">
     <PropertyGroup>
+      <!-- Use the current TargetFramework if not otherwise specified for WinForms private package -->
       <_WinFormsTargetFrameworkVersion Condition="'$(_WinFormsTargetFrameworkVersion)' == ''">$(TargetFramework)</_WinFormsTargetFrameworkVersion>
     </PropertyGroup>
     <ItemGroup>
@@ -127,7 +128,7 @@
 
   <ItemGroup>
     <!-- We always want to use the local WindowsBase, not the one coming from the .NET runtime. -->
-    <DefaultReferenceExclusion Include="WindowsBase;System.Xaml"/>
+    <DefaultReferenceExclusion Include="WindowsBase"/>
   </ItemGroup>
 
   <!--
@@ -145,7 +146,6 @@
     <ItemGroup>
       <_referenceExclusion Include="@(DefaultReferenceExclusion)">
         <AssemblyName>%(DefaultReferenceExclusion.Identity)</AssemblyName>
-        <!-- <FrameworkReferenceName>Microsoft.NETCore.App</FrameworkReferenceName> -->
         <ExternallyResolved>true</ExternallyResolved>
       </_referenceExclusion>
 

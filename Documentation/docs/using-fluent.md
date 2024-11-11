@@ -122,6 +122,99 @@ Irrespective of how you have enabled the Fluent theme, the ThemeMode properties 
 4. Accent color changes will be adhered to whenever the Fluent Theme is applied irrespective of `ThemeMode`.
 5. When the `ThemeMode` is set to a Window, it will take precedence over the Application's `ThemeMode`. In case Window `ThemeMode` is set to None, the window will adhere to Application's `ThemeMode`, even if Application uses Fluent Theme.
 6. The default value of `ThemeMode` is None.
+7. When **contrast themes** are enabled, HighContrast version of the Fluent theme is applied on the application. In this mode, there is no distinction between light and dark modes and all the window's will appear the same. When we switch back to normal themes, the previously set `ThemeMode` are applied on the windows.
 
+## Using Accent color brushes in WPF applications 
 
+### When using Fluent theme
 
+In Fluent theme color ResourceDictionary's ( Light.xaml, Dark.xaml and HC.xaml ) we have included the following accent color brushes which can be referred using DynamicResource extension and used for writing new styles or customizing existing control styles.
+
+```xml
+    <!-- Accent Color Brushes defined in Fluent color resource dictionaries  -->
+    <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="{StaticResource SystemAccentColorLight3}" />
+    <SolidColorBrush x:Key="AccentTextFillColorSecondaryBrush" Color="{StaticResource SystemAccentColorLight3}" />
+    <SolidColorBrush x:Key="AccentTextFillColorTertiaryBrush" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="AccentTextFillColorDisabledBrush" Color="{StaticResource AccentTextFillColorDisabled}" />
+    
+    <SolidColorBrush x:Key="TextOnAccentFillColorSelectedTextBrush" Color="{StaticResource TextOnAccentFillColorSelectedText}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorPrimaryBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorSecondaryBrush" Color="{StaticResource TextOnAccentFillColorSecondary}" />
+    <SolidColorBrush x:Key="TextOnAccentFillColorDisabledBrush" Color="{StaticResource TextOnAccentFillColorDisabled}" />
+    
+    <SolidColorBrush x:Key="AccentFillColorSelectedTextBackgroundBrush" Color="{StaticResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Opacity="0.9" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Opacity="0.8" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource AccentFillColorDisabled}" />
+
+    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+ 
+```
+
+In High Contrast mode, these brushes are updated to use the system highlight colors.
+
+### Without using Fluent theme
+
+Since, we have introduced AccentColor's similar to how other **SystemColors** were present in WPF, you can use accent colors and accent color brushes by directly referring the resource keys defined in **SystemColors** class like this :
+
+```xml
+    <StackPanel Orientation="Horizontal" Height="50">
+        <StackPanel.Resources>
+            <Style TargetType="Border">
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Width" Value="30" />
+            </Style>
+        </StackPanel.Resources>
+        <Border CornerRadius="2 0 0 2" Background="{DynamicResource {x:Static SystemColors.AccentColorDark3BrushKey}}" />
+        <Border Background="{DynamicResource {x:Static SystemColors.AccentColorDark2BrushKey}}" />
+        <Border Background="{DynamicResource {x:Static SystemColors.AccentColorDark1BrushKey}}" />
+        <Border Background="{DynamicResource {x:Static SystemColors.AccentColorBrushKey}}" />
+        <Border Background="{DynamicResource {x:Static SystemColors.AccentColorLight1BrushKey}}" />
+        <Border Background="{DynamicResource {x:Static SystemColors.AccentColorLight2BrushKey}}" />
+        <Border CornerRadius="0 2 2 0" Background="{DynamicResource {x:Static SystemColors.AccentColorLight3BrushKey}}" />
+    </StackPanel>
+```
+
+> [!NOTE]
+> When using AccentColor APIs directly, use Light1, Light2 and Light3 variations for Dark mode and Dark1, Dark2 and Dark3 for light mode in your application.
+
+## Backdrop support in WPF
+
+Unlike WinUI, WPF does not have `Acrylic` and `Mica` material, controllers or brushes. For now, to enable backdrop in WPF, we took advantage of the Desktop Window Manager ( DWM ) for specifying the system-drawn backdrop material on a window. We do this by calling the [DwmSetWindowAttribute function](https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmsetwindowattribute) for the window.
+
+We haven't provided any API yet, for switching between the system defined backdrop types ( see [DWM_SYSTEMBACKDROP_TYPE](https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/ne-dwmapi-dwm_systembackdrop_type) ), as we were not sure of the path we are going to take for this feature.
+
+Rather, when Fluent theme is enabled we set Mica ( DWMSBT_MAINWINDOW ) backdrop on the Window. However, since we need to modify `PresentationSource.CompositionTarget.Background` and call the `DwmExtendFrameIntoClientArea` method, we have provided an  app-context switch to disable the applicaiton of backdrop on windows : `Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop`.
+
+Developers can disable backdrop in their applications by including the switch as following in their project files : 
+```xml
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop" Value="True" />
+</ItemGroup>
+```
+
+or including it in your runtime config file as follows : 
+
+```json
+{
+  "runtimeOptions": {
+    "tfm": "net9.0",
+    "frameworks": [
+        // specifications...   
+    ],
+    "configProperties": {
+      "Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop": true,
+    }
+  }
+}
+```
+
+## Going ahead
+
+There are a lot of issues in the styles and the current infrastructure of how Fluent theme is loaded, etc. and we will keep working iteratively to resolve these issues in .NET 10. There are still a lot of features that are still missing that we will on in the next iteration.
+
+Meanwhile, I would like to ask the community to go ahead and try out the new theme in their applications, and provide us with feedbacks via GitHub issues, discussions, feature suggestions and PRs to make it better.
+
+> [!NOTE]
+> While doing so, add the **"Win 11 Theming"** label to your contributions, so that it becomes easier for us to track and prioritize your issues.

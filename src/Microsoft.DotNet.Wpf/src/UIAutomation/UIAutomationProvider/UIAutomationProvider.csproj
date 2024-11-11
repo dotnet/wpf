@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -45,22 +44,6 @@
     <Compile Include="System\Windows\Automation\Provider\IValueProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IVirtualizedItemProvider.cs" />
     <Compile Include="System\Windows\Automation\Provider\IWindowProvider.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="System.Drawing.Primitives" />
-    <NetCoreReference Include="System.Memory" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
   </ItemGroup>
 
   <ItemGroup>

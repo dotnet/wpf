@@ -7,7 +7,6 @@
     <NoWarn>$(NoWarn);0618;CA1821</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
@@ -103,24 +102,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="Microsoft.Win32.Primitives" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Process" />
-    <NetCoreReference Include="System.Diagnostics.StackTrace" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Memory" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
   </ItemGroup>
 </Project>

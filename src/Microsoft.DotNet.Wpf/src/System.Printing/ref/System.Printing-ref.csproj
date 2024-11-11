@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -18,28 +17,6 @@
     <Compile Include="System.Printing.cs" />
     <Compile Include="System.Printing.internals.cs" />
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <NetCoreReference Include="System.Collections" />
-    <NetCoreReference Include="System.Collections.Specialized" />
-    <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.EventBasedAsync" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
-    <NetCoreReference Include="System.Net.Primitives" />
-    <NetCoreReference Include="System.Net.Requests" />
-    <NetCoreReference Include="System.Net.WebHeaderCollection" />
-    <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Xml" />
-    <NetCoreReference Include="System.Xml.Document" />
-    <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
 
   <ItemGroup>

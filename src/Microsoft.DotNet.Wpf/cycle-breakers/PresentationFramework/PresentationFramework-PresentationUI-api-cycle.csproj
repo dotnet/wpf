@@ -10,18 +10,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="System.Windows.Controls.DocumentViewer.cs" />
     <Compile Include="System.Windows.Controls.ToolBar.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
   </ItemGroup>
 </Project>

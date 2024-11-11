@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-      
     <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
 
@@ -18,10 +17,5 @@
     <Compile Include="System.Printing.PrintTicket.cs" />
     <Compile Include="System.Windows.Xps.Serialization.PrintTicketLevel.cs" />
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
   </ItemGroup>
 </Project>

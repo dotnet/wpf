@@ -7,10 +7,6 @@
 //              interop with the browser. Deprecated as XBAP is not supported.
 //
 
-using MS.Win32;
-using MS.Internal;
-using MS.Internal.AppModel;
-
 namespace System.Windows.Interop
 {
     /// <summary>
@@ -36,10 +32,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns true if the app is a browser hosted app.
         /// </summary>
-        /// <remarks>
-        /// Note that HostingFlags may not be set at the time this property is queried first. 
-        /// That's why they are still separate. Also, this one is public.
-        /// </remarks>
         public static bool IsBrowserHosted => false;
         
         /// <summary>
@@ -47,24 +39,6 @@ namespace System.Windows.Interop
         /// </summary>
         public static Uri Source => null;
 
-        /// <summary>
-        /// Returns true if we are in viewer mode AND this is the first time that a viewer has been navigated.
-        /// Including IsViewer is defense-in-depth in case somebody forgets to check IsViewer. There are other
-        /// reasons why both IsViewer and IsViewerNavigation are necessary, however.
-        /// </summary>
-        internal static bool IsInitialViewerNavigation
-        {
-            get // Because IsViewer is always false, the value of _isInitialViewerNavigation does not matter
-            {
-                return IsViewer && _isInitialViewerNavigation;
-            }
-            set
-            {
-                _isInitialViewerNavigation = value;
-            }
-        }
-
-        private static bool _isInitialViewerNavigation;
     }
 }
 

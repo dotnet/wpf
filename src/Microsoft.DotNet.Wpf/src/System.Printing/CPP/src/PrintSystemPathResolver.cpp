@@ -305,7 +305,7 @@ ValidateAndCaptureServerName(
         {
             if (serverName->StartsWith("\\\\", StringComparison::Ordinal))
             {
-                isValid = isValid & (serverName->IndexOf('\\', 3) < 0);
+                isValid = isValid & (serverName->IndexOf(L'\\', 3) < 0);
             }
         }
     }
@@ -414,7 +414,7 @@ ValidateUNCName(
            (!(name->IndexOf(',') >= 0))             &&
            name->StartsWith("\\\\", StringComparison::Ordinal)                 &&
            (!(name->StartsWith("\\\\\\", StringComparison::Ordinal)))          &&
-           (name->IndexOf('\\', 3) >= 0))
+           (name->IndexOf(L'\\', 3) >= 0))
         {
             isValid = true;
         }
@@ -470,7 +470,7 @@ ValidateUNCPath(
            (!(name->IndexOf(',') >= 0))             &&
            name->StartsWith("\\\\", StringComparison::Ordinal)                 &&
            (!(name->StartsWith("\\\\\\", StringComparison::Ordinal)))          &&
-           (name->IndexOf('\\', 3) >= 0)            &&
+           (name->IndexOf(L'\\', 3) >= 0)            &&
            (!(name->StartsWith("\\\\http://", StringComparison::OrdinalIgnoreCase))))
         {
             isValid = true;

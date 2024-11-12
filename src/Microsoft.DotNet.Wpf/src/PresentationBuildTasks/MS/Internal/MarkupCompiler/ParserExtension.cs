@@ -517,7 +517,7 @@ namespace MS.Internal
                         xmlReader.MoveToAttribute(attrName);
                 }
             }
-            else if (!_compiler.IsBamlNeeded && !_compiler.ProcessingRootContext && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
+            else if (!_compiler.IsBamlNeeded && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
             {
                 if ((!localName.Equals(MarkupCompiler.CODETAG) &&
                      !localName.Equals($"{MarkupCompiler.CODETAG}Extension")) ||

@@ -83,7 +83,6 @@
 
     <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 
-    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
     <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -636,7 +635,6 @@
 
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
-    <Color x:Key="SystemColorWindowColor">Transparent</Color>
     <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
     <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
     <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>

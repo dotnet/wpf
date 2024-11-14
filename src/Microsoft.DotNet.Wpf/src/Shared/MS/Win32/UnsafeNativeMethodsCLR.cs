@@ -57,9 +57,6 @@ namespace MS.Win32
         [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Auto, BestFitMapping = false)]
         public static extern int GetCurrentThemeName(StringBuilder pszThemeFileName, int dwMaxNameChars, StringBuilder pszColorBuff, int dwMaxColorChars, StringBuilder pszSizeBuff, int cchMaxSizeChars);
 
-        [DllImport(ExternDll.DwmAPI, BestFitMapping = false)]
-        public static extern int DwmIsCompositionEnabled(out Int32 enabled);
-
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         public static extern IntPtr GetCurrentThread();
 

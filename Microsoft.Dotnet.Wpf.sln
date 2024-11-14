@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Xaml", "src\Microsoft.DotNet.Wpf\src\System.Xaml\System.Xaml.csproj", "{9AC36357-34B7-40A1-95CA-FE9F46D089A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{0159B0F1-0626-4BED-8D1B-CBFF4F12C369}"
+	ProjectSection(SolutionItems) = preProject
+		packaging\Directory.Build.props = packaging\Directory.Build.props
+		packaging\Directory.Build.targets = packaging\Directory.Build.targets
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.DotNet.Wpf.GitHub", "Microsoft.DotNet.Wpf.GitHub", "{BF20132A-191F-4D34-9A1B-831772A6DFCF}"
 EndProject
@@ -257,6 +261,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{92968783-200
 		.editorconfig = .editorconfig
 		build.cmd = build.cmd
 		eng\common\build.ps1 = eng\common\build.ps1
+		eng\scripts\CIBuild.cmd = eng\scripts\CIBuild.cmd
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		global.json = global.json
@@ -369,6 +374,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{C70269FA
 		eng\WpfArcadeSdk\tools\WpfProjectReference.targets = eng\WpfArcadeSdk\tools\WpfProjectReference.targets
 		eng\WpfArcadeSdk\tools\WPF_Generated_Files.txt = eng\WpfArcadeSdk\tools\WPF_Generated_Files.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Primitives", "src\Microsoft.DotNet.Wpf\src\System.Windows.Primitives\System.Windows.Primitives.csproj", "{5306FA93-178C-4535-ADEE-86B1DE1B68CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Primitives-ref", "src\Microsoft.DotNet.Wpf\src\System.Windows.Primitives\ref\System.Windows.Primitives-ref.csproj", "{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1606,6 +1615,30 @@ Global
 		{D5A55FFC-E408-4BC5-B633-1CBBE9A94DE1}.Release|x64.Build.0 = Release|x64
 		{D5A55FFC-E408-4BC5-B633-1CBBE9A94DE1}.Release|x86.ActiveCfg = Release|x86
 		{D5A55FFC-E408-4BC5-B633-1CBBE9A94DE1}.Release|x86.Build.0 = Release|x86
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|arm64.Build.0 = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|x64.Build.0 = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Debug|x86.Build.0 = Debug|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|arm64.ActiveCfg = Release|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|arm64.Build.0 = Release|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|x64.Build.0 = Release|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|x86.ActiveCfg = Release|Any CPU
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB}.Release|x86.Build.0 = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|arm64.Build.0 = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|x64.Build.0 = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Debug|x86.Build.0 = Debug|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|arm64.ActiveCfg = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|arm64.Build.0 = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|x64.ActiveCfg = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|x64.Build.0 = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|x86.ActiveCfg = Release|Any CPU
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1730,6 +1763,8 @@ Global
 		{D5A55FFC-E408-4BC5-B633-1CBBE9A94DE1} = {A48B585E-6AB0-4F8D-8484-77F37CB44437}
 		{8F62A3BF-C618-49B1-8B09-82C32C3427BB} = {92968783-2008-4A16-A823-6737224FEB9E}
 		{C70269FA-2569-48B7-B246-A263BBC5698F} = {8F62A3BF-C618-49B1-8B09-82C32C3427BB}
+		{5306FA93-178C-4535-ADEE-86B1DE1B68CB} = {2EE4A2DA-70B3-4767-9D18-618DA0FE3105}
+		{0EFFC7C4-B486-4852-8CED-EDEB46E02C42} = {D0AED517-9972-41CB-8751-983E4EB8F511}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4340004-DAC0-497D-B69D-CFA7CD93F567}

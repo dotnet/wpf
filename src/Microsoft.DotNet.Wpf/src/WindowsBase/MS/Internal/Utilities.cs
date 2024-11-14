@@ -9,8 +9,8 @@ namespace MS.Internal
     using System;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
-    using System.Security;
-    using MS.Win32;
+    using Windows.Win32;
+    using Windows.Win32.Foundation;
 
     /// <summary>
     /// General utility class for macro-type functions.
@@ -43,9 +43,8 @@ namespace MS.Internal
                     return false;
                 }
 
-                Int32 isDesktopCompositionEnabled = 0;
-                UnsafeNativeMethods.HRESULT.Check(UnsafeNativeMethods.DwmIsCompositionEnabled(out isDesktopCompositionEnabled));
-                return isDesktopCompositionEnabled != 0;
+                PInvoke.DwmIsCompositionEnabled(out BOOL isDesktopCompositionEnabled).ThrowOnFailure();
+                return isDesktopCompositionEnabled;
             }
         }
 

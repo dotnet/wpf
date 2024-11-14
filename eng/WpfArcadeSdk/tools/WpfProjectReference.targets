@@ -21,6 +21,7 @@
     
   </ItemGroup>
   <ItemGroup>
+    <WpfProjectPath Include="System.Windows.Primitives" ProjectPath="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
     <WpfProjectPath Include="System.Xaml" ProjectPath="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <WpfProjectPath Include="WindowsBase" ProjectPath="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <WpfProjectPath Include="DirectWriteForwarder" ProjectPath="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">

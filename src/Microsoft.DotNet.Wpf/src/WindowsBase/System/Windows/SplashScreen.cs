@@ -83,7 +83,7 @@ namespace System.Windows
             {
                 Dispatcher.CurrentDispatcher.BeginInvoke(
                     DispatcherPriority.Loaded,
-                    (DispatcherOperationCallback)(arg =>
+                    (DispatcherOperationCallback)(static arg =>
                     {
                         ((SplashScreen)arg).Close(TimeSpan.FromSeconds(0.3));
                         return null;

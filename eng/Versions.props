@@ -81,6 +81,7 @@
     <!-- These versions are specified in global.json -->
     <StrawberryPerlVersion>5.38.0.1</StrawberryPerlVersion>
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
+    <MicrosoftWindowsCsWin32PackageVersion>0.3.106</MicrosoftWindowsCsWin32PackageVersion>
   </PropertyGroup>
   <!-- External Analyzers -->
   <PropertyGroup>

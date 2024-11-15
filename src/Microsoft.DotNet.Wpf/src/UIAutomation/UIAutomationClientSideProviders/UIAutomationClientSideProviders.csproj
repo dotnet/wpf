@@ -109,8 +109,10 @@
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\ref\UIAutomationClientSideProviders-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\..\System.Windows.Primitives\System.Windows.Primitives.csproj" />
   </ItemGroup>
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 </Project>

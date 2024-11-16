@@ -52,7 +52,6 @@
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>10.0.0-beta.24562.15</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>
@@ -83,10 +82,6 @@
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
     <MicrosoftWindowsCsWin32PackageVersion>0.3.106</MicrosoftWindowsCsWin32PackageVersion>
   </PropertyGroup>
-  <!-- External Analyzers -->
-  <PropertyGroup>
-    <MicrosoftCodeAnalysisNetAnalyzersVersion>7.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
-  </PropertyGroup>
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
     <XUnitVersion>2.9.0</XUnitVersion>
@@ -110,6 +105,22 @@
     <CoverletMSBuildPackageVersion>3.1.2</CoverletMSBuildPackageVersion>
     <CodecovVersion>1.9.0</CodecovVersion>
     <ReportGeneratorVersion>4.0.9</ReportGeneratorVersion>
+  </PropertyGroup>
+  <!-- External Analyzers -->
+  <PropertyGroup>
+    <CSharpIsNullAnalyzersVersion>0.1.495</CSharpIsNullAnalyzersVersion>
+    <DotNetAnalyzersDocumentationAnalyzersVersion>1.0.0-beta.59</DotNetAnalyzersDocumentationAnalyzersVersion>
+    <MicrosoftCodeAnalysisAnalyzersVersion>3.11.0-beta1.24219.2</MicrosoftCodeAnalysisAnalyzersVersion>
+    <MicrosoftCodeAnalysisCommonPackageVersion>4.10.0-3.final</MicrosoftCodeAnalysisCommonPackageVersion>
+    <MicrosoftCodeAnalysisCSharpPackageVersion>$(MicrosoftCodeAnalysisCommonPackageVersion)</MicrosoftCodeAnalysisCSharpPackageVersion>
+    <MicrosoftCodeAnalysisVisualBasicPackageVersion>$(MicrosoftCodeAnalysisCommonPackageVersion)</MicrosoftCodeAnalysisVisualBasicPackageVersion>
+    <MicrosoftCodeAnalysisCSharpWorkspacesVersion>$(MicrosoftCodeAnalysisCommonPackageVersion)</MicrosoftCodeAnalysisCSharpWorkspacesVersion>
+    <MicrosoftCodeAnalysisVisualBasicWorkspacesVersion>$(MicrosoftCodeAnalysisCommonPackageVersion)</MicrosoftCodeAnalysisVisualBasicWorkspacesVersion>
+    <MicrosoftCodeAnalysisPackagesVersion>1.1.3-beta1.24352.1</MicrosoftCodeAnalysisPackagesVersion>
+    <MicrosoftCodeAnalysisPublicApiAnalyzersVersion>$(MicrosoftCodeAnalysisAnalyzersVersion)</MicrosoftCodeAnalysisPublicApiAnalyzersVersion>
+    <MicrosoftCodeAnalysisNetAnalyzersVersion>8.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
+    <StyleCopAnalyzersVersion>1.2.0-beta.556</StyleCopAnalyzersVersion>
+    <NugetPackagingVersion>6.11.0</NugetPackagingVersion>
   </PropertyGroup>
   <!--Package names-->
   <PropertyGroup>

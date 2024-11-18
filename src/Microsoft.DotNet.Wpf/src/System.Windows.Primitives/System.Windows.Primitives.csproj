@@ -5,7 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>false</CLSCompliant>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
 
     <!--
       We align casing and naming with Win32 API. As such some types have all lower case names, which
@@ -16,7 +16,6 @@
     <NoWarn>$(NoWarn);CS8981;CS3016</NoWarn>
 
     <Deterministic>true</Deterministic>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
     <RootNamespace />
     <DefaultItemExcludes>$(DefaultItemExcludes);ref\**</DefaultItemExcludes>

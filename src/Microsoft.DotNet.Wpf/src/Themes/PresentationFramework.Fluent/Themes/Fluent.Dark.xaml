@@ -4804,9 +4804,6 @@
       <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
       </DataTrigger>
-      <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop)}" Value="True">
-        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
-      </DataTrigger>
     </Style.Triggers>
   </Style>
   <Style BasedOn="{StaticResource DefaultWindowStyle}" TargetType="{x:Type Window}" />

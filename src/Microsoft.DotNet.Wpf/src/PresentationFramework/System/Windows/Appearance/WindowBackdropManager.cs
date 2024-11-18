@@ -25,10 +25,7 @@ internal static class WindowBackdropManager
 
     internal static bool SetBackdrop(Window window, WindowBackdropType backdropType)
     {
-        if (window is null ||
-                !IsSupported(backdropType) ||
-                window.AllowsTransparency ||
-                IsBackdropEnabled == false)
+        if (window is null || window.AllowsTransparency)
         {
             return false;
         }
@@ -42,6 +39,11 @@ internal static class WindowBackdropManager
         if (handle == IntPtr.Zero)
         {
             return false;
+        }
+
+        if(!IsSupported(backdropType) || IsBackdropEnabled == false)
+        {
+            return SetBackdropCore(handle, WindowBackdropType.None);
         }
 
         return SetBackdropCore(handle, backdropType);
@@ -99,7 +101,7 @@ internal static class WindowBackdropManager
             var windowSource = HwndSource.FromHwnd(hwnd);
             if (windowSource.CompositionTarget != null)
             {
-                // TODO : Save the previous background color and reapply in RestoreBackground 
+                // TODO : Save the previous background color and reapply in RestoreBackground
                 windowSource.CompositionTarget.BackgroundColor = Colors.Transparent;
                 return true;
             }
@@ -137,7 +139,7 @@ internal static class WindowBackdropManager
 
     #region Internal Properties
 
-    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
+    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer &&
                                                                         !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;

@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.IO;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
 using System.Formats.Nrbf;
 
 namespace PresentationCore.Tests.TestUtilities;
@@ -14,7 +11,7 @@ namespace PresentationCore.Tests.TestUtilities;
 internal static class BinaryFormatTestExtensions
 {
     /// <summary>
-    ///  Serializes the object using the <see cref="BinaryFormatter"/> and reads it into a <see cref="BinaryFormattedObject"/>.
+    ///  Serializes the object using the <see cref="BinaryFormatter"/> and reads it into a <see cref="SerializationRecord"/>.
     /// </summary>
     public static SerializationRecord SerializeAndParse(this object source) => NrbfDecoder.Decode(source.Serialize());
 

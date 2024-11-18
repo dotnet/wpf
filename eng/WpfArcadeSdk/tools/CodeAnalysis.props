@@ -1,7 +1,14 @@
 <Project>
 
   <PropertyGroup>
-    <!-- Do not warn about the version of analyzers being used in this project -->
+    <!-- Only upgrade NuGetAudit warnings to errors for official builds. -->
+    <WarningsNotAsErrors Condition="'$(OfficialBuild)' != 'true'">$(WarningsNotAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!--
+      Don't let Microsoft.CodeAnalysis.NetAnalyzers complain about the version being older than what is in the SDK.
+    -->
     <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
   </PropertyGroup>
 

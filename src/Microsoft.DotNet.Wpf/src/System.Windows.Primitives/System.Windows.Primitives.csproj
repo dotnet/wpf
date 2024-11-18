@@ -19,6 +19,7 @@
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
     <RootNamespace />
     <DefaultItemExcludes>$(DefaultItemExcludes);ref\**</DefaultItemExcludes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

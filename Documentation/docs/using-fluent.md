@@ -12,7 +12,10 @@ In .NET 9, as part of the ongoing modernization in WPF, we introduced the Fluent
 
 Enabling Fluent theme in WPF application is supported at two levels : **Application** and **Window**.
 
-There are two ways in which you can use \ enable Fluent theme in your WPF Applications - including the Fluent theme resource dictionaries or you can use the experimental **ThemeMode** APIs.
+There are two ways in which you can use \ enable Fluent theme in your WPF Applications - including the Fluent theme resource dictionaries or you can use the experimental **ThemeMode** APIs. 
+
+> [!NOTE]
+> Both the ways have the same effect i.e. the APIs only includes the ResourceDictionary as convenience.
 
 ### Setting Fluent theme by including Fluent theme ResourceDictionary
 
@@ -60,7 +63,7 @@ By default, when `Fluent.xaml` is included it reacts to the system theme changes
 
 ### Setting Fluent theme using the experimental ThemeMode APIs
 
-In .NET 9, we also provided experimental APIs : `Application.ThemeMode` and `Window.ThemeMode` which can be set from XAML or code-behind to enable the Fluent theme in WPF app.
+In .NET 9, we also provided ***experimental APIs*** : `Application.ThemeMode` and `Window.ThemeMode` which can be set from XAML or code-behind to enable the Fluent theme in WPF app.
 
 For setting ThemeMode on Application, you can do the following in App.xaml:
 ```xml
@@ -123,6 +126,12 @@ Irrespective of how you have enabled the Fluent theme, the ThemeMode properties 
 5. When the `ThemeMode` is set to a Window, it will take precedence over the Application's `ThemeMode`. In case Window `ThemeMode` is set to None, the window will adhere to Application's `ThemeMode`, even if Application uses Fluent Theme.
 6. The default value of `ThemeMode` is None.
 7. When **contrast themes** are enabled, HighContrast version of the Fluent theme is applied on the application. In this mode, there is no distinction between light and dark modes and all the window's will appear the same. When we switch back to normal themes, the previously set `ThemeMode` are applied on the windows.
+
+> [!NOTE]
+> Even if you include the ResourceDictionary, you will get the same behavior.
+
+> [!NOTE]
+> ThemeMode APIs are experimental and subject to change in the later .NET versions.
 
 ## Using Accent color brushes in WPF applications 
 
@@ -217,4 +226,4 @@ There are a lot of issues in the styles and the current infrastructure of how Fl
 Meanwhile, I would like to ask the community to go ahead and try out the new theme in their applications, and provide us with feedbacks via GitHub issues, discussions, feature suggestions and PRs to make it better.
 
 > [!NOTE]
-> While doing so, add the **"Win 11 Theming"** label to your contributions, so that it becomes easier for us to track and prioritize your issues.
+> While making PRs, make sure to run the `ThemeGenerator.Fluent.ps1` script to auto-generate the combined Fluent theme resource files.

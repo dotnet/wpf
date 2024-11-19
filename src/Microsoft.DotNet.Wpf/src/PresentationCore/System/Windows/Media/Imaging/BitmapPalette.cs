@@ -9,6 +9,7 @@ using System;
 using System.Security;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
@@ -61,7 +62,7 @@ namespace System.Windows.Media.Imaging
                 colorArray[i] = colors[i];
             }
 
-            _colors = new PartialList<Color>(colorArray);
+            _colors = new ReadOnlyCollection<Color>(colorArray);
 
             _palette = CreateInternalPalette();
 
@@ -347,7 +348,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            _colors = new PartialList<Color>(colors);
+            _colors = new ReadOnlyCollection<Color>(colors);
         }
 
         #endregion // Private Methods
@@ -382,7 +383,7 @@ namespace System.Windows.Media.Imaging
         // the behavior that we want.
         private SafeMILHandle _palette = null; // IWICPalette*
 
-        private IList<Color> _colors = new PartialList<Color>(new List<Color>());
+        private IList<Color> _colors = ReadOnlyCollection<Color>.Empty;
     }
 }
 

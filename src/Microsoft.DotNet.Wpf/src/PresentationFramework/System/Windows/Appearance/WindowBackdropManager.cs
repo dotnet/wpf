@@ -117,14 +117,8 @@ internal static class WindowBackdropManager
             if (windowSource?.Handle != IntPtr.Zero && windowSource.CompositionTarget != null)
             {
                 // If the window is in light mode, set the background color to #FFFAFAFA and for dark mode set it to #FF202020
-                if(WindowThemeIsLight(windowSource))
-                {
-                    windowSource.CompositionTarget.BackgroundColor = (Color)ColorConverter.ConvertFromString("#FFFAFAFA");
-                }
-                else
-                {
-                    windowSource.CompositionTarget.BackgroundColor = (Color)ColorConverter.ConvertFromString("#FF202020");
-                }
+                windowSource.CompositionTarget.BackgroundColor = WindowOnLightMode(windowSource) ?
+                    (Color)ColorConverter.ConvertFromString(_lightWindowBackgroundCompositionColor) : (Color)ColorConverter.ConvertFromString(_darkWindowBackgroundCompositionColor);;
 
                 return true;
             }
@@ -133,16 +127,22 @@ internal static class WindowBackdropManager
         return false;
     }
 
-    private static bool WindowThemeIsLight(HwndSource hwndSource)
+    /// <summary>
+    /// This method checks if the window associated with the hwndSource should be in light mode or not depending on Window's ThemeMode, Application's ThemeMode and System's Theme.
+    /// </summary>
+    /// <param name="hwndSource"></param>
+    /// <returns>True if window should be in light mode, false otherwise</returns>
+    private static bool WindowOnLightMode(HwndSource hwndSource)
     {
         Window window = hwndSource.RootVisual as Window;
 
         if(window is null)
         {
-            return true; // TODO: We were unconditionally changing the CompositionTarget earlier so this shouldn't really affect what is happening but verify if this is the correct behaviour
+            // We were unconditionally assuming that windowSource needs to have the mode as light even if window was null earlier. Doing the same here to ensure parity.
+            return true;
         }
 
-        if(window.ThemeMode == ThemeMode.Light ||
+        if (window.ThemeMode == ThemeMode.Light ||
             (window.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()) ||
             (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.Light) ||
             (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()))
@@ -173,6 +173,10 @@ internal static class WindowBackdropManager
                                                                         !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;
+
+    private const string _lightWindowBackgroundCompositionColor = "#FFFAFAFA";
+
+    private const string _darkWindowBackgroundCompositionColor = "#FF202020";
 
     #endregion
 

@@ -1,7 +1,7 @@
 using Standard;
 using Microsoft.Win32;
 using System.Collections;
-using System.Collections.ObjectModel; 
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -133,7 +133,7 @@ internal static class ThemeManager
             Application.Current.ThemeMode = themeMode;
             return themeMode == ThemeMode.None ? false : true;
         }
-        
+
         return false;
     }
 
@@ -186,14 +186,14 @@ internal static class ThemeManager
 
         ResourceDictionary rd = null;
         bool useLightColors = GetUseLightColors(themeMode);
-        
+
         if (themeMode == ThemeMode.System)
         {
             rd = new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + "Fluent.xaml", UriKind.Absolute) };
 
             var colorFileName = useLightColors ? "Light.xaml" : "Dark.xaml";
             Uri dictionaryUri = new Uri(FluentColorDictionaryUri + colorFileName, UriKind.Absolute);
-            rd.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = dictionaryUri });            
+            rd.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = dictionaryUri });
         }
         else
         {
@@ -291,7 +291,7 @@ internal static class ThemeManager
         if (window == null || window.IsDisposed)
             return;
 
-        // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
+        // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting.
         if (window.Style == null)
         {
             window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
@@ -450,7 +450,7 @@ internal static class ThemeManager
         return indices;
     }
 
-    private static bool IsSystemThemeLight()
+    internal static bool IsSystemThemeLight()
     {
         var useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
             "AppsUseLightTheme", null) as int?;

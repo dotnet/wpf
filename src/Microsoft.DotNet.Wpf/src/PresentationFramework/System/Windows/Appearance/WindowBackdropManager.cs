@@ -113,13 +113,43 @@ internal static class WindowBackdropManager
     {
         if (hwnd != IntPtr.Zero)
         {
-            var windowSource = HwndSource.FromHwnd(hwnd);
+            HwndSource windowSource = HwndSource.FromHwnd(hwnd);
             if (windowSource?.Handle != IntPtr.Zero && windowSource.CompositionTarget != null)
             {
-                windowSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                // If the window is in light mode, set the background color to #FFFAFAFA and for dark mode set it to #FF202020
+                if(WindowThemeIsLight(windowSource))
+                {
+                    windowSource.CompositionTarget.BackgroundColor = (Color)ColorConverter.ConvertFromString("#FFFAFAFA");
+                }
+                else
+                {
+                    windowSource.CompositionTarget.BackgroundColor = (Color)ColorConverter.ConvertFromString("#FF202020");
+                }
+
                 return true;
             }
         }
+
+        return false;
+    }
+
+    private static bool WindowThemeIsLight(HwndSource hwndSource)
+    {
+        Window window = hwndSource.RootVisual as Window;
+
+        if(window is null)
+        {
+            return true; // TODO: We were unconditionally changing the CompositionTarget earlier so this shouldn't really affect what is happening but verify if this is the correct behaviour
+        }
+
+        if(window.ThemeMode == ThemeMode.Light ||
+            (window.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()) ||
+            (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.Light) ||
+            (window.ThemeMode == ThemeMode.None && Application.Current?.ThemeMode == ThemeMode.System && ThemeManager.IsSystemThemeLight()))
+        {
+            return true;
+        }
+
         return false;
     }
 

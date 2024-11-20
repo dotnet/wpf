@@ -1545,7 +1545,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 string xamlInputFullPath = TaskHelper.CreateFullFilePath(inputXamlItem.ItemSpec, SourceDir);
 
-                if (String.Compare(localTypeXamlFile, xamlInputFullPath, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(localTypeXamlFile, xamlInputFullPath, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // Got this file from the original XamlFile TaskItem list.
@@ -1710,27 +1710,19 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private bool IsItemLocalizable(ITaskItem ti)
         {
-            bool bIsLocalizable;
+            // if UICulture is not set, all baml files are not localizable.
+            // The Localizable metadata value is ignored for this case.
+            bool bIsLocalizable = false;
 
-            if (String.IsNullOrEmpty(UICulture))
-            {
-                // if UICulture is not set, all baml files are not localizable.
-                // The Localizable metadate value is ignored for this case.
-                bIsLocalizable = false;
-            }
-            else
-            {
-                string strLocalizable;
+            if (!string.IsNullOrEmpty(UICulture))
+            { 
+                string strLocalizable = ti.GetMetadata(SharedStrings.Localizable);
 
                 // if UICulture is set, by default all the baml files are localizable unless
                 // an explicit value "false" is set to Localizable metadata.
-                bIsLocalizable = true;
-
-                strLocalizable = ti.GetMetadata(SharedStrings.Localizable);
-
-                if (strLocalizable != null && String.Compare(strLocalizable, "false", StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.Equals(strLocalizable, "false", StringComparison.OrdinalIgnoreCase))
                 {
-                    bIsLocalizable = false;
+                    bIsLocalizable = true;
                 }
             }
 

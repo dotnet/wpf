@@ -123,12 +123,9 @@ namespace System.Windows.Controls
 
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null &&
-                string.Compare(propertyName, "IsThreeState", StringComparison.Ordinal) == 0)
+            if (element is DataGridCell cell && string.Equals(propertyName, "IsThreeState", StringComparison.Ordinal))
             {
-                var checkBox = cell.Content as CheckBox;
-                if (checkBox != null)
+                if (cell.Content is CheckBox checkBox)
                 {
                     checkBox.IsThreeState = IsThreeState;
                 }

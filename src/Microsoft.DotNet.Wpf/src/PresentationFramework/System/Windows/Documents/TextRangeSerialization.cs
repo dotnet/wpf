@@ -1940,8 +1940,7 @@ namespace System.Windows.Documents
 
         private static string FilterNaNStringValueForDoublePropertyType(string stringValue, Type propertyType)
         {
-            if (propertyType == typeof(double) &&
-                String.Compare(stringValue, "NaN", StringComparison.OrdinalIgnoreCase) == 0)
+            if (propertyType == typeof(double) && string.Equals(stringValue, "NaN", StringComparison.OrdinalIgnoreCase))
             {
                 return "Auto"; // convert NaN to Auto, to keep parser happy
             }

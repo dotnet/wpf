@@ -2246,7 +2246,7 @@ namespace System.Xaml
                     if (xIsDirective && !yIsDirective) { return XFirst; }
                     if (yIsDirective && !xIsDirective) { return YFirst; }
 
-                    return String.CompareOrdinal(xProperty.Name, yProperty.Name);
+                    return string.CompareOrdinal(xProperty.Name, yProperty.Name);
                 }
             }
 
@@ -2306,7 +2306,7 @@ namespace System.Xaml
                     if (xIsDirective && !yIsDirective) { return XFirst; }
                     if (yIsDirective && !yIsDirective) { return YFirst; }
 
-                    return String.CompareOrdinal(xProperty.Name, yProperty.Name);
+                    return string.CompareOrdinal(xProperty.Name, yProperty.Name);
                 }
             }
 

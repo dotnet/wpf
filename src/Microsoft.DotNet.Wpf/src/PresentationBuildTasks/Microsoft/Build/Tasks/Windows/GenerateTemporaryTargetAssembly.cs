@@ -91,7 +91,7 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase))
             {
                 return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
             }
@@ -638,7 +638,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
 
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (nodeGroup != null && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -651,7 +651,7 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
 
-                            if (nodeItem != null && String.Compare(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (nodeItem != null && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.

@@ -2507,7 +2507,7 @@ namespace System.Windows.Markup
             public bool TokenEquals(string value)
             {
                 int len = _current - _start;
-                return len == value.Length && String.CompareOrdinal(value, 0, _text, _start, len) == 0;
+                return len == value.Length && string.CompareOrdinal(value, 0, _text, _start, len) == 0;
             }
 
             public int Start { get { return _start; } }

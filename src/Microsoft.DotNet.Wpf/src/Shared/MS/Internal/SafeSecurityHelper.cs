@@ -147,10 +147,10 @@ namespace System.Xaml
                 CultureInfo curCulture = curAsmName.CultureInfo;
                 byte[] curKeyToken = curAsmName.GetPublicKeyToken();
 
-                if ( (String.Compare(curAsmName.Name, assemblyName.Name, true, TypeConverterHelper.InvariantEnglishUS) == 0) &&
+                if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
                      (reqVersion == null || reqVersion.Equals(curVersion)) &&
                      (reqCulture == null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken) ) )
+                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }

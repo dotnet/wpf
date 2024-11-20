@@ -340,13 +340,11 @@ namespace System.Windows.Navigation
                 return uri.ToString();
             }
 
-            bool isPack = String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
             string displayName;
-
-            if (isPack)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 Uri relative = BaseUriHelper.MakeRelativeToSiteOfOriginIfPossible(uri);
-                if (! relative.IsAbsoluteUri)
+                if (!relative.IsAbsoluteUri)
                 {
                     displayName = (new Uri(siteOfOrigin, relative)).ToString();
                 }

@@ -3,4 +3,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("WindowsBase.Tests, PublicKey=00000000000000000400000000000000")]
+[assembly: InternalsVisibleTo("PresentationFramework.Fluent.Tests, PublicKey=00000000000000000400000000000000")]
